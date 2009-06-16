@@ -227,6 +227,11 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	String cssSelectedRow = style.getSelectedRow();
 	String selectedRowStyle = style.getSelectedRowStyle();
 	String rowStyle = "border-bottom: 1px solid;";
+	if (tab.isSelected(f)){
+		cssClass = cssSelectedRow + " " + cssClass;
+		rowStyle = rowStyle + " " + selectedRowStyle;
+		events = f%2==0?style.getListPairEvents(cssStyle, cssSelectedRow):style.getListOddEvents(cssStyle, cssSelectedRow);
+	}
 	String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
 	MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
@@ -239,7 +244,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		"'" + request.getParameter("application") + "'," + 
 		"'" + request.getParameter("module") + "'," + 
 		"'" + onSelectCollectionElementAction + "'," + 
-		"'row=" + f + "'," + 
+		"'row=" + f + ",viewObject=" + viewObject + "'," +
 		"this.checked," + 
 		"'" + idRow + "'," + 
 		!Is.empty(view.getOnSelectCollectionElementAction()) + "," +

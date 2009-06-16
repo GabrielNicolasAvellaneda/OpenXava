@@ -36,7 +36,7 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 	public void testJasperReportBaseActionTest() throws Exception {
 		execute("FamilyProductsReport.generatePdf");
 		// Next line: test that errors of a ValidationException thrown from a action are shown
-		assertError("Value for Subfamily in FilterBySubfamily is required"); 
+		assertError("Value for Subfamily in Filter by subfamily is required"); 
 		assertNoPopup();
 		setValue("subfamily.number", "1");
 		

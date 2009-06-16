@@ -107,6 +107,7 @@
   create-reference (true|false) "true"
   modify-reference (true|false) "true"
   as-aggregate (true|false) "false"
+  editor CDATA #IMPLIED
 >
 
 <!ELEMENT list-properties (#PCDATA)>

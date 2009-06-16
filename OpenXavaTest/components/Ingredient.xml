@@ -29,7 +29,7 @@
 			<reference-mapping-detail column="PARTOF" referenced-model-property="oid"/>
 		</reference-mapping>
 		<reference-mapping reference="favouriteFormula">
-			<reference-mapping-detail column="FAVOURITEFORMULA" referenced-model-property="oid"/>
+			<reference-mapping-detail column="FAVOURITEFORMULA_ID" referenced-model-property="oid"/>
 		</reference-mapping>				
 	</entity-mapping> 
 						

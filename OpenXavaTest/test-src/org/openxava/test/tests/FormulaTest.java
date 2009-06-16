@@ -38,14 +38,14 @@ public class FormulaTest extends ModuleTestBase {
 		checkRowCollection("ingredients", 0);
 		assertNoErrors();
 		assertValue("selectedIngredientSize", "1");
-		assertValue("selectedIngredientNames", "CAFE");
+		assertValue("selectedIngredientNames", "AZUCAR");
 		checkRowCollection("ingredients", 1);
 		assertValue("selectedIngredientSize", "2");
-		assertValue("selectedIngredientNames", "CAFE,AZUCAR");
+		assertValue("selectedIngredientNames", "AZUCAR,CAFE");
 		// deselected
 		uncheckRowCollection("ingredients", 0);	
 		assertValue("selectedIngredientSize", "1");
-		assertValue("selectedIngredientNames", "AZUCAR");
+		assertValue("selectedIngredientNames", "CAFE");
 		uncheckRowCollection("ingredients", 1);	
 		assertValue("selectedIngredientSize", "0");
 		assertValue("selectedIngredientNames", "");

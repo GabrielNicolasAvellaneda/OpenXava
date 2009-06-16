@@ -340,8 +340,8 @@ public class ProductTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertActions(detailActions);
 		execute("CRUD.save");		
-		// Since validator for FAMILY and SUBFAMILY has set to NO_NULL
-		// it not use of integer (NO_ZERO) and hence it do not validate although required is true
+		// Since validator for FAMILY and SUBFAMILY has set to NOT_NEGATIVE
+		// it does not fail validation although required is true
 		assertNoError("Value for Family in Product is required");
 		assertNoError("Value for Subfamily in Product is required");
 	}

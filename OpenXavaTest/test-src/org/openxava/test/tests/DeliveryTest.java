@@ -102,7 +102,7 @@ public class DeliveryTest extends ModuleTestBase {
 		checkRowCollection("details", 2);
 		execute("DeliveryDetail.removeSelected", "viewObject=xava_view_section2_details_details");
 		assertNoErrors();
-		assertMessage("DeliveryDetail deleted from database");
+		assertMessage("Delivery detail deleted from database");
 		assertMessage("Delivery detail 13 deleted successfully"); // This message is by the override action for removeSelected		
 		assertCollectionRowCount("details", 2);
 		

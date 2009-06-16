@@ -130,7 +130,7 @@
 		<for-stereotype stereotype="SERVICE_TYPE" />
 	</editor>
 
-	<editor url="descriptionsEditor.jsp" depends-properties="oid">
+	<editor url="descriptionsEditor.jsp" depends-properties="oid" >
 		<property name="model" value="Product3" />
 		<property name="keyProperty" value="number" />
 		<property name="descriptionProperty" value="description" />

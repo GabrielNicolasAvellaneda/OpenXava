@@ -60,7 +60,7 @@
 						
 	</entity>
 	
-	<view>
+	<view>		
 		<property-view property="calculated">
 			<action action="Carrier.translateName"/>		
 		</property-view>		
@@ -86,13 +86,15 @@
 	</view>
 	
 	<view name="CalculatedFellows" extends="Simple">
- 	 	 	  
+ 	 	<property name="fellowCarriersCalculatedSize" type="Integer" />
+ 	 	
 		<collection-view collection="fellowCarriersCalculated">
 			<remove-selected-action action=""/>
+			<on-select-element-action action="Carrier.onSelectFellowCarriersCalulated"/>
 		</collection-view>
-					 
+		
 		<members>			
-			; fellowCarriersCalculated			
+			; fellowCarriersCalculatedSize; fellowCarriersCalculated			
 		</members>		
 		
 	</view>
@@ -128,7 +130,18 @@
 	
 	<view name="FellowsNames" members="number, name; fellowCarriers">
 		 <collection-view collection="fellowCarriers" editor="CarriersNames"/>		 
-	</view>	
+	</view>
+	
+	<view name="CollectionsTogether">
+		<reference-view reference="warehouse">
+			<descriptions-list description-property="name"/>
+		</reference-view>
+		
+		<members>
+			warehouse; 
+			fellowCarriers, fellowCarriersCalculated;
+		</members>
+	</view>
 	
 	<tab>
 		<properties>calculated, number, name</properties>

@@ -136,6 +136,7 @@ public class XavaSuite extends TestSuite {
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
 			suite.addTest(new TestSuite(IssueTest.class));
 		}								
+		suite.addTest(new TestSuite(IsTest.class));
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(JavaProgrammerTest.class));
 		}						

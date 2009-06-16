@@ -1837,7 +1837,7 @@ public class View implements java.io.Serializable {
 			while (it.hasNext()) {
 				Object m = it.next();							
 				if (isMetaProperty(m)) {
-					MetaProperty p = (MetaProperty) m;					
+					MetaProperty p = (MetaProperty) m;
 					String propertyKey= qualifier + p.getName();
 					String valueKey = propertyKey + ".value";
 					String [] results = getRequest().getParameterValues(propertyKey);					
@@ -1878,7 +1878,6 @@ public class View implements java.io.Serializable {
 					subvista.assignValuesToWebView(qualifier);					 																									
 				}
 			}
-			
 			oldValues = values==null?null:new HashMap(values);
 			mustRefreshCollection = false;
 			reloadNeeded = false;			
@@ -3681,7 +3680,9 @@ public class View implements java.io.Serializable {
 		}
 		for (Iterator it=oldValues.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
-			if (!equals(en.getValue(), values.get(en.getKey()))) {				
+			if (!equals(en.getValue(), values.get(en.getKey())) ||
+				editorMustBeReloaded((String) en.getKey()))  
+			{				
 				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
 		}	
@@ -3747,10 +3748,12 @@ public class View implements java.io.Serializable {
 		try {
 			p = getMetaProperty(memberName);
 		}
-		catch (ElementNotFoundException ex) {
+		catch (ElementNotFoundException ex) {			
 			return false;
 		}
-		if (WebEditors.dependsOnSomeOther(p, getViewName())) return true;
+		if (WebEditors.dependsOnSomeOther(p, getViewName())) {		
+			return true;
+		}
 		MetaEditor editor = WebEditors.getMetaEditorFor(p, getViewName());		
 		if (editor.isAlwaysReload()) return true;		
 		// The next is a little 'ad hoc'. It's to avoid to put always-reload="true" in a lot

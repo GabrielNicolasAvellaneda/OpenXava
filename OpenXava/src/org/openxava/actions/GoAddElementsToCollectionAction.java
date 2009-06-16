@@ -23,10 +23,10 @@ public class GoAddElementsToCollectionAction extends CollectionElementViewBaseAc
 		tab.setRequest(getTab().getRequest());
 		tab.setModelName(getCollectionElementView().getModelName());	
 		setTab(tab);				
-		setCurrentCollectionLabel(
+		setCurrentCollectionLabel("'" + 
 				Labels.get(getCollectionElementView().getMemberName(), getRequest().getLocale()) +
 				" " + XavaResources.getString(getRequest(), "of") + " " +
-				Labels.get(getCollectionElementView().getParent().getModelName(), getRequest().getLocale()));
+				Labels.get(getCollectionElementView().getParent().getModelName(), getRequest().getLocale()) + "'");
 		setCollectionViewObject(getViewObject());		
 	}
 	

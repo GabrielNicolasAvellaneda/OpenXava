@@ -1,5 +1,6 @@
 package org.openxava.util;
 
+import java.math.*;
 import java.util.*;
 
 /**
@@ -28,6 +29,8 @@ import java.util.*;
 
 public class Is {
 	
+	private static BigDecimal ZERO = new BigDecimal("0"); 
+	
 	/**
 	 * Verifies if the sent object is <code>null</code> or empty string 
 	 * (if it's string) or 0 (if it's number) or empty Map. <p>
@@ -36,6 +39,7 @@ public class Is {
 	public final static boolean empty(Object object) {
 		if (object == null) return true;
 		if (object instanceof String) return ((String) object).trim().equals("");
+		if (object instanceof BigDecimal) return ZERO.compareTo((BigDecimal)object) == 0;
 		if (object instanceof Number) return ((Number) object).intValue() == 0;
 		if (object instanceof Map) return Maps.isEmptyOrZero((Map) object);
 		return false;

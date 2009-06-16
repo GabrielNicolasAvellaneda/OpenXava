@@ -37,7 +37,7 @@ public class Office2Test extends ModuleTestBase {
 		
 		// Deleting
 		execute("CRUD.delete");
-		assertMessage("Office2 deleted successfully");
+		assertMessage("Office 2 deleted successfully");
 	}
 	
 }

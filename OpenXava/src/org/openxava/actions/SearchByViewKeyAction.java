@@ -73,7 +73,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		}
 		catch (ObjectNotFoundException ex) {
 			String searchPropertiesAndValues = getSearchPropertiesAndValues();
-			getView().clear();
+			getView().clear();			
 			addError("object_not_found", getModelName(), searchPropertiesAndValues);			
 		}						
 		catch (Exception ex) {
@@ -155,8 +155,8 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 				separator = sb.length() == 0 ? "" : ", ";
 				sb.append(separator + propertyName + ":" + value);
 			}
-		}
-		return sb.toString().trim();
+		}		
+		return "'" + sb.toString().trim() + "'";
 	}
 	
 	public void setRequest(HttpServletRequest request) {	
