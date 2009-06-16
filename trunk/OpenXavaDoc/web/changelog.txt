@@ -1,6 +1,30 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 3.1.3 (2009-6-16)
+--------------------------
+- @Editor can be applied to collections. Also available for XML version with <collection-view editor=/>.
+- @Editor can be applied to references. Also available for XML version with <reference-view editor=/>.
+- In editors.xml it's possible to associate an editor by default for all collections or for collections to certain models.
+- In editors.xml it's possible to associate an editor by default for all references or for references to certain models.
+- The selected row in list and collection is highlight.
+- OnSelectElementAction uses takesLong and confirmMessage.
+- The default label is natural, e.g. the label for lastInvoiceNumber now is "Last invoice label".
+- The default parse for int, short and long (MetaProperty.parse) returns null for null or empty string (before it returned 0).
+- It's possible to layout several collections on the same line.
+- OnSelectElementAction added to calculated collection.
+- Removed unused TTFs (fonts for PDF generation).
+- Fix: Editors with alwaysEnabled=true do not refresh via AJAX in some cases.
+- Fix: Is.empty fails with a BigDecimal less than one and not zero.
+- Fix: XCollections.last fail when collection is empty or null.
+- Fix: viewObject property is missing for OnSelectElementBaseAction
+- Fix: highlight select element whit OnSelectElementAction 
+- Fix: Collections with cascade REMOVE whose getter returns null fails in some cases.
+- Fix: mappedBy in @ManyToOne only allowed a reference named equal as the container entity.
+- Fix: @GeneratedValue in a not @Hidden key throws a NullPointerException.
+- Fix: Editors with multiple html elements with the same name fail (broken in v3.1).
+- Fix: IForwardAction at the same time that IChainAction (not refreshed the screen).
+
 OpenXava 3.1.2 (2009-4-22)
 --------------------------
 - View inheritance: A view can extends from another. Available for JPA POJOs and XML components.
