@@ -14,6 +14,7 @@ import org.openxava.jpa.*;
 
 @Entity
 @Views({
+	@View(members="number; name; drivingLicence; warehouse; remarks; calculated; fellowCarriers; fellowCarriersCalculated"),
 	@View(name="Simple", members="number, name"), 	
 	@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculatedSize; fellowCarriersCalculated"),
 	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated"),
@@ -106,7 +107,7 @@ public class Carrier {
 	}
 		
 	@Transient @ReadOnly
-	private int fellowCarriersCalculatedSize;
+	private Integer fellowCarriersCalculatedSize;
 	
 	public static Collection<Carrier> findAll() {
 		Query query = XPersistence.getManager().createQuery("from Carrier as o"); 
@@ -236,11 +237,11 @@ public class Carrier {
 		this.fellowCarriersSelected = fellowCarriersSelected;
 	}
 
-	public int getFellowCarriersCalculatedSize() {
+	public Integer getFellowCarriersCalculatedSize() {
 		return fellowCarriersCalculatedSize;
 	}
 
-	public void setFellowCarriersCalculatedSize(int fellowCarriersCalculatedSize) {
+	public void setFellowCarriersCalculatedSize(Integer fellowCarriersCalculatedSize) {
 		this.fellowCarriersCalculatedSize = fellowCarriersCalculatedSize;
 	}
 	

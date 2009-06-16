@@ -6,13 +6,14 @@
 		<model name="Carrier"/>
 		<controller name="Typical"/>
 		<controller name="Carrier"/>
-	</module>		<module name="CarrierFellowsNames">		<model name="Carrier"/>		<view name="FellowsNames"/>		<controller name="Typical"/>	</module>		
+	</module>			<module name="CarrierFellowsNames">		<model name="Carrier"/>		<view name="FellowsNames"/>		<controller name="Typical"/>	</module>		<module name="CarrierWithCollectionsTogether">		<model name="Carrier"/>		<view name="CollectionsTogether"/>	</module>	
 		
 	<module name="CustomerContactPersonAsAggregate3Levels">
 		<model name="CustomerContactPerson"/>
 		<view name="CustomerAsAggregate3Levels"/>
 		<controller name="Typical"/>
-	</module>					
+	</module>
+			
 	<module name="StateHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>
@@ -220,9 +221,7 @@
 		<controller name="ChangeModule"/>
 		<mode-controller name="Void"/>
 	</module>
-		<module name="BeforeGoingToFormula">		<model name="Formula"/>		<view name="Simple"/>		<controller name="ChangeModule"/>		<mode-controller name="Void"/>
-	</module>
-	
+		<module name="BeforeGoingToFormula">		<model name="Formula"/>		<view name="Simple"/>		<controller name="ChangeModule"/>		<mode-controller name="Void"/>	</module>	
 	<module name="ChangeActiveYear">
 		<model name="Year"/>
 		<controller name="ChangeActiveYear"/>	

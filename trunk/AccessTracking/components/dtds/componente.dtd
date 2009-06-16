@@ -111,7 +111,8 @@
   solo-edicion (true|false) "false"
   crear-referencia (true|false) "true"  
   modificar-referencia (true|false) "true"  
-  como-agregado (true|false) "true"    
+  como-agregado (true|false) "true"
+  editor CDATA #IMPLIED    
 >
 
 <!ELEMENT accion-buscar (poner*)>

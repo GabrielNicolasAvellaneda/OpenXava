@@ -141,8 +141,8 @@ public class MetaReference extends MetaMember implements Cloneable {
 
 	public String getName() {
 		if (Is.emptyString(super.getName())) {
-			ElementName n = new ElementName(getReferencedModelName());
-			setName(firstLower(n.getUnqualifiedName()));		
+			ElementName n = new ElementName(getReferencedModelName());	
+			setName(Strings.firstLower(n.getUnqualifiedName()));
 		}
 		return super.getName();
 	}

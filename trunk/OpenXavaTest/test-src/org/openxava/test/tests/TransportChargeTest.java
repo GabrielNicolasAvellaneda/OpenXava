@@ -102,7 +102,7 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		assertValue("amount", "777.00");
 						
 		execute("CRUD.delete");										
-		assertMessage("TransportCharge deleted successfully");
+		assertMessage("Transport charge deleted successfully");
 	}
 	
 	public void testKeyNestedReferencesInList() throws Exception {

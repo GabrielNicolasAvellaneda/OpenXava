@@ -3,7 +3,7 @@
 <!ELEMENT editores (editor*)>
 
 
-<!ELEMENT editor (propiedad*, formateador?, (para-tipo | para-estereotipo | para-propiedad-modelo | para-valores-posibles | para-referencias | para-referencia)*)>
+<!ELEMENT editor (propiedad*, formateador?, (para-tipo | para-estereotipo | para-propiedad-modelo | para-valores-posibles | para-referencias | para-referencia | para-colecciones | para-coleccion)*)>
 <!ATTLIST editor
  nombre CDATA #IMPLIED
  clase CDATA #IMPLIED
@@ -58,4 +58,12 @@
 <!ATTLIST para-referencia
  modelo CDATA #REQUIRED 
 >
+
+<!ELEMENT para-colecciones EMPTY>
+
+<!ELEMENT para-coleccion EMPTY>
+<!ATTLIST para-coleccion
+ modelo CDATA #REQUIRED 
+>
+
 

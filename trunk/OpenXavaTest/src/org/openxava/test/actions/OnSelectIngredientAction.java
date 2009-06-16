@@ -36,7 +36,7 @@ public class OnSelectIngredientAction extends OnSelectElementBaseAction {
 			getView().setValue("selectedIngredientNames", Is.empty(names) ? newName : names + "," + newName); 
 		}
 		else{
-			Collection<String> collectionNames = Strings.toCollection(names);
+			Collection collectionNames = Strings.toCollection(names);
 			collectionNames.remove(formula.getIngredient().getName());
 			getView().setValue("selectedIngredientNames", Strings.toString(collectionNames)); 
 		}

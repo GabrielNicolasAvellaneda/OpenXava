@@ -56,8 +56,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("collection_defaultCarrier.fellowCarriers.," +
 				"collection_defaultCarrier.fellowCarriersCalculated.," +
 				"reference_editor_defaultCarrier.drivingLicence," +
-				"editor_defaultCarrier.calculated," +
-				"editor_defaultCarrier.fellowCarriersCalculatedSize," +	 
+				"editor_defaultCarrier.calculated," +	 
 				"editor_defaultCarrier.name," +
 				"editor_defaultCarrier.warehouse.name," +
 				"editor_defaultCarrier.warehouse.number," +
@@ -65,8 +64,6 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_mainWarehouse.time," + // it's always-reload
 				"editor_officeManager.arrivalTime," + // it's formatted
 				"editor_officeManager.endingTime," + // it's formatted
-				"editor_receptionist," + // it's formatted
-				"editor_zoneNumber," + // it's formatted
 				"errors, messages,");		
 	}
 	
@@ -78,7 +75,6 @@ public class AJAXTest extends ModuleTestBase {
 		assertValue("address.viewProperty", "THIS IS AN ADDRESS");
 		assertLoadedParts("errors, " +
 				"editor_address.viewProperty," +
-				"editor_address.zipCode," + // Because it's formatted
 				"messages");		
 	}
 	
@@ -436,7 +432,6 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_details.product.subfamilyNumber, " +
 				"editor_details.product.unitPriceInPesetas, " +
 				"editor_details.product.description, " +
-				"editor_details.quantity, " +
 				"messages");		
 		setValue("details.product.number", "2");
 		assertLoadedParts("errors, " +

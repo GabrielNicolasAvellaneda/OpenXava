@@ -3,9 +3,9 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A group of <code>@{@link Editor}</code> associated to the same property. <p>
+ * A group of <code>@{@link Editor}</code> associated to the same member. <p>
  * 
- * Applies to properties.<p>
+ * Applies to properties, references and collections. <p>
  * 
  * It allows to define a value different for <code>@{@link Editor}</code> in each view.<br>
  * Example:

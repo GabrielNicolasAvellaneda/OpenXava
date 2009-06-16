@@ -368,7 +368,7 @@ public class Module extends DWRBase {
 		result.append(application);
 		result.append("&module=");
 		result.append(module);
-		addValuesQueryString(result, values, multipleValues, selected);		
+		addValuesQueryString(result, values, multipleValues, selected);
 		return result.toString();
 	}
 

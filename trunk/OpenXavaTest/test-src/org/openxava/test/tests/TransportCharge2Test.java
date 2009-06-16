@@ -68,7 +68,7 @@ public class TransportCharge2Test extends ModuleTestBase {
 		assertValue("amount", "777.00");
 						
 		execute("CRUD.delete");										
-		assertMessage("TransportCharge2 deleted successfully");
+		assertMessage("Transport charge 2 deleted successfully");
 	}
 	
 	private void deleteAll() throws Exception {

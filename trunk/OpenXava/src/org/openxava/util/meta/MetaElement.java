@@ -53,11 +53,12 @@ abstract public class MetaElement implements java.io.Serializable {
 	 */
 	protected String getLabel(Locale locale, String id) {
 		if (id == null) return "";
-		if (Is.emptyString(label)) label = firstUpper(getName());			
+		if (Is.emptyString(label)) label = Strings.javaIdentifierToNaturalLabel(getName());			
 		return Labels.get(id, locale, label);
 	}
 	
 		
+
 	/**
 	 * Unique id of element, normally used to search the label in the resources files.	 
 	 */
@@ -77,15 +78,6 @@ abstract public class MetaElement implements java.io.Serializable {
 	
 	public void setName(java.lang.String newName) {
 		name = newName;
-	}
-	
-	
-	protected String firstUpper(String s) {
-		return Strings.firstUpper(s);
-	}
-	
-	protected String firstLower(String s) {
-		return Strings.firstLower(s);
 	}
 	
 	public String getDescription() {

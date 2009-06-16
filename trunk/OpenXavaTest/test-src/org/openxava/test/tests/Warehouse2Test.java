@@ -75,7 +75,7 @@ public class Warehouse2Test extends ModuleTestBase {
 		setValue("key.zoneNumber", "6"); 
 		setValue("key.number", "66");
 		execute("CRUD.search");
-		assertError("Object of type Warehouse2 does not exists with key Number:66, Zone:6");
+		assertError("Object of type Warehouse 2 does not exists with key Number:66, Zone:6");
 	}
 	
 }

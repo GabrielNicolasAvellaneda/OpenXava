@@ -331,7 +331,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList",  2, 0, "customer.address.asString");
 		assertValueInCollection("xavaPropertiesList",  3, 0, "customer.address.city");
 		assertValueInCollection("xavaPropertiesList",  4, 0, "customer.address.state.fullName");
-		assertValueInCollection("xavaPropertiesList",  4, 1, "FullName of State of Address of Customer");
+		assertValueInCollection("xavaPropertiesList",  4, 1, "Full name of State of Address of Customer");
 		assertValueInCollection("xavaPropertiesList",  5, 0, "customer.address.state.id");		
 		assertValueInCollection("xavaPropertiesList",  6, 0, "customer.address.state.name");		
 		assertValueInCollection("xavaPropertiesList",  7, 0, "customer.address.street");		
@@ -1493,6 +1493,6 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("customer.number", "43");
 		assertValue("customer.name", "Gonzalo Gonzalez");
 		execute("CRUD.search");
-		assertError("Object of type Invoice does not exists with key Number:43, Paid:No");
+		assertError("Object of type Invoice does not exists with key Number:43, Customer discount:0.25, Paid:No");
 	}
 }

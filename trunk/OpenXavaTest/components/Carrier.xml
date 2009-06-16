@@ -60,7 +60,7 @@
 						
 	</entity>
 	
-	<view>
+	<view>		
 		<property-view property="calculated">
 			<action action="Carrier.translateName"/>		
 		</property-view>		
@@ -86,16 +86,13 @@
 	</view>
 	
 	<view name="CalculatedFellows" extends="Simple">
- 	 	<property name="fellowCarriersCalculatedSize" type="int" />
+ 	 	<property name="fellowCarriersCalculatedSize" type="Integer" />
  	 	
 		<collection-view collection="fellowCarriersCalculated">
 			<remove-selected-action action=""/>
-		</collection-view>
-		
-		<collection-view collection="fellowCarriersCalculated">
 			<on-select-element-action action="Carrier.onSelectFellowCarriersCalulated"/>
 		</collection-view>
-					 
+		
 		<members>			
 			; fellowCarriersCalculatedSize; fellowCarriersCalculated			
 		</members>		

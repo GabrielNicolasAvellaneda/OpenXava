@@ -622,4 +622,24 @@ public class Strings {
 		return notSafeValue; 
 	}	
 	
+	/**
+	 * Convert a string with a Java identifier in label natural for a human. <p>
+	 * 
+	 * If you send "firstName" it returns "First name". <br>
+	 * If you send  "CustomerOrder" it returns "Customer order". <br>
+	 */
+	public static String javaIdentifierToNaturalLabel(String name) { 
+		if (Is.emptyString(name)) return "";
+		if (name.toUpperCase().equals(name)) return change(name, "_", " "); 
+		StringBuffer result = new StringBuffer();
+		result.append(Character.toUpperCase(name.charAt(0)));
+		for (int i=1; i<name.length(); i++) {
+			char letter = name.charAt(i);
+			if (Character.isUpperCase(letter) || Character.isDigit(letter)) result.append(' ');
+			result.append(Character.toLowerCase(letter));
+		}
+		return result.toString();
+	}
+
+	
 }

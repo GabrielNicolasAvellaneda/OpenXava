@@ -52,13 +52,13 @@ public class Labels {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
 				log.warn(XavaResources.getString("element_i18n_warning", id));
 			}			
-			return Strings.firstUpper(id);
+			return Strings.javaIdentifierToNaturalLabel(id); 
 		}
 		catch (Exception ex) {			
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
 				log.warn(XavaResources.getString("element_i18n_warning", id));
 			} 
-			return Strings.firstUpper(id);
+			return Strings.javaIdentifierToNaturalLabel(id); 
 		}		
 	}
 	
