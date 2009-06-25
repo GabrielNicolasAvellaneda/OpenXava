@@ -32,10 +32,12 @@ public class DateFormatter implements IFormatter {
 	}
 		
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
-		if (Is.emptyString(string)) return null;
-		if (string.indexOf('-') >= 0) { // SimpleDateFormat does not work well with -
-			string = Strings.change(string, "-", "/");
-		}		
+		if (Is.emptyString(string)) return null;				
+		if (!"sv".equals(Locales.getCurrent().getLanguage())) { // Patch by Apoteket: bad for Swedish format
+			if (string.indexOf('-') >= 0) { // SimpleDateFormat does not work well with -
+				string = Strings.change(string, "-", "/");
+			}		
+		}
 		DateFormat [] dateFormats = getDateFormats(); 
 		for (int i=0; i<dateFormats.length; i++) {
 			try {
