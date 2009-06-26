@@ -625,6 +625,7 @@ public class DeliveryTest extends ModuleTestBase {
 		
 		execute("CRUD.deleteSelected");
 		assertNoErrors();
+		assertRowUnchecked(0);
 		
 		// Verifying that it is deleted		
 		Query query = XPersistence.getManager().createQuery("from Delivery d where "

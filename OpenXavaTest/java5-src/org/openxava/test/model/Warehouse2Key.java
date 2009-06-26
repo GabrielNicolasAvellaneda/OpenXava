@@ -14,7 +14,7 @@ public class Warehouse2Key implements java.io.Serializable {
 	@Column(length=3, name="ZONE")	
 	private int zoneNumber;	
 	
-	@Column(length=3)
+	@Column(length=3, columnDefinition="NUMERIC NOT NULL") // NUMERIC in order to test a fix
 	private int number;
 	
 	public int getNumber() {

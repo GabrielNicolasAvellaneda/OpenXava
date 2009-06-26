@@ -1,8 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @EmbeddedId with int/long and NUMERIC in DB fails.
 - Labels and messages translated to Swedish.
-- DateFormatter and javascript calendar adapted to work in Swedish. 
+- DateFormatter and javascript calendar adapted to work in Swedish.
 
 OpenXava 3.1.3 (2009-6-16)
 --------------------------
