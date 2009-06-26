@@ -11,7 +11,10 @@
 
 
 <%@page import="org.openxava.web.taglib.IdTag"%>
-<%@page import="org.openxava.web.Ids"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<%@page import="org.openxava.web.Ids"%>
+<%@page import="org.openxava.model.meta.MetaMember"%>
+
+<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
 String viewObject = request.getParameter("viewObject");
@@ -80,19 +83,20 @@ while (it.hasNext()) {
 	else {
 		lastWasEditor = false;
 	  	if (m instanceof MetaReference) {
-			MetaReference ref = (MetaReference) m;			
-			if (view.displayAsDescriptionsList(ref)) {
-				lastWasEditor = true;
-				String referenceKey = Ids.decorate(
-						request.getParameter("application"),
-						request.getParameter("module"),
-						propertyPrefix +  ref.getName()); 
-				request.setAttribute(referenceKey, ref);			
-				String urlDescriptionsList = "descriptionsList.jsp" // in this way because websphere 6 has problems with jsp:param
-					+ "?referenceKey=" + referenceKey
-					+ "&first=" + first;
+			MetaReference ref = (MetaReference) m;
+			String referenceKey = Ids.decorate(
+					request.getParameter("application"),
+					request.getParameter("module"),
+					propertyPrefix +  ref.getName()); 
+			request.setAttribute(referenceKey, ref);
+			if (view.displayReferenceWithNoFrameEditor(ref)) {	
+				lastWasEditor = true;			
+				String urlReferenceEditor = "reference.jsp" // in this way because websphere 6 has problems with jsp:param
+					+ "?referenceKey=" + referenceKey		
+					+ "&first=" + first
+					+ "&frame=false&composite=false&onlyEditor=false"; 				
 	%>
-		<jsp:include page="<%=urlDescriptionsList%>"/>
+		<jsp:include page="<%=urlReferenceEditor%>"/>
 	<%
 				first = false;		
 			}
@@ -104,8 +108,9 @@ while (it.hasNext()) {
 				boolean withFrame = subview.isFrame() && 
 					(!view.isSection() || view.getMetaMembers().size() > 1);
 				lastWasEditor = !withFrame; 
-				boolean firstForSubdetail = first || withFrame; 
+				boolean firstForSubdetail = first || withFrame;
 				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
+				
 					if (first) { 						
 	%>		
 		<tr><td colspan="4">
@@ -118,35 +123,55 @@ while (it.hasNext()) {
 						request.getParameter("module"),
 						"label_" + propertyPrefix + ref.getName()); 
 					String label = view.getLabelFor(ref);
-	%>						 
+	%>					 
 		<%=style.getFrameHeaderStartDecoration() %>
 		<%=style.getFrameTitleStartDecoration() %>
 		<span id="<%=labelKey%>"><%=label%></span>
 		<%=style.getFrameTitleEndDecoration() %>
 		<%=style.getFrameHeaderEndDecoration() %>
 		<%=style.getFrameContentStartDecoration() %>						
-	<%			} // withFrame
-		%>	
-		<%-- Boolean.toString() for params is for working on WebSphere 6.0 --%>
-		<jsp:include page="detail.jsp"> 
-			<jsp:param name="viewObject" value="<%=viewName%>" />
-			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
-			<jsp:param name="first" value="<%=Boolean.toString(firstForSubdetail)%>" /> 
-			<jsp:param name="last" value="<%=Boolean.toString(!it.hasNext())%>" />
-		</jsp:include>			
-	<%			if (withFrame) {
+		<%		} // withFrame
+		
+				String urlReferenceEditor = null;
+				if (view.displayReferenceWithNotCompositeEditor(ref)) {
+					urlReferenceEditor = "reference.jsp" // in this way because websphere 6 has problems with jsp:param					
+						+ "?referenceKey=" + referenceKey
+						+ "&onlyEditor=true&frame=true&composite=false"		
+						+ "&first=" + first;				
+				}
+				else {
+					urlReferenceEditor = "reference.jsp" // in this way because websphere 6 has problems with jsp:param
+						+ "?referenceKey=" + referenceKey
+						+ "&onlyEditor=true&frame=true&composite=true"  
+						+ "&viewObject=" + viewName					
+						+ "&propertyPrefix=" + propertyInReferencePrefix 
+						+ "&first=" + firstForSubdetail  
+						+ "&last=" + !it.hasNext();
+				}			
+		%>  
+			<jsp:include page="<%=urlReferenceEditor%>"/>
+		<%		if (withFrame) {
 		%>			
-		<%=style.getFrameContentEndDecoration() %>
+		<%=style.getFrameContentEndDecoration() %>		
 		<%
 				} // withFrame
 			}
 			first = false; 
 		} else if (m instanceof MetaCollection) {
 			MetaCollection collection = (MetaCollection) m;			
-			String urlCollection = "collection.jsp";
 			boolean withFrame = !view.isSection() || view.getMetaMembers().size() > 1;
+			boolean variousCollectionInLine = view.isVariousCollectionsInSameLine((MetaMember) m);
+			boolean firstCollectionInLine = view.isFirstInLine((MetaMember) m);
+			String styleCollectionTogether = 
+				!variousCollectionInLine ? "" : 
+				(firstCollectionInLine ? "float: left; " : "float: right; ") + 
+				"overflow: auto; display: block ; border: 1px solid black; width: 49%; ";
+			if (!variousCollectionInLine || (variousCollectionInLine && firstCollectionInLine)){
+		
 		%>
 		<tr><td colspan="4">		
+		<%	} %>
+		<div style="<%=styleCollectionTogether %>">
 	<%			if (withFrame) {
 		%>	
 		<%=style.getFrameHeaderStartDecoration()%>
@@ -157,15 +182,16 @@ while (it.hasNext()) {
 		<%=style.getFrameContentStartDecoration()%>
 	<%			} // withFrame
 		%>	
-		<jsp:include page="<%=urlCollection%>"> 
+		<jsp:include page="collection.jsp"> 
 			<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
 			<jsp:param name="viewObject" value="<%=viewObject%>"/>			
 		</jsp:include>
 	<%			if (withFrame) {
 		%>
 		<%=style.getFrameContentEndDecoration()%>			
-	<%			} // withFrame
-		} else if (m instanceof MetaGroup) {
+	<%			} // withFrame%>
+		</div>
+	<%	} else if (m instanceof MetaGroup) {
 			MetaGroup group = (MetaGroup) m;			
 			String viewName = viewObject + "_" + group.getName();
 			View subview = view.getGroupView(group.getName());			
