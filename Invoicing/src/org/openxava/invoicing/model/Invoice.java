@@ -30,10 +30,11 @@ public class Invoice {
 	
 	// Getter and setter for customer
 	
-	@OneToMany(
-		mappedBy="invoice", 
-		cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
+	@ListProperties("product.number, product.description, quantity")	
 	private Collection<Detail> details;
+	
+	// Getter and setter for details
 	
 	@Stereotype("MEMO")
 	private String remarks;

@@ -13,7 +13,8 @@ public class NextNumberForYearCalculator implements ICalculator {
 			.createQuery("select max(i.number) from Invoice i " +
 					"where i.year = :year");
 		query.setParameter("year", year);		
-		return ((Integer) query.getSingleResult()) + 1;
+		Integer lastNumber = (Integer) query.getSingleResult();
+		return lastNumber == null?1:lastNumber + 1;
 	}
 
 	public int getYear() {

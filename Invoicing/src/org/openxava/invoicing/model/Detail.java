@@ -8,7 +8,7 @@ import org.openxava.annotations.*;
 @Entity
 public class Detail {
 	
-	@ManyToOne // Lazy fetching produces a fails on removing a detail from invoice
+	@ManyToOne // Lazy fetching fails on removing a detail from invoice
 	private Invoice invoice;
 	
 	@Id @GeneratedValue(generator="system-uuid") @Hidden 
@@ -20,6 +20,8 @@ public class Detail {
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=true)
 	private Product product;
+	
+	// Getters and setters
 	
 	public Invoice getInvoice() {
 		return invoice;
