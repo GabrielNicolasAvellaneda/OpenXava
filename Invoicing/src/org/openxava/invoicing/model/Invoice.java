@@ -15,7 +15,7 @@ import org.openxava.invoicing.calculators.*;
 	"details;" +
 	"remarks"
 )
- public class Invoice {
+public class Invoice {
 	
 	
 	@Id @Column(length=4)
@@ -36,6 +36,7 @@ import org.openxava.invoicing.calculators.*;
 	
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@ReferenceView("Simple")
 	private Customer customer;
 	
 	
