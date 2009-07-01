@@ -9,11 +9,19 @@ import org.openxava.invoicing.calculators.*;
 
 @Entity
 @IdClass(InvoiceKey.class)
-public class Invoice {
+@View(members=
+	"year, number, date;" +
+	"customer;" +
+	"details;" +
+	"remarks"
+)
+ public class Invoice {
+	
 	
 	@Id @Column(length=4)
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
+	
 	
 	@Id @Column(length=6)
 	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
@@ -21,20 +29,20 @@ public class Invoice {
 	)
 	private int number;
 	
+	
 	@Required
 	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date date;	
 	
+	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	private Customer customer;
 	
-	// Getter and setter for customer
 	
 	@OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
 	@ListProperties("product.number, product.description, quantity")	
 	private Collection<Detail> details;
 	
-	// Getter and setter for details
 	
 	@Stereotype("MEMO")
 	private String remarks;
