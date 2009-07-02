@@ -13,7 +13,19 @@ public class Product {
 	private int number;
 	
 	@Column(length=50) @Required
-	private String description; 
+	private String description;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@DescriptionsList
+	private Author author;
+	
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
 	
 	@ManyToOne(
 		fetch=FetchType.LAZY,
