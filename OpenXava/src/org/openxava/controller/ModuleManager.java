@@ -865,14 +865,16 @@ public class ModuleManager {
 	}
 	
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
-		if (!Is.emptyString(getNextModule())) return; // Another module is executing now 
+		if (!Is.emptyString(getNextModule())) return; // Another module is executing now
+		boolean formUpload = isFormUpload(); 
 		Iterator it = getMetaActionsBeforeEachRequest().iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();
 			if (Is.emptyString(a.getMode()) || a.getMode().equals(getModeName())) { 
 				executeAction(a, errors, messages, request); 
 			}
-		}			
+		}
+		setFormUpload(formUpload); 
 	}
 	
 	private void executeInitAction(HttpServletRequest request, Messages errors, Messages messages) {
@@ -886,6 +888,7 @@ public class ModuleManager {
 	
 	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
 		if (!Is.emptyString(getNextModule())) return; // Another module is executing now
+		boolean formUpload = isFormUpload(); 
 		Iterator it = getMetaActionsOnEachRequest().iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();			
@@ -893,6 +896,7 @@ public class ModuleManager {
 				executeAction(a, errors, messages, request);
 			}
 		}	
+		setFormUpload(formUpload); 
 	}
 	
 	private Collection getMetaActionsOnEachRequest() {		
