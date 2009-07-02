@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Uploading files fails with before-each-request and on-each-request actions.
 - Fix: @EmbeddedId with int/long and NUMERIC in DB fails.
 - Labels and messages translated to Swedish.
 - DateFormatter and javascript calendar adapted to work in Swedish.
