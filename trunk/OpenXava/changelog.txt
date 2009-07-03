@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: It's not possible to write in a full numeric field though the content is selected.
 - Fix: textAreaEditor (really any editor with frame=true) cannot be displayed side by side.
 - Fix: Uploading files fails with before-each-request and on-each-request actions.
 - Fix: @EmbeddedId with int/long and NUMERIC in DB fails.
