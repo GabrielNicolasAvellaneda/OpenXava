@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 @Entity
+@View(name="Simple", members="number, description")
 public class Product {
 	
 	@Id @Column(length=9)
@@ -15,9 +16,11 @@ public class Product {
 	@Column(length=50) @Required
 	private String description;
 	
+	/* tmp
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList
 	private Author author;
+	
 	
 	public void setAuthor(Author author) {
 		this.author = author;
@@ -26,6 +29,7 @@ public class Product {
 	public Author getAuthor() {
 		return author;
 	}
+	*/
 	
 	@ManyToOne(
 		fetch=FetchType.LAZY,
