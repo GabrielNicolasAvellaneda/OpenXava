@@ -170,10 +170,14 @@ if (metaModel.hasVersionProperty()) {
 			}
 			else {
 				String type = "type='" + pMapping.getCmpTypeName() + "'"; 
-</java> 	
+</java> 
 		&lt;property name="<expr>propertyName</expr>" access="field" <expr>type</expr> <expr>getSizeAttributes(prop)</expr>&gt;
-		 	&lt;column name="<expr>pMapping.getColumn()</expr>" <expr>getCheck(prop)</expr> /&gt;
-		&lt;/property&gt;		
+<java>				if (pMapping.hasFormula()) { </java> 
+		 	&lt;formula&gt;<expr>pMapping.getFormula()</expr>&lt;/formula&gt;
+<java>				} else { </java>  
+			&lt;column name="<expr>pMapping.getColumn()</expr>" <expr>getCheck(prop)</expr> /&gt;
+<java>				} </java>
+		&lt;/property&gt;				
 <java>
 			} 	
 		} 

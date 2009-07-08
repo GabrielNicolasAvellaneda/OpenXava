@@ -106,7 +106,7 @@ public class Product {
 		value=OnChangeProductUnitPriceAction.class
 	)
 	private BigDecimal unitPrice;
-	
+		
 	@Stereotype("MEMO")
 	private String remarks;
 

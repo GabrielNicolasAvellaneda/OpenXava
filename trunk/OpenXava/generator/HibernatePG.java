@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Dec 01 17:28:40 CET 2008
+ * @version Tue Jul 07 20:20:24 CEST 2009
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -237,17 +237,25 @@ private String getCheck(MetaProperty property) throws XavaException {
     			else {
     				String type = "type='" + pMapping.getCmpTypeName() + "'"; 
     
-    out.print(" \t\n\t\t<property name=\"");
+    out.print(" \n\t\t<property name=\"");
     out.print(propertyName);
     out.print("\" access=\"field\" ");
     out.print(type);
     out.print(" ");
     out.print(getSizeAttributes(prop));
-    out.print(">\n\t\t \t<column name=\"");
+    out.print(">");
+    				if (pMapping.hasFormula()) { 
+    out.print(" \n\t\t \t<formula>");
+    out.print(pMapping.getFormula());
+    out.print("</formula>");
+    				} else { 
+    out.print("  \n\t\t\t<column name=\"");
     out.print(pMapping.getColumn());
     out.print("\" ");
     out.print(getCheck(prop));
-    out.print(" />\n\t\t</property>");
+    out.print(" />");
+    				} 
+    out.print("\n\t\t</property>");
     
     			} 	
     		} 
@@ -523,7 +531,7 @@ private String getCheck(MetaProperty property) throws XavaException {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Dec 01 17:28:40 CET 2008", // date this file was generated
+        { "Tue Jul 07 20:20:24 CEST 2009", // date this file was generated
              "../OpenXava/generator/hibernate.xml", // input file
              "../OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

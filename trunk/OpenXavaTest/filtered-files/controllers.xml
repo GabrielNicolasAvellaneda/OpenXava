@@ -200,6 +200,11 @@
 	</controller>	
 	
 	<controller name="Product2">
+		<!-- To test uploading files with before-each-request and on-each-request actions -->
+		<action name="doNothing" hidden="true" 
+			before-each-request="true"
+			on-each-request="true"
+			class="org.openxava.test.actions.VoidAction"/>		
 		<action name="deactivateType" class="org.openxava.test.actions.DeactivateReferenceAction" mode="detail">			
 			<set property="reference" value="family"/>
 			<use-object name="xava_view"/>

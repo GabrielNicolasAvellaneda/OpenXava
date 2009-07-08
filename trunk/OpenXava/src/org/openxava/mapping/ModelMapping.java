@@ -119,7 +119,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 			propertyMapping);
 		modelProperties.add(propertyMapping.getProperty());
 		// To keep order
-		tableColumns.add(propertyMapping.getColumn());
+		tableColumns.add(propertyMapping.getColumn());				
+		if (propertyMapping.hasFormula() && !getMetaModel().isAnnotatedEJB3()) {			
+			propertyMapping.getMetaProperty().setReadOnly(true);				
+		}
 	}
 
 	public void addReferenceMapping(ReferenceMapping referenceMapping)
@@ -346,6 +349,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 			}
 			throw new ElementNotFoundException("property_mapping_not_found", modelProperty, getModelName());
 		}
+		if (propertyMapping.hasFormula()) return propertyMapping.getFormula(); 
 		return propertyMapping.getColumn();
 	}
 
@@ -385,7 +389,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return metaComponent;
 	}
 	public void setMetaComponent(MetaComponent componente) throws XavaException {
-		this.metaComponent = componente;		
+		this.metaComponent = componente;
 		setupDefaultConverters();
 	}
 

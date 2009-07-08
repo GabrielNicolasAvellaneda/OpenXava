@@ -44,7 +44,8 @@
 				<set property="familyNumber"/>
 			</default-value-calculator>
 			<validator class="org.openxava.test.validators.UnitPriceValidator"/>    
-		</property>	
+		</property>
+		<property name="unitPriceWithTax" stereotype="MONEY"/>
 		<property name="unitPriceInPesetas" type="java.math.BigDecimal" size="18">
 			<calculator class="org.openxava.test.calculators.EurosToPesetasCalculator">
 				<set property="euros" from="unitPrice"/>
@@ -111,6 +112,7 @@
 			subfamily;
 			warehouse, zoneOne;
 			unitPrice, unitPriceInPesetas;
+			unitPriceWithTax
 		</members>		
 				
 	</view>
@@ -254,7 +256,7 @@
 				
 	<tab>			
 
-		<properties>number, description, family.description, subfamily.description</properties>	
+		<properties>number, description, family.description, subfamily.description, unitPrice, unitPriceWithTax</properties>	
 
 	</tab>
 
@@ -286,7 +288,9 @@
 			/>			
 		</reference-mapping>							
 		<property-mapping
-			property="unitPrice" column="UNITPRICE"/>	
+			property="unitPrice" column="UNITPRICE"/>
+		<property-mapping
+			property="unitPriceWithTax" formula="UNITPRICE * 1.16"/>		
 		<reference-mapping reference="formula">
 			<reference-mapping-detail 
 				referenced-model-property="oid"

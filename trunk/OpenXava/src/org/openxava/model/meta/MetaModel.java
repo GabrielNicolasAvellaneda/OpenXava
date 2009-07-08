@@ -815,6 +815,23 @@ abstract public class MetaModel extends MetaElement {
 		return Collections.unmodifiableCollection(result);
 	}
 	
+	/**
+	 * @return Collection of <tt>String</tt>, not null and read only
+	 */
+	public Collection getOnlyReadWithFormulaPropertiesNames() throws XavaException {
+		Iterator it = getMetaProperties().iterator();
+		ArrayList result = new ArrayList();
+		while (it.hasNext()) {
+			MetaProperty p = (MetaProperty) it.next();
+			PropertyMapping pMapping =  p.getMapping();
+			if (p.isReadOnly() && pMapping != null && pMapping.hasFormula()) {
+				result.add(p.getName());
+			}
+		}
+		return Collections.unmodifiableCollection(result);
+	}
+	
+	
 	
 	/**
 	 * @return Collection of <tt>String</tt>, not null and read only

@@ -43,7 +43,8 @@ import org.openxava.test.validators.*;
 		"family;" +
 		"subfamily;" +
 		"warehouse, zoneOne;" +
-		"unitPrice, unitPriceInPesetas;"		
+		"unitPrice, unitPriceInPesetas;" +
+		"unitPriceWithTax" 
 	),
 	@View( name="ColorWithFrame", members= 
 		"number;" +
@@ -70,12 +71,12 @@ import org.openxava.test.validators.*;
 		"family;" +
 		"subfamily;" +
 		"formula;" +
-		"unitPrice, unitPriceInPesetas;"
+		"unitPrice, unitPriceInPesetas;" 
 	),
 	@View(name="SimpleWithFamily", members="number, description, unitPrice; family"),
 	@View(name="OnlySoftware")
 })
-@Tab(properties="number, description, family.description, subfamily.description")
+@Tab(properties="number, description, family.description, subfamily.description, unitPrice, unitPriceWithTax") 
 
 public class Product2 {
 	
@@ -136,6 +137,12 @@ public class Product2 {
 	)
 	@PropertyValidator(UnitPriceValidator.class)
 	private BigDecimal unitPrice;
+	
+	@org.hibernate.annotations.Formula("UNITPRICE * 1.16")
+	private BigDecimal unitPriceWithTax;
+	public BigDecimal getUnitPriceWithTax() {
+		return unitPriceWithTax;
+	}	
 	
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="FORMULA_OID")
 	@ReferenceView("Simple") 

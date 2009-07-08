@@ -16,9 +16,10 @@ public class MappingParser extends XmlElementsNames {
 
 	
 	
-	public static EntityMapping parseEntityMapping(Node n, int lang) throws XavaException {		
+	public static EntityMapping parseEntityMapping(MetaComponent component, Node n, int lang) throws XavaException { 		
 		Element el = (Element) n;
 		EntityMapping e = new EntityMapping();
+		e.setMetaComponent(component); 
 		e.setTable(el.getAttribute(xtable[lang]));
 		fillPropertiesMappings(el, e, lang);
 		fillMutiplePropertyMapping(el, e, lang);
@@ -44,6 +45,7 @@ public class MappingParser extends XmlElementsNames {
 		p.setProperty(el.getAttribute(xmodel_property[lang]));
 		p.setColumn(el.getAttribute(xtable_column[lang]));
 		p.setCmpTypeName(el.getAttribute(xcmp_type[lang]));
+		p.setFormula(el.getAttribute(xformula[lang])); 
 		fillConverter(el, p, lang);		
 		return p;
 	}

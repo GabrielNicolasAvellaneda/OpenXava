@@ -684,7 +684,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		int number)
 		throws CreateException, ValidationException, XavaException, RemoteException {						
 		try {			
-			//removeReadOnlyFields(metaEjb, values); // not remove the read only fields because it maybe needed initialized on create
+			//removeReadOnlyFields(metaModel, values); // not remove the read only fields because it maybe needed initialized on create
+			removeReadOnlyWithFormulaFields(metaModel, values); 
 			removeCalculatedFields(metaModel, values); 			
 			Messages validationErrors = new Messages(); 
 			validateExistRequired(validationErrors, metaModel, values);						
@@ -1134,6 +1135,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			values.remove(toRemove.next());
 		}
 	}
+	
+	private void removeReadOnlyWithFormulaFields(MetaModel metaModel, Map values) 
+		throws XavaException {
+		Iterator toRemove = metaModel.getOnlyReadWithFormulaPropertiesNames().iterator();
+		while (toRemove.hasNext()) {
+			values.remove(toRemove.next());
+		}
+	}
+	
 		
 	private void removeCalculatedFields(MetaModel metaModel, Map values)
 		throws XavaException {

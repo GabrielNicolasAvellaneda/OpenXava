@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- @Formula annotation from Hibernate supported for detail and list mode.
+- New attribute formula for property-mapping in XML components to specify a property calcuted by SQL.
+- Attribute column in property-mapping of XML components now is optional. Property name is assumed.
 - Fix: It's not possible to write in a full numeric field though the content is selected.
 - Fix: textAreaEditor (really any editor with frame=true) cannot be displayed side by side.
 - Fix: Uploading files fails with before-each-request and on-each-request actions.

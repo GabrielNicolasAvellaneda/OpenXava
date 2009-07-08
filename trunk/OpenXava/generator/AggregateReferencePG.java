@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Dec 01 17:28:35 CET 2008
+ * @version Tue Jul 07 20:20:19 CEST 2009
  */
 public class AggregateReferencePG {
     Properties properties = new Properties();
@@ -237,7 +237,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Dec 01 17:28:35 CET 2008", // date this file was generated
+        { "Tue Jul 07 20:20:19 CEST 2009", // date this file was generated
              "../OpenXava/generator/aggregateReference.xml", // input file
              "../OpenXava/generator/AggregateReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
