@@ -40,12 +40,12 @@ public class Invoice {
 	private Customer customer;
 	
 	
-	@OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
-	@ListProperties("product.number, product.description, quantity")	
+	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
+	@ListProperties("product.number, product.description, quantity")
 	private Collection<Detail> details;
 	
 	
-	@Stereotype("MEMO")
+	@Stereotype("MEMO") 
 	private String remarks;
 	
 	// Getters and setters
