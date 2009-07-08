@@ -189,5 +189,6 @@ public class XmlElementsNames {
 	protected final static String [] xfor_references= { "for-references", "para-referencias" };
 	protected final static String [] xfor_collection= { "for-collection", "para-coleccion" }; 
 	protected final static String [] xfor_collections= { "for-collections", "para-colecciones" }; 
+	protected final static String [] xformula= { "formula", "formula" };
 	
 }

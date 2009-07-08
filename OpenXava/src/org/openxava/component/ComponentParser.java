@@ -80,6 +80,7 @@ class ComponentParser extends ParserBase {
 			String aggregateName = (String) it.next();
 			AggregateMapping aggregateMapping = new AggregateMapping();
 			aggregateMapping.setModelName(aggregateName);
+			aggregateMapping.setMetaComponent(component); 
 			fillDefaultMapping(aggregateMapping, component.getMetaAggregate(aggregateName));
 			component.addAggregateMapping(aggregateMapping);
 		}		
@@ -129,10 +130,11 @@ class ComponentParser extends ParserBase {
 		}
 		
 		if (c == 1) {
-			component.setEntityMapping(MappingParser.parseEntityMapping(l.item(0), lang));
+			component.setEntityMapping(MappingParser.parseEntityMapping(this.component, l.item(0), lang)); 
 		}	
 		else { // It's 0. Has no explicit mapping
 			EntityMapping defaultMapping = new EntityMapping();
+			defaultMapping.setMetaComponent(component); 
 			fillDefaultMapping(defaultMapping, component.getMetaEntity());
 			component.setEntityMapping(defaultMapping);
 		}

@@ -25,14 +25,23 @@ public class PropertyMapping extends MetaSetsContainer {
 	private boolean multpleConverterCreated = false;
 	private String cmpTypeName;
 	private ModelMapping modelMapping;
+	private String formula; 
 	
 	
+	public String getFormula() {
+		return formula;
+	}
+
+	public void setFormula(String formula) {
+		this.formula = formula;
+	}
+
 	public PropertyMapping(ModelMapping parent) {
 		this.modelMapping = parent;
 	}
 	
 	public String getColumn() {
-		return column;
+		return Is.emptyString(column)?property:column;
 	}
 	public void setColumn(String tableColumn) {
 		this.column = tableColumn;
@@ -186,7 +195,7 @@ public class PropertyMapping extends MetaSetsContainer {
 		this.multipleConverterClassName = string;
 	}
 	
-	private MetaProperty getMetaProperty() throws XavaException {
+	MetaProperty getMetaProperty() throws XavaException { 
 		String property = Strings.change(getProperty(), "_", ".");
 		return modelMapping.getMetaModel().getMetaProperty(property);
 	}
@@ -220,6 +229,10 @@ public class PropertyMapping extends MetaSetsContainer {
 			if ("[B".equals(cmpType)) cmpType = "byte[]";
 			setCmpTypeName(cmpType);
 		}					
+	}
+
+	public boolean hasFormula() { 
+		return !Is.emptyString(formula);
 	}
 	
 }

@@ -11,8 +11,9 @@ import javax.persistence.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.annotations.Columns;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 import org.hibernate.usertype.CompositeUserType;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
@@ -594,23 +595,7 @@ public class AnnotatedClassParser {
 	
 		if (field == null && pd.getWriteMethod() == null) {
 			// It's calculated
-			property.setReadOnly(true);
-			MetaCalculator metaCalculator = new MetaCalculator();
-			metaCalculator.setClassName(org.openxava.calculators.ModelPropertyCalculator.class.getName());
-			MetaSet metaSet = new MetaSet();
-			metaSet.setPropertyName("property");
-			metaSet.setValue(property.getName());
-			metaCalculator.addMetaSet(metaSet);
-			if (pd.getReadMethod().isAnnotationPresent(Depends.class)) {
-				Depends depends = pd.getReadMethod().getAnnotation(Depends.class);
-				for (Object propertyFrom: Strings.toCollection(depends.value())) {
-					MetaSet metaSetPropertyFrom = new MetaSet();
-					metaSetPropertyFrom.setPropertyName("valueOfDependsProperty");
-					metaSetPropertyFrom.setPropertyNameFrom((String) propertyFrom);
-					metaCalculator.addMetaSet(metaSetPropertyFrom);
-				}
-			}			
-			property.setMetaCalculator(metaCalculator);
+			setCalculated(pd, property); 
 		}
 		
 		
@@ -631,6 +616,18 @@ public class AnnotatedClassParser {
 			if (Is.emptyString(pMapping.getColumn())) {
 				pMapping.setColumn(pd.getName());
 			}		
+			// Formula 
+			if (field != null && field.isAnnotationPresent(Formula.class)) {
+				Formula formula = field.getAnnotation(Formula.class);
+				pMapping.setFormula(formula.value());
+			}
+			else if (pd.getReadMethod().isAnnotationPresent(Formula.class)) {
+				Formula formula = pd.getReadMethod().getAnnotation(Formula.class);
+				pMapping.setFormula(formula.value());
+			}			
+			if (pMapping.hasFormula() && pd.getWriteMethod() == null) {
+				property.setReadOnly(true);
+			}
 			// Converter (from Hibernate Type)
 			if (field != null && field.isAnnotationPresent(Type.class)) {				
 				Type type = field.getAnnotation(Type.class);
@@ -650,6 +647,27 @@ public class AnnotatedClassParser {
 			
 			mapping.addPropertyMapping(pMapping);
 		}		
+	}
+
+
+	private void setCalculated(PropertyDescriptor pd, MetaProperty property) {
+		property.setReadOnly(true);
+		MetaCalculator metaCalculator = new MetaCalculator();
+		metaCalculator.setClassName(org.openxava.calculators.ModelPropertyCalculator.class.getName());
+		MetaSet metaSet = new MetaSet();
+		metaSet.setPropertyName("property");
+		metaSet.setValue(property.getName());
+		metaCalculator.addMetaSet(metaSet);
+		if (pd.getReadMethod().isAnnotationPresent(Depends.class)) {
+			Depends depends = pd.getReadMethod().getAnnotation(Depends.class);
+			for (Object propertyFrom: Strings.toCollection(depends.value())) {
+				MetaSet metaSetPropertyFrom = new MetaSet();
+				metaSetPropertyFrom.setPropertyName("valueOfDependsProperty");
+				metaSetPropertyFrom.setPropertyNameFrom((String) propertyFrom);
+				metaCalculator.addMetaSet(metaSetPropertyFrom);
+			}
+		}			
+		property.setMetaCalculator(metaCalculator);
 	}
 
 

@@ -17,6 +17,27 @@ public class Product2Test extends ModuleTestBase {
 		super(testName, "Product2");		
 	}
 	
+	public void testFormula() throws Exception {
+		assertValueInList(0, "unitPrice", "11.00");
+		assertValueInList(0, "unitPriceWithTax", "12.76");
+		
+		assertListRowCount(7); // We rely in that there are 7 products, 
+								// you can adapt this number if needed 
+		setConditionValues(new String [] {"", "", "", "", "", "12.76"});
+		execute("List.filter");
+		
+		assertListRowCount(2); // We rely in that there are 2 products 
+				// with 11.00 as price, you can adapt this number if needed
+		assertValueInList(0, "unitPriceWithTax", "12.76");
+		assertValueInList(1, "unitPriceWithTax", "12.76");
+		
+		execute("Mode.detailAndFirst");
+		assertValue("unitPrice", "11.00");
+		assertValue("unitPriceWithTax", "12.76");
+		assertEditable("unitPrice");
+		assertNoEditable("unitPriceWithTax");
+	}
+	
 	public void testEditorForReferenceInEditorsXML() throws Exception {
 		execute("Mode.detailAndFirst");
 		setValue("color.number", "1");

@@ -14,6 +14,7 @@
 <%@page import="org.openxava.web.Ids"%>
 <%@page import="org.openxava.model.meta.MetaMember"%>
 
+<jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
@@ -79,7 +80,8 @@ while (it.hasNext()) {
 	%>					 
 		<%=style.getFrameHeaderStartDecoration() %>
 		<%=style.getFrameTitleStartDecoration() %>
-		<span id="<%=labelKey%>"><%=label%></span>
+		<span id="<%=labelKey%>"><%=label%></span>		
+		<%@ include file="editorIcons.jsp"%>		
 		<%=style.getFrameTitleEndDecoration() %>
 		<%=style.getFrameHeaderEndDecoration() %>
 		<%=style.getFrameContentStartDecoration() %>						

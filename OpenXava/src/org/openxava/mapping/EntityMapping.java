@@ -18,7 +18,7 @@ public class EntityMapping extends ModelMapping {
 		return getMetaModel().getName();
 	}
 
-	public MetaModel getMetaModel() throws XavaException {
+	public MetaModel getMetaModel() throws XavaException {		
 		return getMetaComponent().getMetaEntity();
 	}
 	

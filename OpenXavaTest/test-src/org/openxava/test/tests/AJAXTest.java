@@ -343,6 +343,7 @@ public class AJAXTest extends ModuleTestBase {
 				"reference_editor_subfamily, " +
 				"editor_photos, " +
 				"editor_unitPriceInPesetas, " +
+				"editor_unitPriceWithTax, " +
 				"reference_editor_warehouse, " +
 				"editor_description, " +
 				"editor_number, " +

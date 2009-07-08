@@ -372,7 +372,8 @@
 <!ELEMENT mapeo-propiedad (conversor?)>
 <!ATTLIST mapeo-propiedad
  propiedad-modelo CDATA #REQUIRED
- columna-tabla CDATA #REQUIRED
+ columna-tabla CDATA #IMPLIED
+ formula CDATE #IMPLIED
  tipo-cmp CDATA #IMPLIED 
 >
 
