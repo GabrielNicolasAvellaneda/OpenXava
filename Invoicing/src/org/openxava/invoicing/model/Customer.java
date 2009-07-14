@@ -4,10 +4,10 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 @Entity
- @View(name="Simple", 
+@View(name="Simple", 
 	members="number, name"
- )
- public class Customer {
+)
+public class Customer {
 	
 	@Id 
 	@Column(length=6)
