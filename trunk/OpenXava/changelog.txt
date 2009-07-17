@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- editors.xml: add 'formatter-list'. Default apply MemoFormatter at all properties with stereotype MEMO.
 - Labels and messages translated to Serbian.
 - @Formula annotation from Hibernate supported for detail and list mode.
 - New attribute formula for property-mapping in XML components to specify a property calcuted by SQL.

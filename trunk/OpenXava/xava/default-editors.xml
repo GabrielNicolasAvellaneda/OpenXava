@@ -95,6 +95,7 @@
 	</editor>
 
 	<editor name="TextArea" url="textAreaEditor.jsp" frame="true">
+		<formatter-list class="org.openxava.formatters.MemoFormatter" />
 		<for-stereotype stereotype="TEXTO_GRANDE" />
 		<for-stereotype stereotype="MEMO" />
 		<for-stereotype stereotype="TEXT_AREA" />
