@@ -81,7 +81,13 @@ public class WebEditors {
 	}
 		
 	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName) throws XavaException {
-		Object result = formatToStringOrArray(request, p, object, errors, viewName);
+		Object result = formatToStringOrArray(request, p, object, errors, viewName, false);
+		if (result instanceof String []) return arrayToString((String []) result);		
+		return (String) result;
+	}
+	
+	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException {
+		Object result = formatToStringOrArray(request, p, object, errors, viewName, fromList);
 		if (result instanceof String []) return arrayToString((String []) result);		
 		return (String) result;
 	}
@@ -99,10 +105,13 @@ public class WebEditors {
 	/** 
 	 * @return If has a multiple converter return a array of string else return a string
 	 */
-	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName) throws XavaException { 
+	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException { 
 		try {
 			MetaEditor ed = getMetaEditorFor(p, viewName); 			
-			if (ed.hasFormatter()) {				
+			if (fromList && !Is.empty(ed.getFormatterListClassName())){
+				return ed.getFormatterList().format(request, object);
+			}
+			else if (ed.hasFormatter()) {				
 				return ed.getFormatter().format(request, object);
 			}
 			else if (ed.hasMultipleValuesFormatter()) { 

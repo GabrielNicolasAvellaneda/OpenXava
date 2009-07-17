@@ -34,6 +34,16 @@ public class MetaEditor {
 	private boolean alwaysReload = false;
 	private boolean composite = false; 
 
+	private String formatterListClassName;
+
+	public String getFormatterListClassName() {
+		return formatterListClassName;
+	}
+
+	public void setFormatterListClassName(String formatterListClassName) {
+		this.formatterListClassName = formatterListClassName;
+	}
+
 	
 	public void _addFormatterMetaSet(MetaSet metaSet) {
 		if (formatterMetaSets == null) formatterMetaSets = new ArrayList();
@@ -112,32 +122,37 @@ public class MetaEditor {
 	}
 
 	public boolean hasFormatter() throws XavaException {				
-		return !Is.emptyString(formatterClassName) && getFormatterObject() instanceof IFormatter;
+		return !Is.emptyString(formatterClassName) && getFormatterObject(formatterClassName) instanceof IFormatter;
 	}
 	
 	public boolean hasMultipleValuesFormatter() throws XavaException { 
-		return !Is.emptyString(formatterClassName) && getFormatterObject() instanceof IMultipleValuesFormatter;
+		return !Is.emptyString(formatterClassName) && getFormatterObject(formatterClassName) instanceof IMultipleValuesFormatter;
 	}
 	
 	public IFormatter getFormatter() throws XavaException { 
-		return (IFormatter) getFormatterObject();
+		return (IFormatter) getFormatterObject(formatterClassName);
+	}
+	
+	public IFormatter getFormatterList() throws XavaException { 
+		return (IFormatter) getFormatterObject(formatterListClassName);
 	}
 	
 	public IMultipleValuesFormatter getMultipleValuesFormatter() throws XavaException {  
-		return (IMultipleValuesFormatter) getFormatterObject();
+		return (IMultipleValuesFormatter) getFormatterObject(formatterClassName);
 	}
 	
 	/**
 	 * @return Not null
 	 * @throws XavaException For example, if fomartterClassName is empty string
 	 */
-	private Object getFormatterObject() throws XavaException { 
+	
+	private Object getFormatterObject(String className) throws XavaException{
 		if (formatter == null) {
-			if (Is.emptyString(formatterClassName)) {
+			if (Is.emptyString(className)) {
 				throw new XavaException("no_formatter_class_error");
 			}
 			try {
-				formatter =  Class.forName(formatterClassName).newInstance();
+				formatter =  Class.forName(className).newInstance();
 				if (formatterMetaSets != null) {
 					PropertiesManager pm = new PropertiesManager(formatter);
 					for (Iterator it = formatterMetaSets.iterator(); it.hasNext(); ) {
@@ -146,12 +161,12 @@ public class MetaEditor {
 					}
 				}				
 				if (!(formatter instanceof IFormatter || formatter instanceof IMultipleValuesFormatter)) {
-					throw new XavaException("implements_required", formatterClassName, IFormatter.class.getName() + " or " + IMultipleValuesFormatter.class.getName());
+					throw new XavaException("implements_required", className, IFormatter.class.getName() + " or " + IMultipleValuesFormatter.class.getName());
 				}
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
-				throw new XavaException("create_formatter_error", formatterClassName);
+				throw new XavaException("create_formatter_error", className);
 			}
 		}
 		return formatter;

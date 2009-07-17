@@ -51,10 +51,12 @@ public class EditorsParser extends ParserBase {
 		fillProperties(editor, el);				
 		editor.setFormatterClassName(getFormatterClass(el));
 		editor.setFormatterFromType(getFormatterFromType(el));
+		editor.setFormatterListClassName(getFormatterListClassName(el));
 		if (editor.isFormatterFromType() && !Is.emptyString(editor.getFormatterClassName())) {
 			throw new XavaException("formatter_class_and_from_type_not_compatible");
 		}
 		fillSets(el, editor);
+		
 		MetaWebEditors.addMetaEditor(editor);
 		addEditorsForType(editor, el);
 		addEditorsForStereotype(editor, el);
@@ -82,7 +84,18 @@ public class EditorsParser extends ParserBase {
 		return a;
 	}
 	
-	
+	private String getFormatterListClassName(Element n) throws XavaException {
+		NodeList l = n.getElementsByTagName(xformatter_list[lang]);
+		int c = l.getLength();
+		if (c > 1) {
+			throw new XavaException("no_more_1_formatter_list");	// tmp internacionalizar
+		}
+		if (c < 1) return null;
+		Element el = (Element) l.item(0);					
+		return  el.getAttribute(xclass[lang]);
+	}	
+
+
 	private String getFormatterClass(Element n) throws XavaException {
 		NodeList l = n.getElementsByTagName(xformatter[lang]);
 		int c = l.getLength();
