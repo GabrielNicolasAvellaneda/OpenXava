@@ -44,9 +44,7 @@ public class MappingParser extends XmlElementsNames {
 		PropertyMapping p = new PropertyMapping(parent);
 		p.setProperty(el.getAttribute(xmodel_property[lang]));
 		p.setColumn(el.getAttribute(xtable_column[lang]));
-		// tmp ini
 		if (Is.emptyString(p.getColumn())) p.setColumn(p.getProperty());
-		// tmp fin
 		p.setCmpTypeName(el.getAttribute(xcmp_type[lang]));
 		p.setFormula(el.getAttribute(xformula[lang])); 
 		fillConverter(el, p, lang);		

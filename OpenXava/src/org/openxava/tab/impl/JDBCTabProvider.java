@@ -223,7 +223,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		StringBuffer message =
 			new StringBuffer("[JDBCTabProvider.nextBlock] ");
 		message.append(XavaResources.getString("executing_select", select));
-
+		
 		for (int i = 0; i < key.length; i++) {
 			ps.setObject(i + 1, key[i]);
 			message.append(key[i]);

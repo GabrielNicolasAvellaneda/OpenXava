@@ -27,8 +27,8 @@ public class MetaReference extends MetaMember implements Cloneable {
 	private boolean searchKey;
 	private MetaCalculator metaCalculatorDefaultValue;
 	private ICalculator defaultValueCalculator;
-	
-	
+	private boolean explicitAggregate; 
+	private boolean aggregate; 
 	
 	public MetaCollection getMetaCollectionFromReferencedModel() throws XavaException { 				
 		Iterator it = getMetaModelReferenced().getMetaCollections().iterator();
@@ -109,7 +109,12 @@ public class MetaReference extends MetaMember implements Cloneable {
 	}
 	
 	public boolean isAggregate() throws XavaException {
+		if (explicitAggregate) return aggregate;
 		return getMetaModelReferenced() instanceof MetaAggregate;
+	}
+	public void setAggregate(boolean aggregate) {
+		this.explicitAggregate = true;
+		this.aggregate = aggregate;
 	}
 			
 	public String getLabel() {

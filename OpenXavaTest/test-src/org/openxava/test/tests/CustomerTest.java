@@ -11,7 +11,6 @@ import org.openxava.tests.ModuleTestBase;
 import org.openxava.util.Is;
 import org.openxava.util.Strings;
 
-import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
