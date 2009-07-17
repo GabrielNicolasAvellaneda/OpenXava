@@ -289,18 +289,14 @@ abstract public class ModelMapping implements java.io.Serializable {
 		throws XavaException {
 		PropertyMapping propertyMapping =
 			(PropertyMapping) propertyMappings.get(modelProperty);
-		System.out.println("[ModelMapping.getTableColumn(" + modelProperty + ")] propertyMapping=" + propertyMapping); //  tmp
 		if (propertyMapping == null) {
 			int idx = modelProperty.indexOf('.');
 			if (idx >= 0) {
 				String referenceName = modelProperty.substring(0, idx);
 				String propertyName = modelProperty.substring(idx + 1);
-				System.out.println("[ModelMapping.getTableColumn(" + modelProperty + ")] referenceName=" + referenceName); //  tmp
-				System.out.println("[ModelMapping.getTableColumn(" + modelProperty + ")] propertyName=" + propertyName); //  tmp
 				if (getMetaModel().getMetaReference(referenceName).isAggregate()  &&
 					!Strings.firstUpper(referenceName).equals(getMetaModel().getContainerModelName())  	
 				) {
-					System.out.println("[ModelMapping.getTableColumn(" + modelProperty + ")] IX AGREGATUM"); //  tmp
 					propertyMapping =
 						(PropertyMapping) propertyMappings.get(
 							referenceName + "_" + propertyName);
@@ -324,8 +320,6 @@ abstract public class ModelMapping implements java.io.Serializable {
 				if (referenceMapping
 					.hasColumnForReferencedModelProperty(propertyName)) {					
 					if (qualifyReferenceMappingColumn) {
-						System.out.println("[ModelMapping.getTableColumn] A1"); //  tmp
-						System.out.println("[ModelMapping.getTableColumn] referenceMapping.getColumnForReferencedModelProperty(" + propertyName + ")=" + referenceMapping.getColumnForReferencedModelProperty(propertyName)); //  tmp
 						return getTableToQualifyColumn() 
 							+ "."
 							+ referenceMapping
@@ -333,7 +327,6 @@ abstract public class ModelMapping implements java.io.Serializable {
 								propertyName);
 					}
 					else {
-						System.out.println("[ModelMapping.getTableColumn] A2"); //  tmp
 						return referenceMapping
 							.getColumnForReferencedModelProperty(
 							propertyName);
@@ -346,12 +339,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 					boolean secondLevel = propertyName.indexOf('.') >= 0;
 					String columnName =
 						referencedMapping.getTableColumn(propertyName, secondLevel);
-					if (qualifyReferenceMappingColumn && !secondLevel) {
-						System.out.println("[ModelMapping.getTableColumn] B1"); //  tmp
+					if (qualifyReferenceMappingColumn && !secondLevel) {						
 						return tableName + "." + columnName;
 					}
-					else {
-						System.out.println("[ModelMapping.getTableColumn] B2"); //  tmp
+					else {						
 						return columnName;
 					}
 				}

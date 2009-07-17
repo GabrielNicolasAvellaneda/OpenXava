@@ -73,7 +73,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(ColorWithGroupsAndChangeControllersTest.class));
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(CompositeTest.class));
-		}
+		}		
 		suite.addTest(new TestSuite(CustomerContactPersonAsAggregate3LevelsTest.class));
 		suite.addTest(new TestSuite(CustomerContactPersonTest.class));
 		suite.addTest(new TestSuite(CustomerNewOnInitInheritedTest.class));
@@ -200,7 +200,10 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(SubfamilyTest.class));		
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(TaskTest.class));
-		}		
+		}	
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(ToDoListTest.class));
+		}
 		suite.addTest(new TestSuite(TransportCharge2Test.class));		
 		suite.addTest(new TestSuite(TransportChargeTest.class));
 		suite.addTest(new TestSuite(TransportChargeWithDistanceTest.class));		

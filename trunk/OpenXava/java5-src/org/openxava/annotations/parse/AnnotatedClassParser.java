@@ -1619,6 +1619,7 @@ public class AnnotatedClassParser {
 		else if (element.isAnnotationPresent(ManyToOne.class)) {
 			ManyToOne manyToOne = element.getAnnotation(ManyToOne.class);
 			ref.setRequired(!manyToOne.optional());
+			ref.setAggregate(false); 
 		}
 		
 		// Default value calculator
