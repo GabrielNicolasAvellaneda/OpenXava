@@ -41,7 +41,7 @@ public class PropertyMapping extends MetaSetsContainer {
 	}
 	
 	public String getColumn() {
-		return Is.emptyString(column)?property:column;
+		return column;
 	}
 	public void setColumn(String tableColumn) {
 		this.column = tableColumn;
