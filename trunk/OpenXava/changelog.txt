@@ -1,7 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
-- editors.xml: add 'formatter-list'. Default apply MemoFormatter at all properties with stereotype MEMO.
+- Fix: Row selection in collection are not cleared when main object changed.
+- Added assertCollectionNotEmpty() method to ModuleTestBase.
+- Added 'list-formatter' to <formatter /> in editors.xml. 
+- New MemoFormatter applied by default to MEMO stereotype.
+- Fix: Reference (@ManyToOne) to an element of a collection with cascade ALL or REMOVE fails when used in a list.
 - Labels and messages translated to Serbian.
 - @Formula annotation from Hibernate supported for detail and list mode.
 - New attribute formula for property-mapping in XML components to specify a property calcuted by SQL.

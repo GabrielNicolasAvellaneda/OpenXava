@@ -1514,6 +1514,10 @@ public class ModuleTestBase extends TestCase {
 	protected void assertListNotEmpty() throws Exception {
 		assertTrue(XavaResources.getString("minimum_1_elements_in_list"), getListRowCount() > 0);
 	}
+	
+	protected void assertCollectionNotEmpty(String collection) throws Exception { 
+		assertTrue(XavaResources.getString("minimum_1_elements_in_collection", collection), getCollectionRowCount(collection) > 0);
+	}
 		
 	protected static String getPort() { 
 		if (port == null) {
