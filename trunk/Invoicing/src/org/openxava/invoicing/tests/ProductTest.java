@@ -28,8 +28,12 @@ public class ProductTest extends ModuleTestBase {
 	}
 	
 	public void testRemoveFromList() throws Exception {
+		
 		setConditionValues(new String[] { "", "JUNIT" });
-		setConditionComparators(new String[] { "=", "contains_comparator" });
+		
+		setConditionComparators(
+			new String[] { "=", "contains_comparator" });
+
 		execute("List.filter");
 		assertListRowCount(2);
 		checkRow(1);
@@ -37,7 +41,7 @@ public class ProductTest extends ModuleTestBase {
 		assertListRowCount(1);
 	}
 	
-	public void testChagePrice() throws Exception {
+	public void testChangePrice() throws Exception {
 		// Searching the product1
 		execute("CRUD.new");
 		setValue("number", Integer.toString(product1.getNumber()));
@@ -97,5 +101,5 @@ public class ProductTest extends ModuleTestBase {
 			getManager().remove(getManager().merge(entity));
 		}
 	}		
-			
+	
 }
