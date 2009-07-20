@@ -49,6 +49,21 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
+	public void testCollectionSelectionIsCleared() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Sections.change", "activeSection=1");
+		assertCollectionNotEmpty("details");
+		checkRowCollection("details", 0);
+		execute("Sections.change", "activeSection=3");
+		assertCollectionNotEmpty("deliveries");
+		checkRowCollection("deliveries", 0);
+		execute("Navigation.next");
+		assertCollectionNotEmpty("deliveries");
+		assertRowCollectionUnchecked("deliveries", 0);
+		execute("Sections.change", "activeSection=1");
+		assertRowCollectionUnchecked("details", 0);
+	}
+	
 	public void testGenerateCustomPdfAndPrepareNewAfter() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Invoice.printPdfNewAfter");

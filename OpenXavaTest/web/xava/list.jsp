@@ -270,7 +270,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
 		}
 		else {
-			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName());
+			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName(), true);
 		}
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>"><%=fvalue%>&nbsp;</td>

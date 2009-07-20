@@ -491,6 +491,7 @@ public class View implements java.io.Serializable {
 			}	
 		}	
 		listSelected = null;
+		if (collectionTab != null) collectionTab.clearSelected(); 		
 	}
 
 	/**

@@ -634,8 +634,8 @@ public class Tab implements java.io.Serializable {
 	public void deselectAll() {
 		selected = new int[0];
 	}
-		
-	public boolean isSelected(int row) {
+	
+	public boolean isSelected(int row) {		
 		if (selected == null || selected.length == 0) return false;
 		return Arrays.binarySearch(selected, row) >= 0;
 	}
@@ -1309,6 +1309,10 @@ public class Tab implements java.io.Serializable {
 
 	public void setAddColumnsPageRowCount(int addColumnsPageRowCount) {
 		this.addColumnsPageRowCount = addColumnsPageRowCount;
+	}
+
+	public void clearSelected() { 
+		selected = null;
 	}
 	
 
