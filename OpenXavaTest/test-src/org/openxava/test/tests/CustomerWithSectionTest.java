@@ -47,7 +47,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public CustomerWithSectionTest(String testName) {
 		super(testName, "CustomerWithSection", true);		
 	}
-			
+				
 	public void testTELEPHONE_EMAIL_WEBURLstereotypes() throws Exception {
 		execute("Mode.detailAndFirst");
 		setValue("telephone", "asf");
@@ -174,11 +174,54 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValue("address.street", "C/ DOCTOR PESSET");
 	}
 	
+	public void testAddingToManyToManyCollectionFromANewObject() throws Exception { 
+		execute("CRUD.new");
+		
+		// The minimum data to save a customer
+		setValue("number", "66");
+		setValue("name", "JUNIT Customer");
+		setValue("address.street", "JUNIT Street");
+		setValue("address.zipCode", "46540");
+		setValue("address.city", "EL PUIG");
+		setValue("address.state.id", "CA");
+		
+		// Trying to add a state
+		execute("Sections.change", "activeSection=1");
+		assertCollectionRowCount("states", 0);
+
+		assertAddingStates();		
+		assertNoErrors();
+		assertNoEditable("number");
+		
+		execute("CRUD.delete");		
+		assertNoErrors();		
+	}
+
+	
 	public void testManyToManyCollection() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
 		assertCollectionRowCount("states", 0);
 		
+		assertAddingStates();
+		
+		// Using Edit + Remove
+		execute("Collection.edit", "row=0,viewObject=xava_view_section1_states");
+		execute("Collection.remove", "viewObject=xava_view_section1_states");
+		assertCollectionRowCount("states", 1);
+		// Using Check row + Remove selected
+		checkRowCollection("states", 0);
+		execute("Collection.removeSelected", "viewObject=xava_view_section1_states");
+		assertNoErrors();
+		assertCollectionRowCount("states", 0);
+		
+		// Verifying if that other part is not removed
+		changeModule("StateHibernate");
+		assertValueInList(0, 0, "AK");
+		assertValueInList(4, 0, "CA");		
+	}
+
+	private void assertAddingStates() throws Exception {
 		if (isOX3()) {
 			// In OX3 ManyToMany is supported, then we have a collection of entities
 			execute("Collection.add", "viewObject=xava_view_section1_states");
@@ -205,20 +248,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInCollection("states", 0, 1, "ALASKA");		
 		assertValueInCollection("states", 1, 0, "CA");
 		assertValueInCollection("states", 1, 1, "CALIFORNIA");
-		// Using Edit + Remove
-		execute("Collection.edit", "row=0,viewObject=xava_view_section1_states");
-		execute("Collection.remove", "viewObject=xava_view_section1_states");
-		assertCollectionRowCount("states", 1);
-		// Using Check row + Remove selected
-		checkRowCollection("states", 0);
-		execute("Collection.removeSelected", "viewObject=xava_view_section1_states");
-		assertNoErrors();
-		assertCollectionRowCount("states", 0);
-		
-		// Verifying if that other part is not removed
-		changeModule("StateHibernate");
-		assertValueInList(0, 0, "AK");
-		assertValueInList(4, 0, "CA");		
 	}
 	
 	public void testChangeReferenceLabel() throws Exception {

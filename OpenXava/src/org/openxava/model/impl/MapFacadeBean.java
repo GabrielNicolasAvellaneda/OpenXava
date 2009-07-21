@@ -507,6 +507,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			Object child = findEntity(childMetaModel, collectionElementKeyValues);
 			PropertiesManager pm = new PropertiesManager(parent);
 			Collection collection = (Collection) pm.executeGet(collectionName);
+			if (collection == null) {
+				collection = new HashSet();
+				pm.executeSet(collectionName, collection);
+			}
 			collection.add(child);
 		}		
 	}
