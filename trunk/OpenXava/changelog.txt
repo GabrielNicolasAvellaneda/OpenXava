@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Fails to compile on Eclipse Galileo (JUNIT_HOME is missing).
+- Fix: Adding elements to a ManyToMany collection when the parent object is new fails.
+- Fix: @DisplaySize does not work in custom view with <xava:editor> for reference members.
+- Removed getChosenKeyMap() method from ChooseReferenceAction. This method was not used.
 - Fix: Row selection in collection are not cleared when main object changed.
 - Added assertCollectionNotEmpty() method to ModuleTestBase.
 - Added 'list-formatter' to <formatter /> in editors.xml. 

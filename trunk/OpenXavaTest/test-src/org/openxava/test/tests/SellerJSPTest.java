@@ -48,5 +48,10 @@ public class SellerJSPTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertMessage("Seller deleted successfully");
 	}
+	
+	public void testDisplaySizeOfReferenceMemberInHandmadeView() throws Exception { 
+		execute("CRUD.new");		
+		assertTrue("Size for seller level must be 25", getHtml().indexOf("maxlength=\"50\" size=\"25\"") >= 0);
+	}
 			
 }

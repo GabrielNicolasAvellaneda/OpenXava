@@ -70,16 +70,4 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 		row = i;
 	}
 	
-	/**
-	 * Previous call to execute() method required
-	 * @return chosenKeyMap
-	 */
-	protected Map getChosenKeyMap() {
-		if (chosenKeyMap == null ) {
-			throw new IllegalStateException(XavaResources.getString("call_super_execute_required",  "getChosenKeyMap()"));
-		}			
-		return chosenKeyMap;
-	}
-
-
 }

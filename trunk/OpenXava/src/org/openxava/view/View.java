@@ -3290,6 +3290,19 @@ public class View implements java.io.Serializable {
 		return getMetaView().getDisplaySizeForProperty(p);
 	}
 	
+	public int getDisplaySizeForProperty(String propertyName) throws XavaException { 		
+		int idx = propertyName.indexOf('.');		
+		if (idx < 0) {
+			return getDisplaySizeForProperty(getMetaView().getMetaProperty(propertyName));
+		} 
+		else {						
+			String subview = propertyName.substring(0, idx);			
+			String member = propertyName.substring(idx+1);
+			return getSubview(subview).getDisplaySizeForProperty(member);
+		}				
+	}
+	
+	
 	
 	public boolean isFrame() throws XavaException {
 		return getMetaView().isFrame();
