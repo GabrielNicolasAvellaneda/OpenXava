@@ -3,16 +3,23 @@ package org.openxava.web.meta.xmlparse;
 
 
 
-import org.openxava.util.*;
-import org.openxava.util.meta.*;
-import org.openxava.util.xmlparse.*;
-import org.openxava.web.meta.*;
-import org.w3c.dom.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.util.Is;
+import org.openxava.util.XavaException;
+import org.openxava.util.meta.MetaSet;
+import org.openxava.util.xmlparse.ParserBase;
+import org.openxava.web.meta.MetaEditor;
+import org.openxava.web.meta.MetaWebEditors;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author: Javier Paniza
  */
 public class EditorsParser extends ParserBase {
+	private static Log log = LogFactory.getLog(EditorsParser.class);
 	
 	public final static String VALID_VALUES_TYPE = "valid-values";
 	
@@ -49,14 +56,14 @@ public class EditorsParser extends ParserBase {
 		editor.setDependsStereotypes(dependsStereotypes);
 		editor.setDependsProperties(dependsProperties);
 		fillProperties(editor, el);				
-		editor.setFormatterClassName(getFormatterClass(el));
+		editor.setFormatterClassName(getFormatterClass(el, editor));
 		editor.setFormatterFromType(getFormatterFromType(el));
-		editor.setFormatterListClassName(getFormatterListClassName(el));
+		editor.setListFormatterClassName(getListFormatterClassName(el, editor));
+		
 		if (editor.isFormatterFromType() && !Is.emptyString(editor.getFormatterClassName())) {
 			throw new XavaException("formatter_class_and_from_type_not_compatible");
 		}
-		fillSets(el, editor);
-		
+
 		MetaWebEditors.addMetaEditor(editor);
 		addEditorsForType(editor, el);
 		addEditorsForStereotype(editor, el);
@@ -65,45 +72,56 @@ public class EditorsParser extends ParserBase {
 		addEditorsForReferences(editor, el);
 		addEditorsForReferenceModel(editor, el);
 		addEditorsForCollections(editor, el); 
-		addEditorsForCollectionModel(editor, el); 
+		addEditorsForCollectionModel(editor, el);
+		
 	}	
-
-	private void fillSets(Element el, MetaEditor container)	throws XavaException {
-		NodeList l = el.getElementsByTagName(xset[lang]);
-		int c = l.getLength();
-		for (int i = 0; i < c; i++) {
-			container._addFormatterMetaSet(createSet(l.item(i)));
-		}
-	}
 	
 	private MetaSet createSet(Node n) throws XavaException {
 		Element el = (Element) n;
 		MetaSet a = new MetaSet();		
 		a.setPropertyName(el.getAttribute(xproperty[lang]));
-		a.setValue(el.getAttribute(xvalue[lang]));		
+		a.setValue(el.getAttribute(xvalue[lang]));
 		return a;
 	}
 	
-	private String getFormatterListClassName(Element n) throws XavaException {
-		NodeList l = n.getElementsByTagName(xformatter_list[lang]);
+	private String getListFormatterClassName(Element n, MetaEditor container) throws XavaException {
+		NodeList l = n.getElementsByTagName(xlist_formatter[lang]);
 		int c = l.getLength();
 		if (c > 1) {
-			throw new XavaException("no_more_1_formatter_list");	// tmp internacionalizar
+			throw new XavaException("no_more_1_list_formatter");	// tmp internacionalizar
 		}
 		if (c < 1) return null;
-		Element el = (Element) l.item(0);					
+		Element el = (Element) l.item(0);
+		
+		// add set to list-formatter
+		NodeList set = el.getElementsByTagName(xset[lang]);
+		int x = set.getLength();
+		for (int i = 0; i < x; i++) {
+			container._addListFormatterMetaSet(createSet(set.item(i)));
+		}
+		
+		// 
 		return  el.getAttribute(xclass[lang]);
 	}	
 
 
-	private String getFormatterClass(Element n) throws XavaException {
+	private String getFormatterClass(Element n, MetaEditor container) throws XavaException {
 		NodeList l = n.getElementsByTagName(xformatter[lang]);
 		int c = l.getLength();
 		if (c > 1) {
 			throw new XavaException("no_more_1_formatter");
 		}
 		if (c < 1) return null;
-		Element el = (Element) l.item(0);					
+		Element el = (Element) l.item(0);
+		
+		// add set to formatter
+		NodeList set = el.getElementsByTagName(xset[lang]);
+		int x = set.getLength();
+		for (int i = 0; i < x; i++) {
+			container._addFormatterMetaSet(createSet(set.item(i)));
+		}
+		
+		//
 		return el.getAttribute(xclass[lang]);						
 	}
 	

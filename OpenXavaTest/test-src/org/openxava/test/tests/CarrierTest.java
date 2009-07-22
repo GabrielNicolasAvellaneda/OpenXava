@@ -37,13 +37,15 @@ public class CarrierTest extends ModuleTestBase {
 		Carrier c2 = new Carrier();
 		c2.setWarehouse(wh);
 		c2.setNumber(2);
-		c2.setName("DOS");		
+		c2.setName("DOS");	
+		c2.setRemarks("compañero de uno, de tres y de cuatro. Pero, por ahora, no lo es de cinco");
 		XPersistence.getManager().persist(c2);  
 
 		Carrier c3 = new Carrier();
 		c3.setWarehouse(wh);
 		c3.setNumber(3);
 		c3.setName("TRES");
+		c3.setRemarks("no es muy amigable");
 		XPersistence.getManager().persist(c3);  
 	
 		Carrier c4 = new Carrier();

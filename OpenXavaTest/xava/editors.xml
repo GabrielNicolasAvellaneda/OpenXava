@@ -6,6 +6,13 @@
 
 <editors>
 
+	<editor url="textAreaEditor.jsp" >
+		<list-formatter class="org.openxava.formatters.MemoFormatter" >
+			<set value="22" property="maxLength"/>
+		</list-formatter>
+		<for-model-property model="Subfamily" property="remarks"/>
+	</editor>
+	
 	<editor url="regionsEditor.jsp">
 		<property name="regionsCount" value="3" />
 		<formatter

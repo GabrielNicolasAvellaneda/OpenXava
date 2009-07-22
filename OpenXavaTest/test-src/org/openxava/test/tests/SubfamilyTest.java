@@ -15,10 +15,10 @@ public class SubfamilyTest extends ModuleTestBase {
 		super(testName, "Subfamily");		
 	}
 	
-	public void testMemoFormatter() throws Exception {
+	public void testMemoFormatterInList() throws Exception {
 		assertLabelInList(3, "Remarks");
 		assertValueInList(0, 3, "DESARROLLO DE SOFTWARE");
-		assertValueInList(1, 3, "GESTION INTEGRAL DE RAYOS DE LUNAS SOBRE LOS MARES...");
+		assertValueInList(1, 3, "GESTION INTEGRAL DE RA...");	// list-formatter with set
 		execute("List.viewDetail", "row=1");
 		assertValue("remarks", "GESTION INTEGRAL DE RAYOS DE LUNAS SOBRE LOS MARES QUE PASAN POR EL ABISMO DE MIS MISERIAS. ME ALIMENTARA Y FORTALECIERA. DISOLVIENDO EL DINERAL COMO UN VIRUS QUE SE EXTIENDE Y SE CONTAGIA.");
 	}
