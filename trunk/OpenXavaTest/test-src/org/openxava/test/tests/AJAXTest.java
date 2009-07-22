@@ -381,7 +381,7 @@ public class AJAXTest extends ModuleTestBase {
 				"messages");		
 		execute("Navigation.next");
 		assertLoadedParts("errors, editor_number, " +
-				"collection_fellowCarriers., " +
+				"editor_remarks, collection_fellowCarriers., " +
 				"collection_fellowCarriersCalculated., " +
 				"editor_name, messages, ");		
 		
