@@ -33,7 +33,7 @@ public class InvoiceTest extends ModuleTestBase {
 
 	private void verifyCreatedInvoice() throws Exception {
 		setValue("year", getCurrentYear());
-		setValue("number", invoiceNumber);
+		setValue("number", getInvoiceNumber());
 		execute("CRUD.search");
 		
 		assertValue("year", getCurrentYear()); 
@@ -101,8 +101,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("year", getCurrentYear());		
 		assertValue("number", getInvoiceNumber());
 		assertValue("date", getCurrentDate());
-	}
-	
+	}	
 	
 	private String getCurrentYear() {
 		return new SimpleDateFormat("yyyy").format(new Date());
