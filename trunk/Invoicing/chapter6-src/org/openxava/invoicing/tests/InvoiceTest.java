@@ -118,6 +118,7 @@ public class InvoiceTest extends ModuleTestBase {
 					"select max(i.number) from Invoice i where i.year = :year");
 			query.setParameter("year", Dates.getYear(new Date()));
 			Integer lastNumber = (Integer) query.getSingleResult();
+			if (lastNumber == null) lastNumber = 0;
 			invoiceNumber = Integer.toString(lastNumber + 1);
 		}
 		return invoiceNumber;
