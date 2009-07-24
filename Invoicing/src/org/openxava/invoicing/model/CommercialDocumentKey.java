@@ -6,7 +6,7 @@ import javax.persistence.*;
  * 
  * @author Javier Paniza
  */
-public class InvoiceKey implements java.io.Serializable {
+public class CommercialDocumentKey implements java.io.Serializable {
 
 	private int year;
 	private int number;

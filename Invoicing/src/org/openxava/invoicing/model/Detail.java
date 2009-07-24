@@ -9,7 +9,7 @@ import org.openxava.annotations.*;
 public class Detail extends Identifiable {
 	
 	@ManyToOne // Lazy fetching fails on removing a detail from parent
-	private Invoice parent;
+	private CommercialDocument parent;
 		
 	private int quantity;
 	
@@ -20,11 +20,11 @@ public class Detail extends Identifiable {
 	
 	// Getters and setters
 	
-	public Invoice getParent() {
+	public CommercialDocument getParent() {
 		return parent;
 	}
 
-	public void setParent(Invoice parent) {
+	public void setParent(CommercialDocument parent) {
 		this.parent = parent;
 	}
 
