@@ -2,7 +2,10 @@ package org.openxava.invoicing.model;
 
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 @Entity
+@View(members="product, quantity")
 public class Detail extends Identifiable {
 	
 	@ManyToOne // Lazy fetching fails on removing a detail from invoice
@@ -10,6 +13,8 @@ public class Detail extends Identifiable {
 		
 	private int quantity;
 	
+	@ReferenceView("Simple")  
+	@NoFrame  	
 	@ManyToOne(fetch=FetchType.LAZY, optional=true)
 	private Product product;
 	

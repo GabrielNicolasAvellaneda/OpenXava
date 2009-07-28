@@ -3,12 +3,12 @@ package org.openxava.invoicing.model;
 import java.util.*;
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.invoicing.calculators.*;
 
 @Entity
-@IdClass(InvoiceKey.class)
 @View(members=
 	"year, number, date;" +
 	"customer;" +
@@ -17,13 +17,17 @@ import org.openxava.invoicing.calculators.*;
 )
 public class Invoice {
 	
+	@Id @GeneratedValue(generator="system-uuid") @Hidden 
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(length=32)
+	private String oid;	
 	
-	@Id @Column(length=4)
+	@Column(length=4)
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
 	
 	
-	@Id @Column(length=6)
+	@Column(length=6)
 	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
 		properties=@PropertyValue(name="year") 
 	)
@@ -40,16 +44,24 @@ public class Invoice {
 	private Customer customer;
 	
 	
-	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
-	@ListProperties("product.number, product.description, quantity")
+	@OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
+	@ListProperties("product.number, product.description, quantity")	
 	private Collection<Detail> details;
 	
 	
-	@Stereotype("MEMO") 
+	@Stereotype("MEMO")
 	private String remarks;
 	
 	// Getters and setters
 	
+	public String getOid() {
+		return oid;
+	}
+
+	public void setOid(String oid) {
+		this.oid = oid;
+	}	
+		
 	public int getYear() {
 		return year;
 	}
