@@ -8,24 +8,24 @@ import org.openxava.annotations.*;
 @View(members="product, quantity")
 public class Detail extends Identifiable {
 	
-	@ManyToOne // Lazy fetching fails on removing a detail from parent
-	private Invoice parent;
+	@ManyToOne // Lazy fetching fails on removing a detail from invoice
+	private Invoice invoice;
 		
 	private int quantity;
 	
+	@ReferenceView("Simple")  
+	@NoFrame  	
 	@ManyToOne(fetch=FetchType.LAZY, optional=true)
-	@ReferenceView("Simple")
-	@NoFrame
 	private Product product;
 	
 	// Getters and setters
 	
-	public Invoice getParent() {
-		return parent;
+	public Invoice getInvoice() {
+		return invoice;
 	}
 
-	public void setParent(Invoice parent) {
-		this.parent = parent;
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
 
 	public int getQuantity() {

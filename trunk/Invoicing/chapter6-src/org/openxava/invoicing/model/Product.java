@@ -19,7 +19,15 @@ public class Product {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList
 	private Author author;
-		
+	
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+	
 	@ManyToOne(
 		fetch=FetchType.LAZY,
 		optional=false)
@@ -99,14 +107,5 @@ public class Product {
 	public void setMorePhotos(String morePhotos) {
 		this.morePhotos = morePhotos;
 	}
-	
-	
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
-
-	public Author getAuthor() {
-		return author;
-	}
-			
+		
 }

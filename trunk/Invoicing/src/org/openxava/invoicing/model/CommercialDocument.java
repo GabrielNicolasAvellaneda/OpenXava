@@ -8,21 +8,20 @@ import org.openxava.calculators.*;
 import org.openxava.invoicing.calculators.*;
 
 @Entity
-@IdClass(CommercialDocumentKey.class)
 @View(members=
 	"year, number, date;" +
 	"customer;" +
 	"details;" +
 	"remarks"
 )
-abstract public class CommercialDocument {
+abstract public class CommercialDocument extends Identifiable {
 	
-	@Id @Column(length=4)
+	@Column(length=4)
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
 	
 	
-	@Id @Column(length=6)
+	@Column(length=6)
 	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
 		properties=@PropertyValue(name="year") 
 	)
