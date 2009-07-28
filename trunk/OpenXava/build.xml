@@ -683,6 +683,20 @@
 			<fileset dir="../${project}/filtered-files"/>
 		</copy>
 	</target>
+		
+	<target name="createWebXml">		
+		<loadfile property="servlets.xml" srcfile="../${project}/web/WEB-INF/servlets.xml" failonerror="false"/>
+		<property name="servlets.xml" value=""/>
+		<loadfile property="filters.xml" srcfile="../${project}/web/WEB-INF/filters.xml" failonerror="false"/>
+		<property name="filters.xml" value=""/>
+  		<copy file="../OpenXava/web/WEB-INF/web.xml" 
+  			todir="../${project}/web/WEB-INF" overwrite="true">
+    		<filterset>
+    			<filter token="servlets.xml" value="${servlets.xml}"/>
+    			<filter token="filters.xml" value="${filters.xml}"/>
+    		</filterset>
+  		</copy>				
+	</target>
 					
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
 		<copy todir="../${project}/web/xava" overwrite="true">
@@ -690,7 +704,8 @@
   		</copy>		
   		<copy todir="../${project}/web/WEB-INF" overwrite="true">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
-  		</copy>		
+  		</copy>
+		<antcall target="createWebXml"/>
 		<antcall target="filter"/>
 		<copy file="../OpenXava/bin/Messages_${default.language}.properties" 
 			tofile="../OpenXava/bin/Messages.properties"/>
@@ -941,7 +956,8 @@
   		</copy>		
   		<copy todir="../${project}/web/WEB-INF" overwrite="true">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
-  		</copy>				
+  		</copy>
+		<antcall target="createWebXml"/>		
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>		
 	</target>
 	

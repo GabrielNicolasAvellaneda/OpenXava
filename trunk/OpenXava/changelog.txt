@@ -1,7 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: 'list-formatter' in calculated collection. Also can be use set property.  
+- New servlets.xml and filters.xml can be used in web/WEB-INF to add custom servlets and filters.
+- Fix: When a row is selected by code, if the user unselected it the selected style persisted.
+- Fix: Switching subview dynamically (with setViewName) does not work.
 - Fix: Fails to compile on Eclipse Galileo (JUNIT_HOME is missing).
 - Fix: Adding elements to a ManyToMany collection when the parent object is new fails.
 - Fix: @DisplaySize does not work in custom view with <xava:editor> for reference members.

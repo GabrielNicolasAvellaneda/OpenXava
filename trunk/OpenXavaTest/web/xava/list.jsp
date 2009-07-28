@@ -227,6 +227,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	String cssSelectedRow = style.getSelectedRow();
 	String selectedRowStyle = style.getSelectedRowStyle();
 	String rowStyle = "border-bottom: 1px solid;";
+	String cssClassToActionOnClick = cssClass;
 	if (tab.isSelected(f)){
 		cssClass = cssSelectedRow + " " + cssClass;
 		rowStyle = rowStyle + " " + selectedRowStyle;
@@ -249,7 +250,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		"'" + idRow + "'," + 
 		!Is.empty(view.getOnSelectCollectionElementAction()) + "," +
 		"'" + cssSelectedRow + "'," + 
-		"'" + cssClass + "'," +
+		"'" + cssClassToActionOnClick + "'," +
 		"'" + selectedRowStyle + "'," +
 		"'" + rowStyle + "'," +
 		"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 

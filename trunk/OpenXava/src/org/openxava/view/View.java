@@ -166,7 +166,7 @@ public class View implements java.io.Serializable {
 	
 	public Collection getMetaMembers() throws XavaException {		
 		if (metaMembers == null) {
-			metaMembers = createMetaMembers(false);			
+			metaMembers = createMetaMembers(false);
 		}		
 		return metaMembers;		
 	}
@@ -2681,11 +2681,13 @@ public class View implements java.io.Serializable {
 		return viewName;
 	}
 
-	public void setViewName(String newView) { 		
+	public void setViewName(String newView) {
 		if (Is.equal(viewName, newView)) return;
-		resetMembers();
+		resetMembers();		
 		viewName = newView;
-		reloadNeeded = true;		
+		getRoot().reloadNeeded = true; // We reload the root view when a subview
+								// is changed. Obviously this can be optimized
+		reloadNeeded = true;
 	}
 	
 	public String toString() {

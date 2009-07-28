@@ -171,7 +171,8 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(ProgrammerTest.class));
 		}							
-		suite.addTest(new TestSuite(PublicJSPTest.class));		
+		suite.addTest(new TestSuite(PublicJSPTest.class));
+		suite.addTest(new TestSuite(ReportTest.class));
 		suite.addTest(new TestSuite(SellerCannotCreateCustomerTest.class));
 		suite.addTest(new TestSuite(SellerJSPTest.class));
 		suite.addTest(new TestSuite(SellerTest.class));
@@ -201,6 +202,7 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(TaskTest.class));
 		}	
+		suite.addTest(new TestSuite(TestServletTest.class));
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(ToDoListTest.class));
 		}
