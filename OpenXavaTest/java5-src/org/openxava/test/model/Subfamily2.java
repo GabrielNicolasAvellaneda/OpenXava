@@ -26,7 +26,7 @@ public class Subfamily2 {
 	private int number;
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="FAMILY")
-	@DescriptionsList(descriptionProperties="number, description")
+	@DescriptionsList(descriptionProperties="number, description")	
 	private Family2 family;
 	
 	@Column(length=40) @Required
