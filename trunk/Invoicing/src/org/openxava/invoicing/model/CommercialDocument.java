@@ -8,11 +8,21 @@ import org.openxava.calculators.*;
 import org.openxava.invoicing.calculators.*;
 
 @Entity
+/*
 @View(members=
 	"year, number, date;" +
 	"customer;" +
 	"details;" +
 	"remarks"
+)
+*/
+@View(members=
+	"year, number, date;" +
+	"data {" +
+		"customer;" +
+		"details;" +
+		"remarks" +
+	"}"	
 )
 abstract public class CommercialDocument extends Identifiable {
 	
