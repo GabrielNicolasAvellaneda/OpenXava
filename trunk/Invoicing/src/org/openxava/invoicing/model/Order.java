@@ -22,6 +22,7 @@ import org.openxava.annotations.*;
 public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@ReferenceView("NoCustomerNoOrders")
 	private Invoice invoice;
 
 	public Invoice getInvoice() {
