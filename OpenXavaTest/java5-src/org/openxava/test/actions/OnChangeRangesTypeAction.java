@@ -1,10 +1,10 @@
-package org.openxava.test.action;
+package org.openxava.test.actions;
 
 import org.openxava.actions.*;
 import org.openxava.test.model.*;
 
 /**
- * tmp ¿Misma versión para XML?
+ * 
  * @author Javier Paniza
  */
 

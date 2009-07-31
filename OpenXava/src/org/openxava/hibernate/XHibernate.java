@@ -173,7 +173,7 @@ public class XHibernate {
 	private static Configuration createConfiguration(String hibernateCfg) {
 		return XSystem.isJava5OrBetter()?
 			configureAnnotationConfiguration(hibernateCfg):
-			new Configuration().configure(hibernateCfg);							
+			new Configuration().configure(hibernateCfg);								
 	}
 	
 	private static Configuration configureAnnotationConfiguration(String hibernateCfg) {

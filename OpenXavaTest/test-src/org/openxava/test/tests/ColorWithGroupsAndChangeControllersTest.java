@@ -7,7 +7,7 @@ import org.openxava.tests.ModuleTestBase;
 
 /**
  * Create on 05/03/2009 (10:17:49)
- * @autor Ana Andrés
+ * @author Ana Andrés
  */
 public class ColorWithGroupsAndChangeControllersTest extends ModuleTestBase {
 	private static Log log = LogFactory.getLog(ColorWithGroupsAndChangeControllersTest.class);
