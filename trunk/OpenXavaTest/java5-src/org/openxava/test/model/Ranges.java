@@ -3,7 +3,7 @@ package org.openxava.test.model;
 import java.util.*;
 import javax.persistence.*;
 import org.openxava.annotations.*;
-import org.openxava.test.action.*;
+import org.openxava.test.actions.*;
 
 /**
  * 
