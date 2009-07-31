@@ -8,10 +8,6 @@ import org.openxava.annotations.*;
 
 @Entity
 /*
-@View( extendsView="super.DEFAULT",
-	members="orders { orders } "
-)
-*/
 @View( members=
 	"year, number, date;" +
 	"data {" +
@@ -21,6 +17,18 @@ import org.openxava.annotations.*;
 	"}" +
 	"orders { orders } "			
 )
+*/
+
+@Views({
+	@View( extendsView="super.DEFAULT",
+		members="orders { orders } "
+	),
+	@View( name="NoCustomerNoOrders", members=			
+		"year, number, date;" +
+		"details;" +
+		"remarks" 
+	)
+})
 public class Invoice extends CommercialDocument {
 	
 	@OneToMany(mappedBy="invoice")
