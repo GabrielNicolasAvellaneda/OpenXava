@@ -46,7 +46,7 @@
 		<model name="Carrier"/>
 		<view name="ReadOnlyCalculatedFellows"/>
 		<controller name="Typical"/>		
-	</module>	
+	</module>		<module name="JavaProgrammerExtendedViews">		<model name="JavaProgrammer"/>		<view name="WithSectionsNoFavouriteFramework"/>		<controller name="JavaProgrammer"/>			</module>	
 			
 	<module name="Color">
 		<model name="Color"/>

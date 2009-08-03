@@ -711,7 +711,26 @@
 			<set property="newView" value="Complete"/>
 			<use-object name="xava_view"/>			
 		</action>
-								
+		
+		<action name="changeToWithSectionsAsProgrammerView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="WithSectionsAsProgrammer"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToWithSectionsNoFavouriteFrameworkView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="WithSectionsNoFavouriteFramework"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToDefaultView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value=""/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+												
 	</controller>	
 	
 	<!--

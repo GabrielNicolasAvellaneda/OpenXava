@@ -12,56 +12,7 @@ public class JavaProgrammerTest extends ModuleTestBase {
 	public JavaProgrammerTest(String testName) {
 		super(testName, "JavaProgrammer");		
 	}
-	
-	public void testExtendsView() throws Exception { 
-		execute("CRUD.new");
-		assertExists("name");
-		assertExists("sex"); 
-		assertExists("mainLanguage");
-		assertExists("favouriteFramework");
-		assertExists("experiences");		
-		assertNotExists("frameworks");
-		assertNoAction("Sections.change");
 		
-		execute("JavaProgrammer.changeToWithSectionsView");
-		assertExists("name");
-		assertExists("sex"); 
-		assertExists("mainLanguage");
-		assertExists("favouriteFramework");
-		assertExists("experiences");
-		assertNotExists("frameworks");		
-		execute("Sections.change", "activeSection=1");
-		assertNotExists("experiences");
-		assertExists("frameworks");
-		
-		execute("JavaProgrammer.changeToVerySimpleView");
-		assertExists("name");
-		assertExists("sex"); 
-		assertNotExists("mainLanguage");
-		assertNotExists("favouriteFramework");
-		assertNotExists("experiences");
-		assertNotExists("frameworks");
-		assertNoAction("Sections.change");
-
-		execute("JavaProgrammer.changeToSimpleView");
-		assertExists("name");
-		assertExists("sex"); 
-		assertExists("mainLanguage");
-		assertNotExists("favouriteFramework");
-		assertNotExists("experiences");
-		assertNotExists("frameworks");
-		assertNoAction("Sections.change");
-		
-		execute("JavaProgrammer.changeToCompleteView");
-		assertExists("name");
-		assertExists("sex"); 
-		assertExists("mainLanguage");
-		assertExists("favouriteFramework");
-		assertExists("experiences");
-		assertExists("frameworks");
-		assertNoAction("Sections.change"); 						
-	}
-	
 	public void test2LevelsInheritedEntityCRUD() throws Exception { 
 		execute("CRUD.new");
 		setValue("name", "JUNIT JAVA PROGRAMMER");
