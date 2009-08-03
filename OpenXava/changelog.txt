@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Adding only sections with extendsView of @View produces an ArrayIndexOutOfBoundsException
+- Fix: Using extendsView of @View without members adds all member of current entity to the extended view.
+- Fix: View.setHidden(group, true) doesn't work fired from OnChange in some cases.
 - New servlets.xml and filters.xml can be used in web/WEB-INF to add custom servlets and filters.
 - Fix: When a row is selected by code, if the user unselected it the selected style persisted.
 - Fix: Switching subview dynamically (with setViewName) does not work.

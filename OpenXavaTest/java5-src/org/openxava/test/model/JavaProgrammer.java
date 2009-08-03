@@ -26,7 +26,11 @@ import org.openxava.annotations.*;
 	),
 	@View(name="VerySimple", members="name, sex"),
 	@View(name="Simple", extendsView="VerySimple",
-		members="mainLanguage")			
+		members="mainLanguage"),
+	@View(name="WithSectionsAsProgrammer", extendsView="super.WithSections"),
+	@View(name="WithSectionsNoFavouriteFramework", extendsView="super.WithSections", 
+		members = "frameworks { frameworks }"
+	)	
 })
 public class JavaProgrammer extends Programmer {
 

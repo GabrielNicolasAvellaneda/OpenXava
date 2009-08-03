@@ -276,7 +276,9 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * @return Not nul, of type <tt>String</tt> and read only.
 	 */
 	public Collection getMembersNames() throws XavaException {
-		if (isAllMembers() && !membersNamesByDefaultCreated && _membersNames.isEmpty()) {						
+		if (isAllMembers() && !membersNamesByDefaultCreated && 
+			_membersNames.isEmpty() && Is.emptyString(getExtendsView()))  
+		{						
 			createMembersNamesByDefault();			
 		}
 		copyMembersFromExtendedView();  
@@ -569,7 +571,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		return (MetaReferenceView) metaViewsReferences.get(ref);
 	}		
 	
-	public List getSections() throws XavaException {
+	public List getSections() throws XavaException {		
 		return sections == null?Collections.EMPTY_LIST:sections;		
 	}
 	

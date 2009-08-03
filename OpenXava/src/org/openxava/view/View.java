@@ -1798,7 +1798,7 @@ public class View implements java.io.Serializable {
 		resetMembers();		
 	}
 	
-	private void resetMembers() { 
+	private void resetMembers() {
 		viewName = null;
 		membersNames = null;
 		collectionMemberNames = null;
@@ -3106,10 +3106,11 @@ public class View implements java.io.Serializable {
 		return getMetaView().getSections();
 	}
 	
-	public View getSectionView(int index) throws XavaException {			
+	public View getSectionView(int index) throws XavaException {		
 		if (sectionsViews == null) {
 			sectionsViews = new View[getSections().size()];			
 		}
+		if (index >= sectionsViews.length) sectionsViews = new View[getSections().size()];
 		if (sectionsViews[index] == null) {
 			View v = new View();
 			v.setSection(true);
