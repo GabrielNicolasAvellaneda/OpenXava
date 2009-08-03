@@ -5,11 +5,6 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 @Entity
-/*
-@View( extendsView="super.DEFAULT",
-	members="invoice { invoice } "
-)
-*/
 @View( members=
 	"year, number, date;" +
 	"data {" +
@@ -19,6 +14,11 @@ import org.openxava.annotations.*;
 	"}" +
 	"invoice { invoice } "			
 )
+/*
+@View( extendsView="super.DEFAULT",
+	members="invoice { invoice } "
+)
+*/
 public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
