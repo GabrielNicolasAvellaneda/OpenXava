@@ -8,36 +8,36 @@ import org.openxava.util.*;
 
 import static org.openxava.jpa.XPersistence.*;
 
-public class InvoiceTest extends ModuleTestBase {
+abstract public class CommercialDocumentTest extends ModuleTestBase { // tmp abstract
 	
-	private String invoiceNumber; // tmp invoiceNumber --> number
+	private String number; 
 
-	public InvoiceTest(String testName) {
-		super(testName, "Invoicing", "Invoice");				
+	public CommercialDocumentTest(String testName, String moduleName) { // tmp String moduleName
+		super(testName, "Invoicing", moduleName); // tmp moduleName				
 	}
-		
-	public void testCreateInvoice() throws Exception { // tmp createInvoice --> create	 
+			
+	public void testCreate() throws Exception { 	 
 		verifyDefaultValues();
 		chooseCustomer();		
 		addDetails();		
 		setOtherProperties();		
-		saveInvoice(); // tmp saveInvoice() --> save()
-		verifyCreatedInvoice();	//tmp verifyCreatedInvoice() --> verifyCreated()			
-		removeInvoice(); // tmp removeInvoice() --> remove()
+		save(); 
+		verifyCreated();				
+		remove(); 
 	}
 
-	private void removeInvoice() throws Exception {
+	private void remove() throws Exception {
 		execute("CRUD.delete");
 		assertNoErrors();
 	}
 
-	private void verifyCreatedInvoice() throws Exception {
+	private void verifyCreated() throws Exception {
 		setValue("year", getCurrentYear());
-		setValue("number", getInvoiceNumber());
+		setValue("number", getNumber());
 		execute("CRUD.search");
 		
 		assertValue("year", getCurrentYear()); 
-		assertValue("number", getInvoiceNumber());
+		assertValue("number", getNumber());
 		assertValue("date", getCurrentDate());
 		
 		assertValue("customer.number", "1");
@@ -58,7 +58,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("remarks", "This is a JUNIT test");
 	}
 
-	private void saveInvoice() throws Exception {
+	private void save() throws Exception {
 		execute("CRUD.save");
 		assertNoErrors();
 		
@@ -74,11 +74,11 @@ public class InvoiceTest extends ModuleTestBase {
 	private void addDetails() throws Exception {
 		// Adding a detail line
 		assertCollectionRowCount("details", 0);
-		execute("Collection.new", "viewObject=xava_view_details");
+		execute("Collection.new", "viewObject=xava_view_section0_details"); // tmp section0
 		setValue("details.product.number", "1");
 		assertValue("details.product.description", "Peopleware: Productive Projects and Teams");
 		setValue("details.quantity", "2");
-		execute("Collection.save", "viewObject=xava_view_details");
+		execute("Collection.save", "viewObject=xava_view_section0_details"); // tmp section0
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
 		
@@ -86,7 +86,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("details.product.number", "2");
 		assertValue("details.product.description", "Arco iris de lágrimas");
 		setValue("details.quantity", "1");
-		execute("Collection.save", "viewObject=xava_view_details");
+		execute("Collection.save", "viewObject=xava_view_section0_details"); // tmp section0
 		assertNoErrors();
 		assertCollectionRowCount("details", 2);
 	}
@@ -99,7 +99,7 @@ public class InvoiceTest extends ModuleTestBase {
 	private void verifyDefaultValues() throws Exception {
 		execute("CRUD.new");
 		assertValue("year", getCurrentYear());		
-		assertValue("number", getInvoiceNumber());
+		assertValue("number", getNumber());
 		assertValue("date", getCurrentDate());
 	}	
 	
@@ -111,17 +111,17 @@ public class InvoiceTest extends ModuleTestBase {
 		return DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
 	}
 		
-	private String getInvoiceNumber() {
-		if (invoiceNumber == null) {
+	private String getNumber() {
+		if (number == null) {
 			Query query = getManager().
 				createQuery(
-					"select max(i.number) from Invoice i where i.year = :year");
+					"select max(i.number) from CommercialDocument i where i.year = :year"); // tmp Invoice --> CommercialDocument
 			query.setParameter("year", Dates.getYear(new Date()));
 			Integer lastNumber = (Integer) query.getSingleResult();
 			if (lastNumber == null) lastNumber = 0;
-			invoiceNumber = Integer.toString(lastNumber + 1);
+			number = Integer.toString(lastNumber + 1);
 		}
-		return invoiceNumber;
+		return number;
 	}
 		
 }

@@ -7,22 +7,20 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 @Entity
-/*
-@View( members=
-	"year, number, date;" +
-	"data {" +
-		"customer;" +
-		"details;" +
-		"remarks" +
-	"}" +
-	"orders { orders } "			
-)
-*/
-
 @Views({
-	@View( extendsView="super.DEFAULT",
+	@View( members=
+		"year, number, date;" +
+		"data {" +
+			"customer;" +
+			"details;" +
+			"remarks" +
+		"}" +
+		"orders { orders } "			
+	),	
+	/*@View( extendsView="super.DEFAULT",
 		members="orders { orders } "
 	),
+	*/
 	@View( name="NoCustomerNoOrders", members=			
 		"year, number, date;" +
 		"details;" +
