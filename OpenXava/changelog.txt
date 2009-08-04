@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: JavaScript error when using groups aligned by columns in Liferay with Firefox.
+- Fix: Date formatting fails with Chinese locale.
 - Fix: Adding only sections with extendsView of @View produces an ArrayIndexOutOfBoundsException
 - Fix: Using extendsView of @View without members adds all member of current entity to the extended view.
 - Fix: View.setHidden(group, true) doesn't work fired from OnChange in some cases.

@@ -62,7 +62,7 @@ import org.openxava.util.*;
 	),
 	@View(name="Amounts", members=
 		"year, number;" +
-		"amounts [#" + 
+		"amounts [#" + 		
 			"customerDiscount, customerTypeDiscount, yearDiscount;" +
 			"amountsSum, vatPercentage, vat;" +
 		"]"			

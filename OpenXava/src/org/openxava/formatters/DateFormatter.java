@@ -17,9 +17,9 @@ import org.openxava.util.*;
 
 public class DateFormatter implements IFormatter {
 	
-	private static DateFormat spanishDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private static DateFormat extendedDateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Only for some locales like "es" and "pl"
 	
-	private static DateFormat [] spanishDateFormats = {
+	private static DateFormat [] extendedDateFormats = { // Only for some locales like "es" and "pl"
 		new SimpleDateFormat("dd/MM/yy"), 
 		new SimpleDateFormat("ddMMyy"),
 		new SimpleDateFormat("dd.MM.yy")				
@@ -33,7 +33,7 @@ public class DateFormatter implements IFormatter {
 		
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
 		if (Is.emptyString(string)) return null;				
-		if (!"sv".equals(Locales.getCurrent().getLanguage())) { // Patch by Apoteket: bad for Swedish format
+		if (isExtendedFormat()) { 
 			if (string.indexOf('-') >= 0) { // SimpleDateFormat does not work well with -
 				string = Strings.change(string, "-", "/");
 			}		
@@ -50,15 +50,18 @@ public class DateFormatter implements IFormatter {
 		throw new ParseException(XavaResources.getString("bad_date_format",string),-1);
 	}
 	
+	private boolean isExtendedFormat() {
+		return "es".equals(Locales.getCurrent().getLanguage()) ||
+			"pl".equals(Locales.getCurrent().getLanguage());
+	}
+	
 	private DateFormat getDateFormat() {
-		if ("es".equals(Locales.getCurrent().getLanguage()) ||
-				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateFormat;
+		if (isExtendedFormat()) return extendedDateFormat;
 		return DateFormat.getDateInstance(DateFormat.SHORT, Locales.getCurrent());		
 	}
 	
 	private DateFormat[] getDateFormats() {
-		if ("es".equals(Locales.getCurrent().getLanguage()) ||
-				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateFormats;
+		if (isExtendedFormat()) return extendedDateFormats;
 		return new DateFormat [] { getDateFormat() };
 	}
 		
