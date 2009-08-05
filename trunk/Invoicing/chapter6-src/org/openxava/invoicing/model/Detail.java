@@ -2,11 +2,17 @@ package org.openxava.invoicing.model;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 
 @Entity
 @View(members="product, quantity")
-public class Detail extends Identifiable {
+public class Detail {
+	
+	@Id @GeneratedValue(generator="system-uuid") @Hidden 
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(length=32)
+	private String oid;	
 	
 	@ManyToOne // Lazy fetching fails on removing a detail from invoice
 	private Invoice invoice;
@@ -19,6 +25,14 @@ public class Detail extends Identifiable {
 	private Product product;
 	
 	// Getters and setters
+	
+	public String getOid() {
+		return oid;
+	}
+
+	public void setOid(String oid) {
+		this.oid = oid;
+	}	
 	
 	public Invoice getInvoice() {
 		return invoice;

@@ -8,6 +8,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/i18n"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/chapter4-src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/chapter6-src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/chapter5-src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
 	<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/OpenXava/OpenXava">
 		<dependency-type>uses</dependency-type>
