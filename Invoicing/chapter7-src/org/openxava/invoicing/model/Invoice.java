@@ -30,7 +30,6 @@ import org.openxava.annotations.*;
 public class Invoice extends CommercialDocument {
 	
 	@OneToMany(mappedBy="invoice")
-	@CollectionView("NoCustomerNoInvoice")
 	private Collection<Order> orders;
 
 	public Collection<Order> getOrders() {

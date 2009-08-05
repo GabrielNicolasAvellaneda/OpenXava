@@ -5,27 +5,20 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 @Entity
-@Views({
-	@View( members=
-		"year, number, date;" +
-		"data {" +
-			"customer;" +
-			"details;" +
-			"remarks" +
-		"}" +
-		"invoice { invoice } "			
-	),
-	/*
-	@View( extendsView="super.DEFAULT",
-		members="invoice { invoice } "
-	),
-	*/
-	@View( name="NoCustomerNoInvoice", members=			
-		"year, number, date;" +
+@View( members=
+	"year, number, date;" +
+	"data {" +
+		"customer;" +
 		"details;" +
-		"remarks" 
-	)
-})
+		"remarks" +
+	"}" +
+	"invoice { invoice } "			
+)
+/*
+@View( extendsView="super.DEFAULT",
+	members="invoice { invoice } "
+)
+*/
 public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
