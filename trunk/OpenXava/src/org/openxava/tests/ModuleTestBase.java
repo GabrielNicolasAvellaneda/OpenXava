@@ -652,9 +652,10 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	protected void executeDefaultAction() throws Exception {
-		HtmlButton button = getForm().getButtonByName("xava.DEFAULT_ACTION");
-		page = (HtmlPage) button.click();
+ 		HtmlButton button = getForm().getButtonByName("xava.DEFAULT_ACTION");
+ 		page = (HtmlPage) button.click();		
 		resetForm();
+		restorePage(); 
 	}
 	
 	protected void assertExists(String name) throws Exception {		 

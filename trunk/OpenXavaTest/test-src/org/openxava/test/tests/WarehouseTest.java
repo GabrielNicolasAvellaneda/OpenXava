@@ -21,6 +21,13 @@ public class WarehouseTest extends ModuleTestBase {
 		super(testName, "Warehouse");		
 	}
 	
+	public void testDefaultAction() throws Exception {
+		assertListRowCount(10);
+		setConditionValues(new String [] { "1" });
+		executeDefaultAction();
+		assertListRowCount(3);
+	}
+	
 	public void testChooseUnselectedRow() throws Exception { 
 		checkRow(0);
 		String warehouseName=getValueInList(1, "name");	
@@ -382,7 +389,7 @@ public class WarehouseTest extends ModuleTestBase {
 		assertRowsChecked(10, 12);
 	}
 	
-	public void testDefaulActionInListNotReturnToDetail() throws Exception { 
+	public void testDefaulActionInListNotReturnToDetail() throws Exception {  
 		// In list mode on start
 		assertAction("Warehouse.toLowerCase");
 		assertNoAction("Warehouse.changeZone");

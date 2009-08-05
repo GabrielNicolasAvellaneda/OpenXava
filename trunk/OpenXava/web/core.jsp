@@ -13,7 +13,8 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 <div class="<%=style.getModule()%>">
 <form id="<xava:id name='form'/>" name="<xava:id name='form'/>"
 	method='POST' <%=manager.getEnctype()%> 
-	<%=manager.getFormAction(request)%> style="display: inline;">
+	<%=manager.getFormAction(request)%> style="display: inline;"
+	onsubmit="return false">
 	
 <%-- Here, and not at bottom of form, because if there are some erroneous
 markup inside the view, then maybe these hidden fields are not found by javascript. 

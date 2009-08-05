@@ -9,8 +9,8 @@ org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleM
 manager.setSession(session);
 %>
 
-<button name="xava.DEFAULT_ACTION" 
-	onclick="openxava.executeAction('', false, '<%=manager.getDefaultActionQualifiedName()%>')"
+<button name="xava.DEFAULT_ACTION" type="submit" 
+	onclick="openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '', false, '<%=manager.getDefaultActionQualifiedName()%>')"
 	style="padding: 0; border: none; background-color:transparent; size: 0"></button>
 
 <%
