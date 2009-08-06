@@ -77,6 +77,15 @@ public class Users {
 	}
 	
 	/**
+	 * Associated the UserInfo object to the current thread. <p>
+	 */	
+	public static void setCurrentUserInfo(UserInfo userInfo) { 
+		current.set(userInfo.getId());
+		currentUserInfo.set(userInfo); 
+	}
+	
+	
+	/**
 	 * Associated the user of the request to the current thread. <p>
 	 * 
 	 * Takes into account JetSpeed 1.5 user managament, althought
