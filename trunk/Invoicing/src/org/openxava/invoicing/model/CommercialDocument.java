@@ -18,12 +18,12 @@ import org.openxava.invoicing.calculators.*;
 )
 abstract public class CommercialDocument extends Identifiable {
 	
-	@Column(length=4)
+	@Column(length=4) 
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
 	
 	
-	@Column(length=6)
+	@Column(length=6) 
 	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
 		properties=@PropertyValue(name="year") 
 	)

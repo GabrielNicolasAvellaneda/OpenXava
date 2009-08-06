@@ -19,7 +19,7 @@ import org.openxava.annotations.*;
 	@View( extendsView="super.DEFAULT",
 		members="invoice { invoice } "
 	),
-	*/
+	*/	
 	@View( name="NoCustomerNoInvoice", members=			
 		"year, number, date;" +
 		"details;" +
