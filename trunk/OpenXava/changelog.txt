@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Users.getCurrentUserInfo() returns null after using MapFacade.
 - Fix: The default action (when user press ENTER) does not work with AJAX.
 - Fix: ModuleTestBase.executeDefaultAction() does not refresh page after execution.
 - Fix: JavaScript error when using groups aligned by columns in Liferay with Firefox.

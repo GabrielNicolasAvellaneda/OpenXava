@@ -31,9 +31,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	
 	
-	public Object create(String user, String modelName, Map values)
+	public Object create(UserInfo userInfo, String modelName, Map values)
 		throws CreateException, XavaException, ValidationException, RemoteException {		
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		values = Maps.recursiveClone(values); 		
 		try {
 			MetaModel metaModel = getMetaModel(modelName);	
@@ -59,8 +59,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public void commit(String user) {
-		Users.setCurrent(user);
+	public void commit(UserInfo userInfo) {
+		Users.setCurrentUserInfo(userInfo);
 		getPersistenceProvider().commit(); 
 	}
 
@@ -80,12 +80,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	public Map getValues(
-			String user, 
+			UserInfo userInfo, 
 			String modelName,
 			Map keyValues,
 			Map membersNames)
 			throws FinderException, XavaException, RemoteException {		
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 
 		membersNames = Maps.recursiveClone(membersNames); 		
 		try {			
@@ -115,12 +115,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	public Map getValuesByAnyProperty( 
-			String user, 
+			UserInfo userInfo, 
 			String modelName,
 			Map searchingValues,
 			Map membersNames)
 			throws FinderException, XavaException, RemoteException {		
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		searchingValues = Maps.recursiveClone(searchingValues); 
 		membersNames = Maps.recursiveClone(membersNames); 		
 		try {			
@@ -150,10 +150,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	
-	public void delete(String user, String modelName, Map keyValues)
+	public void delete(UserInfo userInfo, String modelName, Map keyValues)
 		throws RemoveException, ValidationException, XavaException, RemoteException 
 	{		
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 		
 		try {
 			MetaModel metaModel = getMetaModel(modelName);	
@@ -177,10 +177,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public void setValues(String user, String modelName, Map keyValues, Map values)
+	public void setValues(UserInfo userInfo, String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException 
 	{							
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 
 		values = Maps.recursiveClone(values); 		
 		try {
@@ -206,16 +206,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	public Object findEntity(String user, String modelName, Map keyValues)
+	public Object findEntity(UserInfo userInfo, String modelName, Map keyValues)
 		throws FinderException, RemoteException {
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 			
 		return findEntity(modelName, keyValues);
 	}
 	
-	public Map createReturningValues(String user, String modelName, Map values) 
+	public Map createReturningValues(UserInfo userInfo, String modelName, Map values) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		values = Maps.recursiveClone(values); 		
 		try {
 			beginTransaction();
@@ -240,9 +240,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 	}
 	
-	public Map createReturningKey(String user, String modelName, Map values) 
+	public Map createReturningKey(UserInfo userInfo, String modelName, Map values) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		values = Maps.recursiveClone(values); 			
 		try {				
 			beginTransaction();
@@ -267,10 +267,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Object createAggregate(String user, String modelName, Map containerKeyValues, int counter, Map values)  
+	public Object createAggregate(UserInfo userInfo, String modelName, Map containerKeyValues, int counter, Map values)  
 		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
 		values = Maps.recursiveClone(values); 		
 		try {		
@@ -296,10 +296,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Object createAggregate(String user, String modelName, Object container, int counter, Map values)  
+	public Object createAggregate(UserInfo userInfo, String modelName, Object container, int counter, Map values)  
 		throws CreateException,ValidationException, XavaException, RemoteException
 	{		
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		values = Maps.recursiveClone(values); 			
 		try {		
 			beginTransaction();
@@ -324,10 +324,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Map createAggregateReturningKey(String user, String modelName, Map containerKeyValues, int counter, Map values)  
+	public Map createAggregateReturningKey(UserInfo userInfo, String modelName, Map containerKeyValues, int counter, Map values)  
 		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
 		values = Maps.recursiveClone(values); 		
 		try {			
@@ -354,12 +354,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 
 	public Map getValues( 
-		String user, 
+		UserInfo userInfo, 
 		String modelName,
 		Object modelObject,
 		Map memberNames) throws XavaException, RemoteException  
 		 {				
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		memberNames = Maps.recursiveClone(memberNames); 		
 		try {	
 			beginTransaction();
@@ -379,8 +379,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 
-	public Messages validate(String user, String modelName, Map values) throws XavaException, RemoteException {
-		Users.setCurrent(user);
+	public Messages validate(UserInfo userInfo, String modelName, Map values) throws XavaException, RemoteException {
+		Users.setCurrentUserInfo(userInfo);
 		values = Maps.recursiveClone(values); 				
 		try {			
 			beginTransaction();
@@ -399,10 +399,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public void removeCollectionElement(String user, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues)   
+	public void removeCollectionElement(UserInfo userInfo, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues)   
 		throws FinderException,	ValidationException, XavaException, RemoveException, RemoteException 
 	{
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 
 		collectionElementKeyValues = Maps.recursiveClone(collectionElementKeyValues); 		
 		try {		
@@ -460,10 +460,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}						
 	}
 	
-	public void addCollectionElement(String user, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues)   
+	public void addCollectionElement(UserInfo userInfo, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues)   
 		throws FinderException,	ValidationException, XavaException, RemoteException 
 	{
-		Users.setCurrent(user);
+		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 
 		collectionElementKeyValues = Maps.recursiveClone(collectionElementKeyValues); 		
 		try {		
@@ -877,8 +877,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Map getKeyValues(String user, String modelName, Object entity) throws RemoteException, XavaException {
-		Users.setCurrent(user);
+	public Map getKeyValues(UserInfo userInfo, String modelName, Object entity) throws RemoteException, XavaException {
+		Users.setCurrentUserInfo(userInfo);
 		MetaModel metaModel = getMetaModel(modelName);
 		return getValues(metaModel, entity, getKeyNames(metaModel));
 	}

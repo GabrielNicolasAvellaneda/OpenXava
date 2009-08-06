@@ -23,8 +23,14 @@ public class TaskTest extends ModuleTestBase {
 		assertValue("userGivenName", "JUnit Given Name");
 		assertValue("userFamilyName", "JUnit Family Name");
 		assertValue("userEMail", "junit@openxava.org");
+		setValue("summary", "JUNIT TEST");
+		execute("Task.save");
+		assertMessage("The given name is JUnit Given Name");
+		execute("CRUD.delete");
 		logout();
 	}
+	
+	
 	
 	public void testLogoutResetPortletState() throws Exception {
 		login(getUserLoginName(), "junit");
