@@ -1,5 +1,6 @@
 package org.openxava.web.taglib;
 
+import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
@@ -89,12 +90,26 @@ public class EditorTag extends TagSupport {
 			}			
 			try {
 				// If the JSP that uses this tag is in a subfolder
-				pageContext.include("../xava/" + editorURL);				
+				pageContext.include("../xava/" + editorURL);								
 			}
-			catch (Exception ex) {
-				// If the JSP that uses this tag is in root folder				
-				pageContext.include("xava/" + editorURL);
-			}			
+			catch (ServletException ex) { 	
+				log.error(ex.getRootCause().getMessage(), ex.getRootCause());
+				pageContext.include("../xava/editors/notAvailableEditor.jsp");
+			}
+			catch (Exception ex) {	
+				// If the JSP that uses this tag is in root folder
+				try {
+					pageContext.include("xava/" + editorURL);
+				}
+				catch (ServletException ex2) { 	
+					log.error(ex2.getRootCause().getMessage(), ex2.getRootCause());
+					pageContext.include("xava/editors/notAvailableEditor.jsp");
+				}
+				catch (Exception ex2) {
+					log.error(ex2.getMessage(), ex2);
+					pageContext.include("xava/editors/notAvailableEditor.jsp");					
+				}		
+			}		
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -102,6 +117,7 @@ public class EditorTag extends TagSupport {
 		}	
 		return SKIP_BODY;
 	}
+	
 
 	public String getProperty() {
 		return property;

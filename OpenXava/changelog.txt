@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Better management of exceptions from editors: The trace has the root cause and the module is not broken, only the failed editor is not shown.
+- Improved message when datasource is not defined in persistence.xml
 - Fix: Users.getCurrentUserInfo() returns null after using MapFacade.
 - Fix: The default action (when user press ENTER) does not work with AJAX.
 - Fix: ModuleTestBase.executeDefaultAction() does not refresh page after execution.
