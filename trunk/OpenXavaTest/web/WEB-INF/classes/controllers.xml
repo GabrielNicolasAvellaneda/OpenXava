@@ -73,7 +73,6 @@
 		</action>
 	</controller>
 	
-	<!-- tmp -->
 	<controller name="Task"> 
 		<extends controller="Typical"/>
 		<action name="save" mode="detail"
