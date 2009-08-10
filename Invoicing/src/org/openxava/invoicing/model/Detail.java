@@ -1,11 +1,14 @@
 package org.openxava.invoicing.model;
 
+import java.math.*;
+
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.invoicing.calculators.*;
 
 @Entity
-@View(members="product, quantity")
+@View(members="product; quantity, pricePerUnit, amount") // tmp pricePerUnit 
 public class Detail extends Identifiable {
 	
 	@ManyToOne // Lazy fetching fails on removing a detail from parent
@@ -17,6 +20,20 @@ public class Detail extends Identifiable {
 	@ReferenceView("Simple")
 	@NoFrame
 	private Product product;
+	
+	@DefaultValueCalculator(value=PricePerUnitCalculator.class,
+		properties=@PropertyValue(name="productNumber", from="product.number")
+	)
+	@Stereotype("MONEY")
+	private BigDecimal pricePerUnit;	
+
+	@Stereotype("MONEY") 
+	// tmp @Depends("product.number, quantity") 
+	@Depends("pricePerUnit, quantity") // tmp pricePerUnit
+	public BigDecimal getAmount() {
+		// tmp return new BigDecimal(quantity).multiply(product.getPrice());
+		return new BigDecimal(quantity).multiply(getPricePerUnit());
+	}
 	
 	// Getters and setters
 	
@@ -43,5 +60,14 @@ public class Detail extends Identifiable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	
+	public BigDecimal getPricePerUnit() {
+		return pricePerUnit;
+	}
+
+	public void setPricePerUnit(BigDecimal pricePerUnit) {
+		this.pricePerUnit = pricePerUnit;
+	}
+	
 
 }
