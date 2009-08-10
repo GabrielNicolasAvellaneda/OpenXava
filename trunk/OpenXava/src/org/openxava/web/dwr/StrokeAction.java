@@ -8,10 +8,13 @@ package org.openxava.web.dwr;
 public class StrokeAction {
 
 	private String name;
+	private String confirmMessage; 
 	private boolean takesLong;
 	
-	public StrokeAction(String name, boolean takesLong) {
+	
+	public StrokeAction(String name, String confirmMessage, boolean takesLong) {
 		this.name = name;
+		this.confirmMessage = confirmMessage; 
 		this.takesLong = takesLong;
 	}
 	
@@ -21,6 +24,13 @@ public class StrokeAction {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getConfirmMessage() {
+		return confirmMessage;
+	}
+
+	public void setConfirmMessage(String confirmMessage) {
+		this.confirmMessage = confirmMessage;
+	}	
 	public boolean isTakesLong() {
 		return takesLong;
 	}
