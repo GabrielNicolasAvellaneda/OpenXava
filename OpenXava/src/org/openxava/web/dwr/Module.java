@@ -128,7 +128,7 @@ public class Module extends DWRBase {
 			boolean alt = (key.getModifiers() & InputEvent.ALT_DOWN_MASK) > 0; 	
 			boolean shift = (key.getModifiers() & InputEvent.SHIFT_DOWN_MASK) > 0;
 			String id = keyCode + "," + ctrl + "," + alt + "," + shift;
-			result.put(id, new StrokeAction(action.getQualifiedName(), action.isTakesLong()));
+			result.put(id, new StrokeAction(action.getQualifiedName(), action.getConfirmMessage(Locales.getCurrent()), action.isTakesLong()));
 		}
 		return result;
 	}

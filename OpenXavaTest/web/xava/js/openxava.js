@@ -136,7 +136,7 @@ openxava.processKey = function(event) {
 		event.returnValue = false;
 		event.preventDefault();
 		openxava.executeAction(openxava.lastApplication, openxava.lastModule,
-			'', action.takesLong, action.name); 
+			action.confirmMessage, action.takesLong, action.name);  
 		return;
 	}
 		
