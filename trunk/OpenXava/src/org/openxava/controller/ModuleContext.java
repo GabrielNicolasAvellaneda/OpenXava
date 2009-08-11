@@ -187,5 +187,17 @@ public class ModuleContext {
 		}
 		return globalContext;
 	}
+	
+	public Collection getAllObjects(String objectName){
+		Collection allContexts = new ArrayList();
+		if (contexts == null || contexts.isEmpty()) return allContexts;
+		
+		Iterator it = contexts.entrySet().iterator();
+		while (it.hasNext()){
+			Map.Entry context = (Map.Entry) it.next();
+			allContexts.add(((Map)context.getValue()).get(objectName));
+		}
+		return allContexts;
+	}
 
 }

@@ -724,14 +724,10 @@ public class ModuleManager {
 
 	public void setApplicationName(String newName) throws XavaException {
 		if (Is.equal(applicationName, newName)) return;
-		moduleInitiated = false;
 		applicationName = newName;
 		moduleName = null;
-		metaControllers = null;
-		metaActions = null;
-		defaultActionQualifiedName = null;
-		metaModule = null;
 		controllersNames = null;
+		reset();
 	}
 
 	public String getModuleName() {
@@ -743,13 +739,9 @@ public class ModuleManager {
 	 */
 	public void setModuleName(String newModule) throws XavaException {		
 		if (Is.equal(moduleName, newModule)) return; 
-		moduleInitiated = false;
 		moduleName = newModule;
-		metaControllers = null;
 		metaControllerMode = null;
-		metaActions = null;
-		defaultActionQualifiedName = null;
-		metaModule = null;		
+		reset();
 		setupModuleControllers();
 		if (!Is.emptyString(getMetaModule().getModeControllerName())) {
 			setModeControllerName(getMetaModule().getModeControllerName());
@@ -1010,4 +1002,12 @@ public class ModuleManager {
 		this.previousModules = previousModules;
 	}
 	
+	public void reset() {
+		moduleInitiated = false;
+		metaControllers = null;
+		metaActions = null;
+		defaultActionQualifiedName = null;
+		metaModule = null;
+	}
+
 }

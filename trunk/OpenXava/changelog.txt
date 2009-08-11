@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Added reset() method in ModuleManager and getAllObjects() method in ModuleContext 
 - Fix: Actions with confirm=true do not ask for confirmation when keystrokes is used.
 - Better management of exceptions from editors: The trace has the root cause and the module is not broken, only the failed editor is not shown.
 - Improved message when datasource is not defined in persistence.xml
