@@ -1,8 +1,10 @@
 package org.openxava.invoicing.model;
 
+import java.math.*;
 import java.util.*;
 import javax.persistence.*;
 
+import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.invoicing.calculators.*;
@@ -13,6 +15,7 @@ import org.openxava.invoicing.calculators.*;
 	"data {" +
 		"customer;" +
 		"details;" +
+		"amounts [ vatPercentage, baseAmount, vat, totalAmount ];" + // tmp 
 		"remarks" +
 	"}"	
 )
@@ -41,12 +44,38 @@ abstract public class CommercialDocument extends Identifiable {
 	
 	
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
-	@ListProperties("product.number, product.description, quantity")
-	private Collection<Detail> details;
+	@ListProperties("product.number, product.description, quantity, pricePerUnit, amount")
+	private Collection<Detail> details;	
 	
 	
 	@Stereotype("MEMO") 
 	private String remarks;
+	
+	@Digits(integerDigits=2, fractionalDigits=0) 
+	@Required
+	private BigDecimal vatPercentage;
+	
+	@Stereotype("MONEY")
+	public BigDecimal getBaseAmount() {
+		BigDecimal result = new BigDecimal("0.00");
+		for (Detail detail: getDetails()) {
+			result = result.add(detail.getAmount());
+		}
+		return result;
+	}
+	
+	@Stereotype("MONEY")
+	@Depends("vatPercentage")
+	public BigDecimal getVat() {
+		return getBaseAmount()
+			.multiply(getVatPercentage())
+			.divide(new BigDecimal("100"));		
+	}
+	
+	@Depends("baseAmount, vat")
+	public BigDecimal getTotalAmount() {
+		return getBaseAmount().add(getVat());
+	}
 	
 	// Getters and setters
 	
@@ -98,5 +127,12 @@ abstract public class CommercialDocument extends Identifiable {
 		this.remarks = remarks;
 	}
 	
+	public BigDecimal getVatPercentage() {
+		return vatPercentage==null?BigDecimal.ZERO:vatPercentage;
+	}
+
+	public void setVatPercentage(BigDecimal vatPercentage) {
+		this.vatPercentage = vatPercentage;
+	}
 
 }

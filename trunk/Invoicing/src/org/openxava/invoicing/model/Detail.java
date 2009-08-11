@@ -8,7 +8,7 @@ import org.openxava.annotations.*;
 import org.openxava.invoicing.calculators.*;
 
 @Entity
-@View(members="product; quantity, pricePerUnit, amount") // tmp pricePerUnit 
+@View(members="product; quantity, pricePerUnit, amount")  
 public class Detail extends Identifiable {
 	
 	@ManyToOne // Lazy fetching fails on removing a detail from parent
@@ -22,16 +22,16 @@ public class Detail extends Identifiable {
 	private Product product;
 	
 	@DefaultValueCalculator(value=PricePerUnitCalculator.class,
-		properties=@PropertyValue(name="productNumber", from="product.number")
+		properties=@PropertyValue(
+				name="productNumber", 
+				from="product.number")
 	)
 	@Stereotype("MONEY")
 	private BigDecimal pricePerUnit;	
 
-	@Stereotype("MONEY") 
-	// tmp @Depends("product.number, quantity") 
-	@Depends("pricePerUnit, quantity") // tmp pricePerUnit
+	@Stereotype("MONEY")  
+	@Depends("pricePerUnit, quantity") 
 	public BigDecimal getAmount() {
-		// tmp return new BigDecimal(quantity).multiply(product.getPrice());
 		return new BigDecimal(quantity).multiply(getPricePerUnit());
 	}
 	
@@ -62,7 +62,7 @@ public class Detail extends Identifiable {
 	}
 	
 	public BigDecimal getPricePerUnit() {
-		return pricePerUnit;
+		return pricePerUnit==null?BigDecimal.ZERO:pricePerUnit; 
 	}
 
 	public void setPricePerUnit(BigDecimal pricePerUnit) {
