@@ -15,6 +15,23 @@ public class ColorM1Test extends ModuleTestBase {
 		super(testName, "ColorM1");		
 	}
 	
+	public void testInitModules() throws Exception {
+		// Color: access to detail mode
+		changeModule("Color");
+		execute("List.viewDetail", "row=0");
+		assertAction("Mode.list");
+		
+		// init modules
+		changeModule("ColorM1");
+		execute("ColorM1.initModules");
+		assertNoErrors();
+		
+		// Color: restart list mode
+		changeModule("Color");
+		assertNoAction("Mode.list");
+		assertAction("Mode.detailAndFirst");
+	}
+	
 	/*
 	 * - module1
 	 * 	. module2
