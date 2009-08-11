@@ -6,9 +6,8 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
-@Entity
-// tmp @View(name="Simple", members="number, description, price") 
-@View(name="Simple", members="number, description") // tmp
+@Entity 
+@View(name="Simple", members="number, description")
 public class Product {
 	
 	@Id @Column(length=9)
