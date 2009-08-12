@@ -841,6 +841,10 @@
 			class="org.openxava.actions.ChangeModuleAction">
 			<set property="nextModule" value="ColorM2"/>
 		</action>
+		<action name="initModules" 
+			class="org.openxava.test.actions.InitModulesAction">
+			<use-object name="xava_view"/>
+		</action>
 	</controller>
 	
 	<controller name="ColorM2">

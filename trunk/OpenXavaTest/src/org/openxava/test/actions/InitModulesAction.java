@@ -14,8 +14,8 @@ import org.openxava.controller.ModuleManager;
  * Create on 10/08/2009 (14:01:01)
  * @autor Ana Andrés
  */
-public class InitModules extends ViewBaseAction implements IModuleContextAction{
-	private static Log log = LogFactory.getLog(InitModules.class);
+public class InitModulesAction extends ViewBaseAction implements IModuleContextAction{ 
+	private static Log log = LogFactory.getLog(InitModulesAction.class);
 	
 	private ModuleContext context;
 	
@@ -24,7 +24,7 @@ public class InitModules extends ViewBaseAction implements IModuleContextAction{
 	}
 
 	public void execute() throws Exception {
-		Collection managers = (Collection) context.getAllObjects("manager");
+		Collection managers = (Collection) context.getAll("manager");
 		Iterator it = managers.iterator();
 		while(it.hasNext()){
 			ModuleManager manager = (ModuleManager) it.next();

@@ -14,13 +14,14 @@ import org.openxava.util.*;
 
 public class CollectionInViewFilter extends CollectionInViewBaseFilter {
 	
-	protected Collection getKeyValues() throws XavaException {		
+	protected Collection getKeyValues() throws XavaException {	
 		Collection keyNames = getView().getMetaModel().getAllKeyPropertiesNames();
-		Collection values = new ArrayList();			
+		Collection values = new ArrayList();		
+		Map viewValues = getView().getKeyValues();
 		for (Iterator it = keyNames.iterator(); it.hasNext();) {
 			String keyName = (String) it.next();
-			values.add(getView().getValue(keyName));				
-		}			
+			values.add(Maps.getValueFromQualifiedName(viewValues, keyName));				
+		}
 		return values;
 	}
 

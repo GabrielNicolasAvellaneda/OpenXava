@@ -188,7 +188,10 @@ public class ModuleContext {
 		return globalContext;
 	}
 	
-	public Collection getAllObjects(String objectName){
+	/**
+	 * All objects with this name in all the active modules of the user session.
+	 */	
+	public Collection getAll(String objectName) { 
 		Collection allContexts = new ArrayList();
 		if (contexts == null || contexts.isEmpty()) return allContexts;
 		
