@@ -8,6 +8,7 @@ import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.invoicing.calculators.*;
+import org.openxava.jpa.*;
 
 @Entity
 @View(members=
@@ -15,7 +16,9 @@ import org.openxava.invoicing.calculators.*;
 	"data {" +
 		"customer;" +
 		"details;" +
-		"amounts [ vatPercentage, baseAmount, vat, totalAmount ];" + // tmp 
+		"amounts [ " +
+		"	vatPercentage, baseAmount, vat, totalAmount" +
+		"];" +  
 		"remarks" +
 	"}"	
 )
@@ -26,10 +29,12 @@ abstract public class CommercialDocument extends Identifiable {
 	private int year;
 	
 	
-	@Column(length=6) 
+	@Column(length=6)
+	/* tmp
 	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
 		properties=@PropertyValue(name="year") 
 	)
+	*/
 	private int number;
 	
 	
@@ -53,7 +58,7 @@ abstract public class CommercialDocument extends Identifiable {
 	
 	@Digits(integerDigits=2, fractionalDigits=0) 
 	@Required
-	private BigDecimal vatPercentage;
+	private BigDecimal vatPercentage;	
 	
 	@Stereotype("MONEY")
 	public BigDecimal getBaseAmount() {
@@ -72,9 +77,20 @@ abstract public class CommercialDocument extends Identifiable {
 			.divide(new BigDecimal("100"));		
 	}
 	
+	@Stereotype("MONEY")
 	@Depends("baseAmount, vat")
 	public BigDecimal getTotalAmount() {
 		return getBaseAmount().add(getVat());
+	}
+	
+	@PrePersist
+	public void calculateNumber() throws Exception { // tmp
+		Query query = XPersistence.getManager()
+			.createQuery("select max(i.number) from CommercialDocument i " +
+					"where i.year = :year");
+		query.setParameter("year", year);		
+		Integer lastNumber = (Integer) query.getSingleResult();
+		this.number = lastNumber == null?1:lastNumber + 1;
 	}
 	
 	// Getters and setters
