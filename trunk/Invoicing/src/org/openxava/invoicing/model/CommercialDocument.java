@@ -29,12 +29,12 @@ abstract public class CommercialDocument extends Identifiable {
 	private int year;
 	
 	
-	@Column(length=6)
-	/* tmp
+	@Column(length=6)	
+	/*
 	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
 		properties=@PropertyValue(name="year") 
 	)
-	*/
+	*/	
 	private int number;
 	
 	
@@ -50,7 +50,14 @@ abstract public class CommercialDocument extends Identifiable {
 	
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
 	@ListProperties("product.number, product.description, quantity, pricePerUnit, amount")
-	private Collection<Detail> details;	
+	private Collection<Detail> details = new ArrayList<Detail>(); 
+	/* tmp new ArrayList<Detail>() 
+	 *   Cuando se resuelva
+	 *   	https://sourceforge.net/tracker/?func=detail&aid=2837034&group_id=123187&atid=695743
+	 *   Ver si no hace falta new ArrayList<Detail>(),
+	 *   	si no hace falta quitarlo
+	 *      si sigue haciendo falta modificar libro	
+	 */
 	
 	
 	@Stereotype("MEMO") 
@@ -58,6 +65,7 @@ abstract public class CommercialDocument extends Identifiable {
 	
 	@Digits(integerDigits=2, fractionalDigits=0) 
 	@Required
+	@DefaultValueCalculator(VatPercentageCalculator.class)
 	private BigDecimal vatPercentage;	
 	
 	@Stereotype("MONEY")
@@ -84,10 +92,11 @@ abstract public class CommercialDocument extends Identifiable {
 	}
 	
 	@PrePersist
-	public void calculateNumber() throws Exception { // tmp
+	public void calculateNumber() throws Exception { // tmp		
 		Query query = XPersistence.getManager()
-			.createQuery("select max(i.number) from CommercialDocument i " +
-					"where i.year = :year");
+			.createQuery("select max(i.number) from " + 
+					getClass().getSimpleName() +
+					" i where i.year = :year");
 		query.setParameter("year", year);		
 		Integer lastNumber = (Integer) query.getSingleResult();
 		this.number = lastNumber == null?1:lastNumber + 1;
