@@ -41,12 +41,12 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IP
 		return result; 
 	} 
 		
-	public String[] getNextControllers() {		
-		return DEFAULT_CONTROLLERS;
+	public String[] getNextControllers() {				
+		return PREVIOUS_CONTROLLERS;
 	}
 
 	public String getCustomView() {		
-		return DEFAULT_VIEW;
+		return PREVIOUS_VIEW;
 	}
 
 	public View getView() {
