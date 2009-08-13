@@ -47,6 +47,16 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public CustomerWithSectionTest(String testName) {
 		super(testName, "CustomerWithSection", true);		
 	}
+	
+	public void testCancelActionAfterChangeImageAction() throws Exception { 
+		addImage();
+		assertExists("telephone");
+		assertAction("EditableOnOff.setOn");
+		execute("Reference.createNew", "model=Seller,keyProperty=seller.number");		
+		execute("NewCreation.cancel");
+		assertExists("telephone");
+		assertAction("EditableOnOff.setOn");		
+	}
 				
 	public void testTELEPHONE_EMAIL_WEBURLstereotypes() throws Exception {
 		execute("Mode.detailAndFirst");

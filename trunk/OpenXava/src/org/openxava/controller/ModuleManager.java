@@ -324,7 +324,7 @@ public class ModuleManager {
 			if (action instanceof ICustomViewAction) {
 				ICustomViewAction customViewAction = (ICustomViewAction) action;
 				String newView = customViewAction.getCustomView();
-				if (ICustomViewAction.PREVIOUS_VIEW.equals(newView)) { 
+				if (ICustomViewAction.PREVIOUS_VIEW.equals(newView)) {
 					restorePreviousCustomView();
 					reloadViewNeeded = true; 
 				}													
@@ -566,7 +566,7 @@ public class ModuleManager {
 			setViewName(ICustomViewAction.DEFAULT_VIEW);
 			return;						
 		}		
-		String view = (String) previousCustomViews.pop();		
+		String view = (String) previousCustomViews.pop();
 		setViewName(view);		
 	}
 		

@@ -203,7 +203,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertListRowCount(total);		
 	}
 	
-	private void addImage() throws Exception{
+	protected void addImage() throws Exception{ 
 		execute("CRUD.new");
 		execute("ImageEditor.changeImage", "newImageProperty=photo"); 
 		assertNoErrors();
