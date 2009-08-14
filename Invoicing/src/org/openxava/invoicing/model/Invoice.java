@@ -14,6 +14,7 @@ import org.openxava.annotations.*;
 			"customer;" +
 			"details;" +
 			"amounts [ vatPercentage, baseAmount, vat, totalAmount ];" + // tmp move a papa
+			"amount;" +
 			"remarks" +
 		"}" +
 		"orders { orders } "			

@@ -18,11 +18,14 @@ import org.openxava.jpa.*;
 		"details;" +
 		"amounts [ " +
 		"	vatPercentage, baseAmount, vat, totalAmount" +
-		"];" +  
+		"];" +		
 		"remarks" +
 	"}"	
 )
 abstract public class CommercialDocument extends Identifiable {
+	
+	@Transient
+	private boolean removing = false; // tmp
 	
 	@Column(length=4) 
 	@DefaultValueCalculator(CurrentYearCalculator.class)
@@ -30,13 +33,8 @@ abstract public class CommercialDocument extends Identifiable {
 	
 	
 	@Column(length=6)	
-	/*
-	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
-		properties=@PropertyValue(name="year") 
-	)
-	*/	
-	private int number;
-	
+	@ReadOnly 	
+	private int number;	
 	
 	@Required
 	@DefaultValueCalculator(CurrentDateCalculator.class)
@@ -47,7 +45,18 @@ abstract public class CommercialDocument extends Identifiable {
 	@ReferenceView("Simple")
 	private Customer customer;
 	
+	@Stereotype("MONEY")
+	private BigDecimal amount; 
 	
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
 	@ListProperties("product.number, product.description, quantity, pricePerUnit, amount")
 	private Collection<Detail> details = new ArrayList<Detail>(); 
@@ -92,7 +101,7 @@ abstract public class CommercialDocument extends Identifiable {
 	}
 	
 	@PrePersist
-	public void calculateNumber() throws Exception { // tmp		
+	public void calculateNumber() throws Exception { 		
 		Query query = XPersistence.getManager()
 			.createQuery("select max(i.number) from " + 
 					getClass().getSimpleName() +
@@ -101,7 +110,29 @@ abstract public class CommercialDocument extends Identifiable {
 		Integer lastNumber = (Integer) query.getSingleResult();
 		this.number = lastNumber == null?1:lastNumber + 1;
 	}
+
+	// tmp ini
+	boolean isRemoving() {
+		return removing;
+	}
 	
+	@PreRemove
+	private void markRemoving() {
+		this.removing = true;
+	}
+	
+	@PostRemove
+	private void unmarkRemoving() {
+		this.removing = false;
+	}
+	// tmp fin
+	
+	public void recalculateAmount() { 
+		setAmount(getTotalAmount());
+	}
+	
+
+		
 	// Getters and setters
 	
 	public int getYear() {
