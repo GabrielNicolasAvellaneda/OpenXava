@@ -456,6 +456,13 @@ public class CustomerTest extends ModuleTestBase {
 		assertTrue("Search 'alternateSeller' should be 'Reference.search'", html.indexOf("'Reference.search', 'keyProperty=alternateSeller.number'") > 0);
 		execute("MyReference.search", "keyProperty=seller.number");
 		assertListRowCount(2); // Because custome searh action filter
+		execute("ReferenceSearch.cancel");
+		// Testing that the main tab of module is not affected
+		assertNoAction("Mode.detailAndFirst");
+		assertAction("Mode.list");		
+		execute("Mode.list");		
+		assertAction("Mode.detailAndFirst");
+		assertNoAction("Mode.list");
 	}
 	
 	public void testReferencesIfBlankKeyOrNotExists() throws Exception {

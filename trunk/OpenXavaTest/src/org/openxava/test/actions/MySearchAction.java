@@ -10,6 +10,7 @@ public class MySearchAction extends ReferenceSearchAction {
 		
 	public void execute() throws Exception {
 		super.execute();
+		getTab().setTabName("Other"); 
 		getTab().setBaseCondition("${number} < 3");
 	}
 

@@ -770,7 +770,8 @@ public class Tab implements java.io.Serializable {
 
 	public void setModelName(String newModelName) {		
 		if (Is.equal(modelName, newModelName)) return;
-		modelName = newModelName;		
+		modelName = newModelName;
+		tabName = null; 
 		reinitState();
 		loadUserPreferences();
 	}

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Changing the name of a searching reference tab makes the main module tab fails.
 - Fix: After loading an image (LoadImageAction) subsequent calls to CancelAction do not return to previous view.
 - Added reset() method in ModuleManager to reinitalize the running module. 
 - Added getAll() method in ModuleContext to obtain all objects with the same name. 
