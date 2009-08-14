@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Quarter">
+
+	<entity>
+		<reference name="year" model="AcademicYear" key="true"/>
+		<property name="quarter" type="int" key="true" size="1"/>
+		<property name="initDate" type="java.util.Date"/>
+		<property name="endDate" type="java.util.Date"/>
+		<collection name="subjects">
+			<reference model="QuarterSubject"/>
+		</collection>		
+	</entity>
+	
+	<aggregate name="QuarterSubject">
+		<reference name="quarter" key="true"/>
+		<property name="code" size="5" key="true"/>
+		<property name="description" size="50" key="true"/>
+		<collection nmae="groups">
+			<reference model="SubjectGroup"/>	
+		</collection>
+	</aggregate>
+
+	<view>
+		<reference-view reference="year">
+			<descriptions-list/>
+		</reference-view>		
+	</view>
+			
+</component>
