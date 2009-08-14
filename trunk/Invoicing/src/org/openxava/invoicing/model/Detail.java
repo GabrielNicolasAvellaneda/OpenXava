@@ -35,6 +35,25 @@ public class Detail extends Identifiable {
 		return new BigDecimal(quantity).multiply(getPricePerUnit());
 	}
 	
+	@PrePersist  
+	private void onPersist() {
+		getParent().getDetails().add(this);
+		getParent().recalculateAmount();
+	}
+	
+	@PreUpdate
+	private void onUpdate() {
+		getParent().recalculateAmount();
+	}	
+	
+	
+	@PreRemove
+	private void onRemove() {
+		if (getParent().isRemoving()) return; // tmp		
+		getParent().getDetails().remove(this);
+		getParent().recalculateAmount();
+	}
+	
 	// Getters and setters
 	
 	public CommercialDocument getParent() {
