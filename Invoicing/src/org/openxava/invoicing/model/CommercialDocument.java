@@ -25,8 +25,8 @@ import org.openxava.jpa.*;
 abstract public class CommercialDocument extends Identifiable {
 	
 	@Transient
-	private boolean removing = false; // tmp
-	
+	private boolean removing = false; 
+		
 	@Column(length=4) 
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
@@ -75,8 +75,9 @@ abstract public class CommercialDocument extends Identifiable {
 	@Digits(integerDigits=2, fractionalDigits=0) 
 	@Required
 	@DefaultValueCalculator(VatPercentageCalculator.class)
-	private BigDecimal vatPercentage;	
-	
+	private BigDecimal vatPercentage;
+		
+
 	@Stereotype("MONEY")
 	public BigDecimal getBaseAmount() {
 		BigDecimal result = new BigDecimal("0.00");
@@ -111,7 +112,6 @@ abstract public class CommercialDocument extends Identifiable {
 		this.number = lastNumber == null?1:lastNumber + 1;
 	}
 
-	// tmp ini
 	boolean isRemoving() {
 		return removing;
 	}
@@ -125,7 +125,6 @@ abstract public class CommercialDocument extends Identifiable {
 	private void unmarkRemoving() {
 		this.removing = false;
 	}
-	// tmp fin
 	
 	public void recalculateAmount() { 
 		setAmount(getTotalAmount());
