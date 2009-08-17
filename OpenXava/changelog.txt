@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- On adding first collection element the container entity is refreshed in UI after saved.
+- Fix: Calculated properties fails on adding first collection element in some circumstances.
+- Fix: View.refresh() method closed detail element view of collections.
 - Fix: Changing the name of a searching reference tab makes the main module tab fails.
 - Fix: After loading an image (LoadImageAction) subsequent calls to CancelAction do not return to previous view.
 - Added reset() method in ModuleManager to reinitalize the running module. 

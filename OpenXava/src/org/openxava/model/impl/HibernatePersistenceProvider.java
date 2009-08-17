@@ -9,6 +9,7 @@ import org.apache.commons.logging.*;
 import org.hibernate.*;
 
 import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -20,7 +21,10 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 	private static Log log = LogFactory.getLog(HibernatePersistenceProvider.class);
 	
 	protected Object find(Class pojoClass, Serializable key) {
-		return XHibernate.getSession().get(pojoClass, (Serializable) key);
+		flush(); 
+		Object result = XHibernate.getSession().get(pojoClass, (Serializable) key);  
+		if (result != null) refreshIfManaged(result); 			
+		return result;
 	}
 	
 	protected void persist(Object object) {

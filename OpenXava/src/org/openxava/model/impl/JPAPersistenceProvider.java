@@ -22,7 +22,10 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 	
 	protected Object find(Class pojoClass, Serializable key) {
 		try {
-			return XPersistence.getManager().find(pojoClass, key);
+			flush(); 
+			Object result = XPersistence.getManager().find(pojoClass, key);  
+			if (result != null) refreshIfManaged(result); 			
+			return result;
 		}
 		catch (EntityNotFoundException ex) {
 			// As in JPA specification find does not throw EntityNotFoundException
@@ -85,7 +88,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 
 	public void refreshIfManaged(Object object) {
 		if (isManaged(object)) {
-			XPersistence.getManager().refresh(object);		
+			XPersistence.getManager().refresh(object);
 		}
 	}
 	
