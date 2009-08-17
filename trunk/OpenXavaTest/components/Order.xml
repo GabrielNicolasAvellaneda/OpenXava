@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Order">
+
+	<entity>
+		<property name="oid" type="String" key="true" hidden="true">
+			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
+		</property>
+		
+		<property name="year" type="int" size="4">
+			<default-value-calculator class="org.openxava.calculators.CurrentYearCalculator"/>
+		</property>
+		
+		<property name="number" type="int" size="6"/>
+		
+		<property name="date" type="java.util.Date" required="true">
+			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>
+		</property>
+		
+		<reference name="customer" required="true"/>
+		
+		<collection name="details">
+			<reference model="OrderDetail"/>
+		</collection>
+		
+		<property name="remarks" stereotype="MEMO"/>
+		
+		<property name="amount" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.OrderAmountCalculator"/>
+		</property>
+		
+		<postcreate-calculator class="org.openxava.test.calculators.OrderNumberCalculator"/>		
+
+	</entity>
+	
+	<aggregate name="OrderDetail">
+		<property name="oid" type="String" key="true" hidden="true">
+			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
+		</property>
+		
+		<property name="quantity" type="int"/>
+		
+		<reference name="product" model="Product2" required="true"/>
+		
+		<property name="amount" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.OrderDetailAmountCalculator">
+				<set property="productNumber" from="product.number"/>
+				<set property="quantity"/>
+			</calculator>
+		</property>	
+	</aggregate>
+	
+	<view>
+		<reference-view reference="customer" view="Simplest"/>
+		<collection-view collection="details">
+			<list-properties>product.number, product.description, quantity, product.unitPrice, amount</list-properties>
+		</collection-view>
+		<members>
+			year, number, date;
+			customer;
+			details;
+			amount;
+			remarks
+		</members>
+	</view>
+	
+	<view model="OrderDetail">
+		<members>product; quantity, amount</members>
+	</view>
+	
+	<entity-mapping table="XAVATEST@separator@TOrder">
+		<property-mapping property="oid"/>
+		<property-mapping property="year"/>
+		<property-mapping property="number"/>
+		<property-mapping property="date"/>
+		<reference-mapping property="customer">
+			<reference-mapping-detail
+				referenced-model-property="number" 
+				column="CUSTOMER_NUMBER"/>
+		</reference-mapping>		
+		<property-mapping property="remarks"/>		
+	</entity-mapping> 
+	
+</component>

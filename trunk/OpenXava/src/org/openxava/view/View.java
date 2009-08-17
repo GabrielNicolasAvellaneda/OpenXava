@@ -452,12 +452,15 @@ public class View implements java.io.Serializable {
 	}
 	
 	public void setValues(Map map) throws XavaException {
-		if (values == null) values = new HashMap();
-		else values.clear();
-		closeChildCollectionDetailsAndClearSelected();
-		addValues(map);		
+		setValues(map, true);
 	}
 	
+	private void setValues(Map map, boolean closeCollections) throws XavaException { 
+		if (values == null) values = new HashMap();
+		else values.clear();
+		if (closeCollections) closeChildCollectionDetailsAndClearSelected();
+		addValues(map);		
+	}
 
 	private void closeChildCollectionDetailsAndClearSelected() throws XavaException {
 		if (hasSubviews()) { 
@@ -2316,7 +2319,7 @@ public class View implements java.io.Serializable {
 		Map key = getKeyValues();
 		try {			
 			if (Maps.isEmptyOrZero(key)) clear();				
-			else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));				
+			else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()), false);				
 			refreshCollections(); 
 		}
 		catch (FinderException ex) {						

@@ -23,7 +23,7 @@ import org.openxava.view.*;
 
 public class SaveElementInCollectionAction extends CollectionElementViewBaseAction implements IChainActionWithArgv {
 	
-	
+	private boolean containerSaved = false; 
 	
 	public void execute() throws Exception {
 		Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
@@ -31,12 +31,13 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			getView().setKeyEditable(false); // To mark as saved
 		}
 		if (isEntityReferencesCollection()) saveEntity(containerKey);
-		else saveAggregate(containerKey);
+		else saveAggregate(containerKey);		
 		getView().setKeyEditable(false); // To mark as saved
 		getCollectionElementView().setCollectionEditingRow(-1);
 		getCollectionElementView().clear();
 		resetDescriptionsCache();
-		getView().recalculateProperties();
+		if (containerSaved) getView().getRoot().refresh(); 
+		else getView().recalculateProperties(); 
 	}
 	
 	private void validateMaximum() throws ValidationException, XavaException {
@@ -127,25 +128,26 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			if (view.isKeyEditable()) {				
 				Map key = MapFacade.createReturningKey(getModelName(), view.getValues());
 				addMessage("entity_created", getModelName());
-				view.addValues(key);						
+				view.addValues(key);
+				containerSaved=true;
 				return key;								
 			}			
-			else {				
+			else {								
 				return view.getKeyValues();									
 			}
 		}			
 		else {
-			if (view.getKeyValuesWithValue().isEmpty()) {
+			if (view.getKeyValuesWithValue().isEmpty()) {				
 				Map parentKey = saveIfNotExists(view.getParent());
 				Map key = MapFacade.createAggregateReturningKey( 
 					view.getModelName(),
 					parentKey, 0,					
 					view.getValues() );
 				addMessage("aggregate_created", view.getModelName());
-				view.addValues(key);									
+				view.addValues(key);
 				return key;										
 			}
-			else {				
+			else {			
 				return view.getKeyValues();
 			}
 		}
