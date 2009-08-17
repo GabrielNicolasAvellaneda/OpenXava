@@ -49,7 +49,7 @@ public class Detail extends Identifiable {
 	
 	@PreRemove
 	private void onRemove() {
-		if (getParent().isRemoving()) return; // tmp		
+		if (getParent().isRemoving()) return; 		
 		getParent().getDetails().remove(this);
 		getParent().recalculateAmount();
 	}
@@ -88,5 +88,4 @@ public class Detail extends Identifiable {
 		this.pricePerUnit = pricePerUnit;
 	}
 	
-
 }
