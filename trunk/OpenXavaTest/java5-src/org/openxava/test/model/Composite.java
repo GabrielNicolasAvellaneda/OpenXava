@@ -3,6 +3,9 @@ package org.openxava.test.model;
 import java.util.*;
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+import org.openxava.test.actions.*;
+
 /**
  *  
  * @author Javier Paniza
@@ -11,7 +14,8 @@ import javax.persistence.*;
 @Entity
 public class Composite extends Nameable {
 
-	@ManyToOne @JoinColumn(name="PARENT_OID") 
+	@ManyToOne @JoinColumn(name="PARENT_OID")
+	@OnChange(OnChangeVoidAction.class) // Needed to test a case
 	private Composite composite;
 
 	
