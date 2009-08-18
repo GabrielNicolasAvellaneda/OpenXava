@@ -12,7 +12,7 @@ import org.openxava.jpa.*;
 
 @Entity
 @View(members=
-	"year, number, date;" +
+	"year, number, date," +
 	"data {" +
 		"customer;" +
 		"details;" +

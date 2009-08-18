@@ -4,10 +4,16 @@ import javax.persistence.*;
 
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.invoicing.validators.*;
 import org.openxava.util.*;
 
 @Entity
 @Views({
+	/*
+	@View( extendsView="super.DEFAULT",
+		members="delivered; invoice { invoice } "
+	),
+	*/
 	@View( members=
 		"year, number, date, delivered;" +
 		"data {" +
@@ -18,16 +24,17 @@ import org.openxava.util.*;
 		"}" +
 		"invoice { invoice } "			
 	),
-	/*
-	@View( extendsView="super.DEFAULT",
-		members="delivered; invoice { invoice } "
-	),
-	*/	
 	@View( name="NoCustomerNoInvoice", members=			
 		"year, number, date;" +
 		"details;" +
 		"remarks" 
 	)
+})
+@EntityValidator(value=DeliveredToBeInInvoiceValidator.class, properties= {
+	@PropertyValue(name="year"),
+	@PropertyValue(name="number"),
+    @PropertyValue(name="invoice"),
+    @PropertyValue(name="delivered")
 })
 public class Order extends CommercialDocument {
 	
@@ -64,8 +71,16 @@ public class Order extends CommercialDocument {
 		this.invoice = invoice;
 	}
 	
+	@AssertTrue
+	private boolean isDeliveredToBeInInvoice() {
+		if (invoice == null) return true;
+		return isDelivered();
+	}
+	
+	/*
 	@PreUpdate
 	private void validate() throws Exception {
+
 		if (invoice != null && !isDelivered()) {			
 			//throw new XavaException("Açò ha kaskat");			
 			throw new InvalidStateException(
@@ -76,5 +91,6 @@ public class Order extends CommercialDocument {
 			
 		}	
 	}
+	*/
 	
 }
