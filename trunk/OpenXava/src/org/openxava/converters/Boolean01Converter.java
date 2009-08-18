@@ -8,7 +8,7 @@ package org.openxava.converters;
 /**
  * In java boolean and in database Number that
  * it can be 1 or 0.
- * 
+ *  
  * @author Javier Paniza
  */
 public class Boolean01Converter implements IConverter {
@@ -24,6 +24,7 @@ public class Boolean01Converter implements IConverter {
 	
 	public Object toJava(Object o) throws ConversionException {
 		if (o == null) return Boolean.FALSE;
+		if (o instanceof Boolean) return o; // By pass of Boolean objects 
 		if (!(o instanceof Number)) {		
 			throw new ConversionException("conversion_java_number_expected");
 		}

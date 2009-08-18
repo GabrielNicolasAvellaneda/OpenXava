@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Formatting boolean in list mode fails when boolean type column is used.
 - On adding first collection element the container entity is refreshed in UI after saved.
 - Fix: Calculated properties fails on adding first collection element in some circumstances.
 - Fix: View.refresh() method closed detail element view of collections.
