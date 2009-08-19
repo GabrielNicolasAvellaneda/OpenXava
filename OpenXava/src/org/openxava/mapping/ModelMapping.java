@@ -249,7 +249,11 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 	
 	public String getQualifiedColumn(String modelProperty) 
-		throws XavaException {				
+		throws XavaException {	
+		
+		PropertyMapping propertyMapping = (PropertyMapping) propertyMappings.get(modelProperty);
+		if (propertyMapping != null && propertyMapping.hasFormula()) return getColumn(modelProperty);
+		
 		String tableColumn = getTableColumn(modelProperty, true);
 		if (Is.emptyString(tableColumn))
 			return "'" + modelProperty + "'";
