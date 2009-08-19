@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- When the user reset the filters in list, the comparators (the combos) are reset too. 
 - Fix: StackOverflowError with recursive referenced annotated with @OnChange.
 - Fix: Formatting boolean in list mode fails when boolean type column is used.
 - On adding first collection element the container entity is refreshed in UI after saved.

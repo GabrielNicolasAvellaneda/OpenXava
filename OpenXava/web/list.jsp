@@ -133,7 +133,7 @@ while (it.hasNext()) {
 <th class=<%=style.getListSubheaderCell()%> width="5">
 	<a title='<xava:message key="clear_condition_values"/>' href="javascript:void(0)">
 		<img src='<%=request.getContextPath()%>/xava/images/clear-right.gif'
-			border='0' align='middle' onclick="openxava.clearConditionValues('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=prefix%>')"/>
+			border='0' align='middle' onclick="openxava.clearCondition('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=prefix%>')"/>
 	</a>
 </th>
 <%
