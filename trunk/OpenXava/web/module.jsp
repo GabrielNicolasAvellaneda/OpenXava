@@ -45,7 +45,8 @@ Module.setStyle(style);
 
 
 
-<%@page import="org.openxava.web.Ids"%><html xmlns="http://www.w3.org/1999/xhtml" >
+<%@page import="org.openxava.web.Ids"%>
+<%@page import="org.openxava.util.Strings"%><html xmlns="http://www.w3.org/1999/xhtml" >
 <%@page import="org.openxava.web.servlets.Servlets"%><%@page import="org.openxava.util.Is"%>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 
@@ -113,8 +114,12 @@ Module.setStyle(style);
 <% } %>
 
 <script>
-<% String onLoadFunction=manager.getApplicationName() + "_" + manager.getModuleName() + "_openxavaOnLoad"; %>
-<% String initiated=manager.getApplicationName() + "_" + manager.getModuleName() + "_initiated"; %>
+<% 
+String prefix = Strings.change(manager.getApplicationName(), "-", "_") + 
+	"_" + Strings.change(manager.getModuleName(), "-", "_");
+String onLoadFunction= prefix + "_openxavaOnLoad"; 
+String initiated=prefix + "_initiated"; 
+%>
 <%=onLoadFunction%> = function() { 
 	if (openxava != null && openxava.<%=initiated%> == null) {
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
