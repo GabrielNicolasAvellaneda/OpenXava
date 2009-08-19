@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Double click execute the action twice, adding duplicate records to database in some cases.
 - Fix: AccessTracking does not work in Sybase.
 - When the user reset the filters in list, the comparators (the combos) are reset too. 
 - Fix: StackOverflowError with recursive referenced annotated with @OnChange.

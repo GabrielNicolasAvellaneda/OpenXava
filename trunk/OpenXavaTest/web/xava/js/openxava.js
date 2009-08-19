@@ -6,7 +6,9 @@ openxava.init = function(application, module) {
 	openxava.ajaxRequest(application, module);
 }
 
-openxava.ajaxRequest = function(application, module) {	
+openxava.ajaxRequest = function(application, module) {
+	if (document.requesting) return;
+	document.requesting = true;
 	document.throwPropertyChange = false; 
 	document.getElementById(openxava.decorateId(application, module, "loading")).value=true;    
 	document.body.style.cursor='wait';
@@ -19,6 +21,7 @@ openxava.ajaxRequest = function(application, module) {
 }
 
 openxava.refreshPage = function(result) {
+	document.requesting = false;
 	var changed = "";	
 	if (result.error != null) {		
 		openxava.systemError(result);

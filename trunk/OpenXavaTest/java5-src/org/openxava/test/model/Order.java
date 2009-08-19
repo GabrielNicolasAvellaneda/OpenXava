@@ -41,7 +41,7 @@ public class Order extends Identifiable {
 	
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
 	@ListProperties("product.number, product.description, quantity, product.unitPrice, amount")
-	private Collection<OrderDetail> details;  
+	private Collection<OrderDetail> details = new ArrayList<OrderDetail>();  
 	
 	@Stereotype("MEMO") 
 	private String remarks;
