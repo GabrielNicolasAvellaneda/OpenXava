@@ -30,12 +30,7 @@ import org.openxava.util.*;
 		"remarks" 
 	)
 })
-@EntityValidator(value=DeliveredToBeInInvoiceValidator.class, properties= {
-	@PropertyValue(name="year"),
-	@PropertyValue(name="number"),
-    @PropertyValue(name="invoice"),
-    @PropertyValue(name="delivered")
-})
+@RemoveValidator(OrderRemoveValidator.class)
 public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -57,40 +52,12 @@ public class Order extends CommercialDocument {
 	}
 
 	public void setInvoice(Invoice invoice) {
-		/* tmp
-		if (invoice != null && !isDelivered()) {			
-			//throw new XavaException("Açò ha kaskat");			
-			throw new InvalidStateException(
-				new InvalidValue[] {
-					new InvalidValue("Ha caskat", getClass(), "delivered", true, this)
-				}
-			);
-			
-		}
-		*/
 		this.invoice = invoice;
 	}
 	
 	@AssertTrue
-	private boolean isDeliveredToBeInInvoice() {
-		if (invoice == null) return true;
-		return isDelivered();
-	}
-	
-	/*
-	@PreUpdate
-	private void validate() throws Exception {
-
-		if (invoice != null && !isDelivered()) {			
-			//throw new XavaException("Açò ha kaskat");			
-			throw new InvalidStateException(
-				new InvalidValue[] {
-					new InvalidValue("Ha caskat", getClass(), "delivered", true, this)
-				}
-			);
-			
-		}	
-	}
-	*/
+	private boolean isDeliveredToBeInInvoice() {		
+		return invoice == null || isDelivered();
+	}	
 	
 }
