@@ -347,7 +347,8 @@
 <!ELEMENT property-mapping (converter?)>
 <!ATTLIST property-mapping
  property CDATA #REQUIRED
- column CDATA #REQUIRED
+ column CDATA #IMPLIED
+ formula CDATA #IMPLIED
  cmp-type CDATA #IMPLIED 
 >
 

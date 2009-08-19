@@ -91,7 +91,7 @@ while (itAggregates.hasNext()) {
 			}
 		}
 		else {
-			fvalue = WebEditors.format(request, p, value, errors, view.getViewName());	
+			fvalue = WebEditors.format(request, p, value, errors, view.getViewName(), true);	
 		}
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>"><%=fvalue%>&nbsp;</td>
