@@ -5,6 +5,7 @@ import java.math.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.invoicing.annotations.*;
 
 @Entity 
 @View(name="Simple", members="number, description")
@@ -29,6 +30,8 @@ public class Product {
 	@Stereotype("MONEY")
 	private BigDecimal price;
 	
+	@Column(length=13) @ISBN
+	private String isbn; // tmp
 	
 	@Stereotype("PHOTO") 
 	private byte [] photo;
@@ -108,5 +111,13 @@ public class Product {
 	public Author getAuthor() {
 		return author;
 	}
+	
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}	
 			
 }

@@ -6,6 +6,7 @@ import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.invoicing.validators.*;
 import org.openxava.util.*;
+import org.openxava.validators.*;
 
 @Entity
 @Views({
@@ -30,7 +31,6 @@ import org.openxava.util.*;
 		"remarks" 
 	)
 })
-@RemoveValidator(OrderRemoveValidator.class)
 public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -59,5 +59,14 @@ public class Order extends CommercialDocument {
 	private boolean isDeliveredToBeInInvoice() {		
 		return invoice == null || isDelivered();
 	}	
+	
+	@PreRemove
+	private void validateOnRemove() { 
+		if (invoice != null) {
+			throw new IllegalStateException(
+				XavaResources.getString(
+					"cannot_delete_order_with_invoice"));
+		}
+	}
 	
 }
