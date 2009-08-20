@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Parameters in module URL can be obtained with request.getParameter() from any part of the application, even inside a portal.
 - Fix: Projects with - in the name do not work.
 - Fix: Double click execute the action twice, adding duplicate records to database in some cases.
 - Fix: AccessTracking does not work in Sybase.

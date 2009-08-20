@@ -132,7 +132,8 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(InvoiceFromDeliveriesTest.class));		
 		suite.addTest(new TestSuite(InvoiceNestedSectionsTest.class));
 		suite.addTest(new TestSuite(InvoiceNoListTest.class));		
-		suite.addTest(new TestSuite(InvoiceTest.class));		
+		suite.addTest(new TestSuite(InvoiceTest.class));	
+		suite.addTest(new TestSuite(InvoiceWithParameterInURLTest.class));
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
 			suite.addTest(new TestSuite(IssueTest.class));
 		}								
