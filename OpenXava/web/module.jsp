@@ -7,9 +7,21 @@
 <%@page import="org.openxava.util.XSystem"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 
-<%
-if (request.getAttribute("style") == null) {	
-	request.setAttribute("style", org.openxava.web.style.Style.getInstance());
+<%! 
+private String getAdditionalParameters(HttpServletRequest request) { 
+	StringBuffer result = new StringBuffer();
+	for (java.util.Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
+		String name = (String) en.nextElement();
+		if ("application".equals(name) || "module".equals(name) ||
+			"xava.portlet.application".equals(name) || 
+			"xava.portlet.module".equals(name)) continue; 
+		String value = request.getParameter(name);			 
+		result.append('&');
+		result.append(name);
+		result.append('=');
+		result.append(value);
+	}	
+	return result.toString();
 }
 %>
 
@@ -140,4 +152,5 @@ String initiated=prefix + "_initiated";
 }
 window.onload = <%=onLoadFunction%>;
 setTimeout('<%=onLoadFunction%>()', 1000);
+document.additionalParameters="<%=getAdditionalParameters(request)%>"; 
 </script>

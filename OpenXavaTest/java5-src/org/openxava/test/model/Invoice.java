@@ -115,6 +115,11 @@ import org.openxava.util.*;
 		filter=Invoice20020001Filter.class,
 		properties="year, number, amountsSum, vat",
 		baseCondition="${year} = ? and ${number} = ?"
+	),
+	@Tab(name="YearParameter", 
+		filter=YearParameterFilter.class,
+		properties="year, number, customer.number, customer.name, amountsSum, vat, detailsCount, paid, importance",
+		baseCondition="${year} = ?"
 	)
 })
 

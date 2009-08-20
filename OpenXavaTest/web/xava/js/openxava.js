@@ -13,7 +13,7 @@ openxava.ajaxRequest = function(application, module) {
 	document.getElementById(openxava.decorateId(application, module, "loading")).value=true;    
 	document.body.style.cursor='wait';
 	Module.request(
-			application, module,
+			application, module, document.additionalParameters,
 			dwr.util.getValues(openxava.getForm(application, module)),
 			openxava.getMultipleValues(application, module), 
 			openxava.getSelectedValues(application, module), 					 

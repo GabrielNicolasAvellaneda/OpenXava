@@ -41,7 +41,7 @@ public class Module extends DWRBase {
 	private String module;
 	private ModuleManager manager;
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {		
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected) throws Exception { 
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module); 		
@@ -57,7 +57,7 @@ public class Module extends DWRBase {
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());			
-			getURIAsStream("execute.jsp", values, multipleValues, selected);			
+			getURIAsStream("execute.jsp", values, multipleValues, selected, additionalParameters);			
 			Map changedParts = new HashMap();
 			result.setChangedParts(changedParts);
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
@@ -74,7 +74,7 @@ public class Module extends DWRBase {
 				changeModule(result);
 			}
 			else {
-				fillResult(result, values, multipleValues, selected);
+				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}			
 			result.setStrokeActions(getStrokeActions());
 			return result;
@@ -161,27 +161,27 @@ public class Module extends DWRBase {
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {
-		request(request, response, application, module, null, null, null);		
+		request(request, response, application, module, null, null, null, null);		
 		memorizeLastMessages();				
 	}	
 
-	private InputStream getURIAsStream(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
-		return Servlets.getURIAsStream(request, response, getURI(jspFile, values, multipleValues, selected));
+	private InputStream getURIAsStream(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
+		return Servlets.getURIAsStream(request, response, getURI(jspFile, values, multipleValues, selected, additionalParameters));
 	}
 	
-	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
+	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
 		if (jspFile == null) return "";
 		if (jspFile.startsWith("html:")) return jspFile.substring(5); // Using html: prefix the content is returned as is
-		return Servlets.getURIAsString(request, response, getURI(jspFile, values, multipleValues, selected));
+		return Servlets.getURIAsString(request, response, getURI(jspFile, values, multipleValues, selected, additionalParameters));
 	}
 	
 
-	private void fillResult(Result result, Map values, Map multipleValues, String[] selected) throws Exception {
+	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
 		Map changedParts = result.getChangedParts();
 		for (Iterator it = getChangedParts(values).entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry changedPart = (Map.Entry) it.next();			
 			changedParts.put(changedPart.getKey(),
-				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected)	
+				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected, additionalParameters)	
 			);			
 		}	
 		if (!manager.isListMode()) {
@@ -359,7 +359,7 @@ public class Module extends DWRBase {
 		}		
 	}
 	
-	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected) {
+	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) {
 		StringBuffer result = new StringBuffer(getURIPrefix());
 		result.append(jspFile);
 		if (jspFile.endsWith(".jsp")) result.append('?');
@@ -369,6 +369,7 @@ public class Module extends DWRBase {
 		result.append("&module=");
 		result.append(module);
 		addValuesQueryString(result, values, multipleValues, selected);
+		if (!Is.emptyString(additionalParameters)) result.append(additionalParameters);
 		return result.toString();
 	}
 
