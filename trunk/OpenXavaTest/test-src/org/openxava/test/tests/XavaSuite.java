@@ -46,7 +46,6 @@ public class XavaSuite extends TestSuite {
 	}
 	public static Test suite() {		
 		TestSuite suite = new TestSuite();		
-
 		suite.addTest(new TestSuite(WarehouseTest.class));		
 		suite.addTest(new TestSuite(AJAXTest.class));
 		if (ModuleTestBase.isOX3()) {
@@ -202,7 +201,10 @@ public class XavaSuite extends TestSuite {
 		}
 		suite.addTest(new TestSuite(Subfamily2Test.class));
 		suite.addTest(new TestSuite(SubfamilySelectTest.class));	
-		suite.addTest(new TestSuite(SubfamilyTest.class));		
+		suite.addTest(new TestSuite(SubfamilyTest.class));
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(SummerCourseTest.class));
+		}
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(TaskTest.class));
 		}	

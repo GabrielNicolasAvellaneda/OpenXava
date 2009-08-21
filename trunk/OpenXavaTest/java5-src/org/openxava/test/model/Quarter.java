@@ -5,7 +5,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 /**
- * tmp Hacer versión XML
+ * 
  * @author Javier Paniza
  */
 
