@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: IChangeModuleAction does not work when called from a IChainAction.
+- Property isI18nWarnings from xava.properties now is false by default, so i18n warnings are no shown by default.
 - Fix: Error on delete entity with inheritance and composite key.
 - If adding alements to a collection validation exceptions are produced , the validation messages are show to the user.
 - Parameters in module URL can be obtained with request.getParameter() from any part of the application, even inside a portal.

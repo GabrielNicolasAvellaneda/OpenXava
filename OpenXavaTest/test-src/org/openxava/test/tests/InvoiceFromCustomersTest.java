@@ -85,6 +85,12 @@ public class InvoiceFromCustomersTest extends ModuleTestBase {
 		assertNoAction("Invoice.listOfCustomer");
 		assertAction("CustomerInvoices.return");
 		assertInvoices();		
+		
+		// Return to initial module using a chained action
+		execute("CustomerInvoices.returnWithChainedAction");
+		assertAction("Invoice.listOfCustomer");
+		assertNoAction("CustomerInvoices.return");
+		assertValueInList(0, 0, "Javi");		
 	}
 	
 	private void assertInvoices() throws Exception {
