@@ -419,6 +419,7 @@
 	
 	<controller name="CustomerInvoices">
 		<action name="return" class="org.openxava.actions.ReturnPreviousModuleAction"/>
+		<action name="returnWithChainedAction" class="org.openxava.test.actions.ChainToReturnPreviousModuleAction"/>
 	</controller>
 	
 	<controller name="ProductFromInvoice">

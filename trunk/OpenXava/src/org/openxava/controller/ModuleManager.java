@@ -30,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1.4beta (2009-7-xx)");		
+		log.info("OpenXava 3.1.4rc (2009-8-xx)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -402,6 +402,17 @@ public class ModuleManager {
 					request.getSession().setAttribute("xava_forward_inNewWindow", String.valueOf(forward.inNewWindow()));					
 				}				
 			}
+			nextModule = null;			
+			if (action instanceof IChangeModuleAction) {				
+				IChangeModuleAction moduleChange = (IChangeModuleAction) action;
+				nextModule = moduleChange.getNextModule();				
+				if (!Is.emptyString(nextModule)) {					
+					if (moduleChange.hasReinitNextModule()) {						
+						getContext().put(getApplicationName(), nextModule, "manager", null);
+					}
+					request.setAttribute("xava.sendParametersToTab", "false");
+				}
+			}		
 			if (action instanceof IChainAction) {
 				IChainAction chainable = (IChainAction) action;				
 				String nextAction = chainable.getNextAction();				
@@ -420,18 +431,6 @@ public class ModuleManager {
 					executeAction(nextMetaAction, action.getErrors(), action.getMessages(), argv, request); 
 				}
 			}
-			
-			nextModule = null;			
-			if (action instanceof IChangeModuleAction) {				
-				IChangeModuleAction moduleChange = (IChangeModuleAction) action;
-				nextModule = moduleChange.getNextModule();				
-				if (!Is.emptyString(nextModule)) {					
-					if (moduleChange.hasReinitNextModule()) {						
-						getContext().put(getApplicationName(), nextModule, "manager", null);
-					}
-					request.setAttribute("xava.sendParametersToTab", "false");
-				}
-			}			
 			if (!reloadViewNeeded) {
 				Object currentView = getContext().get(applicationName, moduleName, "xava_view"); 
 				reloadViewNeeded = currentView != previousView;

@@ -153,7 +153,7 @@ public class XavaPreferences {
 	}	
 	
 	public boolean isI18nWarnings() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("i18nWarnings", "true").trim());		
+		return "true".equalsIgnoreCase(getProperties().getProperty("i18nWarnings", "false").trim());		
 	}
 
 
