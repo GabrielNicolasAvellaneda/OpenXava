@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Error on delete entity with inheritance and composite key.
+- If adding alements to a collection validation exceptions are produced , the validation messages are show to the user.
 - Parameters in module URL can be obtained with request.getParameter() from any part of the application, even inside a portal.
 - Fix: Projects with - in the name do not work.
 - Fix: Double click execute the action twice, adding duplicate records to database in some cases.

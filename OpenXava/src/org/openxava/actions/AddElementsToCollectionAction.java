@@ -5,8 +5,10 @@ import java.util.*;
 import javax.ejb.*;
 
 import org.apache.commons.logging.*;
+import org.hibernate.validator.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
+import org.openxava.validators.*;
 
 /**
  * This is for the case of collections of entities without @AsEmbedded (or without as-aggregate="true"). <p>
@@ -42,7 +44,6 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 		}
 		addMessage("elements_added_to_collection", new Integer(added), currentCollectionLabel);
 		if (failed > 0) addError("elements_not_added_to_collection", new Integer(failed), currentCollectionLabel);
-		getView().setKeyEditable(false); // To mark as saved
 		getTab().deselectAll();
 		resetDescriptionsCache(); 
 		
@@ -55,6 +56,7 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 			added++;
 		}
 		catch (Exception ex) {
+			addValidationMessage(ex); 
 			failed++;
 			log.error(
 				XavaResources.getString("add_collection_element_error", 
@@ -64,6 +66,22 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 		}
 	}
 	
+	private void addValidationMessage(Exception ex) { 
+		if (ex instanceof ValidationException) {		
+			addErrors(((ValidationException)ex).getErrors());
+		}
+		else if (ex instanceof InvalidStateException) {
+			InvalidValue [] invalidValues = ((InvalidStateException) ex).getInvalidValues();
+			for (int i=0; i<invalidValues.length; i++) {
+				addError("invalid_state", 
+						invalidValues[i].getPropertyName(), 
+						Classes.getSimpleName(invalidValues[i].getBeanClass()), 
+						invalidValues[i].getMessage(), 
+						invalidValues[i].getValue());			
+			}
+		}		
+	}
+
 	public String getNextAction() throws Exception { 
 		// In order to annul the chaining of the action
 		return null;

@@ -2,6 +2,7 @@ package org.openxava.annotations.parse;
 
 import java.beans.*;
 import java.io.*;
+import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
@@ -63,12 +64,11 @@ public class AnnotatedClassParser {
 			if (!pojoClass.isAnnotationPresent(Entity.class)) {
 				component.setTransient(true);
 			}
-			
-			if (pojoClass.isAnnotationPresent(IdClass.class)) {
-				IdClass idClass = (IdClass) pojoClass.getAnnotation(IdClass.class);
+
+			IdClass idClass = (IdClass) getAnnotationInHierarchy(pojoClass, IdClass.class);
+			if (idClass != null) {				
 				entity.setPOJOKeyClass(idClass.value());
-			}
-			
+			}			
 			
 			EntityMapping mapping = new EntityMapping();
 			mapping.setTable(getTable(name, pojoClass));
@@ -91,6 +91,15 @@ public class AnnotatedClassParser {
 		finally {
 			removeParsingComponent(component);
 		}
+	}
+
+
+	private Annotation getAnnotationInHierarchy(Class pojoClass, Class annotation) {
+		if (Object.class.equals(pojoClass)) return null;
+		if (pojoClass.isAnnotationPresent(annotation)) {
+			return pojoClass.getAnnotation(annotation);
+		}
+		return getAnnotationInHierarchy(pojoClass.getSuperclass(), annotation);
 	}
 
 
@@ -253,10 +262,10 @@ public class AnnotatedClassParser {
 			metaAggregate.setName(modelName);
 			metaAggregate.setPOJOClassName(type.getName());
 			Class pojoClass = metaAggregate.getPOJOClass();
-			if (pojoClass.isAnnotationPresent(IdClass.class)) {
-				IdClass idClass = (IdClass) pojoClass.getAnnotation(IdClass.class);
+			IdClass idClass = (IdClass) getAnnotationInHierarchy(pojoClass, IdClass.class);
+			if (idClass != null) {				
 				metaAggregate.setPOJOKeyClass(idClass.value());
-			}
+			}			
 			model.getMetaComponent().addMetaAggregate(metaAggregate);
 			parseViews(model.getMetaComponent(), type, modelName);
 			AggregateMapping mapping = new AggregateMapping();

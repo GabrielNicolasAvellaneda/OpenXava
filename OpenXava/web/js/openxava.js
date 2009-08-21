@@ -7,8 +7,8 @@ openxava.init = function(application, module) {
 }
 
 openxava.ajaxRequest = function(application, module) {
-	if (document.requesting) return;
-	document.requesting = true;
+	if (openxava.isRequesting(application, module)) return; 	
+	openxava.setRequesting(application, module); 
 	document.throwPropertyChange = false; 
 	document.getElementById(openxava.decorateId(application, module, "loading")).value=true;    
 	document.body.style.cursor='wait';
@@ -20,8 +20,8 @@ openxava.ajaxRequest = function(application, module) {
 			openxava.refreshPage); 			
 }
 
-openxava.refreshPage = function(result) {
-	document.requesting = false;
+openxava.refreshPage = function(result) { 
+	openxava.resetRequesting(result); 
 	var changed = "";	
 	if (result.error != null) {		
 		openxava.systemError(result);
@@ -99,6 +99,21 @@ openxava.updateRootIds = function(application, moduleFrom, moduleTo) {
 	document.getElementById(openxava.decorateId(
 		application, moduleFrom, "loaded_parts")).id =	
 			openxava.decorateId(application, moduleTo, "loaded_parts");
+}
+
+openxava.setRequesting = function(application, module) { 
+	if (openxava.requesting == null) openxava.requesting = { };
+	openxava.requesting[application + "::" + module] = true;
+}
+
+openxava.isRequesting = function(application, module) { 
+	if (openxava.requesting == null) return false;
+	return openxava.requesting[application + "::" + module];
+}
+
+openxava.resetRequesting = function(result) { 
+	if (openxava.requesting == null) return;
+	openxava.requesting[result.application + "::" + result.module] = false;
 }
 
 openxava.getForm = function(application, module) { 		

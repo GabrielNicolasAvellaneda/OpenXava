@@ -25,6 +25,12 @@ private String getAdditionalParameters(HttpServletRequest request) {
 }
 %>
 
+<%
+if (request.getAttribute("style") == null) {	
+	request.setAttribute("style", org.openxava.web.style.Style.getInstance());
+}
+%>
+
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
