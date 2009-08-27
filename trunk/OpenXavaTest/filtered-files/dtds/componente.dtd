@@ -373,7 +373,7 @@
 <!ATTLIST mapeo-propiedad
  propiedad-modelo CDATA #REQUIRED
  columna-tabla CDATA #IMPLIED
- formula CDATE #IMPLIED
+ formula CDATA #IMPLIED
  tipo-cmp CDATA #IMPLIED 
 >
 

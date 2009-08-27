@@ -22,6 +22,8 @@ import org.openxava.model.meta.*;
 
 public class Messages implements java.io.Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private static Log log = LogFactory.getLog(Messages.class);
 	
 	static class Message implements java.io.Serializable {

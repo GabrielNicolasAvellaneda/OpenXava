@@ -40,6 +40,8 @@
    <RDBSchema:RDBTable xmi:id="RDBTable_Color" name="" primaryKey="Color_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Color_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Color" constraint="Constraint_Color_"/>
 
+      <columns xmi:id="Color__HexValue" name="_HexValue">
+      </columns>
       <columns xmi:id="Color__Name" name="_Name">
       </columns>
       <columns xmi:id="Color__Version" name="_Version">
@@ -259,6 +261,8 @@
       <columns xmi:id="Course_year" name="year">
       </columns>
       <columns xmi:id="Course__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Course__Dtype" name="_Dtype">
       </columns>
       <columns xmi:id="Course_number" name="number">
       </columns>
@@ -488,6 +492,17 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Report" name="" primaryKey="Report_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Report_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Report" constraint="Constraint_Report_"/>
+
+      <columns xmi:id="Report_oid" name="oid">
+      </columns>
+      <columns xmi:id="Report__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Report__Ranges_oid" name="_Ranges_oid">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_SellerLevel" name="" primaryKey="SellerLevel_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="SellerLevel_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_SellerLevel" constraint="Constraint_SellerLevel_"/>
 
@@ -685,6 +700,23 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Ranges" name="" primaryKey="Ranges_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Ranges_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Ranges" constraint="Constraint_Ranges_"/>
+
+      <columns xmi:id="Ranges__NumberFrom" name="_NumberFrom">
+      </columns>
+      <columns xmi:id="Ranges__Type" name="_Type">
+      </columns>
+      <columns xmi:id="Ranges_oid" name="oid">
+      </columns>
+      <columns xmi:id="Ranges__DateFrom" name="_DateFrom">
+      </columns>
+      <columns xmi:id="Ranges__NumberTo" name="_NumberTo">
+      </columns>
+      <columns xmi:id="Ranges__DateTo" name="_DateTo">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Family" name="" primaryKey="Family_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family" constraint="Constraint_Family_"/>
 
@@ -734,11 +766,15 @@
       </columns>
       <columns xmi:id="Product2__Description" name="_Description">
       </columns>
+      <columns xmi:id="Product2__UnitPriceWithTax" name="_UnitPriceWithTax">
+      </columns>
       <columns xmi:id="Product2_number" name="number">
       </columns>
       <columns xmi:id="Product2__Warehouse_zoneNumber" name="_Warehouse_zoneNumber">
       </columns>
       <columns xmi:id="Product2__Warehouse_number" name="_Warehouse_number">
+      </columns>
+      <columns xmi:id="Product2__Color_number" name="_Color_number">
       </columns>
       <columns xmi:id="Product2__Family_number" name="_Family_number">
       </columns>

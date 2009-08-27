@@ -128,8 +128,8 @@ public class ModuleTestBase extends TestCase {
 			// Liferay
 			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/c/portal/login");
 			resetLoginForm();			
-			setFormValue("login", user, true, false);					
-			setFormValue(getPasswordFieldInLiferay(), password, true, false);
+			setFormValue(getLiferayField("login"), user, true, false);					
+			setFormValue(getLiferayField("password"), password, true, false);
 			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getHtmlElementsByAttribute("input", "type", "submit").get(0);
 			page = (HtmlPage) button.click();
 			
@@ -358,22 +358,21 @@ public class ModuleTestBase extends TestCase {
 			return false;
 		}
 	}
-
-	private String getPasswordFieldInLiferay() {
+		
+	private String getLiferayField(String name) { 
 		Collection inputs = getForm().getHtmlElementsByTagName("input");		
-		String passwordTextField = "password";
+		String passwordTextField = name;
 		for (Iterator it = inputs.iterator(); it.hasNext(); ) {
 			HtmlInput input = (HtmlInput) it.next();
 			String elementName = input.getNameAttribute();
-			if (elementName.endsWith("_password")) {
+			if (elementName.endsWith("_" + name)) {
 				passwordTextField = elementName; 
 				break;
 			}
 		}
 		return passwordTextField;
 	}
-	
-	
+		
 	/**
 	 * User logout. <p>
 	 * 

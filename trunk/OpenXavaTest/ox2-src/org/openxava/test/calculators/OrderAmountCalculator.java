@@ -5,6 +5,7 @@ import java.rmi.*;
 import java.util.*;
 
 import org.openxava.calculators.*;
+import org.openxava.test.model.*;
 
 /**
  * 
@@ -17,9 +18,12 @@ public class OrderAmountCalculator implements IModelCalculator {
 
 	public Object calculate() throws Exception {
 		BigDecimal result = new BigDecimal("0.00");
-		for (Iterator it = order.getDetails(); it.hasNext(); ) {
-			IOrderDetail detail = (IOrderDetail) it.next;
-			result = result.add(detail.getAmount());
+		Collection details = order.getDetails();
+		if (details != null) {
+			for (Iterator it = details.iterator(); it.hasNext(); ) {
+				IOrderDetail detail = (IOrderDetail) it.next();
+				result = result.add(detail.getAmount());
+			}
 		}
 		return result;
 	}

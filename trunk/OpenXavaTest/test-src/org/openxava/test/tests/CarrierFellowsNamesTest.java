@@ -14,6 +14,7 @@ public class CarrierFellowsNamesTest extends ModuleTestBase {
 	}
 	
 	public void testEditorForCollectionByView() throws Exception{
+		execute("List.orderBy", "property=number"); 
 		execute("Mode.detailAndFirst");
 		assertValue("number", "1");
 		assertValue("name", "UNO");

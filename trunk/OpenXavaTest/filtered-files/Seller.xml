@@ -76,6 +76,10 @@
 		<filter class="org.openxava.test.filters.NumbersToLettersFilter"/>
 	</tab>
 	
+	<tab name="Other">
+		<filter class="org.openxava.test.filters.NumbersToLettersFilter"/>
+	</tab>	
+	
 	<entity-mapping table="XAVATEST.SELLER">
 		<property-mapping 
 			property="number" column="NUMBER"/>

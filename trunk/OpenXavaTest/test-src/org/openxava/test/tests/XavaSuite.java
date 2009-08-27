@@ -46,6 +46,7 @@ public class XavaSuite extends TestSuite {
 	}
 	public static Test suite() {		
 		TestSuite suite = new TestSuite();		
+		
 		suite.addTest(new TestSuite(WarehouseTest.class));		
 		suite.addTest(new TestSuite(AJAXTest.class));
 		if (ModuleTestBase.isOX3()) {
@@ -174,7 +175,9 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(ProgrammerTest.class));
 		}							
 		suite.addTest(new TestSuite(PublicJSPTest.class));
-		suite.addTest(new TestSuite(QuarterTest.class));
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(QuarterTest.class));
+		}
 		suite.addTest(new TestSuite(ReportTest.class));
 		suite.addTest(new TestSuite(SellerCannotCreateCustomerTest.class));
 		suite.addTest(new TestSuite(SellerJSPTest.class));

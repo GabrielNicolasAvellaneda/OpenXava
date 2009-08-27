@@ -45,7 +45,11 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/dwr.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-jdk14.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Messages objects are not serializable betweend different JVM. Added serialVersionUID.
+- Support for Liferay 5.2.3 with Tomcat 6.
+- Upgrade to commons-logging 1.1.1.
 - Fix: IChangeModuleAction does not work when called from a IChainAction.
 - Property isI18nWarnings from xava.properties now is false by default, so i18n warnings are no shown by default.
 - Fix: Error on delete entity with inheritance and composite key.

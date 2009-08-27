@@ -14,6 +14,7 @@ public class CourseData
    private static final long serialVersionUID = 1L;
    private int year;
    private java.lang.String _Description;
+   private java.lang.String _Dtype;
    private int number;
 
    public CourseData()
@@ -24,6 +25,7 @@ public class CourseData
    {
       setYear(otherData.getYear());
       set_Description(otherData.get_Description());
+      set_Dtype(otherData.get_Dtype());
       setNumber(otherData.getNumber());
 
    }
@@ -51,6 +53,15 @@ public class CourseData
       this._Description = _Description;
    }
 
+   public java.lang.String get_Dtype()
+   {
+      return this._Dtype;
+   }
+   public void set_Dtype( java.lang.String _Dtype )
+   {
+      this._Dtype = _Dtype;
+   }
+
    public int getNumber()
    {
       return this.number;
@@ -64,7 +75,7 @@ public class CourseData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("year=" + getYear() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber());
+      str.append("year=" + getYear() + " " + "_Description=" + get_Description() + " " + "_Dtype=" + get_Dtype() + " " + "number=" + getNumber());
       str.append('}');
 
       return(str.toString());
@@ -86,6 +97,14 @@ public class CourseData
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
+         if( this._Dtype == null )
+         {
+            lEquals = lEquals && ( lTest._Dtype == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Dtype.equals( lTest._Dtype );
+         }
          lEquals = lEquals && this.number == lTest.number;
 
          return lEquals;
@@ -103,6 +122,8 @@ public class CourseData
       result = 37*result + (int) year;
 
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+
+      result = 37*result + ((this._Dtype != null) ? this._Dtype.hashCode() : 0);
 
       result = 37*result + (int) number;
 
