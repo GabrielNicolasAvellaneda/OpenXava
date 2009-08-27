@@ -24,6 +24,9 @@ public interface Product2Home
    public java.util.Collection findByWarehouse(int zoneNumber, java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public java.util.Collection findByColor(java.lang.Integer number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findByFamily(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

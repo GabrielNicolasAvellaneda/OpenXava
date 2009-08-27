@@ -15,9 +15,11 @@ public class Product2Data
    private java.lang.String _Photos;
    private java.math.BigDecimal _UnitPrice;
    private java.lang.String _Description;
+   private java.math.BigDecimal _UnitPriceWithTax;
    private long number;
    private int _Warehouse_zoneNumber;
    private java.lang.Integer _Warehouse_number;
+   private java.lang.Integer _Color_number;
    private int _Family_number;
    private int _Subfamily_number;
    private java.lang.String _Formula_oid;
@@ -31,9 +33,11 @@ public class Product2Data
       set_Photos(otherData.get_Photos());
       set_UnitPrice(otherData.get_UnitPrice());
       set_Description(otherData.get_Description());
+      set_UnitPriceWithTax(otherData.get_UnitPriceWithTax());
       setNumber(otherData.getNumber());
       set_Warehouse_zoneNumber(otherData.get_Warehouse_zoneNumber());
       set_Warehouse_number(otherData.get_Warehouse_number());
+      set_Color_number(otherData.get_Color_number());
       set_Family_number(otherData.get_Family_number());
       set_Subfamily_number(otherData.get_Subfamily_number());
       set_Formula_oid(otherData.get_Formula_oid());
@@ -72,6 +76,15 @@ public class Product2Data
       this._Description = _Description;
    }
 
+   public java.math.BigDecimal get_UnitPriceWithTax()
+   {
+      return this._UnitPriceWithTax;
+   }
+   public void set_UnitPriceWithTax( java.math.BigDecimal _UnitPriceWithTax )
+   {
+      this._UnitPriceWithTax = _UnitPriceWithTax;
+   }
+
    public long getNumber()
    {
       return this.number;
@@ -97,6 +110,15 @@ public class Product2Data
    public void set_Warehouse_number( java.lang.Integer _Warehouse_number )
    {
       this._Warehouse_number = _Warehouse_number;
+   }
+
+   public java.lang.Integer get_Color_number()
+   {
+      return this._Color_number;
+   }
+   public void set_Color_number( java.lang.Integer _Color_number )
+   {
+      this._Color_number = _Color_number;
    }
 
    public int get_Family_number()
@@ -130,7 +152,7 @@ public class Product2Data
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Photos=" + get_Photos() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_Family_number=" + get_Family_number() + " " + "_Subfamily_number=" + get_Subfamily_number() + " " + "_Formula_oid=" + get_Formula_oid());
+      str.append("_Photos=" + get_Photos() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "_Description=" + get_Description() + " " + "_UnitPriceWithTax=" + get_UnitPriceWithTax() + " " + "number=" + getNumber() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_Color_number=" + get_Color_number() + " " + "_Family_number=" + get_Family_number() + " " + "_Subfamily_number=" + get_Subfamily_number() + " " + "_Formula_oid=" + get_Formula_oid());
       str.append('}');
 
       return(str.toString());
@@ -167,6 +189,14 @@ public class Product2Data
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
+         if( this._UnitPriceWithTax == null )
+         {
+            lEquals = lEquals && ( lTest._UnitPriceWithTax == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._UnitPriceWithTax.equals( lTest._UnitPriceWithTax );
+         }
          lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this._Warehouse_zoneNumber == lTest._Warehouse_zoneNumber;
          if( this._Warehouse_number == null )
@@ -176,6 +206,14 @@ public class Product2Data
          else
          {
             lEquals = lEquals && this._Warehouse_number.equals( lTest._Warehouse_number );
+         }
+         if( this._Color_number == null )
+         {
+            lEquals = lEquals && ( lTest._Color_number == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Color_number.equals( lTest._Color_number );
          }
          lEquals = lEquals && this._Family_number == lTest._Family_number;
          lEquals = lEquals && this._Subfamily_number == lTest._Subfamily_number;
@@ -206,11 +244,15 @@ public class Product2Data
 
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
+      result = 37*result + ((this._UnitPriceWithTax != null) ? this._UnitPriceWithTax.hashCode() : 0);
+
       result = 37*result + (int)(number^(number>>>32));
 
       result = 37*result + (int) _Warehouse_zoneNumber;
 
       result = 37*result + ((this._Warehouse_number != null) ? this._Warehouse_number.hashCode() : 0);
+
+      result = 37*result + ((this._Color_number != null) ? this._Color_number.hashCode() : 0);
 
       result = 37*result + (int) _Family_number;
 

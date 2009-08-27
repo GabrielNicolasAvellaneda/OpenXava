@@ -18,6 +18,7 @@ public abstract class ColorCMP
       {
          dataHolder = new org.openxava.test.model.ColorData();
 
+         dataHolder.set_HexValue( get_HexValue() );
          dataHolder.set_Name( get_Name() );
          dataHolder.set_Version( get_Version() );
          dataHolder.setNumber( getNumber() );
@@ -35,6 +36,7 @@ public abstract class ColorCMP
    {
       try
       {
+         set_HexValue( dataHolder.get_HexValue() );
          set_Name( dataHolder.get_Name() );
          set_Version( dataHolder.get_Version() );
 
@@ -90,6 +92,7 @@ public abstract class ColorCMP
       ColorValue = new org.openxava.test.model.ColorValue();
       try
          {
+            ColorValue.setHexValue( getHexValue() );
             ColorValue.setSample( getSample() );
             ColorValue.setName( getName() );
             ColorValue.setVersion( getVersion() );
@@ -109,6 +112,7 @@ public abstract class ColorCMP
 
 	  try
 	  {
+		 setHexValue( valueHolder.getHexValue() );
 		 setSample( valueHolder.getSample() );
 		 setName( valueHolder.getName() );
 		 setVersion( valueHolder.getVersion() );
@@ -121,6 +125,10 @@ public abstract class ColorCMP
    }
 
 /* Value Objects END */
+
+   public abstract java.lang.String get_HexValue() ;
+
+   public abstract void set_HexValue( java.lang.String _HexValue ) ;
 
    public abstract java.lang.String get_Name() ;
 

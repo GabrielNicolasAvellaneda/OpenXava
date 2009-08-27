@@ -32,7 +32,7 @@ public class POJOTest extends TestCase {
 		XHibernate.commit();
 		XPersistence.commit();
 	}
-	
+		
 	public void testCalculatedPropertyOnAggregateDependsOnPropertyOfContainerModel() throws Exception {
 		Customer c = Customer.findByNumber(1);
 		assertEquals("DOCTOR PESSET46540EL PUIGNew York1", c.getAddress().getAsString());

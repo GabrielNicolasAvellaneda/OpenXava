@@ -21,9 +21,11 @@ public abstract class Product2CMP
          dataHolder.set_Photos( get_Photos() );
          dataHolder.set_UnitPrice( get_UnitPrice() );
          dataHolder.set_Description( get_Description() );
+         dataHolder.set_UnitPriceWithTax( get_UnitPriceWithTax() );
          dataHolder.setNumber( getNumber() );
          dataHolder.set_Warehouse_zoneNumber( get_Warehouse_zoneNumber() );
          dataHolder.set_Warehouse_number( get_Warehouse_number() );
+         dataHolder.set_Color_number( get_Color_number() );
          dataHolder.set_Family_number( get_Family_number() );
          dataHolder.set_Subfamily_number( get_Subfamily_number() );
          dataHolder.set_Formula_oid( get_Formula_oid() );
@@ -44,8 +46,10 @@ public abstract class Product2CMP
          set_Photos( dataHolder.get_Photos() );
          set_UnitPrice( dataHolder.get_UnitPrice() );
          set_Description( dataHolder.get_Description() );
+         set_UnitPriceWithTax( dataHolder.get_UnitPriceWithTax() );
          set_Warehouse_zoneNumber( dataHolder.get_Warehouse_zoneNumber() );
          set_Warehouse_number( dataHolder.get_Warehouse_number() );
+         set_Color_number( dataHolder.get_Color_number() );
          set_Family_number( dataHolder.get_Family_number() );
          set_Subfamily_number( dataHolder.get_Subfamily_number() );
          set_Formula_oid( dataHolder.get_Formula_oid() );
@@ -106,9 +110,11 @@ public abstract class Product2CMP
             Product2Value.setUnitPrice( getUnitPrice() );
             Product2Value.setDescription( getDescription() );
             Product2Value.setUnitPriceInPesetas( getUnitPriceInPesetas() );
+            Product2Value.setUnitPriceWithTax( getUnitPriceWithTax() );
             Product2Value.setNumber( getNumber() );
             Product2Value.setWarehouse_zoneNumber( getWarehouse_zoneNumber() );
             Product2Value.setWarehouse_number( getWarehouse_number() );
+            Product2Value.setColor_number( getColor_number() );
             Product2Value.setFamily_number( getFamily_number() );
             Product2Value.setSubfamily_number( getSubfamily_number() );
             Product2Value.setFormula_oid( getFormula_oid() );
@@ -131,8 +137,10 @@ public abstract class Product2CMP
 		 setUnitPrice( valueHolder.getUnitPrice() );
 		 setDescription( valueHolder.getDescription() );
 		 setUnitPriceInPesetas( valueHolder.getUnitPriceInPesetas() );
+		 setUnitPriceWithTax( valueHolder.getUnitPriceWithTax() );
 		 setWarehouse_zoneNumber( valueHolder.getWarehouse_zoneNumber() );
 		 setWarehouse_number( valueHolder.getWarehouse_number() );
+		 setColor_number( valueHolder.getColor_number() );
 		 setFamily_number( valueHolder.getFamily_number() );
 		 setSubfamily_number( valueHolder.getSubfamily_number() );
 		 setFormula_oid( valueHolder.getFormula_oid() );
@@ -158,6 +166,10 @@ public abstract class Product2CMP
 
    public abstract void set_Description( java.lang.String _Description ) ;
 
+   public abstract java.math.BigDecimal get_UnitPriceWithTax() ;
+
+   public abstract void set_UnitPriceWithTax( java.math.BigDecimal _UnitPriceWithTax ) ;
+
    public abstract long getNumber() ;
 
    public abstract void setNumber( long number ) ;
@@ -169,6 +181,10 @@ public abstract class Product2CMP
    public abstract java.lang.Integer get_Warehouse_number() ;
 
    public abstract void set_Warehouse_number( java.lang.Integer _Warehouse_number ) ;
+
+   public abstract java.lang.Integer get_Color_number() ;
+
+   public abstract void set_Color_number( java.lang.Integer _Color_number ) ;
 
    public abstract int get_Family_number() ;
 

@@ -68,6 +68,7 @@
 	
 	<view model="OrderDetail">
 		<members>product; quantity, amount</members>
+		<reference-view reference="product" view="SimpleWithFamily"/>
 	</view>
 	
 	<entity-mapping table="XAVATEST@separator@TOrder">
@@ -75,12 +76,27 @@
 		<property-mapping property="year"/>
 		<property-mapping property="number"/>
 		<property-mapping property="date"/>
-		<reference-mapping property="customer">
+		<reference-mapping reference="customer">
 			<reference-mapping-detail
 				referenced-model-property="number" 
 				column="CUSTOMER_NUMBER"/>
 		</reference-mapping>		
 		<property-mapping property="remarks"/>		
-	</entity-mapping> 
+	</entity-mapping>
+	
+	 <aggregate-mapping aggregate="OrderDetail" table="XAVATEST@separator@OrderDetail">
+		<reference-mapping reference="order">
+			<reference-mapping-detail
+				referenced-model-property="oid" 
+				column="PARENT_OID"/>
+		</reference-mapping>			 
+		<property-mapping property="oid"/>
+		<property-mapping property="quantity"/>
+		<reference-mapping reference="product">
+			<reference-mapping-detail
+				referenced-model-property="number" 
+				column="PRODUCT_NUMBER"/>
+		</reference-mapping>		
+	</aggregate-mapping> 
 	
 </component>

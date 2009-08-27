@@ -626,7 +626,7 @@ public class MapFacade {
 		try {
 			return getImpl(modelName).validate(Users.getCurrentUserInfo(), modelName, values);								
 		}
-		catch (RemoteException ex) {
+		catch (RemoteException ex) {			
 			annulImpl(modelName);
 			try {
 				return getImpl(modelName).validate(Users.getCurrentUserInfo(), modelName, values);
@@ -634,8 +634,7 @@ public class MapFacade {
 			catch (RemoteException rex) {
 				throw new SystemException(rex);
 			}	
-		}
-				
+		}				
 	}
 	
 									

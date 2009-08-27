@@ -19,6 +19,12 @@ public interface CourseRemote
    public void setDescription( java.lang.String newDescription )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getDtype(  )
+      throws java.rmi.RemoteException;
+
+   public void setDtype( java.lang.String newDtype )
+      throws java.rmi.RemoteException;
+
    public int getNumber(  )
       throws java.rmi.RemoteException;
 

@@ -18,6 +18,8 @@ public class CourseValue
    private boolean yearHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private java.lang.String dtype;
+   private boolean dtypeHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
 
@@ -32,6 +34,8 @@ public class CourseValue
 	  yearHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
+	  this.dtype = otherValue.dtype;
+	  dtypeHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
    }
@@ -64,6 +68,20 @@ public class CourseValue
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
    }
+   public java.lang.String getDtype()
+   {
+	  return this.dtype;
+   }
+
+   public void setDtype( java.lang.String dtype )
+   {
+	  this.dtype = dtype;
+	  dtypeHasBeenSet = true;
+   }
+
+   public boolean dtypeHasBeenSet(){
+	  return dtypeHasBeenSet;
+   }
    public int getNumber()
    {
 	  return this.number;
@@ -83,7 +101,7 @@ public class CourseValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("year=" + getYear() + " " + "description=" + getDescription() + " " + "number=" + getNumber());
+	  str.append("year=" + getYear() + " " + "description=" + getDescription() + " " + "dtype=" + getDtype() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -139,6 +157,14 @@ public class CourseValue
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
+		 if( this.dtype == null )
+		 {
+			lEquals = lEquals && ( that.dtype == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.dtype.equals( that.dtype );
+		 }
 
 		 return lEquals;
 	  }
@@ -153,6 +179,8 @@ public class CourseValue
       result = 37*result + (int) year;
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + ((this.dtype != null) ? this.dtype.hashCode() : 0);
 
       result = 37*result + (int) number;
 

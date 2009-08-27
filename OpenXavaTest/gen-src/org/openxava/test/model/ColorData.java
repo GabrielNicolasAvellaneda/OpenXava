@@ -12,6 +12,7 @@ public class ColorData
 {
 
    private static final long serialVersionUID = 1L;
+   private java.lang.String _HexValue;
    private java.lang.String _Name;
    private java.lang.Integer _Version;
    private java.lang.Integer number;
@@ -22,6 +23,7 @@ public class ColorData
 
    public ColorData( ColorData otherData )
    {
+      set_HexValue(otherData.get_HexValue());
       set_Name(otherData.get_Name());
       set_Version(otherData.get_Version());
       setNumber(otherData.getNumber());
@@ -31,6 +33,15 @@ public class ColorData
    public org.openxava.test.model.ColorKey getPrimaryKey() {
      org.openxava.test.model.ColorKey pk = new org.openxava.test.model.ColorKey(this.getNumber());
      return pk;
+   }
+
+   public java.lang.String get_HexValue()
+   {
+      return this._HexValue;
+   }
+   public void set_HexValue( java.lang.String _HexValue )
+   {
+      this._HexValue = _HexValue;
    }
 
    public java.lang.String get_Name()
@@ -64,7 +75,7 @@ public class ColorData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "_Version=" + get_Version() + " " + "number=" + getNumber());
+      str.append("_HexValue=" + get_HexValue() + " " + "_Name=" + get_Name() + " " + "_Version=" + get_Version() + " " + "number=" + getNumber());
       str.append('}');
 
       return(str.toString());
@@ -77,6 +88,14 @@ public class ColorData
          ColorData lTest = (ColorData) pOther;
          boolean lEquals = true;
 
+         if( this._HexValue == null )
+         {
+            lEquals = lEquals && ( lTest._HexValue == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._HexValue.equals( lTest._HexValue );
+         }
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -113,6 +132,8 @@ public class ColorData
    public int hashCode()
    {
       int result = 17;
+
+      result = 37*result + ((this._HexValue != null) ? this._HexValue.hashCode() : 0);
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 

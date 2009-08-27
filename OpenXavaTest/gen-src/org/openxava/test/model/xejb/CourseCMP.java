@@ -20,6 +20,7 @@ public abstract class CourseCMP
 
          dataHolder.setYear( getYear() );
          dataHolder.set_Description( get_Description() );
+         dataHolder.set_Dtype( get_Dtype() );
          dataHolder.setNumber( getNumber() );
 
       }
@@ -36,6 +37,7 @@ public abstract class CourseCMP
       try
       {
          set_Description( dataHolder.get_Description() );
+         set_Dtype( dataHolder.get_Dtype() );
 
       }
       catch (Exception e)
@@ -91,6 +93,7 @@ public abstract class CourseCMP
          {
             CourseValue.setYear( getYear() );
             CourseValue.setDescription( getDescription() );
+            CourseValue.setDtype( getDtype() );
             CourseValue.setNumber( getNumber() );
 
          }
@@ -108,6 +111,7 @@ public abstract class CourseCMP
 	  try
 	  {
 		 setDescription( valueHolder.getDescription() );
+		 setDtype( valueHolder.getDtype() );
 
 	  }
 	  catch (Exception e)
@@ -125,6 +129,10 @@ public abstract class CourseCMP
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
+
+   public abstract java.lang.String get_Dtype() ;
+
+   public abstract void set_Dtype( java.lang.String _Dtype ) ;
 
    public abstract int getNumber() ;
 

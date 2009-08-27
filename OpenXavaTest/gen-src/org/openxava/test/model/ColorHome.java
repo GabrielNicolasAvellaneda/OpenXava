@@ -21,6 +21,9 @@ public interface ColorHome
    public org.openxava.test.model.ColorRemote create(org.openxava.test.model.ColorValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public java.util.Collection findAll()
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.ColorRemote findByNumber(java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

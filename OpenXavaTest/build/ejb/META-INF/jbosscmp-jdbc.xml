@@ -130,6 +130,11 @@
          <table-name>XAVATEST.COLOR</table-name>
 
          <cmp-field>
+            <field-name>_HexValue</field-name>
+            <column-name>HEXVALUE</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Name</field-name>
             <column-name>NAME</column-name>
 
@@ -145,6 +150,15 @@
 
         </cmp-field>
 
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Color o]]></jboss-ql>
+
+	     </query>
          <query>
             <query-method>
                <method-name>findByNumber</method-name>
@@ -901,6 +915,11 @@
          <cmp-field>
             <field-name>_Description</field-name>
             <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Dtype</field-name>
+            <column-name>DTYPE</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -1805,7 +1824,7 @@
         </cmp-field>
          <cmp-field>
             <field-name>_FavouriteFormula_oid</field-name>
-            <column-name>FAVOURITEFORMULA</column-name>
+            <column-name>FAVOURITEFORMULA_ID</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -1842,6 +1861,52 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o.oid = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Report</ejb-name>
+
+         <table-name>XAVATEST.REPORT</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Ranges_oid</field-name>
+            <column-name>RANGES_OID</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByRanges</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Report o WHERE o._Ranges_oid = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Report o WHERE o.oid = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -2631,6 +2696,57 @@
       </entity>
 
       <entity>
+         <ejb-name>Ranges</ejb-name>
+
+         <table-name>XAVATEST.RANGES</table-name>
+
+         <cmp-field>
+            <field-name>_NumberFrom</field-name>
+            <column-name>NUMBERFROM</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Type</field-name>
+            <column-name>TYPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_DateFrom</field-name>
+            <column-name>DATEFROM</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_NumberTo</field-name>
+            <column-name>NUMBERTO</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_DateTo</field-name>
+            <column-name>DATETO</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ranges o WHERE o.oid = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Family</ejb-name>
 
          <table-name>XAVATEST@separator@FAMILY</table-name>
@@ -2778,6 +2894,11 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_UnitPriceWithTax</field-name>
+            <column-name>UNITPRICE * 1.16</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>number</field-name>
             <column-name>NUMBER</column-name>
 
@@ -2790,6 +2911,11 @@
          <cmp-field>
             <field-name>_Warehouse_number</field-name>
             <column-name>WAREHOUSE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Color_number</field-name>
+            <column-name>COLOR_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -2817,6 +2943,16 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Warehouse_zoneNumber = ?1 AND o._Warehouse_number = ?2 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByColor</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Color_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>

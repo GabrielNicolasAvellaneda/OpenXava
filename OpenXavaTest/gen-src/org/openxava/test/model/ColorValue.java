@@ -14,6 +14,8 @@ public class ColorValue
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String hexValue;
+   private boolean hexValueHasBeenSet = false;
    private java.lang.String sample;
    private boolean sampleHasBeenSet = false;
    private java.lang.String name;
@@ -30,6 +32,8 @@ public class ColorValue
    //TODO Cloneable is better than this !
    public ColorValue( ColorValue otherValue )
    {
+	  this.hexValue = otherValue.hexValue;
+	  hexValueHasBeenSet = true;
 	  this.sample = otherValue.sample;
 	  sampleHasBeenSet = true;
 	  this.name = otherValue.name;
@@ -40,6 +44,20 @@ public class ColorValue
 	  numberHasBeenSet = true;
    }
 
+   public java.lang.String getHexValue()
+   {
+	  return this.hexValue;
+   }
+
+   public void setHexValue( java.lang.String hexValue )
+   {
+	  this.hexValue = hexValue;
+	  hexValueHasBeenSet = true;
+   }
+
+   public boolean hexValueHasBeenSet(){
+	  return hexValueHasBeenSet;
+   }
    public java.lang.String getSample()
    {
 	  return this.sample;
@@ -101,7 +119,7 @@ public class ColorValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("sample=" + getSample() + " " + "name=" + getName() + " " + "version=" + getVersion() + " " + "number=" + getNumber());
+	  str.append("hexValue=" + getHexValue() + " " + "sample=" + getSample() + " " + "name=" + getName() + " " + "version=" + getVersion() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -154,6 +172,14 @@ public class ColorValue
 	  {
 		 ColorValue that = (ColorValue) other;
 		 boolean lEquals = true;
+		 if( this.hexValue == null )
+		 {
+			lEquals = lEquals && ( that.hexValue == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.hexValue.equals( that.hexValue );
+		 }
 		 if( this.sample == null )
 		 {
 			lEquals = lEquals && ( that.sample == null );
@@ -182,6 +208,8 @@ public class ColorValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.hexValue != null) ? this.hexValue.hashCode() : 0);
+
       result = 37*result + ((this.sample != null) ? this.sample.hashCode() : 0);
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);

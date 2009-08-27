@@ -8,8 +8,6 @@ import org.openxava.model.meta.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
-import com.gargoylesoftware.htmlunit.html.*;
-
 /**
  * @author Javier Paniza
  */

@@ -6,7 +6,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
              
-    <!-- Tomcat + Hypersonic -->           
+    <!-- Tomcat + Hypersonic -->            
     <persistence-unit name="default">    	
     	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
     	<class>org.openxava.session.GalleryImage</class>
@@ -16,6 +16,7 @@
             <property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
     </persistence-unit>      
+    
     
     
     
@@ -42,10 +43,8 @@
         </properties>
     </persistence-unit>
     -->
-    
-    
-    
-    <!-- JUnit Hypersonic -->            
+        
+    <!-- JUnit Hypersonic -->             
     <persistence-unit name="junit">
         <properties>
 			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
@@ -58,7 +57,7 @@
     
      
     
-	<!-- JUnit AS/400     
+	<!-- JUnit AS/400      
     <persistence-unit name="junit">
         <properties>
 			<property name="hibernate.connection.driver_class" value="com.ibm.as400.access.AS400JDBCDriver"/>

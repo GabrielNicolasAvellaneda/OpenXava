@@ -1,27 +1,36 @@
 package org.openxava.test.calculators;
 
-import java.math.*;
 import java.rmi.*;
-import java.util.*;
 
+import org.hibernate.*;
 import org.openxava.calculators.*;
+import org.openxava.hibernate.*;
+import org.openxava.test.model.*;
 
 /**
  * 
  * @author Javier Paniza
  */
 
-public class OrderAmountCalculator implements IModelCalculator {
+public class OrderNumberCalculator implements IModelCalculator {
 	
 	private IOrder order;
 
 	public Object calculate() throws Exception {
-		Query query = XHibernate.getSession()
-			.createQuery("select max(o.number) from Order o " + 
-				"where o.year = :year");
-		query.setParameter("year", order.getYear());		
-		Integer lastNumber = (Integer) query.getSingleResult();
-		order.setNumber(lastNumber == null?1:lastNumber + 1);
+		Session session = XHibernate.createSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			Query query = session
+				.createQuery("select max(o.number) from Order o " + 
+					"where o.year = :year");
+			query.setParameter("year", new Integer(order.getYear()));				
+			Integer lastNumber = (Integer) query.uniqueResult();
+			order.setNumber(lastNumber == null?1:lastNumber.intValue() + 1);
+		}
+		finally {
+			tx.commit();
+			session.close();
+		}
 		return null;
 	}
 	

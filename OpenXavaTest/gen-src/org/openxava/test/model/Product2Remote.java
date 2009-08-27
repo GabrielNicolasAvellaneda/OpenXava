@@ -31,6 +31,12 @@ public interface Product2Remote
    public java.math.BigDecimal getUnitPriceInPesetas(  )
       throws java.rmi.RemoteException;
 
+   public java.math.BigDecimal getUnitPriceWithTax(  )
+      throws java.rmi.RemoteException;
+
+   public void setUnitPriceWithTax( java.math.BigDecimal newUnitPriceWithTax )
+      throws java.rmi.RemoteException;
+
    public long getNumber(  )
       throws java.rmi.RemoteException;
 
@@ -53,6 +59,24 @@ public interface Product2Remote
       throws java.rmi.RemoteException;
 
    public java.lang.Integer getWarehouse_number(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.IColor getColor(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.ColorRemote getColorRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setColor( org.openxava.test.model.IColor newColor )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.ColorKey getColorKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setColorKey( org.openxava.test.model.ColorKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.Integer getColor_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IFamily2 getFamily(  )

@@ -120,6 +120,7 @@ public class SeveralModulesTest extends ModuleTestBase {
 	}
 
 	private void assertActions() throws Exception {
+		execute("List.orderBy", "property=number");
 		assertValueInList(0, "name", "UNO");
 		selectModuleInPage("Customer");
 		assertValueInList(0, "name", "Javi");
