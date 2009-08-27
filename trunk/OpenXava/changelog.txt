@@ -1,31 +1,44 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Messages objects are not serializable betweend different JVM. Added serialVersionUID.
+OpenXava 3.1.4 (2009-8-27)
+--------------------------
+- @Formula annotation from Hibernate supported for detail and list mode.
+- Labels and messages translated to Serbian.
+- Labels and messages translated to Swedish.
+- Added 'list-formatter' to <formatter /> in editors.xml. 
+- New servlets.xml and filters.xml can be used in web/WEB-INF to add custom servlets and filters.
 - Support for Liferay 5.2.3 with Tomcat 6.
+- When the user reset the filters in list, the comparators (the combos) are reset too. 
+- On adding first collection element the container entity is refreshed in UI after saved.
+- New attribute formula for property-mapping in XML components to specify a property calcuted by SQL.
+- DateFormatter and javascript calendar adapted to work in Swedish.
+- New MemoFormatter applied by default to MEMO stereotype.
+- Attribute column in property-mapping of XML components now is optional. Property name is assumed.
+- Added assertCollectionNotEmpty() method to ModuleTestBase.
+- Improved message when datasource is not defined in persistence.xml
+- Added reset() method in ModuleManager to reinitalize the running module. 
+- Added getAll() method in ModuleContext to obtain all objects with the same name. 
 - Upgrade to commons-logging 1.1.1.
-- Fix: IChangeModuleAction does not work when called from a IChainAction.
-- Property isI18nWarnings from xava.properties now is false by default, so i18n warnings are no shown by default.
-- Fix: Error on delete entity with inheritance and composite key.
-- If adding alements to a collection validation exceptions are produced , the validation messages are show to the user.
 - Parameters in module URL can be obtained with request.getParameter() from any part of the application, even inside a portal.
+- If adding alements to a collection validation exceptions are produced , the validation messages are show to the user.
+- Property isI18nWarnings from xava.properties now is false by default, so i18n warnings are no shown by default.
+- Better management of exceptions from editors: The trace has the root cause and the module is not broken, only the failed editor is not shown.
+- Removed getChosenKeyMap() method from ChooseReferenceAction. This method was not used.
+- Fix: Messages objects are not serializable betweend different JVM. Added serialVersionUID.
+- Fix: IChangeModuleAction does not work when called from a IChainAction.
+- Fix: Error on delete entity with inheritance and composite key.
 - Fix: Projects with - in the name do not work.
 - Fix: Double click execute the action twice, adding duplicate records to database in some cases.
 - Fix: AccessTracking does not work in Sybase.
-- When the user reset the filters in list, the comparators (the combos) are reset too. 
 - Fix: StackOverflowError with recursive referenced annotated with @OnChange.
 - Fix: Formatting boolean in list mode fails when boolean type column is used.
-- On adding first collection element the container entity is refreshed in UI after saved.
 - Fix: Calculated properties fails on adding first collection element in some circumstances.
 - Fix: View.refresh() method closed detail element view of collections.
 - Fix: Changing the name of a searching reference tab makes the main module tab fails.
 - Fix: After loading an image (LoadImageAction) subsequent calls to CancelAction do not return to previous view.
-- Added reset() method in ModuleManager to reinitalize the running module. 
-- Added getAll() method in ModuleContext to obtain all objects with the same name. 
 - Fix: Nested collections with composite key with references fail.
 - Fix: Actions with confirm=true do not ask for confirmation when keystrokes is used.
-- Better management of exceptions from editors: The trace has the root cause and the module is not broken, only the failed editor is not shown.
-- Improved message when datasource is not defined in persistence.xml
 - Fix: Users.getCurrentUserInfo() returns null after using MapFacade.
 - Fix: The default action (when user press ENTER) does not work with AJAX.
 - Fix: ModuleTestBase.executeDefaultAction() does not refresh page after execution.
@@ -34,28 +47,17 @@ Change Log for OpenXava project
 - Fix: Adding only sections with extendsView of @View produces an ArrayIndexOutOfBoundsException
 - Fix: Using extendsView of @View without members adds all member of current entity to the extended view.
 - Fix: View.setHidden(group, true) doesn't work fired from OnChange in some cases.
-- New servlets.xml and filters.xml can be used in web/WEB-INF to add custom servlets and filters.
 - Fix: When a row is selected by code, if the user unselected it the selected style persisted.
 - Fix: Switching subview dynamically (with setViewName) does not work.
 - Fix: Fails to compile on Eclipse Galileo (JUNIT_HOME is missing).
 - Fix: Adding elements to a ManyToMany collection when the parent object is new fails.
 - Fix: @DisplaySize does not work in custom view with <xava:editor> for reference members.
-- Removed getChosenKeyMap() method from ChooseReferenceAction. This method was not used.
 - Fix: Row selection in collection are not cleared when main object changed.
-- Added assertCollectionNotEmpty() method to ModuleTestBase.
-- Added 'list-formatter' to <formatter /> in editors.xml. 
-- New MemoFormatter applied by default to MEMO stereotype.
 - Fix: Reference (@ManyToOne) to an element of a collection with cascade ALL or REMOVE fails when used in a list.
-- Labels and messages translated to Serbian.
-- @Formula annotation from Hibernate supported for detail and list mode.
-- New attribute formula for property-mapping in XML components to specify a property calcuted by SQL.
-- Attribute column in property-mapping of XML components now is optional. Property name is assumed.
 - Fix: It's not possible to write in a full numeric field though the content is selected.
 - Fix: textAreaEditor (really any editor with frame=true) cannot be displayed side by side.
 - Fix: Uploading files fails with before-each-request and on-each-request actions.
 - Fix: @EmbeddedId with int/long and NUMERIC in DB fails.
-- Labels and messages translated to Swedish.
-- DateFormatter and javascript calendar adapted to work in Swedish.
 
 OpenXava 3.1.3 (2009-6-16)
 --------------------------

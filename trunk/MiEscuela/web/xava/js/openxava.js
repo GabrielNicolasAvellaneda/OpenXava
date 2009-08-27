@@ -6,19 +6,22 @@ openxava.init = function(application, module) {
 	openxava.ajaxRequest(application, module);
 }
 
-openxava.ajaxRequest = function(application, module) {	
+openxava.ajaxRequest = function(application, module) {
+	if (openxava.isRequesting(application, module)) return; 	
+	openxava.setRequesting(application, module); 
 	document.throwPropertyChange = false; 
 	document.getElementById(openxava.decorateId(application, module, "loading")).value=true;    
 	document.body.style.cursor='wait';
 	Module.request(
-			application, module,
+			application, module, document.additionalParameters,
 			dwr.util.getValues(openxava.getForm(application, module)),
 			openxava.getMultipleValues(application, module), 
 			openxava.getSelectedValues(application, module), 					 
 			openxava.refreshPage); 			
 }
 
-openxava.refreshPage = function(result) {
+openxava.refreshPage = function(result) { 
+	openxava.resetRequesting(result); 
 	var changed = "";	
 	if (result.error != null) {		
 		openxava.systemError(result);
@@ -98,6 +101,21 @@ openxava.updateRootIds = function(application, moduleFrom, moduleTo) {
 			openxava.decorateId(application, moduleTo, "loaded_parts");
 }
 
+openxava.setRequesting = function(application, module) { 
+	if (openxava.requesting == null) openxava.requesting = { };
+	openxava.requesting[application + "::" + module] = true;
+}
+
+openxava.isRequesting = function(application, module) { 
+	if (openxava.requesting == null) return false;
+	return openxava.requesting[application + "::" + module];
+}
+
+openxava.resetRequesting = function(result) { 
+	if (openxava.requesting == null) return;
+	openxava.requesting[result.application + "::" + result.module] = false;
+}
+
 openxava.getForm = function(application, module) { 		
 	return document.getElementById(openxava.getFormName(application, module));	
 }
@@ -136,7 +154,7 @@ openxava.processKey = function(event) {
 		event.returnValue = false;
 		event.preventDefault();
 		openxava.executeAction(openxava.lastApplication, openxava.lastModule,
-			'', action.takesLong, action.name); 
+			action.confirmMessage, action.takesLong, action.name);  
 		return;
 	}
 		
@@ -291,6 +309,11 @@ openxava.setFocus = function(application, module) {
 	}	
 }
 
+openxava.clearCondition = function(application, module, prefix) { 
+	openxava.clearConditionValues(application, module, prefix);
+	openxava.clearConditionComparators(application, module, prefix);
+}
+
 openxava.clearConditionValues = function(application, module, prefix) { 
 	var form = openxava.getForm(application, module);
 	var elementName = openxava.decorateId(application, module, prefix + "conditionValue.");
@@ -301,6 +324,18 @@ openxava.clearConditionValues = function(application, module, prefix) {
 		element = form.elements[elementName + (++i)];
 	}
 }
+
+openxava.clearConditionComparators = function(application, module, prefix) {  
+	var form = openxava.getForm(application, module);
+	var elementName = openxava.decorateId(application, module, prefix + "conditionComparator.");
+	var element = form.elements[elementName + "0"];
+	var i=0;
+	while (typeof element != "undefined") {
+		element[0].selected = 'selected';
+		element = form.elements[elementName + (++i)];
+	}
+}
+
 
 openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, confirmMessage, takesLong) {
 	if (checkValue) {

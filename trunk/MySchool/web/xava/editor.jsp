@@ -14,11 +14,13 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
-
+String shasFrame = request.getParameter("hasFrame"); 
+boolean hasFrame="true".equals(shasFrame)?true:false;
 boolean editable = view.isEditable(p);
 boolean lastSearchKey = view.isLastSearchKey(p); 
 boolean throwPropertyChanged = view.throwsPropertyChanged(p);
 	
+
 int labelFormat = view.getLabelFormatForProperty(p);
 String label = view.getLabelFor(p);
 %>
@@ -26,6 +28,8 @@ String label = view.getLabelFor(p);
 <%  
 if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.change(label, " ", "&nbsp;");
 %>
+
+<% if (!hasFrame) {  %>
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
@@ -48,6 +52,8 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 </td></tr>
 <tr><td style='vertical-align: middle'>
 <% } %>
+
+<% } // if (!hasFrame) %>
 <span id="<xava:id name='<%="editor_" + view.getPropertyPrefix() + p.getName()%>'/>"> 
 <xava:editor property="<%=p.getName()%>" editable="<%=editable%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
 </span>
@@ -61,8 +67,11 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 </span>
 <% } %>
 
+<% if (!hasFrame) { %>
 <%=postEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 </td></tr>
 </table>
 <% } %>
+
+<% } // if (!hasFrame) %>

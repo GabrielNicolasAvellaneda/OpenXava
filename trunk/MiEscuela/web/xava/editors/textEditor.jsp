@@ -30,7 +30,7 @@ if (p.isNumber()) {
 		maxLength += sizeIncrement;
 	}
 	String integer = p.getScale() == 0?"true":"false";
-	script = script + " onkeypress='return openxava.validateNumeric(event, " + p.getSize() + ", " + integer + ")' "; 
+	script = script + " onkeyup='return openxava.validateNumeric(event, " + p.getSize() + ", " + integer + ")' "; 
 }	
 
 boolean fillWithZeros = "true".equals(request.getParameter("fillWithZeros"));

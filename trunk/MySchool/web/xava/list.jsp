@@ -133,7 +133,7 @@ while (it.hasNext()) {
 <th class=<%=style.getListSubheaderCell()%> width="5">
 	<a title='<xava:message key="clear_condition_values"/>' href="javascript:void(0)">
 		<img src='<%=request.getContextPath()%>/xava/images/clear-right.gif'
-			border='0' align='middle' onclick="openxava.clearConditionValues('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=prefix%>')"/>
+			border='0' align='middle' onclick="openxava.clearCondition('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=prefix%>')"/>
 	</a>
 </th>
 <%
@@ -227,6 +227,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	String cssSelectedRow = style.getSelectedRow();
 	String selectedRowStyle = style.getSelectedRowStyle();
 	String rowStyle = "border-bottom: 1px solid;";
+	String cssClassToActionOnClick = cssClass;
 	if (tab.isSelected(f)){
 		cssClass = cssSelectedRow + " " + cssClass;
 		rowStyle = rowStyle + " " + selectedRowStyle;
@@ -249,7 +250,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		"'" + idRow + "'," + 
 		!Is.empty(view.getOnSelectCollectionElementAction()) + "," +
 		"'" + cssSelectedRow + "'," + 
-		"'" + cssClass + "'," +
+		"'" + cssClassToActionOnClick + "'," +
 		"'" + selectedRowStyle + "'," +
 		"'" + rowStyle + "'," +
 		"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 
@@ -270,7 +271,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
 		}
 		else {
-			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName());
+			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName(), true);
 		}
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>"><%=fvalue%>&nbsp;</td>
