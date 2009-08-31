@@ -25,8 +25,8 @@ public class ISBNValidator implements Validator<ISBN> {
 			HtmlPage page = (HtmlPage) client.getPage(
 					"http://www.bookfinder4u.com/IsbnSearch.aspx?isbn=" +
 					isbn + "&mode=direct");
-			System.out.println("[ISBNValidator.isbnExists] :\n" + page.asText()); // tmp			
-			return false;
+			System.out.println("[ISBNValidator.isbnExists] :\n" + page.asText()); // tmp
+			return page.asText().indexOf("ISBN-13: " + isbn) >= 0;
 		}
 		catch (Exception ex) {
 			// tmp Un mensaje en el log
