@@ -33,6 +33,15 @@ public class Product {
 	@Column(length=13) @ISBN
 	private String isbn; // tmp
 	
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}	
+	
+	
 	@Stereotype("PHOTO") 
 	private byte [] photo;
 	
@@ -112,12 +121,5 @@ public class Product {
 		return author;
 	}
 	
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}	
 			
 }

@@ -9,6 +9,6 @@ import org.openxava.invoicing.validators.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ISBN {
 	
-	String message() default "isbn_not_exist";
+	String message() default "ISBN does not exist";
 	
 }
