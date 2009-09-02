@@ -30,8 +30,8 @@ public class Product {
 	@Stereotype("MONEY")
 	private BigDecimal price;
 	
-	@Column(length=13) @ISBN
-	private String isbn; // tmp
+	@Column(length=10) @ISBN
+	private String isbn; 
 	
 	public String getIsbn() {
 		return isbn;
