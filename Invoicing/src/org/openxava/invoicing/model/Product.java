@@ -30,17 +30,8 @@ public class Product {
 	@Stereotype("MONEY")
 	private BigDecimal price;
 	
-	@Column(length=10) @ISBN
-	private String isbn; 
-	
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}	
-	
+	@Column(length=10) @ISBN(search=false)
+	private String isbn; 	
 	
 	@Stereotype("PHOTO") 
 	private byte [] photo;
@@ -121,5 +112,12 @@ public class Product {
 		return author;
 	}
 	
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}	
 			
 }
