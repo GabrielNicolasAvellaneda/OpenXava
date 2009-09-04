@@ -14,6 +14,7 @@
 <%@page import="org.openxava.web.Ids"%>
 <%@page import="org.openxava.model.meta.MetaMember"%>
 
+<jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
@@ -60,10 +61,38 @@ while (it.hasNext()) {
 			String urlEditor = "editor.jsp" // in this way because websphere 6 has problems with jsp:param
 				+ "?propertyKey=" + propertyKey
 				+ "&first=" + first
-				+ "&hasFrame=" + hasFrame;			
-%>
+				+ "&hasFrame=" + hasFrame;		
+			boolean withFrame = hasFrame && 
+				(!view.isSection() || view.getMetaMembers().size() > 1);
+			if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
+				if (first) { 						
+	%>		
+		<tr><td colspan="4">
+	<%	
+				} 
+			}
+			if (withFrame) { 					 					
+				String labelKey = Ids.decorate(
+					request.getParameter("application"),
+					request.getParameter("module"),
+					"label_" + propertyPrefix + p.getName()); 
+				String label = view.getLabelFor(p);
+	%>					 
+		<%=style.getFrameHeaderStartDecoration() %>
+		<%=style.getFrameTitleStartDecoration() %>
+		<span id="<%=labelKey%>"><%=label%></span>		
+		<%@ include file="editorIcons.jsp"%>		
+		<%=style.getFrameTitleEndDecoration() %>
+		<%=style.getFrameHeaderEndDecoration() %>
+		<%=style.getFrameContentStartDecoration() %>						
+		<%	} // withFrame %>
 	<jsp:include page="<%=urlEditor%>" />
-<%
+	<%
+			if (withFrame) {
+		%>			
+		<%=style.getFrameContentEndDecoration() %>		
+		<%
+			} // withFrame		
 			first = false;
 		}
 		else {
