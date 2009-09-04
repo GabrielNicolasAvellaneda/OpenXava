@@ -842,10 +842,6 @@
 			class="org.openxava.actions.ChangeModuleAction">
 			<set property="nextModule" value="ColorM2"/>
 		</action>
-		<action name="initModules" 
-			class="org.openxava.test.actions.InitModulesAction">
-			<use-object name="xava_view"/>
-		</action>
 	</controller>
 	
 	<controller name="ColorM2">
@@ -881,6 +877,19 @@
 		<extends controller="Typical"/>
 		<action name="onSelectIngredient" hidden="true"   
 			class="org.openxava.test.actions.OnSelectIngredientAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+	
+	<controller name="IssueList">
+		<extends controller="DefaultSchema"/>
+	</controller>
+	
+	<controller name="SelectSchema">
+		<extends controller="DefaultSchema"/>
+		<action name="set" hidden="true" 
+			class="org.openxava.test.actions.SelectSchemaAction">
+			<use-object name="xava_defaultSchema"/>
 			<use-object name="xava_view"/>
 		</action>
 	</controller>
