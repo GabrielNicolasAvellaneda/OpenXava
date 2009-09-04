@@ -1,13 +1,13 @@
 package org.openxava.actions;
 
-import java.util.*;
+import java.util.Locale;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 
-
-
-import org.openxava.controller.*;
-import org.openxava.util.*;
+import org.openxava.controller.Environment;
+import org.openxava.util.Locales;
+import org.openxava.util.Messages;
+import org.openxava.web.DescriptionList;
 
 /**
  * @author Javier Paniza
@@ -149,13 +149,7 @@ abstract public class BaseAction implements IAction, IRequestAction {
 	 * others uses of descriptionsEditors.	 
 	 */
 	protected void resetDescriptionsCache() {
-		Enumeration e = request.getSession().getAttributeNames();
-		while (e.hasMoreElements()) {
-			String name = (String) e.nextElement();
-			if (name.endsWith(".descriptionsCalculator")) {
-				request.getSession().removeAttribute(name);
-			}
-		}		
+		DescriptionList.resetDescriptionsCache(request.getSession());		
 	}
 	
 	public void setRequest(HttpServletRequest request) {
