@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: ModuleManager.reset not work with descriptionsList at default schema components
+
 OpenXava 3.1.4 (2009-8-27)
 --------------------------
 - @Formula annotation from Hibernate supported for detail and list mode.

@@ -1007,6 +1007,7 @@ public class ModuleManager {
 		metaActions = null;
 		defaultActionQualifiedName = null;
 		metaModule = null;
+		DescriptionList.resetDescriptionsCache(getSession());
 	}
 
 }
