@@ -27,7 +27,7 @@
   			Module.request(
   				HttpServletRequest request, 
   				HttpServletResponse response, 
-  				String application, String module, 
+  				String application, String module, String additionalParameters, 
   				Map<String, String> values, 
   				Map<String, String> multipleValues, 
   				String [] selected);
