@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.hibernate.validator.*;
+import org.hibernate.annotations.Formula;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.invoicing.calculators.*;
@@ -48,14 +49,6 @@ abstract public class CommercialDocument extends Identifiable {
 	@Stereotype("MONEY")
 	private BigDecimal amount; 
 	
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
-
 
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
 	@ListProperties("product.number, product.description, quantity, pricePerUnit, amount")
@@ -76,8 +69,30 @@ abstract public class CommercialDocument extends Identifiable {
 	@Required
 	@DefaultValueCalculator(VatPercentageCalculator.class)
 	private BigDecimal vatPercentage;
-		
+	
 
+	
+	@Stereotype("MONEY")
+	
+	@Formula("AMOUNT * 0.10") 		
+	private BigDecimal estimatedProfit;		
+	public BigDecimal getEstimatedProfit() {
+		return estimatedProfit;
+	}
+	
+	
+	// tmp ini
+	/*
+	@Stereotype("MONEY")	
+	public BigDecimal getEstimatedProfit() {
+		return getAmount()
+			.multiply(new BigDecimal("0.10"));
+	}
+	*/
+
+	// tmp fin
+	
+	
 	@Stereotype("MONEY")
 	public BigDecimal getBaseAmount() {
 		BigDecimal result = new BigDecimal("0.00");
@@ -189,5 +204,13 @@ abstract public class CommercialDocument extends Identifiable {
 	public void setVatPercentage(BigDecimal vatPercentage) {
 		this.vatPercentage = vatPercentage;
 	}
+	
+	public BigDecimal getAmount() {
+		return amount;
+	}
 
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+	
 }
