@@ -3,7 +3,6 @@
 <project name="MiEscuela" basedir="." default="desplegarWar">
 
 	<property name="project" value="MiEscuela" />
-	<property name="ox3" value="true" />
 	<property file="../openxava.properties"/>
 	
 	<!-- Construye y despliega la aplicación en formato .war -->	
