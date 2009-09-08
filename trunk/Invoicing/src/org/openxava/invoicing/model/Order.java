@@ -4,26 +4,12 @@ import javax.persistence.*;
 
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
-import org.openxava.invoicing.validators.*;
 import org.openxava.util.*;
-import org.openxava.validators.*;
 
 @Entity
 @Views({
-	/*
 	@View( extendsView="super.DEFAULT",
 		members="delivered; invoice { invoice } "
-	),
-	*/
-	@View( members=
-		"year, number, date, delivered;" +
-		"data {" +
-			"customer;" +
-			"details;" +
-			"amounts [ vatPercentage, baseAmount, vat, totalAmount ];" + // tmp move a papa
-			"remarks" +
-		"}" +
-		"invoice { invoice } "			
 	),
 	@View( name="NoCustomerNoInvoice", members=			
 		"year, number, date;" +

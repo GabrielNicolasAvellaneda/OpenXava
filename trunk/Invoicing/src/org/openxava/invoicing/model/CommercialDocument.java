@@ -52,15 +52,7 @@ abstract public class CommercialDocument extends Identifiable {
 
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
 	@ListProperties("product.number, product.description, quantity, pricePerUnit, amount")
-	private Collection<Detail> details = new ArrayList<Detail>(); 
-	/* tmp new ArrayList<Detail>() 
-	 *   Cuando se resuelva
-	 *   	https://sourceforge.net/tracker/?func=detail&aid=2837034&group_id=123187&atid=695743
-	 *   Ver si no hace falta new ArrayList<Detail>(),
-	 *   	si no hace falta quitarlo
-	 *      si sigue haciendo falta modificar libro	
-	 */
-	
+	private Collection<Detail> details = new ArrayList<Detail>(); // tmp Revisar en source code de otros capítulos lo del new	
 	
 	@Stereotype("MEMO") 
 	private String remarks;
@@ -79,20 +71,7 @@ abstract public class CommercialDocument extends Identifiable {
 	public BigDecimal getEstimatedProfit() {
 		return estimatedProfit;
 	}
-	
-	
-	// tmp ini
-	/*
-	@Stereotype("MONEY")	
-	public BigDecimal getEstimatedProfit() {
-		return getAmount()
-			.multiply(new BigDecimal("0.10"));
-	}
-	*/
-
-	// tmp fin
-	
-	
+		
 	@Stereotype("MONEY")
 	public BigDecimal getBaseAmount() {
 		BigDecimal result = new BigDecimal("0.00");

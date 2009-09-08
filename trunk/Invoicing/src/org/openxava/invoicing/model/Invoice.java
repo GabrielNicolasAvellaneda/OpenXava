@@ -8,25 +8,15 @@ import org.openxava.annotations.*;
 
 @Entity
 @Views({
-	@View( members=
-		"year, number, date;" +
-		"data {" +
-			"customer;" +
-			"details;" +
-			"amounts [ vatPercentage, baseAmount, vat, totalAmount ];" + // tmp move a papa
-			"remarks" +
-		"}" +
-		"orders { orders } "			
-	),	
-	/*@View( extendsView="super.DEFAULT",
+	@View( extendsView="super.DEFAULT",
 		members="orders { orders } "
-	),
-	*/
+	),	
 	@View( name="NoCustomerNoOrders", members=			
 		"year, number, date;" +
 		"details;" +
 		"remarks" 
 	)
+	
 })
 public class Invoice extends CommercialDocument {
 	
