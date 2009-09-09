@@ -193,32 +193,21 @@ public class MetaComponent implements Serializable {
 	/**
 	 *
 	 * @return Elements <tt>instanceof MetaAggregateForCollection</tt> and 
-	 * 			<tt>ejbGenerated == true</tt>. Not null.
-	 * @exception XavaException Any problem.
-	 */
-	public Collection getMetaAggregatesForCollectionEjbGenerated() throws  XavaException {
-		return getMetaAggregatesForCollectionGenerated(true);
-	}
-
-	/**
-	 *
-	 * @return Elements <tt>instanceof MetaAggregateForCollection</tt> and 
 	 * 			<tt>pojoGenerated == true</tt>. Not null.
 	 * @exception XavaException Any problem.
 	 */	
 	public Collection getMetaAggregatesForCollectionPojoGenerated() throws  XavaException {
-		return getMetaAggregatesForCollectionGenerated(false);
+		return getMetaAggregatesForCollectionGenerated();
 	}
 	
-	private Collection getMetaAggregatesForCollectionGenerated(boolean ejb) throws  XavaException {
+	private Collection getMetaAggregatesForCollectionGenerated() throws  XavaException {
 		Iterator it = getMetaAggregates().iterator();
 		Collection result = new ArrayList();
 		while (it.hasNext()) {
 			Object element = it.next();
 			if (!(element instanceof MetaAggregateForCollection)) continue;
-			MetaAggregateForCollection aggregate = (MetaAggregateForCollection) element;
-			boolean generated = ejb?aggregate.isEjbGenerated():aggregate.isPojoGenerated();
-			if (generated) {
+			MetaAggregateForCollection aggregate = (MetaAggregateForCollection) element;			
+			if (aggregate.isPojoGenerated()) {
 				result.add(aggregate);
 			}
 		}

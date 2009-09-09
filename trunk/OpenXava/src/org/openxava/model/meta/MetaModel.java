@@ -56,7 +56,6 @@ abstract public class MetaModel extends MetaElement {
 	private Collection membersNames = new ArrayList();
 	private Collection calculatedPropertiesNames;
 	private MetaView metaViewByDefault;
-	private boolean ejbGenerated;
 	private boolean pojoGenerated;
 	private Collection keyReferencesNames; 
 	private Collection keyPropertiesNames; 
@@ -75,7 +74,6 @@ abstract public class MetaModel extends MetaElement {
 	private Collection metaReferencesWithDefaultValueCalculator;
 	private String qualifiedName;
 	private boolean hasDefaultCalculatorOnCreate = false;
-	private MetaEJB metaEJB;
 	private String pojoClassName;
 	private Collection metaReferencesToEntity;
 	private boolean annotatedEJB3;
@@ -103,33 +101,7 @@ abstract public class MetaModel extends MetaElement {
 			}
 		}		
 		return r;
-	}
-	
-	/**
-	 * All models (Entities and Aggregates) where its EJB code is generated.
-	 * 
-	 * @return of type MetaModel
-	 */
-	public static Collection getAllEjbGenerated() throws XavaException { 
-		Collection r = new HashSet();
-		for (Iterator it = MetaComponent.getAll().iterator(); it.hasNext();) {
-			MetaComponent comp = (MetaComponent) it.next();
-			MetaEntity en = comp.getMetaEntity();
-			if (en.isEjbGenerated()) { 
-				r.add(en);
-			}
-									
-			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
-				MetaAggregate ag = (MetaAggregate) itAggregates.next();
-				if (ag instanceof MetaAggregateForCollection) { 
-					if (ag.isEjbGenerated()) {
-						r.add(ag);
-					}
-				}
-			}
-		}		
-		return r;
-	}
+	}	
 	
 	/**
 	 * All models (Entities and Aggregates) where its POJO code and Hiberante mapping is generated.
@@ -1151,14 +1123,6 @@ abstract public class MetaModel extends MetaElement {
 		return getName();
 	}
 		
-	public boolean isEjbGenerated() {
-		return ejbGenerated;
-	}
-
-	public void setEjbGenerated(boolean generated) {		
-		this.ejbGenerated = generated;
-	}
-	
 	public boolean isPojoGenerated() {
 		return pojoGenerated;
 	}
@@ -1755,16 +1719,7 @@ abstract public class MetaModel extends MetaElement {
 	public void setPOJOKeyClass(Class pojoKeyClass) {
 		this.pojoKeyClass = pojoKeyClass;
 	}
-	
-	
-	public MetaEJB getMetaEJB() {
-		return metaEJB;
-	}
-	public void setMetaEJB(MetaEJB metaEJB) {
-		this.metaEJB = metaEJB;
-		this.metaEJB.setMetaModel(this);
-	}
-
+		
 	public boolean isAnnotatedEJB3() {
 		return annotatedEJB3;
 	}

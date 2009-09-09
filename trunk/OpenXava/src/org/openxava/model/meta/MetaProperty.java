@@ -485,7 +485,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				if (!(getMetaModel() instanceof MetaEntity)) {								
 					key = false;
 				}										
-				else if (((MetaEntity) getMetaModel()).isAnnotatedEJB3() || getMetaModel().isPojoGenerated() || getMetaModel().isEjbGenerated()) {
+				else if (((MetaEntity) getMetaModel()).isAnnotatedEJB3() || getMetaModel().isPojoGenerated()) {
 					key = false;						
 				}
 				else {				
@@ -612,7 +612,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean calculateIfReadOnly() { 
 		try {			
 			if (getMetaModel() == null) return false;
-			if (getMetaModel().isPojoGenerated() || getMetaModel().isEjbGenerated()) return false;
+			if (getMetaModel().isPojoGenerated()) return false;
 			PropertiesManager man = new PropertiesManager(
 				getMetaModel().getPropertiesClass());
 			return !man.hasSetter(getName());

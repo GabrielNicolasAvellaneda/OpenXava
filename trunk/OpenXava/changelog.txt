@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- OpenXavaTest refactored: Source folders reorganized, XavaSuite class removed, ant task renamed, etc.
+- Dropped support for EntityBeans CMP2.
+- Dropped support for Java 1.4. From now on OX requires Java 5 or better.
+- XSystem.isJava5OrBetter() method removed.
 - Fix: ModuleManager.reset not work with descriptionsList at default schema components
 
 OpenXava 3.1.4 (2009-8-27)

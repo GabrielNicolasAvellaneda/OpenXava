@@ -16,28 +16,20 @@ import org.openxava.util.*;
 public class MetaEntity extends MetaModel {
 	
 	private Collection keyFields;
-	private MetaEJB metaEJB;
+
 	/**
 	 * @return The names of key fields. Of <tt>String</tt>.
 	 */
 	public Collection getKeyFields() throws XavaException {
 		if (keyFields == null) {
 			keyFields = new ArrayList();	
-			if (isEjbGenerated() || isAnnotatedEJB3()) {
-				keyFields.addAll(getAllKeyPropertiesNames());
-			}
-			else {		
-				Field[] fields = getMetaEJB().getPrimaryKeyClass().getFields();				
-				for (int i = 0; i < fields.length; i++) {
-					keyFields.add(fields[i].getName());
-				}
-			}
+			keyFields.addAll(getAllKeyPropertiesNames());
 		}		
 		return keyFields;
 	}
 		
 	public boolean isKey(String propertyName) throws XavaException {		 	
-		if ((isAnnotatedEJB3() || isPojoGenerated() || isEjbGenerated()) &&  super.isKey(propertyName)) return true;
+		if ((isAnnotatedEJB3() || isPojoGenerated()) &&  super.isKey(propertyName)) return true;
 		return getKeyFields().contains(propertyName);		
 	}
 	
@@ -60,22 +52,5 @@ public class MetaEntity extends MetaModel {
 	public ModelMapping getMapping() throws XavaException {
 		return getMetaComponent().getEntityMapping();
 	}
-	
-	/**
-	 * EJB info about this entity.
-	 * 
-	 * MetaEntity always has metaEJB. Although ejb tag is not specified or
-	 * we do not use EJB at all a default value is generated and returned.  
-	 */
-	public MetaEJB getMetaEJB() {
-		if (metaEJB == null) {
-			if (super.getMetaEJB() != null) metaEJB =  super.getMetaEJB();
-			else {
-				metaEJB = new MetaEJB();
-				metaEJB.setMetaModel(this);
-			}
-		}
-		return metaEJB;
-	}
-		
+			
 }

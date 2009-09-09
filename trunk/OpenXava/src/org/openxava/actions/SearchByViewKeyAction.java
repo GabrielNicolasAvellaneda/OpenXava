@@ -52,19 +52,17 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 				values = MapFacade.getValues(getModelName(), keys, getMemberNames());
 			}
 			
-			if (XSystem.isJava5OrBetter()) {
-				try {
-					// For inheritance support
-					// A new find is not so slow, possibly because of persistence engine cache
-					Object entity = MapFacade.findEntity(getModelName(), values); 
-					String modelName = Classes.getSimpleName(entity.getClass());
-					if (!modelName.equals(getModelName())) {
-						getView().setModelName(modelName);				
-						values = MapFacade.getValues(modelName, entity, getMemberNames());
-					}
+			try {
+				// For inheritance support
+				// A new find is not so slow, possibly because of persistence engine cache
+				Object entity = MapFacade.findEntity(getModelName(), values); 
+				String modelName = Classes.getSimpleName(entity.getClass());
+				if (!modelName.equals(getModelName())) {
+					getView().setModelName(modelName);				
+					values = MapFacade.getValues(modelName, entity, getMemberNames());
 				}
-				catch (ObjectNotFoundException ex) { // For some special case, as null reference keys				
-				}
+			}
+			catch (ObjectNotFoundException ex) { // For some special case, as null reference keys				
 			}
 						
 			getView().setEditable(true);	

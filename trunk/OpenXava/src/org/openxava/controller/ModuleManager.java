@@ -2,12 +2,14 @@ package org.openxava.controller;
 
 import java.util.*;
 
+import javax.persistence.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.logging.*;
+import org.hibernate.validator.*;
 
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
@@ -30,7 +32,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1.4 (2009-8-27)");		
+		log.info("OpenXava 4m1beta (2009-9-xx)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -440,28 +442,50 @@ public class ModuleManager {
 			}
 		}
 		catch (Exception ex) {
-			// Maybe a factory for creating a ExceptionManager would be finer,
-			// but this is only for compatibility with 1.4. At some time OX
-			// will loss Java 1.4 compatibility, and will remove this code.
-			if (XSystem.isJava5OrBetter()) ModuleManagerJava5.manageExceptionJava5(this, metaAction, errors, messages, ex);
-			else manageExceptionJava14(metaAction, errors, messages, ex);
+			manageException(metaAction, errors, messages, ex);
 		}
 				
 	}
 	
-	private void manageExceptionJava14(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
+	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
 		if (ex instanceof ValidationException) {		
 			errors.add(((ValidationException)ex).getErrors());
 			messages.removeAll();
 			doRollback();			
 		}
+		else if (ex instanceof RollbackException) {
+			if (ex.getCause() instanceof InvalidStateException) {
+				manageInvalidStateException(metaAction, errors, messages, (InvalidStateException) ex.getCause());				
+			}
+			else {
+				manageRegularException(metaAction, errors, messages, ex);
+			}
+			doRollback();
+		}
+		else if (ex instanceof InvalidStateException) {			
+			manageInvalidStateException(metaAction, errors, messages, (InvalidStateException) ex);				
+			doRollback();
+		}				
 		else {			
-			manageException(metaAction, errors, messages, ex);
+			manageRegularException(metaAction, errors, messages, ex);
 			doRollback();			
 		}						
-	}	
+	}
+	
+	private void manageInvalidStateException(MetaAction metaAction, Messages errors, Messages messages, InvalidStateException ex) {
+		InvalidValue [] invalidValues = ex.getInvalidValues();
+		for (int i=0; i<invalidValues.length; i++) {
+			errors.add("invalid_state", 
+					invalidValues[i].getPropertyName(), 
+					Classes.getSimpleName(invalidValues[i].getBeanClass()), 
+					invalidValues[i].getMessage(), 
+					invalidValues[i].getValue());			
+		}
+		messages.removeAll();		
+	}
+	
 
-	void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
+	private void manageRegularException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
 		log.error(ex.getMessage(), ex);
 		if (metaAction != null) {
 			errors.add("no_execute_action", metaAction.getId(), ex.getLocalizedMessage());
@@ -498,7 +522,7 @@ public class ModuleManager {
 	 */
 	public void resetPersistence() {
 		org.openxava.hibernate.XHibernate.setCmt(false); 
-		if (XSystem.isJava5OrBetter()) org.openxava.jpa.XPersistence.reset();
+		org.openxava.jpa.XPersistence.reset();
 		org.openxava.hibernate.XHibernate.reset(); 
 	}
 	
@@ -518,12 +542,12 @@ public class ModuleManager {
 	}
 	
 	private void doCommit() {
-		if (XSystem.isJava5OrBetter()) XPersistence.commit();
+		XPersistence.commit();
 		XHibernate.commit();		
 	}
 	
 	void doRollback() {
-		if (XSystem.isJava5OrBetter()) XPersistence.rollback(); 
+		XPersistence.rollback(); 
 		XHibernate.rollback();		
 	}		
 
@@ -1007,7 +1031,7 @@ public class ModuleManager {
 		metaActions = null;
 		defaultActionQualifiedName = null;
 		metaModule = null;
-		DescriptionList.resetDescriptionsCache(getSession());
-	}
+		DescriptionsLists.resetDescriptionsCache(getSession());
+	}	
 
 }

@@ -15,10 +15,12 @@
 <component name="Family">
 
 	<entity>
+		<!-- tmp Quitar dtd 
 		<ejb remote="org.openxava.test.model.FamilyRemote"
 			home="org.openxava.test.model.FamilyHome"
 			primaryKey="org.openxava.test.model.FamilyKey"
-			jndi="ejb/openxava.test/Family"/>		
+			jndi="ejb/openxava.test/Family"/>
+		-->			
 		<bean class="org.openxava.test.model.Family"/>	
 		<property name="oid" type="String" hidden="true" key="true" required="false"/>
 		

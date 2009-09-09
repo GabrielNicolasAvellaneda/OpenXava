@@ -52,18 +52,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 			// Try to obtain it from primary key
 			if (!(getMetaModel() instanceof MetaEntity))
 				return java.lang.Object.class;
-			MetaEntity metaEntity = (MetaEntity) getMetaModel();
-			Class keyClass = metaEntity.getMetaEJB().getPrimaryKeyClass();
-			try {
-				return keyClass.getField(propertyName).getType();
-			}
-			catch (NoSuchFieldException ex2) {
-				log.warn(
-						XavaResources.getString("property_type_from_mapping_warning", 
-								propertyName, getMetaComponent().getName()),ex2);
-				// If we does not obtain type return a default value
-				return java.lang.Object.class;
-			}
+			throw ex;
 		}
 	}
 

@@ -5,7 +5,7 @@
  name ID #REQUIRED
 >
 
-<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, (method|finder|postcreate-calculator|postload-calculator|postmodify-calculator|preremove-calculator|validator|remove-validator)*)>
+<!ELEMENT entity (bean?, implements*, (property|reference|collection)*, (method|finder|postcreate-calculator|postload-calculator|postmodify-calculator|preremove-calculator|validator|remove-validator)*)>
 <!ATTLIST entity
  label CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	collection (true|false) "false" 
 >
 
-<!ELEMENT aggregate   ((bean|ejb)?, implements*, (property|reference|collection)*, (method|finder|postcreate-calculator|postload-calculator|postmodify-calculator|preremove-calculator|validator|remove-validator)*)>
+<!ELEMENT aggregate   (bean?, implements*, (property|reference|collection)*, (method|finder|postcreate-calculator|postload-calculator|postmodify-calculator|preremove-calculator|validator|remove-validator)*)>
 <!ATTLIST aggregate
  name ID #REQUIRED
  label CDATA #IMPLIED
@@ -174,14 +174,6 @@
   always-enabled (true|false) "false"
 >
 
-
-<!ELEMENT ejb EMPTY>
-<!ATTLIST ejb
- remote CDATA #REQUIRED
- home CDATA #REQUIRED
- primaryKey CDATA #REQUIRED
- jndi CDATA #REQUIRED 
->
 
 <!ELEMENT bean EMPTY>
 <!ATTLIST bean

@@ -142,10 +142,8 @@ public class Is {
 	public final static boolean equal(Object a, Object b) {
 		if (a == null) return b == null;
 		if (b == null) return false;
-		if (XSystem.isJava5OrBetter()) {
-			if (getEnumClass().isInstance(a) ) a = enumToInteger(a); 
-			if (getEnumClass().isInstance(b) ) b = enumToInteger(b);
-		}
+		if (a instanceof Enum) a = enumToInteger(a); 
+		if (b instanceof Enum) b = enumToInteger(b);		
 		if (isInteger(a)) a = toLong(a);
 		if (isInteger(b)) b = toLong(b);
 		try {
@@ -182,15 +180,6 @@ public class Is {
 		catch (Exception ex) {
 			throw new XavaException("enum_to_integer_error");
 		}		
-	}
-
-	private static Class getEnumClass() {
-		try {
-			return Class.forName("java.lang.Enum");
-		}
-		catch (Exception ex) {			
-			throw new XavaException("create_class_error", "java.lang.Enum");
-		}
 	}
 
 	/**
