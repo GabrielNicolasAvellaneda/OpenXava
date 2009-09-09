@@ -1554,11 +1554,6 @@ public class View implements java.io.Serializable {
 									trySetValue(ref.getName(), values); 
 									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());									
 								}
-								else if (referencedModel.getMetaEJB() != null && referencedModel.getMetaEJB().isPrimaryKeyClassAvailable() && referencedModel.getMetaEJB().getPrimaryKeyClass().isInstance(value)) { 
-									Map values = referencedModel.getMetaEJB().obtainMapFromPrimaryKey(value);
-									trySetValue(ref.getName(), values); 
-									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());
-								}		
 								else {
 									Collection keys = referencedModel.getAllKeyPropertiesNames();
 									if (keys.size() != 1) {

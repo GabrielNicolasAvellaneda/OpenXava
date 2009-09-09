@@ -22,13 +22,6 @@ public class ModelParser extends XmlElementsNames {
 		e.setName(name);
 		e.setQualifiedName(name);
 		e.setLabel(el.getAttribute(xlabel[lang]));
-		if (hasEjb(el, lang)) {							
-			fillEjbInfo(el, e, lang);
-			e.setEjbGenerated(false);
-		}
-		else {			
-			e.setEjbGenerated(true);
-		}
 		if (hasBean(el, lang)) {
 			e.setPOJOClassName(getBeanClass(el, lang));
 			e.setPojoGenerated(false);
@@ -43,12 +36,7 @@ public class ModelParser extends XmlElementsNames {
 		
 	public static MetaAggregate parseAggregate(Node n, MetaModel container, int lang) throws XavaException {
 		Element el = (Element) n;
-		if (hasEjb(el, lang)) {
-			MetaAggregateForCollection r = createAggregateForCollection(n, container, lang);
-			r.setEjbGenerated(false);
-			return r;			
-		}
-		else if (hasBean(el, lang)) {
+		if (hasBean(el, lang)) {
 			MetaAggregateForReference r = createAggregateForReference(n, container, lang);
 			r.setPojoGenerated(false);
 			return r;
@@ -57,13 +45,11 @@ public class ModelParser extends XmlElementsNames {
 			String name = el.getAttribute(xname[lang]);
 			if (container.containsMetaReferenceWithModel(name)) {
 				MetaAggregateForReference r = createAggregateForReference(n, container, lang);
-				r.setEjbGenerated(true);
 				r.setPojoGenerated(true);
 				return r;
 			}
 			else {
 				MetaAggregateForCollection r = createAggregateForCollection(n, container, lang);
-				r.setEjbGenerated(true);
 				r.setPojoGenerated(true);
 				return r;
 			}
@@ -89,26 +75,10 @@ public class ModelParser extends XmlElementsNames {
 		a.setName(el.getAttribute(xname[lang]));
 		a.setQualifiedName(container.getQualifiedName() + "." + a.getName());
 		a.setLabel(el.getAttribute(xlabel[lang]));
-		if (hasEjb(el, lang)) {
-			fillEjbInfo(el, a, lang);
-		}
 		fillMembers(el, a, lang);
 		return a;
 	}
-		
-	private static void fillEjbInfo(Element el, MetaModel metaModel, int lang) throws XavaException {
-		Element elEjb = ParserUtil.getElement(el, xejb[lang]);
-		if (elEjb == null) {
-			throw new XavaException("ejb_expected", el.getAttribute(xname[lang]));
-		}
-		MetaEJB ejb = new MetaEJB();
-		ejb.setRemote(elEjb.getAttribute(xremote[lang]));
-		ejb.setHome(elEjb.getAttribute(xhome[lang]));
-		ejb.setPrimaryKey(elEjb.getAttribute(xprimaryKey[lang]));
-		ejb.setJndi(elEjb.getAttribute(xjndi[lang]));
-		metaModel.setMetaEJB(ejb);
-	}
-	
+			
 	private static void fillMembers(Element el, MetaModel container, int lang)
 		throws XavaException {
 		NodeList l = el.getChildNodes();
@@ -188,11 +158,7 @@ public class ModelParser extends XmlElementsNames {
 			}
 		}
 	}	
-				
-	private static boolean hasEjb(Element el, int lang) {
-		return ParserUtil.getElement(el, xejb[lang]) != null;
-	}
-	
+					
 	private static boolean hasBean(Element el, int lang) {
 		return ParserUtil.getElement(el, xbean[lang]) != null;
 	}	

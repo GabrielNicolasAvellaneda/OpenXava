@@ -3,6 +3,7 @@ package org.openxava.component;
 import java.util.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.annotations.parse.*;
 import org.openxava.mapping.*;
 import org.openxava.mapping.xmlparse.*;
 import org.openxava.model.meta.*;
@@ -26,10 +27,10 @@ class ComponentParser extends ParserBase {
 		super(name + ".xml");		
 	}
 	
-	synchronized public static MetaComponent parse(String name) throws XavaException {		
+	synchronized public static MetaComponent parse(String name) throws XavaException {
 		ComponentParser parser = new ComponentParser(name);				
 		parser.parse();		
-		MetaComponent r = parser.getComponent();		
+		MetaComponent r = parser.getComponent();
 		if (r == null) {
 			r = parseAnnotatedClass(name);
 		}
@@ -40,18 +41,9 @@ class ComponentParser extends ParserBase {
 	}
 	
 	private static MetaComponent parseAnnotatedClass(String name) throws XavaException {
-		Object parser = null;
+		AnnotatedClassParser parser = new AnnotatedClassParser();		
 		try {
-			// At the momment, annotated EJBs are parsed only if parser is available in classpath
-			parser = Class.forName("org.openxava.annotations.parse.AnnotatedClassParser").newInstance();						
-		}
-		catch (Exception ex) {
-			log.warn(XavaResources.getString("annotated_parser_not_found_warning", name));
-			return null;
-		}		
-		
-		try {
-			return (MetaComponent) Objects.execute(parser, "parse", String.class, name);			
+			return parser.parse(name);			
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

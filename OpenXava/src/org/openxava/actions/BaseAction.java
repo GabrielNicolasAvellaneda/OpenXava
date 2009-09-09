@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.openxava.controller.Environment;
 import org.openxava.util.Locales;
 import org.openxava.util.Messages;
-import org.openxava.web.DescriptionList;
+import org.openxava.web.DescriptionsLists;
 
 /**
  * @author Javier Paniza
@@ -149,7 +149,7 @@ abstract public class BaseAction implements IAction, IRequestAction {
 	 * others uses of descriptionsEditors.	 
 	 */
 	protected void resetDescriptionsCache() {
-		DescriptionList.resetDescriptionsCache(request.getSession());		
+		DescriptionsLists.resetDescriptionsCache(request.getSession());		
 	}
 	
 	public void setRequest(HttpServletRequest request) {

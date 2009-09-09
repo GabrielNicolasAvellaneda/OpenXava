@@ -13,8 +13,6 @@ import org.openxava.util.*;
  */
 
 public class MetaAggregateForCollection extends MetaAggregate {
-	
-	private MetaEJB metaEJB = null;	
 		
 	public ModelMapping getMapping() throws XavaException {
 		return getMetaComponent().getAggregateMapping(getName());
@@ -27,17 +25,6 @@ public class MetaAggregateForCollection extends MetaAggregate {
 	public Class getBeanClass() throws XavaException {
 		throw new UnsupportedOperationException ("Still not supported");
 		
-	}
-	
-	public MetaEJB getMetaEJB() {
-		if (metaEJB == null) {
-			if (super.getMetaEJB() != null) metaEJB =  super.getMetaEJB();
-			else {
-				metaEJB = new MetaEJB();
-				metaEJB.setMetaModel(this);
-			}
-		}
-		return metaEJB;
 	}
 	
 }

@@ -347,16 +347,11 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	/**
-	 * Warning: Does not rely heavily in this method, it can change in the future.
+	 * The business component of the tested module can be defined 
+	 * using a annotated POJO or an XML file.
 	 */
-	static public boolean isOX3() {
-		try {
-			Class.forName("org.openxava.annotations.parse.AnnotatedClassParser");
-			return true;
-		}
-		catch (ClassNotFoundException ex) {
-			return false;
-		}
+	protected boolean usesAnnotatedPOJO() {
+		return getMetaModel().isAnnotatedEJB3();
 	}
 		
 	private String getLiferayField(String name) { 
@@ -1558,7 +1553,7 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * Jetspeed2 or Liferay
 	 */
-	public static boolean isPortalEnabled() {
+	protected static boolean isPortalEnabled() { 
 		return isLiferayEnabled() || isJetspeed2Enabled();
 	}
 		

@@ -17,8 +17,6 @@ public class XSystem {
 	private static Log log = LogFactory.getLog(XSystem.class);
 	
 	private static boolean onServer = false;
-	private static boolean java5OrBetter;
-	private static boolean java5calculated = false;	
 	private static String encoding = null; 
 	
 	/**
@@ -43,15 +41,6 @@ public class XSystem {
 	 */
 	public static boolean onServer() {
 		return onServer;
-	}
-	
-	public static boolean isJava5OrBetter() {
-		if (!java5calculated) {
-			String version = System.getProperty("java.specification.version");		
-			java5OrBetter = !(version.equals("1.4") || version.equals("1.3") || version.equals("1.2") || version.equals("1.1") || version.equals("1.0"));
-			java5calculated = true;
-		}
-		return java5OrBetter;
 	}
 
 	

@@ -171,23 +171,8 @@ public class XHibernate {
 	}	
 	
 	private static Configuration createConfiguration(String hibernateCfg) {
-		return XSystem.isJava5OrBetter()?
-			configureAnnotationConfiguration(hibernateCfg):
-			new Configuration().configure(hibernateCfg);								
+		return new AnnotationConfiguration().configure(hibernateCfg);								
 	}
-	
-	private static Configuration configureAnnotationConfiguration(String hibernateCfg) {
-		// In this way in order to work in the JDK 1.4 of AS/400
-		try {
-			Configuration cfg = (Configuration)
-				Class.forName("org.hibernate.cfg.AnnotationConfiguration").newInstance();
-			return cfg.configure(hibernateCfg);
-		}
-		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
-			throw new HibernateException(XavaResources.getString("hibernate_annotation_configuration_error"));
-		}
-	}	
 	
 	private static SessionFactory createSessionFactory(String hibernateCfg, Properties properties) throws HibernateException {
 		try {						

@@ -4,8 +4,8 @@
 
 	<property name="project" value="OpenXavaTest" />
 	<property name="package" value="test"/>
-	<!-- property name="configuration" value="tomcat-hypersonic" /-->
-	<property name="configuration" value="jboss-hypersonic" />
+	<property name="configuration" value="tomcat-hypersonic" />
+	<!-- property name="configuration" value="jboss-hypersonic" /-->
 	<!-- property name="configuration" value="websphere-as400" /-->	
 	<!-- property name="configuration" value="websphere61-as400" /-->
 	<!-- property name="configuration" value="jboss-as400" /-->	
@@ -71,14 +71,7 @@
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
-	
-	<target name="deployOX3War" depends="touchHistory">		
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
-		<ant antfile="../OpenXava/build.xml" target="deployWar">
-			<property name="ox3" value="true"/>
-		</ant>
-	</target>	
-		
+			
 	<target name="deploy" depends="touchHistory">
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
@@ -98,12 +91,7 @@
 	<target name="regeneratePortletGenerator"> 
 		<ant antfile="../OpenXava/build.xml" target="regeneratePortletGenerator"/>
 	</target>
-	
-	<target name="redeployPortlets"> 
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
-		<ant antfile="../OpenXava/build.xml" target="redeployPortlets"/>
-	</target>
-	
+		
 	<target name="deployPortlets"> 
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
@@ -114,27 +102,11 @@
 		<ant antfile="../OpenXava/build.xml" target="generatePortlets"/>
 	</target>			
 
-	<target name="generateOX3Portlets"> 
+	<target name="redeployPortlets"> 
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
-		<ant antfile="../OpenXava/build.xml" target="generatePortlets">
-			<property name="ox3" value="true"/>
-		</ant>
+		<ant antfile="../OpenXava/build.xml" target="redeployPortlets"/>
 	</target>
-	
-	<target name="redeployOX3Portlets"> 
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
-		<ant antfile="../OpenXava/build.xml" target="redeployPortlets">
-			<property name="ox3" value="true"/>
-		</ant>
-	</target>	
-	
-	<target name="deployOX3Portlets"> 
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
-		<ant antfile="../OpenXava/build.xml" target="deployPortlets">
-			<property name="ox3" value="true"/>
-		</ant>
-	</target>
-		
+
 	<target name="all">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
 		<ant antfile="../OpenXava/build.xml" target="compile"/>

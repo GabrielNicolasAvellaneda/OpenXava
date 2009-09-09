@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="java5-src"/>
 	<classpathentry kind="src" path="filtered-files"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="gen-src-xava"/>

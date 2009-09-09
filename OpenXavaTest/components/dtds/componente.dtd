@@ -5,7 +5,7 @@
  nombre ID #REQUIRED
 >
 
-<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
+<!ELEMENT entidad (bean?, implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
 <!ATTLIST entidad
  etiqueta CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	coleccion (true|false) "false" 
 >
 
-<!ELEMENT agregado   ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
+<!ELEMENT agregado   (bean? implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
 <!ATTLIST agregado
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED
@@ -180,14 +180,6 @@
   siempre-activa (true|false) "false"
 >
 
-
-<!ELEMENT ejb EMPTY>
-<!ATTLIST ejb
- remote CDATA #REQUIRED
- home CDATA #REQUIRED
- primaryKey CDATA #REQUIRED
- jndi CDATA #REQUIRED 
->
 
 <!ELEMENT bean EMPTY>
 <!ATTLIST bean

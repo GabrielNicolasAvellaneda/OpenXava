@@ -21,11 +21,10 @@
 	<property name="subcontext" value="${project}"/>				
 	<property name="classes.dir" value="web/WEB-INF/classes"/>
 	<property name="name.war" value="${project}"/>
-	<property name="jboss.mapping.xml" value="jaws.xml"/>
 	<property name="separator" value="."/>
 	<property name="meta-inf.dir" value="build/ejb/META-INF"/>
-	<property name="project.ejb" value = "${project}"/>
-	<property name="name.jar" value = "${project.ejb}"/>
+	<property name="project.name" value = "${project}"/>
+	<property name="name.jar" value = "${project.name}"/>
     <property name="server.properties.dir" value="../OpenXava/build/server-properties"/>
     <property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>        
 	<property name="model.package" value="model"/>
@@ -52,15 +51,15 @@
 	
 	<target name="init">
 		<tstamp/>
-		<available file="../${project.ejb}/${meta-inf.dir}/jbosscmp-jdbc.xml" 
-			property="jboss.mapping.xml" value="jbosscmp-jdbc.xml"/>
+		<available file="../${project.name}/filtered-files" type="dir"
+			property="classic-xml"/>
 	</target>
 	
 	<target name="initPortlets">
 		<uptodate property="regenerate.portlet.xml.notRequired"
-			targetfile="../${project.ejb}/web/WEB-INF/portlet.xml">
-			<srcfiles file="../${project.ejb}/xava/application.xml"/>
-			<srcfiles file="../${project.ejb}/xava/aplicacion.xml"/>			
+			targetfile="../${project.name}/web/WEB-INF/portlet.xml">
+			<srcfiles file="../${project.name}/xava/application.xml"/>
+			<srcfiles file="../${project.name}/xava/aplicacion.xml"/>			
 		</uptodate>
 	</target>
 		
@@ -94,16 +93,16 @@
 		
 	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">
-			<fileset dir="../${project.ejb}/xava"/>
+		<copy todir="../${project.name}/filtered-files" overwrite="${overwrite.xava.files}">
+			<fileset dir="../${project.name}/xava"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
 				<filter token="collection" value="${collection}"/>
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">
-			<fileset dir="../${project.ejb}/components"/>
+		<copy todir="../${project.name}/filtered-files" overwrite="${overwrite.xava.files}">
+			<fileset dir="../${project.name}/components"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
 				<filter token="collection" value="${collection}"/>
@@ -115,8 +114,8 @@
     	
 	<target name="filterXavaFilesWithConfiguration" if="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">
-			<fileset dir="../${project.ejb}/xava"/>
+		<copy todir="../${project.name}/filtered-files" overwrite="${overwrite.xava.files}">
+			<fileset dir="../${project.name}/xava"/>
 	    	<filterset>
 				<filtersfile file="${configuration}.properties"/>
 				<filter token="separator" value="${separator}"/>
@@ -124,8 +123,8 @@
 			</filterset>
 		</copy>
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">		
-			<fileset dir="../${project.ejb}/components"/>
+		<copy todir="../${project.name}/filtered-files" overwrite="${overwrite.xava.files}">		
+			<fileset dir="../${project.name}/components"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
@@ -135,7 +134,7 @@
 		</copy>						
 	</target>
 		
-	<target name="filterXavaFiles" depends="copyDTDs" unless="ox3">
+	<target name="filterXavaFiles" depends="init, copyDTDs" if="classic-xml">
 		<antcall target="filterXavaFilesWithConfiguration">
 			<param name="overwrite.xava.files" value="true"/>
 		</antcall>
@@ -144,7 +143,7 @@
 		</antcall>
 	</target>
 	
-	<target name="filterChangedXavaFiles" depends="copyDTDs" unless="ox3">
+	<target name="filterChangedXavaFiles" depends="init, copyDTDs" if="classic-xml">
 		<antcall target="filterXavaFilesWithConfiguration">
 			<param name="overwrite.xava.files" value="false"/>
 		</antcall>
@@ -154,10 +153,10 @@
 	</target>
 		
 	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
-		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="${overwrite.hibernate.files}">		
+		<copy todir="../${project.name}/filtered-files" failonerror="false" overwrite="${overwrite.hibernate.files}">		
 			<fileset dir="../OpenXava/hibernate"/>
-			<fileset dir="../${project.ejb}/hibernate"/>			
-			<fileset dir="../${project.ejb}/build/hibernate"/>
+			<fileset dir="../${project.name}/hibernate"/>			
+			<fileset dir="../${project.name}/build/hibernate"/>
 	    	<filterset>	    		    		
 				<filter token="separator" value="${separator}"/>
 				<filter token="collection" value="${collection}"/>
@@ -170,10 +169,10 @@
 	</target>	
 	
 	<target name="filterHibernateFilesWithConfiguration" if="configuration">
-		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="${overwrite.hibernate.files}">		
+		<copy todir="../${project.name}/filtered-files" failonerror="false" overwrite="${overwrite.hibernate.files}">		
 			<fileset dir="../OpenXava/hibernate"/>
-			<fileset dir="../${project.ejb}/hibernate"/>
-			<fileset dir="../${project.ejb}/build/hibernate"/>
+			<fileset dir="../${project.name}/hibernate"/>
+			<fileset dir="../${project.name}/build/hibernate"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>
 	    		<filter token="images.schema.definition" value='schema="@images.schema@"'/>
@@ -187,7 +186,7 @@
 		</copy>			
 	</target>
 		
-	<target name="filterHibernateFiles" depends="copyDTDs" unless="ox3">
+	<target name="filterHibernateFiles" depends="init, copyDTDs" if="classic-xml">
 		<antcall target="filterHibernateFilesWithConfiguration">
 			<param name="overwrite.hibernate.files" value="true"/>
 		</antcall>
@@ -196,77 +195,17 @@
 		</antcall>
 	</target>
 	
-	<target name="filterChangedHibernateFiles" depends="copyDTDs" unless="ox3">
+	<target name="filterChangedHibernateFiles" depends="init, copyDTDs" if="classic-xml">
 		<antcall target="filterHibernateFilesWithConfiguration">
 			<param name="overwrite.hibernate.files" value="false"/>
 		</antcall>
 		<antcall target="filterHibernateFilesWithoutConfiguration">
 			<param name="overwrite.hibernate.files" value="false"/>
 		</antcall>
-	</target>
-	
-			
-	<target name="regenerateWebsphereMapping">
-		<echo>Generating xml template for Websphere Mapping</echo>
-		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}${file.separator}websphereDbxmi.template"/> 
-			<arg value="${generator.dir}${file.separator}websphereDbxmi.xml"/>         
-		</java>				
-		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}${file.separator}websphereSchxmi.template"/> 
-			<arg value="${generator.dir}${file.separator}websphereSchxmi.xml"/>         
-		</java>						
-		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}${file.separator}websphereTblxmi.template"/> 
-			<arg value="${generator.dir}${file.separator}websphereTblxmi.xml"/>         
-		</java>								
-		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}${file.separator}websphereMapxmi.template"/> 
-			<arg value="${generator.dir}${file.separator}websphereMapxmi.xml"/>         
-		</java>										
-		<echo>Generating Websphere Mapping classes generator</echo>
-		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}${file.separator}websphereDbxmi.xml"/>
-			<arg value="${generator.dir}${file.separator}WebsphereDbxmiPG.java"/>
-		</java>
-		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}${file.separator}websphereSchxmi.xml"/>
-			<arg value="${generator.dir}${file.separator}WebsphereSchxmiPG.java"/>
-		</java>		
-		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}${file.separator}websphereTblxmi.xml"/>
-			<arg value="${generator.dir}${file.separator}WebsphereTblxmiPG.java"/>
-		</java>				
-		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}${file.separator}websphereMapxmi.xml"/>
-			<arg value="${generator.dir}${file.separator}WebsphereMapxmiPG.java"/>
-		</java>						
-		<echo>Compiling classes generators</echo>
-		<javac srcdir="${generator.dir}"
-			destdir="${generator.dir}"
-			classpath="${tl.lib};${xava.lib};${j2ee.lib}"
-			target="${javac.version}" source="${javac.version}"
-		/>
-		
-		<antcall target="generateWebsphereMapping"/>
-	</target>
-	
-	<target name="generateWebsphereMapping" depends="filter">
-		<delete file="../${project}/gen-src-xava/dnas.properties"/>
-		<echo>Generating Websphere Mapping</echo>		
-		<java 
-			classname="WebsphereCodeGenerator" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/${classes.dir};${xava.generator.path}" 
-			fork="yes">
-			<arg value="${project}"/>        		
-	       	<arg value="${domain}"/>
-       		<arg value="${package}"/>
-	       	<arg value="${model.package}"/>       	
-		</java>		
-	</target>
-	        
+	</target>	
+				
 	<target name="regenerateGenerator"> 
-		<echo>Generating xml template for EJB</echo>
+		<echo>Generating xml template for POJO</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}${file.separator}calculatedCollection.template"/> 
          <arg value="${generator.dir}${file.separator}calculatedCollection.xml"/>         
@@ -283,10 +222,6 @@
          <arg value="${generator.dir}${file.separator}entityReference.template"/> 
          <arg value="${generator.dir}${file.separator}entityReference.xml"/>         
        </java>
-		<java classname="Simple2XML" classpath="${tl.lib}">
-		  <arg value="${generator.dir}${file.separator}entityReferenceEJB.template"/> 
-		  <arg value="${generator.dir}${file.separator}entityReferenceEJB.xml"/>         
-		</java>
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}${file.separator}aggregateReference.template"/> 
          <arg value="${generator.dir}${file.separator}aggregateReference.xml"/>         
@@ -299,20 +234,15 @@
 		 <arg value="${generator.dir}${file.separator}initMembers.template"/> 
 		 <arg value="${generator.dir}${file.separator}initMembers.xml"/>         
 		</java>			
-       	<java classname="Simple2XML" classpath="${tl.lib}">
-        	<arg value="${generator.dir}${file.separator}ejbean.template"/> 
-         	<arg value="${generator.dir}${file.separator}ejbean.xml"/>         
-      	</java>
-		<echo>Generating xml template for POJO</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
 			<arg value="${generator.dir}${file.separator}pojo.template"/> 
 			<arg value="${generator.dir}${file.separator}pojo.xml"/>         
 		</java>		
-  		<echo>Generating xml template for JavaBean</echo>
-       <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}${file.separator}bean.template"/> 
-         <arg value="${generator.dir}${file.separator}bean.xml"/>         
-       </java>
+		<echo>Generating xml template for JavaBean</echo>
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}${file.separator}bean.template"/> 
+			<arg value="${generator.dir}${file.separator}bean.xml"/>         
+		</java>		
   		<echo>Generating xml template for interface</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}${file.separator}interface.template"/> 
@@ -324,7 +254,7 @@
 			<arg value="${generator.dir}${file.separator}hibernate.xml"/>         
 		</java> 
 		
-       <echo>Generating EJB classes generator</echo>
+       <echo>Generating POJO classes generator</echo>
         <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
           <arg value="${generator.dir}${file.separator}calculatedCollection.xml"/>
           <arg value="${generator.dir}${file.separator}CalculatedCollectionPG.java"/>
@@ -357,20 +287,15 @@
 			<arg value="${generator.dir}${file.separator}initMembers.xml"/> 
 			<arg value="${generator.dir}${file.separator}InitMembersPG.java"/>         
 		</java>  			
-       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}${file.separator}ejbean.xml"/> 
-         <arg value="${generator.dir}${file.separator}EJBeanPG.java"/>         
-       </java>
-		<echo>Generating POJO classes generator</echo>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
 			<arg value="${generator.dir}${file.separator}pojo.xml"/> 
 			<arg value="${generator.dir}${file.separator}PojoPG.java"/>         
 		</java>
-       <echo>Generating JavaBean classes generator</echo>
-       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}${file.separator}bean.xml"/> 
-         <arg value="${generator.dir}${file.separator}BeanPG.java"/>         
-       </java>
+		<echo>Generating JavaBean classes generator</echo>
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}${file.separator}bean.xml"/> 
+			<arg value="${generator.dir}${file.separator}BeanPG.java"/>         
+		</java>		
        <echo>Generating Interfaz classes generator</echo>
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
          <arg value="${generator.dir}${file.separator}interface.xml"/> 
@@ -390,27 +315,13 @@
     	/>	 	    		
 		
 		<delete file="../${project}/gen-src-xava/dnas.properties"/>
-		<delete file="../${project}/gen-src-xava/dnas-ejb.properties"/>
 		<delete file="../${project}/gen-src-xava/dnas-pojo.properties"/>
     </target>        
-	
-    <target name="generateXDoclet">         	
-	   <echo>Generating EJB classes</echo>    	
-       <java 
-       		classname="EJBCodeGenerator" 
-       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/filtered-files;../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
-       		fork="yes">
-			<arg value="${project}"/>        		
-	       	<arg value="${domain}"/>
-       		<arg value="${package}"/>
-	       	<arg value="${model.package}"/>       	
-		</java>
-    </target>
 	
 	<target name="regenerateHibernate">
 		<delete file="../${project}/gen-src-xava/dnas-pojo.properties"/>
 		<delete>
-			<fileset dir="../${project.ejb}/filtered-files" includes="**/*"/>
+			<fileset dir="../${project.name}/filtered-files" includes="**/*"/>
 		</delete>
 		<antcall target="generateHibernate"/>
 	</target>
@@ -430,14 +341,6 @@
     	<antcall target="filterHibernateFiles"/>    	
     </target>
 		
-	<target name="runXDoclet">
-    	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
-	</target>
-	        
-    <target name="generateEJB" depends="filterXavaFiles, generateHibernate, generateXDoclet">         	    	
-    	<antcall target="runXDoclet"/>
-    </target>
-	
 	<target name="clearGeneratedCode">
     	<delete failonerror="false">
    			<fileset dir="../${project}/gen-src"/>
@@ -445,25 +348,19 @@
     		<fileset dir="../${project}/${meta-inf.dir}" excludes="MANIFEST.MF"/>
    		</delete>		
 	</target>
-		
-    <target name="regenerateEJB">    
-    	<delete file="../${project}/gen-src-xava/dnas-ejb.properties"/>
-    	<delete file="../${project}/gen-src-xava/dnas-pojo.properties"/>
-		<antcall target="generateEJB"/>
-    </target>
-		
+				
 	<target name="filterWithoutConfiguration" unless="configuration" 
 		depends="init">
-		<copy file="../${project.ejb}/${meta-inf.dir}/ejb-jar.xml" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/ejb-jar.xml" 
+		<copy file="../${project.name}/${meta-inf.dir}/ejb-jar.xml" 
+			toFile="../${project.name}/${classes.dir}/META-INF/ejb-jar.xml" 
 			overwrite="yes">
 			<filterset>
 				<filter token="separator" value="${separator}"/>
 				<filter token="collection" value="${collection}"/>
 			</filterset>
 		</copy>
-		<copy file="../${project.ejb}/${meta-inf.dir}/jboss.xml" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/jboss.xml" 
+		<copy file="../${project.name}/${meta-inf.dir}/jboss.xml" 
+			toFile="../${project.name}/${classes.dir}/META-INF/jboss.xml" 
 			overwrite="yes">
 			<filterset>
 				<filter token="subcontext" value="${subcontext}"/>
@@ -471,17 +368,8 @@
 				<filter token="package" value="${domain}/${package}"/>
 			</filterset>
 		</copy>
-		<copy file="../${project.ejb}/${meta-inf.dir}/${jboss.mapping.xml}" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/${jboss.mapping.xml}" 
-			overwrite="yes">
-			<filterset>
-				<filter token="datasource" value="${datasource}"/>
-				<filter token="separator" value="${separator}"/>
-				<filter token="collection" value="${collection}"/>
-			</filterset>
-		</copy>
-		<copy file="../${project.ejb}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/ibm-ejb-jar-bnd.xmi" 
+		<copy file="../${project.name}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
+			toFile="../${project.name}/${classes.dir}/META-INF/ibm-ejb-jar-bnd.xmi" 
 			overwrite="yes" failonerror="no">
 			<filterset>
 				<filter token="subcontext" value="${subcontext}"/>
@@ -489,9 +377,9 @@
 				<filter token="package" value="${domain}/${package}"/>
 			</filterset>
 		</copy>
-		<copy todir="../${project.ejb}/${classes.dir}/META-INF/backends" 
+		<copy todir="../${project.name}/${classes.dir}/META-INF/backends" 
 			overwrite="yes" failonerror="no">
-			<fileset dir="../${project.ejb}/${meta-inf.dir}/backends"/>
+			<fileset dir="../${project.name}/${meta-inf.dir}/backends"/>
 			<filterset>
 				<filter token="subcontext" value="${subcontext}"/>
 				<filter token="datasource" value="${datasource}"/>
@@ -502,8 +390,8 @@
 	
 	<target name="filterWithConfiguration" if="configuration" 
 		depends="init">
-		<copy file="../${project.ejb}/${meta-inf.dir}/ejb-jar.xml" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/ejb-jar.xml" 
+		<copy file="../${project.name}/${meta-inf.dir}/ejb-jar.xml" 
+			toFile="../${project.name}/${classes.dir}/META-INF/ejb-jar.xml" 
 			overwrite="yes">
 			<filterset>				
 				<filtersfile file="${configuration}.properties"/>
@@ -511,8 +399,8 @@
 				<filter token="collection" value="${collection}"/>
 			</filterset>
 		</copy>
-		<copy file="../${project.ejb}/${meta-inf.dir}/jboss.xml" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/jboss.xml" 
+		<copy file="../${project.name}/${meta-inf.dir}/jboss.xml" 
+			toFile="../${project.name}/${classes.dir}/META-INF/jboss.xml" 
 			overwrite="yes">
 			<filterset>
 				<filtersfile file="${configuration}.properties"/>
@@ -521,18 +409,8 @@
 				<filter token="package" value="${domain}/${package}"/>				
 			</filterset>
 		</copy>
-		<copy file="../${project.ejb}/${meta-inf.dir}/${jboss.mapping.xml}" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/${jboss.mapping.xml}" 
-			overwrite="yes">
-			<filterset>
-				<filtersfile file="${configuration}.properties"/>				
-				<filter token="datasource" value="${datasource}"/>
-				<filter token="separator" value="${separator}"/>				
-				<filter token="collection" value="${collection}"/>
-			</filterset>
-		</copy>
-		<copy file="../${project.ejb}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
-			toFile="../${project.ejb}/${classes.dir}/META-INF/ibm-ejb-jar-bnd.xmi" 
+		<copy file="../${project.name}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
+			toFile="../${project.name}/${classes.dir}/META-INF/ibm-ejb-jar-bnd.xmi" 
 			overwrite="yes" failonerror="no">
 			<filterset>
 				<filtersfile file="${configuration}.properties"/>
@@ -541,9 +419,9 @@
 				<filter token="package" value="${domain}/${package}"/>				
 			</filterset>
 		</copy>		
-		<copy todir="../${project.ejb}/${classes.dir}/META-INF/backends" 
+		<copy todir="../${project.name}/${classes.dir}/META-INF/backends" 
 			overwrite="yes" failonerror="no">
-			<fileset dir="../${project.ejb}/${meta-inf.dir}/backends"/>
+			<fileset dir="../${project.name}/${meta-inf.dir}/backends"/>
 			<filterset>
 				<filtersfile file="${configuration}.properties"/>
 				<filter token="subcontext" value="${subcontext}"/>
@@ -553,11 +431,15 @@
 		</copy>				
 	</target>
 	
-	<target name="configureJNDI" if="jndi.conf" unless="ox3">
-		<copy file="../${project.ejb}/properties/jndi-${jndi.conf}.properties" 
-			tofile="../${project.ejb}/properties/jndi.properties" overwrite="true"/>
-		<copy file="../${project.ejb}/properties/jndi-${jndi.conf}.properties" 
-			tofile="../${project.ejb}/${classes.dir}/jndi.properties" overwrite="true"/>		
+	<target name="configureJNDI" depends="init" if="classic-xml">
+		<antcall target="configureJNDIImpl"/> 
+	</target>
+	
+	<target name="configureJNDIImpl" if="jndi.conf">
+		<copy file="../${project.name}/properties/jndi-${jndi.conf}.properties" 
+			tofile="../${project.name}/properties/jndi.properties" overwrite="true"/>
+		<copy file="../${project.name}/properties/jndi-${jndi.conf}.properties" 
+			tofile="../${project.name}/${classes.dir}/jndi.properties" overwrite="true"/>		
 	</target>
 	
 	<target name="compile"> 
@@ -592,8 +474,8 @@
 	<target name="createEJBJar" 
 		depends="createDist, updateDataSourceInfo, filterWithConfiguration, filterWithoutConfiguration, filter, configureJNDI">
 		<jar jarfile="${dist.dir}/${name.jar}.jar" 
-			basedir="../${project.ejb}/${classes.dir}" 
-			manifest="../${project.ejb}/${meta-inf.dir}/MANIFEST.MF"/>
+			basedir="../${project.name}/${classes.dir}" 
+			manifest="../${project.name}/${meta-inf.dir}/MANIFEST.MF"/>
 	</target>
 	
 	<target name="copyLibsForEAR">
@@ -639,12 +521,12 @@
         <copy file="${dist.dir}/${file.ear}" todir="${deploy.dir}"/>
     </target>	
 	
-	<target name="updateDataSourceInfo" unless="ox3">
-		<echo file="../${project.ejb}/filtered-files/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
-		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
+	<target name="updateDataSourceInfo" depends="init" if="classic-xml">
+		<echo file="../${project.name}/filtered-files/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
+		<echo file="../${project.name}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
 	</target>
 	
-	<target name="filterI18n" unless="ox3">
+	<target name="filterI18n" depends="init" if="classic-xml">
 		<antcall target="filterI18nWithConfiguration"/>
 		<antcall target="filterI18nWithoutConfiguration"/>
 	</target>	
@@ -672,13 +554,13 @@
 		</copy>
 	</target>	
 		
-	<target name="copyI18nPortletsToClasses" if="ox3">
+	<target name="copyI18nPortletsToClasses" depends="init" if="classic-xml">
   		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false">
     		<fileset dir="../${project}/i18n/portlets"/>
   		</copy>					
 	</target>	
 	
-	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n, updateDataSourceInfo" unless="ox3">
+	<target name="filter" depends="init, filterXavaFiles, filterHibernateFiles, filterI18n, updateDataSourceInfo" if="classic-xml">
 		<copy todir="../${project}/${classes.dir}">
 			<fileset dir="../${project}/filtered-files"/>
 		</copy>
