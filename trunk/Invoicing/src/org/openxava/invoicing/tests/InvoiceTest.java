@@ -1,12 +1,5 @@
 package org.openxava.invoicing.tests;
 
-import java.math.*;
-
-import javax.persistence.*;
-
-import org.openxava.invoicing.model.*;
-import org.openxava.jpa.*;
-
 public class InvoiceTest extends CommercialDocumentTest {
 	
 	public InvoiceTest(String testName) { 
