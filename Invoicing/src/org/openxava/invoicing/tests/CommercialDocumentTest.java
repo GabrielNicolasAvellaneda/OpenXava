@@ -17,18 +17,18 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	}
 			
 	public void testCreate() throws Exception {
-		calculateNumber(); // tmp
+		calculateNumber(); 
 		verifyDefaultValues();
 		chooseCustomer();		
 		addDetails();		
 		setOtherProperties();		
 		save(); 
-		verifyAmountAndEstimatedProfit(); // tmp
+		verifyAmountAndEstimatedProfit(); 
 		verifyCreated();				
 		remove(); 
 	}
 
-	private void verifyAmountAndEstimatedProfit() throws Exception { // tmp
+	private void verifyAmountAndEstimatedProfit() throws Exception { 
 		execute("Mode.list");
 		setConditionValues(new String [] { getCurrentYear(), getNumber() } );
 		execute("List.filter");
@@ -45,10 +45,6 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	}
 
 	private void verifyCreated() throws Exception {
-		// tmp setValue("year", getCurrentYear());
-		// tmp setValue("number", getNumber());
-		// tmp execute("CRUD.search");
-		
 		assertValue("year", getCurrentYear()); 
 		assertValue("number", getNumber());
 		assertValue("date", getCurrentDate());
@@ -90,40 +86,37 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 		execute("Collection.new", "viewObject=xava_view_section0_details"); 
 		setValue("details.product.number", "1");
 		assertValue("details.product.description", "Peopleware: Productive Projects and Teams");
-		assertValue("details.pricePerUnit", "31.00"); // tmp @DefaultValueProperty 8.1.2
+		assertValue("details.pricePerUnit", "31.00"); 
 		setValue("details.quantity", "2");
-		assertValue("details.amount", "62.00"); // tmp amount: calculated property 8.1.1
+		assertValue("details.amount", "62.00"); 
 		execute("Collection.save", "viewObject=xava_view_section0_details"); 
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
 		
-		// tmp ini
-		// Verifying ... 8.2.1
+		// On saving first detail the document is saved,
+		// then we verify that number is calculated
 		assertValue("number", getNumber());
 		
-		// Verifying ... 8.1.3
+		// Verifying calculated properties of document
 		assertValue("baseAmount", "62.00");
 		assertValue("vat", "9.92");
 		assertValue("totalAmount", "71.92"); 
-		// tmp fin
 		
 		// Adding another detail		
 		setValue("details.product.number", "2");
 		assertValue("details.product.description", "Arco iris de lágrimas");
-		assertValue("details.pricePerUnit", "15.00"); // tmp
-		setValue("details.pricePerUnit", "10.00"); // tmp we overwrite
+		assertValue("details.pricePerUnit", "15.00"); 
+		setValue("details.pricePerUnit", "10.00"); 
 		setValue("details.quantity", "1");
-		assertValue("details.amount", "10.00"); // tmp
+		assertValue("details.amount", "10.00"); 
 		execute("Collection.save", "viewObject=xava_view_section0_details"); 
 		assertNoErrors();
 		assertCollectionRowCount("details", 2);
 		
-		// tmp ini
-		// Verifying ... 8.1.3
+		// Verifying calculated properties of document
 		assertValue("baseAmount", "72.00");
 		assertValue("vat", "11.52");
 		assertValue("totalAmount", "83.52"); 
-		// tmp fin		
 	}
 
 	private void chooseCustomer() throws Exception {
@@ -134,10 +127,9 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	private void verifyDefaultValues() throws Exception {
 		execute("CRUD.new");
 		assertValue("year", getCurrentYear());		
-		// tmp assertValue("number", getNumber());
-		assertValue("number", ""); // tmp 8.2.1  Multiuser safe
+		assertValue("number", ""); 
 		assertValue("date", getCurrentDate());
-		assertValue("vatPercentage", "16"); // tmp Default value from a properties file 8.1.4
+		assertValue("vatPercentage", "16");
 	}	
 	
 	private String getCurrentYear() {
@@ -147,23 +139,7 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	private String getCurrentDate() {
 		return DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
 	}
-		
-	/* tmp
-	private String getNumber() {
-		if (number == null) {
-			Query query = getManager().
-				createQuery(
-					"select max(i.number) from CommercialDocument i where i.year = :year"); 
-			query.setParameter("year", Dates.getYear(new Date()));
-			Integer lastNumber = (Integer) query.getSingleResult();
-			if (lastNumber == null) lastNumber = 0;
-			number = Integer.toString(lastNumber + 1);
-		}
-		return number;
-	}
-	*/
-	
-	// tmp ini	
+				
 	private void calculateNumber() {
 		Query query = getManager().
 			createQuery(
@@ -177,6 +153,5 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	private String getNumber() {
 		return number;
 	}
-	// tmp fin
 		
 }
