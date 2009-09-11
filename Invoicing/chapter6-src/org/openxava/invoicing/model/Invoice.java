@@ -46,7 +46,7 @@ public class Invoice {
 	
 	@OneToMany(mappedBy="invoice", cascade=CascadeType.ALL)
 	@ListProperties("product.number, product.description, quantity")	
-	private Collection<Detail> details;
+	private Collection<Detail> details = new ArrayList<Detail>();
 	
 	
 	@Stereotype("MEMO")

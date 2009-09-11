@@ -1,11 +1,13 @@
 package org.openxava.invoicing.model;
 
 import java.util.*;
+
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.invoicing.calculators.*;
+import org.openxava.invoicing.model.*;
 
 @Entity
 @View(members=
@@ -18,12 +20,12 @@ import org.openxava.invoicing.calculators.*;
 )
 abstract public class CommercialDocument extends Identifiable {
 	
-	@Column(length=4)
+	@Column(length=4) 
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
 	
 	
-	@Column(length=6)
+	@Column(length=6) 
 	@DefaultValueCalculator(value=NextNumberForYearCalculator.class,
 		properties=@PropertyValue(name="year") 
 	)
@@ -42,7 +44,7 @@ abstract public class CommercialDocument extends Identifiable {
 	
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
 	@ListProperties("product.number, product.description, quantity")
-	private Collection<Detail> details;
+	private Collection<Detail> details = new ArrayList<Detail>();
 	
 	
 	@Stereotype("MEMO") 
