@@ -10,12 +10,13 @@ import org.openxava.annotations.*;
 @Views({
 	@View( extendsView="super.DEFAULT",
 		members="orders { orders } "
-	),
+	),	
 	@View( name="NoCustomerNoOrders", members=			
 		"year, number, date;" +
 		"details;" +
 		"remarks" 
 	)
+	
 })
 public class Invoice extends CommercialDocument {
 	

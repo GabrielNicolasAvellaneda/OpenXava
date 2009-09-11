@@ -2,13 +2,15 @@ package org.openxava.invoicing.model;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.util.*;
 
 @Entity
 @Views({
 	@View( extendsView="super.DEFAULT",
 		members="invoice { invoice } "
-	),	
+	),
 	@View( name="NoCustomerNoInvoice", members=			
 		"year, number, date;" +
 		"details;" +
@@ -20,7 +22,7 @@ public class Order extends CommercialDocument {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
 	private Invoice invoice;
-
+	
 	public Invoice getInvoice() {
 		return invoice;
 	}
@@ -28,5 +30,5 @@ public class Order extends CommercialDocument {
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
-	
+		
 }
