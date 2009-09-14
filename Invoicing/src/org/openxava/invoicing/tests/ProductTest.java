@@ -58,7 +58,33 @@ public class ProductTest extends ModuleTestBase {
 		setValue("number", Integer.toString(product1.getNumber()));
 		execute("CRUD.search");
 		assertValue("price", "12.00");
-	}	
+	}
+	
+	public void testISBNValidator() throws Exception {
+		// Searching the product1
+		execute("CRUD.new");
+		setValue("number", Integer.toString(product1.getNumber()));
+		execute("CRUD.search");		
+		assertValue("description", "JUNIT Product 1");
+		assertValue("isbn", "");
+		
+		// With incorrect ISBN format
+		setValue("isbn", "1111");
+		execute("CRUD.save");
+		assertError("1111 is not a valid value for Isbn of " +
+				"Product: I s b n does not exist");
+		
+		// ISBN does not exist though it has correct format
+		setValue("isbn", "1234367890");
+		execute("CRUD.save");
+		assertError("1234367890 is not a valid value for Isbn of " +
+				"Product: I s b n does not exist");
+		
+		// ISBN exists
+		setValue("isbn", "0932633439");
+		execute("CRUD.save");
+		assertNoErrors();
+	}
 			
 	private void createProducts() {
 		// Creating the Java object
