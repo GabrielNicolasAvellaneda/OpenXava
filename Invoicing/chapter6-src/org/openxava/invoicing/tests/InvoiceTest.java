@@ -10,34 +10,34 @@ import static org.openxava.jpa.XPersistence.*;
 
 public class InvoiceTest extends ModuleTestBase {
 	
-	private String invoiceNumber; // tmp invoiceNumber --> number
+	private String number;
 
 	public InvoiceTest(String testName) {
 		super(testName, "Invoicing", "Invoice");				
 	}
 		
-	public void testCreateInvoice() throws Exception { // tmp createInvoice --> create	 
+	public void testCreate() throws Exception { 	 
 		verifyDefaultValues();
 		chooseCustomer();		
 		addDetails();		
 		setOtherProperties();		
-		saveInvoice(); // tmp saveInvoice() --> save()
-		verifyCreatedInvoice();	//tmp verifyCreatedInvoice() --> verifyCreated()			
-		removeInvoice(); // tmp removeInvoice() --> remove()
+		save(); 
+		verifyCreated();			
+		remove(); 
 	}
 
-	private void removeInvoice() throws Exception {
+	private void remove() throws Exception {
 		execute("CRUD.delete");
 		assertNoErrors();
 	}
 
-	private void verifyCreatedInvoice() throws Exception {
+	private void verifyCreated() throws Exception {
 		setValue("year", getCurrentYear());
-		setValue("number", getInvoiceNumber());
+		setValue("number", getNumber());
 		execute("CRUD.search");
 		
 		assertValue("year", getCurrentYear()); 
-		assertValue("number", getInvoiceNumber());
+		assertValue("number", getNumber());
 		assertValue("date", getCurrentDate());
 		
 		assertValue("customer.number", "1");
@@ -58,7 +58,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("remarks", "This is a JUNIT test");
 	}
 
-	private void saveInvoice() throws Exception {
+	private void save() throws Exception {
 		execute("CRUD.save");
 		assertNoErrors();
 		
@@ -99,7 +99,7 @@ public class InvoiceTest extends ModuleTestBase {
 	private void verifyDefaultValues() throws Exception {
 		execute("CRUD.new");
 		assertValue("year", getCurrentYear());		
-		assertValue("number", getInvoiceNumber());
+		assertValue("number", getNumber());
 		assertValue("date", getCurrentDate());
 	}	
 	
@@ -111,17 +111,17 @@ public class InvoiceTest extends ModuleTestBase {
 		return DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
 	}
 		
-	private String getInvoiceNumber() {
-		if (invoiceNumber == null) {
+	private String getNumber() { 
+		if (number == null) {
 			Query query = getManager().
 				createQuery(
 					"select max(i.number) from Invoice i where i.year = :year");
 			query.setParameter("year", Dates.getYear(new Date()));
 			Integer lastNumber = (Integer) query.getSingleResult();
 			if (lastNumber == null) lastNumber = 0;
-			invoiceNumber = Integer.toString(lastNumber + 1);
+			number = Integer.toString(lastNumber + 1);
 		}
-		return invoiceNumber;
+		return number;
 	}
 		
 }
