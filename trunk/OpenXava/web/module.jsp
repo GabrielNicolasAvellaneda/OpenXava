@@ -84,8 +84,9 @@ Module.setStyle(style);
 	%>
 
 <% } %>
-	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/xava/editors/calendar/skins/aqua/theme.css" title="Aqua" /> 
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/style/openxava.css" />	
+	<% for (String cssFile: style.getAdditionalCssFiles() ) { %>
+	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>"/>
+	<% } %> 	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
@@ -97,12 +98,36 @@ Module.setStyle(style);
 	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>	
+	<script type="text/javascript">
+		portalJQuery = jQuery;       
+	</script>				
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js"></script>				
+	<script type="text/javascript">
+		$ = jQuery;
+		jQuery = portalJQuery;       
+	</script>			  			 
+	<script type="text/javascript">			
+		$(function(){
+			$('#xava_dialog').dialog({
+				autoOpen: false,
+				modal: true,
+				resizable: true,
+				width: 'auto',
+				height: 'auto',				
+				close: openxava.onCloseDialog
+			});							
+		});
+	</script>
+	
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	  
+	<div id="xava_dialog" > 
+	</div>
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="true"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>	

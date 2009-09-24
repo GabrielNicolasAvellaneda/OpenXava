@@ -9,6 +9,8 @@
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager");
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xava_view");
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
+boolean buttonBar = !"false".equalsIgnoreCase(request.getParameter("buttonBar")); 
+String buttonsAlign = buttonBar?"":"text-align: right;";
 %>
 <div class="<%=style.getModule()%>">
 <form id="<xava:id name='form'/>" name="<xava:id name='form'/>"
@@ -32,9 +34,12 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 	name="<xava:id name='xava_focus_property_id'/>"/>
 
 <div <%=style.getModuleSpacing()%> >
+
+	<% if (buttonBar) { %>
     <div id='<xava:id name="button_bar"/>' class='<%=style.getButtonBar()%>'>		
 		<jsp:include page="buttonBar.jsp"/>
 	</div>
+	<% } %>
     
     <% if (messagesOnTop) { %>    
     <div id='<xava:id name="errors"/>' style="display: inline;">
@@ -49,8 +54,8 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 	<div id='<xava:id name="view"/>' <%=manager.isListMode()?"":("class='" + style.getDetail() + "'")%> style='padding-top: 2px;'>
 		<jsp:include page='<%=manager.getViewURL()%>'/>		
 	</div>    	
-    <div style="clear: both; padding-top: 2px;"></div>
-	<div id='<xava:id name="bottom_buttons"/>' style="<%=style.getBottomButtonsStyle()%>">	
+    <div style="clear: both; padding-top: 2px;"></div>    
+	<div id='<xava:id name="bottom_buttons"/>' style="<%=buttonsAlign %> <%=style.getBottomButtonsStyle()%>">	
 		<jsp:include page="bottomButtons.jsp"/>
 	</div>
     

@@ -63,7 +63,11 @@ public class ModuleManager {
 	private boolean executingAction = false;
 	private boolean reloadAllUINeeded;  
 	private boolean reloadViewNeeded; 
-	private boolean actionsChanged; 
+	private boolean actionsChanged;
+	private boolean showDialog; 
+	private boolean hideDialog; 
+	private boolean dialogVisible; 
+	private MetaAction lastExecutedMetaAction; 
 		
 	/**
 	 * HTML action bind to the current form.
@@ -197,7 +201,7 @@ public class ModuleManager {
 					executeAction(a, errors, messages, actionValue, request);
 					long time = System.currentTimeMillis() - ini;
 					log.debug("Execute " + xavaAction + "=" + time + " ms");					
-				}									
+				}				
 			}			
 		}
 		catch (Exception ex) {
@@ -249,6 +253,7 @@ public class ModuleManager {
 			action.setErrors(errors);
 			action.setMessages(messages);
 			action.setEnvironment(getEnvironment());
+			String previousDefaultActionQualifiedName = getDefaultActionQualifiedName();  
 			if (metaAction != null) {
 				setObjectsInAction(action, metaAction);
 			}
@@ -433,18 +438,35 @@ public class ModuleManager {
 					executeAction(nextMetaAction, action.getErrors(), action.getMessages(), argv, request); 
 				}
 			}
+			if (metaAction != null && errors.isEmpty()) {
+				setShowDialog(metaAction.isShowDialog());
+				if (metaAction.isShowDialog()) dialogVisible = true;
+				if (metaAction.isHideDialog() != null) {
+					setHideDialog(metaAction.isHideDialog());
+					if (metaAction.isHideDialog()) dialogVisible = false;
+				}
+				else {
+					if (metaAction.getQualifiedName().equals(previousDefaultActionQualifiedName) ||
+						"cancel".equals(metaAction.getName())) 
+					{
+						setHideDialog(true);
+						dialogVisible = false;
+					}
+				}
+			}
 			if (!reloadViewNeeded) {
 				Object currentView = getContext().get(applicationName, moduleName, "xava_view"); 
 				reloadViewNeeded = currentView != previousView;
 			}
+			lastExecutedMetaAction = metaAction;
 			if (!(metaAction == null && executingAction)) { // For avoiding commit on OnChange actions triggered from a regular action execution
 				doCommit(); // after executing action
-			}
+			}			 
 		}
 		catch (Exception ex) {
+			setHideDialog(false); 
 			manageException(metaAction, errors, messages, ex);
-		}
-				
+		}				
 	}
 	
 	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
@@ -876,6 +898,8 @@ public class ModuleManager {
 		else {
 			reloadAllUINeeded = false;
 		}
+		showDialog = dialogVisible && !hasProcessRequest(request)?true:false; // When a dialog is shown and the user click in refresh in browser we'll re-open the dialog
+		hideDialog = false;
 		reloadViewNeeded = false;		
 	}
 	
@@ -1032,6 +1056,31 @@ public class ModuleManager {
 		defaultActionQualifiedName = null;
 		metaModule = null;
 		DescriptionsLists.resetDescriptionsCache(getSession());
-	}	
+	}
+	
+	public boolean isShowDialog() {
+		return showDialog;
+	}
 
+	private void setShowDialog(boolean showDialog) {
+		this.showDialog = showDialog;
+	}
+
+	public boolean isHideDialog() {
+		return hideDialog;
+	}
+
+	private void setHideDialog(boolean hideDialog) {
+		if (hideDialog) reloadAllUINeeded = true; 
+		this.hideDialog = hideDialog;
+	}
+	
+	public MetaAction getLastExecutedMetaAction() {
+		return lastExecutedMetaAction;
+	}
+
+	public boolean isDialogVisible() {
+		return dialogVisible;
+	}
+			
 }

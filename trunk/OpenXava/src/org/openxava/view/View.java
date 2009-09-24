@@ -158,7 +158,10 @@ public class View implements java.io.Serializable {
 	private Collection formattedProperties;
 	private boolean refreshDescriptionsLists;
 	private Collection oldNotEditableMembersNames;
-	private boolean defaultListActionsForCollectionsIncluded = true; 
+	private boolean defaultListActionsForCollectionsIncluded = true;
+	private String title; 
+	private String titleId; 
+	private Object [] titleArguments; 
 		
 	public View() {
 		oid = nextOid++;
@@ -3502,6 +3505,8 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
+	
+	
 	private Map getLabels() {
 		View root = getRoot();
 		if (this == root) return labels;
@@ -4174,4 +4179,32 @@ public class View implements java.io.Serializable {
 		this.defaultListActionsForCollectionsIncluded = defaultListActionsForCollectionsIncluded;
 	}
 	
+	public void setTitleId(String id, Object ... arguments) { 
+		this.title = null;
+		this.titleId = id;
+		this.titleArguments = arguments;
+	}
+	
+	public String getTitle() { 
+		if (title == null) {
+			if (titleId == null) title="";
+			else {
+				if (titleArguments != null && titleArguments.length > 0) {
+					title = XavaResources.getString(titleId, titleArguments);
+				}
+				else if (Labels.exists(titleId)) {
+					title = Labels.get(titleId);
+				}
+				else {
+					title = XavaResources.getString(titleId);
+				}
+			}
+		}
+		return title;
+	}
+	
+	public void setTitle(String title) { 
+		this.title = title;
+	}
+				
 }

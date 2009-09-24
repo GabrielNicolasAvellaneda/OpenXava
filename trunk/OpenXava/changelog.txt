@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New property 'title' for View class. This title will be shown in the frame when the view would be displayed in a dialog.
+- Fix: MetaElement.getDescription() and MetaElement.getLabel() used local machine locale. Now it uses client locale.
 - OpenXavaTest refactored: Source folders reorganized, XavaSuite class removed, ant task renamed, etc.
 - Dropped support for EntityBeans CMP2.
 - Dropped support for Java 1.4. From now on OX requires Java 5 or better.

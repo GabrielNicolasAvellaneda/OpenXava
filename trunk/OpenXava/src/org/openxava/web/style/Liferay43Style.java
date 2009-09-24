@@ -80,24 +80,20 @@ public class Liferay43Style extends Style {
 		return ""; 
 	}
 	
-	public String getButtonBarStyle() {
-		// tmp return "style='position: static; margin-bottom: 4px'"; 		
-		return "position: static; margin-bottom: 4px;"; // tmp
+	public String getButtonBarStyle() { 		
+		return "position: static; margin-bottom: 4px;"; 
 	}
 	
 	public String getButtonBarStartStyle() {
-		// tmp return "style='position: static'";
-		return "position: static;"; // tmp
+		return "position: static;"; 
 	}
 	
 	public String getButtonBarMiddleStyle() {
-		// tmp return "style='position: static'";
-		return "position: static;"; // tmp
+		return "position: static;";
 	}
 	
 	public String getButtonBarEndStyle() {
-		// tmp return "style='position: static'";
-		return "position: static;"; // tmp
+		return "position: static;"; 
 	}
 
 		
@@ -117,9 +113,8 @@ public class Liferay43Style extends Style {
 		return "border=0 cellspacing=0 cellpadding=0"; 
 	}
 	
-	public String getListStyle() {
-		// tmp return "style='border-collapse: collapse; border-bottom: 2px solid #CCCCCC;'"; 
-		return "border-collapse: collapse; border-bottom: 2px solid #CCCCCC;"; // tmp
+	public String getListStyle() { 
+		return "border-collapse: collapse; border-bottom: 2px solid #CCCCCC;"; 
 	}	
 	
 	

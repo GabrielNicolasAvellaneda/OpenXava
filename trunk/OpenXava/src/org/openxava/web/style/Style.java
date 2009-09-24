@@ -1,5 +1,7 @@
 package org.openxava.web.style;
 
+import java.util.*;
+
 import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
@@ -22,6 +24,7 @@ import org.openxava.util.*;
 
 public class Style {
 	
+	private static Collection<String> additionalCssFiles; 	
 	private static Log log = LogFactory.getLog(Style.class);
 	private static Style instance = null;
 	private String cssFile; 
@@ -47,6 +50,25 @@ public class Style {
 	
 	public String [] getNoPortalModuleJsFiles() { 
 		return null;
+	}
+	
+	protected Collection<String> createAdditionalCssFiles() {
+		return Arrays.asList( 
+			"/xava/editors/calendar/skins/aqua/theme.css", 
+			"/xava/style/openxava.css"	
+		);
+	}
+	
+	/**
+	 * These css files will be always added, inside and outside portal. <p>
+	 * 
+	 * To refine it overwrite the {@link #createAdditionalCssFiles} method.<br>
+	 */
+	final public Collection<String> getAdditionalCssFiles() {
+		if (additionalCssFiles == null) {
+			additionalCssFiles = createAdditionalCssFiles();
+		}
+		return additionalCssFiles;
 	}
 	
 	public String getInitThemeScript() { 

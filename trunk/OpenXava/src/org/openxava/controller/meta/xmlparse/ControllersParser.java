@@ -109,6 +109,11 @@ public class ControllersParser extends ParserBase {
 		result.setByDefault(toByDefault(el.getAttribute(xby_default[lang])));
 		result.setTakesLong(getAttributeBoolean(el, xtakes_long[lang]));
 		result.setConfirm(getAttributeBoolean(el, xconfirm[lang]));
+		result.setShowDialog(getAttributeBoolean(el, xshow_dialog[lang])); 
+		String hideDialog =el.getAttribute(xhide_dialog[lang]);
+		if (!xdefault[lang].equals(hideDialog)) {
+			result.setHideDialog(Boolean.valueOf(hideDialog));
+		}
 		fillSet(el, result);
 		fillUseObject(el, result);
 		return result;

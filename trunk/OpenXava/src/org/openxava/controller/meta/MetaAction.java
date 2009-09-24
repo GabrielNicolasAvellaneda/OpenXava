@@ -37,6 +37,8 @@ public class MetaAction extends MetaElement {
 	private boolean confirm;
 	private boolean onEachRequest;
 	private boolean beforeEachRequest;
+	private boolean showDialog; 
+	private Boolean hideDialog = null; 
 	
 	public MetaAction() {
 	}
@@ -283,5 +285,22 @@ public class MetaAction extends MetaElement {
 	public void setBeforeEachRequest(boolean beforeEachRequest) {
 		this.beforeEachRequest = beforeEachRequest;
 	}
-		
+	
+	public boolean isShowDialog() {
+		return showDialog;
+	}
+
+	public void setShowDialog(boolean showDialog) {
+		this.showDialog = showDialog;
+	}
+
+	public Boolean isHideDialog() {		
+		return hideDialog;
+	}
+
+	public void setHideDialog(Boolean hideDialog) {
+		this.hideDialog = hideDialog;
+	}
+	
+			
 }
