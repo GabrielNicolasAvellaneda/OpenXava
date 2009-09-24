@@ -28,7 +28,7 @@ abstract public class MetaElement implements java.io.Serializable {
 	}
 	
 	public String getLabel() {
-		return getLabel(Locale.getDefault());
+		return getLabel(Locales.getCurrent()); 
 	}
 	
 	public String getLabel(ServletRequest request) {		
@@ -80,8 +80,8 @@ abstract public class MetaElement implements java.io.Serializable {
 		name = newName;
 	}
 	
-	public String getDescription() {
-		return getDescription(Locale.getDefault());
+	public String getDescription() { 
+		return getDescription(Locales.getCurrent()); 
 	}
 	
 	public String getDescription(Locale locale) {

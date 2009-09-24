@@ -28,6 +28,8 @@
  by-default (never|if-possible|almost-always|always) "never"
  takes-long (true|false) "false"
  confirm (true|false) "false"
+ show-dialog (true|false) "false"
+ hide-dialog (true|false|default) "default"
 >
 
 <!ELEMENT use-object EMPTY>

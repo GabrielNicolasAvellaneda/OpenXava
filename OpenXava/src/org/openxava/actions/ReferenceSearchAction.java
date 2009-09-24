@@ -19,7 +19,6 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 			
 	private Tab tab;	
 	private String tabName = "";
-	private String currentReferenceLabel;
 	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too
 	
 	
@@ -66,7 +65,7 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 			getTab().setBaseCondition(null);
 		}
 					
-		setCurrentReferenceLabel(ref.getLabel());	 
+		getView().setTitleId("choose_reference_prompt", ref.getLabel()); 
 	}
 
 	private MetaReference getMetaReference(MetaModel metaRootModel, String referenceName) throws XavaException {
@@ -92,14 +91,6 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 
 	public void setTab(Tab tab) {
 		this.tab = tab;
-	}
-
-	public String getCurrentReferenceLabel() {
-		return currentReferenceLabel;
-	}
-
-	public void setCurrentReferenceLabel(String string) {
-		currentReferenceLabel = string;
 	}
 
 	/**

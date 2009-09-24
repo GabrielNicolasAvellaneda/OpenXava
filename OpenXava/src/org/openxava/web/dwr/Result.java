@@ -20,6 +20,9 @@ public class Result {
 	private String focusPropertyId;
 	private String error;
 	private boolean reload; 
+	private boolean showDialog; 
+	private boolean hideDialog; 
+	private String dialogTitle; 
 	
 	public Result() {
 	}
@@ -106,6 +109,30 @@ public class Result {
 
 	public void setReload(boolean reload) {
 		this.reload = reload;
+	}
+	
+	public boolean isShowDialog() {
+		return showDialog;
+	}
+
+	public void setShowDialog(boolean showDialog) {
+		this.showDialog = showDialog;
+	}
+
+	public boolean isHideDialog() {
+		return hideDialog;
+	}
+
+	public void setHideDialog(boolean hideDialog) {
+		this.hideDialog = hideDialog;
+	}
+	
+	public String getDialogTitle() {
+		return dialogTitle;
+	}
+
+	public void setDialogTitle(String dialogTitle) {
+		this.dialogTitle = dialogTitle;
 	}
 
 }

@@ -1,5 +1,7 @@
 package org.openxava.web.style;
 
+import java.util.*;
+
 /**
  * For Liferay 5.1. <p>
  * 
@@ -28,6 +30,13 @@ public class Liferay51Style extends Liferay43Style {
 	public String [] getNoPortalModuleJsFiles() { 
 		return noPortalModuleJsFiles;
 	}	
+		
+	protected Collection<String> createAdditionalCssFiles() {
+		Collection<String> result = new ArrayList(super.createAdditionalCssFiles());
+		result.add("/xava/style/liferay51/css/jquery-ui-patch.css");
+		return result;
+	}
+
 			
 	public String getModuleSpacing() { 
 		return "";		

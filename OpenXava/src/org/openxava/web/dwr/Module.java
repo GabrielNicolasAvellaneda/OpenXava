@@ -18,6 +18,8 @@ import org.openxava.web.*;
 import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 
+import sun.security.action.*;
+
 /**
  * For accessing to module execution from DWR. <p>
  * 
@@ -178,6 +180,19 @@ public class Module extends DWRBase {
 
 	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
 		Map changedParts = result.getChangedParts();
+		
+		if (manager.isShowDialog()) {
+			result.setShowDialog(manager.isShowDialog());			
+			setDialogTitle(result);
+			changedParts.put("xava_dialog", 
+				getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
+			); 
+			return;
+		}
+		if (manager.isHideDialog()) {
+			result.setHideDialog(true);
+		}
+				
 		for (Iterator it = getChangedParts(values).entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry changedPart = (Map.Entry) it.next();			
 			changedParts.put(changedPart.getKey(),
@@ -189,6 +204,17 @@ public class Module extends DWRBase {
 		}
 	}
 
+	private void setDialogTitle(Result result) { 		
+		if (!Is.emptyString(getView().getTitle())) {
+			result.setDialogTitle(getView().getTitle());
+		}
+		else {
+			MetaAction lastAction = manager.getLastExecutedMetaAction();
+			String model = Labels.get(getView().getModelName());
+			if (lastAction == null) result.setDialogTitle(model);
+			else result.setDialogTitle(lastAction.getDescription() + " " + model);
+		}		
+	}
 
 	private Map getChangedParts(Map values) { 
 		Map result = new HashMap(); 

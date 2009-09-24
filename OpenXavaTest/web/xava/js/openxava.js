@@ -20,8 +20,8 @@ openxava.ajaxRequest = function(application, module) {
 			openxava.refreshPage); 			
 }
 
-openxava.refreshPage = function(result) { 
-	openxava.resetRequesting(result); 
+openxava.refreshPage = function(result) {
+	openxava.resetRequesting(result);
 	var changed = "";	
 	if (result.error != null) {		
 		openxava.systemError(result);
@@ -54,7 +54,15 @@ openxava.refreshPage = function(result) {
 		openxava.ajaxRequest(result.application, result.nextModule); 
 		return;
 	}	
-	else {	
+	else {
+		if (result.showDialog){
+			openxava.disableElements(result);
+		}
+		else if (result.hideDialog) {
+			$('#xava_dialog').attr("application", ""); 
+			$('#xava_dialog').attr("module", ""); 
+			$('#xava_dialog').dialog('close');
+		}		
 		openxava.strokeActions = result.strokeActions; 		
 		var changedParts = result.changedParts; 		
 		for (var id in changedParts) {
@@ -70,24 +78,65 @@ openxava.refreshPage = function(result) {
 			}			
 		}
 		if (openxava.initTheme != null) openxava.initTheme();		
-		if (result.focusPropertyId != null) { 
-			document.getElementById(openxava.decorateId(result.application, result.module, "xava_focus_property_id")).value = result.focusPropertyId; 
+		if (result.focusPropertyId != null) {
+			document.getElementById(openxava.decorateId(result.application, result.module, "xava_focus_property_id")).value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
 		}
-	}	
+		if (result.showDialog){
+			$('#xava_dialog').attr("application", result.application); 
+			$('#xava_dialog').attr("module", result.module); 
+			$('#xava_dialog').dialog('option', 'title', result.dialogTitle);
+			$('#xava_dialog').dialog('open');
+		}
+	}		
 	document.getElementById('xava_processing_layer').style.display='none'; 
-	var form = openxava.getForm(result.application, result.module); 
+	var form = openxava.getForm(result.application, result.module);	
 	if (form != null) {  
 		form[openxava.decorateId(result.application, result.module, "xava_action")].value=""; 
 		form[openxava.decorateId(result.application, result.module, "xava_action_argv")].value="";
 		form[openxava.decorateId(result.application, result.module, "xava_changed_property")].value="";
-	}		
+	}	
 	document.getElementById(openxava.decorateId(result.application, result.module, "loaded_parts")).value=changed;
 	document.getElementById(openxava.decorateId(result.application, result.module, "loading")).value=false;
 	openxava.lastApplication=result.application;
 	openxava.lastModule=result.module;	
 	document.body.style.cursor='auto';	
 }
+
+openxava.disableElements = function(result) { 
+	var rootId = openxava.decorateId(result.application, result.module, "core");
+	var prefixId = openxava.decorateId(result.application, result.module, "");
+	$("#" + rootId).find("[id^=" + prefixId + "]").each(
+		function () {			
+			this.id = this.id + "__DISABLED__"; 
+		}	
+	);
+	$("#" + rootId).find("[name^=" + prefixId + "]").each(
+		function () {			
+			this.name = this.name + "__DISABLED__"; 
+		}	
+	);		
+}
+
+openxava.onCloseDialog = function() { 
+	var application = $("#xava_dialog").attr("application");
+	var module = $("#xava_dialog").attr("module");
+	if (application != "") {
+		openxava.executeAction(application, module, false, false, "Dialog.cancel");
+	}
+	$("[id$=__DISABLED__]").each(
+		function () {
+			this.id = this.id.substring(0, this.id.length - 12);
+		}	
+	);
+	$("[name$=__DISABLED__]").each(
+		function () {
+			this.name = this.name.substring(0, this.name.length - 12);
+		}	
+	);
+	$("#xava_dialog").empty();	
+}
+
 
 openxava.updateRootIds = function(application, moduleFrom, moduleTo) { 
 	document.getElementById(openxava.decorateId(
@@ -297,7 +346,7 @@ openxava.requestOnChange = function(application, module) {
 }
 
 openxava.setFocus = function(application, module) { 
-	var form = openxava.getForm(application, module);
+	var form = openxava.getForm(application, module);	
 	var elementName = form.elements[openxava.decorateId(application, module, "xava_focus_property_id")].value;	
 	var elementDecoratedName =  openxava.decorateId(application, module, elementName); 
 	var element = form.elements[elementDecoratedName];	
