@@ -148,6 +148,8 @@ Module.setStyle(style);
 		if (!loadingImage.startsWith("/")) loadingImage = request.getContextPath() + "/xava/" + style.getLoadingModuleImage();
 		%>
 		<img src='<%=loadingImage%>' style="padding: 20px;"/>
+	</div>	
+	<div id="xava_console">
 	</div>
 
 <% if (!isPortlet) { %>

@@ -69,5 +69,6 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	public void setRow(int i) {
 		row = i;
 	}
+
 	
 }

@@ -238,7 +238,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 			assertValueInList(0, 0, "AK");
 			assertValueInList(4, 0, "CA");
 			checkRow(0);
-			checkRow(4);
+			checkRow(4);			
 			execute("AddToCollection.add");
 		}
 		else {

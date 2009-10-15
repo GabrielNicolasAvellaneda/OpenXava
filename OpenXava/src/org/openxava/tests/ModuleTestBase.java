@@ -58,7 +58,7 @@ public class ModuleTestBase extends TestCase {
 	private static String liferayURL;	
 	private static String host;
 	private static String port;
-	private static int loginFormIndex = -1;
+	private static int loginFormIndex = -1; 
 	private String locale;
 	private MetaModule metaModule;
 	private MetaModel metaModel;
@@ -68,7 +68,7 @@ public class ModuleTestBase extends TestCase {
 	private String module;
 	private WebClient client; 
 	private HtmlPage page; 
-	private HtmlForm form;
+	private HtmlForm form;  
 	private String lastNotNotifiedPropertyName; 
 	private String lastNotNotifiedPropertyValue;
 	private BrowserVersion browserVersion;	
@@ -118,6 +118,7 @@ public class ModuleTestBase extends TestCase {
 		}
 		XHibernate.commit();
 		XPersistence.commit();
+		client.closeAllWindows();		
 		client = null;  
 		page = null; 
 		form = null; 
@@ -127,10 +128,10 @@ public class ModuleTestBase extends TestCase {
 		if (isLiferayEnabled()) {
 			// Liferay
 			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/c/portal/login");
-			resetLoginForm();			
+			resetLoginForm(); 			
 			setFormValue(getLiferayField("login"), user, true, false);					
 			setFormValue(getLiferayField("password"), password, true, false);
-			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getHtmlElementsByAttribute("input", "type", "submit").get(0);
+			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getElementsByAttribute("input", "type", "submit").get(0);
 			page = (HtmlPage) button.click();
 			
 			try {
@@ -152,7 +153,7 @@ public class ModuleTestBase extends TestCase {
 			resetLoginForm();			
 			setFormValue("org.apache.jetspeed.login.username", user);
 			setFormValue("org.apache.jetspeed.login.password", password);
-			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getHtmlElementsByAttribute("input", "type", "submit").get(0); 
+			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getElementsByAttribute("input", "type", "submit").get(0); 
 			page = (HtmlPage) button.click();			
 			page = (HtmlPage) client.getPage(getModuleURL()); 
 			resetForm();
@@ -174,8 +175,8 @@ public class ModuleTestBase extends TestCase {
 	private void setFormValue(String name, String value, boolean refreshIfNeeded, boolean decorateName) throws Exception {
 		boolean refreshNeeded = false;		
 		String id = decorateName?decorateId(name):name; 
-		try {
-			HtmlInput input = getForm().getInputByName(id);	
+		try {	
+			HtmlInput input = getInputByName(id); 
 			focus(input);
 			assertNotDisable(name, input);
 			if (input instanceof HtmlCheckBoxInput) {
@@ -229,7 +230,7 @@ public class ModuleTestBase extends TestCase {
 
 	private void focus(HtmlElement element) throws Exception {
 		element.focus();
-		Thread.sleep(20);		
+		Thread.sleep(20);				
 	}
 
 	private void setRadioButtonsValue(String name, String value) {
@@ -253,14 +254,13 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private void refreshPage() throws Exception {
-		Thread.sleep(120);								
-		resetForm();		
+		resetForm(); 				
 	}
 
 	private String getFormValue(String name) {
 		String id = decorateId(name); 
 		try {			
-			HtmlInput input = getForm().getInputByName(id);
+			HtmlInput input = getInputByName(id);
 			if (input instanceof HtmlRadioButtonInput) {
 				return getRadioButtonsValue(id);
 			}
@@ -269,7 +269,7 @@ public class ModuleTestBase extends TestCase {
 			}
 			else {
 				return input.getValueAttribute();
-			}
+			}			
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			try {
@@ -282,6 +282,20 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 	
+	/*
+	 * This is needed because a bug of HtmlUnit 2.6, where to get values from
+	 * form fails in some circumstances. 
+	 */
+	private HtmlInput getInputByName(String name) { 
+		HtmlElement el = page.getElementByName(name);
+		if (el instanceof HtmlInput) {
+			return (HtmlInput) el;
+		}
+		else {
+			throw new com.gargoylesoftware.htmlunit.ElementNotFoundException("input", "name", name);
+		}
+	}
+
 	private String [] getFormValues(String name) {		
 		List elements = getForm().getInputsByName(name);
 		if (elements.isEmpty()) {
@@ -290,7 +304,7 @@ public class ModuleTestBase extends TestCase {
 		String [] values = new String[elements.size()];
 		int i=0;
 		for (Iterator it = elements.iterator(); it.hasNext(); i++) {
-			values[i] = ((HtmlElement) it.next()).getAttributeValue("value");
+			values[i] = ((HtmlElement) it.next()).getAttribute("value");
 		}
 		return values;
 	}
@@ -303,7 +317,7 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	private void setFormValues(String name, String [] values) throws Exception {		
-		List elements = new ArrayList(page.getHtmlElementsByName(name));		
+		List elements = new ArrayList(page.getElementsByName(name));		
 		boolean refreshPage = false;
 		if (isOneMultipleSelect(elements)) { 
 			HtmlSelect select = (HtmlSelect) elements.get(0);
@@ -388,7 +402,7 @@ public class ModuleTestBase extends TestCase {
 	 * Like close navigator, open again, and reexecute the module.
 	 */
 	protected void resetModule() throws Exception {		
-		client = new WebClient(getBrowserVersion()); 		
+		client = new WebClient(getBrowserVersion());		
 		client.setThrowExceptionOnFailingStatusCode(false); // Because some .js are missing in Liferay 4.1
 		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3		
 		if (getLocale() != null) {
@@ -410,13 +424,14 @@ public class ModuleTestBase extends TestCase {
 	
 	private BrowserVersion getBrowserVersion() {
 		if (browserVersion == null) {
-			String browser = getProperty("browser", "firefox2");
-			if ("firefox2".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_2;
-			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7_0;
-			else if ("iexplorer6".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_6_0;
+			String browser = getProperty("browser", "firefox3"); 
+			if ("firefox3".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_3;
+			else if ("firefox2".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_2;
+			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7;
+			else if ("iexplorer6".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_6;
 			else {
-				log.warn(XavaResources.getString("unknown_browser_using_default", "Firefox 2"));
-				browserVersion = BrowserVersion.FIREFOX_2;
+				log.warn(XavaResources.getString("unknown_browser_using_default", "Firefox 3")); 
+				browserVersion = BrowserVersion.FIREFOX_3; 
 			}
 		}
 		return browserVersion;
@@ -481,12 +496,10 @@ public class ModuleTestBase extends TestCase {
 	protected void setModelToModuleSetting() { 		
 	}
 	
-
-	
 	/**
 	 * Execute the action clicking in the link or button.
 	 */
-	protected void execute(String action) throws Exception {
+	protected void execute(String action) throws Exception { 
 		// Before click in the buttom, we blur from the current element
 		HtmlElement focusedElement = page.getFocusedElement();
 		if (focusedElement != null) {
@@ -494,7 +507,7 @@ public class ModuleTestBase extends TestCase {
 		}
 		
 		throwChangeOfLastNotNotifiedProperty();
-		if (page.getHtmlElementsByName(Ids.decorate(application, module, ACTION_PREFIX + "." + action)).size() > 1) { // Action of list/collection
+		if (page.getElementsByName(Ids.decorate(application, module, ACTION_PREFIX + "." + action)).size() > 1) { // Action of list/collection
 			execute(action, null);
 			return;
 		}	
@@ -522,25 +535,13 @@ public class ModuleTestBase extends TestCase {
 		}	
 	}
 										 	
-	private void waitUntilPageIsLoaded() throws Exception { 
-		HtmlInput loading = (HtmlInput) getElementById("loading");
-		for (int i=0; !"true".equals(loading.getValueAttribute()) && i<20; i++) {
-			try { Thread.sleep(100); } catch (Exception ex) { }			
-		}
-		int x = 0;
-		while ("true".equals(loading.getValueAttribute())) {
-			x++;			
-			if (x % 200 == 0){
-				page = (HtmlPage) ((WebWindow) client.getWebWindows().get(0)).getEnclosedPage();
-				assertSystemError(); 
-				loading = (HtmlInput) getElementById("loading");
-			}
-			try { Thread.sleep(20); } catch (Exception ex) { }		
-		}		
+	private void waitUntilPageIsLoaded() throws Exception {				
+		client.waitForBackgroundJavaScriptStartingBefore(10000); 		
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
-		}		
+		}
 	}
+	
 
 	private void assertSystemError() { 
 		Object systemError = page.getElementById("xava_system_error"); 
@@ -561,10 +562,10 @@ public class ModuleTestBase extends TestCase {
 		return Ids.decorate(application, module, name);
 	}
 
-	protected void assertFocusOn(String name) throws Exception {		
+	protected void assertFocusOn(String name) throws Exception {
 		String expectedFocusProperty = decorateId(name); 
 		HtmlElement element = page.getFocusedElement(); 
-		String focusProperty = element==null?null:element.getAttributeValue("name");
+		String focusProperty = element==null?null:element.getAttribute("name");
 		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
 	}
 	
@@ -593,9 +594,8 @@ public class ModuleTestBase extends TestCase {
 		}
 		if (arguments == null && element == null) { // We try if it is a button
 			String moduleMarkForButton = "executeAction(\"" + application + "\", \"" + module + "\"";
-			for (Iterator it = getForm().getHtmlElementsByAttribute("input", "id", decorateId(action)).iterator(); it.hasNext(); ) { 
-				Object inputElement = it.next();
-				if (!(inputElement instanceof HtmlInput)) continue;
+			HtmlElement inputElement = page.getElementById(decorateId(action));
+			if (inputElement instanceof HtmlInput) {
 				HtmlInput input = (HtmlInput) inputElement;
 				if ("button".equals(input.getTypeAttribute()) &&
 					input.getOnClickAttribute().endsWith("\"" + action + "\")") &&
@@ -603,12 +603,12 @@ public class ModuleTestBase extends TestCase {
 				{				
 					element = input;				
 				}				
-			}
+			}			
 		}
 		if (element != null) {
 			Page newPage = element.click();
 			if (newPage instanceof HtmlPage) {
-				page = (HtmlPage) newPage;				
+				page = (HtmlPage) newPage;	
 				resetForm();				
 			}
 			else {
@@ -623,7 +623,7 @@ public class ModuleTestBase extends TestCase {
 			}
 			fail(XavaResources.getString("clickable_not_found", action));  
 		}	
-		
+
 		restorePage();
 	}
 	
@@ -854,7 +854,7 @@ public class ModuleTestBase extends TestCase {
 	protected void setValueNotNotify(String name, String value) throws Exception {
 		String qualifiedName = decorateId(name); 
 		HtmlInput input = getForm().getInputByName(qualifiedName);
-		input.setAttributeValue("value", value); // In this way onchange is not thrown 
+		input.setAttribute("value", value); // In this way onchange is not thrown 
 		lastNotNotifiedPropertyName = qualifiedName; 
 		lastNotNotifiedPropertyValue = value; 
 	}
@@ -862,7 +862,7 @@ public class ModuleTestBase extends TestCase {
 	protected void setValue(String name, String value) throws Exception {		
 		setFormValue(decorateId(name), value); 
 	}	
-	
+		
 	/**
 	 * For multiple values properties
 	 */
@@ -933,18 +933,24 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private Collection getActions() {
-		Collection hiddens = getForm().getHtmlElementsByAttribute("input", "type", "hidden");
+		HtmlElement dialog = page.getElementById("xava_dialog");
+		if (!Is.emptyString(dialog.asText())) return getActions(dialog);
+		return getActions(getElementById("core"));
+	}	
+	
+	private Collection getActions(HtmlElement el) { 		
+		Collection hiddens = el.getElementsByAttribute("input", "type", "hidden");				
 		Set actions = new HashSet();		
 		for (Iterator it = hiddens.iterator(); it.hasNext(); ) {
 			HtmlInput input = (HtmlInput) it.next();
 			if (!input.getNameAttribute().startsWith(Ids.decorate(application, module, ACTION_PREFIX))) continue;
 			actions.add(removeActionPrefix(input.getNameAttribute()));			
 		}								
-		return actions;		
-	}		
+		return actions;				
+	}
 			
 	protected void assertActions(String [] expectedActions) throws Exception {
-		Collection actionsInForm = getActions();			
+		Collection actionsInForm = getActions();		
 		Collection left = new ArrayList();		
 		for (int i = 0; i < expectedActions.length; i++) {
 			String expectedAction = expectedActions[i];				
@@ -1074,7 +1080,7 @@ public class ModuleTestBase extends TestCase {
 	private boolean collectionHasFilterHeader(HtmlTable table) { 				
 		return table.getRowCount() > 1 && 
 			!table.getCellAt(1, 0).
-				getHtmlElementsByAttribute("input", "name", 
+				getElementsByAttribute("input", "name", 
 					Ids.decorate(application, module,
 						ACTION_PREFIX + ".List.filter")).isEmpty();
 	}
@@ -1621,7 +1627,7 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
-	private void resetForm() throws Exception {
+	private void resetForm() throws Exception {		
 		waitUntilPageIsLoaded();
 		setNewModuleIfChanged(); 
 		form = null; 		
@@ -1648,12 +1654,12 @@ public class ModuleTestBase extends TestCase {
 	 * presentation technology.
 	 */	
 	protected HtmlForm getForm() { 
-		if (form == null) {
+		if (form == null) {			
 			form = page.getFormByName(decorateId("form"));
 		}
 		return form;	
 	}	
-	
+		
 	private int getLoginFormIndex() throws Exception {
 		if (loginFormIndex == -1) {
 			if (isLiferayEnabled()) {
@@ -1682,7 +1688,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	private boolean hasElementByName(String elementName) {
-		return !page.getHtmlElementsByName(decorateId(elementName)).isEmpty();
+		return !page.getElementsByName(decorateId(elementName)).isEmpty();
 	}
 	
 	private boolean hasElementById(String elementId) { 

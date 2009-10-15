@@ -218,10 +218,10 @@ public class CustomerTest extends ModuleTestBase {
 		addImage();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getUrl();
+		URL url = page.getWebResponse().getRequestSettings().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
-		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("photo")).get(0); 
+		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("photo")).get(0); 
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();
@@ -241,10 +241,10 @@ public class CustomerTest extends ModuleTestBase {
 		execute("ImageEditor.deleteImage", "newImageProperty=photo");
 		assertNoErrors();
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getUrl();
+		URL url = page.getWebResponse().getRequestSettings().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
-		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("photo")).get(0); 
+		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("photo")).get(0); 
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();
@@ -278,7 +278,7 @@ public class CustomerTest extends ModuleTestBase {
 	public void testSearchReferenceWithAListInAGroup() throws Exception {
 		execute("CRUD.new");		
 		assertValue("seller.name", "");		
-		execute("MyReference.search", "keyProperty=seller.number"); 
+		execute("MyReference.search", "keyProperty=seller.number");
 		String sellerName = getValueInList(0, 1);
 		execute("ReferenceSearch.choose", "row=0");
 		assertTrue("The name of first seller can't be empty string", sellerName.trim().length() > 0);		

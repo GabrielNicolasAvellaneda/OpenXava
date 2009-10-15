@@ -66,11 +66,11 @@ public class FormulaTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getUrl();
+		URL url = page.getWebResponse().getRequestSettings().getUrl();
 		
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
-		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("ingredients.image")).get(0);
+		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("ingredients.image")).get(0);
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();

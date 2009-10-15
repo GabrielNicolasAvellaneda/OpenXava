@@ -189,9 +189,9 @@ public class CarrierTest extends CarrierTestBase {
 	
 	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception {
 		execute("Mode.detailAndFirst");		
-		// Modifying				
-		execute("Reference.modify", "model=Warehouse,keyProperty=warehouse.number");
-		assertNoErrors();
+		// Modifying		
+		execute("Reference.modify", "model=Warehouse,keyProperty=warehouse.number");		
+		assertNoErrors();		
 		assertAction("Modification.update");
 		assertAction("Modification.cancel");
 		assertValue("Warehouse", "name", "MODIFIED WAREHOUSE");

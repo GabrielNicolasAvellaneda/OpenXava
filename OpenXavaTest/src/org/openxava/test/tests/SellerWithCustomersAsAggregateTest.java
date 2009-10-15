@@ -38,7 +38,7 @@ public class SellerWithCustomersAsAggregateTest extends ModuleTestBase {
 		setValue("customers.address.city", "EL PUIG");
 		setValue("customers.address.state.id", "CA");
 		
-		execute("Collection.save", "viewObject=xava_view_customers");
+		execute("Collection.save", "viewObject=xava_view_customers");		
 		assertMessage("Customer created and associated to Seller");
 		assertCollectionRowCount("customers", 1);
 		assertValueInCollection("customers", 0, "name", "Junit 66");

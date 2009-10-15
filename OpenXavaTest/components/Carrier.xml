@@ -68,7 +68,9 @@
 			<descriptions-list/>
 		</reference-view>
 		
-		<reference-view reference="warehouse" view="KeyInGroup"/>
+		<reference-view reference="warehouse" view="KeyInGroup">
+			<action action="WarehouseReference.createNewNoDialog"/>
+		</reference-view>
 		
 		<collection-view collection="fellowCarriers" view="Simple" edit-only="true">
 			<list-action action="Carrier.translateName"/>

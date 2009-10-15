@@ -60,7 +60,7 @@
 			<use-object name="xava_view"/>
 		</action>	
 	</controller>
-	
+		
 	<controller name="ChangeActiveYear">
 		<action name="showActiveYear" class="org.openxava.test.actions.ShowActiveYearAction"
 			on-init="true" hidden="true">
@@ -330,7 +330,7 @@
 	<controller name="CustomerNewOnInitInherited">
 		<extends controller="CustomerNewOnInit"/>
 	</controller>
-	
+		
 	<controller name="ChangeModule">
 		<action name="goCustomer" class="org.openxava.actions.ChangeModuleAction">
 			<set property="nextModule" value="CustomerWithSection"/>
@@ -515,9 +515,13 @@
 			class="org.openxava.test.actions.MySearchAction"
 			image="images/search.gif">				
 			<use-object name="xava_view"/>
+			 
 			<use-object name="xava_referenceSubview"/>
-			<use-object name="xava_tab"/>
-			<use-object name="xava_currentReferenceLabel"/>			
+			<!-- tmp Poner en migration
+			O hacerlo compatible con un mensaje de advertencia
+			<use-object name="xava_currentReferenceLabel"/>
+			-->
+			<use-object name="xava_tab"/>						
 		</action>			
 				
 	</controller>
@@ -771,7 +775,19 @@
 		</action>						
 	</controller>
 	
-
+	<controller name="WarehouseReference">
+		<action name="createNewNoDialog" 
+			class="org.openxava.actions.CreateNewFromReferenceAction"
+			image="images/create_new.gif"
+			show-dialog="false">
+			<set property="keyProperty" value="warehouse.number"/>
+			<set property="model" value="Warehouse"/>
+			<use-object name="xava_view"/>
+			<use-object name="xava_previousViews"/>
+			<use-object name="xava_referenceSubview"/>
+		</action>
+	</controller>	
+	
 	<controller name="HideShowCRUDActions">
 		<action name="hideDelete" class="org.openxava.test.actions.HideDeleteAction" mode="detail"/>
 		<action name="showDelete" class="org.openxava.test.actions.ShowDeleteAction" mode="detail"/>

@@ -43,11 +43,11 @@ public class Module extends DWRBase {
 	private String module;
 	private ModuleManager manager;
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected) throws Exception {
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected) throws Exception {		
 		Result result = new Result(); 
 		result.setApplication(application); 
-		result.setModule(module); 		
-		try {						
+		result.setModule(module);		
+		try {
 			Servlets.setCharacterEncoding(request, response);
 			this.request = request;
 			this.response = response;
@@ -189,7 +189,7 @@ public class Module extends DWRBase {
 			); 
 			return;
 		}
-		if (manager.isHideDialog()) {
+		if (manager.isHideDialog()) { 
 			result.setHideDialog(true);
 		}
 				
@@ -217,16 +217,20 @@ public class Module extends DWRBase {
 	}
 
 	private Map getChangedParts(Map values) { 
-		Map result = new HashMap(); 
+		Map result = new HashMap();
 		if (values == null || manager.isReloadAllUINeeded() || manager.isFormUpload()) {   		
 			put(result, "core", "core.jsp");
 		}
 		else {			
-			if (manager.isActionsChanged()) {
-				put(result, "button_bar", "buttonBar.jsp");
-				put(result, "bottom_buttons", "bottomButtons.jsp");
-			}		
-			
+			if (manager.isActionsChanged()) {				
+				if (manager.isDialogVisible()) {					
+					put(result, "bottom_buttons", "bottomButtons.jsp?buttonBar=false");					
+				}				
+				else {						
+					put(result, "button_bar", "buttonBar.jsp");
+					put(result, "bottom_buttons", "bottomButtons.jsp");
+				}
+			}					
 			Messages errors = (Messages) request.getAttribute("errors");
 			put(result, "errors", errors.contains()?"errors.jsp":null);
 			Messages messages = (Messages) request.getAttribute("messages");

@@ -282,7 +282,7 @@ here that you want to override.
 			<use-object name="xava_view"/>
 		</action>			
 	</controller>
-					<controller name="ReferenceSearch">		<action name="choose" by-default="almost-always"			class="org.openxava.actions.ChooseReferenceAction">			<use-object name="xava_referenceSubview"/>
+					<controller name="ReferenceSearch">		<action name="choose" by-default="almost-always"			class="org.openxava.actions.ChooseReferenceAction"> 			<use-object name="xava_referenceSubview"/>			
 			<use-object name="xava_view"/>			<use-object name="xava_tab"/>					</action>		<action name="cancel"			class="org.openxava.actions.CancelFromCustomListAction">
 			<use-object name="xava_view"/>
 			<use-object name="xava_tab"/>		</action>	</controller>
