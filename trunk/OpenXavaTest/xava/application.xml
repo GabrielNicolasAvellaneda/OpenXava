@@ -150,8 +150,7 @@
 	<module name="SellerJSP" folder="invoicing.variations">
 		<model name="Seller"/>
 		<view name="ForCustomJSP"/>		  
-		<web-view url="custom-jsp/seller.jsp"/>		<controller name="Typical"/>		
-	</module>	
+		<web-view url="custom-jsp/seller.jsp"/>		<controller name="Typical"/>	</module>	
 	
 	<module name="SellerWithDescriptionsListJSP" folder="invoicing.variations">
 		<model name="Seller"/>

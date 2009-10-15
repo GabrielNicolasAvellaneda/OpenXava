@@ -29,7 +29,7 @@ public class AJAXTest extends ModuleTestBase {
 	public void testAlwaysReloadEditor() throws Exception { 
 		changeModule("Warehouse");
 		execute("CRUD.new");
-		HtmlElement el = getForm().getHtmlElementById("ox_OpenXavaTest_Warehouse__editor_time");		
+		HtmlElement el = getForm().getElementById("ox_OpenXavaTest_Warehouse__editor_time");		
 		String time = el.asText().trim();		
 		execute("CRUD.new");
 		String otherTime = el.asText().trim();		
@@ -490,13 +490,24 @@ public class AJAXTest extends ModuleTestBase {
 	public void testChangingViewAndController() throws Exception {
 		changeModule("Carrier");
 		execute("CRUD.new");
-		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");
+		execute("WarehouseReference.createNewNoDialog"); 
 		assertLoadedParts("errors, view, bottom_buttons, " +
 				"button_bar, messages");
 		execute("NewCreation.saveNew");
 		assertLoadedParts("errors, error_image_Warehouse.zoneNumber, " +
 				"messages, error_image_Warehouse.number, editor_time,");		
 	}
+	
+	public void testShowDialog() throws Exception { 
+		changeModule("Carrier");
+		execute("CRUD.new");
+		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");
+		assertLoadedParts("xava_dialog");
+		execute("NewCreation.saveNew");
+		assertLoadedParts("errors, error_image_Warehouse.zoneNumber, " +
+				"messages, error_image_Warehouse.number, editor_time,");		
+	}
+
 	
 	public void testCustomView_uploadFile() throws Exception {
 		changeModule("Product2");

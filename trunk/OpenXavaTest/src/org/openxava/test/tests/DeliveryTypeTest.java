@@ -116,7 +116,7 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertMessage("Delivery type deleted successfully");		
 	}
 	
-	static void setDeliveryAdvice(Delivery delivery, String advice) throws Exception  {
+	static void setDeliveryAdvice(Delivery delivery, String advice) throws Exception  { 
 		if (delivery.getClass().isAnnotationPresent(Entity.class)) {
 			// In the JPA entity we use a @Transient and @Required for advice property
 			// we need to put value to advice in order to pass

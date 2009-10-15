@@ -647,9 +647,8 @@ public class DeliveryTest extends ModuleTestBase {
 	public void testReferencesIfKeyNotExists() throws Exception { 
 		execute("CRUD.new");		
 		setValue("invoice.year", "2004"); // We supose that not exists
-		assertValue("invoice.yearDiscount", "400.00"); 
-		setValue("invoice.number", "907"); // We supose that not exists
-				
+		assertValue("invoice.yearDiscount", "400.00"); 		
+		setValue("invoice.number", "907"); // We supose that not exists		
 		assertError("Invoice with key {year=2004, number=907} not found");
 				
 		// The reference datas are deleted in screen
@@ -710,7 +709,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("employee", "JUNIT EMPLOYEE");		
 		execute("CRUD.save");
 		assertNoErrors();
-		
+				
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");						
@@ -721,7 +720,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("carrier.number", "1");		
 		execute("CRUD.save");
 		assertNoErrors();
-		
+				
 		// Reading and verifying
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
@@ -733,7 +732,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertExists("carrier.number");						    
 		assertNotExists("employee");
 		assertValue("carrier.number", "1");
-		
+				
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");						
@@ -744,7 +743,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNotExists("carrier.number");
 		assertExists("employee");
 		assertValue("employee", "JUNIT EMPLOYEE");
-		
+				
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");						
@@ -754,12 +753,11 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("description", "JUNIT WITHOUT DELIVEREDBY");		
 		assertNotExists("carrier.number");
 		assertNotExists("employee");
-				
+						
 		// Delete
 		execute("CRUD.delete");
 		assertMessage("Delivery deleted successfully");
-
-
+		
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");						
@@ -768,7 +766,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.search");				
 		execute("CRUD.delete");
 		assertMessage("Delivery deleted successfully");
-
+		
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");						
@@ -776,7 +774,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "63");
 		execute("CRUD.search");						
 		execute("CRUD.delete");			
-		assertMessage("Delivery deleted successfully");		
+		assertMessage("Delivery deleted successfully");
 	}
 	
 	public void testMultipleMappingProperty() throws Exception { 				
@@ -800,13 +798,13 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");		
-		setValue("number", "66");				
+		setValue("number", "66");	
 		execute("CRUD.search");
 		assertNoErrors();
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");						
 		assertValue("type.number", "1");
-		assertValue("number", "66");			
+		assertValue("number", "66");		
 		assertValue("date", "2/22/97");
 		assertValue("description", "JUNIT");		
 		assertNoErrors();

@@ -23,7 +23,7 @@ public class SeveralModulesTest extends ModuleTestBase {
 	
 	public void testSeveralModulesInSamePage() throws Exception {
 		assertActions();
-		assertOnChangeEvent();		
+		assertOnChangeEvent();				
 		assertFocusOn("relationWithSeller");		
 		assertSections();
 		assertCollections();
@@ -42,11 +42,11 @@ public class SeveralModulesTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getUrl();
+		URL url = page.getWebResponse().getRequestSettings().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
 		
-		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(Ids.decorate("OpenXavaTest", "Customer", "photo")).get(0);
+		HtmlImage image = (HtmlImage) page.getElementsByName(Ids.decorate("OpenXavaTest", "Customer", "photo")).get(0);
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();
@@ -65,7 +65,7 @@ public class SeveralModulesTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("number", "1");
 		execute("CRUD.search");
-		assertNoErrors();
+		assertNoErrors();		
 		assertValue("name", "UNO");
 		assertCollectionRowCount("fellowCarriers", 3);
 		assertValueInCollection("fellowCarriers", 0, "number", "2");
@@ -114,8 +114,8 @@ public class SeveralModulesTest extends ModuleTestBase {
 
 	private void assertOnChangeEvent() throws Exception {
 		assertValue("seller.number", "1");
-		assertValue("seller.name", "MANUEL CHAVARRI");
-		setValue("seller.number", "2");	
+		assertValue("seller.name", "MANUEL CHAVARRI");		
+		setValue("seller.number", "2");		
 		assertValue("seller.name", "JUANVI LLAVADOR");
 	}
 

@@ -53,7 +53,7 @@ public class Seller {
 	})
 	@NoCreate(forViews="CannotCreateCustomer")
 	@NoModify(forViews="CannotCreateCustomer")
-	@RowStyle(style="highlight", property="type", value="steady") 
+	@RowStyle(style="highlight", property="type", value="steady")	
 	private Collection<Customer> customers;
 		
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="BOSS")

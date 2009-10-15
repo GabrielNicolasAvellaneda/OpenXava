@@ -32,7 +32,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 4m1beta (2009-9-xx)");		
+		log.info("OpenXava 4m1beta (2009-10-xx)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -1071,8 +1071,8 @@ public class ModuleManager {
 	}
 
 	private void setHideDialog(boolean hideDialog) {
-		if (hideDialog) reloadAllUINeeded = true; 
-		this.hideDialog = hideDialog;
+		if (dialogVisible && hideDialog) reloadAllUINeeded = true; 
+		this.hideDialog = dialogVisible && hideDialog;  
 	}
 	
 	public MetaAction getLastExecutedMetaAction() {
