@@ -1759,5 +1759,17 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(msg + ": " + value1, !Is.equal(value1, value2));		
 	}
 	
+	protected void assertDialog() {  
+		assertTrue(XavaResources.getString("dialog_must_be_displayed"), page.getElementById("xava_dialog").isDisplayed()); 
+	}
+		
+	protected void assertNoDialog() { 
+		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), !page.getElementById("xava_dialog").isDisplayed()); 
+	}
+
+	protected void assertDialogLabel(String expectedLabel) { 
+		String label = page.getElementById("ui-dialog-title-xava_dialog").asText();
+		assertEquals(XavaResources.getString("unexpected_dialog_label"), expectedLabel, label); 
+	}
 	
 }

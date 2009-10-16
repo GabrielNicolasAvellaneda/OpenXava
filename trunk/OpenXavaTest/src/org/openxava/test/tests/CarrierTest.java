@@ -192,26 +192,41 @@ public class CarrierTest extends CarrierTestBase {
 		// Modifying		
 		execute("Reference.modify", "model=Warehouse,keyProperty=warehouse.number");		
 		assertNoErrors();		
+		assertDialog();
 		assertAction("Modification.update");
 		assertAction("Modification.cancel");
-		assertValue("Warehouse", "name", "MODIFIED WAREHOUSE");
+		assertValue("Warehouse", "name", "MODIFIED WAREHOUSE");		
 		execute("Modification.cancel");
+		assertNoDialog();
 		
 		// Creating
-		execute("Reference.createNew", "model=Warehouse,keyProperty=warehouse.number");		
+		execute("Reference.createNew", "model=Warehouse,keyProperty=warehouse.number");
+		assertDialog(); 		
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");
 		assertValue("Warehouse", "name", "NEW WAREHOUSE");
-		assertNoAction("Mode.list"); // When navigate to another view mode actions are disable
+		assertNoAction("Mode.list"); 	// Inside a dialog mode actions are disable
+		
+		execute("NewCreation.cancel");
+		execute("WarehouseReference.createNewNoDialog");
+		assertNoDialog(); 		
+		assertNoErrors();
+		assertAction("NewCreation.saveNew");
+		assertAction("NewCreation.cancel");
+		assertValue("Warehouse", "name", "NEW WAREHOUSE");
+		assertNoAction("Mode.list"); 	// When navigate to another view actions are disable		
 	}
 	
 	
-	public void testDeleteUsingBeforeReferenceSearch() throws Exception {
+	public void testDeleteUsingBeforeReferenceSearch_dialogLabel() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		execute("Reference.search", "keyProperty=xava.Carrier.warehouse.number");
+		assertDialog();
+		assertDialogLabel("Choose a new value for Warehouse");
 		execute("ReferenceSearch.cancel");
+		assertNoDialog();
 		execute("CRUD.delete");		
 		assertNoErrors();
 		assertMessage("Carrier deleted successfully");		

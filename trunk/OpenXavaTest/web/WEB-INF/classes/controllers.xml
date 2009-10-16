@@ -511,16 +511,13 @@
 	
 	<controller name="MyReference">
 	
+		<!-- tmp Poner show-dialog="true" en migration -->
 		<action name="search" hidden="true"
+			show-dialog="true"
 			class="org.openxava.test.actions.MySearchAction"
 			image="images/search.gif">				
-			<use-object name="xava_view"/>
-			 
-			<use-object name="xava_referenceSubview"/>
-			<!-- tmp Poner en migration
-			O hacerlo compatible con un mensaje de advertencia
-			<use-object name="xava_currentReferenceLabel"/>
-			-->
+			<use-object name="xava_view"/>			 
+			<use-object name="xava_referenceSubview"/>			
 			<use-object name="xava_tab"/>						
 		</action>			
 				
