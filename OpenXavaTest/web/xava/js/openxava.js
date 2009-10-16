@@ -351,8 +351,7 @@ openxava.setFocus = function(application, module) {
 	var form = openxava.getForm(application, module);	
 	var elementName = form.elements[openxava.decorateId(application, module, "xava_focus_property_id")].value;
 	var elementDecoratedName =  openxava.decorateId(application, module, elementName);
-	//var element = form.elements[elementDecoratedName]; // It does not work with HtmlUnit 2.6
-	var element = document.getElementsByName(elementDecoratedName)[0]; 
+	var element = form.elements[elementDecoratedName];  
 	
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
 		if (element.type != "hidden") {

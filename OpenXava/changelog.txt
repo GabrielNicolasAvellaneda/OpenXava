@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New assertDialog(), assertNoDialog() and assertDialogLabel() methods in ModuleTestBase.
 - New EnumStringType hibernate type to convert from arbitrary strings in DB to enum values in JPA.
 - New property 'title' for View class. This title will be shown in the frame when the view would be displayed in a dialog.
 - Fix: MetaElement.getDescription() and MetaElement.getLabel() used local machine locale. Now it uses client locale.
