@@ -20,9 +20,10 @@ public class Result {
 	private String focusPropertyId;
 	private String error;
 	private boolean reload; 
-	private boolean showDialog; 
+	private boolean showDialog; 	
 	private boolean hideDialog; 
 	private String dialogTitle; 
+	private int dialogLevel; 
 	
 	public Result() {
 	}
@@ -133,6 +134,14 @@ public class Result {
 
 	public void setDialogTitle(String dialogTitle) {
 		this.dialogTitle = dialogTitle;
+	}
+
+	public void setDialogLevel(int dialogLevel) {
+		this.dialogLevel = dialogLevel;
+	}
+
+	public int getDialogLevel() {
+		return dialogLevel;
 	}
 
 }

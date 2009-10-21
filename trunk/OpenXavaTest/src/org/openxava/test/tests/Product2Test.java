@@ -454,6 +454,8 @@ public class Product2Test extends ModuleTestBase {
 		XPersistence.getManager().remove(f);		
 	}
 	
+	
+	
 	public void testDescriptionsListReferenceValidation() throws Exception {						
 		execute("CRUD.new");	
 		setValue("family.number", ""); // because has a default value

@@ -65,9 +65,11 @@ public class ModuleManager {
 	private boolean reloadViewNeeded; 
 	private boolean actionsChanged;
 	private boolean showDialog; 
-	private boolean hideDialog; 
-	private boolean dialogVisible; 
-	private MetaAction lastExecutedMetaAction; 
+	private boolean hideDialog;  
+	private MetaAction lastExecutedMetaAction;
+	private int dialogLevel = 0;  
+
+	
 		
 	/**
 	 * HTML action bind to the current form.
@@ -248,6 +250,7 @@ public class ModuleManager {
 	}
 
 	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
+		int originalDialogLevel = dialogLevel; 
 		try {			
 			Object previousView = getContext().get(applicationName, moduleName, "xava_view");  
 			action.setErrors(errors);
@@ -440,19 +443,24 @@ public class ModuleManager {
 			}
 			if (metaAction != null && errors.isEmpty()) {
 				setShowDialog(metaAction.isShowDialog());
-				if (metaAction.isShowDialog()) dialogVisible = true;
+				if (metaAction.isShowDialog()) {					
+					dialogLevel++;  
+				}
 				if (metaAction.isHideDialog() != null) {
 					setHideDialog(metaAction.isHideDialog());
-					if (metaAction.isHideDialog()) dialogVisible = false;
+					if (metaAction.isHideDialog()) {						
+						dialogLevel--;
+					}
 				}
 				else {
 					if (metaAction.getQualifiedName().equals(previousDefaultActionQualifiedName) ||
 						"cancel".equals(metaAction.getName())) 
 					{
-						setHideDialog(true);
-						dialogVisible = false;
+						setHideDialog(true);						
+						dialogLevel--; 
 					}
 				}
+				if (dialogLevel < 0) dialogLevel = 0; 
 			}
 			if (!reloadViewNeeded) {
 				Object currentView = getContext().get(applicationName, moduleName, "xava_view"); 
@@ -464,7 +472,8 @@ public class ModuleManager {
 			}			 
 		}
 		catch (Exception ex) {
-			setHideDialog(false); 
+			setHideDialog(false);
+			dialogLevel = originalDialogLevel; 
 			manageException(metaAction, errors, messages, ex);
 		}				
 	}
@@ -898,7 +907,7 @@ public class ModuleManager {
 		else {
 			reloadAllUINeeded = false;
 		}
-		showDialog = dialogVisible && !hasProcessRequest(request)?true:false; // When a dialog is shown and the user click in refresh in browser we'll re-open the dialog
+		showDialog = dialogLevel > 0 && !hasProcessRequest(request)?true:false; // When a dialog is shown and the user click in refresh in browser we'll re-open the dialog
 		hideDialog = false;
 		reloadViewNeeded = false;		
 	}
@@ -1070,17 +1079,17 @@ public class ModuleManager {
 		return hideDialog;
 	}
 
-	private void setHideDialog(boolean hideDialog) {
-		if (dialogVisible && hideDialog) reloadAllUINeeded = true; 
-		this.hideDialog = dialogVisible && hideDialog;  
+	private void setHideDialog(boolean hideDialog) { 
+		if (dialogLevel > 0 && hideDialog) reloadAllUINeeded = true; 
+		this.hideDialog = dialogLevel > 0 && hideDialog;
 	}
 	
 	public MetaAction getLastExecutedMetaAction() {
 		return lastExecutedMetaAction;
 	}
 
-	public boolean isDialogVisible() {
-		return dialogVisible;
+	public int getDialogLevel() { 
+		return dialogLevel;
 	}
 			
 }

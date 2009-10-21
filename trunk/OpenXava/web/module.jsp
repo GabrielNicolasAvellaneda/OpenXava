@@ -107,27 +107,22 @@ Module.setStyle(style);
 	<script type="text/javascript">
 		$ = jQuery;
 		jQuery = portalJQuery;       
-	</script>			  			 
-	<script type="text/javascript">			
-		$(function(){
-			$('#xava_dialog').dialog({
-				autoOpen: false,
-				modal: true,
-				resizable: true,
-				width: 'auto',
-				height: 'auto',				
-				close: openxava.onCloseDialog
-			});							
-		});
 	</script>
-	
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	  
-	<div id="xava_dialog" > 
-	</div>
+	<div id="xava_dialog1"></div>
+	<div id="xava_dialog2"></div>
+	<div id="xava_dialog3"></div>
+	<div id="xava_dialog4"></div>
+	<div id="xava_dialog5"></div>
+	<div id="xava_dialog6"></div>
+	<div id="xava_dialog7"></div>
+	<div id="xava_dialog8"></div>
+	<div id="xava_dialog9"></div>	
+	
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="true"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>	

@@ -223,7 +223,7 @@ here that you want to override.
 			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction">						<use-object name="xava_view"/>			<use-object name="xava_newImageProperty"/>		</action>		</controller>
 	
 	<controller name="Dialog">
-		<action name="cancel" hide-dialog="false"
+		<action name="cancel" hide-dialog="true"
 			class="org.openxava.actions.CancelAction">			
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_view"/>
