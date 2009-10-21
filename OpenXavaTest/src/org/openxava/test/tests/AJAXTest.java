@@ -502,7 +502,7 @@ public class AJAXTest extends ModuleTestBase {
 		changeModule("Carrier");
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");
-		assertLoadedParts("xava_dialog");
+		assertLoadedParts("xava_dialog1");
 		execute("NewCreation.saveNew");
 		assertLoadedParts("errors, error_image_Warehouse.zoneNumber, " +
 				"messages, error_image_Warehouse.number, editor_time,");		

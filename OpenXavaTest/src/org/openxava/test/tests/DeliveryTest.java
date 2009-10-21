@@ -34,13 +34,63 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
-	public void testCreateEntityWithCollectionFromReference() throws Exception {
+	
+	public void testSecondLevelDialogReturningWithCancelButton() throws Exception { 
+		assertSecondLevelDialogReturning(false);
+	}
+	
+	public void testSecondLevelDialogReturningWithCloseDialogButton() throws Exception { 
+		assertSecondLevelDialogReturning(true);
+	}	
+	
+	private void assertSecondLevelDialogReturning(boolean closeDialogButton) throws Exception { 
+		execute("CRUD.new");
+		assertExists("vehicle"); // Only in Delivery, no dialog
+		assertNotExists("customerDiscount"); // Only in Invoice, first dialog level
+		assertNotExists("website"); // Only in Customer, second dialog level
+		assertNoDialog();
+		
+		execute("Reference.createNew", "model=Invoice,keyProperty=invoice.number");
+		assertNotExists("vehicle"); 
+		assertExists("customerDiscount"); 
+		assertNotExists("website"); 
+		assertDialog();
+		
+		execute("Reference.createNew", "model=Customer,keyProperty=customer.number");
+		assertNotExists("vehicle"); 
+		assertNotExists("customerDiscount"); 
+		assertExists("website"); 
+		assertDialog();
+				
+		if (closeDialogButton) closeDialog(); 
+		else execute("NewCreation.cancel");
+		
+		assertNotExists("vehicle"); 
+		assertExists("customerDiscount"); 
+		assertNotExists("website"); 
+		assertDialog();
+		
+		if (closeDialogButton) closeDialog(); 
+		else execute("NewCreation.cancel");
+
+		assertExists("vehicle"); 
+		assertNotExists("customerDiscount"); 
+		assertNotExists("website"); 
+		assertNoDialog();
+	}
+	
+	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception {
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");
-		setModel("Invoice");
+		assertDialog();
+		
 		setValue("year", "2002");
 		setValue("number", "1");
+		execute("Reference.search", "keyProperty=customer.number");
+		execute("ReferenceSearch.choose", "row=1");
+		assertValue("customer.name", "Juanillo");
 		setValue("customer.number", "1");
+		assertValue("customer.name", "Javi"); 
 		execute("Sections.change", "activeSection=2");
 		setValue("vatPercentage", "16");
 		execute("NewCreation.saveNew");
@@ -63,7 +113,10 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=2");
 		setValue("vatPercentage", "17");
 		execute("NewCreation.saveNew");
-		assertNoErrors();
+		assertNoErrors();		
+		assertNoDialog();
+		assertValue("invoice.year", "2009");
+		assertValue("invoice.number", "66");
 		
 		changeModule("Invoice");
 		execute("CRUD.new");

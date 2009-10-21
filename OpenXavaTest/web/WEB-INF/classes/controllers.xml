@@ -511,7 +511,6 @@
 	
 	<controller name="MyReference">
 	
-		<!-- tmp Poner show-dialog="true" en migration -->
 		<action name="search" hidden="true"
 			show-dialog="true"
 			class="org.openxava.test.actions.MySearchAction"

@@ -933,8 +933,8 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private Collection getActions() {
-		HtmlElement dialog = page.getElementById("xava_dialog");
-		if (!Is.emptyString(dialog.asText())) return getActions(dialog);
+		HtmlElement dialog = page.getElementById(getTopDialog());
+		if (dialog != null) return getActions(dialog);
 		return getActions(getElementById("core"));
 	}	
 	
@@ -1759,16 +1759,34 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(msg + ": " + value1, !Is.equal(value1, value2));		
 	}
 	
-	protected void assertDialog() {  
-		assertTrue(XavaResources.getString("dialog_must_be_displayed"), page.getElementById("xava_dialog").isDisplayed()); 
+	protected void assertDialog() {
+		assertTrue(XavaResources.getString("dialog_must_be_displayed"), page.getElementById("xava_dialog1").hasChildNodes()); 
 	}
 		
-	protected void assertNoDialog() { 
-		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), !page.getElementById("xava_dialog").isDisplayed()); 
+	protected void assertNoDialog() {	
+		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), !page.getElementById("xava_dialog1").hasChildNodes()); 
+	}
+	
+	protected void closeDialog() throws Exception { 
+		assertDialog();
+		HtmlElement title = (HtmlElement) page.getElementById(getTopDialog()).getPreviousSibling();
+		HtmlElement closeLink = title.getHtmlElementsByTagName("a").get(0);
+		page = closeLink.click();
+		resetForm();		
+	}
+	
+	private String getTopDialog() {
+		for (int level = 9; level >= 0; level--) {
+			HtmlElement el = page.getElementById("xava_dialog" + level);
+			if (el != null && el.hasChildNodes()) {
+				return "xava_dialog" + level;
+			}
+		}		
+		return null;
 	}
 
 	protected void assertDialogLabel(String expectedLabel) { 
-		String label = page.getElementById("ui-dialog-title-xava_dialog").asText();
+		String label = page.getElementById("ui-dialog-title-" + getTopDialog()).asText();
 		assertEquals(XavaResources.getString("unexpected_dialog_label"), expectedLabel, label); 
 	}
 	

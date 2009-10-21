@@ -18,8 +18,6 @@ import org.openxava.web.*;
 import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 
-import sun.security.action.*;
-
 /**
  * For accessing to module execution from DWR. <p>
  * 
@@ -46,7 +44,7 @@ public class Module extends DWRBase {
 	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected) throws Exception {		
 		Result result = new Result(); 
 		result.setApplication(application); 
-		result.setModule(module);		
+		result.setModule(module);
 		try {
 			Servlets.setCharacterEncoding(request, response);
 			this.request = request;
@@ -180,17 +178,25 @@ public class Module extends DWRBase {
 
 	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
 		Map changedParts = result.getChangedParts();
-		
+
+		result.setDialogLevel(manager.getDialogLevel()); 
 		if (manager.isShowDialog()) {
-			result.setShowDialog(manager.isShowDialog());			
+			result.setShowDialog(manager.isShowDialog());						
 			setDialogTitle(result);
-			changedParts.put("xava_dialog", 
-				getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
-			); 
-			return;
+			if (manager.getDialogLevel() > 9) {
+				throw new XavaException("no_more_than_9_dialogs"); 
+			}
 		}
 		if (manager.isHideDialog()) { 
 			result.setHideDialog(true);
+		}
+		if (manager.isShowDialog() || manager.isHideDialog()) {			
+			if (manager.getDialogLevel() > 0) {
+				changedParts.put("xava_dialog" + manager.getDialogLevel(),  
+					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
+				);
+				return;
+			}			
 		}
 				
 		for (Iterator it = getChangedParts(values).entrySet().iterator(); it.hasNext(); ) {
@@ -222,8 +228,8 @@ public class Module extends DWRBase {
 			put(result, "core", "core.jsp");
 		}
 		else {			
-			if (manager.isActionsChanged()) {				
-				if (manager.isDialogVisible()) {					
+			if (manager.isActionsChanged()) {									
+				if (manager.getDialogLevel() > 0) { 
 					put(result, "bottom_buttons", "bottomButtons.jsp?buttonBar=false");					
 				}				
 				else {						
