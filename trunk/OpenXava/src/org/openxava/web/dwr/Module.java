@@ -39,12 +39,12 @@ public class Module extends DWRBase {
 	private HttpServletResponse response;
 	private String application;
 	private String module;
-	private ModuleManager manager;
+	private ModuleManager manager;	
 	
 	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected) throws Exception {		
 		Result result = new Result(); 
 		result.setApplication(application); 
-		result.setModule(module);
+		result.setModule(module);		
 		try {
 			Servlets.setCharacterEncoding(request, response);
 			this.request = request;
@@ -76,7 +76,7 @@ public class Module extends DWRBase {
 			else {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}			
-			result.setStrokeActions(getStrokeActions());
+			result.setStrokeActions(getStrokeActions());			
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -183,16 +183,13 @@ public class Module extends DWRBase {
 		if (manager.isShowDialog()) {
 			result.setShowDialog(manager.isShowDialog());						
 			setDialogTitle(result);
-			if (manager.getDialogLevel() > 9) {
-				throw new XavaException("no_more_than_9_dialogs"); 
-			}
 		}
 		if (manager.isHideDialog()) { 
 			result.setHideDialog(true);
 		}
 		if (manager.isShowDialog() || manager.isHideDialog()) {			
 			if (manager.getDialogLevel() > 0) {
-				changedParts.put("xava_dialog" + manager.getDialogLevel(),  
+				changedParts.put(decorateId("xava_dialog" + manager.getDialogLevel()),   
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
 				);
 				return;
@@ -420,7 +417,7 @@ public class Module extends DWRBase {
 	private String decorateId(String name) { 
 		return Ids.decorate(application, module, name);
 	}
-
+	
 	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) {
 		if (values == null) return;
 		if (multipleValues != null) {

@@ -920,22 +920,22 @@ public class ModuleTestBase extends TestCase {
 		assertEquals(XavaResources.getString("unexpected_description", name), value, getDescriptionValue(name));		
 	}
 
-	protected boolean existsAction(String action) {		
+	protected boolean existsAction(String action) throws Exception {		
 		return getActions().contains(action);
 	}
 	
-	protected void assertAction(String action) {		
+	protected void assertAction(String action) throws Exception {		
 		assertTrue(XavaResources.getString("action_not_found_in_ui", action), getActions().contains(action));
 	}
 	
-	protected void assertNoAction(String action) {
+	protected void assertNoAction(String action) throws Exception {
 		assertTrue(XavaResources.getString("action_found_in_ui", action), !getActions().contains(action));
 	}
 	
-	private Collection getActions() {
-		HtmlElement dialog = page.getElementById(getTopDialog());
-		if (dialog != null) return getActions(dialog);
-		return getActions(getElementById("core"));
+	private Collection getActions() throws Exception {
+		String dialog = getTopDialog();
+		if (dialog == null) return getActions(getElementById("core"));
+		return getActions(getElementById(dialog));		
 	}	
 	
 	private Collection getActions(HtmlElement el) { 		
@@ -1759,34 +1759,39 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(msg + ": " + value1, !Is.equal(value1, value2));		
 	}
 	
-	protected void assertDialog() {
-		assertTrue(XavaResources.getString("dialog_must_be_displayed"), page.getElementById("xava_dialog1").hasChildNodes()); 
+	protected void assertDialog() throws Exception {
+		assertTrue(XavaResources.getString("dialog_must_be_displayed"), getTopDialog() != null); 
 	}
 		
-	protected void assertNoDialog() {	
-		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), !page.getElementById("xava_dialog1").hasChildNodes()); 
+	protected void assertNoDialog() throws Exception {	
+		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), getTopDialog() == null); 
 	}
 	
 	protected void closeDialog() throws Exception { 
 		assertDialog();
-		HtmlElement title = (HtmlElement) page.getElementById(getTopDialog()).getPreviousSibling();
+		HtmlElement title = (HtmlElement) getElementById(getTopDialog()).getPreviousSibling();
 		HtmlElement closeLink = title.getHtmlElementsByTagName("a").get(0);
 		page = closeLink.click();
 		resetForm();		
 	}
 	
-	private String getTopDialog() {
-		for (int level = 9; level >= 0; level--) {
-			HtmlElement el = page.getElementById("xava_dialog" + level);
-			if (el != null && el.hasChildNodes()) {
-				return "xava_dialog" + level;
+	private String getTopDialog() throws Exception {
+		int level = 0;
+		for (level = 1; ; level++) {
+			try {
+				HtmlElement el = getElementById("xava_dialog" + level);
+				if (!el.hasChildNodes()) break;
 			}
-		}		
-		return null;
+			catch (ElementNotFoundException ex) {
+				break;
+			}
+		}
+		if (level == 1) return null;
+		return "xava_dialog" + (level - 1);
 	}
 
-	protected void assertDialogLabel(String expectedLabel) { 
-		String label = page.getElementById("ui-dialog-title-" + getTopDialog()).asText();
+	protected void assertDialogLabel(String expectedLabel) throws Exception {
+		String label = page.getElementById("ui-dialog-title-" + decorateId(getTopDialog())).asText();
 		assertEquals(XavaResources.getString("unexpected_dialog_label"), expectedLabel, label); 
 	}
 	

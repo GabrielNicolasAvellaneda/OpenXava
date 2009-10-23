@@ -20,7 +20,7 @@ public class SeveralModulesTest extends ModuleTestBase {
 	public SeveralModulesTest(String testName) {
 		super(testName, "Carrier"); // getModuleURL() is override, so we do not go to Carrier module		
 	}
-	
+		
 	public void testSeveralModulesInSamePage() throws Exception {
 		assertActions();
 		assertOnChangeEvent();				

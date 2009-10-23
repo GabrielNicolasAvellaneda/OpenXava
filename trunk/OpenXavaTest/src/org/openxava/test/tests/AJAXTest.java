@@ -516,7 +516,8 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, view, bottom_buttons, " +
 				"button_bar, messages");
 		execute("Gallery.addImage");
-		assertLoadedParts("core, ");
+		// assertLoadedParts("core, "); When no dialog
+		assertLoadedParts("xava_dialog1, "); // When dialog
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
 		setFileValue("newImage", imageUrl);
 		execute("LoadImageIntoGallery.loadImage");
