@@ -54,17 +54,21 @@ openxava.refreshPage = function(result) {
 		openxava.ajaxRequest(result.application, result.nextModule); 
 		return;
 	}	
-	else {
-		if (result.showDialog){
+	else {		
+		if (result.showDialog){			
 			openxava.disableElements(result);
 		}
 		else if (result.hideDialog) {
-			var dialog = openxava.getDialog();
+			var dialog = openxava.getDialog(result.application, result.module); 
 			dialog.attr("application", ""); 
 			dialog.attr("module", ""); 
 			dialog.dialog('close');
 		}
-		openxava.dialogLevel = result.dialogLevel; 
+		openxava.dialogLevel = result.dialogLevel;
+		var dialog;
+		if (result.showDialog) {
+			dialog = openxava.getDialog(result.application, result.module);
+		}
 		openxava.strokeActions = result.strokeActions; 		
 		var changedParts = result.changedParts;
 		for (var id in changedParts) {
@@ -84,8 +88,7 @@ openxava.refreshPage = function(result) {
 			document.getElementById(openxava.decorateId(result.application, result.module, "xava_focus_property_id")).value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
 		}
-		if (result.showDialog){
-			var dialog = openxava.getDialog();
+		if (result.showDialog){			
 			dialog.attr("application", result.application); 
 			dialog.attr("module", result.module); 
 			dialog.dialog('option', 'title', result.dialogTitle);
@@ -109,9 +112,8 @@ openxava.refreshPage = function(result) {
 }
 
 openxava.disableElements = function(result) {	
-	var rootId = openxava.dialogLevel > 0? 
-			"xava_dialog" + openxava.dialogLevel:
-			openxava.decorateId(result.application, result.module, "core");
+	var rawRootId = openxava.dialogLevel > 0?"xava_dialog" + openxava.dialogLevel:"core"; 
+	var rootId = openxava.decorateId(result.application, result.module, rawRootId); 
 	var prefixId = openxava.decorateId(result.application, result.module, "");
 	$("#" + rootId).find("[id^=" + prefixId + "]").each(
 		function () {			
@@ -125,8 +127,8 @@ openxava.disableElements = function(result) {
 	);		
 }
 
-openxava.onCloseDialog = function() {
-	var dialog = openxava.getDialog(); 
+openxava.onCloseDialog = function(event) {  
+	var dialog = $(event.target); 
 	var application = dialog.attr("application");	
 	if (application != "") {
 		var module = dialog.attr("module");
@@ -159,11 +161,14 @@ openxava.updateRootIds = function(application, moduleFrom, moduleTo) {
 			openxava.decorateId(application, moduleTo, "loaded_parts");
 }
 
-openxava.getDialog = function() { 
+openxava.getDialog = function(application, module) {  
 	if (openxava.dialogs == null) openxava.dialogs = { };
-	var dialog = openxava.dialogs[openxava.dialogLevel];
+	var dialogId = openxava.decorateId(application, module, "xava_dialog" + openxava.dialogLevel);
+	var dialog = openxava.dialogs[dialogId];
 	if (dialog == null) {
-		dialog = $('#xava_dialog' + openxava.dialogLevel).dialog({
+		$("body").append("<div id='" + openxava.decorateId(application, module , 
+				"xava_dialog" + openxava.dialogLevel) + "'></div>");
+		dialog = $('#' + dialogId).dialog({
 			autoOpen: false,
 			modal: true,
 			resizable: true,
@@ -171,7 +176,7 @@ openxava.getDialog = function() {
 			height: 'auto',				
 			close: openxava.onCloseDialog
 		});
-		openxava.dialogs[openxava.dialogLevel] = dialog;		
+		openxava.dialogs[dialogId] = dialog;		
 	}
 	return dialog;
 }

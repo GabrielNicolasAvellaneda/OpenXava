@@ -39,7 +39,7 @@
 		<for-type type="int"/>
 		<for-type type="long"/>
 		<for-type type="float"/>
-		<for-type type="double"/>  	  	  	  	  	
+		<for-type type="double"/>  	  	  			  	  	
 	</required-validator>
   
 	<required-validator>

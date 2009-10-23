@@ -56,7 +56,7 @@ public class ModuleManager {
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
-	private Stack previousModules;	
+	private Stack<String> previousModules;	
 	private String defaultView = null;
 	private boolean formUpload = false;
 	private String previousMode;
@@ -77,7 +77,7 @@ public class ModuleManager {
 	 */
 	public String getFormAction(HttpServletRequest request) {		
 		if (!isFormUpload()) return "";
-		String module = !getPreviousModules().isEmpty() ? (String) previousModules.elementAt(0) : getModuleName();
+		String module = !getPreviousModules().isEmpty() ? previousModules.elementAt(0) : getModuleName();
 		Object portletActionURL = request.getSession().getAttribute(Ids.decorate(getApplicationName(), module, "xava.portlet.uploadActionURL"));
 		if (portletActionURL == null) return "";
 		return "action='" +  portletActionURL + "'";
@@ -1049,12 +1049,12 @@ public class ModuleManager {
 		return reloadViewNeeded || isListMode() || !"xava/detail".equals(getViewName());
 	}
 	
-	public Stack getPreviousModules() { 
-		if (previousModules == null) previousModules = new Stack();
+	public Stack<String> getPreviousModules() { 
+		if (previousModules == null) previousModules = new Stack<String>();
 		return previousModules;
 	}
 
-	public void setPreviousModules(Stack previousModules) {
+	public void setPreviousModules(Stack<String> previousModules) {
 		this.previousModules = previousModules;
 	}
 	

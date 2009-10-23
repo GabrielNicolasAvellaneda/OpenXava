@@ -166,8 +166,9 @@ here that you want to override.
 		<action name="cancel"
 			class="org.openxava.actions.CancelInListAction">
 		</action>		
-	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>					</action>								<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>										</controller>						<controller name="ImageEditor">
+	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>					</action>								<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>										</controller>										<controller name="ImageEditor">
 		<action name="changeImage"
+			show-dialog="true"
 			class="org.openxava.actions.ChangeImageAction">			
 			<use-object name="xava_newImageProperty"/>			
 		</action>
@@ -183,7 +184,7 @@ here that you want to override.
 			class="org.openxava.actions.CancelAction"/>
 	</controller>
 	
-	
+		
 	<controller name="Gallery">
 		<action name="edit" image="images/photo.gif" hidden="true"
 			class="org.openxava.actions.EditGalleryAction">			
@@ -191,8 +192,9 @@ here that you want to override.
 			<use-object name="xava_view"/>
 		</action>
 		<action name="return" image="images/back.gif"
-			class="org.openxava.actions.CancelAction"/>		
+			class="org.openxava.actions.CancelAction"/>			
 		<action name="addImage"
+			show-dialog="true"
 			class="org.openxava.actions.AddImageToGalleryAction"/>
 		<action name="maximizeImage" hidden="true" image="images/maximize.gif"
 			class="org.openxava.actions.MaximizeImageAction">
@@ -220,7 +222,12 @@ here that you want to override.
 		
 	</controller>
 	
-			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction">						<use-object name="xava_view"/>			<use-object name="xava_newImageProperty"/>		</action>		</controller>
+			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction">						<use-object name="xava_view"/>			<use-object name="xava_newImageProperty"/>		</action>
+			
+		<action name="cancel"
+			class="org.openxava.actions.CancelAction">			
+		</action>	
+				</controller>
 	
 	<controller name="Dialog">
 		<action name="cancel" hide-dialog="true"

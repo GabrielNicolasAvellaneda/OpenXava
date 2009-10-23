@@ -210,6 +210,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
 		setFileValue("newImage", imageUrl);
+		assertAction("LoadImage.cancel");
 		execute("LoadImage.loadImage");
 		assertNoErrors();
 	}
