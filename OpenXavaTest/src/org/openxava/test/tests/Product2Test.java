@@ -58,7 +58,7 @@ public class Product2Test extends ModuleTestBase {
 				
 		assertTrue(
 				getHtml().indexOf(
-					"<input name=\"ox_OpenXavaTest_Product2__color.number\" value=\"0\" type=\"radio\"") 
+					"<input name=\"ox_OpenXavaTest_Product2__color___number\" value=\"0\" type=\"radio\"") 
 					>= 0
 		);
 		

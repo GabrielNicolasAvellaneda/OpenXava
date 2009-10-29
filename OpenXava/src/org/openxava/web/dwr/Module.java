@@ -76,7 +76,7 @@ public class Module extends DWRBase {
 			else {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}			
-			result.setStrokeActions(getStrokeActions());			
+			result.setStrokeActions(getStrokeActions());
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -189,7 +189,7 @@ public class Module extends DWRBase {
 		}
 		if (manager.isShowDialog() || manager.isHideDialog()) {			
 			if (manager.getDialogLevel() > 0) {
-				changedParts.put(decorateId("xava_dialog" + manager.getDialogLevel()),   
+				changedParts.put(decorateId("dialog" + manager.getDialogLevel()),   
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
 				);
 				return;
@@ -402,7 +402,7 @@ public class Module extends DWRBase {
 		result.append("&module=");
 		result.append(module);
 		addValuesQueryString(result, values, multipleValues, selected);
-		if (!Is.emptyString(additionalParameters)) result.append(additionalParameters);
+		if (!Is.emptyString(additionalParameters)) result.append(additionalParameters);		
 		return result.toString();
 	}
 
@@ -416,6 +416,7 @@ public class Module extends DWRBase {
 	
 	private String decorateId(String name) { 
 		return Ids.decorate(application, module, name);
+		// return Ids.decorate(application, module, name).replaceAll("\\.", "\\\\.");
 	}
 	
 	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) {

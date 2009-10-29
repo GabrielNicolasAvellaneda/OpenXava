@@ -558,7 +558,8 @@ public class ModuleTestBase extends TestCase {
 	 * Decorate the name to produced an unique identifier as the used by
 	 * OX for HTML elements.
 	 */
-	protected String decorateId(String name) {  
+	protected String decorateId(String name) {
+		name = Strings.change(name, ".KEY", "__KEY__");
 		return Ids.decorate(application, module, name);
 	}
 
@@ -1779,7 +1780,7 @@ public class ModuleTestBase extends TestCase {
 		int level = 0;
 		for (level = 1; ; level++) {
 			try {
-				HtmlElement el = getElementById("xava_dialog" + level);
+				HtmlElement el = getElementById("dialog" + level);
 				if (!el.hasChildNodes()) break;
 			}
 			catch (ElementNotFoundException ex) {
@@ -1787,7 +1788,7 @@ public class ModuleTestBase extends TestCase {
 			}
 		}
 		if (level == 1) return null;
-		return "xava_dialog" + (level - 1);
+		return "dialog" + (level - 1);
 	}
 
 	protected void assertDialogLabel(String expectedLabel) throws Exception {

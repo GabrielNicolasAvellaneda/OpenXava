@@ -1859,7 +1859,7 @@ public class View implements java.io.Serializable {
 				}
 				else if (m instanceof MetaReference) {					
 					MetaReference ref = (MetaReference) m;										
-					String key = qualifier + ref.getName() + ".KEY"; 
+					String key = qualifier + ref.getName() + "__KEY__";
 					String value = getRequest().getParameter(key);
 					if (value == null) {						
 						View subview = getSubview(ref.getName()); 					 																				
@@ -2095,8 +2095,8 @@ public class View implements java.io.Serializable {
 	private void propertyChanged(String propertyId) {		
 		try {														
 			String name = Ids.undecorate(propertyId);			
-			if (name.endsWith(".KEY")) {
-				String refName = name.substring(0, name.length() - 4);
+			if (name.endsWith("__KEY__")) {
+				String refName = name.substring(0, name.length() - 7);
 				MetaModel referencedModel = null;
 				try {
 					referencedModel = getMetaModel().getMetaReference(refName).getMetaModelReferenced();
