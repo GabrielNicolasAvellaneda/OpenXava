@@ -24,15 +24,8 @@ public class IdTag extends TagSupport {
 	public int doStartTag() throws JspException {		
 		try {
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
-			String module = (String) context.get(request, "xava_currentModule");
-			if (Is.empty(module)) module = request.getParameter("module");
 			pageContext.getOut().print(
-				Ids.decorate(
-					request.getParameter("application"),
-					module,
-					name
-				)
+				Ids.decorate( request, name	)
 			);		
 		}
 		catch (Exception ex) {

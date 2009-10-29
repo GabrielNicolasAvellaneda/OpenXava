@@ -27,7 +27,7 @@
 				
 	<validator name="NO_CERO"
 		class="org.openxava.validators.NotZeroValidator"/>
-	<validator name="NOT_ZERO"
+	<validator name="NOT_ZERO" 
 		class="org.openxava.validators.NotZeroValidator"/>
 		
         

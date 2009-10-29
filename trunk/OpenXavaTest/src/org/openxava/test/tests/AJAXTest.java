@@ -284,23 +284,23 @@ public class AJAXTest extends ModuleTestBase {
 		
 		execute("Navigation.next");
 		assertValue("number", "2");
-		assertDescriptionValue("address.state.id", "Colorado");
-		assertLoadedPart("reference_editor_address.state");
+		assertDescriptionValue("address.state.id", "Colorado");		
+		assertLoadedPart("reference_editor_address___state"); 
 		
 		execute("Navigation.next");
 		assertValue("number", "3");
 		assertDescriptionValue("address.state.id", "New York");
-		assertLoadedPart("reference_editor_address.state");
+		assertLoadedPart("reference_editor_address___state"); 
 		
 		execute("Navigation.next");
 		assertValue("number", "4");
 		assertDescriptionValue("address.state.id", "New York");
-		assertNotLoadedPart("reference_editor_address.state");
+		assertNotLoadedPart("reference_editor_address___state");
 		
 		execute("Navigation.next");
 		assertValue("number", "43");
-		assertDescriptionValue("address.state.id", "Kansas");
-		assertLoadedPart("reference_editor_address.state");				
+		assertDescriptionValue("address.state.id", "Kansas");				
+		assertLoadedPart("reference_editor_address___state"); 
 	}
 			
 	public void testDependentDescriptionsList_resetDescriptionsCache_setEditable() throws Exception { 
@@ -502,7 +502,7 @@ public class AJAXTest extends ModuleTestBase {
 		changeModule("Carrier");
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");
-		assertLoadedParts("xava_dialog1");
+		assertLoadedParts("dialog1");
 		execute("NewCreation.saveNew");
 		assertLoadedParts("errors, error_image_Warehouse.zoneNumber, " +
 				"messages, error_image_Warehouse.number, editor_time,");		
@@ -517,7 +517,7 @@ public class AJAXTest extends ModuleTestBase {
 				"button_bar, messages");
 		execute("Gallery.addImage");
 		// assertLoadedParts("core, "); When no dialog
-		assertLoadedParts("xava_dialog1, "); // When dialog
+		assertLoadedParts("dialog1, "); // When dialog
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
 		setFileValue("newImage", imageUrl);
 		execute("LoadImageIntoGallery.loadImage");
@@ -565,18 +565,19 @@ public class AJAXTest extends ModuleTestBase {
 		assertEquals("Loaded parts are not the expected ones", order(expected), order(getLoadedParts()));
 	}
 	
-	private String order(String parts) {
+	private String order(String parts) {		
 		StringTokenizer st = new StringTokenizer(parts, ",");
 		SortedSet ordered = new TreeSet();
 		while (st.hasMoreTokens()) {
 			String part = st.nextToken().trim();
-			if (!"".equals(part)) ordered.add(part);			
+			if (!"".equals(part)) ordered.add(Ids.undecorate(part));
 		}
 		StringBuffer result = new StringBuffer();
 		for (Iterator it=ordered.iterator(); it.hasNext(); ) {
-			result.append(Ids.undecorate((String) it.next()));
+			result.append(it.next());
 			result.append(",\n");
 		}
+		
 		return result.toString();
 	}
 
