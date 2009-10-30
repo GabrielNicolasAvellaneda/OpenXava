@@ -172,7 +172,7 @@ public class CarrierTest extends CarrierTestBase {
 		assertValueInList(0, "name", "Cinco");
 	}
 	
-	public void testPropertyDependsDescriptionsListReference_multipleKeyWithSpaces_descriptionsListLabels() throws Exception {
+	public void testPropertyDependsDescriptionsListReference_multipleKeyWithSpaces_descriptionsListLabels_modifyDialog() throws Exception {
 		execute("CRUD.new");
 		assertLabel("drivingLicence", "Driving licence"); 
 		assertValue("remarks","");
@@ -184,6 +184,12 @@ public class CarrierTest extends CarrierTestBase {
 		assertNoErrors();
 		assertValue("drivingLicence.KEY", key);
 		assertValue("remarks", "He can drive trucks");
+		
+		assertNoDialog();
+		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); // tmp Migration
+		assertNoErrors();
+		assertDialog();
+		assertValue("description", "CAMIONES PEQUEÑOS");
 	}
 	
 	

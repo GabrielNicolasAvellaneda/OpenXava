@@ -14,13 +14,13 @@ import org.openxava.jpa.*;
 
 @Entity
 @Views({
-	@View(members="number; name; drivingLicence; warehouse; remarks; calculated; fellowCarriers; fellowCarriersCalculated"),
+	@View(members="number; name; drivingLicence; warehouse; remarks; calculated; fellowCarriers; fellowCarriersCalculated"),	
 	@View(name="Simple", members="number, name"), 	
 	@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculatedSize; fellowCarriersCalculated"),
 	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated"),
-	@View(name="FellowsNames", members="number, name; fellowCarriers"), 
+	@View(name="FellowsNames", members="number, name; fellowCarriers"), 	
 	@View(
-		name="WithSections", 
+		name="WithSections",
 		members=
 			"number, name; fellowCarriersSelected; " +
 			"data {drivingLicence; warehouse} " +
