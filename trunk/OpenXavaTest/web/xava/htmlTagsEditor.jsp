@@ -14,12 +14,7 @@ if (first && !view.isAlignedByColumns()) {
 	postLabel="</td>";
 	preIcons="<td style='vertical-align: middle' class='" + style.getEditorWrapper()+ "'>";
 	postIcons="</td>";	
-	String browser = (String) request.getAttribute("xava.portlet.user-agent");
-	boolean firefox = browser.indexOf("Firefox") >= 0;
-	// width: 99%  is for label and data not very separated when only one row, 
-	//				but it produces no good layout of frames in Firefox.
-	String width = firefox?"":"width: 99%";
-	preEditor="<td style='vertical-align: middle; "  + width + "'><table border='0' cellpadding='0' cellspacing='0'><tr><td style='vertical-align: middle' class='" + style.getEditorWrapper()+ "'>";
+	preEditor="<td style='vertical-align: middle;'><table border='0' cellpadding='0' cellspacing='0'><tr><td style='vertical-align: middle' class='" + style.getEditorWrapper()+ "'>";
 	postEditor="</td>";
 } 
 else {

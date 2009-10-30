@@ -48,6 +48,7 @@ public class ReferenceBaseAction extends ViewBaseAction {
 	}
 
 	private ViewInfo createSubview(View view, String memberName) throws XavaException {
+		if (memberName.endsWith("__KEY__")) memberName = memberName.substring(0, memberName.length() - 7);
 		int idx = memberName.indexOf('.'); 
 		if (idx < 0) {
 			return new ViewInfo(view.getSubview(memberName), memberName, view); 

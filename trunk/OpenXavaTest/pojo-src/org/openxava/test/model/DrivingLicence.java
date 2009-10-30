@@ -11,7 +11,7 @@ import org.openxava.annotations.*;
  */
 
 @Entity
-@IdClass(DrivingLicenceKey.class)
+@IdClass(DrivingLicenceKey.class) 
 public class DrivingLicence {
 	
 	@Id @Column(length=2) @Stereotype("NO_FORMATING_STRING")
