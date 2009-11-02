@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 
 @Entity
@@ -18,12 +19,16 @@ import org.openxava.annotations.*;
 	)
 	
 })
+@Tab(properties="year, number, date, " +
+		"customer.number, customer.name, " +
+		"vatPercentaget, estimatedProfit, baseAmount, " +
+		"vat, totalAmount, amount, remarks")
 public class Invoice extends CommercialDocument {
 	
 	@OneToMany(mappedBy="invoice")
 	@CollectionView("NoCustomerNoInvoice")
 	private Collection<Order> orders;
-
+	
 	public Collection<Order> getOrders() {
 		return orders;
 	}

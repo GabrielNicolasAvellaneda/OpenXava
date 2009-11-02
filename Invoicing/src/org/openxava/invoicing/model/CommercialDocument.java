@@ -62,10 +62,7 @@ abstract public class CommercialDocument extends Identifiable {
 	@DefaultValueCalculator(VatPercentageCalculator.class)
 	private BigDecimal vatPercentage;
 	
-
-	
-	@Stereotype("MONEY")
-	
+	@Stereotype("MONEY")	
 	@Formula("AMOUNT * 0.10") 		
 	private BigDecimal estimatedProfit;		
 	public BigDecimal getEstimatedProfit() {

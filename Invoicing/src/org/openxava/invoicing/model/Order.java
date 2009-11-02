@@ -46,6 +46,12 @@ public class Order extends CommercialDocument {
 		return invoice == null || isDelivered();
 	}	
 	
+	@AssertTrue
+	private boolean isCustomerOfInvoiceMustBeTheSame() {
+		return invoice == null || 
+			invoice.getCustomer().getNumber() == getCustomer().getNumber();
+	}
+	
 	@PreRemove
 	private void validateOnRemove() { 
 		if (invoice != null) {
