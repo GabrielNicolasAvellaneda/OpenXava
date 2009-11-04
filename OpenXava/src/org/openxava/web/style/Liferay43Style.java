@@ -1,5 +1,7 @@
 package org.openxava.web.style;
 
+import java.util.*;
+
 /**
  * For Liferay 4.3, 4.4 and 5.0. <p>
  * 
@@ -27,6 +29,10 @@ public class Liferay43Style extends Style {
 		return Liferay51Style.getInstance().getNoPortalModuleJsFiles(); 
 	}
 	
+	protected String getJQueryCss() { 
+		return "/xava/style/cupertino/jquery-ui.css";
+	}
+			
 	public String getInitThemeScript() { 
 		return "jQuery( function() { Liferay.Util.addInputType(); Liferay.Util.addInputFocus(); } );";
 	}

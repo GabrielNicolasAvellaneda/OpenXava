@@ -52,10 +52,16 @@ public class Style {
 		return null;
 	}
 	
+	protected String getJQueryCss() { 
+		return "/xava/style/ui-lightness/jquery-ui.css";
+	}
+
+	
 	protected Collection<String> createAdditionalCssFiles() {
 		return Arrays.asList( 
 			"/xava/editors/calendar/skins/aqua/theme.css", 
-			"/xava/style/openxava.css"	
+			"/xava/style/openxava.css",
+			getJQueryCss()
 		);
 	}
 	

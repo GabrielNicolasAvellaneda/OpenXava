@@ -31,12 +31,9 @@ public class Liferay51Style extends Liferay43Style {
 		return noPortalModuleJsFiles;
 	}	
 		
-	protected Collection<String> createAdditionalCssFiles() {
-		Collection<String> result = new ArrayList(super.createAdditionalCssFiles());
-		result.add("/xava/style/liferay51/css/jquery-ui-patch.css");
-		return result;
-	}
-
+	protected String getJQueryCss() { 
+		return "/xava/style/liferay51/css/jquery-ui-patch.css";
+	}	
 			
 	public String getModuleSpacing() { 
 		return "";		

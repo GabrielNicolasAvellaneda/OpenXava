@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Java 5 syntax can be use in custom JSPs for WebSphere Portal 6.1.
+- A trim is applied to all labels of OpenXava elements: This fix some ugly layout in IE7.
 - Reference guide in Russian improved.
 - Dialog for uploading file in image editor has a cancel button.
 - Image editor and Image gallery editor use a dialog to upload the files.

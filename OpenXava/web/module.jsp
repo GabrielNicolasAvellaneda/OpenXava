@@ -100,13 +100,17 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>	
 	<script type="text/javascript">
-		portalJQuery = jQuery;       
+		if (typeof jQuery != "undefined") {  
+			portalJQuery = jQuery;
+		}       
 	</script>				
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js"></script>				
 	<script type="text/javascript">
 		$ = jQuery;
-		jQuery = portalJQuery;       
+		if (typeof portalJQuery != "undefined") {  
+			jQuery = portalJQuery;    
+		}   
 	</script>
 <% if (!isPortlet) { %>
 </head>

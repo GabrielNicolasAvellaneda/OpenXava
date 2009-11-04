@@ -191,7 +191,7 @@ public class Module extends DWRBase {
 			if (manager.getDialogLevel() > 0) {
 				changedParts.put(decorateId("dialog" + manager.getDialogLevel()),   
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
-				);
+				);				
 				return;
 			}			
 		}

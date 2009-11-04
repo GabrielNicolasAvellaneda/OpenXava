@@ -1,5 +1,7 @@
 package org.openxava.web.style;
 
+import java.util.*;
+
 /**
  * For Liferay 4.1 and 4.2. <p>
  * 
@@ -22,6 +24,10 @@ public class Liferay41Style extends Style {
 		}
 		return instance;
 	}
+	
+	protected String getJQueryCss() { 
+		return "/xava/style/cupertino/jquery-ui.css";
+	}	
 		
 	public String getModule() {
 		//return "portlet-font"; No, because usually link style is ugly, and not coherent with the portal
@@ -57,25 +63,20 @@ public class Liferay41Style extends Style {
 	}
 	
 	public String getButtonBarStyle() {
-		// tmp return "style='position: static'";
-		return "position: static;"; // tmp
+		return "position: static;";
 	}
 	
 	public String getButtonBarStartStyle() {
-		// tmp return "style='position: static'";
-		return "position: static;"; // tmp
+		return "position: static;"; 
 	}
 	
 	public String getButtonBarMiddleStyle() {
-		// tmp return "style='position: static'";
-		return "position: static;"; // tmp
+		return "position: static;"; 
 	}
 	
 	public String getButtonBarEndStyle() {
-		// tmp return "style='position: static'";
-		return "position: static;"; // tmp
+		return "position: static;"; 
 	}
-
 		
 	public String getMode(boolean onButton) { 
 		return "list-info";
@@ -93,19 +94,14 @@ public class Liferay41Style extends Style {
 		return "border=0 cellspacing=0 cellpadding=0";
 	}
 	
-	public String getListStyle() { 
-		// tmp return "style='border-collapse: collapse'"; 
-		return "border-collapse: collapse;"; // tmp
+	public String getListStyle() {  
+		return "border-collapse: collapse;"; 
 	}	
-
-	
 	
 	public String getListHeader() { 
 		return "portlet-section-header";		
 	}
-	
-	
-	
+		
 	public String getListHeaderCell() { 		
 		return getListCell();
 	}
