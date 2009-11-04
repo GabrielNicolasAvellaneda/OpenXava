@@ -21,6 +21,7 @@ public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
+	@SearchAction("Order.searchInvoice") // tmp
 	private Invoice invoice;
 	
 	private boolean delivered;
