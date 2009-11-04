@@ -21,6 +21,10 @@ public class WebSpherePortalStyle extends Style {
 		return instance;
 	}
 	
+	protected String getJQueryCss() { 
+		return "/xava/style/cupertino/jquery-ui.css";
+	}
+	
 	public String getModuleSpacing() {
 		return ""; 
 	}	
