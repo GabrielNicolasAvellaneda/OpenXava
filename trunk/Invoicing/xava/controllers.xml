@@ -1,0 +1,13 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
+
+<controllers>
+
+	<controller name="Order">
+		<action name="" class="">
+		</action>
+	
+	</controller> 
+	
+</controllers>
