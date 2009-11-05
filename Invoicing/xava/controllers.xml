@@ -4,8 +4,15 @@
 
 <controllers>
 
-	<controller name="Order">
-		<action name="" class="">
+	<controller name="Invoice">
+	
+		<extends controller="Typical"/>
+	
+		<action name="delete" mode="detail" confirm="true"
+			class="org.openxava.invoicing.actions.DeleteInvoiceAction"
+			image="images/delete.gif"
+			keystroke="Control D">
+			<use-object name="xava_view"/>						
 		</action>
 	
 	</controller> 
