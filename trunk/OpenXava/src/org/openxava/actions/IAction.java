@@ -8,6 +8,9 @@ import org.openxava.util.*;
 /**
  * OpenXava action.
  * 
+ * It's better to extend from {@link BaseAction} instead of implementing directly this
+ * interface.
+ * 
  * @author Javier Paniza
  */
 

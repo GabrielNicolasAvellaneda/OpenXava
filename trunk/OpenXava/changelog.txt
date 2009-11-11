@@ -1,12 +1,18 @@
 Change Log for OpenXava project
 ===============================
 
-- Java 5 syntax can be use in custom JSPs for WebSphere Portal 6.1.
+- Upgrade to HtmlUnit 2.5.
+- Popup dialogs supported by means of show-dialog and hide-dialog attribute for <action /> in controllers.xml.
+- New getNewMode() and setNewMode() methods in BaseAction to change the module mode (detail/list).
+- Fix: Ugly formatting of action error messages with additional information.
+- New methods in BaseAction: getManager(), getRequest() and getContext().
+- New methods in ViewBaseAction to work with view navigation: showNewView(), returnToPreviousView() and getPreviousView().
+- JasperReportBaseAction now extends from ViewBaseAction.
 - A trim is applied to all labels of OpenXava elements: This fix some ugly layout in IE7.
 - Reference guide in Russian improved.
 - Dialog for uploading file in image editor has a cancel button.
 - Image editor and Image gallery editor use a dialog to upload the files.
-- New assertDialog(), assertNoDialog(), assertDialogLabel() and closeDialog() methods in ModuleTestBase.
+- New assertDialog(), assertNoDialog(), assertDialogTitle() and closeDialog() methods in ModuleTestBase.
 - New EnumStringType hibernate type to convert from arbitrary strings in DB to enum values in JPA.
 - New property 'title' for View class. This title will be shown in the frame when the view would be displayed in a dialog.
 - Fix: MetaElement.getDescription() and MetaElement.getLabel() used local machine locale. Now it uses client locale.
@@ -14,7 +20,7 @@ Change Log for OpenXava project
 - Dropped support for EntityBeans CMP2.
 - Dropped support for Java 1.4. From now on OX requires Java 5 or better.
 - XSystem.isJava5OrBetter() method removed.
-- Fix: ModuleManager.reset not work with descriptionsList at default schema components
+- Fix: ModuleManager.reset does not work with descriptionsList at default schema components
 
 OpenXava 3.1.4 (2009-8-27)
 --------------------------

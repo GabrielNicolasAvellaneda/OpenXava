@@ -224,6 +224,12 @@
 			<set property="newLimitZone" value="1"/>
 			<use-object name="xavatest_limitZone"/>
 			<use-object name="xava_view"/>
+		</action>
+		<action name="reportBySubfamily" 
+			class="org.openxava.test.actions.GoFamilyProductsReportAction"
+			show-dialog="true">			
+			<use-object name="xava_view"/>
+			<use-object name="xava_previousViews"/>			
 		</action>		
 	</controller>
 	
@@ -564,14 +570,19 @@
 		<action name="generatePdf" 
 			class="org.openxava.test.actions.FamilyProductsReportAction"
 			takes-long="true"
+			hide-dialog="true"
 			keystroke="Control Alt P">
-			<use-object name="xava_view"/>			
+			<use-object name="xava_view"/>
+			<use-object name="xava_previousViews"/>			
 		</action>
 		<action name="generateExcel" 
 			class="org.openxava.test.actions.FamilyProductsReportAction"
+			hide-dialog="false"
 			takes-long="true">
 			<set property="format" value="excel"/>
+			<set property="goBackOnFinish" value="false"/>
 			<use-object name="xava_view"/>			
+			<use-object name="xava_previousViews"/>
 		</action>								
 	</controller>		
 
@@ -843,7 +854,31 @@
 			<use-object name="xava_view"/>			
 		</action>
 		
+		<action name="addFullAddress" hidden="true"
+			show-dialog="true"
+			class="org.openxava.test.actions.GoAddFullAddressAction">					
+			<use-object name="xava_view"/>			
+			<use-object name="xava_previousViews"/>
+		</action>
+		
 	</controller>
+	
+	<controller name="AddFullAddress">
+	
+		<action name="add" hide-dialog="true"
+			class="org.openxava.test.actions.AddFullAddressAction">			
+			<use-object name="xava_previousViews"/>
+			<use-object name="xava_view"/>
+		</action>		
+	
+		<action name="cancel" hide-dialog="true"
+			class="org.openxava.actions.CancelAction">			
+			<use-object name="xava_previousViews"/>
+			<use-object name="xava_view"/>
+		</action>
+		
+	</controller>
+	
 	
 	<controller name="ReturnPreviousModule">
 		<action name="return" class="org.openxava.actions.ReturnPreviousModuleAction"/>

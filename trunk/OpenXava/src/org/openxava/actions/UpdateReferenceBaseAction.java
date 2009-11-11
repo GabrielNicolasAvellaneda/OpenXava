@@ -10,9 +10,8 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public abstract class UpdateReferenceBaseAction extends BaseAction implements IChangeControllersAction {
+public abstract class UpdateReferenceBaseAction extends ViewBaseAction implements IChangeControllersAction {
 	
-	private View view;	
 	private String [] nextControllers = null;
 	private Stack previousViews;
 	
@@ -26,8 +25,7 @@ public abstract class UpdateReferenceBaseAction extends BaseAction implements IC
 			if (!referenceSubview.hasKeyProperties()) {
 				referenceSubview.findObject();
 			}
-			View previousView = (View) getPreviousViews().pop();
-			setView(previousView);
+			returnToPreviousView();
 		}
 		resetDescriptionsCache();
 	}
@@ -36,14 +34,6 @@ public abstract class UpdateReferenceBaseAction extends BaseAction implements IC
 		return getView().getValues();
 	}
 	
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
-	}
-
 	public String[] getNextControllers() {		
 		return nextControllers;
 	}

@@ -4179,12 +4179,18 @@ public class View implements java.io.Serializable {
 		this.defaultListActionsForCollectionsIncluded = defaultListActionsForCollectionsIncluded;
 	}
 	
+	/**
+	 * @since 4m1
+	 */
 	public void setTitleId(String id, Object ... arguments) { 
 		this.title = null;
 		this.titleId = id;
 		this.titleArguments = arguments;
 	}
-	
+
+	/**
+	 * @since 4m1
+	 */	
 	public String getTitle() { 
 		if (title == null) {
 			if (titleId == null) title="";
@@ -4203,6 +4209,9 @@ public class View implements java.io.Serializable {
 		return title;
 	}
 	
+	/**
+	 * @since 4m1
+	 */	
 	public void setTitle(String title) { 
 		this.title = title;
 	}

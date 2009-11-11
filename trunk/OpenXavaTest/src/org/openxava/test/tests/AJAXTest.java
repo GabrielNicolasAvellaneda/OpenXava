@@ -180,6 +180,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertNoAction("Customer.changeNameLabel"); 
 		assertLoadedParts("editor_type, " +
 				"editor___ACTION__Customer_changeNameLabel, " +
+				"editor_address.__ACTION__Address_addFullAddress, " +
 				"editor_number, errors, " +
 				"editor_alternateSeller.number, " +
 				"property_actions_address.street, " +
@@ -206,6 +207,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertAction("Customer.changeNameLabel"); 
 		assertLoadedParts("editor_type, " +
 				"editor___ACTION__Customer_changeNameLabel, " +
+				"editor_address.__ACTION__Address_addFullAddress, " +
 				"editor_number, errors, " +
 				"editor_alternateSeller.number, " +
 				"property_actions_address.street, " +

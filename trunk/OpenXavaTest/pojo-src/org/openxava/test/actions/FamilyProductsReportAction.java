@@ -19,9 +19,17 @@ import org.openxava.validators.*;
  * 
  * @author Javier Paniza
  */
-public class FamilyProductsReportAction extends JasperReportBaseAction {
+public class FamilyProductsReportAction extends JasperReportBaseAction implements IChangeControllersAction {  
 	
 	private Subfamily2 subfamily;
+	private boolean goBackOnFinish = true; 
+		
+	public void execute() throws Exception { 
+		super.execute();
+		if (goBackOnFinish) {
+			returnToPreviousView();
+		}
+	}
 
 	public Map getParameters() throws Exception  {		
 		Messages errors = MapFacade.validate("FilterBySubfamily", getView().getValues());
@@ -47,5 +55,17 @@ public class FamilyProductsReportAction extends JasperReportBaseAction {
 		}
 		return subfamily;
 	}
+	
+	public String[] getNextControllers() throws Exception { 		
+		return goBackOnFinish?PREVIOUS_CONTROLLERS:SAME_CONTROLLERS;
+	}	
+	
+	public boolean isGoBackOnFinish() {
+		return goBackOnFinish;
+	}
 
+	public void setGoBackOnFinish(boolean goBackOnFinish) {
+		this.goBackOnFinish = goBackOnFinish;
+	}
+	
 }
