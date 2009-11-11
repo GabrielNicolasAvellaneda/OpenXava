@@ -17,6 +17,51 @@ public class Product2Test extends ModuleTestBase {
 		super(testName, "Product2");		
 	}
 	
+	public void testCustomDialog() throws Exception { 
+		// In detail mode
+		execute("CRUD.new");
+		assertCustomDialog();
+		
+		// In list mode
+		execute("Mode.list");
+		assertCustomDialog();
+		
+		// Using generateExcel that does not hide the dialog
+		assertNoDialog();
+		assertAction("Product2.reportBySubfamily");
+		assertNoAction("FamilyProductsReport.generateExcel");
+		execute("Product2.reportBySubfamily");
+		assertDialog();
+		assertNoAction("Product2.reportBySubfamily");
+		assertAction("FamilyProductsReport.generateExcel");
+		setValue("subfamily.number", "2");
+		execute("FamilyProductsReport.generateExcel");
+		assertNoErrors();
+		assertContentTypeForPopup("application/vnd.ms-excel");
+		assertDialog();
+		assertNoAction("Product2.reportBySubfamily");
+		assertAction("FamilyProductsReport.generateExcel");				
+	}
+	
+	private void assertCustomDialog() throws Exception { 
+		assertNoDialog();
+		assertAction("Product2.reportBySubfamily");
+		assertNoAction("FamilyProductsReport.generatePdf");
+		execute("Product2.reportBySubfamily");
+		assertDialog();
+		assertNoAction("Product2.reportBySubfamily");
+		assertAction("FamilyProductsReport.generatePdf");		
+		execute("FamilyProductsReport.generatePdf");
+		assertError("Value for Subfamily in Filter by subfamily is required");		
+		setValue("subfamily.number", "2");
+		execute("FamilyProductsReport.generatePdf");
+		assertNoErrors();
+		assertContentTypeForPopup("application/pdf");
+		assertNoDialog();
+		assertAction("Product2.reportBySubfamily");
+		assertNoAction("FamilyProductsReport.generatePdf");		
+	}
+	
 	public void testFormula() throws Exception {
 		assertValueInList(0, "unitPrice", "11.00");
 		assertValueInList(0, "unitPriceWithTax", "12.76");

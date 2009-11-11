@@ -3,10 +3,10 @@ if (openxava == null) var openxava = {};
 openxava.init = function(application, module) {
 	dwr.util.useLoadingMessage(openxava.loadingMessage);
 	document.onkeydown = openxava.processKey;  
-	openxava.ajaxRequest(application, module);
+	openxava.ajaxRequest(application, module, true); 
 }
 
-openxava.ajaxRequest = function(application, module) {
+openxava.ajaxRequest = function(application, module, firstRequest) {
 	if (openxava.isRequesting(application, module)) return;
 	openxava.setRequesting(application, module); 
 	document.throwPropertyChange = false; 
@@ -16,7 +16,8 @@ openxava.ajaxRequest = function(application, module) {
 			application, module, document.additionalParameters,			
 			openxava.getFormValues(openxava.getForm(application, module)), 
 			openxava.getMultipleValues(application, module), 
-			openxava.getSelectedValues(application, module), 					 
+			openxava.getSelectedValues(application, module),
+			firstRequest,
 			openxava.refreshPage); 			
 }
 

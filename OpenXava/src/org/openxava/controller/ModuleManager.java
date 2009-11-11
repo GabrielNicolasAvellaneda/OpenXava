@@ -32,7 +32,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 4m1beta (2009-10-xx)");		
+		log.info("OpenXava 4m1beta (2009-11-xx)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -250,7 +250,7 @@ public class ModuleManager {
 	}
 
 	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
-		int originalDialogLevel = dialogLevel; 
+		int originalDialogLevel = dialogLevel;		
 		try {			
 			Object previousView = getContext().get(applicationName, moduleName, "xava_view");  
 			action.setErrors(errors);
@@ -469,7 +469,7 @@ public class ModuleManager {
 			lastExecutedMetaAction = metaAction;
 			if (!(metaAction == null && executingAction)) { // For avoiding commit on OnChange actions triggered from a regular action execution
 				doCommit(); // after executing action
-			}			 
+			}			
 		}
 		catch (Exception ex) {
 			setHideDialog(false);
@@ -519,10 +519,10 @@ public class ModuleManager {
 	private void manageRegularException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
 		log.error(ex.getMessage(), ex);
 		if (metaAction != null) {
-			errors.add("no_execute_action", metaAction.getId(), ex.getLocalizedMessage());
+			errors.add("no_execute_action", metaAction.getId(), "'" + ex.getLocalizedMessage() + "'"); 
 		}
 		else {
-			errors.add("no_execute_action", "", ex.getLocalizedMessage());
+			errors.add("no_execute_action", "", "'" + ex.getLocalizedMessage() + "'"); 
 		}
 		messages.removeAll();
 	}
@@ -1037,7 +1037,7 @@ public class ModuleManager {
 	public boolean isReloadAllUINeeded() {
 		return reloadAllUINeeded;
 	}
-
+		
 	/**
 	 * Is actions list change since the last action execution ?. <p>
 	 */

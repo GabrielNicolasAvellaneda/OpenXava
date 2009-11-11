@@ -39,9 +39,10 @@ public class Module extends DWRBase {
 	private HttpServletResponse response;
 	private String application;
 	private String module;
-	private ModuleManager manager;	
+	private ModuleManager manager;
+	private boolean firstRequest; 
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected) throws Exception {		
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception {
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module);		
@@ -51,13 +52,15 @@ public class Module extends DWRBase {
 			this.response = response;
 			this.application = application;
 			this.module = module;
+			this.firstRequest = firstRequest==null?false:firstRequest; 
 			checkSecurity(request, application, module);
 			setPageReloadedLastTime(false);
 			Users.setCurrent(request);
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());			
-			getURIAsStream("execute.jsp", values, multipleValues, selected, additionalParameters);			
+			getURIAsStream("execute.jsp", values, multipleValues, selected, additionalParameters);
+			setDialogLevel(result); 
 			Map changedParts = new HashMap();
 			result.setChangedParts(changedParts);
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
@@ -161,7 +164,7 @@ public class Module extends DWRBase {
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {
-		request(request, response, application, module, null, null, null, null);		
+		request(request, response, application, module, null, null, null, null, false); 		
 		memorizeLastMessages();				
 	}	
 
@@ -179,15 +182,7 @@ public class Module extends DWRBase {
 	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
 		Map changedParts = result.getChangedParts();
 
-		result.setDialogLevel(manager.getDialogLevel()); 
-		if (manager.isShowDialog()) {
-			result.setShowDialog(manager.isShowDialog());						
-			setDialogTitle(result);
-		}
-		if (manager.isHideDialog()) { 
-			result.setHideDialog(true);
-		}
-		if (manager.isShowDialog() || manager.isHideDialog()) {			
+		if (manager.isShowDialog() || manager.isHideDialog() || firstRequest) { 			
 			if (manager.getDialogLevel() > 0) {
 				changedParts.put(decorateId("dialog" + manager.getDialogLevel()),   
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
@@ -204,6 +199,20 @@ public class Module extends DWRBase {
 		}	
 		if (!manager.isListMode()) {
 			result.setFocusPropertyId(getView().getFocusPropertyId());
+		}
+	}
+
+	private void setDialogLevel(Result result) {
+		result.setDialogLevel(manager.getDialogLevel()); 
+		if (manager.isShowDialog()) {
+			result.setShowDialog(manager.isShowDialog());						
+			setDialogTitle(result);
+		}
+		if (manager.isHideDialog()) { 
+			result.setHideDialog(true);
+		}
+		if (firstRequest && manager.getDialogLevel() > 0) { 
+			result.setShowDialog(true);
 		}
 	}
 

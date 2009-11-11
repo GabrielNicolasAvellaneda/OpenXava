@@ -5,12 +5,8 @@ import java.sql.*;
 import java.util.*;
 
 import javax.servlet.*;
-import javax.servlet.http.*;
-
-
 
 import org.openxava.util.*;
-import org.openxava.view.*;
 import net.sf.jasperreports.engine.*;
 
 /**
@@ -22,15 +18,13 @@ import net.sf.jasperreports.engine.*;
  * @author Daniel García Salas  
  */
 
-abstract public class JasperReportBaseAction extends BaseAction implements IForwardAction, IModelAction {
+abstract public class JasperReportBaseAction extends ViewBaseAction implements IForwardAction, IModelAction { 
 	
 	public static String PDF = "pdf";
 	public static String EXCEL = "excel"; 
 	public static String RTF = "rtf";
 	public static String ODT = "odt"; 
-	
-	private HttpServletRequest request;
-	private View view;
+		
 	private String modelName;
 	private String format = PDF;
 	
@@ -79,7 +73,7 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	}
 
 	public void execute() throws Exception {
-		ServletContext application = request.getSession().getServletContext();
+		ServletContext application = getRequest().getSession().getServletContext();
 		System.setProperty("jasper.reports.compile.class.path",					 
 			application.getRealPath("/WEB-INF/lib/jasperreports.jar") +
 			System.getProperty("path.separator") + 
@@ -107,8 +101,8 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 		else {
 			jprint = JasperFillManager.fillReport(report, parameters, ds);
 		}		
-		request.getSession().setAttribute("xava.report.jprint", jprint);
-		request.getSession().setAttribute("xava.report.format", getFormat());
+		getRequest().getSession().setAttribute("xava.report.jprint", jprint);
+		getRequest().getSession().setAttribute("xava.report.format", getFormat());
 	}
 	
 	private boolean isAbsolutePath(String design) { 
@@ -128,19 +122,7 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	public boolean inNewWindow() {
 		return true;
 	}
-	
-	public void setRequest(HttpServletRequest request) {
-		super.setRequest(request);
-		this.request = request;
-	}
-		
-	public View getView() {
-		return view;
-	}
-	public void setView(View view) {
-		this.view = view;
-	}
-	
+				
 	public void setModel(String modelName) { //  to obtain a JDCB connection, if required
 		this.modelName = modelName;
 	}

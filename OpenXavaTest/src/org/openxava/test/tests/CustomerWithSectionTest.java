@@ -48,6 +48,26 @@ public class CustomerWithSectionTest extends CustomerTest {
 		super(testName, "CustomerWithSection", true);		
 	}
 	
+	public void testDialogChangesPreviousView() throws Exception {		
+		execute("CRUD.new");
+		assertValue("address.street", "");
+		assertValue("address.zipCode", "");
+		assertValue("address.city", "");
+		assertValue("address.state.id", "");
+		assertNoDialog();
+		execute("Address.addFullAddress");
+		assertDialog();
+		assertDialogTitle("Entry the full address");
+		setValue("fullAdress", "AV. BARON DE CARCER, 48 - 12E 46001 VALENCIA CA");		
+		execute("AddFullAddress.add");
+		assertNoErrors();
+		assertNoDialog();
+		assertValue("address.street", "AV. BARON DE CARCER, 48 - 12E");
+		assertValue("address.zipCode", "46001");
+		assertValue("address.city", "VALENCIA");
+		assertValue("address.state.id", "CA");		
+	}
+	
 	public void testCancelActionAfterChangeImageAction() throws Exception { 
 		addImage();
 		assertExists("telephone");

@@ -12,7 +12,7 @@ import org.openxava.annotations.*;
 @Views ({
 	@View( members =
 		"viewProperty;" +
-		"street, zipCode;" +		
+		"street, zipCode, Address.addFullAddress();" +		
 		"city [" +
 		"	city, state;" +
 		"]"		

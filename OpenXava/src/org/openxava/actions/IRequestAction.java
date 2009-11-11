@@ -5,11 +5,15 @@ import javax.servlet.http.*;
 /**
  * Action that receive a servlet request. <p>
  * 
- * With this action we can access directily to the
+ * It is implemented by {@link BaseAction}, so if your 
+ * extends from it you can access to the request 
+ * just by calling to {@link BaseAction#getRequest} (since 4m1). <p>
+ * 
+ * With this action you can access directly to the
  * web application resources (by means request), but
- * its link to implementation tecnology (servlets),
- * hence it's better to elude it if we have another
- * way and we are thinking in migrate to another tecnology. <p>
+ * it ties to implementation technology (servlets),
+ * hence it's better to elude it if you have another
+ * option and you're thinking in migrate to another tecnology. <p>
  * 
  * But it's needed form some issues. As this action type is
  * used for specific task, it's possible refactoring and create

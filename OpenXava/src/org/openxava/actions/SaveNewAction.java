@@ -36,49 +36,6 @@ public class SaveNewAction extends UpdateReferenceBaseAction {
 			addError("no_create_exists");
 		}
 
-		/* tmp original
-		try {
-			// Create
-			Map key = MapFacade.createReturningKey(getView().getModelName(),
-					getValuesToSave());
-			returnsToPreviousViewUpdatingReferenceView(key);
-		} catch (ValidationException ex) {
-			addErrors(ex.getErrors());
-		} catch (DuplicateKeyException ex) {
-			addError("no_create_exists");
-		}
-		*/
-		// tmp ini
-		/*
-		Map values = null;
-		Map key = null;
-
-		try {
-			// Create
-			if (getView().isKeyEditable()) {
-				// Create
-				if (isResetAfter()) {
-					MapFacade.create(getView().getModelName(),
-							getValuesToSave());
-				} else {
-					key = MapFacade.createReturningKey(
-							getView().getModelName(), getValuesToSave());
-				}
-			} else {
-				// Modify
-				key = getView().getKeyValues();
-				MapFacade.setValues(getView().getModelName(), key,
-						getValuesToSave());
-			}
-
-			returnsToPreviousViewUpdatingReferenceView(key);
-		} catch (ValidationException ex) {
-			addErrors(ex.getErrors());
-		} catch (DuplicateKeyException ex) {
-			addError("no_create_exists");
-		}
-		*/
-		// tmp fin
 	}
 
 }

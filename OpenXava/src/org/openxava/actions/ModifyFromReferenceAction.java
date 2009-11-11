@@ -22,9 +22,7 @@ public class ModifyFromReferenceAction extends NavigationFromReferenceBaseAction
 		Map key = getReferenceSubview().getKeyValuesWithValue();
 		if (key.isEmpty()) {
 			addError("cannot_modify_empty_reference");
-			View view = (View) getPreviousViews().pop();
-			view.setRequest(getView().getRequest());
-			setView(view);
+			returnToPreviousView();
 			exists = false;
 			return;
 		}

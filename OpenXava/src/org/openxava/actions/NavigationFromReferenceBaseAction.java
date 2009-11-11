@@ -1,26 +1,16 @@
 package org.openxava.actions;
 
-
-import java.util.*;
-
-import javax.servlet.http.*;
-
-
-
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
-import org.openxava.view.*;
 
 /**
  * @author Javier Paniza
  */
 
-abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAction implements IChangeControllersAction, IRequestAction, IChainAction {
+abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAction implements IChangeControllersAction, IChainAction {
 		
 	private String model;	
-	private String controller;
-	private HttpServletRequest request;	
-	private Stack previousViews;
+	private String controller;		
 	
 	abstract public String getNextAction() throws Exception;
 	abstract protected String getCustomController();
@@ -30,17 +20,12 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 	
 	public void execute() throws Exception {
 		super.execute();
-		View viewReference = new View();			
-		viewReference.setModelName(getModel());
-		viewReference.setRequest(request);
-		viewReference.setErrors(getErrors()); 
-		viewReference.setMessages(getMessages());
-		viewReference.putObject("xava.referenceSubview", getReferenceSubview());
-		getPreviousViews().push(getView());
-		setView(viewReference);		
+		showNewView();				
+		getView().setModelName(getModel());
+		getView().putObject("xava.referenceSubview", getReferenceSubview());
 		
 		// Next line is for reset the cache		
-		request.getSession().removeAttribute(getKeyProperty() + ".descriptionsCalculator");				
+		getRequest().getSession().removeAttribute(getKeyProperty() + ".descriptionsCalculator");				
 	}
 
 	public String[] getNextControllers() throws Exception {		
@@ -53,10 +38,6 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 
 	public void setModel(String string) {
 		model = string;
-	}
-
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;		
 	}
 
 	public String getController() throws XavaException {
@@ -75,12 +56,5 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 	public void setController(String string) {
 		controller = string;
 	}	
-
-	public Stack getPreviousViews() {
-		return previousViews;
-	}
-	public void setPreviousViews(Stack previousViews) {
-		this.previousViews = previousViews;
-	}
 	
 }

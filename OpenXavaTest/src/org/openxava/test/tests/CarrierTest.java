@@ -230,7 +230,7 @@ public class CarrierTest extends CarrierTestBase {
 		execute("Mode.detailAndFirst");
 		execute("Reference.search", "keyProperty=xava.Carrier.warehouse.number");
 		assertDialog();
-		assertDialogLabel("Choose a new value for Warehouse");
+		assertDialogTitle("Choose a new value for Warehouse");
 		execute("ReferenceSearch.cancel");
 		assertNoDialog();
 		execute("CRUD.delete");		

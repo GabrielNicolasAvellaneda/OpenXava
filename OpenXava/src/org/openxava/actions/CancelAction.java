@@ -22,12 +22,7 @@ public class CancelAction extends ViewBaseAction implements INavigationAction, I
 	
 	
 	public void execute() throws Exception {
-		 
-		if (getPreviousViews() != null && !getPreviousViews().empty()) {
-			View view = (View) getPreviousViews().pop();
-			view.setRequest(request);
-			setView(view);
-		}
+		returnToPreviousView(); 
 		if (restoreEditable && getView() != null) {
 			getView().setKeyEditable(keyEditable);
 			getView().setEditable(editable);			

@@ -84,9 +84,14 @@ Module.setStyle(style);
 	%>
 
 <% } %>
-	<% for (String cssFile: style.getAdditionalCssFiles() ) { %>
+	<% 
+	for (java.util.Iterator it = style.getAdditionalCssFiles().iterator(); it.hasNext(); ) {
+		String cssFile = (String) it.next();
+	%>
 	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>"/>
-	<% } %> 	
+	<% 
+	} 
+	%> 	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>

@@ -1760,14 +1760,24 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(msg + ": " + value1, !Is.equal(value1, value2));		
 	}
 	
+	/**
+	 * @since 4m1
+	 */
 	protected void assertDialog() throws Exception {
 		assertTrue(XavaResources.getString("dialog_must_be_displayed"), getTopDialog() != null); 
 	}
-		
+
+	/**
+	 * @since 4m1
+	 */
+	
 	protected void assertNoDialog() throws Exception {	
 		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), getTopDialog() == null); 
 	}
 	
+	/**
+	 * @since 4m1
+	 */
 	protected void closeDialog() throws Exception { 
 		assertDialog();
 		HtmlElement title = (HtmlElement) getElementById(getTopDialog()).getPreviousSibling();
@@ -1791,9 +1801,12 @@ public class ModuleTestBase extends TestCase {
 		return "dialog" + (level - 1);
 	}
 
-	protected void assertDialogLabel(String expectedLabel) throws Exception {
+	/**
+	 * @since 4m1
+	 */	
+	protected void assertDialogTitle(String expectedTitle) throws Exception {
 		String label = page.getElementById("ui-dialog-title-" + decorateId(getTopDialog())).asText();
-		assertEquals(XavaResources.getString("unexpected_dialog_label"), expectedLabel, label); 
+		assertEquals(XavaResources.getString("unexpected_dialog_title"), expectedTitle, label); 
 	}
 	
 }

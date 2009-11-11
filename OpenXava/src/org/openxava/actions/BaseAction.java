@@ -4,22 +4,24 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.openxava.controller.Environment;
+import org.openxava.controller.*;
 import org.openxava.util.Locales;
 import org.openxava.util.Messages;
 import org.openxava.web.DescriptionsLists;
 
 /**
+ * 
  * @author Javier Paniza
  */
 
-abstract public class BaseAction implements IAction, IRequestAction {
+abstract public class BaseAction implements IAction, IRequestAction, IModuleContextAction, IChangeModeAction {
 	
 	private Messages errors;
 	private Messages messages;
 	private Environment environment;
-	private transient HttpServletRequest request;	
-	
+	private transient HttpServletRequest request;
+	private ModuleContext context; 
+	private String nextMode; 
 	
 	public Messages getErrors() {
 		return errors;
@@ -152,19 +154,60 @@ abstract public class BaseAction implements IAction, IRequestAction {
 		DescriptionsLists.resetDescriptionsCache(request.getSession());		
 	}
 	
-	public void setRequest(HttpServletRequest request) {
-		// the request always private. If one descendent
-		// action need request, then that implements IRequestAction
-		// For no promote the easy use of request, and hence
-		// the creation of no portable (out of http) actions.
+	public void setRequest(HttpServletRequest request) { 
 		this.request= request;
 	}
-    
+	
+	/**
+	 * With this method you can access directly to the
+	 * web application resources, but it ties you to 
+	 * implementation technology (servlets), hence it's 
+	 * better to avoid it if you have alternative and 
+	 * are thinking in migrating to another tecnology. 
+	 * 
+	 * @since 4m1
+	 */
+	protected HttpServletRequest getRequest() { 
+		return this.request;
+	}
+	
 	/**
 	 * The Locale of the current request. <p> 
 	 */
     protected Locale getLocale() {
         return Locales.getCurrent();
     }
-    
+
+	/**
+	 * @since 4m1
+	 */    
+	protected ModuleContext getContext() {  
+		return context;
+	}
+
+	public void setContext(ModuleContext context) {
+		this.context = context;
+	}
+
+	/**
+	 * @since 4m1
+	 */
+	public String getNextMode() {
+		return nextMode;
+	}
+
+	/**
+	 * @since 4m1
+	 */	
+	protected void setNextMode(String nextMode) {
+		this.nextMode = nextMode;
+	}
+
+	/**
+	 * @since 4m1
+	 */	
+	protected ModuleManager getManager() { 
+		return (ModuleManager) context.get(request, "manager");
+	}	
+       
 }
