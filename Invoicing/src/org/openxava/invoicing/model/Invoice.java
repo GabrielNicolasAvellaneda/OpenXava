@@ -17,13 +17,22 @@ import org.openxava.annotations.*;
 	)
 	
 })
-
-	@Tab(properties="year, number, date, customer.number, customer.name, " +
-		"vatPercentage, estimatedProfit, baseAmount, " +
-		"vat, totalAmount, amount, remarks")
-		
+@Tab(properties="year, number, date, customer.number, customer.name, " +
+	"vatPercentage, estimatedProfit, baseAmount, " +
+	"vat, totalAmount, amount, remarks, deleted") // tmp deleted 		
 public class Invoice extends CommercialDocument {
 	
+	@Hidden
+	private boolean deleted;
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@OneToMany(mappedBy="invoice")
 	@CollectionView("NoCustomerNoInvoice")
 	private Collection<Order> orders;
