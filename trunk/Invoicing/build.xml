@@ -37,12 +37,13 @@
 	<target name="updateSchema">
 		<ant antfile="../OpenXava/build.xml" target="updateSchemaJPA">			
 			<property name="persistence.unit" value="junit"/>
-			<!-- Windows -->  
+			<!-- Windows   
 			<property name="schema.path" value="/Users/javi/openxava-3.1.3/tomcat/common/lib/postgresql-8.3-604.jdbc3.jar"/>
+			-->
 						
-			<!-- Linux  
+			<!-- Linux -->  
 			<property name="schema.path" value="/home/javi/openxava-3b/tomcat/common/lib/postgresql-8.3-604.jdbc3.jar"/>
-			-->			
+						
 		</ant>
 	</target>	
 	
