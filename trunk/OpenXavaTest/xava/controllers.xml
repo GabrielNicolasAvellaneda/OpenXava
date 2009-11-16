@@ -871,7 +871,7 @@
 			<use-object name="xava_view"/>
 		</action>		
 	
-		<action name="cancel" hide-dialog="true"
+		<action name="cancel" 
 			class="org.openxava.actions.CancelAction">			
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_view"/>

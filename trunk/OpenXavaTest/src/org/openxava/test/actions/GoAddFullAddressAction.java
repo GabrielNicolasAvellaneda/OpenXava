@@ -2,7 +2,9 @@ package org.openxava.test.actions;
 
 import org.openxava.actions.*;
 
-public class GoAddFullAddressAction extends ViewBaseAction implements IChangeControllersAction {
+public class GoAddFullAddressAction 
+	extends ViewBaseAction 
+	implements IChangeControllersAction {
 
 	public void execute() throws Exception {
 		showNewView();
