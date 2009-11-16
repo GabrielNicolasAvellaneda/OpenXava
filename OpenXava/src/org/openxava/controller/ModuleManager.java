@@ -454,7 +454,7 @@ public class ModuleManager {
 				}
 				else {
 					if (metaAction.getQualifiedName().equals(previousDefaultActionQualifiedName) ||
-						"cancel".equals(metaAction.getName())) 
+						"cancel".equals(metaAction.getName()) || "cancelar".equals(metaAction.getName())) 
 					{
 						setHideDialog(true);						
 						dialogLevel--; 
