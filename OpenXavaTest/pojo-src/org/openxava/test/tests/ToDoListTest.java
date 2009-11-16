@@ -27,5 +27,23 @@ public class ToDoListTest extends ModuleTestBase {
 		assertValueInCollection("tasks.componentsTasks", 0, 0, "COMPONENT 1");		
 	}
 	
+	public void testSelectAndDeselectAllCollectionElements() throws Exception {
+		execute("List.viewDetail", "row=0");
+		
+		assertAllCollectionUnchecked("tasks");
+		checkAllCollection("tasks");
+		assertAllCollectionUnchecked("components");
+		assertAllCollectionChecked("tasks");
+		assertRowCollectionChecked("tasks", 0);
+		assertRowCollectionChecked("tasks", 1);
+		assertAllCollectionUnchecked("components");
+		assertRowCollectionUnchecked("components", 0);
+		
+		uncheckRowCollection("tasks", 0);
+		assertAllCollectionUnchecked("tasks");
+		checkRowCollection("tasks", 0);
+		assertAllCollectionChecked("tasks");
+	}
+	
 	
 }

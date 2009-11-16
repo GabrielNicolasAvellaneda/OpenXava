@@ -39,7 +39,8 @@ public class FormulaTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("selectedIngredientSize", "1");
 		assertValue("selectedIngredientNames", "AZUCAR");
-		checkRowCollection("ingredients", 1);
+		checkAllCollection("ingredients");
+		assertRowCollectionChecked("ingredients", 1);
 		assertValue("selectedIngredientSize", "2");
 		assertValue("selectedIngredientNames", "AZUCAR,CAFE");
 		// deselected
