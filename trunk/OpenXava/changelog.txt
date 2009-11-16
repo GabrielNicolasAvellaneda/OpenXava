@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Add checkbox in list to selected and deselected all collection elements
+
 - Upgrade to HtmlUnit 2.5.
 - Popup dialogs supported by means of show-dialog and hide-dialog attribute for <action /> in controllers.xml.
 - New getNewMode() and setNewMode() methods in BaseAction to change the module mode (detail/list).

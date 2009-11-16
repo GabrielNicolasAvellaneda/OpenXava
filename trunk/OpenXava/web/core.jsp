@@ -25,6 +25,8 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 --%>	
 <INPUT type="hidden" name="<xava:id name='xava_action'/>" value=""/>
 <INPUT type="hidden" name="<xava:id name='xava_action_argv'/>" value=""/>
+<INPUT type="hidden" name="<xava:id name='xava_action_range'/>" value=""/>
+<INPUT type="hidden" name="<xava:id name='xava_action_already_processed'/>" value=""/>
 <INPUT type="hidden" name="<xava:id name='xava_action_application'/>" value="<%=request.getParameter("application")%>"/>
 <INPUT type="hidden" name="<xava:id name='xava_action_module'/>" value="<%=request.getParameter("module")%>"/>
 <INPUT type="hidden" name="<xava:id name='xava_changed_property'/>"/> 
