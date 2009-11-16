@@ -709,7 +709,7 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * Only for debug.
 	 */
-	protected void printHtml() throws Exception {		
+	protected void printHtml() throws Exception {
 		log.debug(getHtml());		
 	}
 	
@@ -1078,7 +1078,7 @@ public class ModuleTestBase extends TestCase {
 		return table.getRowCount() - increment;
 	}
 	
-	private boolean collectionHasFilterHeader(HtmlTable table) { 				
+	private boolean collectionHasFilterHeader(HtmlTable table) {
 		return table.getRowCount() > 1 && 
 			!table.getCellAt(1, 0).
 				getElementsByAttribute("input", "name", 
@@ -1184,17 +1184,65 @@ public class ModuleTestBase extends TestCase {
 	protected void checkRow(int row) throws Exception {
 		checkRow("selected", row);
 	}
+
+	protected void checkAll() throws Exception {
+		checkAll("");		
+	}
+	
+	private void checkAll(String id) throws Exception{
+		HtmlInput input = getCheckable(Is.empty(id) ? "selected_all" : id);
+		if (input.isChecked()){
+			log.warn(XavaResources.getString("xavajunit_already_selected"));	// tmp traducir
+		}
+		else{
+			input.click();
+			waitUntilPageIsLoaded();	
+		}
+	}
 	
 	protected void uncheckRow(int row) throws Exception {
 		uncheckRow("selected", row);
 	}
-		
+	
+	protected void uncheckAll() throws Exception {
+		uncheckAll("");
+	}
+	
+	private void uncheckAll(String id) throws Exception{
+		HtmlInput input = getCheckable(Is.empty(id) ? "selected_all" : id);
+		if (input.isChecked()){
+			input.click();
+			waitUntilPageIsLoaded();
+		}
+		else{
+			log.warn(XavaResources.getString("xavajunit_already_unselected"));	// tmp
+		}
+	}
+	
 	protected void checkRowCollection(String collection, int row) throws Exception {		
 		if (collectionHasFilterHeader(collection)) {
 			checkRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {		
 			checkRow(collection + ".__SELECTED__", row);
+		}
+	}
+	
+	protected void checkAllCollection(String collection) throws Exception {		
+		if (collectionHasFilterHeader(collection)) {
+			checkAll(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
+		}
+		else {		
+			checkAll(collection + ".__SELECTED__");
+		}
+	}
+	
+	protected void uncheckAllCollection(String collection) throws Exception {		
+		if (collectionHasFilterHeader(collection)) {
+			uncheckAll(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
+		}
+		else {		
+			uncheckAll(collection + ".__SELECTED__");
 		}
 	}
 	
@@ -1210,7 +1258,11 @@ public class ModuleTestBase extends TestCase {
 	private HtmlInput getCheckable(String id, int row) {
 		return (HtmlInput) getForm().getInputByValue(id + ":" + row); 
 	}
-		
+	
+	private HtmlInput getCheckable(String value) {
+		return (HtmlInput) getForm().getInputByValue(value); 
+	}
+	
 	private void checkRow(String id, int row) throws Exception {
 		HtmlInput input = getCheckable(id, row);
 		if (input.isChecked()){
@@ -1248,6 +1300,10 @@ public class ModuleTestBase extends TestCase {
 		assertRowChecked("selected", row);
 	}
 	
+	protected void assertAllChecked() { 
+		assertAllChecked("selected_all");
+	}
+	
 	protected void assertRowCollectionChecked(String collection, int row) throws Exception { 
 		if (collectionHasFilterHeader(collection)) {
 			assertRowChecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
@@ -1256,10 +1312,23 @@ public class ModuleTestBase extends TestCase {
 			assertRowChecked(decorateId(collection + "." + "__SELECTED__"), row);
 		}
 	}	
-	
+
+	protected void assertAllCollectionChecked(String collection) throws Exception { 
+		if (collectionHasFilterHeader(collection)) {
+			assertAllChecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
+		}
+		else {			
+			assertAllChecked(decorateId(collection + "." + "__SELECTED__"));
+		}
+	}	
 	private void assertRowChecked(String id, int row) { 
 		assertTrue(XavaResources.getString("selected_rows_not_match"), 
 				getCheckable(id, row).isChecked()); 		
+	}	
+	
+	private void assertAllChecked(String id) { 
+		assertTrue(XavaResources.getString("selected_all_not_match"),	// tmp 
+			getCheckable(id).isChecked()); 		
 	}	
 	
 	protected void assertRowsChecked(int f1, int f2) {
@@ -1276,6 +1345,10 @@ public class ModuleTestBase extends TestCase {
 		assertRowUnchecked("selected", row);
 	}
 
+	protected void assertAllUnchecked() { 
+		assertAllUnchecked("selected_all");
+	}	
+	
 	protected void assertRowCollectionUnchecked(String collection, int row) throws Exception { 
 		if (collectionHasFilterHeader(collection)) {
 			assertRowUnchecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
@@ -1285,9 +1358,23 @@ public class ModuleTestBase extends TestCase {
 		}
 	}	
 	
+	protected void assertAllCollectionUnchecked(String collection) throws Exception { 
+		if (collectionHasFilterHeader(collection)) {
+			assertAllUnchecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
+		}
+		else {			
+			assertAllUnchecked(decorateId(collection + "." + "__SELECTED__"));
+		}
+	}	
+	
 	private void assertRowUnchecked(String id, int row) { 
 		assertTrue(XavaResources.getString("selected_row_unexpected", new Integer(row)), 
 				!getCheckable(id, row).isChecked());
+	}
+	
+	private void assertAllUnchecked(String id) { 
+		assertTrue(XavaResources.getString("selected_all_unexpected"), 
+				!getCheckable(id).isChecked());
 	}
 	
 	protected void assertError(String message) throws Exception {

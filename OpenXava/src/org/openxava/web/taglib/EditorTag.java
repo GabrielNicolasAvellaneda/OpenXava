@@ -53,10 +53,17 @@ public class EditorTag extends TagSupport {
 			Messages errors = (Messages) request.getAttribute("errors"); 													
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
 			String xavaFocusProperty = Ids.decorate(application, module, "xava_focus_property");
+			
 			String scriptFoco = "onblur=\"" + xavaFocusProperty + ".value='" + propertyKey + "'\"";
+
 			String script = throwsChanged? 
-				"onchange='openxava.throwPropertyChanged(\"" + application +
-				"\", \"" + module + "\", \"" + propertyKey + "\")' ":"";
+				"onchange=\"openxava.throwPropertyChanged(" +
+				"'" + application + "'," +
+				"'" + module + "'," +
+				"'" + propertyKey + "'" +
+				")\""  
+			:
+			"";
 			script = script + scriptFoco;
 
 			boolean editable = explicitEditable?this.editable:view.isEditable(property);  

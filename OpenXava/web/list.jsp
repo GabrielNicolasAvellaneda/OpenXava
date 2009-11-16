@@ -9,6 +9,7 @@
 <%@ page import="org.openxava.web.Ids" %>
 <%@ page import="org.openxava.controller.meta.MetaAction"%>
 <%@ page import="org.openxava.controller.meta.MetaControllers"%>
+<%@page import="org.openxava.web.Jsp"%>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -47,6 +48,11 @@ if (!tab.isFilterVisible()) {
 }
 String lastRow = request.getParameter("lastRow");
 boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
+String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
+MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
+String cssSelectedRow = style.getSelectedRow();
+String selectedRowStyle = style.getSelectedRowStyle();
+String rowStyle = "border-bottom: 1px solid;";
 %>
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
@@ -67,9 +73,16 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 	<a id="<xava:id name='<%="filter_link_" + id%>'/>" href="javascript:openxava.manageFilterRow('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
 		src='<%=imageFilterPrefix%><%=imageFilter%>.gif' border='0'/></a>
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
+	<% if (tab.isCustomize()) { %><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><% } %>
 </th>
 <th class="<%=style.getListHeaderCell()%>" width="5">
-<% if (tab.isCustomize()) { %><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><% } %>
+	<%
+	String actionOnClickAll = Jsp.getActionOnClickAll(
+		request.getParameter("application"), request.getParameter("module"), 
+		onSelectCollectionElementAction, viewObject, prefix, cssSelectedRow,
+		selectedRowStyle, rowStyle);
+	%>
+	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=prefix%>selected_all" <%=actionOnClickAll%> />
 </th>
 <%
 tab.reset();
@@ -209,7 +222,7 @@ if (tab.isRowsHidden()) {
 <%
 }
 else {
-	
+
 IXTableModel model = tab.getTableModel(); 
 totalSize = tab.getTotalSize();
 if (totalSize > 0) {
@@ -223,39 +236,24 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
 	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);
-	String idRow = Ids.decorate(request, id + "_" + f);
-	String cssSelectedRow = style.getSelectedRow();
-	String selectedRowStyle = style.getSelectedRowStyle();
-	String rowStyle = "border-bottom: 1px solid;";
 	String cssClassToActionOnClick = cssClass;
 	if (tab.isSelected(f)){
 		cssClass = cssSelectedRow + " " + cssClass;
 		rowStyle = rowStyle + " " + selectedRowStyle;
 		events = f%2==0?style.getListPairEvents(cssStyle, cssSelectedRow):style.getListOddEvents(cssStyle, cssSelectedRow);
 	}
-	String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
-	MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
+	String prefixIdRow = Ids.decorate(request, prefix);
 %>
-<tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
+<tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
-<% } 
-	String actionOnClick = "onClick=\"openxava.onSelectElement(" +
-		"'" + request.getParameter("application") + "'," + 
-		"'" + request.getParameter("module") + "'," + 
-		"'" + onSelectCollectionElementAction + "'," + 
-		"'row=" + f + ",viewObject=" + viewObject + "'," +
-		"this.checked," + 
-		"'" + idRow + "'," + 
-		!Is.empty(view.getOnSelectCollectionElementAction()) + "," +
-		"'" + cssSelectedRow + "'," + 
-		"'" + cssClassToActionOnClick + "'," +
-		"'" + selectedRowStyle + "'," +
-		"'" + rowStyle + "'," +
-		"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 
-		(Is.empty(onSelectCollectionElementMetaAction)?false:onSelectCollectionElementMetaAction.isTakesLong()) + 
-		")\"";
+<% }
+	String actionOnClick = Jsp.getActionOnClick(
+		request.getParameter("application"), request.getParameter("module"), 
+		onSelectCollectionElementAction, f, viewObject, prefixIdRow + f,
+		cssSelectedRow, cssClassToActionOnClick, selectedRowStyle, rowStyle, 
+		onSelectCollectionElementMetaAction);
 %>
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">

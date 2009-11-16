@@ -195,14 +195,28 @@ public class ModuleManager {
 					parseMultipartRequest(request);
 				}				
 				String xavaAction = getParameter(request, "xava_action");
-				if (!Is.emptyString(xavaAction)) {											
-					String actionValue = request.getParameter("xava_action_argv");					
-					if ("undefined".equals(actionValue)) actionValue = null;						
-					MetaAction a = MetaControllers.getMetaAction(xavaAction);					
-					long ini = System.currentTimeMillis();
-					executeAction(a, errors, messages, actionValue, request);
-					long time = System.currentTimeMillis() - ini;
-					log.debug("Execute " + xavaAction + "=" + time + " ms");					
+				if (!Is.emptyString(xavaAction)) {
+					String actionValue = request.getParameter("xava_action_argv");
+					if ("undefined".equals(actionValue)) actionValue = null;
+					String range = request.getParameter("xava_action_range");
+					if ("undefined".equals(range)) range = null;
+					String alreadyProcessed = request.getParameter("xava_action_already_processed");
+					if ("undefined".equals(alreadyProcessed) || alreadyProcessed == null) alreadyProcessed = "";
+					
+					// range
+					int first = Is.empty(range) ? 0 : Integer.parseInt(range.substring(0, range.indexOf("_")));
+					int last = Is.empty(range) ? 0 : Integer.parseInt(range.substring(range.indexOf("_") + 1));
+					//
+					for (int i = first; i <= last; i++){
+						if (!alreadyProcessed.contains("_" + i + "_")){
+							String av = Is.empty(range) ? actionValue : actionValue + ",row=" + i;
+							MetaAction a = MetaControllers.getMetaAction(xavaAction);
+							long ini = System.currentTimeMillis();
+							executeAction(a, errors, messages, av, request);
+							long time = System.currentTimeMillis() - ini;
+							log.debug("Execute " + xavaAction + "=" + time + " ms");	
+						}
+					}					
 				}				
 			}			
 		}
