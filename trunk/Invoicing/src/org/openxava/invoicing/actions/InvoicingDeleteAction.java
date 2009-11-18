@@ -1,15 +1,10 @@
 package org.openxava.invoicing.actions;
 
-import static org.openxava.jpa.XPersistence.*;
-
 import java.util.*;
-
 import org.openxava.actions.*;
-import org.openxava.invoicing.model.*;
 import org.openxava.model.*;
-import org.openxava.validators.*;
 
-public class MarkAsDeletedAction extends ViewBaseAction {
+public class InvoicingDeleteAction extends ViewBaseAction {
 
 	public void execute() throws Exception {
 		if (getView().getKeyValuesWithValue().isEmpty()) {

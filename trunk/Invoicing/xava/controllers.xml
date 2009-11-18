@@ -4,12 +4,12 @@
 
 <controllers>
 
-	<controller name="Invoice">
+	<controller name="Invoicing">
 	
 		<extends controller="Typical"/>
 	
 		<action name="delete" mode="detail" confirm="true"
-			class="org.openxava.invoicing.actions.DeleteInvoiceAction"
+			class="org.openxava.invoicing.actions.InvoicingDeleteAction" 
 			image="images/delete.gif"
 			keystroke="Control D">
 			<use-object name="xava_view"/>						
