@@ -16,7 +16,8 @@ public class GenerateReportAction extends TabBaseAction implements IForwardActio
 		if (!("pdf".equals(getType()) || "csv".equals(getType()))) {
 			throw new XavaException("report_type_not_supported", getType(), "pdf, csv");
 		}
-		request.getSession().setAttribute("xava_reportTab", getTab());
+		request.getSession().setAttribute("xava_reportTab", getTab());		
+		request.getSession().setAttribute("xava_selectedRowsReportTab", getTab().getSelected()); 
 	}
 	
 	public boolean inNewWindow() {

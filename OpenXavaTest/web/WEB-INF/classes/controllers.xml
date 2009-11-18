@@ -488,7 +488,10 @@
 			
 					
 	<controller name="Warehouse">
-		<extends controller="Typical"/>		
+		<extends controller="Typical"/>
+		
+		<action name="showListTitle" hidden="true" on-init="true"
+			class="org.openxava.test.actions.ShowListTitleAction"/>		
 		
 		<action name="changeZone" mode="detail" class="org.openxava.test.actions.ChangeZoneAction"/>				
 		
@@ -502,6 +505,13 @@
 			<set property="rowCount" value="20"/>
 			<use-object name="xava_tab"/>
 		</action>
+		
+		<action name="changePageRowCount" mode="list"
+			class="org.openxava.test.actions.ChangePageRowCountAction">
+			<set property="rowCount" value="20"/>
+			<use-object name="xava_tab"/>
+		</action>
+		
 	</controller>
 	
 	<controller name="WarehouseSpecialNew">

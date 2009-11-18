@@ -2,27 +2,48 @@
 <%@page import="org.openxava.web.Ids"%>
 <%@page import="org.openxava.controller.meta.MetaControllers"%>
 <%@page import="org.openxava.util.Is"%>
+<%@page import="org.openxava.web.Actions"%>
+
+<%
+	String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
+String cssSelectedRow = style.getSelectedRow();
+String selectedRowStyle = style.getSelectedRowStyle();
+String rowStyle = "border-bottom: 1px solid;";
+MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
+%>
 
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
-	<% if (lineAction != null) { %>	
+	<%
+		if (lineAction != null) {
+	%>	
 	<th class=<%=style.getListHeaderCell()%>></th>
-	<% } %>	
-	<th class=<%=style.getListHeaderCell()%> width="5"></th>
+	<%
+		}
+	%>	
+	<th class=<%=style.getListHeaderCell()%> width="5">
+	<%
+		String actionOnClickAll = Actions.getActionOnClickAll(
+		request.getParameter("application"), request.getParameter("module"), 
+		onSelectCollectionElementAction, idCollection, propertyPrefix, 
+		cssSelectedRow, selectedRowStyle, rowStyle);
+	%>
+	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=propertyPrefix%>selected_all" <%=actionOnClickAll%> />
+	</th>
 <%
-// Heading
+	// Heading
 Iterator it = subview.getMetaPropertiesList().iterator();
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 %>
 	<th class=<%=style.getListHeaderCell()%>><%=p.getLabel(request)%>&nbsp;</th>
 <%
-}
+	}
 %>
 </tr>
 
 <%
-// Values
+	// Values
 Collection aggregates = subview.getCollectionValues();
 if (aggregates == null) aggregates = java.util.Collections.EMPTY_LIST;
 Iterator itAggregates = aggregates.iterator();
@@ -37,35 +58,23 @@ while (itAggregates.hasNext()) {
 		cssClass = cssClass + " " + selectedClass;		
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; 
 	}		
+	String idRow = Ids.decorate(request, propertyPrefix) + f;
 	String events=f%2==0?style.getListPairEvents(selectedClass):style.getListOddEvents(selectedClass);
-	String idRow = Ids.decorate(request, idCollection + "_" + f);
-	String cssSelectedRow = style.getSelectedRow();
-	String selectedRowStyle = style.getSelectedRowStyle();
-	String rowStyle = "border-bottom: 1px solid;";
-	String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
-	MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
-<% if (lineAction != null) { %>
+<%
+	if (lineAction != null) {
+%>
 <td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
-<% } 
-	String actionOnClick = "onClick=\"openxava.onSelectElement(" +
-	"'" + request.getParameter("application") + "'," + 
-	"'" + request.getParameter("module") + "'," + 
-	"'" + onSelectCollectionElementAction + "'," + 
-	"'row=" + f + ",viewObject=" + viewObject + "'," +
-	"this.checked," + 
-	"'" + idRow + "'," +  
-	!Is.empty(subview.getOnSelectCollectionElementAction()) + "," +
-	"'" + cssSelectedRow + "'," + 
-	"'" + cssClass + "'," +
-	"'" + selectedRowStyle + "'," +
-	"'" + rowStyle + "'," +
-	"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 
-	(Is.empty(onSelectCollectionElementMetaAction)?false:onSelectCollectionElementMetaAction.isTakesLong()) + 
-	")\"";
+<%
+	} 
+	String actionOnClick = Actions.getActionOnClick(
+		request.getParameter("application"), request.getParameter("module"), 
+		onSelectCollectionElementAction, f, idCollection, idRow,
+		cssSelectedRow, cssClass, selectedRowStyle, rowStyle, 
+		onSelectCollectionElementMetaAction);
 %>
 <td class="<%=cssCellClass%>" width="5" style="<%=style.getListCellStyle()%>">
 <input type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="<%=propertyPrefix%>__SELECTED__:<%=f%>" <%=actionOnClick%>/>

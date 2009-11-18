@@ -44,7 +44,8 @@ public class WarehouseTest extends ModuleTestBase {
 		assertListRowCount(3);
 	}
 	
-	public void testChangePageRowCountInTab() throws Exception {
+	public void testChangePageRowCountInTab_listTitle() throws Exception {
+		assertListTitle("Warehouse report"); 
 		assertListRowCount(10);
 		execute("Warehouse.changePageRowCount");
 		assertListRowCount(20);
@@ -315,7 +316,7 @@ public class WarehouseTest extends ModuleTestBase {
 		assertValue("name", name);
 	}
 	
-	public void testListNavigation_ChooseVarious_NavigateInChoosed() throws Exception { 
+	public void testListNavigation_ChooseVarious_NavigateInChoosed() throws Exception {		 
 		// In list mode on start
 		assertAction("Warehouse.toLowerCase");
 		assertNoAction("Warehouse.changeZone");

@@ -33,13 +33,14 @@ openxava.refreshPage = function(result) {
 		return;
 	}		
 	if (result.forwardURL != null) {
-		if (result.forwardInNewWindow) { 		
+		if (result.forwardInNewWindow) { 
 			window.open(result.forwardURL);
 			var form = openxava.getForm(result.application, result.module);
 			if (form != null) { 
 				form[openxava.decorateId(result.application, result.module, "xava_action")].value="";	
 				form[openxava.decorateId(result.application, result.module, "xava_action_argv")].value="";
 				form[openxava.decorateId(result.application, result.module, "xava_changed_property")].value="";
+				form[openxava.decorateId(result.application, result.module, "xava_action_range")].value="";
 			}
 			window.location.reload();	
 			return; 			
@@ -48,7 +49,7 @@ openxava.refreshPage = function(result) {
 			location.href=result.forwardURL;			
 		}
 	}
-	else if (result.nextModule != null) {		
+	else if (result.nextModule != null) {	
 		openxava.updateRootIds(result.application, result.module, result.nextModule);
 		document.getElementById("xava_last_module_change").value=result.module + "::" + result.nextModule;
 		openxava.resetRequesting(result); 
@@ -56,7 +57,7 @@ openxava.refreshPage = function(result) {
 		return;
 	}	
 	else {		
-		if (result.showDialog){			
+		if (result.showDialog){	
 			openxava.disableElements(result);
 		}
 		else if (result.hideDialog) {
@@ -89,7 +90,7 @@ openxava.refreshPage = function(result) {
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
 		}
-		if (result.showDialog){			
+		if (result.showDialog){	
 			dialog.attr("application", result.application); 
 			dialog.attr("module", result.module); 
 			dialog.dialog('option', 'title', result.dialogTitle);
@@ -99,12 +100,13 @@ openxava.refreshPage = function(result) {
 		}
 			
 	}		
-	document.getElementById('xava_processing_layer').style.display='none'; 
+	document.getElementById('xava_processing_layer').style.display='none';
 	var form = openxava.getForm(result.application, result.module);	
 	if (form != null) {  
 		form[openxava.decorateId(result.application, result.module, "xava_action")].value=""; 
 		form[openxava.decorateId(result.application, result.module, "xava_action_argv")].value="";
 		form[openxava.decorateId(result.application, result.module, "xava_changed_property")].value="";
+		form[openxava.decorateId(result.application, result.module, "xava_action_range")].value="";
 	}	
 	openxava.getElementById(result.application, result.module, "loaded_parts").value=changed;
 	openxava.getElementById(result.application, result.module, "loading").value=false;
@@ -112,6 +114,8 @@ openxava.refreshPage = function(result) {
 	openxava.lastModule=result.module;
 	openxava.resetRequesting(result); 
 	document.body.style.cursor='auto';
+	
+	openxava.hasOnSelectAll(result.application, result.module);
 }
 
 openxava.disableElements = function(result) {	
@@ -335,10 +339,14 @@ openxava.manageFilterRow = function(application, module, id, tabObject) {
 }
 
 openxava.executeAction = function(application, module, confirmMessage, takesLong, action) { 
-	openxava.executeAction(application, module, confirmMessage, takesLong, action, null);
+	openxava.executeAction(application, module, confirmMessage, takesLong, action, null, null);
 }
 
-openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv) {	
+openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv) { 
+	openxava.executeAction(application, module, confirmMessage, takesLong, action, argv, null, null);
+}
+
+openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv, range, alreadyProcessed) {
 	if (confirmMessage != "" && !confirm(confirmMessage)) return;
 	if (takesLong) { 
 		document.getElementById('xava_processing_layer').style.display='block';
@@ -348,6 +356,8 @@ openxava.executeAction = function(application, module, confirmMessage, takesLong
 	form[openxava.decorateId(application, module, "xava_focus_forward")].value = "false";
 	form[openxava.decorateId(application, module, "xava_action")].value=action;	
 	form[openxava.decorateId(application, module, "xava_action_argv")].value=argv;	
+	form[openxava.decorateId(application, module, "xava_action_range")].value=range;
+	form[openxava.decorateId(application, module, "xava_action_already_processed")].value=alreadyProcessed + "_";
 	if (openxava.isSubmitNeeded(form)) { 
 		form.submit();
 	} 
@@ -489,7 +499,6 @@ openxava.clearConditionComparators = function(application, module, prefix) {
 	}
 }
 
-
 openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, confirmMessage, takesLong) {
 	var row = $("#" + idRow)[0];
 	if (checkValue) {
@@ -512,6 +521,8 @@ openxava.onSelectElement = function(application, module, action, argv, checkValu
 		argv = argv + ",selected=" + checkValue;
 		openxava.executeAction(application, module, confirmMessage, takesLong, action, argv);	
 	}
+	
+	openxava.hasOnSelectAll(application, module);
 }
 
 openxava.clearLog = function(message) { 
@@ -520,4 +531,50 @@ openxava.clearLog = function(message) {
 
 openxava.log = function(message) { 	
 	$('#xava_console').append(message).append("<br/>");
+}
+
+openxava.onSelectAll = function(application, module, action, argv, checkValue, hasOnSelectAction, prefix, cssSelectedRow, selectedRowStyle, rowStyle){
+	var selected = document.getElementsByName(openxava.decorateId(application, module, "xava_selected"));
+	var first = -1;
+	var last = 0;
+	var alreadyProcessed = "";
+
+	for (var i=0; i<selected.length; i++) {
+		if (selected[i].value.search(prefix) != -1){
+			var row = selected[i].value.replace(prefix + "selected:", "");
+			if (selected[i].value.search("__SELECTED__") != -1) row = selected[i].value.replace(prefix + "__SELECTED__:", "");	// calculatedCollections
+			if (first < 0) first = row;
+			if (selected[i].checked==checkValue) alreadyProcessed = alreadyProcessed + "_" + i;
+			else{
+				if (!hasOnSelectAction) {
+					var idRow = openxava.decorateId(application, module, prefix) + row;
+					var cssRow = ($("#" + idRow)[0]).className;
+					if (!checkValue) cssRow = cssRow.replace(cssSelectedRow, "");
+					openxava.onSelectElement(application, module, action, argv, checkValue, idRow, null, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, null, null);
+				}	
+				last = row;
+			}
+			selected[i].checked=checkValue?1:0;
+		}
+	}
+	
+	if (hasOnSelectAction){ 
+		argv = argv + ",selected=" + checkValue;
+		var range = first + "_" + last;
+		openxava.executeAction(application, module, "", "", action, argv, range, alreadyProcessed);
+	}
+	else openxava.hasOnSelectAll(application, module);
+}
+
+openxava.hasOnSelectAll = function(application, module){
+	var selectedAll = document.getElementsByName(openxava.decorateId(application, module, "xava_selected_all"));
+	for (var i=0; i<selectedAll.length; i++){
+		var selected = document.getElementsByName(openxava.decorateId(application, module, "xava_selected"));
+		var all = selected.length > 0;
+		for (var j=0; j<selected.length && all; j++){
+			var value = selectedAll[i].value.replace("selected_all", "");
+			if (selected[j].value.search(value) != -1) all = selected[j].checked;
+		}
+		selectedAll[i].checked=all;
+	}
 }

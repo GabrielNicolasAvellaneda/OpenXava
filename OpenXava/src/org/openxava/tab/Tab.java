@@ -573,7 +573,7 @@ public class Tab implements java.io.Serializable {
 		this.selected = values;
 	}
 	
-	public void deselectVisualizedRows() { 
+	public void deselectVisualizedRows() {
 		List r = new ArrayList(); 				
 		if (selected != null) {	
 			for (int i=0; i<selected.length; i++) {
@@ -596,7 +596,7 @@ public class Tab implements java.io.Serializable {
 	 * 
 	 * Postcondition <tt>this.selected == values</tt> <b>is not fulfilled</b> 	 
 	 */
-	public void setSelected(int [] values) { 				
+	public void setSelected(int [] values) {
 		List r = new ArrayList();
 		if (selected != null) {	
 			for (int i=0; i<selected.length; i++) {
@@ -619,7 +619,7 @@ public class Tab implements java.io.Serializable {
 	/**
 	 * Same that {@link #setSelectec(int [] values)} but from String []. <p>
 	 */
-	public void setSelected(String [] values) { 
+	public void setSelected(String [] values) {
 		if (values == null) {
 			selected = null;
 			return;
@@ -776,7 +776,7 @@ public class Tab implements java.io.Serializable {
 		loadUserPreferences();
 	}
 
-	private void reinitState() {		
+	private void reinitState() {
 		descendingOrder = false;
 		orderBy = null;	
 		condition = null;		
@@ -788,7 +788,7 @@ public class Tab implements java.io.Serializable {
 		tableModel  = null;	
 		selected  = null;
 		metaTab = null;
-		metaTabCloned = false;
+		metaTabCloned = false; 
 	}
 	
 	public String getTabName() {
@@ -874,7 +874,7 @@ public class Tab implements java.io.Serializable {
 		if (getCollectionView() != null) return getCollectionTitle(); 
 		String modelName = getModelName();
 		String tabName = getTabName();
-		Locale locale = XavaResources.getLocale(request);		
+		Locale locale = XavaResources.getLocale(request);
 		String title = titleId==null?getTitleI18n(locale, modelName, tabName):Labels.get(titleId, locale);
 		if (title != null) return putTitleArguments(locale, title);		
 		String modelLabel = MetaModel.get(modelName).getLabel(locale); 
@@ -1312,9 +1312,8 @@ public class Tab implements java.io.Serializable {
 		this.addColumnsPageRowCount = addColumnsPageRowCount;
 	}
 
-	public void clearSelected() { 
+	public void clearSelected() {
 		selected = null;
 	}
 	
-
 }

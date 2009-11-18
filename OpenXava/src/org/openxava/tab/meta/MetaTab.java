@@ -62,7 +62,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		else {
 			id = modelName + ".tabs." + tabName + ".title";
 		}
-		if (Labels.exists(id)) {
+		if (Labels.existsExact(id, locale)) { 
 			return Labels.get(id, locale);
 		}		
 		else {
