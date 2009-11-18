@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- When generating a PDF report or CSV export from list, if there are checked rows, only them are shown in the report.
 - New checkbox in list to select and deselect all rows at once.
 - A dialog is used for searching, creating or modifying a reference.
 - Upgrade to HtmlUnit 2.5.
