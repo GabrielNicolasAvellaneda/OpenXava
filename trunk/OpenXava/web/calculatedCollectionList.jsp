@@ -2,10 +2,10 @@
 <%@page import="org.openxava.web.Ids"%>
 <%@page import="org.openxava.controller.meta.MetaControllers"%>
 <%@page import="org.openxava.util.Is"%>
-<%@page import="org.openxava.web.Jsp"%>
+<%@page import="org.openxava.web.Actions"%>
 
 <%
-String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
+	String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
 String cssSelectedRow = style.getSelectedRow();
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
@@ -14,12 +14,16 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
-	<% if (lineAction != null) { %>	
+	<%
+		if (lineAction != null) {
+	%>	
 	<th class=<%=style.getListHeaderCell()%>></th>
-	<% } %>	
+	<%
+		}
+	%>	
 	<th class=<%=style.getListHeaderCell()%> width="5">
 	<%
-	String actionOnClickAll = Jsp.getActionOnClickAll(
+		String actionOnClickAll = Actions.getActionOnClickAll(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, idCollection, propertyPrefix, 
 		cssSelectedRow, selectedRowStyle, rowStyle);
@@ -27,19 +31,19 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=propertyPrefix%>selected_all" <%=actionOnClickAll%> />
 	</th>
 <%
-// Heading
+	// Heading
 Iterator it = subview.getMetaPropertiesList().iterator();
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 %>
 	<th class=<%=style.getListHeaderCell()%>><%=p.getLabel(request)%>&nbsp;</th>
 <%
-}
+	}
 %>
 </tr>
 
 <%
-// Values
+	// Values
 Collection aggregates = subview.getCollectionValues();
 if (aggregates == null) aggregates = java.util.Collections.EMPTY_LIST;
 Iterator itAggregates = aggregates.iterator();
@@ -58,12 +62,15 @@ while (itAggregates.hasNext()) {
 	String events=f%2==0?style.getListPairEvents(selectedClass):style.getListOddEvents(selectedClass);
 %>
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
-<% if (lineAction != null) { %>
+<%
+	if (lineAction != null) {
+%>
 <td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
-<% } 
-	String actionOnClick = Jsp.getActionOnClick(
+<%
+	} 
+	String actionOnClick = Actions.getActionOnClick(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, f, idCollection, idRow,
 		cssSelectedRow, cssClass, selectedRowStyle, rowStyle, 

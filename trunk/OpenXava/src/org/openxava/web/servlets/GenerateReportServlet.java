@@ -17,6 +17,7 @@ import org.apache.commons.logging.*;
 import org.directwebremoting.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
+import org.openxava.tab.impl.*;
 import org.openxava.util.*;
 
 /**
@@ -138,18 +139,21 @@ public class GenerateReportServlet extends HttpServlet {
 			}						
 			request.getParameter("application"); // for a bug in websphere 5.1 
 			request.getParameter("module"); // for a bug in websphere 5.1
-			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");											
+			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
+			request.getSession().removeAttribute("xava_reportTab"); 
+			int [] selectedRows = (int []) request.getSession().getAttribute("xava_selectedRowsReportTab"); 
+			request.getSession().removeAttribute("xava_selectedRowsReportTab"); 
 			String uri = request.getRequestURI();				
 			if (uri.endsWith(".pdf")) {
 				InputStream is;
 				JRDataSource ds;
 				Map parameters = new HashMap();
-				synchronized (tab) {					
-					tab.setRequest(request); 															
+				synchronized (tab) {
+					tab.setRequest(request);
 					parameters.put("Title", tab.getTitle());									
-					parameters.put("Organization", getOrganization(request, tab));										
+					parameters.put("Organization", getOrganization(request, tab));
 					is  = getReport(request, response, tab);
-					ds = getDataSource(tab, request);
+					ds = getDataSource(tab, selectedRows, request);
 				}
 				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);					
 				response.setContentType("application/pdf");				
@@ -160,7 +164,7 @@ public class GenerateReportServlet extends HttpServlet {
 				response.setContentType("text/x-csv");
 				synchronized (tab) {
 					tab.setRequest(request);
-					response.getWriter().print(TableModels.toCSV(getTableModel(tab, request, true)));
+					response.getWriter().print(TableModels.toCSV(getTableModel(tab, selectedRows, request, true)));
 				}
 			}
 			else {
@@ -198,12 +202,19 @@ public class GenerateReportServlet extends HttpServlet {
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
 	
-	private JRDataSource getDataSource(Tab tab, ServletRequest request) throws Exception {
-		return new JRTableModelDataSource(getTableModel(tab, request, false));		
+	private JRDataSource getDataSource(Tab tab, int [] selectedRows, ServletRequest request) throws Exception {
+		return new JRTableModelDataSource(getTableModel(tab, selectedRows, request, false));		
 	}		  	
 	
-	private TableModel getTableModel(Tab tab, ServletRequest request, boolean labelAsHeader) throws Exception {
-		return new TableModelDecorator(tab.getAllDataTableModel(), tab.getMetaProperties(), Locales.getCurrent(), labelAsHeader);
+	private TableModel getTableModel(Tab tab, int [] selectedRows, ServletRequest request, boolean labelAsHeader) throws Exception {
+		TableModel data = null;
+		if (selectedRows != null && selectedRows.length > 0) {
+			data = new SelectedRowsXTableModel(tab.getTableModel(), selectedRows);
+		}
+		else {
+			data = tab.getAllDataTableModel();
+		}
+		return new TableModelDecorator(data, tab.getMetaProperties(), Locales.getCurrent(), labelAsHeader);
 	}
 	
 }

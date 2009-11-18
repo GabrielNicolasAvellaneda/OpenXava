@@ -6,13 +6,13 @@ import org.openxava.controller.meta.MetaAction;
 import org.openxava.util.Is;
 
 /**
- * Utilidades para los .jsp
+ * Utility class to help in action code generato for JSPs.
  * 
  * Create on 30/10/2009 (16:32:16)
- * @autor Ana Andrés
+ * @author Ana Andrés
  */
-public class Jsp {
-	private static Log log = LogFactory.getLog(Jsp.class);
+public class Actions {
+	private static Log log = LogFactory.getLog(Actions.class);
 	
 	public static String getActionOnClick(String application, String module, 
 			String onSelectCollectionElementAction, int row, String viewObject, String idRow,

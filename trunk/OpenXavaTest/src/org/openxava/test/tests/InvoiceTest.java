@@ -503,10 +503,19 @@ public class InvoiceTest extends ModuleTestBase {
 		String header = excel.nextToken();
 		assertEquals("header", "Year;Number;Date;Amounts sum;V.A.T.;Details count;Paid;Importance", header);		
 		String line1 = excel.nextToken();
-		assertEquals("line1", expectedLine, line1);
+		assertEquals("line1", expectedLine, line1);		
 	}
 	
-
+	public void testGenerateExcelForOnlyCheckedRows() throws Exception { 
+		checkRow(0);
+		checkRow(2); // We assume that there are at least 3 invoices		
+		execute("Print.generateExcel");
+		assertContentTypeForPopup("text/x-csv");		
+		StringTokenizer excel = new StringTokenizer(getPopupText(), "\n\r");
+		assertEquals("Must be exactly 3 (1 header + 2 detail) lines in the exported file", 
+			3, excel.countTokens());	
+	}
+	
 	public void testFilterByDate() throws Exception {
 		String date = getValueInList(0, "date");		
 		String [] conditionValues = { " ", " ", date, "true" };

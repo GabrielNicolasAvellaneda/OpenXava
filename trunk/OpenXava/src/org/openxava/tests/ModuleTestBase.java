@@ -1192,7 +1192,7 @@ public class ModuleTestBase extends TestCase {
 	private void checkAll(String id) throws Exception{
 		HtmlInput input = getCheckable(Is.empty(id) ? "selected_all" : id);
 		if (input.isChecked()){
-			log.warn(XavaResources.getString("xavajunit_already_selected"));	// tmp traducir
+			log.warn(XavaResources.getString("selected_all_already_selected"));
 		}
 		else{
 			input.click();
@@ -1215,7 +1215,7 @@ public class ModuleTestBase extends TestCase {
 			waitUntilPageIsLoaded();
 		}
 		else{
-			log.warn(XavaResources.getString("xavajunit_already_unselected"));	// tmp
+			log.warn(XavaResources.getString("selected_all_already_unselected"));
 		}
 	}
 	
@@ -1266,7 +1266,7 @@ public class ModuleTestBase extends TestCase {
 	private void checkRow(String id, int row) throws Exception {
 		HtmlInput input = getCheckable(id, row);
 		if (input.isChecked()){
-			log.warn(XavaResources.getString("xavajunit_row_already_selected"));
+			log.warn(XavaResources.getString("row_already_selected"));
 		}
 		else{
 			input.click();
@@ -1292,7 +1292,7 @@ public class ModuleTestBase extends TestCase {
 			waitUntilPageIsLoaded();
 		}
 		else{
-			log.warn(XavaResources.getString("xavajunit_row_already_unselected"));
+			log.warn(XavaResources.getString("row_already_unselected"));
 		}
 	}
 			
@@ -1327,7 +1327,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	private void assertAllChecked(String id) { 
-		assertTrue(XavaResources.getString("selected_all_not_match"),	// tmp 
+		assertTrue(XavaResources.getString("selected_all_not_checked"),	 
 			getCheckable(id).isChecked()); 		
 	}	
 	
