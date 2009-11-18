@@ -26,17 +26,17 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertNoErrors();
 		assertMessage("comboDeliveries=" + toKeyString(delivery));
 		assertValue("comboDeliveries", toKeyString(delivery));
-	}
+	}	
 			
 	public void testSaveActionNotResetRefreshData() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "66");
-		setValue("description", "JUNIT");
+		setValue("description", "JUNIT &%=+"); // &%=+ is to test URL special characters
 		execute("DeliveryType.saveNotReset");
 		assertNoErrors();
 		
 		assertValue("number", "66");		
-		assertValue("description", "JUNIT CREATED"); // 'CREATED' is added in postcreate
+		assertValue("description", "JUNIT &%=+ CREATED"); // 'CREATED' is added in postcreate
 		assertNoEditable("number");
 		assertEditable("description");
 		

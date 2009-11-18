@@ -2,6 +2,7 @@ package org.openxava.web.dwr;
 
 import java.awt.event.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 import javax.servlet.http.*;
@@ -401,7 +402,7 @@ public class Module extends DWRBase {
 		}		
 	}
 	
-	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) {
+	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws UnsupportedEncodingException {
 		StringBuffer result = new StringBuffer(getURIPrefix());
 		result.append(jspFile);
 		if (jspFile.endsWith(".jsp")) result.append('?');
@@ -428,7 +429,7 @@ public class Module extends DWRBase {
 		// return Ids.decorate(application, module, name).replaceAll("\\.", "\\\\.");
 	}
 	
-	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) {
+	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) throws UnsupportedEncodingException {
 		if (values == null) return;
 		if (multipleValues != null) {
 			SortedMap sortedMultipleValues = new TreeMap(multipleValues);  			
@@ -487,14 +488,12 @@ public class Module extends DWRBase {
 		return filteredKey; 
 	}
 
-	private Object filterValue(Object value) {
+	private Object filterValue(Object value) throws UnsupportedEncodingException {
 		if (value == null) return null;
-		String s = value.toString()
-			.replaceAll("%", "%25")
-			.replaceAll("&", "%26")
-			.replaceAll("=", "%3d");
-		if (s.startsWith("[reference:")) return "true";
-		return s;
+		if (value.toString().startsWith("[reference:")) {
+			return "true";
+		} 
+		return URLEncoder.encode(value.toString(), "UTF-8");
 	}
 	
 	private static boolean isPortlet() {
