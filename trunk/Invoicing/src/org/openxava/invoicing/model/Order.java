@@ -22,7 +22,7 @@ public class Order extends CommercialDocument {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
 	@SearchAction("Order.searchInvoice") // tmp
-	private Invoice invoice;
+	private CommercialDocument invoice;
 	
 	private boolean delivered;
 
@@ -34,11 +34,11 @@ public class Order extends CommercialDocument {
 		this.delivered = delivered;
 	}
 
-	public Invoice getInvoice() {
+	public CommercialDocument getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(Invoice invoice) {
+	public void setInvoice(CommercialDocument invoice) {
 		this.invoice = invoice;
 	}
 	
