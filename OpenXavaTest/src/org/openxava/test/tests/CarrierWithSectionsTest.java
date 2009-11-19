@@ -12,7 +12,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 	public CarrierWithSectionsTest(String testName) {
 		super(testName, "CarrierWithSections");
 	}
-	
+		
 	public void testCarrierSelected() throws Exception{
 		assertListNotEmpty();
 		execute("List.viewDetail", "row=0");

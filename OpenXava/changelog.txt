@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: View navigation malfunction after choosing a reference when searching with a list.
+- Fix: Calculated collections inside a transient (not entity) class does not work.
 - Fix: Character + in string fields was erased.
 - When generating a PDF report or CSV export from list, if there are checked rows, only them are shown in the report.
 - New checkbox in list to select and deselect all rows at once.

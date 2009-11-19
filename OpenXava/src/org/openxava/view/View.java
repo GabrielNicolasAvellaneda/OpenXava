@@ -1205,31 +1205,41 @@ public class View implements java.io.Serializable {
 	 * The values only include the displayed data in the row.<br>
 	 * @return  Of type <tt>Map</tt>. Never null.
 	 */	
-	public List getCollectionValues() throws XavaException {		
-		assertRepresentsCollection("getCollectionValues()");				
-		if (isCollectionCalculated() || !isDefaultListActionsForCollectionsIncluded()) { 		
+	public List getCollectionValues() throws XavaException {
+		assertRepresentsCollection("getCollectionValues()");
+		if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded()) {
 			// If calculated we obtain the data directly from the model object
-			Map membersNames = new HashMap();
-			membersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));		
-			try {		
-				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);				
-				return (List) values.get(getMemberName());				
+			Map mapMembersNames = new HashMap();
+			mapMembersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));
+			try	{
+				Map mapReturnValues = null;
+				Map mapKeys = getParent().getKeyValues();
+				if ((null != mapKeys) && (!mapKeys.isEmpty())) {
+					mapReturnValues = MapFacade.getValues(getParent().getModelName(), mapKeys, mapMembersNames);	
+				}
+				else {
+					// get transient view object model so that it might be used instead of keyValues, what is more fill
+					// it with data so that accessory methods might be used on current view members values
+					Object oParentObject =getParent().getMetaModel().getPOJOClass().newInstance();
+					getParent().getMetaModel().fillPOJO(oParentObject, getParent().getValues());
+					mapReturnValues = MapFacade.getValues(getParent().getModelName(), oParentObject, mapMembersNames);
+				}
+				return (List) mapReturnValues.get(getMemberName());
 			}
 			catch (ObjectNotFoundException ex) { // New one is creating
-				return Collections.EMPTY_LIST; 								
+				return Collections.EMPTY_LIST;
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
-				getErrors().add("collection_error", getMemberName()); 
-				throw new XavaException("collection_error", getMemberName()); 								
-			}			
+				getErrors().add("collection_error", getMemberName());
+				throw new XavaException("collection_error",	getMemberName());
+			}
 		}
-		else { 
+		else {
 			// If not calculated we obtain the data from the Tab
 			return getCollectionValues(getCollectionTab().getAllKeys());
 		}
-		
-	}
+	}	
 		
 	/**
 	 * A list of selected collection element when each element is a map 
