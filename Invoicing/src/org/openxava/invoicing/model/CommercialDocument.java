@@ -25,6 +25,18 @@ import org.openxava.jpa.*;
 )
 abstract public class CommercialDocument extends Identifiable {
 	
+	@Hidden
+	private boolean deleted;
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	
 	@Transient
 	private boolean removing = false; 
 		
@@ -64,7 +76,11 @@ abstract public class CommercialDocument extends Identifiable {
 	
 	@Stereotype("MONEY")	
 	@Formula("AMOUNT * 0.10") 		
-	private BigDecimal estimatedProfit;		
+	private BigDecimal estimatedProfit;
+
+	// tmp here deleted
+	
+		
 	public BigDecimal getEstimatedProfit() {
 		return estimatedProfit;
 	}
@@ -188,5 +204,6 @@ abstract public class CommercialDocument extends Identifiable {
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
+
 	
 }
