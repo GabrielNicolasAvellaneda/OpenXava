@@ -17,7 +17,7 @@
 	coleccion (true|false) "false" 
 >
 
-<!ELEMENT agregado   (bean? implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
+<!ELEMENT agregado   (bean?, implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
 <!ATTLIST agregado
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED

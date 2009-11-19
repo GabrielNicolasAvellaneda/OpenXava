@@ -424,7 +424,7 @@ public class ModuleTestBase extends TestCase {
 	
 	private BrowserVersion getBrowserVersion() {
 		if (browserVersion == null) {
-			String browser = getProperty("browser", "firefox3"); 
+			String browser = getProperty("browser", "firefox2"); // FF2 because FF3 in HtmlUnit 2.5 has a bug with setFocus()
 			if ("firefox3".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_3;
 			else if ("firefox2".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_2;
 			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7;

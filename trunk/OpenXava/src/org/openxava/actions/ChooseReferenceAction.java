@@ -59,7 +59,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	}
 
 	public String getCustomView() {		
-		return chosen?DEFAULT_VIEW:SAME_VIEW;
+		return chosen?PREVIOUS_VIEW:SAME_VIEW; 
 	}
 
 	public int getRow() {

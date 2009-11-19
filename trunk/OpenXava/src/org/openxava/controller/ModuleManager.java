@@ -21,6 +21,8 @@ import org.openxava.validators.*;
 import org.openxava.view.*;
 import org.openxava.web.*;
 
+import com.lowagie.text.pdf.interfaces.*;
+
 /**
  * @author Javier Paniza
  */
@@ -630,21 +632,21 @@ public class ModuleManager {
 	
 	private void restorePreviousCustomView() throws XavaException { 
 		Stack previousCustomViews = (Stack) getObjectFromContext("xava_previousCustomViews");	
-		if (previousCustomViews.isEmpty()) {
+		if (previousCustomViews.isEmpty()) {			
 			setViewName(ICustomViewAction.DEFAULT_VIEW);
 			return;						
 		}		
-		String view = (String) previousCustomViews.pop();
+		String view = (String) previousCustomViews.pop();		
 		setViewName(view);		
 	}
 		
 	private void memorizeControllers() throws XavaException {
-		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
+		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");		
 		previousControllers.push(this.controllersNames);
 	}
 	
 	private void memorizeCustomView() throws XavaException { 
-		Stack previousCustomViews = (Stack) getObjectFromContext("xava_previousCustomViews");
+		Stack previousCustomViews = (Stack) getObjectFromContext("xava_previousCustomViews");	
 		previousCustomViews.push(this.viewName);		
 	}	
 
