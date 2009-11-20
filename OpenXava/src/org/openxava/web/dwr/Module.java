@@ -67,9 +67,14 @@ public class Module extends DWRBase {
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 			if (!Is.emptyString(forwardURI)) {
 				memorizeLastMessages();
-				result.setForwardURL(request.getScheme() + "://" + 
-					request.getServerName() + ":" + request.getServerPort() + 
-					request.getContextPath() + forwardURI);
+				if (forwardURI.startsWith("http://") || forwardURI.startsWith("https://")) {
+					result.setForwardURL(forwardURI);
+				}
+				else {
+					result.setForwardURL(request.getScheme() + "://" + 
+						request.getServerName() + ":" + request.getServerPort() + 
+						request.getContextPath() + forwardURI);
+				}
 				result.setForwardInNewWindow("true".equals(request.getSession().getAttribute("xava_forward_inNewWindow")));
 				request.getSession().removeAttribute("xava_forward");
 				request.getSession().removeAttribute("xava_forward_inNewWindow");				
@@ -493,7 +498,7 @@ public class Module extends DWRBase {
 		if (value.toString().startsWith("[reference:")) {
 			return "true";
 		} 
-		return URLEncoder.encode(value.toString(), "UTF-8");
+		return URLEncoder.encode(value.toString(), XSystem.getEncoding()); 
 	}
 	
 	private static boolean isPortlet() {

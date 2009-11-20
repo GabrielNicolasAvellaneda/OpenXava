@@ -82,9 +82,9 @@
         <for-stereotype stereotype="EMAIL"/>
     </editor>
     
-    <editor name="WebURL" url="textEditor.jsp">
+    <editor name="WebURL" url="webURLEditor.jsp">
         <for-stereotype stereotype="WEBURL"/>
-    </editor>
+    </editor>    
     
 	<editor name="Image" url="imageEditor.jsp" format="false">
 		<formatter class="org.openxava.formatters.ImageFormatter" />
