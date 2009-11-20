@@ -345,5 +345,10 @@ here that you want to override.
 			class="org.openxava.actions.SetDefaultSchemaAction">
 			<use-object name="xava_defaultSchema"/>			
 		</action>
+	</controller>
+	
+	<controller name="WebURL">
+		<action name="go" hidden="true"
+			class="org.openxava.actions.GoToURLAction"/>
 	</controller>								 
 </controllers>

@@ -48,6 +48,16 @@ public class CustomerWithSectionTest extends CustomerTest {
 		super(testName, "CustomerWithSection", true);		
 	}
 	
+	public void testForwardToAbsoluteURL() throws Exception { 
+		execute("CRUD.new");
+		assertValue("website", "");
+		execute("WebURL.go", "property=website,viewObject=xava_view_section0");
+		assertError("Empty URL, so you cannot go to it");
+		setValue("website", "http://www.openxava.org/");
+		execute("WebURL.go", "property=website,viewObject=xava_view_section0");
+		assertTrue(getHtml().indexOf("OpenXava is a productive way") >= 0);
+	}
+	
 	// To fix a concrete bug
 	public void testNavigateToSearchReferenceAndCreateReference() throws Exception { 
 		execute("CRUD.new");

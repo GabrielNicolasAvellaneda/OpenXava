@@ -609,11 +609,11 @@ public class ModuleTestBase extends TestCase {
 		if (element != null) {
 			Page newPage = element.click();
 			if (newPage instanceof HtmlPage) {
-				page = (HtmlPage) newPage;	
-				resetForm();				
+				resetForm();
+				page = (HtmlPage) client.getWebWindows().get(0).getEnclosedPage(); 
 			}
 			else {
-				page = null; 
+				page = null;
 			}
 		}
 		else {

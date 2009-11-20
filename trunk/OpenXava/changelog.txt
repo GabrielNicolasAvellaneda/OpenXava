@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- WebURL editor, used by WEBURL steroetype, has a link to go to the URL.
+- Fordward to pages outside the application is possible by means of IForwardAction.
 - Fix: View navigation malfunction after choosing a reference when searching with a list.
 - Fix: Calculated collections inside a transient (not entity) class does not work.
 - Fix: Character + in string fields was erased.
