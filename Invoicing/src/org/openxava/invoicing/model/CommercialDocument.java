@@ -23,19 +23,7 @@ import org.openxava.jpa.*;
 		"remarks" +
 	"}"	
 )
-abstract public class CommercialDocument extends Identifiable {
-	
-	@Hidden
-	private boolean deleted;
-	
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
+abstract public class CommercialDocument extends Deletable { 
 	
 	@Transient
 	private boolean removing = false; 
