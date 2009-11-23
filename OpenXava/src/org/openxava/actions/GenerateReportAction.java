@@ -1,6 +1,9 @@
 package org.openxava.actions;
 
 import javax.servlet.http.*;
+
+import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.util.*;
 
 /**
@@ -18,6 +21,12 @@ public class GenerateReportAction extends TabBaseAction implements IForwardActio
 		}
 		request.getSession().setAttribute("xava_reportTab", getTab());		
 		request.getSession().setAttribute("xava_selectedRowsReportTab", getTab().getSelected()); 
+		if (!Is.emptyString(XHibernate.getDefaultSchema())) {
+			request.getSession().setAttribute("xava_hibernateDefaultSchemaTab", XHibernate.getDefaultSchema());
+		}
+		if (!Is.emptyString(XPersistence.getDefaultSchema())) {
+			request.getSession().setAttribute("xava_jpaDefaultSchemaTab", XPersistence.getDefaultSchema());
+		}
 	}
 	
 	public boolean inNewWindow() {

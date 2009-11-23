@@ -622,10 +622,10 @@ public class ModuleTestBase extends TestCase {
 				execute(action, refineArgumentsForReferenceActionWithObsoleteStyle(arguments));
 				return;
 			}
-			fail(XavaResources.getString("clickable_not_found", action));  
-		}	
+			fail(XavaResources.getString("clickable_not_found", action));
+		}			
 
-		restorePage();
+		restorePage();		
 	}
 	
 	private void restorePage() throws Exception {
