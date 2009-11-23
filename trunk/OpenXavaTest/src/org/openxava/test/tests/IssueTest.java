@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import java.util.*;
+
 import org.openxava.tests.*;
 
 
@@ -13,7 +15,7 @@ public class IssueTest extends ModuleTestBase {
 	public IssueTest(String testName) {
 		super(testName, "Issue");		
 	}
-	
+		
 	public void testDynamicChangeOfDefaultSchema() throws Exception {
 		// We start on schema 'COMPANYA'
 		assertListRowCount(2);
