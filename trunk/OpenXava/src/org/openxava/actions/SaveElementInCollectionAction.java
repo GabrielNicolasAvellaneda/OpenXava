@@ -5,7 +5,6 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import org.openxava.jpa.*;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -40,6 +39,10 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		else getView().recalculateProperties(); 
 	}
 	
+	protected Map getValuesToSave() throws Exception {
+		return getCollectionElementView().getValues();
+	}
+	
 	private void validateMaximum() throws ValidationException, XavaException {
 		MetaCollection metaCollection = getMetaCollection();
 		int maximum = metaCollection.getMaximum(); 
@@ -58,7 +61,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			Map parentKey = new HashMap();
 			MetaCollection metaCollection = getMetaCollection();
 			parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
-			Map values = getCollectionElementView().getValues();
+			Map values = getValuesToSave(); 
 			values.putAll(parentKey);
 			try {
 				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), values);
@@ -96,7 +99,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}
 		else {				
 			try {				
-				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), getCollectionElementView().getValues());
+				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), getValuesToSave());
 				addMessage("aggregate_modified", getCollectionElementView().getModelName());
 			}
 			catch (ObjectNotFoundException ex) {
@@ -112,7 +115,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		MapFacade.createAggregate(
 			getCollectionElementView().getModelName(),						
 			containerKey, row+1, // +1 for start in 1, because 0 is equals to no value					
-			getCollectionElementView().getValues() );
+			getValuesToSave() ); 
 		addMessage("aggregate_created", getCollectionElementView().getModelName());		
 	}
 	

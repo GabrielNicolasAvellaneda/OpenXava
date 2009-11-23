@@ -14,7 +14,9 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
 
 import org.apache.commons.logging.*;
-import org.directwebremoting.*;
+
+import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.tab.impl.*;
@@ -132,7 +134,7 @@ public class GenerateReportServlet extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		try {	
+		try {				
 			Locales.setCurrent(request); 
 			if (Users.getCurrent() == null) { // for a bug in websphere portal 5.1 with Domino LDAP
 				Users.setCurrent((String)request.getSession().getAttribute("xava.user"));
@@ -142,7 +144,8 @@ public class GenerateReportServlet extends HttpServlet {
 			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
 			request.getSession().removeAttribute("xava_reportTab"); 
 			int [] selectedRows = (int []) request.getSession().getAttribute("xava_selectedRowsReportTab"); 
-			request.getSession().removeAttribute("xava_selectedRowsReportTab"); 
+			request.getSession().removeAttribute("xava_selectedRowsReportTab");
+			setDefaultSchema(request);
 			String uri = request.getRequestURI();				
 			if (uri.endsWith(".pdf")) {
 				InputStream is;
@@ -177,6 +180,20 @@ public class GenerateReportServlet extends HttpServlet {
 		}		
 	}
 	
+	private void setDefaultSchema(HttpServletRequest request) {
+		String hibernateDefaultSchemaTab = (String) request.getSession().getAttribute("xava_hibernateDefaultSchemaTab");
+		if (hibernateDefaultSchemaTab != null) {
+			request.getSession().removeAttribute("xava_hibernateDefaultSchemaTab");
+			XHibernate.setDefaultSchema(hibernateDefaultSchemaTab);
+			
+		}
+		String jpaDefaultSchemaTab = (String) request.getSession().getAttribute("xava_jpaDefaultSchemaTab");
+		if (jpaDefaultSchemaTab != null) {
+			request.getSession().removeAttribute("xava_jpaDefaultSchemaTab");
+			XPersistence.setDefaultSchema(jpaDefaultSchemaTab);			
+		}
+	}
+
 	protected String getOrganization(HttpServletRequest request, Tab tab) throws MissingResourceException, XavaException {
 		Locale locale = XavaResources.getLocale(request);
 		if (Labels.exists("xava.organization", locale)) {

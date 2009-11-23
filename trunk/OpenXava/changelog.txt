@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Generating PDF reports and exporting to CSV fail when multischema is used.
+- Fix: Generating PDF reports and exporting to CSV fail in collections inside nested sections.
+- SaveElementInCollectionAction has a method getValuesToSave() to refine the data to save.
+- EntityResolver for XML parser that allows you to remove the WEB-INF/classes/dtds in your application at deploying time.
 - WebURL editor, used by WEBURL steroetype, has a link to go to the URL.
 - Fordward to pages outside the application is possible by means of IForwardAction.
 - Fix: View navigation malfunction after choosing a reference when searching with a list.

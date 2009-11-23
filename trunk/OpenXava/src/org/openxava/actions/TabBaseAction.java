@@ -60,8 +60,8 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 	 */
 	public void setViewObject(String viewObject) { 
 		if (Is.emptyString(this.collection)) {					
-			this.collection = viewObject.substring("xava_view_".length());			
-			if (this.collection.startsWith("section")) {				
+			this.collection = viewObject.substring("xava_view_".length());									
+			while (this.collection.startsWith("section")) {
 				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);				
 			}
 		}
