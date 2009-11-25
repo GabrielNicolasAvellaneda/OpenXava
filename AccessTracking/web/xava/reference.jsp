@@ -64,7 +64,7 @@ String keyProperties = "";
 String propertyKey = null;
 if (keys.size() == 1) {		
 	keyProperty = keys.iterator().next().toString();
-	propertyKey = referenceKey + "." + keyProperty;
+	propertyKey = Ids.decorate(request, referenceKey + "." + keyProperty); 
 	Map values = (Map) view.getValue(ref.getName());	
 	values = values == null?java.util.Collections.EMPTY_MAP:values;
 	Object value = values.get(keyProperty);
@@ -74,7 +74,7 @@ if (keys.size() == 1) {
 	request.setAttribute(propertyKey + ".fvalue", fvalue);
 }
 else {	
-	propertyKey = referenceKey + ".KEY";
+	propertyKey = referenceKey + "__KEY__"; 
 	Map values = (Map) view.getValue(ref.getName());
 	values = values == null?java.util.Collections.EMPTY_MAP:values;
 	java.util.Iterator it = keys.iterator();
@@ -82,7 +82,7 @@ else {
 	while (it.hasNext()) {
 		String property = (String) it.next();		
 		Object value = values.get(property);
-		String valueKey = referenceKey + "." + property + ".value";
+		String valueKey = Ids.decorate(request, referenceKey + "." + property) + ".value"; 
 		request.setAttribute(valueKey, value);
 		sb.append(property);
 		if (it.hasNext()) {

@@ -79,7 +79,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("Address.addFullAddress");
 		assertDialog();
 		assertDialogTitle("Entry the full address");
-		setValue("fullAdress", "AV. BARON DE CARCER, 48 - 12E 46001 VALENCIA CA");		
+		setValue("fullAddress", "AV. BARON DE CARCER, 48 - 12E 46001 VALENCIA CA");		
 		execute("AddFullAddress.add");
 		assertNoErrors();
 		assertNoDialog();

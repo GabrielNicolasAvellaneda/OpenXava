@@ -1,37 +1,42 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4m1 (2009-11-24)
+-------------------------
+- Popup dialogs supported by means of show-dialog and hide-dialog attribute for <action /> in controllers.xml.
+- A dialog is used for searching, creating or modifying a reference.
+- Image editor and Image gallery editor use a dialog to upload the files.
+- New checkbox in list to select and deselect all rows at once.
+- Reference guide in Russian improved.
+- Dropped support for EntityBeans CMP2.
+- Dropped support for Java 1.4. From now on OX requires Java 5 or better.
+- Dialog for uploading file in image editor has a cancel button.
+- When generating a PDF report or CSV export from list, if there are checked rows, only them are shown in the report.
+- WebURL editor, used by WEBURL steroetype, has a link to go to the URL.
+- New methods in BaseAction: getManager(), getRequest() and getContext().
+- New property 'title' for View class. This title will be shown in the frame when the view would be displayed in a dialog.
+- New getNewMode() and setNewMode() methods in BaseAction to change the module mode (detail/list).
+- Fordward to pages outside the application is possible by means of IForwardAction.
+- SaveElementInCollectionAction has a method getValuesToSave() to refine the data to save.
+- New methods in ViewBaseAction to work with view navigation: showNewView(), returnToPreviousView() and getPreviousView().
+- JasperReportBaseAction now extends from ViewBaseAction.
+- New assertDialog(), assertNoDialog(), assertDialogTitle() and closeDialog() methods in ModuleTestBase.
+- XSystem.isJava5OrBetter() method removed.
+- JavaScript code (openxava.js) now uses jQuery.
+- Added jQuery UI library.
+- EntityResolver for XML parser that allows you to remove the WEB-INF/classes/dtds in your application at deploying time.
+- Tomcat included in distribution upgrade to Tomcat 6.0.20.
+- Upgrade to HtmlUnit 2.5.
+- A trim is applied to all labels of OpenXava elements: This fix some ugly layout in IE7.
+- New EnumStringType hibernate type to convert from arbitrary strings in DB to enum values in JPA.
+- OpenXavaTest refactored: Source folders reorganized, XavaSuite class removed, ant task renamed, etc.
 - Fix: Generating PDF reports and exporting to CSV fail when multischema is used.
 - Fix: Generating PDF reports and exporting to CSV fail in collections inside nested sections.
-- SaveElementInCollectionAction has a method getValuesToSave() to refine the data to save.
-- EntityResolver for XML parser that allows you to remove the WEB-INF/classes/dtds in your application at deploying time.
-- WebURL editor, used by WEBURL steroetype, has a link to go to the URL.
-- Fordward to pages outside the application is possible by means of IForwardAction.
 - Fix: View navigation malfunction after choosing a reference when searching with a list.
 - Fix: Calculated collections inside a transient (not entity) class does not work.
 - Fix: Character + in string fields was erased.
-- When generating a PDF report or CSV export from list, if there are checked rows, only them are shown in the report.
-- New checkbox in list to select and deselect all rows at once.
-- A dialog is used for searching, creating or modifying a reference.
-- Upgrade to HtmlUnit 2.5.
-- Popup dialogs supported by means of show-dialog and hide-dialog attribute for <action /> in controllers.xml.
-- New getNewMode() and setNewMode() methods in BaseAction to change the module mode (detail/list).
 - Fix: Ugly formatting of action error messages with additional information.
-- New methods in BaseAction: getManager(), getRequest() and getContext().
-- New methods in ViewBaseAction to work with view navigation: showNewView(), returnToPreviousView() and getPreviousView().
-- JasperReportBaseAction now extends from ViewBaseAction.
-- A trim is applied to all labels of OpenXava elements: This fix some ugly layout in IE7.
-- Reference guide in Russian improved.
-- Dialog for uploading file in image editor has a cancel button.
-- Image editor and Image gallery editor use a dialog to upload the files.
-- New assertDialog(), assertNoDialog(), assertDialogTitle() and closeDialog() methods in ModuleTestBase.
-- New EnumStringType hibernate type to convert from arbitrary strings in DB to enum values in JPA.
-- New property 'title' for View class. This title will be shown in the frame when the view would be displayed in a dialog.
 - Fix: MetaElement.getDescription() and MetaElement.getLabel() used local machine locale. Now it uses client locale.
-- OpenXavaTest refactored: Source folders reorganized, XavaSuite class removed, ant task renamed, etc.
-- Dropped support for EntityBeans CMP2.
-- Dropped support for Java 1.4. From now on OX requires Java 5 or better.
-- XSystem.isJava5OrBetter() method removed.
 - Fix: ModuleManager.reset does not work with descriptionsList at default schema components
 
 OpenXava 3.1.4 (2009-8-27)

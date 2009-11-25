@@ -7,9 +7,15 @@
 <component name="Year">
 
 	<entity>
-		<property name="year" type="int" size="4" required="true"/>			  
-	</entity>
-
+		<property name="year" type="int" size="4" required="true"/>
+		
+		<collection name="months"> 			
+			<reference model="Month"/>			
+			<calculator class="org.openxava.test.calculators.MonthsCalculator"/>
+		</collection>		
+					  
+	</entity>	
+	
 	<transient/>	
 				
 </component>

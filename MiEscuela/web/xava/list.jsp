@@ -9,13 +9,14 @@
 <%@ page import="org.openxava.web.Ids" %>
 <%@ page import="org.openxava.controller.meta.MetaAction"%>
 <%@ page import="org.openxava.controller.meta.MetaControllers"%>
+<%@page import="org.openxava.web.Actions"%>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
-org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+	org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 String collection = request.getParameter("collection"); 
 String id = "list";
 String collectionArgv = "";
@@ -47,32 +48,54 @@ if (!tab.isFilterVisible()) {
 }
 String lastRow = request.getParameter("lastRow");
 boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
+String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
+MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
+String cssSelectedRow = style.getSelectedRow();
+String selectedRowStyle = style.getSelectedRowStyle();
+String rowStyle = "border-bottom: 1px solid;";
 %>
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
 
-<% if (tab.isTitleVisible()) { %>
+<%
+	if (tab.isTitleVisible()) {
+%>
 <table width="100%" id="list-title" class=<%=style.getListTitleWrapper()%>>
 <tr><td class=<%=style.getListTitle()%>>
 <%=tab.getTitle()%>
 </td></tr>
 </table>
-<% } %>
+<%
+	}
+%>
 
 <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">
-	<%String imageFilterPrefix = request.getContextPath() + "/xava/images/"; %>
+	<%
+		String imageFilterPrefix = request.getContextPath() + "/xava/images/";
+	%>
 	<input name="xava_image_filter_prefix" type="hidden" value="<%=imageFilterPrefix%>"/>     
 	<a id="<xava:id name='<%="filter_link_" + id%>'/>" href="javascript:openxava.manageFilterRow('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
 		src='<%=imageFilterPrefix%><%=imageFilter%>.gif' border='0'/></a>
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
+	<%
+		if (tab.isCustomize()) {
+	%><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><%
+		}
+	%>
 </th>
 <th class="<%=style.getListHeaderCell()%>" width="5">
-<% if (tab.isCustomize()) { %><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><% } %>
+	<%
+		String actionOnClickAll = Actions.getActionOnClickAll(
+		request.getParameter("application"), request.getParameter("module"), 
+		onSelectCollectionElementAction, viewObject, prefix, cssSelectedRow,
+		selectedRowStyle, rowStyle);
+	%>
+	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=prefix%>selected_all" <%=actionOnClickAll%> />
 </th>
 <%
-tab.reset();
+	tab.reset();
 java.util.Collection properties = tab.getMetaProperties();
 java.util.Iterator it = properties.iterator();
 int columnIndex = 0;
@@ -84,9 +107,13 @@ while (it.hasNext()) {
 	}
 %>
 <th class="<%=style.getListHeaderCell()%>" <%=align%>>
-<% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><% } %>
 <%
-	if (property.isCalculated()) {		
+	if (tab.isCustomize()) {
+%><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><%
+	}
+%>
+<%
+	if (property.isCalculated()) {
 %>
 <%=property.getQualifiedLabel(request)%>&nbsp;
 <%
@@ -96,28 +123,29 @@ while (it.hasNext()) {
 <xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getQualifiedLabel(request)%></xava:link>&nbsp;
 </span>
 <%
-		if (tab.isOrderAscending(property.getQualifiedName())) {
+	if (tab.isOrderAscending(property.getQualifiedName())) {
 %>
 <img src="<%=request.getContextPath()%>/xava/images/<%=style.getAscendingImage()%>" border="0" align="middle"/>
 <%
-		}
+	}
 %>
 <%
-		if (tab.isOrderDescending(property.getQualifiedName())) {
+	if (tab.isOrderDescending(property.getQualifiedName())) {
 %>
 <img src="<%=request.getContextPath()%>/xava/images/<%=style.getDescendingImage()%>" border="0" align="middle"/>
 <%
-		}
+	}
 %>
 	
-<% 
-   }
-   
-   if (tab.isCustomize()) { %>
+<%
+		}
+		   
+		   if (tab.isCustomize()) {
+	%>
 	<xava:image action="List.moveColumnToRight" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
 	<xava:image action="List.removeColumn" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
-<% }
- 
+<%
+	}
 %>
 </th>
 <%
@@ -125,7 +153,9 @@ while (it.hasNext()) {
 }
 %>
 </tr>
-<% if (filter) { %>
+<%
+	if (filter) {
+%>
 <tr id="<xava:id name='<%="tr_list_filter_" + id%>'/>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
 <th class=<%=style.getListSubheaderCell()%> style="text-align: center" width="60">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
@@ -137,7 +167,7 @@ while (it.hasNext()) {
 	</a>
 </th>
 <%
-it = properties.iterator();
+	it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
 String [] conditionComparators = tab.getConditionComparators();
 int iConditionValues = -1; 
@@ -154,7 +184,7 @@ while (it.hasNext()) {
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");		
 		if (isValidValues) {
-	%>	
+%>	
 <th class=<%=style.getListSubheaderCell()%> align="left">
 <%-- Boolean.toString( ) for base0 is needed in order to work in WebSphere 6 --%>
 <jsp:include page="comparatorsValidValuesCombo.jsp">
@@ -164,52 +194,58 @@ while (it.hasNext()) {
 	<jsp:param name="prefix" value="<%=prefix%>"/>
 	<jsp:param name="index" value="<%=iConditionValues%>"/>
 </jsp:include>		
-	<%	
-		}
-		else if (isBoolean) { 
-	%>
+	<%
+				}
+						else if (isBoolean) {
+			%>
 <th class="<%=style.getListSubheaderCell()%>" align="left">
 <jsp:include page="comparatorsBooleanCombo.jsp">
 	<jsp:param name="comparator" value="<%=comparator%>" />
 	<jsp:param name="prefix" value="<%=prefix%>"/>
 	<jsp:param name="index" value="<%=iConditionValues%>"/> 
 </jsp:include>
-	<% } else { // Not boolean %>
+	<%
+		} else { // Not boolean
+	%>
 <th class=<%=style.getListSubheaderCell()%> align="left">
-<% 
-String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
+<%
+	String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?comparator=" + comparator
 	+ "&isString=" + isString
 	+ "&isDate=" + isDate
 	+ "&prefix=" + prefix  
-	+ "&index=" + iConditionValues; 
+	+ "&index=" + iConditionValues;
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
 <input name="<xava:id name='<%=prefix + "conditionValue." + iConditionValues%>'/>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
-	<% } %>
+	<%
+		}
+	%>
 </th>
-<% 
+<%
 	}
 	else {
 %>
 <th class=<%=style.getListSubheaderCell()%>></th>
 <%
 	} 
-} // while	
+} // while
 %>
 </tr>
-<% } /* if (filter) */ %>
 <%
-int totalSize = 0;
+	} /* if (filter) */
+%>
+<%
+	int totalSize = 0;
 if (tab.isRowsHidden()) {
 %>
 	<tr id="nodata"><td align="center">
 	<xava:link action="List.showRows" argv="<%=collectionArgv%>"/>
 	</td></tr>
 <%
-}
+	}
 else {
-	
+
 IXTableModel model = tab.getTableModel(); 
 totalSize = tab.getTotalSize();
 if (totalSize > 0) {
@@ -223,39 +259,27 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
 	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);
-	String idRow = Ids.decorate(request, id + "_" + f);
-	String cssSelectedRow = style.getSelectedRow();
-	String selectedRowStyle = style.getSelectedRowStyle();
-	String rowStyle = "border-bottom: 1px solid;";
 	String cssClassToActionOnClick = cssClass;
 	if (tab.isSelected(f)){
 		cssClass = cssSelectedRow + " " + cssClass;
 		rowStyle = rowStyle + " " + selectedRowStyle;
 		events = f%2==0?style.getListPairEvents(cssStyle, cssSelectedRow):style.getListOddEvents(cssStyle, cssSelectedRow);
 	}
-	String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
-	MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
+	String prefixIdRow = Ids.decorate(request, prefix);
 %>
-<tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
+<tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
-<% if (!org.openxava.util.Is.emptyString(action)) { %>
+<%
+	if (!org.openxava.util.Is.emptyString(action)) {
+%>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
-<% } 
-	String actionOnClick = "onClick=\"openxava.onSelectElement(" +
-		"'" + request.getParameter("application") + "'," + 
-		"'" + request.getParameter("module") + "'," + 
-		"'" + onSelectCollectionElementAction + "'," + 
-		"'row=" + f + ",viewObject=" + viewObject + "'," +
-		"this.checked," + 
-		"'" + idRow + "'," + 
-		!Is.empty(view.getOnSelectCollectionElementAction()) + "," +
-		"'" + cssSelectedRow + "'," + 
-		"'" + cssClassToActionOnClick + "'," +
-		"'" + selectedRowStyle + "'," +
-		"'" + rowStyle + "'," +
-		"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 
-		(Is.empty(onSelectCollectionElementMetaAction)?false:onSelectCollectionElementMetaAction.isTakesLong()) + 
-		")\"";
+<%
+	}
+	String actionOnClick = Actions.getActionOnClick(
+		request.getParameter("application"), request.getParameter("module"), 
+		onSelectCollectionElementAction, f, viewObject, prefixIdRow + f,
+		cssSelectedRow, cssClassToActionOnClick, selectedRowStyle, rowStyle, 
+		onSelectCollectionElementMetaAction);
 %>
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
