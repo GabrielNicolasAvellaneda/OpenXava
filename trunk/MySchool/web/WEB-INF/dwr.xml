@@ -30,7 +30,8 @@
   				String application, String module, String additionalParameters, 
   				Map<String, String> values, 
   				Map<String, String> multipleValues, 
-  				String [] selected);
+  				String [] selected,
+  				Boolean firstRequest);
   		]]>
 	</signatures>  
 

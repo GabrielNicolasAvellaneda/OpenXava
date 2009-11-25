@@ -29,7 +29,7 @@ class ComponentParser extends ParserBase {
 	
 	synchronized public static MetaComponent parse(String name) throws XavaException {
 		ComponentParser parser = new ComponentParser(name);				
-		parser.parse();		
+		parser.parse();				
 		MetaComponent r = parser.getComponent();
 		if (r == null) {
 			r = parseAnnotatedClass(name);

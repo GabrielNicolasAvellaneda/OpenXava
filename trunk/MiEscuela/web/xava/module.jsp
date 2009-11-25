@@ -84,8 +84,14 @@ Module.setStyle(style);
 	%>
 
 <% } %>
-	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/xava/editors/calendar/skins/aqua/theme.css" title="Aqua" /> 
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/style/openxava.css" />	
+	<% 
+	for (java.util.Iterator it = style.getAdditionalCssFiles().iterator(); it.hasNext(); ) {
+		String cssFile = (String) it.next();
+	%>
+	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>"/>
+	<% 
+	} 
+	%> 	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
@@ -97,12 +103,25 @@ Module.setStyle(style);
 	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>	
+	<script type="text/javascript">
+		if (typeof jQuery != "undefined") {  
+			portalJQuery = jQuery;
+		}       
+	</script>				
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js"></script>				
+	<script type="text/javascript">
+		$ = jQuery;
+		if (typeof portalJQuery != "undefined") {  
+			jQuery = portalJQuery;    
+		}   
+	</script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
-<% } %>	  
+<% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="true"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>	
@@ -123,6 +142,8 @@ Module.setStyle(style);
 		if (!loadingImage.startsWith("/")) loadingImage = request.getContextPath() + "/xava/" + style.getLoadingModuleImage();
 		%>
 		<img src='<%=loadingImage%>' style="padding: 20px;"/>
+	</div>	
+	<div id="xava_console">
 	</div>
 
 <% if (!isPortlet) { %>

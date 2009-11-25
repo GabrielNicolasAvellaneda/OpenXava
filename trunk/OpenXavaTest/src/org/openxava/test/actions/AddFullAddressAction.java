@@ -6,7 +6,7 @@ import org.openxava.view.*;
 public class AddFullAddressAction extends ViewBaseAction {
 
 	public void execute() throws Exception {		
-		String fullAddress = getView().getValueString("fullAdress");
+		String fullAddress = getView().getValueString("fullAddress");
 		String [] tokens = fullAddress.split(" ");
 		View addressView = getPreviousView().getSubview("address");
 		String [] properties = { "state.id", "city", "zipCode", "street" };

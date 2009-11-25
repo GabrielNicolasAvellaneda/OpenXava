@@ -8,14 +8,14 @@ package org.openxava.test.model;
 
 public class OneLineAddress {
 	
-	private String fullAdress;
+	private String fullAddress;
 
-	public String getFullAdress() {
-		return fullAdress;
+	public String getFullAddress() {
+		return fullAddress;
 	}
 
-	public void setFullAdress(String fullAdress) {
-		this.fullAdress = fullAdress;
+	public void setFullAddress(String fullAddress) {
+		this.fullAddress = fullAddress;
 	}
 
 }

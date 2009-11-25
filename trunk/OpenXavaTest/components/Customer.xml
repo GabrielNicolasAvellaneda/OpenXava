@@ -363,7 +363,7 @@
 
 		<members>
 			viewProperty;
-			street, zipCode;
+			street, zipCode, <action action="Address.addFullAddress"/>;
 			<group name="city">
 				city, state;
 			</group>

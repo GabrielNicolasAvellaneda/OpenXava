@@ -21,8 +21,6 @@ import org.openxava.validators.*;
 import org.openxava.view.*;
 import org.openxava.web.*;
 
-import com.lowagie.text.pdf.interfaces.*;
-
 /**
  * @author Javier Paniza
  */
@@ -34,7 +32,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 4m1beta (2009-11-xx)");		
+		log.info("OpenXava 4m1 (2009-11-25)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	

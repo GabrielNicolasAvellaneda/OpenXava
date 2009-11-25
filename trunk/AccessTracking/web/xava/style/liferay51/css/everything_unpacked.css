@@ -305,7 +305,8 @@ hr, .separator {
 
 .ui-dialog-overlay {
 	background: #000;
-	opacity: 0.8;
+/* tmp	opacity: 0.8; */
+	opacity: 0.2;
 	z-index: 400;
 }
 
