@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Problems with charset encoding on accepting data from browser.
+
 OpenXava 4m1 (2009-11-24)
 -------------------------
 - Popup dialogs supported by means of show-dialog and hide-dialog attribute for <action /> in controllers.xml.
