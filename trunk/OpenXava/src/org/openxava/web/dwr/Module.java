@@ -498,7 +498,7 @@ public class Module extends DWRBase {
 		if (value.toString().startsWith("[reference:")) {
 			return "true";
 		} 
-		return URLEncoder.encode(value.toString(), XSystem.getEncoding()); 
+		return URLEncoder.encode(value.toString(), request.getCharacterEncoding()); 
 	}
 	
 	private static boolean isPortlet() {
