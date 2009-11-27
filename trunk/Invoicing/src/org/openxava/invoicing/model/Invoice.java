@@ -19,7 +19,7 @@ import org.openxava.annotations.*;
 })
 @Tab(properties="year, number, date, customer.number, customer.name, " +
 	"vatPercentage, estimatedProfit, baseAmount, " +
-	"vat, totalAmount, amount, remarks")   		
+	"vat, totalAmount, amount, remarks")    		
 public class Invoice extends CommercialDocument {
 	
 	@OneToMany(mappedBy="invoice")
