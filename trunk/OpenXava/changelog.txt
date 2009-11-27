@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: In some combination of nested sections the section is duplicated on changing section.
 - Fix: Problems with charset encoding on accepting data from browser.
 
 OpenXava 4m1 (2009-11-24)

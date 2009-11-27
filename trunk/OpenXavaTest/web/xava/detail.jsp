@@ -257,7 +257,8 @@ while (it.hasNext()) {
 <% 	
 	if (view.isFrame() && 
 			!(last && view.getParent() != null && !view.getParent().isFrame()) && 
-			!(!lastWasProperty && view.isSection() && view.getMembersNames().size() == 1 
+			// tmp !(!lastWasProperty && view.isSection() && view.getMembersNames().size() == 1 
+			!(!lastWasProperty && view.isSection() && view.getMembersNamesWithoutSections().size() == 1 // tmp		
 					&& view.getParent() != null && view.getParent().isFrame())) {		
 %>
 </tr>
