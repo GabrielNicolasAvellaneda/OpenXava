@@ -1399,7 +1399,7 @@ public class View implements java.io.Serializable {
 		}			
 	}
 
-	private Collection getMembersNamesWithoutSections() throws XavaException { 
+	public Collection getMembersNamesWithoutSections() throws XavaException {  
 		if (membersNamesWithoutSections==null) { 	
 			Iterator it = createMetaMembers(true).iterator();						
 			membersNamesWithoutSections = new ArrayList();

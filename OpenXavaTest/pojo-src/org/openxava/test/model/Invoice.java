@@ -48,6 +48,13 @@ import org.openxava.util.*;
 		"}" +						
 		"deliveries { deliveries }"		
 	),
+	@View(name="NestedSections2", members=
+		"year, number, date;" +
+		"data {" +				 
+		"	amountsSum { amountsSum }" +
+		"	details { details }" +						
+		"}" 		
+	),
 	@View(name="OnlyReadDetails", members=
 		"year, number, date, paid;" +
 		"details;"
