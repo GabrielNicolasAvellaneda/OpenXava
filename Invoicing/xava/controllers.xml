@@ -3,6 +3,8 @@
 <!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
 
 <controllers>
+ 
+	<env-var name="XAVA_SEARCH_ACTION" value="Invoicing.searchExcludingDeleted"/>
 
 	<controller name="Invoicing">
 	
@@ -13,8 +15,15 @@
 			image="images/delete.gif"
 			keystroke="Control D">
 			<use-object name="xava_view"/>						
-		</action>
-	
+		</action>		
+		 
+		<action name="searchExcludingDeleted" hidden="true"
+			class="org.openxava.invoicing.actions.SearchExcludingDeletedAction" 
+			image="images/delete.gif"
+			keystroke="Control D">
+			<use-object name="xava_view"/>						
+		</action>		
+			
 	</controller> 
 	
 </controllers>
