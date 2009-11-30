@@ -17,10 +17,9 @@
 			<use-object name="xava_view"/>						
 		</action>		
 		 
-		<action name="searchExcludingDeleted" hidden="true"
-			class="org.openxava.invoicing.actions.SearchExcludingDeletedAction" 
-			image="images/delete.gif"
-			keystroke="Control D">
+		<action name="searchExcludingDeleted" 
+			hidden="true"
+			class="org.openxava.invoicing.actions.SearchExcludingDeletedAction">
 			<use-object name="xava_view"/>						
 		</action>		
 			
