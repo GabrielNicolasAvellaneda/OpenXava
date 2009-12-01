@@ -6,7 +6,8 @@ import javax.ejb.*;
 
 import org.openxava.actions.*;
 
-public class SearchExcludingDeletedAction extends SearchByViewKeyAction {
+public class SearchExcludingDeletedAction 
+	extends SearchByViewKeyAction {
 	
 	private boolean isDeletable() {
 		return getView().getMetaModel().containsMetaProperty("deleted");
