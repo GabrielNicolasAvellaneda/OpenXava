@@ -1,3 +1,4 @@
+
 /*  Copyright Mihai Bazon, 2002-2005  |  www.bazon.net/mishoo
  * -----------------------------------------------------------
  *
@@ -12,9 +13,11 @@
  * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
  */
 
-// $Id: calendar.js,v 1.1 2005-07-21 08:46:27 javierpaniza Exp $
+// $Id: calendar.js,v 1.2 2009-12-02 12:11:34 javierpaniza Exp $
 
 /** The Calendar object constructor. */
+if (typeof Calendar == "undefined") { // By Javier Paniza, in order to work in a multi-portlet environment
+
 Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
 	// member variables
 	this.activeDiv = null;
@@ -1804,3 +1807,5 @@ Date.prototype.setFullYear = function(y) {
 
 // global object that remembers the calendar
 window._dynarch_popupCalendar = null;
+
+} // Of if (typeof Calendar == "undefined") {
