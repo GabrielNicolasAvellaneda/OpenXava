@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: JavaScript calendar does not work when several portlets in the same page.
 - Fix: In some combination of nested sections the section is duplicated on changing section.
 - Fix: Problems with charset encoding on accepting data from browser.
 
