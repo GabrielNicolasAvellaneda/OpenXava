@@ -17,9 +17,7 @@ import org.openxava.annotations.*;
 	)
 	
 })
-@Tab(properties="year, number, date, customer.number, customer.name, " +
-	"vatPercentage, estimatedProfit, baseAmount, " +
-	"vat, totalAmount, amount, remarks, deleted") // tmp deleted    		
+@Tab(baseCondition = "deleted = false")     		
 public class Invoice extends CommercialDocument {
 	
 	@OneToMany(mappedBy="invoice")

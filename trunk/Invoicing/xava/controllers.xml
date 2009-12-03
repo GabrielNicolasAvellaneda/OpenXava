@@ -22,6 +22,12 @@
 			class="org.openxava.invoicing.actions.SearchExcludingDeletedAction">
 			<use-object name="xava_view"/>						
 		</action>		
+		
+		<action name="deleteSelected" mode="list" confirm="true"
+			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction"
+			keystroke="Control D">
+		</action>							
+		
 			
 	</controller> 
 	
