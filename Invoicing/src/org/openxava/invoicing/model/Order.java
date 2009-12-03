@@ -17,11 +17,11 @@ import org.openxava.util.*;
 		"remarks" 
 	)
 })
+@Tab(baseCondition = "deleted = false")
 public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
-	@SearchAction("Order.searchInvoice") // tmp
 	private CommercialDocument invoice;
 	
 	private boolean delivered;
