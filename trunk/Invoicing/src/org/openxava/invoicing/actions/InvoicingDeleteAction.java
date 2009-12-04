@@ -7,7 +7,7 @@ import org.openxava.model.*;
 public class InvoicingDeleteAction extends ViewBaseAction 
 	implements IChainAction {
 	
-	private String nextAction = null;
+	private String nextAction = null;	
 
 	public void execute() throws Exception {
 		if (getView().getKeyValuesWithValue().isEmpty()) {
@@ -32,5 +32,5 @@ public class InvoicingDeleteAction extends ViewBaseAction
 	public String getNextAction() throws Exception {
 		return nextAction;
 	}
-
+	
 }

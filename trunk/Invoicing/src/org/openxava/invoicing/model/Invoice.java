@@ -17,7 +17,10 @@ import org.openxava.annotations.*;
 	)
 	
 })
-@Tab(baseCondition = "deleted = false")     		
+@Tabs({
+	@Tab(baseCondition = "deleted = false"),
+	@Tab(name="Deleted", baseCondition = "deleted = true")
+})
 public class Invoice extends CommercialDocument {
 	
 	@OneToMany(mappedBy="invoice")

@@ -11,6 +11,8 @@ public class InvoicingDeleteSelectedAction
 	implements IChainAction {
 	
 	private String nextAction = null;
+	private boolean restore; // tmp
+	private int row; // tmp
 
 	public void execute() throws Exception {		
 		if (!getMetaModel().containsMetaProperty("deleted")) {
@@ -29,29 +31,43 @@ public class InvoicingDeleteSelectedAction
 	}
 	
 	private void markSelectedEntitiesAsDeleted() throws Exception {
-		int [] selectedOnes = getTab().getSelected();
-		if (selectedOnes != null) {
-			Map values = new HashMap();
-			values.put("deleted", true);
-			for (int i = 0; i < selectedOnes.length; i++) {				
-				Map key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[i]);
-				try {									
-					MapFacade.setValues(
-						getTab().getModelName(), 
-						key, 
-						values);					
-				}
-				catch (ValidationException ex) {
-					addError("no_delete_row", new Integer(i), key);
-					addErrors(ex.getErrors());
-				}								
-				catch (Exception ex) {
-					addError("no_delete_row", new Integer(i), key);
-				}				
+		Map values = new HashMap();
+		// tmp values.put("deleted", true); 
+		values.put("deleted", !isRestore());		
+		for (Map key: getTab().getSelectedKeys()) {
+			try {									
+				MapFacade.setValues(
+					getTab().getModelName(), 
+					key, 
+					values);					
 			}
-			getTab().deselectAll();
-			resetDescriptionsCache();
-		}		
+			catch (ValidationException ex) {
+				addError("no_delete_row", "", key);
+				addErrors(ex.getErrors());
+			}								
+			catch (Exception ex) {
+				addError("no_delete_row", "", key);
+			}				
+		}
+		getTab().deselectAll();
+		resetDescriptionsCache();				
 	}
+
+	public boolean isRestore() {
+		return restore;
+	}
+
+	public void setRestore(boolean restore) {
+		this.restore = restore;
+	}
+	
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
 
 }
