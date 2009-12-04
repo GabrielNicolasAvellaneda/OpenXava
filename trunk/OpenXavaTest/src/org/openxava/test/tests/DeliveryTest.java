@@ -187,13 +187,16 @@ public class DeliveryTest extends ModuleTestBase {
 		assertFocusOn("remarks");
 	}
 	
-	public void testNonExistentReferenceUsedAsKey() throws Exception {
+	
+	public void testNonExistentReferenceUsedAsKey_ceroValueOnChange() throws Exception {
 		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
 		execute("CRUD.new");
+		assertMessage("type=null");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
 		assertValue("invoice.date", "1/1/02");						
 		setValue("type.number", "0");
+		assertMessage("type=0"); // Verifies cero as value for on change action
 		setValue("number", "66");
 		setValue("description", "JUNIT");		
 		execute("CRUD.save");

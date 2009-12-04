@@ -633,13 +633,29 @@ public class Strings {
 		if (name.toUpperCase().equals(name)) return change(name, "_", " "); 
 		StringBuffer result = new StringBuffer();
 		result.append(Character.toUpperCase(name.charAt(0)));
-		for (int i=1; i<name.length(); i++) {
-			char letter = name.charAt(i);
-			if (Character.isUpperCase(letter) || Character.isDigit(letter)) result.append(' ');
-			result.append(Character.toLowerCase(letter));
-		}
+        boolean acronym = false;
+        for (int i=1; i<name.length(); i++) {
+            char letter = name.charAt(i);
+            boolean isUpperCase = Character.isUpperCase(letter);
+            if (!acronym && (isUpperCase || Character.isDigit(letter))) result.append(' ');
+            if (isUpperCase) {
+                if ((i < name.length()-1) && Character.isUpperCase(name.charAt(i+1))) {
+                    acronym = true;
+                }
+                if (acronym) {
+                    result.append(letter);
+                } else {
+                    result.append(Character.toLowerCase(letter));
+                }
+            } else {
+                if (acronym) {
+                    result.append(' ');
+                    acronym = false;
+                }
+                result.append(letter);
+            }
+        }        		
 		return result.toString();
 	}
-
 	
 }

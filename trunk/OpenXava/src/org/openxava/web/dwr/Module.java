@@ -85,7 +85,7 @@ public class Module extends DWRBase {
 			else {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}			
-			result.setStrokeActions(getStrokeActions());
+			result.setStrokeActions(getStrokeActions());			
 			return result;
 		}
 		catch (SecurityException ex) {
