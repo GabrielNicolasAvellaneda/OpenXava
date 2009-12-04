@@ -131,6 +131,7 @@ public class Delivery {
 		@DescriptionsList(forViews="GroupsInSections")
 	})
 	@Action(forViews="DEFAULT, MoreSections", value="Delivery.setDefaultType")
+	@OnChange(forViews="DEFAULT", value = OnChangeDeliveryType.class) 
 	private DeliveryType type;
 	
 	@Type(type="org.openxava.types.Date3Type") 

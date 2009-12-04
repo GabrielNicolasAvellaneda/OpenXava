@@ -16,7 +16,7 @@ public class DeliveryGroupsInSectionsTest extends ModuleTestBase {
 	public void testOnChangeActionOnSearchNotMoreThanOneTime() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
-		assertMessagesCount(1);
+		assertMessagesCount(1);		
 	}
 	
 }

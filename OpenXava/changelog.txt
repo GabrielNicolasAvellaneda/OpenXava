@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: In @OnChange for descriptions list references when the value is zero it's converted to null.
+- Fix: Automatic label generation (Strings.javaIdentifierToNaturalLabel() method) does not work fine with acronyms.
 - Fix: JavaScript calendar does not work when several portlets in the same page.
 - Fix: In some combination of nested sections the section is duplicated on changing section.
 - Fix: Problems with charset encoding on accepting data from browser.
