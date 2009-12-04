@@ -31,4 +31,11 @@
 			
 	</controller> 
 	
+	<controller name="Trash">
+		<action name="restore" mode="list"
+			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction">
+			<set property="restore" value="true"/>
+		</action>	
+	</controller>
+	
 </controllers>
