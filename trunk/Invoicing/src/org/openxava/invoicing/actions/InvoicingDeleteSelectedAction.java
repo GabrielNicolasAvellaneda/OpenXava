@@ -35,6 +35,7 @@ public class InvoicingDeleteSelectedAction
 		// tmp values.put("deleted", true); 
 		values.put("deleted", !isRestore());		
 		for (Map key: getTab().getSelectedKeys()) {
+		// tmp for (Map key: getSelectedKeys()) {
 			try {									
 				MapFacade.setValues(
 					getTab().getModelName(), 
@@ -51,6 +52,11 @@ public class InvoicingDeleteSelectedAction
 		}
 		getTab().deselectAll();
 		resetDescriptionsCache();				
+	}
+	
+	private Map [] getSelectedKeys() throws Exception { // tmp
+		if (row < 0) return getTab().getSelectedKeys();		
+		return new Map [] { (Map) getTab().getTableModel().getObjectAt(row) };
 	}
 
 	public boolean isRestore() {
