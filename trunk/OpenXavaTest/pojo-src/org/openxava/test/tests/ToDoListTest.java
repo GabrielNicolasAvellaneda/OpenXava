@@ -43,7 +43,11 @@ public class ToDoListTest extends ModuleTestBase {
 		assertAllCollectionUnchecked("tasks");
 		checkRowCollection("tasks", 0);
 		assertAllCollectionChecked("tasks");
+		
+		setConditionValues("tasks", new String[] { "f" });
+		execute("List.filter", "collection=tasks");
+		assertCollectionRowCount("tasks", 0);
+		assertAllCollectionUnchecked("tasks");
 	}
-	
 	
 }

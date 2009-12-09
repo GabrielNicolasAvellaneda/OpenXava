@@ -2,6 +2,12 @@ package org.openxava.test.tests;
 
 import java.net.URL;
 
+import javax.persistence.Query;
+
+import org.openxava.jpa.XPersistence;
+import org.openxava.test.model.Formula;
+import org.openxava.test.model.FormulaIngredient;
+import org.openxava.test.model.Ingredient;
 import org.openxava.tests.ModuleTestBase;
 import org.openxava.util.Strings;
 
@@ -53,6 +59,15 @@ public class FormulaTest extends ModuleTestBase {
 		// fails to deselect the last selected
 		assertRowCollectionUnchecked("ingredients", 0);
 		assertRowCollectionUnchecked("ingredients", 1);
+		
+		// not execute the associated actions if there are no items in the collection
+		setConditionValues("ingredients", new String[] { "", "r"} );
+		execute("List.filter", "collection=ingredients");
+		assertCollectionRowCount("ingredients", 0);
+		uncheckAllCollection("ingredients");
+		checkAllCollection("ingredients");
+		assertNoErrors();
+		assertNoMessages();
 	}
 	
 	public void testImageInsideCollection() throws Exception {
