@@ -114,9 +114,12 @@ openxava.refreshPage = function(result) {
 	openxava.lastModule=result.module;
 	openxava.resetRequesting(result); 
 	document.body.style.cursor='auto';
+	
 	openxava.hasOnSelectAll(result.application, result.module);
-	openxava.effectShow(openxava.decorateId(result.application, result.module, "messages"));
-	openxava.effectShow(openxava.decorateId(result.application, result.module, "errors"));
+	var messagesIsEmpty = document.getElementById(openxava.decorateId(result.application, result.module, "messages") + "_table") == null;
+	var errorsIsEmpty = document.getElementById(openxava.decorateId(result.application, result.module, "errors") + "_table") == null;
+	if (!messagesIsEmpty) openxava.effectShow(openxava.decorateId(result.application, result.module, "messages"));
+	if (!errorsIsEmpty) openxava.effectShow(openxava.decorateId(result.application, result.module, "errors"));
 }
 
 openxava.disableElements = function(result) {	
