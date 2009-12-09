@@ -114,8 +114,9 @@ openxava.refreshPage = function(result) {
 	openxava.lastModule=result.module;
 	openxava.resetRequesting(result); 
 	document.body.style.cursor='auto';
-	
 	openxava.hasOnSelectAll(result.application, result.module);
+	openxava.effectShow(openxava.decorateId(result.application, result.module, "messages"));
+	openxava.effectShow(openxava.decorateId(result.application, result.module, "errors"));
 }
 
 openxava.disableElements = function(result) {	
@@ -546,18 +547,17 @@ openxava.onSelectAll = function(application, module, action, argv, checkValue, h
 			if (first < 0) first = row;
 			if (selected[i].checked==checkValue) alreadyProcessed = alreadyProcessed + "_" + i;
 			else{
-				if (!hasOnSelectAction) {
-					var idRow = openxava.decorateId(application, module, prefix) + row;
-					var cssRow = ($("#" + idRow)[0]).className;
-					if (!checkValue) cssRow = cssRow.replace(cssSelectedRow, "");
-					openxava.onSelectElement(application, module, action, argv, checkValue, idRow, null, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, null, null);
-				}	
+				var idRow = openxava.decorateId(application, module, prefix) + row;
+				var cssRow = ($("#" + idRow)[0]).className;
+				if (!checkValue) cssRow = cssRow.replace(cssSelectedRow, "");
+				openxava.onSelectElement(application, module, action, argv, checkValue, idRow, null, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, null, null);
 				last = row;
 			}
 			selected[i].checked=checkValue?1:0;
 		}
 	}
 	
+	if (first < 0) return;	// no items in the collection
 	if (hasOnSelectAction){ 
 		argv = argv + ",selected=" + checkValue;
 		var range = first + "_" + last;
@@ -571,10 +571,18 @@ openxava.hasOnSelectAll = function(application, module){
 	for (var i=0; i<selectedAll.length; i++){
 		var selected = document.getElementsByName(openxava.decorateId(application, module, "xava_selected"));
 		var all = selected.length > 0;
+		var e = 0;	// when there are several collections: it checks that the collection has at least one element
 		for (var j=0; j<selected.length && all; j++){
 			var value = selectedAll[i].value.replace("selected_all", "");
-			if (selected[j].value.search(value) != -1) all = selected[j].checked;
+			if (selected[j].value.search(value) != -1) {
+				e++;
+				all = selected[j].checked;
+			}
 		}
-		selectedAll[i].checked=all;
+		selectedAll[i].checked=e == 0 ? false : all;
 	}
+}
+
+openxava.effectShow = function(id) {
+	$("#"+id).show("clip", null, "slow", null);
 }
