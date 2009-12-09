@@ -17,7 +17,10 @@ import org.openxava.util.*;
 		"remarks" 
 	)
 })
-@Tab(baseCondition = "deleted = false")
+@Tabs({
+	@Tab(baseCondition = "deleted = false"),
+	@Tab(name="Deleted", baseCondition = "deleted = true")
+})
 public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)

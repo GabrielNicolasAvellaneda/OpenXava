@@ -34,8 +34,8 @@ public class InvoicingDeleteSelectedAction
 		Map values = new HashMap();
 		// tmp values.put("deleted", true); 
 		values.put("deleted", !isRestore());		
-		for (Map key: getTab().getSelectedKeys()) {
-		// tmp for (Map key: getSelectedKeys()) {
+		// tmp for (Map key: getTab().getSelectedKeys()) {
+		for (Map key: getSelectedKeys()) {
 			try {									
 				MapFacade.setValues(
 					getTab().getModelName(), 
