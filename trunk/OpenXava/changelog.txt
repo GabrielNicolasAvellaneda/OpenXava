@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Paging into collection (it forgot selected rows)
 - Show messages/errors animated
 - Fix: Problems with checkbox 'select/deselect all' with several collections and @OnSelectElementAction
 - Fix: In @OnChange for descriptions list references when the value is zero it's converted to null.

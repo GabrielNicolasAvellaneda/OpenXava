@@ -1,10 +1,20 @@
 package org.openxava.test.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
-import org.hibernate.annotations.*;
-import org.openxava.annotations.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.openxava.annotations.DescriptionsList;
+import org.openxava.annotations.Hidden;
+import org.openxava.annotations.Required;
+import org.openxava.jpa.XPersistence;
 
 /**
  * 
@@ -32,6 +42,12 @@ public class Ingredient {
 	@ManyToOne(fetch=FetchType.LAZY) @DescriptionsList
 	private Formula favouriteFormula; // For testing cyclic references
 
+	public static Ingredient findByName(String name) throws NoResultException {
+		Query query = XPersistence.getManager().createQuery("from Ingredient where name = :name"); 
+		query.setParameter("name", name); 			
+		return (Ingredient) query.getSingleResult();		  		
+	}
+	
 	public Formula getFavouriteFormula() {
 		return favouriteFormula;
 	}

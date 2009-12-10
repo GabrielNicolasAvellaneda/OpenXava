@@ -27,6 +27,36 @@ public class FormulaTest extends ModuleTestBase {
 		super(testName, "Formula");		
 	}
 	
+	public void testPagingInCollection() throws Exception {
+		// crear registros
+		Formula formula = Formula.findByName("HTML TEST");
+		Ingredient ingredient = Ingredient.findByName("LECHE");
+		for (int x = 0; x <= 12; x++){
+			FormulaIngredient fi = new FormulaIngredient();
+			fi.setFormula(formula);
+			fi.setIngredient(ingredient);
+			XPersistence.getManager().persist(fi);
+			XPersistence.getManager().flush();
+		}
+		XPersistence.commit();
+		
+		//
+		execute("Mode.detailAndFirst");
+		assertValue("name", "HTML TEST");
+		assertCollectionRowCount("ingredients", 10);
+		checkRowCollection("ingredients", 0);
+		execute("List.goNextPage", "collection=ingredients");
+		execute("List.goPreviousPage", "collection=ingredients");
+		assertRowCollectionChecked("ingredients", 0);
+		
+		// borrar registros
+		String sentencia = " DELETE FROM FormulaIngredient WHERE ingredient.oid = :ingredient ";
+		Query query = XPersistence.getManager().createQuery(sentencia);
+		query.setParameter("ingredient", ingredient.getOid());
+		query.executeUpdate();
+		XPersistence.commit();
+	}
+	
 	public void testOnSelectElementActionFromAnotherModule() throws Exception {
 		changeModule("BeforeGoingToFormula");
 		execute("ChangeModule.goFormula");
