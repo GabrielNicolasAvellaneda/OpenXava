@@ -621,7 +621,7 @@ public class Tab implements java.io.Serializable {
 	 */
 	public void setSelected(String [] values) {
 		if (values == null) {
-			selected = null;
+			if (selected != null && selected.length > 0) removeSelectedInCurrentPage();
 			return;
 		}
 		int [] intValues = new int[values.length];
@@ -631,11 +631,26 @@ public class Tab implements java.io.Serializable {
 		setSelected(intValues);
 	}
 	
+	public void removeSelectedInCurrentPage(){
+		List rest = new ArrayList();
+		for (int i = 0; i < selected.length; i++){
+			int value = selected[i];
+			if (value >= getInitialIndex() && value <= getFinalIndex()) continue;
+			rest.add(value);
+		}
+		
+		Collections.sort(rest);		
+		selected = new int[rest.size()];		
+		for (int i=0; i<selected.length; i++) {			
+			selected[i] = ((Integer) rest.get(i)).intValue();
+		}
+	}
+	
 	public void deselectAll() {
 		selected = new int[0];
 	}
 	
-	public boolean isSelected(int row) {		
+	public boolean isSelected(int row) {	
 		if (selected == null || selected.length == 0) return false;
 		return Arrays.binarySearch(selected, row) >= 0;
 	}
