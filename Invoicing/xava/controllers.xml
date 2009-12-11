@@ -26,16 +26,16 @@
 		<action name="deleteSelected" mode="list" confirm="true"
 			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction"
 			keystroke="Control D">
-		</action>							
+		</action>
 		
-			
 	</controller> 
 	
 	<controller name="Trash">
 		<action name="restore" mode="list"
 			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction">
 			<set property="restore" value="true"/>
-		</action>	
+		</action>
+		
 	</controller>
 	
 </controllers>
