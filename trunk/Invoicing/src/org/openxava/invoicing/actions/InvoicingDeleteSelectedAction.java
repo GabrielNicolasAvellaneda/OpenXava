@@ -11,8 +11,8 @@ public class InvoicingDeleteSelectedAction
 	implements IChainAction {
 	
 	private String nextAction = null;
-	private boolean restore; // tmp
-	private int row; // tmp
+	private boolean restore;
+	private int row = -1;
 
 	public void execute() throws Exception {		
 		if (!getMetaModel().containsMetaProperty("deleted")) {
@@ -31,10 +31,8 @@ public class InvoicingDeleteSelectedAction
 	}
 	
 	private void markSelectedEntitiesAsDeleted() throws Exception {
-		Map values = new HashMap();
-		// tmp values.put("deleted", true); 
+		Map values = new HashMap(); 
 		values.put("deleted", !isRestore());		
-		// tmp for (Map key: getTab().getSelectedKeys()) {
 		for (Map key: getSelectedKeys()) {
 			try {									
 				MapFacade.setValues(
@@ -54,8 +52,14 @@ public class InvoicingDeleteSelectedAction
 		resetDescriptionsCache();				
 	}
 	
-	private Map [] getSelectedKeys() throws Exception { // tmp
-		if (row < 0) return getTab().getSelectedKeys();		
+	private Map [] getSelectedKeys() throws Exception {
+		System.out
+				.println("[InvoicingDeleteSelectedAction.getSelectedKeys] row=" + row); // tmp
+		if (row < 0) {
+			System.out
+					.println("[InvoicingDeleteSelectedAction.getSelectedKeys] getTab().getSelectedKeys()=" + getTab().getSelectedKeys()); // tmp
+			return getTab().getSelectedKeys();		
+		}
 		return new Map [] { (Map) getTab().getTableModel().getObjectAt(row) };
 	}
 
@@ -75,5 +79,4 @@ public class InvoicingDeleteSelectedAction
 		this.row = row;
 	}
 	
-
 }
