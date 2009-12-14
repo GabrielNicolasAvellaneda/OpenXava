@@ -51,7 +51,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertValue("name", "JUNIT Customer MODIFIED");
 		 
 		// Delete
-		execute("CRUD.delete");
+		execute("Invoicing.delete"); 
 		assertMessage("Customer deleted successfully");
 	}
 		

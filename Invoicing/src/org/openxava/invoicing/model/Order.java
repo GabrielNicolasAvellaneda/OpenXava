@@ -25,7 +25,7 @@ public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
-	private CommercialDocument invoice;
+	private Invoice invoice;
 	
 	private boolean delivered;
 
@@ -37,11 +37,11 @@ public class Order extends CommercialDocument {
 		this.delivered = delivered;
 	}
 
-	public CommercialDocument getInvoice() {
+	public Invoice getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(CommercialDocument invoice) {
+	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
 	
