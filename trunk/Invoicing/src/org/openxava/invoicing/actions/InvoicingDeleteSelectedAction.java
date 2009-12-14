@@ -53,11 +53,7 @@ public class InvoicingDeleteSelectedAction
 	}
 	
 	private Map [] getSelectedKeys() throws Exception {
-		System.out
-				.println("[InvoicingDeleteSelectedAction.getSelectedKeys] row=" + row); // tmp
 		if (row < 0) {
-			System.out
-					.println("[InvoicingDeleteSelectedAction.getSelectedKeys] getTab().getSelectedKeys()=" + getTab().getSelectedKeys()); // tmp
 			return getTab().getSelectedKeys();		
 		}
 		return new Map [] { (Map) getTab().getTableModel().getObjectAt(row) };
