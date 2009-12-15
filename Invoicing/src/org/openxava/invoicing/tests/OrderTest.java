@@ -31,9 +31,8 @@ public class OrderTest extends CommercialDocumentTest {
 		
 		// Order with invoice cannot be deleted
 		execute("Mode.list");
-		execute("Mode.detailAndFirst");
-		// tmp execute("CRUD.delete");
-		execute("Invoicing.delete"); // tmp
+		execute("Mode.detailAndFirst");		
+		execute("Invoicing.delete"); 
 		assertErrorsCount(1);
 		
 		// Restore values

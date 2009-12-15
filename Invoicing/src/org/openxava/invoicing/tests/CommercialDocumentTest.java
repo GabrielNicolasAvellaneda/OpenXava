@@ -41,9 +41,8 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 	}
 
-	private void remove() throws Exception {
-		// tmp execute("CRUD.delete");
-		execute("Invoicing.delete"); // tmp
+	private void remove() throws Exception { 
+		execute("Invoicing.delete");
 		assertNoErrors();
 	}
 
