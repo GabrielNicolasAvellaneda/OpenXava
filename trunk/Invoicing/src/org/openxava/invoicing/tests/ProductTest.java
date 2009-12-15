@@ -36,9 +36,8 @@ public class ProductTest extends ModuleTestBase {
 
 		execute("List.filter");
 		assertListRowCount(2);
-		checkRow(1);
-		// tmp execute("CRUD.deleteSelected");		
-		execute("Invoicing.deleteSelected"); // tmp
+		checkRow(1);				
+		execute("Invoicing.deleteSelected"); 
 		assertListRowCount(1);
 	}
 	
