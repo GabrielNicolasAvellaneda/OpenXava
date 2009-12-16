@@ -29,6 +29,85 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 		verifyCreated();				
 		remove(); 
 	}
+	
+	public void testTrash() throws Exception { 
+		assertListOnlyOnePage();
+
+		// Deleting from detail mode
+		int initialRowCount = getListRowCount();
+		String year1 = getValueInList(0, 0);
+		String number1 = getValueInList(0, 1);
+		execute("Mode.detailAndFirst");
+		execute("Invoicing.delete");
+		execute("Mode.list");
+		
+		assertListRowCount(initialRowCount - 1);
+		assertDocumentNotInList(year1, number1);
+		
+		// Deleting from list mode
+		String year2 = getValueInList(0, 0);
+		String number2 = getValueInList(0, 1);
+		checkRow(0);
+		execute("Invoicing.deleteSelected");
+		assertListRowCount(initialRowCount - 2);
+		assertDocumentNotInList(year2, number2);		
+		
+		// Verifying deleted entities in trash module
+		changeModule(model + "Trash");
+		assertListOnlyOnePage();
+		int initialTrashRowCount = getListRowCount(); 
+		
+		assertDocumentInList(year1, number1);
+		assertDocumentInList(year2, number2);		
+ 
+		// Restoring using row action
+		int row1 = getDocumentRowInList(year1, number1);
+		execute("Trash.restore", "row=" + row1);
+		assertListRowCount(initialTrashRowCount - 1);
+		assertDocumentNotInList(year1, number1);
+		
+		// Restoring checking a row and using bottom button
+		int row2 = getDocumentRowInList(year2, number2);
+		checkRow(row2);
+		execute("Trash.restore");
+		assertListRowCount(initialTrashRowCount - 2);
+		assertDocumentNotInList(year2, number2);
+		
+		// Verifying entities restored
+		changeModule(model);
+		assertListRowCount(initialRowCount);
+		assertDocumentInList(year1, number1);
+		assertDocumentInList(year2, number2);		
+	}
+
+	private void assertListOnlyOnePage() throws Exception {
+		assertListNotEmpty(); 
+		assertTrue("Must be less than 10 rows to run this test", 
+			getListRowCount() < 10);		
+	}
+	
+	private void assertDocumentNotInList(String year, String number) throws Exception {
+		assertTrue("Document " + year + "/" + number + " must not be in list",
+				getDocumentRowInList(year, number) < 0);
+	}
+		
+	private void assertDocumentInList(String year, String number) throws Exception {
+		assertTrue("Document " + year + "/" + number + " must be in list",
+			getDocumentRowInList(year, number) >= 0);
+	}
+	
+	private int getDocumentRowInList(String year, String number) throws Exception {
+		int c = getListRowCount();
+		for (int i=0; i<c; i++) {
+			if (year.equals(getValueInList(i, 0)) &&
+				number.equals(getValueInList(i, 1))) 
+			{
+				return i;				
+			}
+		}		
+		return -1;
+	}
+
 
 	private void verifyAmountAndEstimatedProfit() throws Exception { 
 		execute("Mode.list");

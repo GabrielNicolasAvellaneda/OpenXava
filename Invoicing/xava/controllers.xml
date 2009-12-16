@@ -35,7 +35,11 @@
 			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction">
 			<set property="restore" value="true"/>
 		</action>
-		
+		<!-- tmp -->
+		<action name="deleteSelected" mode="list" confirm="true"
+			class="org.openxava.actions.DeleteSelectedAction"
+			keystroke="Control D">
+		</action>							
 	</controller>
 	
 </controllers>
