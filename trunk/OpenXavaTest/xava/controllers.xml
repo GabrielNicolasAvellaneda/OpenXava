@@ -24,43 +24,38 @@
 	of OpenXava. Because it has the same name.
 	In OpenXavaTest application this controller and not the one in default-controllers.xml
 	is used to manage collections.
-	 -->
+	
+	tmp 
+	- Hay que actualizar guía de referencia sobre como refinar colecciones
+	- Que view tiene su propia clase ha de estar en migración
+	-->  
 	<controller name="Collection">
 		<action name="new" image="images/create_new.gif"
-			class="org.openxava.actions.CreateNewElementInCollectionAction">			
-		</action>	
+			class="org.openxava.actions.CreateNewElementInCollectionAction"/>
+	
+		<action name="add" image="images/create_new.gif" 
+			class="org.openxava.actions.GoAddElementsToCollectionAction"/>
 
-		<action name="add" image="images/create_new.gif"
-			class="org.openxava.actions.GoAddElementsToCollectionAction">		
-			<use-object name="xava_tab"/>	
-			<use-object name="xava_currentCollectionLabel"/>
-			<use-object name="xava_collectionViewObject"/>
-		</action>												
-		<action name="hideDetail"
-			class="org.openxava.test.actions.HideDetailElementInCollectionWithMessageAction">
-		</action>							
-		<action name="save"
-			class="org.openxava.actions.SaveElementInCollectionAction">			
-			<use-object name="xava_view"/>
-		</action>			
-		<action name="remove"
-			class="org.openxava.actions.RemoveElementFromCollectionAction">			
-			<use-object name="xava_view"/>
-		</action>					
-		<action name="edit" image="images/edit.gif"
-			class="org.openxava.actions.EditElementInCollectionAction">			
-			<use-object name="xava_view"/>
-		</action>							
-		<action name="view" image="images/view.gif"
-			class="org.openxava.actions.EditElementInCollectionAction">			
-			<use-object name="xava_view"/>
-		</action>			 
+		<action name="hideDetail" 
+			class="org.openxava.test.actions.HideDetailElementInCollectionWithMessageAction"/>
+							
+		<action name="save" 
+			class="org.openxava.actions.SaveElementInCollectionAction"/>
+
+		<action name="remove" 
+			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
+
+		<action name="edit" image="images/edit.gif" 
+			class="org.openxava.actions.EditElementInCollectionAction"/>
+						 						
+		<action name="view" image="images/view.gif" 
+			class="org.openxava.actions.ViewElementInCollectionAction"/>
+					 		
 		<action name="removeSelected" confirm="true" image="images/delete.gif"
-			class="org.openxava.actions.RemoveSelectedInCollectionAction">
-			<use-object name="xava_view"/>
-		</action>	
-	</controller>
-		
+			class="org.openxava.actions.RemoveSelectedInCollectionAction"/>
+	
+	</controller>	
+					
 	<controller name="ChangeActiveYear">
 		<action name="showActiveYear" class="org.openxava.test.actions.ShowActiveYearAction"
 			on-init="true" hidden="true">
@@ -172,14 +167,14 @@
 		</action>								
 	</controller>
 	
-	<controller name="DeliveryDetail">
-		<action name="new" image="images/create_new.gif"
+	<controller name="DeliveryDetail">		
+		<action name="new" image="images/create_new.gif" 
 			class="org.openxava.test.actions.NewDeliveryDetailAction">			
-		</action>					
+		</action>											
 		<action name="hideDetail"
 			class="org.openxava.test.actions.HideDeliveryDetailAction">			
 		</action>							
-		<action name="save"
+		<action name="save" 
 			class="org.openxava.test.actions.SaveDeliveryDetailAction">			
 			<use-object name="xava_view"/>
 		</action>			
@@ -226,8 +221,7 @@
 			<use-object name="xava_view"/>
 		</action>
 		<action name="reportBySubfamily" 
-			class="org.openxava.test.actions.GoFamilyProductsReportAction"
-			show-dialog="true">			
+			class="org.openxava.test.actions.GoFamilyProductsReportAction">			
 			<use-object name="xava_view"/>
 			<use-object name="xava_previousViews"/>			
 		</action>		
@@ -527,8 +521,7 @@
 	
 	<controller name="MyReference">
 	
-		<action name="search" hidden="true"
-			show-dialog="true"
+		<action name="search" hidden="true"			
 			class="org.openxava.test.actions.MySearchAction"
 			image="images/search.gif">				
 			<use-object name="xava_view"/>			 
@@ -579,15 +572,13 @@
 	<controller name="FamilyProductsReport">
 		<action name="generatePdf" 
 			class="org.openxava.test.actions.FamilyProductsReportAction"
-			takes-long="true"
-			hide-dialog="true"
+			takes-long="true"			
 			keystroke="Control Alt P">
 			<use-object name="xava_view"/>
 			<use-object name="xava_previousViews"/>			
 		</action>
 		<action name="generateExcel" 
-			class="org.openxava.test.actions.FamilyProductsReportAction"
-			hide-dialog="false"
+			class="org.openxava.test.actions.FamilyProductsReportAction"			
 			takes-long="true">
 			<set property="format" value="excel"/>
 			<set property="goBackOnFinish" value="false"/>
@@ -795,10 +786,10 @@
 	<controller name="WarehouseReference">
 		<action name="createNewNoDialog" 
 			class="org.openxava.actions.CreateNewFromReferenceAction"
-			image="images/create_new.gif"
-			show-dialog="false">
+			image="images/create_new.gif">
 			<set property="keyProperty" value="warehouse.number"/>
 			<set property="model" value="Warehouse"/>
+			<set property="showDialog" value="false"/>
 			<use-object name="xava_view"/>
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_referenceSubview"/>
@@ -864,8 +855,7 @@
 			<use-object name="xava_view"/>			
 		</action>
 		
-		<action name="addFullAddress" hidden="true"
-			show-dialog="true"
+		<action name="addFullAddress" hidden="true"			
 			class="org.openxava.test.actions.GoAddFullAddressAction">					
 			<use-object name="xava_view"/>			
 			<use-object name="xava_previousViews"/>
@@ -875,7 +865,7 @@
 	
 	<controller name="AddFullAddress">
 	
-		<action name="add" hide-dialog="true"
+		<action name="add" 
 			class="org.openxava.test.actions.AddFullAddressAction">			
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_view"/>

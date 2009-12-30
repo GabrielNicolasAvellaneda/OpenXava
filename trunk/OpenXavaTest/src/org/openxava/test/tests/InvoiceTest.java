@@ -30,6 +30,7 @@ import org.openxava.util.XavaPreferences;
 
 
 /**
+ * 
  * @author Javier Paniza
  */
 
@@ -108,8 +109,9 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("vatPercentage", "16");
 		execute("Sections.change", "activeSection=1");
 		execute("Collection.new", "viewObject=xava_view_section1_details");
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		execute("Collection.save");
 		assertNoMessage("Invoice created successfully");
+		closeDialog(); 
 		execute("CRUD.new");
 		assertValue("comment", "");
 		setValue("year", "2008");
@@ -139,29 +141,9 @@ public class InvoiceTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 10);
 	}
 	
-	public void testCollectionElementHiddenOnChangeObject_generatePdfAggregateCollection() throws Exception {
+	public void testGeneratePdfAggregateCollection() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
-		
-		// Verifying that detail is closed
-		assertAction("Collection.new");
-		assertNoAction("Collection.save");
-		
-		// Editing the first detail
-		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details");
-		
-		// Verifying that detail is opened
-		assertNoAction("Collection.new");
-		assertAction("Collection.save");
-		
-		// Go to next invoice
-		execute("Navigation.next");
-		
-		// Verifying that detail is closed
-		assertAction("Collection.new");
-		assertNoAction("Collection.save");	
-		
-		// Print a collection of aggregates
 		execute("Print.generatePdf", "viewObject=xava_view_section1_details");
 		assertContentTypeForPopup("application/pdf");
 	}
@@ -763,20 +745,23 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		assertCollectionRowCount("details", 0);
 		
+		assertNoDialog();
 		execute("Collection.new", "viewObject=xava_view_section1_details");
-		setValue("details.serviceType", usesAnnotatedPOJO()?"":"0");
-		setValue("details.quantity", "20");
-		setValue("details.unitPrice", getProductUnitPrice());
-		assertValue("details.amount", getProductUnitPriceMultiplyBy("20"));
-		setValue("details.product.number", getProductNumber());
-		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "03/18/04"); // Testing multiple-mapping in aggregate
-		setValue("details.soldBy.number", getProductNumber());
-		execute("Collection.save", "viewObject=xava_view_section1_details");		
+		assertDialog();
+		setValue("serviceType", usesAnnotatedPOJO()?"":"0");
+		setValue("quantity", "20");
+		setValue("unitPrice", getProductUnitPrice());		
+		assertValue("amount", getProductUnitPriceMultiplyBy("20"));
+		setValue("product.number", getProductNumber());
+		assertValue("product.description", getProductDescription());
+		setValue("deliveryDate", "03/18/04"); // Testing multiple-mapping in aggregate
+		setValue("soldBy.number", getProductNumber());
+		execute("Collection.save");		
 		assertMessage("Invoice detail created successfully");
 		assertMessage("Invoice created successfully"); 
 		assertNoErrors();		
-		assertExists("details.serviceType"); // Testing does not hide detail on save
+		// assertExists("serviceType"); // In OX3 it does not hide detail on save, 
+		assertNoDialog();			// but since OX4m2 a dialog is used and it's close
 		assertCollectionRowCount("details", 1);
 
 		// Next line tests IModelCalculator in an aggregate collection (only apply to XML components)
@@ -791,26 +776,28 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("vatPercentage", "23");		
 		execute("Sections.change", "activeSection=1");
 		// end of recalculate testing
-				
-		setValue("details.serviceType", usesAnnotatedPOJO()?"0":"1");
-		setValue("details.quantity", "200");
-		setValue("details.unitPrice", getProductUnitPrice());		
-		assertValue("details.amount", getProductUnitPriceMultiplyBy("200"));
-		setValue("details.product.number", getProductNumber());
-		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "3/19/04"); // Testing multiple-mapping in aggregate
-		setValue("details.soldBy.number", getProductNumber());
-		execute("Collection.save", "viewObject=xava_view_section1_details");
-		assertCollectionRowCount("details", 2);
 		
-		setValue("details.serviceType", usesAnnotatedPOJO()?"1":"2");
-		setValue("details.quantity", "2");
-		setValue("details.unitPrice", getProductUnitPrice());
-		assertValue("details.amount", getProductUnitPriceMultiplyBy("2"));
-		setValue("details.product.number", getProductNumber());
-		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate		
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		execute("Collection.new", "viewObject=xava_view_section1_details"); 
+		setValue("serviceType", usesAnnotatedPOJO()?"0":"1");
+		setValue("quantity", "200");
+		setValue("unitPrice", getProductUnitPrice());		
+		assertValue("amount", getProductUnitPriceMultiplyBy("200"));
+		setValue("product.number", getProductNumber());
+		assertValue("product.description", getProductDescription());
+		setValue("deliveryDate", "3/19/04"); // Testing multiple-mapping in aggregate
+		setValue("soldBy.number", getProductNumber());
+		execute("Collection.save");
+		assertCollectionRowCount("details", 2);
+
+		execute("Collection.new", "viewObject=xava_view_section1_details"); 
+		setValue("serviceType", usesAnnotatedPOJO()?"1":"2");
+		setValue("quantity", "2");
+		setValue("unitPrice", getProductUnitPrice());
+		assertValue("amount", getProductUnitPriceMultiplyBy("2"));
+		setValue("product.number", getProductNumber());
+		assertValue("product.description", getProductDescription());
+		setValue("deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate		
+		execute("Collection.save");
 		assertCollectionRowCount("details", 3);
 				
 		assertValueInCollection("details", 0, 0, "Urgent");
@@ -883,26 +870,27 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		// Edit line
 		execute("Sections.change", "activeSection=1");		
-		assertNotExists("details.product.description");
-		assertNotExists("details.quantity");
-		assertNotExists("details.deliveryDate");
+		assertNotExists("product.description");
+		assertNotExists("quantity");
+		assertNotExists("deliveryDate");
 		execute("Invoice.editDetail", "row=1,viewObject=xava_view_section1_details");
-		assertValue("details.product.description", getProductDescription());
-		assertValue("details.quantity", "200");
-		assertValue("details.deliveryDate", "3/19/04");
-		setValue("details.quantity", "234");
-		setValue("details.deliveryDate", "4/23/04");
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		assertValue("product.description", getProductDescription());
+		assertValue("quantity", "200");
+		assertValue("deliveryDate", "3/19/04");
+		setValue("quantity", "234");
+		setValue("deliveryDate", "4/23/04");
+		execute("Collection.save");
 		assertNoErrors();
 		assertMessage("Invoice detail modified successfully");
 		assertValueInCollection("details", 1, 3, "234");		
-		assertExists("details.product.description"); // Because on save detail is not hide
-		assertExists("details.quantity");
-		assertExists("details.deliveryDate");
+		assertNotExists("product.description"); 
+		assertNotExists("quantity");
+		assertNotExists("deliveryDate");
 		execute("Invoice.editDetail", "row=1,viewObject=xava_view_section1_details");
-		assertValue("details.product.description", getProductDescription());
-		assertValue("details.quantity", "234");
-		assertValue("details.deliveryDate", "4/23/04");
+		assertValue("product.description", getProductDescription());
+		assertValue("quantity", "234");
+		assertValue("deliveryDate", "4/23/04");
+		closeDialog(); 
 		
 		// Return to save and consult for see if the line is edited
 		execute("CRUD.save");
@@ -917,13 +905,14 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("details", 1, 3, "234");
 		assertValueInCollection("details", 1, 4, getProductUnitPrice());
 		assertValueInCollection("details", 1, 5, getProductUnitPriceMultiplyBy("234"));
-		assertNotExists("details.product.description");
-		assertNotExists("details.quantity");
-		assertNotExists("details.deliveryDate");
+		assertNotExists("product.description");
+		assertNotExists("quantity");
+		assertNotExists("deliveryDate");
 		execute("Invoice.editDetail", "row=1,viewObject=xava_view_section1_details");
-		assertValue("details.product.description", getProductDescription());
-		assertValue("details.quantity", "234");
-		assertValue("details.deliveryDate", "4/23/04");
+		assertValue("product.description", getProductDescription());
+		assertValue("quantity", "234");
+		assertValue("deliveryDate", "4/23/04");
+		closeDialog();
 		
 		// Verifying that it do not delete member in collection that not are in list
 		execute("CRUD.new");
@@ -937,15 +926,16 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("number", "66");		
 		execute("CRUD.search");
 		assertNoErrors();
-		execute("Sections.change", "activeSection=1");				
+		execute("Sections.change", "activeSection=1");
+		
+		assertCollectionRowCount("details", 3); 
 		execute("Invoice.editDetail", "row=1,viewObject=xava_view_section1_details");
-		assertValue("details.product.description", getProductDescription());
-		assertValue("details.quantity", "234");
-		assertValue("details.deliveryDate", "4/23/04");
+		assertValue("product.description", getProductDescription());
+		assertValue("quantity", "234");
+		assertValue("deliveryDate", "4/23/04");
 		
 		// Remove a row from collection
-		assertCollectionRowCount("details", 3);
-		execute("Collection.remove", "viewObject=xava_view_section1_details");
+		execute("Collection.remove");
 		assertMessage("Invoice detail deleted from database");
 		assertCollectionRowCount("details", 2);
 		assertValueInCollection("details", 0, 0, "Urgent");
@@ -1026,22 +1016,21 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=1");
 		
 		execute("Collection.new", "viewObject=xava_view_section1_details");
-		setValue("details.serviceType", "0");
-		setValue("details.quantity", "20");
-		setValue("details.unitPrice", getProductUnitPrice());
-		assertValue("details.amount", getProductUnitPriceMultiplyBy("20"));
-		setValue("details.product.number", getProductNumber());
-		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "03/18/04");
-		setValue("details.soldBy.number", getProductNumber());
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		setValue("serviceType", "0");
+		setValue("quantity", "20");
+		setValue("unitPrice", getProductUnitPrice());
+		assertValue("amount", getProductUnitPriceMultiplyBy("20"));
+		setValue("product.number", getProductNumber());
+		assertValue("product.description", getProductDescription());				
+		setValue("deliveryDate", "03/18/04");
+		setValue("soldBy.number", getProductNumber());
+		execute("Collection.save");		
 		assertError("It is not possible to add details, the invoice is paid");
 		
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			execute("CRUD.delete");
 			assertMessage("Invoice deleted successfully");
-		}
-		
+		}		
 	}
 	
 	
@@ -1069,25 +1058,29 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		assertCollectionRowCount("details", 0);
 		
+		assertNoDialog(); 
 		execute("Collection.new", "viewObject=xava_view_section1_details");
-		setValue("details.serviceType", "0");
-		setValue("details.quantity", "20");
-		setValue("details.unitPrice", getProductUnitPricePlus10());
-		assertValue("details.amount", "600.00");
-		assertValue("details.product.number", "");
-		assertValue("details.product.description", ""); 
-		setValue("details.deliveryDate", "03/18/04");
-		setValue("details.soldBy.number", getProductNumber());
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		assertDialog(); 
+		setValue("serviceType", "0");
+		setValue("quantity", "20");
+		setValue("unitPrice", getProductUnitPricePlus10());
+		assertValue("amount", "600.00");
+		assertValue("product.number", "");
+		assertValue("product.description", ""); 
+		setValue("deliveryDate", "03/18/04");
+		setValue("soldBy.number", getProductNumber());
+		execute("Collection.save"); 		
 		assertError("It is needed specify a product for a valid invoice detail");
 		
-		setValue("details.product.number", getProductNumber()); 
-		assertValue("details.product.description", getProductDescription());
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		setValue("product.number", getProductNumber()); 
+		assertValue("product.description", getProductDescription());
+		execute("Collection.save");
 		assertError("Invoice price of a product can not be greater to official price of the product");
+		assertDialog(); 
 		
-		setValue("details.unitPrice", getProductUnitPrice());
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		setValue("unitPrice", getProductUnitPrice());
+		execute("Collection.save");
+		assertNoDialog(); 
 		assertNoErrors();
 		
 		// Delete
@@ -1197,40 +1190,21 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details");
 		
-		String [] aggregateDetailActions = {
-			"Navigation.previous",
-			"Navigation.first",
-			"Navigation.next",
-			"CRUD.new",
-			"CRUD.save",
-			"CRUD.delete",
-			"CRUD.search",	
-			"Invoice.printPdf",
-			"Invoice.printExcel",
-			"Invoice.printRtf",
-			"Invoice.printOdt",
-			"Invoice.removeViewDeliveryInInvoice",
-			"Invoice.addViewDeliveryInInvoice",			
-			"Mode.list",
-			"Sections.change",			
+		String [] aggregateDetailActions = { 
 			"Reference.createNew",
 			"Reference.search",
 			"Reference.modify",
 			"Gallery.edit",
-			"Invoice.editDetail", // because it is overwrite, otherwise 'Collection.edit'
 			"Collection.save",
 			"Collection.remove",
 			"Collection.hideDetail",
-			"List.filter", 
-			"List.orderBy", 
-			"List.customize", 				
-			"Invoice.viewProduct",
-			"Invoice.printPdfNewAfter"
-		};		
+			"Invoice.viewProduct"
+		};				
 		assertActions(aggregateDetailActions);
 		
-		assertEditable("details.serviceType");
+		assertEditable("serviceType");
 		
+		closeDialog(); 
 		// i18n for member of collections
 		// In resource file we have: Invoice.details.product.description=Product
 		assertLabelInCollection("details", 1, "Product");
@@ -1244,17 +1218,19 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.search");
 		assertNoErrors();		
 		execute("Sections.change", "activeSection=1");		
+		assertNoDialog(); 
 		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details");
+		assertDialog(); 
 		assertNoErrors();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		assertValue("details.remarks", "Edit at " + df.format(new java.util.Date()));
+		assertValue("remarks", "Edit at " + df.format(new java.util.Date())); 
 		
-		String productNumber = getValue("details.product.number");
+		String productNumber = getValue("product.number");
 		assertTrue("Detail must to have product number", !Is.emptyString(productNumber));
-		String productDescription = getValue("details.product.description");
+		String productDescription = getValue("product.description");
 		assertTrue("Detail must to have product description", !Is.emptyString(productDescription));
-		
-		execute("Invoice.viewProduct", "viewObject=xava_view_section1_details");
+				
+		execute("Invoice.viewProduct"); 
 		assertNoErrors();
 		assertNoAction("CRUD.new");
 		assertAction("ProductFromInvoice.return");
@@ -1284,23 +1260,22 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=3");
 		assertCollectionRowCount("deliveries", 1);
 		
-		assertNotExists("deliveries.number");
-		assertNotExists("deliveries.date");
-		assertNotExists("deliveries.description");
+		assertNoDialog(); 
 		execute("Collection.view", "row=0,viewObject=xava_view_section3_deliveries");
-		assertValue("deliveries.number", "666");		
-		assertValue("deliveries.date", "2/22/04");		
-		assertValue("deliveries.description", "DELIVERY JUNIT 666");
-		assertNoEditable("deliveries.number"); 
-		assertNoEditable("deliveries.date"); 		
-		assertNoEditable("deliveries.description"); 
+		assertDialog(); 
+		assertValue("number", "666");		
+		assertValue("date", "2/22/04");		
+		assertValue("description", "DELIVERY JUNIT 666");
+		assertNoEditable("number"); 
+		assertNoEditable("date"); 		
+		assertNoEditable("description"); 		
 	}
 	
 	public void testDefaultValueInDetailCollection() throws Exception {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=1");		
 		execute("Collection.new", "viewObject=xava_view_section1_details");
-		assertValue("details.deliveryDate", getCurrentDate());
+		assertValue("deliveryDate", getCurrentDate()); 
 	}
 				
 	public void testCalculatedPropertiesInSection() throws Exception {
@@ -1489,15 +1464,15 @@ public class InvoiceTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 0);
 
 		execute("Collection.new", "viewObject=xava_view_section1_details");
-		setValue("details.serviceType", "0");
-		setValue("details.quantity", "20");
-		setValue("details.unitPrice", getProductUnitPrice());
-		assertValue("details.amount", getProductUnitPriceMultiplyBy("20"));
-		setValue("details.product.number", getProductNumber());
-		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "09/05/2007");
-		setValue("details.soldBy.number", getProductNumber());
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		setValue("serviceType", "0");
+		setValue("quantity", "20");
+		setValue("unitPrice", getProductUnitPrice());
+		assertValue("amount", getProductUnitPriceMultiplyBy("20"));
+		setValue("product.number", getProductNumber());
+		assertValue("product.description", getProductDescription());
+		setValue("deliveryDate", "09/05/2007");
+		setValue("soldBy.number", getProductNumber());
+		execute("Collection.save");
 		assertNoErrors();
 		assertMessage("Invoice detail created successfully");
 	}

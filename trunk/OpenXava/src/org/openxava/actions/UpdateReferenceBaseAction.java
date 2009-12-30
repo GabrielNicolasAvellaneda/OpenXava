@@ -25,7 +25,7 @@ public abstract class UpdateReferenceBaseAction extends ViewBaseAction implement
 			if (!referenceSubview.hasKeyProperties()) {
 				referenceSubview.findObject();
 			}
-			returnToPreviousView();
+			closeDialog(); 
 		}
 		resetDescriptionsCache();
 	}

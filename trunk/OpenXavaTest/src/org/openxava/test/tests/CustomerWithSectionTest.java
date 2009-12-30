@@ -48,6 +48,53 @@ public class CustomerWithSectionTest extends CustomerTest {
 		super(testName, "CustomerWithSection", true);		
 	}
 	
+	public void testDialogsInNestedCollections() throws Exception { 
+		assertDialogsInNestedCollections(false);
+		assertDialogsInNestedCollections(true);
+	}
+	
+	public void assertDialogsInNestedCollections(boolean closeDialog) throws Exception { 
+		execute("CRUD.new");
+		assertNoDialog();		
+		assertAction("CRUD.new");
+		assertNoAction("Collection.hideDetail");
+		assertExists("deliveryPlaces");
+		assertNotExists("receptionists");
+		
+		execute("Collection.new", "viewObject=xava_view_section0_deliveryPlaces");
+		assertDialog();		
+		assertNoAction("CRUD.new");
+		assertAction("Collection.save");
+		assertAction("Collection.hideDetail");
+		assertNotExists("deliveryPlaces");
+		assertExists("receptionists");
+		
+		execute("Collection.new", "viewObject=xava_view_receptionists");
+		assertDialog();		
+		assertActions(new String [] { "Collection.save", "Collection.hideDetail" });
+		assertNotExists("deliveryPlaces");
+		assertNotExists("receptionists");
+		
+		if (closeDialog) closeDialog();
+		else execute("Collection.hideDetail");
+		assertDialog();		
+		assertNoAction("CRUD.new");
+		assertAction("Collection.save");
+		assertAction("Collection.hideDetail");
+		assertAction("Collection.new");
+		assertNotExists("deliveryPlaces");
+		assertExists("receptionists");
+	
+		if (closeDialog) closeDialog();
+		else execute("Collection.hideDetail");
+		assertNoDialog();		
+		assertAction("CRUD.new");
+		assertNoAction("Collection.hideDetail");
+		assertAction("Collection.new");
+		assertExists("deliveryPlaces");
+		assertNotExists("receptionists");		
+	}
+	
 	public void testForwardToAbsoluteURL() throws Exception { 
 		execute("CRUD.new");
 		assertValue("website", "");
@@ -133,19 +180,19 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertCollectionRowCount("deliveryPlaces", 1);
 		execute("Collection.edit", "row=0,viewObject=xava_view_section0_deliveryPlaces");
 		
-		assertCollectionRowCount("deliveryPlaces.receptionists", 2);
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "JUAN");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "PEPE");
+		assertCollectionRowCount("receptionists", 2);
+		assertValueInCollection("receptionists", 0, 0, "JUAN");
+		assertValueInCollection("receptionists", 1, 0, "PEPE");
 		
-		execute("List.orderBy", "property=name,collection=deliveryPlaces.receptionists");
-		execute("List.orderBy", "property=name,collection=deliveryPlaces.receptionists");
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "PEPE");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "JUAN");
-
-		setConditionValues("deliveryPlaces.receptionists", new String[] { "J"} );		
-		execute("List.filter", "collection=deliveryPlaces.receptionists");
-		assertCollectionRowCount("deliveryPlaces.receptionists", 1);
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "JUAN");				
+		execute("List.orderBy", "property=name,collection=receptionists"); 
+		execute("List.orderBy", "property=name,collection=receptionists");
+		assertValueInCollection("receptionists", 0, 0, "PEPE");
+		assertValueInCollection("receptionists", 1, 0, "JUAN");
+		
+		setConditionValues("receptionists", new String[] { "J"} ); 
+		execute("List.filter", "collection=receptionists"); 
+		assertCollectionRowCount("receptionists", 1); 
+		assertValueInCollection("receptionists", 0, 0, "JUAN");				
 	}
 	
 	public void testModifyFromReference() throws Exception {
@@ -257,14 +304,22 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertAddingStates();
 		
 		// Using Edit + Remove
+		/* To remove editing collections of entites not available since OX4m2
 		execute("Collection.edit", "row=0,viewObject=xava_view_section1_states");
 		execute("Collection.remove", "viewObject=xava_view_section1_states");
 		assertCollectionRowCount("states", 1);
+		*/
 		// Using Check row + Remove selected
-		checkRowCollection("states", 0);
+		checkRowCollection("states", 0);		
+		execute("Collection.removeSelected", "viewObject=xava_view_section1_states");
+		assertNoErrors();
+		assertCollectionRowCount("states", 1);
+		
+		checkRowCollection("states", 0);		
 		execute("Collection.removeSelected", "viewObject=xava_view_section1_states");
 		assertNoErrors();
 		assertCollectionRowCount("states", 0);
+		
 		
 		// Verifying if that other part is not removed
 		changeModule("StateHibernate");

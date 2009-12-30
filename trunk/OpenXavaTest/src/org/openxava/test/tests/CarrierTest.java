@@ -186,7 +186,7 @@ public class CarrierTest extends CarrierTestBase {
 		assertValue("remarks", "He can drive trucks");
 		
 		assertNoDialog();
-		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); // tmp Migration
+		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); 
 		assertNoErrors();
 		assertDialog();
 		assertValue("description", "CAMIONES PEQUEÑOS");

@@ -57,8 +57,8 @@ public class CustomerTest extends ModuleTestBase {
 		assertValue("name", "Cuatrero");
 		assertCollectionRowCount("deliveryPlaces", 1); // Cuatrero has 1 delivery place
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
-		assertCollectionRowCount("deliveryPlaces.receptionists", 2); // The delivery place has 2 receptionist
-		execute("Print.generatePdf", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");		
+		assertCollectionRowCount("receptionists", 2); // The delivery place has 2 receptionist
+		execute("Print.generatePdf", "viewObject=xava_view_receptionists");		
 		assertContentTypeForPopup("application/pdf");		
 	}
 	
@@ -69,15 +69,14 @@ public class CustomerTest extends ModuleTestBase {
 		assertValue("name", "Cuatrero");
 		assertCollectionRowCount("deliveryPlaces", 1); // Cuatrero has 1 delivery place
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
-		assertCollectionRowCount("deliveryPlaces.receptionists", 2); // The delivery place has 2 receptionist
-		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		setValue("deliveryPlaces.receptionists.name", "JUNIT");
-		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		assertCollectionRowCount("deliveryPlaces.receptionists", 3);
-		execute("Collection.hideDetail", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		checkRowCollection("deliveryPlaces.receptionists", 2);
-		execute("Collection.removeSelected", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		assertCollectionRowCount("deliveryPlaces.receptionists", 2);
+		assertCollectionRowCount("receptionists", 2); // The delivery place has 2 receptionist
+		execute("Collection.new", "viewObject=xava_view_receptionists");
+		setValue("name", "JUNIT");
+		execute("Collection.save");
+		assertCollectionRowCount("receptionists", 3);
+		checkRowCollection("receptionists", 2);
+		execute("Collection.removeSelected", "viewObject=xava_view_receptionists");
+		assertCollectionRowCount("receptionists", 2);
 	}
 				
 	public void testObtainAggregateValues() throws Exception {
@@ -139,13 +138,13 @@ public class CustomerTest extends ModuleTestBase {
 	public void testOnChangePropertyOfReferenceWithMultipleKeyAsListDescriptionInAggregateOfCollection() throws Exception {
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces");		
-		assertValue("deliveryPlaces.remarks", "");
+		assertValue("remarks", "");
 		Warehouse warehouse = new Warehouse();
 		warehouse.setNumber(1);
 		warehouse.setZoneNumber(1);
 		String warehouseKey = MetaModel.getForPOJO(warehouse).toString(warehouse);
-		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey);
-		assertValue("deliveryPlaces.remarks", "PREFERRED WAREHOUSE IS 1");
+		setValue("preferredWarehouse.KEY", warehouseKey);
+		assertValue("remarks", "PREFERRED WAREHOUSE IS 1");
 	}
 		
 	public void testViewGetValueInGroup() throws Exception {
@@ -204,7 +203,7 @@ public class CustomerTest extends ModuleTestBase {
 	}
 	
 	protected void addImage() throws Exception{ 
-		execute("CRUD.new");
+		execute("CRUD.new");		
 		execute("ImageEditor.changeImage", "newImageProperty=photo"); 
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
@@ -545,7 +544,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertValueInList(0, 5, "NEW YORK"); // property of a reference inside an aggregate
 	}
 	
-	public void testNestedAggregateCollections() throws Exception {				
+	public void testNestedAggregateCollections() throws Exception {
 		// Creating
 		execute("CRUD.new");
 		setValue("number", "66");
@@ -556,56 +555,65 @@ public class CustomerTest extends ModuleTestBase {
 		setValue("address.city", "POBLE JUNIT PER A J");
 		setValue("address.state.id", "NY");
 				
+		assertNoDialog();
 		execute("Collection.new", "viewObject=xava_view"  + getSection() + "_deliveryPlaces");
-		setValue("deliveryPlaces.name", "DELIVERY JUNIT 1");
-		setValue("deliveryPlaces.address", "STREET JUNIT 1");		
-		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		setValue("deliveryPlaces.receptionists.name", "RECEPTIONISTS JUNIT 1 - 1");		
-		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		assertDialog();
+		setValue("name", "DELIVERY JUNIT 1");
+		setValue("address", "STREET JUNIT 1");		
+		execute("Collection.new", "viewObject=xava_view_receptionists"); 
+		setValue("name", "RECEPTIONISTS JUNIT 1 - 1");		
+		execute("Collection.save");
 		assertNoErrors();
+
+		assertCollectionRowCount("receptionists", 1);
+		assertValueInCollection("receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
 		
+		closeDialog(); 
 		assertNoEditable("number"); // Header is saved hence it is not editable
 		
 		assertCollectionRowCount("deliveryPlaces", 1);
 		assertValueInCollection("deliveryPlaces", 0, 0, "DELIVERY JUNIT 1");
 		assertValueInCollection("deliveryPlaces", 0, 1, "STREET JUNIT 1");
-		
-		assertCollectionRowCount("deliveryPlaces.receptionists", 1);
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
-						
-		setValue("deliveryPlaces.receptionists.name", "RECEPTIONISTS JUNIT 1 - 2");		
-		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		
-		assertCollectionRowCount("deliveryPlaces", 1);
-		assertCollectionRowCount("deliveryPlaces.receptionists", 2);
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "RECEPTIONISTS JUNIT 1 - 2");
-		
-		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces");
 				
-		setValue("deliveryPlaces.name", "DELIVERY JUNIT 2");
-		setValue("deliveryPlaces.address", "STREET JUNIT 2");		
-		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		setValue("deliveryPlaces.receptionists.name", "RECEPTIONISTS JUNIT 2 - 1");				
-		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces"); 
+		execute("Collection.new", "viewObject=xava_view_receptionists"); 
+		setValue("name", "RECEPTIONISTS JUNIT 1 - 2");		
+		execute("Collection.save");
 		
-		setValue("deliveryPlaces.receptionists.name", "RECEPTIONISTS JUNIT 2 - 2");				
-		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		assertCollectionRowCount("receptionists", 2);
+		assertValueInCollection("receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
+		assertValueInCollection("receptionists", 1, 0, "RECEPTIONISTS JUNIT 1 - 2");		
+			
+		execute("Collection.save");
+		assertCollectionRowCount("deliveryPlaces", 1); 
+				
+		execute("Collection.new", "viewObject=xava_view"  + getSection() + "_deliveryPlaces"); 
+		setValue("name", "DELIVERY JUNIT 2");
+		setValue("address", "STREET JUNIT 2");		
+		execute("Collection.new", "viewObject=xava_view_receptionists");
+		setValue("name", "RECEPTIONISTS JUNIT 2 - 1");				
+		execute("Collection.save");
 		
+		execute("Collection.new", "viewObject=xava_view_receptionists"); 
+		setValue("name", "RECEPTIONISTS JUNIT 2 - 2");				
+		execute("Collection.save");
+		
+		assertCollectionRowCount("receptionists", 2);
+		assertValueInCollection("receptionists", 0, 0, "RECEPTIONISTS JUNIT 2 - 1");
+		assertValueInCollection("receptionists", 1, 0, "RECEPTIONISTS JUNIT 2 - 2");
+		
+		closeDialog();
 		assertCollectionRowCount("deliveryPlaces", 2);
 		assertValueInCollection("deliveryPlaces", 0, 0, "DELIVERY JUNIT 1");
 		assertValueInCollection("deliveryPlaces", 0, 1, "STREET JUNIT 1");
 		assertValueInCollection("deliveryPlaces", 1, 0, "DELIVERY JUNIT 2");
-		assertValueInCollection("deliveryPlaces", 1, 1, "STREET JUNIT 2");
-				
-		assertCollectionRowCount("deliveryPlaces.receptionists", 2);
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "RECEPTIONISTS JUNIT 2 - 1");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "RECEPTIONISTS JUNIT 2 - 2");
+		assertValueInCollection("deliveryPlaces", 1, 1, "STREET JUNIT 2");		
 		
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
 		
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "RECEPTIONISTS JUNIT 1 - 2");
+		assertValueInCollection("receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
+		assertValueInCollection("receptionists", 1, 0, "RECEPTIONISTS JUNIT 1 - 2");
+		closeDialog(); 
 				
 		// Search
 		execute("CRUD.new");
@@ -620,12 +628,15 @@ public class CustomerTest extends ModuleTestBase {
 		assertValueInCollection("deliveryPlaces", 1, 1, "STREET JUNIT 2");
 
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
-		assertValueInCollection("deliveryPlaces.receptionists", 0, "name", "RECEPTIONISTS JUNIT 1 - 1");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, "name", "RECEPTIONISTS JUNIT 1 - 2");
+		assertValueInCollection("receptionists", 0, "name", "RECEPTIONISTS JUNIT 1 - 1");
+		assertValueInCollection("receptionists", 1, "name", "RECEPTIONISTS JUNIT 1 - 2");
+		closeDialog(); 
 		
 		execute("Collection.edit", "row=1,viewObject=xava_view" + getSection() + "_deliveryPlaces");
-		assertValueInCollection("deliveryPlaces.receptionists", 0, "name", "RECEPTIONISTS JUNIT 2 - 1");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, "name", "RECEPTIONISTS JUNIT 2 - 2");
+		assertValueInCollection("receptionists", 0, "name", "RECEPTIONISTS JUNIT 2 - 1");
+		assertValueInCollection("receptionists", 1, "name", "RECEPTIONISTS JUNIT 2 - 2");
+		closeDialog(); 
+		assertNoDialog();
 		
 		// Delete
 		execute("CRUD.delete");												

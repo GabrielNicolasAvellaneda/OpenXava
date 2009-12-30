@@ -60,10 +60,10 @@ public class MetaController extends MetaElement {
 	public boolean containsMetaAction(String actionName) {
 		return metaActions.contains(new MetaAction(actionName));
 	}
-	public Collection getMetaActionsForMode(String mode) throws XavaException {
+	public Collection<MetaAction> getMetaActionsForMode(String mode) throws XavaException {
 		if (Is.emptyString(mode)) return Collections.EMPTY_LIST;
 		
-		List result = new ArrayList();
+		List<MetaAction> result = new ArrayList<MetaAction>();
 		// Adding parents
 		Iterator itParents = getParents().iterator();
 		while (itParents.hasNext()) {
@@ -76,7 +76,7 @@ public class MetaController extends MetaElement {
 		while (it.hasNext()) {
 			MetaAction metaAction = (MetaAction) it.next();			
 			if (mode.equals(metaAction.getMode()) || Is.emptyString(metaAction.getMode())) {
-				int pos = result.indexOf(metaAction);
+				int pos = indexOf(result, metaAction);
 				if (pos < 0) result.add(metaAction);
 				else {
 					result.remove(pos);
@@ -87,6 +87,15 @@ public class MetaController extends MetaElement {
 		return result;
 	}
 	
+	// Search by name, so ignoring the controller name
+	private int indexOf(List<MetaAction> actions, MetaAction metaAction) { 
+		for (int i=0; i<actions.size(); i++) {
+			if (actions.get(i).getName().equals(metaAction.getName())) {
+				return i;
+			}
+		}
+		return -1;
+	}
 	/**
 	 * The MetaActions of this controllers and all its parents. <p>
 	 */

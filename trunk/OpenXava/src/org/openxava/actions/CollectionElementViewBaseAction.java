@@ -1,10 +1,5 @@
 package org.openxava.actions;
 
-import javax.servlet.http.*;
-
-
-
-import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
@@ -13,51 +8,37 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-abstract public class CollectionElementViewBaseAction extends ViewBaseAction implements IModuleContextAction, IRequestAction {
+abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	
 	private View collectionElementView;		
 	private String viewObject;
-	private ModuleContext context;	
-	private HttpServletRequest request;
-	
 
 	abstract public void execute() throws Exception;
 	
+	public View getView() { 
+		if (viewObject != null) return super.getView();
+		return getCollectionElementView().getRoot();		
+	}
+	
 	protected View getCollectionElementView() throws XavaException {
 		if (collectionElementView == null) {
-			collectionElementView = (View) context.get(request, viewObject);
+			if (viewObject == null) collectionElementView = super.getView(); // In a dialog
+			else collectionElementView = (View) getContext().get(getRequest(), viewObject);
 			collectionElementView.refreshCollections(); 
 		}
 		return collectionElementView;
 	}
-	
+		
 	protected boolean isEntityReferencesCollection() throws XavaException {
 		return getCollectionElementView().getMetaModel() instanceof MetaEntity;		
 	}
-		
-	public ModuleContext getContext() {
-		return context;
-	}
-
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	public void setContext(ModuleContext moduleContext) {
-		context = moduleContext;
-	}
-
-	public void setRequest(HttpServletRequest request) {
-		super.setRequest(request);
-		this.request = request;
-	}
-
+	
 	public String getViewObject() {
 		return viewObject;
 	}
 
-	public void setViewObject(String string) {
-		viewObject = string;
+	public void setViewObject(String viewObject) {
+		this.viewObject = viewObject;
 	}
-	
+		
 }

@@ -79,7 +79,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoDialog();
 	}
 	
-	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception {
+	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception { 
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");
 		assertDialog();
@@ -101,10 +101,10 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=1");
 		assertCollectionRowCount("details", 0);		
 		execute("Collection.new", "viewObject=xava_view_section1_details");		
-		setValue("details.quantity", "20");
-		setValue("details.unitPrice", "1");
-		setValue("details.product.number", "1");
-		execute("Collection.save", "viewObject=xava_view_section1_details");	
+		setValue("quantity", "20");
+		setValue("unitPrice", "1");
+		setValue("product.number", "1");
+		execute("Collection.save");	
 		assertNoErrors();
 		assertMessage("Invoice detail created successfully");
 		assertMessage("Invoice created successfully"); 
@@ -144,14 +144,14 @@ public class DeliveryTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 3);
 		
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
-		setValue("details.number", "14");
-		setValue("details.description", "JUNIT DETAIL 14");
-		execute("DeliveryDetail.save", "viewObject=xava_view_section2_details_details");
+		setValue("number", "14");
+		setValue("description", "JUNIT DETAIL 14");
+		execute("DeliveryDetail.save");
 		
 		assertError("More than 3 items in Details of Delivery are not allowed");
+		closeDialog();
 		assertCollectionRowCount("details", 3);
 		
-		execute("DeliveryDetail.hideDetail", "viewObject=xava_view_section2_details_details");
 		checkRowCollection("details", 2);
 		execute("DeliveryDetail.removeSelected", "viewObject=xava_view_section2_details_details");
 		assertNoErrors();
@@ -160,15 +160,15 @@ public class DeliveryTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 2);
 		
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
-		setValue("details.number", "13");
-		setValue("details.description", "DETAIL 13");
-		execute("DeliveryDetail.save", "viewObject=xava_view_section2_details_details");
+		setValue("number", "13");
+		setValue("description", "DETAIL 13");
+		execute("DeliveryDetail.save");
 		assertNoErrors();
 		assertMessage("The action Save for delivery detail executed");
 		assertCollectionRowCount("details", 3);
 		
 		execute("Collection.edit", "row=2,viewObject=xava_view_section2_details_details");
-		execute("DeliveryDetail.save", "viewObject=xava_view_section2_details_details");
+		execute("DeliveryDetail.save");
 		assertNoErrors();
 		
 		// checkboxNotInCollectionWhenNotEditable, this test only work in a HTML UI
@@ -196,7 +196,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");
 		assertValue("invoice.date", "1/1/02");						
 		setValue("type.number", "0");
-		assertMessage("type=0"); // Verifies cero as value for on change action
+		assertMessage("type=0"); // Verifies zero as value for on change action
 		setValue("number", "66");
 		setValue("description", "JUNIT");		
 		execute("CRUD.save");
@@ -270,7 +270,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=2");
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
-		setValue("details.number", "66");
+		setValue("number", "66");
 		assertNoErrors();
 	}
 	
@@ -291,19 +291,19 @@ public class DeliveryTest extends ModuleTestBase {
 		
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
 		assertMessage("The action New for delivery detail executed");
-		setValue("details.number", "66");
-		setValue("details.description", "JUNIT DELIVERY DETAIL");
-		execute("DeliveryDetail.save", "viewObject=xava_view_section2_details_details");
+		setValue("number", "66");
+		setValue("description", "JUNIT DELIVERY DETAIL");
+		execute("DeliveryDetail.save");
 		assertMessage("The action Save for delivery detail executed");
 		assertNoErrors();				
 		
 		execute("Collection.edit", "row=0,viewObject=xava_view_section2_details_details");
-		assertValue("details.number", "66");
-		execute("DeliveryDetail.hideDetail", "viewObject=xava_view_section2_details_details");
+		assertValue("number", "66");
+		execute("DeliveryDetail.hideDetail");
 		assertMessage("The action Close for delivery detail executed");
 		execute("Collection.edit", "row=0,viewObject=xava_view_section2_details_details");
-		assertValue("details.number", "66");
-		execute("DeliveryDetail.remove", "viewObject=xava_view_section2_details_details");
+		assertValue("number", "66");
+		execute("DeliveryDetail.remove");
 		assertMessage("The action Remove for delivery detail executed");
 		assertNoErrors();
 	}
@@ -321,9 +321,9 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=2");
 		assertCollectionRowCount("details", 0);
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");		
-		setValue("details.number", "66");
-		setValue("details.description", "JUNIT DELIVERY DETAIL");
-		execute("DeliveryDetail.save", "viewObject=xava_view_section2_details_details");		
+		setValue("number", "66");
+		setValue("description", "JUNIT DELIVERY DETAIL");
+		execute("DeliveryDetail.save");		
 		assertNoErrors();				
 		assertCollectionRowCount("details", 1);
 		

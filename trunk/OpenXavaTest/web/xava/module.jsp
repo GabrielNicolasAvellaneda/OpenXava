@@ -92,7 +92,7 @@ Module.setStyle(style);
 	<% 
 	} 
 	%> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/dwr-engine.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js'></script>
@@ -124,7 +124,9 @@ Module.setStyle(style);
 <% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="true"/>
-	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>	
+	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>
+	<input id="<xava:id name='view_member'/>" type="hidden" value=""/>
+		
 	<%-- Layer for progress bar --%>
 	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none'>
 	<table cellspacing='0'>

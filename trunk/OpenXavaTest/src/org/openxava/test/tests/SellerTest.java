@@ -2,15 +2,13 @@ package org.openxava.test.tests;
 
 import java.rmi.*;
 
-import javax.persistence.*;
-
-import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 
 /**
+ * 
  * @author Javier Paniza
  */
 
@@ -23,7 +21,7 @@ public class SellerTest extends ModuleTestBase {
 		super(testName, "Seller");		
 	}
 	
-	public void testRowStyleInCollections() throws Exception { 
+	public void testRowStyleInCollections() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertValue("number", "1");
 		assertValue("name", "MANUEL CHAVARRI");
@@ -111,9 +109,9 @@ public class SellerTest extends ModuleTestBase {
 	
 	public void testMembersOfReferenceToEntityNotEditable() throws Exception {
 		execute("Mode.detailAndFirst");
-		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
-		assertEditable("customers.number");
-		assertNoEditable("customers.name");
+		execute("Collection.view", "row=0,viewObject=xava_view_customers"); 
+		assertNoEditable("number"); 
+		assertNoEditable("name");
 	}
 	
 	public void testOverwriteCollectionControllers_defaultListActionsForCollections_tabActionsForCollections() throws Exception { 
@@ -121,8 +119,8 @@ public class SellerTest extends ModuleTestBase {
 		setValue("number", "1");
 		execute("CRUD.search");
 		assertValue("name", "MANUEL CHAVARRI");
-		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
-		execute("Collection.hideDetail", "viewObject=xava_view_customers");
+		execute("Collection.view", "row=0,viewObject=xava_view_customers");
+		execute("Collection.hideDetail");
 		assertMessage("Detail is hidden");
 		
 		execute("Print.generatePdf", "viewObject=xava_view_customers");
@@ -170,9 +168,9 @@ public class SellerTest extends ModuleTestBase {
 	
 	public void testCollectionOfEntityReferencesElementsNotEditables() throws Exception {
 		execute("Mode.detailAndFirst");
-		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
-		assertEditable("customers.number");
-		assertNoEditable("customers.name");
+		execute("Collection.view", "row=0,viewObject=xava_view_customers");
+		assertNoEditable("number");
+		assertNoEditable("name");
 		assertNoAction("Collection.new"); // of deliveryPlaces
 	}
 	
@@ -229,12 +227,16 @@ public class SellerTest extends ModuleTestBase {
 		setValue("name", "SELLER JUNIT 66");
 		setValue("level.id", "A");
 
-		execute("Collection.add", "viewObject=xava_view_customers");		
+		assertNoDialog();
+		execute("Collection.add", "viewObject=xava_view_customers");
+		assertDialog();
+		assertDialogTitle("Add elements to 'Customers of Seller'");
 		assertValueInList(5, 0, getCustomer1().getName());
 		assertValueInList(6, 0, getCustomer2().getName());
 		checkRow(5);
 		checkRow(6);
 		execute("AddToCollection.add");
+		assertNoDialog();
 		assertNoErrors();
 		assertMessage("2 element(s) added to Customers of Seller");
 		assertCollectionRowCount("customers",2);
@@ -302,8 +304,8 @@ public class SellerTest extends ModuleTestBase {
 		assertValueInCollection("customers", 0, 3, getCustomer1().getRelationWithSeller());
 		assertValueInCollection("customers", 0, 4, getCustomer1().getSeller().getLevel().getDescription());
 		
-		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
-		execute("Collection.remove", "viewObject=xava_view_customers");
+		checkRowCollection("customers", 0);
+		execute("Collection.removeSelected", "viewObject=xava_view_customers");
 		assertMessage("Association between Customer and Seller has been removed, but Customer is still in database");
 		assertNoErrors();
 		assertCollectionRowCount("customers", 0);		

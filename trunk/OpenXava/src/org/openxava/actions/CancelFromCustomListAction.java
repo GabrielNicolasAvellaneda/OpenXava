@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 
 
+import javax.inject.*;
+
 import org.openxava.tab.*;
 
 
@@ -10,18 +12,14 @@ import org.openxava.tab.*;
  * @author Javier Paniza
  */
 
-public class CancelFromCustomListAction extends ViewBaseAction implements INavigationAction {
+public class CancelFromCustomListAction extends ViewBaseAction implements ICustomViewAction { 
 	
+	@Inject 
 	private Tab tab;
 	
-	
-	
-	public void execute() throws Exception {		
-		getTab().setModelName(getView().getModelName());		
-	}
-	
-	public String [] getNextControllers() {
-		return PREVIOUS_CONTROLLERS;
+	public void execute() throws Exception {
+		closeDialog(); 
+		getTab().setModelName(getView().getModelName());		 
 	}
 	
 	public String getCustomView() {

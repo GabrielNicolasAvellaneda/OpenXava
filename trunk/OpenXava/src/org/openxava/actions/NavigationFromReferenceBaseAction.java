@@ -11,6 +11,7 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 		
 	private String model;	
 	private String controller;		
+	private boolean showDialog = true; 
 	
 	abstract public String getNextAction() throws Exception;
 	abstract protected String getCustomController();
@@ -20,7 +21,8 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 	
 	public void execute() throws Exception {
 		super.execute();
-		showNewView();				
+		if (showDialog) showDialog(); 
+		else showNewView();		
 		getView().setModelName(getModel());
 		getView().putObject("xava.referenceSubview", getReferenceSubview());
 		
@@ -55,6 +57,14 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 
 	public void setController(String string) {
 		controller = string;
-	}	
+	}
+	
+	public boolean isShowDialog() {
+		return showDialog;
+	}
+	public void setShowDialog(boolean showDialog) {
+		this.showDialog = showDialog;
+	}
+	
 	
 }

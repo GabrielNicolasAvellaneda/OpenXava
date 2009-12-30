@@ -1,7 +1,9 @@
 package org.openxava.controller;
 
+import java.lang.reflect.*;
 import java.util.*;
 
+import javax.inject.*;
 import javax.persistence.*;
 import javax.servlet.http.*;
 
@@ -36,6 +38,7 @@ public class ModuleManager {
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
+	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 
 		
 	private String user; 
 	private Collection metaActionsOnInit;
@@ -82,8 +85,18 @@ public class ModuleManager {
 		if (portletActionURL == null) return "";
 		return "action='" +  portletActionURL + "'";
 	}
+	
+	public void addMetaAction(MetaAction action) {
+		getMetaActions().add(action);
+		this.controllersNames = MODIFIED_CONTROLLERS;		
+	}
+	
+	public void removeMetaAction(MetaAction action) {
+		getMetaActions().remove(action);
+		this.controllersNames = MODIFIED_CONTROLLERS;				
+	}
 
-	public Collection getMetaActions() {
+	public Collection<MetaAction> getMetaActions() { 
 		if (metaActions == null) {
 			try {			
 				Iterator it = getMetaControllers().iterator();
@@ -101,7 +114,7 @@ public class ModuleManager {
 		}		
 		return metaActions;		
 	}
-	
+		
 	public Collection getMetaActionsOnInit() {
 		if (metaActionsOnInit == null) {
 			try {			
@@ -416,7 +429,7 @@ public class ModuleManager {
 				setFormUpload(((ILoadFileAction) action).isLoadFile());
 			}			
 			if (metaAction != null) {
-				getObjectFromAction(action, metaAction);
+				getObjectsFromAction(action, metaAction);
 			}
 			if (action instanceof IForwardAction) {				
 				IForwardAction forward = (IForwardAction) action;
@@ -454,27 +467,6 @@ public class ModuleManager {
 					}					
 					executeAction(nextMetaAction, action.getErrors(), action.getMessages(), argv, request); 
 				}
-			}
-			if (metaAction != null && errors.isEmpty()) {
-				setShowDialog(metaAction.isShowDialog());
-				if (metaAction.isShowDialog()) {					
-					dialogLevel++;  
-				}
-				if (metaAction.isHideDialog() != null) {
-					setHideDialog(metaAction.isHideDialog());
-					if (metaAction.isHideDialog()) {						
-						dialogLevel--;
-					}
-				}
-				else {
-					if (metaAction.getQualifiedName().equals(previousDefaultActionQualifiedName) ||
-						"cancel".equals(metaAction.getName()) || "cancelar".equals(metaAction.getName())) 
-					{
-						setHideDialog(true);						
-						dialogLevel--; 
-					}
-				}
-				if (dialogLevel < 0) dialogLevel = 0; 
 			}
 			if (!reloadViewNeeded) {
 				Object currentView = getContext().get(applicationName, moduleName, "xava_view"); 
@@ -609,7 +601,7 @@ public class ModuleManager {
 		return getMetaModule().getEnvironment();
 	}
 
-	private void setControllersNames(String [] names) {		
+	public void setControllersNames(String [] names) { 		
 		metaControllers = null;
 		metaActions = null;
 		metaActionsOnInit = null;
@@ -623,9 +615,14 @@ public class ModuleManager {
 			setupModuleControllers();
 			return;						
 		}
+		Object controllers = previousControllers.pop(); 
 		
-		String [] controllers = (String []) previousControllers.pop();
-		setControllersNames(controllers);		
+		if (controllers instanceof String []) { // The list of controllers
+			setControllersNames((String [])controllers);
+		}
+		else { // A collection of metaactions
+			this.metaActions = (Collection) controllers;
+		}
 	}
 	
 	private void restorePreviousCustomView() throws XavaException { 
@@ -638,9 +635,14 @@ public class ModuleManager {
 		setViewName(view);		
 	}
 		
-	private void memorizeControllers() throws XavaException {
-		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");		
-		previousControllers.push(this.controllersNames);
+	public void memorizeControllers() throws XavaException {
+		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
+		if (this.controllersNames == MODIFIED_CONTROLLERS) { 
+			previousControllers.push(this.metaActions);
+		}
+		else {
+			previousControllers.push(this.controllersNames);
+		}
 	}
 	
 	private void memorizeCustomView() throws XavaException { 
@@ -683,8 +685,37 @@ public class ModuleManager {
 		return xavaValues == null?Collections.EMPTY_MAP:xavaValues; 
 	}
 
-	private void getObjectFromAction(IAction action, MetaAction metaAction) throws XavaException {
-		if (!metaAction.usesObjects()) return;
+	private void getObjectsFromAction(IAction action, MetaAction metaAction) throws XavaException {
+		getObjectsFromActionInjectFields(action, metaAction); 
+		getObjectsFromActionUseObjects(action, metaAction);
+	}
+
+	private void getObjectsFromActionInjectFields(IAction action,
+			MetaAction metaAction) {
+		for (Field f: Classes.getFieldsAnnotatedWith(action.getClass(), Inject.class)) {
+			String objectName = getObjectNameFromActionField(f);
+			String property = f.getName();			
+			Object value = null;			
+			
+			try {
+				f.setAccessible(true);
+				value = f.get(action);								
+			}
+			catch (Exception ex) {
+				log.error(ex.getMessage(), ex);
+				throw new XavaException("get_property_action_value_error", property, metaAction.getName());
+			}
+			if (value != null) {  
+				// The nulls are not assigned and thus we allow to have trasient attributes
+				// that it can lost on go and return from server without danger of alter
+				// the session value 				
+				setObjectInContext(objectName, value);
+			}			
+		}
+	}
+
+	private void getObjectsFromActionUseObjects(IAction action,
+			MetaAction metaAction) {
 		PropertiesManager mp = new PropertiesManager(action);
 		Iterator it = metaAction.getMetaUseObjects().iterator();
 		while (it.hasNext()) {
@@ -695,12 +726,10 @@ public class ModuleManager {
 				value = mp.executeGet(property);
 			}
 			catch (Exception ex) {
-				log.error(ex.getMessage(), ex);
-				throw new XavaException("get_property_action_value_error", property, metaAction.getName());
+				log.warn(XavaResources.getString("get_property_action_value_error", property, metaAction.getName()), ex); 
 			}
-			if (value != null) {
-				// The nulls are not assigned 
-				// los nulos no los asignamos and thus we allow to have trasient attributes
+			if (value != null) {  
+				// The nulls are not assigned and thus we allow to have trasient attributes
 				// that it can lost on go and return from server without danger of alter
 				// the session value 				
 				setObjectInContext(metaUseObject.getName(), value);
@@ -708,8 +737,42 @@ public class ModuleManager {
 		}
 	}
 
+	private String getObjectNameFromActionField(Field f) {
+		String objectName = null;
+		if (f.isAnnotationPresent(Named.class)) {
+			Named named = f.getAnnotation(Named.class);
+			objectName = named.value();
+		}
+		else {
+			objectName = f.getName();
+		}
+		return objectName;
+	}
+
 	private void setObjectsInAction(IAction action, MetaAction metaAction) throws XavaException {
-		if (!metaAction.usesObjects()) return;
+		setObjectsToActionInjectFields(action, metaAction); 
+		setObjectsToActionUseObjects(action, metaAction);		
+	}
+
+	private void setObjectsToActionInjectFields(IAction action, MetaAction metaAction) {
+		for (Field f: Classes.getFieldsAnnotatedWith(action.getClass(), Inject.class)) {
+			String objectName = getObjectNameFromActionField(f);
+			String property = f.getName();			
+			Object value = getObjectFromContext(objectName);			
+			
+			try {
+				f.setAccessible(true);
+				f.set(action, value);								
+			}
+			catch (Exception ex) {
+				log.error(ex.getMessage(), ex);
+				throw new XavaException("set_property_action_value_error", property, metaAction.getName());
+			}
+			getSession().setAttribute(objectName, value);			
+		}
+	}
+
+	private void setObjectsToActionUseObjects(IAction action, MetaAction metaAction) {
 		PropertiesManager mp = new PropertiesManager(action);
 		Iterator it = metaAction.getMetaUseObjects().iterator();
 		while (it.hasNext()) {
@@ -726,19 +789,35 @@ public class ModuleManager {
 				mp.executeSet(property, value);
 			}
 			catch (Exception ex) {
-				log.error(ex.getMessage(), ex);
-				throw new XavaException("set_property_action_value_error", property, metaAction.getName());
+				log.warn(XavaResources.getString("set_property_action_value_error", property, metaAction.getName()), ex);
 			}
 			getSession().setAttribute(objectName, value);
-		}		
+		}
 	}
 		
 	private Object getObjectFromContext(String objectName) throws XavaException {
-		return getContext().get(getApplicationName(), getModuleName(), objectName);				
+		return getContext().get(getApplicationName(), getModuleName(), toExactContextObjectName(objectName));
+	}
+
+	private String toExactContextObjectName(String objectName) {
+		String exactName = objectName;			
+		if (exactName.indexOf('_') < 0 && !MetaControllers.containsMetaObject(objectName)) {			
+			exactName = "xava_" + objectName;
+			if (!MetaControllers.containsMetaObject(exactName)) {			
+				for (String prefix: MetaControllers.getObjectPrefixes()) {
+					exactName = prefix + "_" + objectName;
+					if (MetaControllers.containsMetaObject(exactName)) {
+						break;
+					}
+					exactName = objectName;
+				}				
+			}			
+		}
+		return exactName;
 	}
 	
 	private void setObjectInContext(String objectName, Object value) throws XavaException {
-		getContext().put(getApplicationName(), getModuleName(), objectName, value);				
+		getContext().put(getApplicationName(), getModuleName(), toExactContextObjectName(objectName), value); 
 	}
 	
 	private ModuleContext getContext() {
@@ -1087,15 +1166,27 @@ public class ModuleManager {
 
 	private void setShowDialog(boolean showDialog) {
 		this.showDialog = showDialog;
+		dialogLevel++;
+		if (dialogLevel < 0) dialogLevel = 0;
 	}
 
 	public boolean isHideDialog() {
 		return hideDialog;
 	}
+	
+	public void showDialog() {
+		setShowDialog(true);
+	}
+	
+	public void closeDialog() {
+		setHideDialog(true);
+	}
 
 	private void setHideDialog(boolean hideDialog) { 
 		if (dialogLevel > 0 && hideDialog) reloadAllUINeeded = true; 
 		this.hideDialog = dialogLevel > 0 && hideDialog;
+		dialogLevel--;
+		if (dialogLevel < 0) dialogLevel = 0;
 	}
 	
 	public MetaAction getLastExecutedMetaAction() {

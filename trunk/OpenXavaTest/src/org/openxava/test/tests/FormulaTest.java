@@ -28,7 +28,7 @@ public class FormulaTest extends ModuleTestBase {
 	}
 	
 	public void testPagingInCollection() throws Exception {
-		// crear registros
+		// create objects in database
 		Formula formula = Formula.findByName("HTML TEST");
 		Ingredient ingredient = Ingredient.findByName("LECHE");
 		for (int x = 0; x <= 12; x++){
@@ -49,7 +49,7 @@ public class FormulaTest extends ModuleTestBase {
 		execute("List.goPreviousPage", "collection=ingredients");
 		assertRowCollectionChecked("ingredients", 0);
 		
-		// borrar registros
+		// remove objects from database
 		String sentencia = " DELETE FROM FormulaIngredient WHERE ingredient.oid = :ingredient ";
 		Query query = XPersistence.getManager().createQuery(sentencia);
 		query.setParameter("ingredient", ingredient.getOid());
@@ -103,7 +103,7 @@ public class FormulaTest extends ModuleTestBase {
 	public void testImageInsideCollection() throws Exception {
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view_section0_ingredients");
-		execute("ImageEditor.changeImage", "newImageProperty=ingredients.image");
+		execute("ImageEditor.changeImage", "newImageProperty=image"); 
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/cake.gif";
@@ -116,7 +116,7 @@ public class FormulaTest extends ModuleTestBase {
 		
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
-		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("ingredients.image")).get(0);
+		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("image")).get(0); 
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();
@@ -133,7 +133,7 @@ public class FormulaTest extends ModuleTestBase {
 	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection_aggregateCanHasReferenceToModelOfContainerType() throws Exception {		
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view_section0_ingredients");
-		assertExists("ingredients.anotherFormula.oid"); // Reference to a model of 'Formula' type, the same of the container
+		assertExists("anotherFormula.oid"); // Reference to a model of 'Formula' type, the same of the container
 		
 		String [][] ingredients = {
 			{ "", "" },
@@ -155,12 +155,12 @@ public class FormulaTest extends ModuleTestBase {
 				{ "03C6B61AC0A8011600000000AB4E7ACB", "LECHE" }, 		 				
 		};
 		
-		assertValidValues("ingredients.ingredient.oid", ingredients);
-		assertValidValues("ingredients.accentuate.oid", empty);
+		assertValidValues("ingredient.oid", ingredients);
+		assertValidValues("accentuate.oid", empty);
 		
-		setValue("ingredients.ingredient.oid", "03C6E1ADC0A8011600000000498BC537");
-		assertValidValues("ingredients.ingredient.oid", ingredients);
-		assertValidValues("ingredients.accentuate.oid", cafeConLeche);
+		setValue("ingredient.oid", "03C6E1ADC0A8011600000000498BC537");
+		assertValidValues("ingredient.oid", ingredients);
+		assertValidValues("accentuate.oid", cafeConLeche);
 	}
 	
 	public void testHtmlTextStereotype() throws Exception {		

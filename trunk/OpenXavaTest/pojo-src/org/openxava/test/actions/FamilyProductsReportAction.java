@@ -25,10 +25,8 @@ public class FamilyProductsReportAction extends JasperReportBaseAction implement
 	private boolean goBackOnFinish = true; 
 		
 	public void execute() throws Exception { 
-		super.execute();
-		if (goBackOnFinish) {
-			returnToPreviousView();
-		}
+		super.execute();		
+		if (goBackOnFinish)	closeDialog(); 				
 	}
 
 	public Map getParameters() throws Exception  {		

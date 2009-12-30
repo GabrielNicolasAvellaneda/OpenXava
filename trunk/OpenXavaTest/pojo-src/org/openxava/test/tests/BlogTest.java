@@ -29,9 +29,8 @@ public class BlogTest extends ModuleTestBase {
 										// default collection actions
 		execute("Collection.new", "viewObject=xava_view_comments");		
 		
-		setValue("comments.body", "I agree");
-		execute("Collection.save", "viewObject=xava_view_comments");
-		assertValue("comments.body", "");
+		setValue("body", "I agree");
+		execute("Collection.save");		
 		assertNoErrors();		
 
 		assertTrue(getHtml().indexOf("There are no comments") < 0);

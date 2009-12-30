@@ -20,11 +20,11 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public class SaveElementInCollectionAction extends CollectionElementViewBaseAction implements IChainActionWithArgv {
+public class SaveElementInCollectionAction extends CollectionElementViewBaseAction {
 	
 	private boolean containerSaved = false; 
 	
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			getView().setKeyEditable(false); // To mark as saved
@@ -36,8 +36,10 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		getCollectionElementView().clear();
 		resetDescriptionsCache();
 		if (containerSaved) getView().getRoot().refresh(); 
-		else getView().recalculateProperties(); 
+		else getView().recalculateProperties();
+		closeDialog();
 	}
+	
 	
 	protected Map getValuesToSave() throws Exception {
 		return getCollectionElementView().getValues();
@@ -126,16 +128,16 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	/**
 	 * @return The saved object 
 	 */
-	protected Map saveIfNotExists(View view) throws Exception { 					
+	protected Map saveIfNotExists(View view) throws Exception {
 		if (getView() == view) {
 			if (view.isKeyEditable()) {				
 				Map key = MapFacade.createReturningKey(getModelName(), view.getValues());
 				addMessage("entity_created", getModelName());
 				view.addValues(key);
-				containerSaved=true;
+				containerSaved=true;				
 				return key;								
 			}			
-			else {								
+			else {										
 				return view.getKeyValues();									
 			}
 		}			
@@ -159,9 +161,5 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	public String getNextAction() throws Exception { 		
 		return getErrors().contains()?null:getCollectionElementView().getNewCollectionElementAction();
 	}
-
-	public String getNextActionArgv() throws Exception { 
-		return "viewObject=" + getViewObject();
-	}
-	
+		
 }

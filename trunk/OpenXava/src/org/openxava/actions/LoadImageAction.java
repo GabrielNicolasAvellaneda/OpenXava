@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 import org.apache.commons.fileupload.*;
 
 
@@ -12,10 +14,10 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public class LoadImageAction extends BaseAction implements INavigationAction, IProcessLoadedFileAction {
+public class LoadImageAction extends ViewBaseAction implements INavigationAction, IProcessLoadedFileAction {
 	
 	private List fileItems;
-	private View view;
+	@Inject
 	private String newImageProperty;
 	
 
@@ -29,12 +31,13 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IP
 				findView().setValue(propertyName, fi.get());
 			}			
 		}		
+		closeDialog(); 
 	}
 	
 	private View findView() { 
 		String property = getNewImageProperty(); 
-		String []m = property.split( "\\." );  
-		View result = view; 
+		String []m = property.split( "\\." );   
+		View result = getPreviousView(); 
 		for( int i = 0; i < m.length-1; i++ ) { 
 			result = result.getSubview(m[i]); 
 		} 		
@@ -47,14 +50,6 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IP
 
 	public String getCustomView() {		
 		return PREVIOUS_VIEW;
-	}
-
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
 	}
 
 	public String getNewImageProperty() {

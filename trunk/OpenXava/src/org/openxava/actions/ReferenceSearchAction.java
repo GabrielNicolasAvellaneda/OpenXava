@@ -64,8 +64,10 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 		else {
 			getTab().setBaseCondition(null);
 		}
-					
+		
+		showDialog();
 		getView().setTitleId("choose_reference_prompt", ref.getLabel()); 
+		 
 	}
 
 	private MetaReference getMetaReference(MetaModel metaRootModel, String referenceName) throws XavaException {

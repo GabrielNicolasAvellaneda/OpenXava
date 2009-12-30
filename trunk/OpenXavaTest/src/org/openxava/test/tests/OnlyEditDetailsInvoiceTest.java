@@ -64,28 +64,16 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 		execute("Collection.edit", "row=0,viewObject=xava_view_details");
 		
 		String [] aggregateDetailActions = {
-			"Navigation.previous",
-			"Navigation.first",
-			"Navigation.next",
-			"CRUD.new",
-			"CRUD.save",
-			"CRUD.delete",
-			"CRUD.search",						
-			"Mode.list",			
 			"Reference.search",
 			"Reference.createNew",
 			"Reference.modify",
 			"Gallery.edit",
-			"Collection.edit",
 			"Collection.save",
 			"Collection.hideDetail",
-			"List.filter", 
-			"List.orderBy", 
-			"List.customize"			
 		};		
 		assertActions(aggregateDetailActions);
 		
-		assertEditable("details.serviceType");						
+		assertEditable("serviceType");						
 	}
 
 	private Invoice getInvoice() throws Exception {

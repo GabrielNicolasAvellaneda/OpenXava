@@ -50,5 +50,6 @@
 			<attribute name="owner.project.facets" value="jst.java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javax.inject.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

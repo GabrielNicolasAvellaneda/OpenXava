@@ -139,7 +139,7 @@ public class AJAXTest extends ModuleTestBase {
 				"reference_editor_address.state, " +
 				"collection_deliveryPlaces., " +
 				"editor_photo, messages, ");		
-		// Collections
+		// Collections 
 		execute("List.orderBy", "property=name,collection=deliveryPlaces");
 		assertLoadedParts("errors, collection_deliveryPlaces., " +
 				"messages");		
@@ -150,23 +150,27 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, collection_deliveryPlaces., " +
 				"messages");
 		execute("Collection.new", "viewObject=xava_view_deliveryPlaces");
-		assertLoadedParts("errors, collection_deliveryPlaces., " +
-				"messages");
+		assertLoadedParts("dialog1");
+		closeDialog();
+		assertLoadedParts("core");
 		execute("Collection.edit", "row=0,viewObject=xava_view_deliveryPlaces");		
-		assertLoadedParts("errors, collection_deliveryPlaces., " +
+		assertLoadedParts("dialog1");
+		execute("List.orderBy", "property=name,collection=receptionists");
+		assertLoadedParts("errors, collection_receptionists., " +
 				"messages");
-		execute("List.orderBy", "property=name,collection=deliveryPlaces.receptionists");
-		assertLoadedParts("errors, collection_deliveryPlaces.receptionists., " +
+		execute("List.filter", "collection=receptionists");
+		assertLoadedParts("errors, collection_receptionists., " +
 				"messages");
-		execute("List.filter", "collection=deliveryPlaces.receptionists");
-		assertLoadedParts("errors, collection_deliveryPlaces.receptionists., " +
-				"messages");
-		execute("Collection.new", "viewObject=xava_view_deliveryPlaces_receptionists");
-		assertLoadedParts("errors, collection_deliveryPlaces.receptionists., " +
-				"messages");
-		execute("Collection.edit", "row=0,viewObject=xava_view_deliveryPlaces_receptionists");
-		assertLoadedParts("errors, collection_deliveryPlaces.receptionists., " +
-				"messages");
+		execute("Collection.new", "viewObject=xava_view_receptionists");
+		assertLoadedParts("dialog2");
+		closeDialog();
+		assertLoadedParts("dialog1");
+		execute("Collection.edit", "row=0,viewObject=xava_view_receptionists");
+		assertLoadedParts("dialog2");
+		closeDialog();
+		assertLoadedParts("dialog1");
+		closeDialog();
+		assertLoadedParts("core");
 		
 		// Hide/show members
 		execute("Customer.hideSeller");
@@ -270,11 +274,19 @@ public class AJAXTest extends ModuleTestBase {
 		if (!usesAnnotatedPOJO()) return;
 		changeModule("Blog");
 		execute("Mode.detailAndFirst");
+		/* Before 4m2 when dialog was not used for editing collection details
 		execute("Collection.new", "viewObject=xava_view_comments");
 		assertLoadedParts("collection_comments., errors, messages,");
 		setValue("comments.body", "Me too");
 		execute("Collection.save", "viewObject=xava_view_comments");
 		assertLoadedParts("collection_comments., errors, messages,");		
+		*/
+		// Since 4m2, with dialogs
+		execute("Collection.new", "viewObject=xava_view_comments");
+		assertLoadedParts("dialog1");
+		setValue("body", "Me too");
+		execute("Collection.save");
+		assertLoadedParts("core");				
 	}
  
 	
@@ -381,9 +393,10 @@ public class AJAXTest extends ModuleTestBase {
 		assertCollectionRowCount("fellowCarriers", 3);
 		assertLoadedParts("errors, collection_fellowCarriers., " +
 				"messages, editor_warehouse.name, ");
-		execute("Collection.edit", "row=0,viewObject=xava_view_fellowCarriersCalculated");
-		assertLoadedParts("errors, collection_fellowCarriersCalculated., " +
-				"messages");		
+		execute("Collection.view", "row=0,viewObject=xava_view_fellowCarriersCalculated");
+		assertLoadedParts("dialog1");
+		closeDialog();
+		assertLoadedParts("core");
 		execute("Navigation.next");
 		assertLoadedParts("errors, editor_number, " +
 				"editor_remarks, collection_fellowCarriers., " +
@@ -425,29 +438,33 @@ public class AJAXTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=1");
 		execute("Collection.new", "viewObject=xava_view_section1_details");
+		
+		/* Until 4m1
 		// First time that the detail is used all collection is reloaded
 		assertLoadedParts("errors, collection_details., " +
 				"messages");
+		*/
+		assertLoadedParts("dialog1"); // Since 4m2
 
-		setValue("details.product.number", "1");
+		setValue("product.number", "1");
 		assertLoadedParts("errors, " +
-				"editor_details.product.warehouseKey, " +
-				"editor_details.product.familyNumber, " +
-				"editor_details.product.photos, " +
-				"editor_details.product.unitPrice, " +
-				"editor_details.product.subfamilyNumber, " +
-				"editor_details.product.unitPriceInPesetas, " +
-				"editor_details.product.description, " +
+				"editor_product.warehouseKey, " +
+				"editor_product.familyNumber, " +
+				"editor_product.photos, " +
+				"editor_product.unitPrice, " +
+				"editor_product.subfamilyNumber, " +
+				"editor_product.unitPriceInPesetas, " +
+				"editor_product.description, " +
 				"messages");		
-		setValue("details.product.number", "2");
+		setValue("product.number", "2");
 		assertLoadedParts("errors, " +
-				"editor_details.product.warehouseKey, " +
-				"editor_details.product.familyNumber, " +
-				"editor_details.product.photos, " +
-				"editor_details.product.subfamilyNumber, " +
-				"editor_details.product.unitPrice, " +
-				"editor_details.product.unitPriceInPesetas, " +
-				"editor_details.product.description, " +
+				"editor_product.warehouseKey, " +
+				"editor_product.familyNumber, " +
+				"editor_product.photos, " +
+				"editor_product.subfamilyNumber, " +
+				"editor_product.unitPrice, " +
+				"editor_product.unitPriceInPesetas, " +
+				"editor_product.description, " +
 				"messages");		
 	}	
 	

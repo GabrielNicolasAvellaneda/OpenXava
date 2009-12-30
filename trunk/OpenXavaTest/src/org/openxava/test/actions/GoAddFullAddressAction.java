@@ -7,7 +7,7 @@ public class GoAddFullAddressAction
 	implements IChangeControllersAction {
 
 	public void execute() throws Exception {
-		showNewView();
+		showDialog(); // tmp En migration y guía de referencia
 		getView().setTitleId("entry_full_address");
 		// getView().setTitle("Entry the full address");
 		getView().setModelName("OneLineAddress");		

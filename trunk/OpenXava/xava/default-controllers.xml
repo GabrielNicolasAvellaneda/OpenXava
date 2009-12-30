@@ -8,6 +8,8 @@ In your project use the name 'controllers.xml' or 'controladores.xml'
 If you have to override some of this controller for you application, you only
 need to create a controller in your application with the same name of the controller
 here that you want to override.
+
+tmp Cambiar todos los use-object por @Inject, y ponerlo en changelog, migración y guia de referencia
 -->
 
 <controllers>
@@ -167,8 +169,7 @@ here that you want to override.
 			class="org.openxava.actions.CancelInListAction">
 		</action>		
 	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>					</action>								<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>										</controller>										<controller name="ImageEditor">
-		<action name="changeImage"
-			show-dialog="true"
+		<action name="changeImage"			
 			class="org.openxava.actions.ChangeImageAction">			
 			<use-object name="xava_newImageProperty"/>			
 		</action>
@@ -193,8 +194,7 @@ here that you want to override.
 		</action>
 		<action name="return" image="images/back.gif"
 			class="org.openxava.actions.CancelAction"/>			
-		<action name="addImage"
-			show-dialog="true"
+		<action name="addImage"		
 			class="org.openxava.actions.AddImageToGalleryAction"/>
 		<action name="maximizeImage" hidden="true" image="images/maximize.gif"
 			class="org.openxava.actions.MaximizeImageAction">
@@ -222,30 +222,25 @@ here that you want to override.
 		
 	</controller>
 	
-			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction">						<use-object name="xava_view"/>			<use-object name="xava_newImageProperty"/>		</action>
-			
+			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction"/>
+		<!-- tmp Cancel no va bien. Comprobar que hay un test de prueba para esto -->										
 		<action name="cancel"
-			class="org.openxava.actions.CancelAction">			
-		</action>	
-				</controller>
+			class="org.openxava.actions.CancelAction"/>				</controller>
 	
 	<controller name="Dialog">
-		<action name="cancel" hide-dialog="true"
-			class="org.openxava.actions.CancelAction">			
+		<action name="cancel" 
+			class="org.openxava.actions.CancelDialogAction">			
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_view"/>
 		</action>
-	</controller>		<controller name="Reference">		<action name="search"			class="org.openxava.actions.ReferenceSearchAction"			image="images/search.gif"
-			show-dialog="true">			<use-object name="xava_view"/>			<use-object name="xava_referenceSubview"/>			<use-object name="xava_tab"/>		</action>		<action name="createNew" 
+	</controller>		<controller name="Reference">		<action name="search"			class="org.openxava.actions.ReferenceSearchAction"			image="images/search.gif">			<use-object name="xava_view"/>			<use-object name="xava_referenceSubview"/>			<use-object name="xava_tab"/>		</action>		<action name="createNew" 
 			class="org.openxava.actions.CreateNewFromReferenceAction"
-			image="images/create_new.gif"
-			show-dialog="true">			<use-object name="xava_view"/>
+			image="images/create_new.gif">			<use-object name="xava_view"/>
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_referenceSubview"/>		</action>
 		<action name="modify" 
 			class="org.openxava.actions.ModifyFromReferenceAction"
-			image="images/edit.gif"
-			show-dialog="true">
+			image="images/edit.gif">
 			<use-object name="xava_view"/>
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_referenceSubview"/>
@@ -296,34 +291,25 @@ here that you want to override.
 	
 	<controller name="AddToCollection">
 		<action name="add" 
-			class="org.openxava.actions.AddElementsToCollectionAction">
-			<use-object name="xava_view"/>			
-			<use-object name="xava_tab"/>			
-			<use-object name="xava_collectionViewObject" action-property="viewObject"/>
-			<use-object name="xava_currentCollectionLabel"/>			
-		</action>
+			class="org.openxava.actions.AddElementsToCollectionAction"/>		
 		<action name="cancel" 
-			class="org.openxava.actions.CancelFromCustomListAction">
-			<use-object name="xava_view"/>
-			<use-object name="xava_tab"/>
-		</action>
+			class="org.openxava.actions.CancelFromCustomListAction"/>
 	</controller>
-			<controller name="Collection">		<action name="new" image="images/create_new.gif"			class="org.openxava.actions.CreateNewElementInCollectionAction">					</action>				
-		
+		<controller name="Collection">
+				<action name="new" image="images/create_new.gif"			class="org.openxava.actions.CreateNewElementInCollectionAction"/>							
+			
 		<action name="add" image="images/create_new.gif"
-			class="org.openxava.actions.GoAddElementsToCollectionAction">			
-			<use-object name="xava_tab"/>
-			<use-object name="xava_currentCollectionLabel"/>
-			<use-object name="xava_collectionViewObject"/>
-		</action>						
-		<action name="hideDetail"			class="org.openxava.actions.HideDetailElementInCollectionAction">					</action>							
-		<action name="save"			class="org.openxava.actions.SaveElementInCollectionAction">						<use-object name="xava_view"/>		</action>					<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction">						<use-object name="xava_view"/>		</action>							<action name="edit" image="images/edit.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>									<action name="view" image="images/view.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>
-		 
+			class="org.openxava.actions.GoAddElementsToCollectionAction"/>					
+				<action name="hideDetail"			class="org.openxava.actions.HideDetailElementInCollectionAction"/>			
+		<action name="save"			class="org.openxava.actions.SaveElementInCollectionAction"/>			
+							<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
+						
+		<action name="edit" image="images/edit.gif"			class="org.openxava.actions.EditElementInCollectionAction"/>					
+											<action name="view" image="images/view.gif"			class="org.openxava.actions.ViewElementInCollectionAction"/>					
 		<action name="removeSelected" confirm="true" image="images/delete.gif"
-			class="org.openxava.actions.RemoveSelectedInCollectionAction">
-			<use-object name="xava_view"/>
-		</action>
-											</controller>
+			class="org.openxava.actions.RemoveSelectedInCollectionAction"/>
+											
+	</controller>	
 	
 	<controller name="DefaultListActionsForCollections">
 		<extends controller="Print"/>

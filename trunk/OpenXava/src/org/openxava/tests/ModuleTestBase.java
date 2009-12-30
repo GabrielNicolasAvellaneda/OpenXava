@@ -177,7 +177,6 @@ public class ModuleTestBase extends TestCase {
 		String id = decorateName?decorateId(name):name; 
 		try {	
 			HtmlInput input = getInputByName(id); 
-			focus(input);
 			assertNotDisable(name, input);
 			if (input instanceof HtmlCheckBoxInput) {
 				if ("true".equalsIgnoreCase(value) && !input.isChecked() ||
@@ -200,20 +199,20 @@ public class ModuleTestBase extends TestCase {
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			try {							
 				HtmlSelect select = getForm().getSelectByName(id);
-				focus(select);
 				assertNotDisable(name, select);
 				select.setSelectedAttribute(value, true);
 				refreshNeeded = !Is.emptyString(select.getOnChangeAttribute());
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
 				HtmlTextArea textArea = getForm().getTextAreaByName(id);
-				focus(textArea);
 				assertNotDisable(name, textArea);
 				textArea.setText(value);
 				refreshNeeded = !Is.emptyString(textArea.getOnChangeAttribute());
 			}
 		}		
-		if (refreshIfNeeded && refreshNeeded) refreshPage();
+		if (refreshIfNeeded && refreshNeeded) {			
+			refreshPage();			
+		}
 	}
 	
 	private void assertNotDisable(String name, HtmlElement element) { 		
@@ -257,8 +256,8 @@ public class ModuleTestBase extends TestCase {
 		resetForm(); 				
 	}
 
-	private String getFormValue(String name) {
-		String id = decorateId(name); 
+	private String getFormValue(String name) throws Exception {
+		String id = decorateId(name);
 		try {			
 			HtmlInput input = getInputByName(id);
 			if (input instanceof HtmlRadioButtonInput) {
@@ -513,7 +512,7 @@ public class ModuleTestBase extends TestCase {
 		}	
 
 		Element element  = getElementById(action);  
-		if (element instanceof ClickableElement) {
+		if (element instanceof ClickableElement) {			
 			Page newPage = ((ClickableElement) element).click();
 			if (newPage instanceof HtmlPage) {
 				page = (HtmlPage) newPage;			
@@ -527,16 +526,16 @@ public class ModuleTestBase extends TestCase {
 		restorePage();
 	}
 	
-	private void throwChangeOfLastNotNotifiedProperty() throws Exception { 		
+	private void throwChangeOfLastNotNotifiedProperty() throws Exception {		
 		if (lastNotNotifiedPropertyName != null) {
 			setFormValueNoRefresh(lastNotNotifiedPropertyName, lastNotNotifiedPropertyValue);
 			lastNotNotifiedPropertyName = null;
 			lastNotNotifiedPropertyValue = null;
-		}	
+		}
 	}
 										 	
-	private void waitUntilPageIsLoaded() throws Exception {				
-		client.waitForBackgroundJavaScriptStartingBefore(10000); 		
+	private void waitUntilPageIsLoaded() throws Exception { 		
+		client.waitForBackgroundJavaScriptStartingBefore(10000);		
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
@@ -860,8 +859,8 @@ public class ModuleTestBase extends TestCase {
 		lastNotNotifiedPropertyValue = value; 
 	}
 	
-	protected void setValue(String name, String value) throws Exception {		
-		setFormValue(decorateId(name), value); 
+	protected void setValue(String name, String value) throws Exception {
+		setFormValue(decorateId(name), value);
 	}	
 		
 	/**
@@ -914,7 +913,7 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	protected void assertValue(String model, String name, String value) throws Exception {
-		assertEquals(XavaResources.getString("unexpected_value_in_model", name, model), value, getValue(model, name));		
+		assertEquals(XavaResources.getString("unexpected_value_in_model", name, model), value, getValue(model, name));
 	}
 	
 	protected void assertDescriptionValue(String name, String value) throws Exception {
@@ -1003,17 +1002,28 @@ public class ModuleTestBase extends TestCase {
 		return getTable(tableId, "collection_not_displayed").getRow(row+2);
 	}
 		
-	protected String getValueInCollection(String collection, int row, String name) throws Exception {		
+	protected String getValueInCollection(String collection, int row, String name) throws Exception {
 		int column = getPropertiesList(collection).indexOf(name);		
 		return getValueInCollection(collection, row, column);
 	}
 
 	private List getPropertiesList(String collection) throws Exception {
+		collection = getCollectionPrefix() + collection;
 		MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(collection);
 		List propertiesList = metaCollectionView==null?null:metaCollectionView.getPropertiesListNames();
 		if (propertiesList == null || propertiesList.isEmpty()) propertiesList = getMetaModel().getMetaCollection(collection).getMetaReference().getMetaModelReferenced().getPropertiesNamesWithoutHiddenNorTransient();
 		return propertiesList;
 	}	
+	
+	private String getCollectionPrefix() {  
+		String viewMember = getViewMember();
+		if (Is.emptyString(viewMember)) return "";
+		return viewMember + ".";
+	}
+	
+	private String getViewMember() { 
+		return getElementById("view_member").getAttribute("value");
+	}
 	
 	protected String getValueInCollection(String collection, int row, int column) throws Exception {
 		return getTableCellInCollection(collection, row, column).asText().trim();
@@ -1716,7 +1726,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private void resetForm() throws Exception {		
-		waitUntilPageIsLoaded();
+		waitUntilPageIsLoaded();		
 		setNewModuleIfChanged(); 
 		form = null; 		
 	}

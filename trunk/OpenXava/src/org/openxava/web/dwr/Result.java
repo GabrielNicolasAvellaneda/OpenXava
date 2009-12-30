@@ -8,7 +8,7 @@ import java.util.*;
  */
 
 public class Result {
-
+	
 	private Map changedParts;
 	private Map strokeActions;
 	private String forwardURL;
@@ -24,6 +24,7 @@ public class Result {
 	private boolean hideDialog; 
 	private String dialogTitle; 
 	private int dialogLevel; 
+	private String viewMember;    
 	
 	public Result() {
 	}
@@ -143,5 +144,13 @@ public class Result {
 	public int getDialogLevel() {
 		return dialogLevel;
 	}
+	
+	public String getViewMember() {
+		return viewMember==null?"":viewMember; 
+	}
 
+	public void setViewMember(String viewMember) {
+		this.viewMember = viewMember;
+	}
+	
 }

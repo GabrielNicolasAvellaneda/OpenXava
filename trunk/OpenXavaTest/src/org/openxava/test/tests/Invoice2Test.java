@@ -24,12 +24,12 @@ public class Invoice2Test extends ModuleTestBase {
 		// Creating a new detail
 		execute("Collection.new", "viewObject=xava_view_details");
 		assertNotExists("details.invoice.year"); 
-		setValue("details.quantity", "7");
-		setValue("details.unitPrice", "8");
-		assertValue("details.amount", "56.00");
-		setValue("details.product.number", "1");
-		assertValue("details.product.description", "MULTAS DE TRAFICO");
-		execute("Collection.save", "viewObject=xava_view_details");
+		setValue("quantity", "7");
+		setValue("unitPrice", "8");
+		assertValue("amount", "56.00");
+		setValue("product.number", "1");
+		assertValue("product.description", "MULTAS DE TRAFICO");
+		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
 		execute("CRUD.search");
@@ -37,12 +37,12 @@ public class Invoice2Test extends ModuleTestBase {
 		
 		// Creating another one
 		execute("Collection.new", "viewObject=xava_view_details");
-		setValue("details.quantity", "10");
-		setValue("details.unitPrice", "10");
-		assertValue("details.amount", "100.00");
-		setValue("details.product.number", "1");
-		assertValue("details.product.description", "MULTAS DE TRAFICO");
-		execute("Collection.save", "viewObject=xava_view_details");
+		setValue("quantity", "10");
+		setValue("unitPrice", "10");
+		assertValue("amount", "100.00");
+		setValue("product.number", "1");
+		assertValue("product.description", "MULTAS DE TRAFICO");
+		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 2);
 		execute("CRUD.search");
@@ -50,9 +50,9 @@ public class Invoice2Test extends ModuleTestBase {
 		
 		// Modifiying
 		execute("Collection.edit", "row=1,viewObject=xava_view_details");
-		setValue("details.quantity", "20");
-		setValue("details.unitPrice", "10");
-		execute("Collection.save", "viewObject=xava_view_details");
+		setValue("quantity", "20");
+		setValue("unitPrice", "10");
+		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 2);
 		execute("CRUD.search");
@@ -60,9 +60,9 @@ public class Invoice2Test extends ModuleTestBase {
 		
 		// Removing
 		execute("Collection.edit", "row=1,viewObject=xava_view_details");
-		setValue("details.quantity", "20");
-		setValue("details.unitPrice", "10");
-		execute("Collection.remove", "viewObject=xava_view_details");
+		setValue("quantity", "20");
+		setValue("unitPrice", "10");
+		execute("Collection.remove");
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
 		execute("CRUD.search");
@@ -79,12 +79,12 @@ public class Invoice2Test extends ModuleTestBase {
 		setValue("customer.number", "1");
 		assertCollectionRowCount("details", 0);
 		execute("Collection.new", "viewObject=xava_view_details");
-		setValue("details.quantity", "7");
-		setValue("details.unitPrice", "8");
-		assertValue("details.amount", "56.00");
-		setValue("details.product.number", "1");
-		assertValue("details.product.description", "MULTAS DE TRAFICO");
-		execute("Collection.save", "viewObject=xava_view_details");
+		setValue("quantity", "7");
+		setValue("unitPrice", "8");
+		assertValue("amount", "56.00");
+		setValue("product.number", "1");
+		assertValue("product.description", "MULTAS DE TRAFICO");
+		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
 		
@@ -102,12 +102,13 @@ public class Invoice2Test extends ModuleTestBase {
 		assertValueInCollection("details", 1, "product.description", "IBM ESERVER ISERIES 270");
 		
 		execute("Collection.edit", "row=0,viewObject=xava_view_details");
-		assertValue("details.product.description", "XAVA");
-		assertValue("details.product.family.description", "SOFTWARE");
+		assertValue("product.description", "XAVA");
+		assertValue("product.family.description", "SOFTWARE");
+		closeDialog();
 		
 		execute("Collection.edit", "row=1,viewObject=xava_view_details");
-		assertValue("details.product.description", "IBM ESERVER ISERIES 270");
-		assertValue("details.product.family.description", "HARDWARE");		
+		assertValue("product.description", "IBM ESERVER ISERIES 270");
+		assertValue("product.family.description", "HARDWARE");		
 	}
 							
 }
