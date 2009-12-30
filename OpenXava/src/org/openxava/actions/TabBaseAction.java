@@ -16,6 +16,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
+// tmp Hacer que descienda de ViewBaseAction --> ¿Test JUnit?
 abstract public class TabBaseAction extends BaseAction implements IModuleContextAction {
 	
 	private Tab tab;	

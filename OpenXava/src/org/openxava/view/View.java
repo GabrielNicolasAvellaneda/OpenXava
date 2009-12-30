@@ -162,7 +162,14 @@ public class View implements java.io.Serializable {
 	private boolean defaultListActionsForCollectionsIncluded = true;
 	private String title; 
 	private String titleId; 
-	private Object [] titleArguments; 
+	private Object [] titleArguments;
+	
+	// firstLevel is the root view that receives the request 
+	// usually match with getRoot(), but not always. For example,
+	// you can fill a dialog using a subview from the current view
+	// In that case, inside the dialog this subview will be firstLeve, though
+	// it continues being a subview.
+	private boolean firstLevel; 
 		
 	public View() {
 		oid = nextOid++;
@@ -1503,13 +1510,13 @@ public class View implements java.io.Serializable {
 				Collection alreadyPut = new ArrayList();				
 				while (it.hasNext()) {
 					MetaProperty p = (MetaProperty) it.next();
-					if (membersNames.containsKey(p.getName())) {				
+					if (membersNames.containsKey(p.getName())) {
 						try {
 							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculate the dependent ones
 								ICalculator calculator = p.createDefaultValueCalculator();
 								if (calculator instanceof IJDBCCalculator) {
 									((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
-								}								
+								}		
 								trySetValue(p.getName(), calculator.calculate()); 
 								alreadyPut.add(p.getName());
 							}					
@@ -1858,11 +1865,12 @@ public class View implements java.io.Serializable {
 	}
 	
 	public void assignValuesToWebView() {		
-		assignValuesToWebView(""); 		
+		assignValuesToWebView("", true); 		
 	}
 		
-	public void assignValuesToWebView(String qualifier) {
-		try {
+	private void assignValuesToWebView(String qualifier, boolean firstLevel) { 
+		try {			
+			this.firstLevel = firstLevel; 
 			formattedProperties = null; 
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));						
 			setIdFocusProperty(getRequest().getParameter("xava_focus_property"));
@@ -1896,7 +1904,7 @@ public class View implements java.io.Serializable {
 					String value = getRequest().getParameter(key);					
 					if (value == null) {												
 						View subview = getSubview(ref.getName()); 					 																				
-						subview.assignValuesToWebView(qualifier + ref.getName() + "."); 
+						subview.assignValuesToWebView(qualifier + ref.getName() + ".", false); 
 					}
 					else { // References as combo (descriptions-list) and composite key
 						assignReferenceValue(qualifier, ref, value);
@@ -1905,12 +1913,12 @@ public class View implements java.io.Serializable {
 				else if (m instanceof MetaCollection) {
 					MetaCollection collec = (MetaCollection) m;						
 					View subview = getSubview(collec.getName());					 					
-					subview.assignValuesToWebView(qualifier + collec.getName() + ".");
+					subview.assignValuesToWebView(qualifier + collec.getName() + ".", false);
 				}
 				else if (m instanceof MetaGroup) {					
 					MetaGroup group = (MetaGroup) m;					
 					View subview = getGroupView(group.getName());
-					subview.assignValuesToWebView(qualifier);					 																									
+					subview.assignValuesToWebView(qualifier, false);					 																									
 				}
 			}
 			oldValues = values==null?null:new HashMap(values);
@@ -1926,11 +1934,11 @@ public class View implements java.io.Serializable {
 						
 			if (hasSections()) { 								
 				View section = getSectionView(getActiveSection());
-				section.assignValuesToWebView(qualifier);
+				section.assignValuesToWebView(qualifier, false);
 			}						
 						
-			if (!isSubview() && !isSection()) {						  
-				changedProperty = Ids.undecorate(getRequest().getParameter("xava_changed_property")); 
+			if (firstLevel) { 
+				changedProperty = Ids.undecorate(getRequest().getParameter("xava_changed_property"));
 				if (!Is.emptyString(changedProperty)) {
 					if (getParent() == null) {
 						getRoot().registeringExecutedActions = true;
@@ -1960,7 +1968,8 @@ public class View implements java.io.Serializable {
 			!Boolean.class.equals(p.getType());
 	}
 
-	private String getQualifiedCollectionName() { 
+	private String getQualifiedCollectionName() {
+		if (firstLevel) return "";
 		if (!isRepresentsCollection() && !isRepresentsEntityReference() && !isRepresentsAggregate()) return ""; 
 		return getParent().getQualifiedCollectionName() + getMemberName() + "_"; 
 	}
@@ -2125,7 +2134,7 @@ public class View implements java.io.Serializable {
 	}
 	
 
-	private void propertyChanged(String propertyId) {		
+	private void propertyChanged(String propertyId) {
 		try {														
 			String name = Ids.undecorate(propertyId);			
 			if (name.endsWith("__KEY__")) {
@@ -2275,7 +2284,7 @@ public class View implements java.io.Serializable {
 			while (viewOfAction.isGroup()) viewOfAction = viewOfAction.getParent();
 			action.setView(viewOfAction);
 			action.setChangedProperty(changedPropertyQualifiedName); 
-			action.setNewValue(getValue(changedPropertyQualifiedName));							
+			action.setNewValue(getValue(changedPropertyQualifiedName));
 			getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());				
 			registerExecutedAction(changedPropertyQualifiedName, action);
 		}
@@ -3472,8 +3481,9 @@ public class View implements java.io.Serializable {
         focusPropertyId = newFocusProperty; 
     }
 
-	public String getEditCollectionElementAction() {		
-		return editCollectionElementAction == null?"Collection.edit":editCollectionElementAction;
+	public String getEditCollectionElementAction() { 
+		if (editCollectionElementAction != null) return editCollectionElementAction;
+		return isRepresentsEntityReference()?"Collection.view":"Collection.edit"; // tmp ¿changelog, documentación, migración?  
 	}
 	
 	public String getViewCollectionElementAction() {		
@@ -3585,7 +3595,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public String getHideCollectionElementAction() { 		
-		return hideCollectionElementAction == null?"Collection.hideDetail":hideCollectionElementAction;
+		return hideCollectionElementAction == null?"Collection.hideDetail":hideCollectionElementAction;		
 	}
 
 	public void setHideCollectionElementAction(String hideCollectionElementAction) {		

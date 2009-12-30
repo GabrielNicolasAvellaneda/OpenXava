@@ -10,8 +10,12 @@ import org.openxava.actions.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
+/**
+ * 
+ * @author Javier Paniza
+ */
 
-public class MetaAction extends MetaElement {
+public class MetaAction extends MetaElement implements Cloneable { 
 	
 	private static Log log = LogFactory.getLog(MetaAction.class);
 	
@@ -37,8 +41,8 @@ public class MetaAction extends MetaElement {
 	private boolean confirm;
 	private boolean onEachRequest;
 	private boolean beforeEachRequest;
-	private boolean showDialog; 
-	private Boolean hideDialog = null; 
+	// tmp private boolean showDialog; En migration y changelog 
+	// tmp private Boolean hideDialog = null; En migration y changelog
 	
 	public MetaAction() {
 	}
@@ -71,6 +75,18 @@ public class MetaAction extends MetaElement {
 			this.keystroke = keystroke;
 		}
 	}
+	
+	public MetaAction cloneMetaAction() { 
+		try {
+			return (MetaAction) clone();
+		}
+		catch (CloneNotSupportedException ex) {
+			log.error(ex.getMessage(), ex);
+			throw new RuntimeException(XavaResources.getString("implement_cloneable_required")); 
+		}
+
+	}
+	
 	public boolean hasKeystroke() {
 		return !Is.emptyString(keystroke);
 	}
@@ -108,7 +124,7 @@ public class MetaAction extends MetaElement {
 	
 	public boolean equals(Object action) {
 		if (!(action instanceof MetaAction)) return false; // It also discards the nulls
-		return getName().equals(((MetaAction) action).getName());
+		return getQualifiedName().equals(((MetaAction) action).getQualifiedName()); 
 	}
 	
 	public int hashCode() {	
@@ -286,21 +302,4 @@ public class MetaAction extends MetaElement {
 		this.beforeEachRequest = beforeEachRequest;
 	}
 	
-	public boolean isShowDialog() {
-		return showDialog;
-	}
-
-	public void setShowDialog(boolean showDialog) {
-		this.showDialog = showDialog;
-	}
-
-	public Boolean isHideDialog() {		
-		return hideDialog;
-	}
-
-	public void setHideDialog(Boolean hideDialog) {
-		this.hideDialog = hideDialog;
-	}
-	
-			
 }

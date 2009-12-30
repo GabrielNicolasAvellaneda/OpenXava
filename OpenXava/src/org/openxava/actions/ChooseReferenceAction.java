@@ -5,7 +5,6 @@ import java.util.*;
 
 
 import org.openxava.tab.*;
-import org.openxava.util.XavaResources;
 import org.openxava.view.*;
 
 /**
@@ -18,8 +17,6 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	private View referenceSubview;
 	private int row = -1;
 	private boolean	chosen = true;
-	private Map chosenKeyMap;
-	
 	
 	public void execute() throws Exception {						
 		int [] selectedOnes = tab.getSelected();
@@ -35,7 +32,8 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 			return;
 		}		
 		getReferenceSubview().setValuesNotifying(key);
-		getTab().setModelName(getView().getModelName());
+		getTab().setModelName(getPreviousView().getModelName());
+		closeDialog(); 
 	}
 
 	public Tab getTab() {
@@ -46,7 +44,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 		tab = web;
 	}
 
-	public View getReferenceSubview() {
+	public View getReferenceSubview() {		
 		return referenceSubview;
 	}
 

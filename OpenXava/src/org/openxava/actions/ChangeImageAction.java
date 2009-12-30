@@ -7,13 +7,12 @@ package org.openxava.actions;
  * @author Javier Paniza
  */
 
-public class ChangeImageAction extends BaseAction implements ILoadFileAction {
+public class ChangeImageAction extends ViewBaseAction implements ILoadFileAction { 
 		
 	private String newImageProperty;	
-
 	
-	
-	public void execute() throws Exception {		
+	public void execute() throws Exception {
+		showDialog(); 
 	}
 
 	public String[] getNextControllers() {		

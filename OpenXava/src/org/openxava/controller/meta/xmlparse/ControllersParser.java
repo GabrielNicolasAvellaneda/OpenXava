@@ -1,8 +1,5 @@
 package org.openxava.controller.meta.xmlparse;
 
-
-
-
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -109,12 +106,7 @@ public class ControllersParser extends ParserBase {
 		result.setByDefault(toByDefault(el.getAttribute(xby_default[lang])));
 		result.setTakesLong(getAttributeBoolean(el, xtakes_long[lang]));
 		result.setConfirm(getAttributeBoolean(el, xconfirm[lang]));
-		result.setShowDialog(getAttributeBoolean(el, xshow_dialog[lang])); 
-		String hideDialog =el.getAttribute(xhide_dialog[lang]);
-		if (!xdefault[lang].equals(hideDialog)) {
-			result.setHideDialog(Boolean.valueOf(hideDialog));
-		}
-		fillSet(el, result);
+		fillSet(el, result);		
 		fillUseObject(el, result);
 		return result;
 	}
@@ -164,7 +156,7 @@ public class ControllersParser extends ParserBase {
 		result.setActionProperty(el.getAttribute(xaction_property[lang]));
 		return result;
 	}
-
+	
 	private void fillExtends(Element el, MetaController container)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xextends[lang]);

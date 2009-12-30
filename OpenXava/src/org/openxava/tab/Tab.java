@@ -199,7 +199,7 @@ public class Tab implements java.io.Serializable {
 		
 	private MetaTab getMetaTab() throws XavaException  {
 		if (metaTab == null) {				
-			try {
+			try {				
 				metaTab = MetaComponent.get(getModelName()).getMetaTab(getTabName());
 			}
 			catch (ElementNotFoundException ex) {
@@ -621,7 +621,7 @@ public class Tab implements java.io.Serializable {
 	 */
 	public void setSelected(String [] values) {
 		if (values == null) {
-			if (selected != null && selected.length > 0) removeSelectedInCurrentPage();
+			if (selected != null && selected.length > 0) deselectedInCurrentPage();
 			return;
 		}
 		int [] intValues = new int[values.length];
@@ -631,7 +631,7 @@ public class Tab implements java.io.Serializable {
 		setSelected(intValues);
 	}
 	
-	public void removeSelectedInCurrentPage(){
+	private void deselectedInCurrentPage() { 
 		List rest = new ArrayList();
 		for (int i = 0; i < selected.length; i++){
 			int value = selected[i];
@@ -783,7 +783,7 @@ public class Tab implements java.io.Serializable {
 		return modelName;
 	}
 
-	public void setModelName(String newModelName) {		
+	public void setModelName(String newModelName) {				
 		if (Is.equal(modelName, newModelName)) return;
 		modelName = newModelName;
 		tabName = null; 

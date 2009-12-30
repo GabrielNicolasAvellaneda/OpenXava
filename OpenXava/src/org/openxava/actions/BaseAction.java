@@ -5,6 +5,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.openxava.controller.*;
+import org.openxava.controller.meta.*;
 import org.openxava.util.Locales;
 import org.openxava.util.Messages;
 import org.openxava.web.DescriptionsLists;
@@ -14,14 +15,15 @@ import org.openxava.web.DescriptionsLists;
  * @author Javier Paniza
  */
 
-abstract public class BaseAction implements IAction, IRequestAction, IModuleContextAction, IChangeModeAction {
+abstract public class BaseAction implements IAction, IRequestAction, IModuleContextAction, IChangeModeAction, IChangeControllersAction {
 	
 	private Messages errors;
 	private Messages messages;
 	private Environment environment;
 	private transient HttpServletRequest request;
 	private ModuleContext context; 
-	private String nextMode; 
+	private String nextMode;
+	private String [] nextControllers;
 	
 	public Messages getErrors() {
 		return errors;
@@ -209,5 +211,43 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	protected ModuleManager getManager() { 
 		return (ModuleManager) context.get(request, "manager");
 	}	
+	
+	protected void addActions(String ... qualifiedActions) { // tmp Añadir tests
+		for (String qualifiedAction: qualifiedActions) {
+			MetaAction action = MetaControllers.getMetaAction(qualifiedAction);
+			if (action.isHidden()) { // tmp doc este detalle
+				action = action.cloneMetaAction();
+				action.setHidden(false);
+			}
+			getManager().addMetaAction(action);
+		}
+	}
+	
+	protected void removeActions(String ... qualifiedActions) { // tmp Añadir tests
+		for (String qualifiedAction: qualifiedActions) {
+			getManager().removeMetaAction(MetaControllers.getMetaAction(qualifiedAction));
+		}
+	}
+	
+	protected void clearActions() {
+		getManager().memorizeControllers();										
+		getManager().setControllersNames(IChangeControllersAction.EMPTY_CONTROLLER);
+	}
+	
+	protected void setControllers(String ... controllers) { // tmp doc 
+		nextControllers = controllers;
+	}
+	
+	protected void returnToPreviousControllers() { // tmp doc
+		nextControllers = PREVIOUS_CONTROLLERS;
+	}
+	
+	protected void setDefaultControllers() { // tmp doc
+		nextControllers = DEFAULT_CONTROLLERS;
+	}
+
+	public String[] getNextControllers() throws Exception { // tmp doc, y referencia		
+		return nextControllers;
+	}
        
 }

@@ -10,7 +10,8 @@ import org.openxava.actions.*;
 public class GoFamilyProductsReportAction extends ViewBaseAction implements IChangeControllersAction, IChangeModeAction {
 
 	public void execute() throws Exception {
-		showNewView();
+		// tmp showNewView();
+		showDialog(); // En migración y guía de referencia (diálogo)
 		getView().setModelName("FilterBySubfamily");
 		getView().setViewName("Family1");
 	}

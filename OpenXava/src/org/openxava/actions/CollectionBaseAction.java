@@ -46,7 +46,7 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 	 */
 	protected List getMapsSelectedValues() throws XavaException {
 		if (mapsSelectedValues == null) {
-			mapsSelectedValues = getCollectionElementView().getCollectionSelectedValues();
+			mapsSelectedValues = getCollectionElementView().getCollectionSelectedValues();			
 		}
 		return mapsSelectedValues;
 	}

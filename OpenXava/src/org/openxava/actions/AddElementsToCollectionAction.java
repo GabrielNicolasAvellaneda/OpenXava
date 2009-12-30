@@ -3,6 +3,7 @@ package org.openxava.actions;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.inject.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.validator.*;
@@ -22,11 +23,13 @@ import org.openxava.validators.*;
 public class AddElementsToCollectionAction extends SaveElementInCollectionAction implements INavigationAction {
 	
 	private static Log log = LogFactory.getLog(AddElementsToCollectionAction.class);
-	 	
+	 		
+	@Inject 
 	private Tab tab;
 	private int added;
 	private int failed;
 	private int row = -1;
+	@Inject
 	private String currentCollectionLabel;
 	
 	public void execute() throws Exception {
@@ -42,12 +45,12 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 				}
 			}		
 		}
-		addMessage("elements_added_to_collection", new Integer(added), currentCollectionLabel);
+		addMessage("elements_added_to_collection", new Integer(added), currentCollectionLabel);		
 		if (failed > 0) addError("elements_not_added_to_collection", new Integer(failed), currentCollectionLabel);
 		getView().setKeyEditable(false); // To mark as saved
 		getTab().deselectAll();
-		resetDescriptionsCache(); 
-		
+		resetDescriptionsCache(); 		
+		closeDialog(); 
 	}
 
 	private void associateEntityInRow(int row) throws FinderException, Exception {
@@ -102,7 +105,7 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 	}
 
 	public String getCustomView() {		
-		return added > 0?DEFAULT_VIEW:SAME_VIEW;
+		return added > 0?PREVIOUS_VIEW:SAME_VIEW; 
 	}
 
 	public int getRow() {
@@ -112,13 +115,12 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 	public void setRow(int row) {
 		this.row = row;
 	}
-
-	public String getCurrentCollectionLabel() {
-		return currentCollectionLabel;
-	}
-
-	public void setCurrentCollectionLabel(String currentCollectionLabel) {
-		this.currentCollectionLabel = currentCollectionLabel;
+	
+	// This action is executed from an dialog so it has not viewObject,
+	// but it could be injected from a old (not updated) action definition 
+	// in controllers.xml using use-object. This method is to avoid that 
+	// viewObject has value in that case
+	public void setViewObject(String viewObject) { 
 	}
 
 }

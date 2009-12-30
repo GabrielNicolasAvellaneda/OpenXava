@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import javax.inject.*;
+
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -11,9 +13,11 @@ import org.openxava.util.*;
 
 public class GoAddElementsToCollectionAction extends CollectionElementViewBaseAction implements INavigationAction {
 	
-			
-	private Tab tab;		
-	private String currentCollectionLabel;  
+	@Inject 		
+	private Tab tab;
+	@Inject
+	private String currentCollectionLabel;
+	@Inject 
 	private String collectionViewObject;
 	private String nextController = "AddToCollection"; // If you change the default value change setter and getter doc too
 	
@@ -22,12 +26,14 @@ public class GoAddElementsToCollectionAction extends CollectionElementViewBaseAc
 		Tab tab = new Tab();
 		tab.setRequest(getTab().getRequest());
 		tab.setModelName(getCollectionElementView().getModelName());	
-		setTab(tab);				
-		setCurrentCollectionLabel("'" + 
-				Labels.get(getCollectionElementView().getMemberName(), getRequest().getLocale()) +
-				" " + XavaResources.getString(getRequest(), "of") + " " +
-				Labels.get(getCollectionElementView().getParent().getModelName(), getRequest().getLocale()) + "'");
-		setCollectionViewObject(getViewObject());		
+		setTab(tab);
+		currentCollectionLabel = "'" + 
+			Labels.get(getCollectionElementView().getMemberName(), getRequest().getLocale()) +
+			" " + XavaResources.getString(getRequest(), "of") + " " +
+			Labels.get(getCollectionElementView().getParent().getModelName(), getRequest().getLocale()) + "'";
+		getCollectionElementView().setTitleId("add_to_collection_prompt", currentCollectionLabel);
+		setCollectionViewObject(getViewObject());
+		showDialog(getCollectionElementView()); 		
 	}
 	
 	public String[] getNextControllers() {		

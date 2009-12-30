@@ -43,7 +43,7 @@ public class Module extends DWRBase {
 	private ModuleManager manager;
 	private boolean firstRequest; 
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception {
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception {		
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module);		
@@ -85,7 +85,8 @@ public class Module extends DWRBase {
 			else {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}			
-			result.setStrokeActions(getStrokeActions());			
+			result.setViewMember(getView().getMemberName());
+			result.setStrokeActions(getStrokeActions());
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -188,7 +189,7 @@ public class Module extends DWRBase {
 	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
 		Map changedParts = result.getChangedParts();
 
-		if (manager.isShowDialog() || manager.isHideDialog() || firstRequest) { 			
+		if (manager.isShowDialog() || manager.isHideDialog() || firstRequest) {
 			if (manager.getDialogLevel() > 0) {
 				changedParts.put(decorateId("dialog" + manager.getDialogLevel()),   
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					

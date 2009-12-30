@@ -21,7 +21,8 @@ public class AddFullAddressAction extends ViewBaseAction {
 		}
 		addressView.setValue("street", street.toString().trim());
 		
-		returnToPreviousView();
+		// tmp returnToPreviousView();
+		closeDialog(); // tmp En migration
 	}
 
 }

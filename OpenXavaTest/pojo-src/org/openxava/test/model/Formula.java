@@ -41,6 +41,7 @@ public class Formula {
 	
 	@OnSelectElementAction("Formula.onSelectIngredient") 
 	@OneToMany(mappedBy="formula", cascade=CascadeType.REMOVE)
+	@ListProperties("image, ingredient.name") 
 	private Collection<FormulaIngredient> ingredients;	
 	
 	@Stereotype("HTML_TEXT")

@@ -6,8 +6,8 @@ package org.openxava.actions;
 
 public interface IChangeControllersAction extends IAction {
 				
-	final static String [] EMPTY_CONTROLLER = new String [] { "Empty" };
-	final static String [] DEFAULT_CONTROLLERS = new String [] {};
+	final static String [] EMPTY_CONTROLLER = new String [] {};
+	final static String [] DEFAULT_CONTROLLERS = new String [] { "__DEFAULT_CONTROLLERS__" };	
 	final static String [] SAME_CONTROLLERS = null;
 	final static String [] PREVIOUS_CONTROLLERS = new String [] { "__PREVIOUS_CONTROLLERS__" };
 	

@@ -24,21 +24,21 @@ public class SellerWithCustomersAsAggregateTest extends ModuleTestBase {
 						
 		assertCustomerNotExists(66);
 		execute("Collection.new", "viewObject=xava_view_customers");
-		assertEditable("customers.number");
-		assertEditable("customers.name");
-		assertValue("customers.number", ""); // Test if clear the fields
-		assertValue("customers.type", usesAnnotatedPOJO()?"0":"1"); // Test if execute default value calculators
+		assertEditable("number");
+		assertEditable("name");
+		assertValue("number", ""); // Test if clear the fields
+		assertValue("type", usesAnnotatedPOJO()?"0":"1"); // Test if execute default value calculators
 		
 		// Creating
-		setValue("customers.number", "66");
-		setValue("customers.name", "JUNIT 66");
-		setValue("customers.type", usesAnnotatedPOJO()?"0":"1");
-		setValue("customers.address.street", "AV. CONSTITUCION");
-		setValue("customers.address.zipCode", "46540");
-		setValue("customers.address.city", "EL PUIG");
-		setValue("customers.address.state.id", "CA");
+		setValue("number", "66");
+		setValue("name", "JUNIT 66");
+		setValue("type", usesAnnotatedPOJO()?"0":"1");
+		setValue("address.street", "AV. CONSTITUCION");
+		setValue("address.zipCode", "46540");
+		setValue("address.city", "EL PUIG");
+		setValue("address.state.id", "CA");
 		
-		execute("Collection.save", "viewObject=xava_view_customers");		
+		execute("Collection.save");		
 		assertMessage("Customer created and associated to Seller");
 		assertCollectionRowCount("customers", 1);
 		assertValueInCollection("customers", 0, "name", "Junit 66");
@@ -46,14 +46,14 @@ public class SellerWithCustomersAsAggregateTest extends ModuleTestBase {
 		
 		// Modifiying
 		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
-		setValue("customers.name", "JUNIT 66x");
-		execute("Collection.save", "viewObject=xava_view_customers");
+		setValue("name", "JUNIT 66x");
+		execute("Collection.save");
 		assertMessage("Customer modified successfully");
 		assertValueInCollection("customers", 0, "name", "Junit 66x");
 		
 		// Removing
 		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
-		execute("Collection.remove", "viewObject=xava_view_customers");
+		execute("Collection.remove");
 		assertMessage("Association between Customer and Seller has been removed, but Customer is still in database");
 		assertCollectionRowCount("customers", 0);
 		// Object is not remove from database, only the association is removed

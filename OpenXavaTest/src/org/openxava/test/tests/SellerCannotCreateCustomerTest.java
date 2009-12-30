@@ -27,9 +27,9 @@ public class SellerCannotCreateCustomerTest extends ModuleTestBase {
 	
 	public void testMembersOfReferenceToEntityNotEditableInSection_notCreateNewReferenceFromCollectionOnEdit() throws Exception {
 		execute("Mode.detailAndFirst");
-		execute("Collection.edit", "row=0,viewObject=xava_view_section0_customers");
-		assertEditable("customers.number");
-		assertNoEditable("customers.name");	
+		execute("Collection.view", "row=0,viewObject=xava_view_section0_customers");
+		assertNoEditable("number");
+		assertNoEditable("name");	
 		assertNoAction("Reference.createNew");
 		assertNoAction("Reference.modify");
 	}

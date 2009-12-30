@@ -190,9 +190,6 @@ public class XmlElementsNames {
 	protected final static String [] xfor_collection= { "for-collection", "para-coleccion" }; 
 	protected final static String [] xfor_collections= { "for-collections", "para-colecciones" }; 
 	protected final static String [] xformula= { "formula", "formula" };
-	protected final static String [] xlist_formatter = { "list-formatter", "formateador-lista" };
-	protected final static String [] xshow_dialog = { "show-dialog", "mostrar-dialogo" }; 
-	protected final static String [] xhide_dialog = { "hide-dialog", "ocultar-dialogo" }; 
-	protected final static String [] xdefault = { "default", "defecto" }; 
+	protected final static String [] xlist_formatter = { "list-formatter", "formateador-lista" }; 
 	
 }

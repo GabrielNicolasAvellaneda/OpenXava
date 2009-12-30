@@ -23,8 +23,8 @@ public class ToDoListTest extends ModuleTestBase {
 		assertCollectionRowCount("tasks", 2);
 		assertValueInCollection("tasks", 0, 0, "TASK 1");
 		execute("Collection.edit", "row=0,viewObject=xava_view_tasks");
-		assertCollectionRowCount("tasks.componentsTasks", 1);
-		assertValueInCollection("tasks.componentsTasks", 0, 0, "COMPONENT 1");		
+		assertCollectionRowCount("componentsTasks", 1);
+		assertValueInCollection("componentsTasks", 0, 0, "COMPONENT 1");		
 	}
 	
 	public void testSelectAndDeselectAllCollectionElements() throws Exception {

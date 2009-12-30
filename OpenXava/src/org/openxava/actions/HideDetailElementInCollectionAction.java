@@ -14,6 +14,7 @@ public class HideDetailElementInCollectionAction extends CollectionElementViewBa
 	public void execute() throws Exception {							
 		getCollectionElementView().setCollectionDetailVisible(false);
 		getCollectionElementView().setCollectionEditingRow(-1);
+		closeDialog(); 
 	}
 
 }

@@ -6,12 +6,12 @@ package org.openxava.actions;
 /**
  * @author Javier Paniza
  */
-public class AddImageToGalleryAction extends BaseAction implements ILoadFileAction {
+public class AddImageToGalleryAction extends ViewBaseAction implements ILoadFileAction { 
 
 	
 	
 	public void execute() throws Exception {
-		
+		showDialog(); 		
 	}
 	
 	public String getCustomView() {		

@@ -18,13 +18,13 @@ public class InvoiceNoListTest extends ModuleTestBase {
 		// execute("CRUD.new"); // Does not call to new in order to test a bug that arise in this case
 		execute("Sections.change", "activeSection=1");
 		execute("Collection.new", "viewObject=xava_view_section1_details");
-		assertValue("details.product.description", "");
-		execute("Reference.search", "keyProperty=xava.Invoice.details.product.number");
+		assertValue("product.description", "");
+		execute("Reference.search", "keyProperty=product.number");
 		int lastIndex = getListRowCount() - 1;		
 		String description = getValueInList(lastIndex, 1);		
 		execute("ReferenceSearch.choose", "row=" + lastIndex);
 		assertNoErrors();
-		assertValue("details.product.description", description);
+		assertValue("product.description", description);
 	}
 								
 }

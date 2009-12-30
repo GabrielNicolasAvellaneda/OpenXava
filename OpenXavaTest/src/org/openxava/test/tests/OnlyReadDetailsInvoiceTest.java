@@ -63,26 +63,14 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		execute("Collection.view", "row=0,viewObject=xava_view_details");
 		
 		String [] aggregateDetailActions = {
-			"Navigation.previous",
-			"Navigation.first",
-			"Navigation.next",
-			"CRUD.new",
-			"CRUD.save",
-			"CRUD.delete",
-			"CRUD.search",			
 			"Gallery.edit",
-			"Mode.list",						
-			"Collection.view",
 			"Collection.hideDetail",
-			"List.filter", 
-			"List.orderBy", 
-			"List.customize"
 		};		
 		assertActions(aggregateDetailActions);
 		
-		assertNoEditable("details.serviceType");		
-		assertNoEditable("details.product.number");
-		assertNoEditable("details.product.description");						
+		assertNoEditable("serviceType");		
+		assertNoEditable("product.number");
+		assertNoEditable("product.description");						
 	}
 	
 	public void testLevel4ReferenceInList() throws Exception {

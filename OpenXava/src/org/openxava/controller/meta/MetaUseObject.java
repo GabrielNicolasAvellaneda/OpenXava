@@ -11,8 +11,7 @@ import org.openxava.util.*;
 public class MetaUseObject {
 	
 	private String name;
-	private String actionProperty;
-	
+	private String actionProperty;		
 	
 	public String getName() {
 		return name;

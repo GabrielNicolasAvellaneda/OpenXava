@@ -19,8 +19,9 @@ public class MetaControllers {
 	public final static String WEB="web";
 	
 	private static Map environmentVariables;
-	private static Map metaControllers;
-	private static Map mapMetaObjects;
+	private static Map<String, MetaController> metaControllers;
+	private static Map<String, MetaObject> mapMetaObjects;
+	private static Collection<String> objectPrefixes; 
 	private static String context = SWING;
 	
 	
@@ -94,7 +95,15 @@ public class MetaControllers {
 		MetaObject a = (MetaObject) mapMetaObjects.get(name);
 		if (a == null) throw new ElementNotFoundException("session_object_not_found_in_controllers", name);		
 		return a; 
-	}	
+	}
+	
+	public static boolean containsMetaObject(String name) { 
+		if (metaControllers == null) {
+			setup();
+		}						
+		if (mapMetaObjects == null) return false;
+		return mapMetaObjects.containsKey(name);
+	}
 	
 	public static String getContext() {
 		return context;
@@ -118,6 +127,22 @@ public class MetaControllers {
 		}
 		if (environmentVariables == null) return null;
 		return (String) environmentVariables.get(name);						
+	}
+
+	public static Collection<String> getObjectPrefixes() {
+		if (objectPrefixes == null) {
+			if (metaControllers == null) { 
+				setup();
+			}
+			objectPrefixes = new HashSet();
+			for (MetaObject object: mapMetaObjects.values()) {
+				int idx = object.getName().indexOf('_'); 
+				if (idx >= 0) {
+					objectPrefixes.add(object.getName().substring(0, idx)); 
+				}
+			}		
+		}
+		return objectPrefixes;
 	}	
 	
 }

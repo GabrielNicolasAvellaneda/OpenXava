@@ -18,9 +18,9 @@ public class QuarterTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount("subjects", 1);
 		execute("Collection.edit", "row=0,viewObject=xava_view_subjects");
-		assertCollectionRowCount("subjects.groups", 1);
-		assertValueInCollection("subjects.groups", 0, 0, "CODE");
-		assertValueInCollection("subjects.groups", 0, 1, "TYPE");
+		assertCollectionRowCount("groups", 1);
+		assertValueInCollection("groups", 0, 0, "CODE");
+		assertValueInCollection("groups", 0, 1, "TYPE");
 	}
 	
 }

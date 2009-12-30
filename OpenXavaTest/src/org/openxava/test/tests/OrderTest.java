@@ -30,12 +30,12 @@ public class OrderTest extends ModuleTestBase {
 		assertValue("customer.name", "Javi");
 		assertCollectionRowCount("details", 0);
 		execute("Collection.new", "viewObject=xava_view_details");
-		setValue("details.product.number", "1");
-		assertValue("details.product.description", "MULTAS DE TRAFICO");
-		assertValue("details.product.unitPrice", "11.00");
-		setValue("details.quantity", "10");
-		assertValue("details.amount", "110.00");
-		execute("Collection.save", "viewObject=xava_view_details");
+		setValue("product.number", "1");
+		assertValue("product.description", "MULTAS DE TRAFICO");
+		assertValue("product.unitPrice", "11.00");
+		setValue("quantity", "10");
+		assertValue("amount", "110.00");
+		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
 		assertValue("amount", "110.00");
@@ -49,17 +49,12 @@ public class OrderTest extends ModuleTestBase {
 		setValue("customer.number", "1");
 		assertCollectionRowCount("details", 0);
 		execute("Collection.new", "viewObject=xava_view_details");
-		setValue("details.product.number", "1");
-		setValue("details.quantity", "10");
-		ClickableElement link = null;
-		for (Iterator it = getForm().getHtmlElementsByTagName("a").iterator(); it.hasNext();) {
-			link = (ClickableElement) it.next();
-			if ("Save detail".equals(link.asText())) break;
-		}
-		assertNotNull("Must exist the 'Save detail' link", link);
-		
-		link.click(); // Not dblClick(), it does not reproduce the problem
-		link.click();
+		setValue("product.number", "1");
+		setValue("quantity", "10");
+		HtmlElement action = getForm().getElementById(decorateId("Collection.save"));
+				
+		action.click(); // Not dblClick(), it does not reproduce the problem
+		action.click();
 		Thread.sleep(3000);
 				
 		assertNoErrors();

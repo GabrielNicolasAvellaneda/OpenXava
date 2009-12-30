@@ -18,7 +18,7 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	
 	public void execute() throws Exception {
-		getCollectionElementView().setCollectionDetailVisible(true);		
+		getCollectionElementView().setCollectionDetailVisible(true);
 		Collection elements = getCollectionElementView().getCollectionValues(); 
 		if (elements == null) return;
 		if (elements instanceof List) {
@@ -30,6 +30,20 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 		else {
 			throw new XavaException("only_list_collection_for_aggregates");
 		}
+		showDialog(getCollectionElementView());
+		if (getCollectionElementView().isCollectionEditable() || 
+			getCollectionElementView().isCollectionMembersEditables()) 
+		{ 
+			addActions(getCollectionElementView().getSaveCollectionElementAction());
+		}
+		if (getCollectionElementView().isCollectionEditable()) { 
+			addActions(getCollectionElementView().getRemoveCollectionElementAction());
+		} 	
+		Iterator itDetailActions = getCollectionElementView().getActionsNamesDetail().iterator();
+		while (itDetailActions.hasNext()) {		
+			addActions(itDetailActions.next().toString());			
+		}
+		addActions(getCollectionElementView().getHideCollectionElementAction());					
 	}
 	
 	public int getRow() {

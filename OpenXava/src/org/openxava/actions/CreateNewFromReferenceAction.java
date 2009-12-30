@@ -7,7 +7,7 @@ package org.openxava.actions;
  * @author Javier Paniza
  */
 
-public class CreateNewFromReferenceAction extends NavigationFromReferenceBaseAction implements IRequestAction, IChainAction {
+public class CreateNewFromReferenceAction extends NavigationFromReferenceBaseAction {
 	
 	public String getCustomController() {	
 		return getModel() + "Creation";

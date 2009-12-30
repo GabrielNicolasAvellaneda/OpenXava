@@ -12,7 +12,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class LoadImageIntoGalleryAction extends BaseAction implements INavigationAction, IProcessLoadedFileAction {
+public class LoadImageIntoGalleryAction extends ViewBaseAction implements INavigationAction, IProcessLoadedFileAction {
 
 	private List fileItems;
 	private Gallery gallery;
@@ -30,6 +30,7 @@ public class LoadImageIntoGalleryAction extends BaseAction implements INavigatio
 		}		
 		if (c == 1)	addMessage("image_added_to_gallery");
 		else if (c > 1) addMessage("images_added_to_gallery", new Integer(c));
+		closeDialog(); 
 	}
 
 	public String[] getNextControllers() {		

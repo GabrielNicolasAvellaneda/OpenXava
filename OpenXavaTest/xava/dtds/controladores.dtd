@@ -29,8 +29,6 @@
  por-defecto (nunca|si-posible|casi-siempre|siempre) "nunca"
  cuesta (true|false) "false" 
  confirmar (true|false) "false"
- mostrar-dialogo (true|false) "false"
- ocultar-dialogo (true|false|defecto) "defecto"
 >
 
 <!ELEMENT usa-objeto EMPTY>
