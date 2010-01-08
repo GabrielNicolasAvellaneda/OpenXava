@@ -289,7 +289,7 @@
 		<mode-controller name="Void"/>
 	</module>
 			<module name="FamilyWithInheritanceController" folder="warehousing/variations">		<model name="Family"/>		<controller name="Family"/>
-		<controller name="HideShowCRUDActions"/>	</module>		
+		<controller name="HideShowCRUDActions"/>		<controller name="AddRemoveCRUDActions"/>	</module>		
 			<module name="SubfamilySelect" folder="warehousing/variations">		<model name="Subfamily" />				<tab name="CompleteSelect"/>		<controller name="Typical"/>			</module>
 				<module name="DeliveryTypeJSP" folder="invoicing/variations">
 		<model name="DeliveryType"/>
@@ -306,6 +306,6 @@
 	<module name="CarrierWithSections" >
 		<model name="Carrier"/>
 		<view name="WithSections"/>
-		<controller name="CarrierWithSections"/>
+		<controller name="CarrierWithSections"/>		<controller name="Typical"/>		<controller name="Carrier"/>
 	</module>		<module name="WarehouseSpecialNew" >		<model name="Warehouse"/>		<view name="WithOnChangeZone"/>		<controller name="WarehouseSpecialNew"/>	</module>		<module name="OfficeOnlyWarehouse">		<model name="Office"/>		<view name="OnlyWarehouse"/>		<controller name="Typical"/>			</module>		<module name="ShipmentSeparatedTime">		<model name="Shipment"/>		<view name="SeparatedTime"/>		<controller name="Typical"/>			</module>		<module name="IssueList">		<model name="IssueList"/>		<controller name="IssueList"/>		<mode-controller name="Void"/>	</module>		<module name="SelectSchema">		<model name="SelectSchema"/>		<controller name="SelectSchema"/>		<mode-controller name="Void"/>	</module>				
 </application>
