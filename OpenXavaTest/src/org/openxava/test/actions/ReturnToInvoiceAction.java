@@ -2,14 +2,18 @@ package org.openxava.test.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 
 
 /**
+ * 
  * @author Javier Paniza
  */
 public class ReturnToInvoiceAction extends ViewBaseAction implements INavigationAction {
 
+	@Inject
 	private Map invoiceValues;
 	
 	public void execute() throws Exception {

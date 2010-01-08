@@ -3,6 +3,9 @@ package org.openxava.actions;
 /**
  * Allows to hide an action. <p>
  * 
+ * You can just use the removeActions() and clearActions() methods of {@link BaseAction} 
+ * instead of implementing this interface.
+ * 
  * @author Javier Paniza
  */
 

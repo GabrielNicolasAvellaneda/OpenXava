@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 
 
+import javax.inject.*;
+
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -13,6 +15,7 @@ public class GoDetailAction extends BaseAction implements IChangeModeAction, ICh
 	
 	private String nextSection;
 	private String nextAction;
+	@Inject
 	private Tab tab;
 	
 

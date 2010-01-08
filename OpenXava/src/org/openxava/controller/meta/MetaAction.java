@@ -41,8 +41,6 @@ public class MetaAction extends MetaElement implements Cloneable {
 	private boolean confirm;
 	private boolean onEachRequest;
 	private boolean beforeEachRequest;
-	// tmp private boolean showDialog; En migration y changelog 
-	// tmp private Boolean hideDialog = null; En migration y changelog
 	
 	public MetaAction() {
 	}

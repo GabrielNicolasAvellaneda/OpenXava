@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 
 
+import javax.inject.*;
+
 import org.openxava.session.*;
 
 /**
@@ -11,19 +13,12 @@ import org.openxava.session.*;
 
 public class MinimizeImageAction extends BaseAction {
 	
+	@Inject
 	private Gallery gallery;
 	
 
 	public void execute() throws Exception {
 		gallery.setMaximized(false);
-	}
-
-	public Gallery getGallery() {
-		return gallery;
-	}
-
-	public void setGallery(Gallery gallery) {
-		this.gallery = gallery;
 	}
 
 }

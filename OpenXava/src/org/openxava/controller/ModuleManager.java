@@ -34,7 +34,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 4m2 beta (2009-12-x)");		
+		log.info("OpenXava 4m2 beta (2010-1-x)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -88,12 +88,14 @@ public class ModuleManager {
 	
 	public void addMetaAction(MetaAction action) {
 		getMetaActions().add(action);
-		this.controllersNames = MODIFIED_CONTROLLERS;		
+		this.controllersNames = MODIFIED_CONTROLLERS;
+		actionsChanged = true; 
 	}
 	
 	public void removeMetaAction(MetaAction action) {
 		getMetaActions().remove(action);
-		this.controllersNames = MODIFIED_CONTROLLERS;				
+		this.controllersNames = MODIFIED_CONTROLLERS;
+		actionsChanged = true; 
 	}
 
 	public Collection<MetaAction> getMetaActions() { 
@@ -175,11 +177,12 @@ public class ModuleManager {
 		return metaControllers;
 	}
 
-	private void setupModuleControllers() throws XavaException {					
+	private void setupModuleControllers() throws XavaException {		
 		Collection controllers = getMetaModule().getControllersNames();
 		String [] names = new String[controllers.size()];
 		controllers.toArray(names);		
-		setControllersNames(names);			
+		setControllersNames(names);
+		getPreviousControllers().clear(); 
 	}
 		
 	private String getModeControllerName() {		
@@ -373,7 +376,7 @@ public class ModuleManager {
 			}
 			if (action instanceof IChangeControllersAction) {
 				IChangeControllersAction changeControllersAction = (IChangeControllersAction) action;
-				String [] nextControllers = changeControllersAction.getNextControllers();				
+				String [] nextControllers = changeControllersAction.getNextControllers();
 				if (nextControllers != IChangeControllersAction.SAME_CONTROLLERS) {
 					if (nextControllers == IChangeControllersAction.DEFAULT_CONTROLLERS) {
 						setupModuleControllers();															
@@ -386,7 +389,6 @@ public class ModuleManager {
 						setControllersNames(nextControllers);
 						executeInitAction(request, errors, messages);
 					}
-					actionsChanged = true; 
 				}
 			}			
 			if (action instanceof IHideActionAction) {
@@ -394,7 +396,6 @@ public class ModuleManager {
 				if (actionToHide != null) {
 					addToHiddenActions(actionToHide);
 				}
-				actionsChanged = true;
 			}
 			if (action instanceof IHideActionsAction) {
 				String [] actionsToHide = ((IHideActionsAction) action).getActionsToHide();
@@ -405,14 +406,12 @@ public class ModuleManager {
 						}
 					}					
 				}
-				actionsChanged = true;
 			}
 			if (action instanceof IShowActionAction) {
 				String actionToShow = ((IShowActionAction) action).getActionToShow();
 				if (actionToShow != null) {
 					removeFromHiddenActions(actionToShow);
 				}
-				actionsChanged = true;
 			}
 			if (action instanceof IShowActionsAction) {
 				String [] actionsToShow = ((IShowActionsAction) action).getActionsToShow();
@@ -423,7 +422,6 @@ public class ModuleManager {
 						}
 					}					
 				}
-				actionsChanged = true;
 			}						
 			if (action instanceof ILoadFileAction) {					
 				setFormUpload(((ILoadFileAction) action).isLoadFile());
@@ -601,16 +599,17 @@ public class ModuleManager {
 		return getMetaModule().getEnvironment();
 	}
 
-	public void setControllersNames(String [] names) { 		
+	public void setControllersNames(String [] names) {
 		metaControllers = null;
 		metaActions = null;
 		metaActionsOnInit = null;
-		defaultActionQualifiedName = null;
+		defaultActionQualifiedName = null;		
 		this.controllersNames = names;
+		actionsChanged = true; 		
 	}
 	
-	private void restorePreviousControllers() throws XavaException {
-		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
+	public void restorePreviousControllers() throws XavaException { 
+		Stack previousControllers = getPreviousControllers();
 		if (previousControllers.isEmpty()) {
 			setupModuleControllers();
 			return;						
@@ -622,6 +621,7 @@ public class ModuleManager {
 		}
 		else { // A collection of metaactions
 			this.metaActions = (Collection) controllers;
+			this.actionsChanged = true; 
 		}
 	}
 	
@@ -636,13 +636,18 @@ public class ModuleManager {
 	}
 		
 	public void memorizeControllers() throws XavaException {
-		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
+		Stack previousControllers = getPreviousControllers();
 		if (this.controllersNames == MODIFIED_CONTROLLERS) { 
 			previousControllers.push(this.metaActions);
 		}
 		else {
 			previousControllers.push(this.controllersNames);
 		}
+	}
+
+	private Stack getPreviousControllers() {
+		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
+		return previousControllers;
 	}
 	
 	private void memorizeCustomView() throws XavaException { 
@@ -709,7 +714,7 @@ public class ModuleManager {
 				// The nulls are not assigned and thus we allow to have trasient attributes
 				// that it can lost on go and return from server without danger of alter
 				// the session value 				
-				setObjectInContext(objectName, value);
+				setObjectInContext(objectName, value);				
 			}			
 		}
 	}
@@ -732,7 +737,7 @@ public class ModuleManager {
 				// The nulls are not assigned and thus we allow to have trasient attributes
 				// that it can lost on go and return from server without danger of alter
 				// the session value 				
-				setObjectInContext(metaUseObject.getName(), value);
+				setObjectInContext(metaUseObject.getName(), value);				
 			}
 		}
 	}
@@ -782,11 +787,12 @@ public class ModuleManager {
 			Object value = getObjectFromContext(objectName);			
 			if (value == null) {				
 				value = createObject(objectName);
-				setObjectInContext(objectName, value);
+				setObjectInContext(objectName, value);					
 			}
 			
 			try {
 				mp.executeSet(property, value);
+				log.warn(XavaResources.getString("use_inject_instead", property, metaAction.getQualifiedName()));
 			}
 			catch (Exception ex) {
 				log.warn(XavaResources.getString("set_property_action_value_error", property, metaAction.getName()), ex);
@@ -1107,7 +1113,8 @@ public class ModuleManager {
 	
 	private void addToHiddenActions(String action) {
 		if (hiddenActions == null) hiddenActions = new HashSet();
-		hiddenActions.add(action);		
+		hiddenActions.add(action);	
+		actionsChanged = true; 
 		metaActions = null;
 	}
 	
@@ -1115,6 +1122,7 @@ public class ModuleManager {
 		if (hiddenActions == null) return;
 		hiddenActions.remove(action);	
 		metaActions = null;		
+		actionsChanged = true; 
 	}
 	
 	private void removeHiddenActions() {

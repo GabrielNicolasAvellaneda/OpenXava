@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 
 
 import org.openxava.mapping.*;
@@ -16,7 +18,7 @@ import org.openxava.view.*;
 
 public class ReferenceSearchAction extends ReferenceBaseAction implements INavigationAction {
 	
-			
+	@Inject		
 	private Tab tab;	
 	private String tabName = "";
 	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too

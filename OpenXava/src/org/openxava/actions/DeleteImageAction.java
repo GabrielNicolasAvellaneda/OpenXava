@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import javax.inject.*;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -10,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 public class DeleteImageAction extends ViewBaseAction{
 	private static Log log = LogFactory.getLog(DeleteImageAction.class);
 	
+	@Inject
 	private String newImageProperty;
 	
 	public void execute() throws Exception {

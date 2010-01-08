@@ -1,5 +1,7 @@
 package org.openxava.test.actions;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 import org.openxava.tab.*;
 
@@ -9,6 +11,8 @@ import org.openxava.tab.*;
 public class ChangeListTitleAction extends BaseAction {
 	
 	private String titleId;
+	
+	@Inject
 	private Tab tab;
 
 	public void execute() throws Exception {

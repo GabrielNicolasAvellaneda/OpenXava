@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import javax.inject.*;
+
 import org.openxava.util.*;
 import org.openxava.view.*;
 
@@ -36,6 +38,7 @@ public class ReferenceBaseAction extends ViewBaseAction {
 	
 	private ViewInfo viewInfo;	
 	private String keyProperty;
+	@Inject
 	private View referenceSubview;		
 	
 	public void execute() throws Exception {	

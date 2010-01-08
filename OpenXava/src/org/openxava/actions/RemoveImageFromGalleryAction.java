@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 
 
+import javax.inject.*;
+
 import org.openxava.session.*;
 
 /**
@@ -11,20 +13,13 @@ import org.openxava.session.*;
 
 public class RemoveImageFromGalleryAction extends BaseAction {
 	
+	@Inject
 	private Gallery gallery;
 	private String oid;
 	
 	
 	public void execute() throws Exception {
 		gallery.removeImage(oid);
-	}
-
-	public Gallery getGallery() {
-		return gallery;
-	}
-
-	public void setGallery(Gallery gallery) {
-		this.gallery = gallery;
 	}
 
 	public String getOid() {

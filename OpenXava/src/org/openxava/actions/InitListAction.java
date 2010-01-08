@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import javax.inject.*;
+
 import org.openxava.tab.*;
 
 /**
@@ -7,6 +9,7 @@ import org.openxava.tab.*;
  */
 public class InitListAction extends TabBaseAction {
 	
+	@Inject
 	private Tab mainTab;
 
 	public void execute() throws Exception {

@@ -2,6 +2,8 @@ package org.openxava.test.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 import org.openxava.controller.*;
 import org.openxava.tab.*;
@@ -13,6 +15,7 @@ import org.openxava.tab.*;
 public class ListCustomerInvoicesAction extends BaseAction implements IChangeModuleAction, IModuleContextAction {
 	
 	private int row;
+	@Inject
 	private Tab tab;
 	private ModuleContext context;
 

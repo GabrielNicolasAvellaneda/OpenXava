@@ -12,9 +12,7 @@ import org.openxava.view.*;
 
 public abstract class UpdateReferenceBaseAction extends ViewBaseAction implements IChangeControllersAction {
 	
-	private String [] nextControllers = null;
-	private Stack previousViews;
-	
+	private String [] nextControllers = null;	
 	
 	protected void returnsToPreviousViewUpdatingReferenceView(Map key) throws Exception {
 		nextControllers = PREVIOUS_CONTROLLERS;				
@@ -36,13 +34,6 @@ public abstract class UpdateReferenceBaseAction extends ViewBaseAction implement
 	
 	public String[] getNextControllers() {		
 		return nextControllers;
-	}
-
-	public Stack getPreviousViews() {
-		return previousViews;
-	}
-	public void setPreviousViews(Stack previousViews) {
-		this.previousViews = previousViews;
 	}
 	
 }

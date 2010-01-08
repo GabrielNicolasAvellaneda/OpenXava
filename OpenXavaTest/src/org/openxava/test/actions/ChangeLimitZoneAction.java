@@ -1,5 +1,7 @@
 package org.openxava.test.actions;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 
 /**
@@ -8,6 +10,8 @@ import org.openxava.actions.*;
 public class ChangeLimitZoneAction extends ViewBaseAction {
 	
 	private int newLimitZone;
+	
+	@Inject
 	private int limitZone;
 
 	public void execute() throws Exception {

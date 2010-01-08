@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 
 
 import org.openxava.tab.*;
@@ -14,9 +16,13 @@ import org.openxava.view.*;
 
 public class GoListAction extends BaseAction implements IChangeModeAction, INavigationAction {
 		
+	@Inject
 	private View view;
+	@Inject
 	private Tab tab;
+	@Inject
 	private Tab mainTab;
+	@Inject
 	private Stack previousViews;
 	
 		

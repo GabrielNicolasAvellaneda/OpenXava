@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import javax.inject.*;
+
 
 
 
@@ -9,6 +11,7 @@ package org.openxava.actions;
 
 public class ChangeImageAction extends ViewBaseAction implements ILoadFileAction { 
 		
+	@Inject
 	private String newImageProperty;	
 	
 	public void execute() throws Exception {

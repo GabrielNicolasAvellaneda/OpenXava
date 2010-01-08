@@ -1,6 +1,12 @@
 package org.openxava.actions;
 
 /**
+ * To indicate the next controllers to show. <p>
+ * 
+ * Given that {@link BaseAction) already implements it, you can just call to the 
+ * setControllers(), returnToPreviousControllers(), setDefaultControllers(),  
+ * addActions(), removeActions() and clearActions() methods from your action. 
+ * 
  * @author Javier Paniza
  */
 

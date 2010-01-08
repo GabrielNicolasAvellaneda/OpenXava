@@ -1,5 +1,7 @@
 package org.openxava.test.actions;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 import org.openxava.tab.*;
 
@@ -9,21 +11,16 @@ import org.openxava.tab.*;
 
 public class InitDefaultYearTo2002Action extends BaseAction {
 
-	private int defaultYear;
+	@Inject
+	private int defaultYear; // without getter and setter, to test it 
+	
+	@Inject
 	private Tab tab;
 
 	public void execute() throws Exception {
-		setDefaultYear(2002);
+		defaultYear = 2002; // This changes defaultYear in context because of @Inject
 		tab.setTitleVisible(true);
 		tab.setTitleArgument(new Integer(2002));
-	}
-
-	public int getDefaultYear() {
-		return defaultYear;
-	}
-
-	public void setDefaultYear(int i) {
-		defaultYear = i;		
 	}
 
 	public Tab getTab() {

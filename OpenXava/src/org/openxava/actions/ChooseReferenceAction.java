@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 
 
 import org.openxava.tab.*;
@@ -13,7 +15,9 @@ import org.openxava.view.*;
 
 public class ChooseReferenceAction extends ViewBaseAction implements INavigationAction {
 	 	
+	@Inject
 	private Tab tab;
+	@Inject
 	private View referenceSubview;
 	private int row = -1;
 	private boolean	chosen = true;

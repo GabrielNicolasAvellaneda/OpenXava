@@ -511,7 +511,7 @@ public class ModuleTestBase extends TestCase {
 			return;
 		}	
 
-		Element element  = getElementById(action);  
+		Element element  = getElementById(action);		
 		if (element instanceof ClickableElement) {			
 			Page newPage = ((ClickableElement) element).click();
 			if (newPage instanceof HtmlPage) {

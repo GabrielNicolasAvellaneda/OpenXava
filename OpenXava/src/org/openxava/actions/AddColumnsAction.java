@@ -2,6 +2,7 @@ package org.openxava.actions;
 
 import java.util.Arrays;
 
+import javax.inject.*;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -14,6 +15,7 @@ import org.openxava.tab.Tab;
 public class AddColumnsAction extends BaseAction implements IRequestAction, INavigationAction, IChangeModeAction {
 	
 	private HttpServletRequest request;
+	@Inject @Named("xava_customizingTab")
 	private Tab tab;
 	
 	

@@ -1,5 +1,6 @@
 package org.openxava.actions;
 
+import javax.inject.*;
 import javax.servlet.http.*;
 
 import org.openxava.controller.*;
@@ -15,10 +16,8 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-
-// tmp Hacer que descienda de ViewBaseAction --> ¿Test JUnit?
-abstract public class TabBaseAction extends BaseAction implements IModuleContextAction {
-	
+abstract public class TabBaseAction extends ViewBaseAction implements IModuleContextAction {
+		
 	private Tab tab;	
 	
 	private ModuleContext context; 

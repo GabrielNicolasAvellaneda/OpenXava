@@ -9,22 +9,7 @@ import org.openxava.util.*;
 import org.openxava.view.*;
 
 /**
- * tmp ini
- * ¿Añadir showDialog()/hideDialog() y quitar show-dialog/hideDialog
- * - Código más expresivo. showView -> muestra en vista, showDialog -> muestra en diálogo
- * - Menos trabajo, solo escribimos acción.
- * - Lo de declarativo solo no funciona: Tienes que retocar código de acciones normalmente.
- * - Importante problema práctico: 
- * 		Si sobreescribes una acción que saca diágo has de editar su <action /> 
- * 		para que también lo saque. Así que cuando mejoras algo estándar sacando un diálogo, 
- *      has de documentar un cambio que han de aplicar todos.
- * - Sacar o no un diálogo puede ser algo intrinseco a la acción.
- * - Sacar o no un diálogo puede depender de cierta condición.
- * - Si se quiere sacar o no de forma declarativa, podemos tener un propiedad en la acción
- * - Mayor complejidad: Hay que usar showDialog() + editar un .xml
- * - Podemos hacer declarativo bajo demanda.     
  * 
- * tmp fin 
  * @author Javier Paniza
  */
 
@@ -32,10 +17,11 @@ abstract public class ViewBaseAction extends BaseAction {
 	
 	private static Log log = LogFactory.getLog(ViewBaseAction.class);
 		
-	@Inject // tmp Mensaje de advertencia en los setters, y migración
+	@Inject 
 	private View view;
 	@Inject
 	private Stack previousViews;
+	private boolean dialogShown = false; 
 	
 	/**
 	 * Creates a new view and shows it. <p>
@@ -55,8 +41,7 @@ abstract public class ViewBaseAction extends BaseAction {
 	 * 
 	 * @since 4m2
 	 */	
-	protected void showView(View newView) { // tmp 
-		assertPreviousViews("showView()");
+	protected void showView(View newView) {  
 		getView().putObject("xava.mode", getManager().getModeName());	
 		newView.setRequest(getRequest());
 		newView.setErrors(getErrors()); 
@@ -65,24 +50,42 @@ abstract public class ViewBaseAction extends BaseAction {
 		setView(newView);		
 		setNextMode(DETAIL);
 	}
-	
-	protected void showDialog(View viewToShowInDialog) throws Exception { // tmp doc
+
+	/**
+	 * Shows the specified view inside a dialog. <p>
+	 * 
+	 * After it if you call to getView() it will be the specified view.<br>
+	 * 
+	 * @since 4m2
+	 */		
+	protected void showDialog(View viewToShowInDialog) throws Exception { 
 		showView(viewToShowInDialog);
 		if (getNextControllers() == null) {			
 			clearActions();
 		}
 		getManager().showDialog();
+		dialogShown = true;
 	}
-	
-	protected void showDialog() throws Exception { // tmp doc
+
+	/**
+	 * Creates a new view and shows it inside a dialog. <p>
+	 * 
+	 * After it if you call to getView() it will return this new view.<br>
+	 * 
+	 * @since 4m2
+	 */	
+	protected void showDialog() throws Exception { 
 		showDialog(new View());
 	}
 	
-	protected void closeDialog() { // tmp doc
-		System.out.println("[ViewBaseAction.closeDialog] "); //  tmp
+	/**
+	 * @since 4m2
+	 */
+	protected void closeDialog() { 
 		returnToPreviousView();
 		returnToPreviousControllers();
-		getManager().closeDialog();		
+		getManager().closeDialog();
+		dialogShown = false;
 	}	
 	
 	/**
@@ -105,17 +108,9 @@ abstract public class ViewBaseAction extends BaseAction {
 	 * @since 4m1
 	 */	
 	protected View getPreviousView() {
-		assertPreviousViews("getPreviousView()");
 		return (View) getPreviousViews().peek();					
 	}
-
 		
-	private void assertPreviousViews(String method) { // tmp quitar 
-		if (previousViews == null) {
-			throw new XavaException("use_object_previousViews_required", method, getClass().getName());
-		}		
-	}
-
 	public View getView() {
 		return view;
 	}
@@ -125,8 +120,7 @@ abstract public class ViewBaseAction extends BaseAction {
 	}
 			
 	protected String getModelName() {
-		// tmp return view.getModelName();
-		return getView().getModelName(); // tmp
+		return getView().getModelName(); 
 	}
 	
 	/**
@@ -145,6 +139,12 @@ abstract public class ViewBaseAction extends BaseAction {
 
 	public void setPreviousViews(Stack previousViews) {
 		this.previousViews = previousViews;
+	}
+	
+	
+	protected void setControllers(String... controllers) {
+		if (dialogShown) getManager().restorePreviousControllers(); 
+		super.setControllers(controllers);
 	}
 	
 }

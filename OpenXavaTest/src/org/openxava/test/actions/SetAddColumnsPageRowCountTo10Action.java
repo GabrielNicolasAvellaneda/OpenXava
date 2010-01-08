@@ -1,5 +1,7 @@
 package org.openxava.test.actions;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 import org.openxava.tab.*;
 
@@ -10,6 +12,7 @@ import org.openxava.tab.*;
 
 public class SetAddColumnsPageRowCountTo10Action extends BaseAction {
 	
+	@Inject
 	private Tab tab;
 
 	public void execute() throws Exception {
