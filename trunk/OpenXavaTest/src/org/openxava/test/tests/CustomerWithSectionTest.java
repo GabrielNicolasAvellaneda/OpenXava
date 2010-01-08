@@ -124,8 +124,11 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValue("address.state.id", "");
 		assertNoDialog();
 		execute("Address.addFullAddress");
+		assertActions(new String[] {
+			"AddFullAddress.add", "Dialog.cancel"	
+		});
 		assertDialog();
-		assertDialogTitle("Entry the full address");
+		assertDialogTitle("Entry the full address");		
 		setValue("fullAddress", "AV. BARON DE CARCER, 48 - 12E 46001 VALENCIA CA");		
 		execute("AddFullAddress.add");
 		assertNoErrors();
@@ -134,6 +137,11 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValue("address.zipCode", "46001");
 		assertValue("address.city", "VALENCIA");
 		assertValue("address.state.id", "CA");		
+		
+		execute("Address.addFullAddress");
+		assertDialog();
+		execute("Dialog.cancel");
+		assertNoDialog();
 	}
 	
 	public void testCancelActionAfterChangeImageAction() throws Exception { 

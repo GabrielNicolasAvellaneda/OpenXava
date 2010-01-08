@@ -303,6 +303,10 @@ public class DeliveryTest extends ModuleTestBase {
 		assertMessage("The action Close for delivery detail executed");
 		execute("Collection.edit", "row=0,viewObject=xava_view_section2_details_details");
 		assertValue("number", "66");
+		closeDialog();
+		assertMessage("The action Close for delivery detail executed");		
+		execute("Collection.edit", "row=0,viewObject=xava_view_section2_details_details");
+		assertValue("number", "66");
 		execute("DeliveryDetail.remove");
 		assertMessage("The action Remove for delivery detail executed");
 		assertNoErrors();

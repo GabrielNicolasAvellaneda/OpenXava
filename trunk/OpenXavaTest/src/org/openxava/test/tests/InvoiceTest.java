@@ -640,23 +640,23 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("date", "04/01/2004");
 		
-		setValue("date", "4/1/29"); // If current year is 2009
+		setValue("date", "4/1/30"); // If current year is 2010
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("date", "04/01/2029");
+		assertValue("date", "04/01/2030");
 		
-		setValue("date", "040130"); // If current year is 2009
+		setValue("date", "040131"); // If current year is 2010
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("date", "04/01/1930");
+		assertValue("date", "04/01/1931");
 		
 		setValue("date", "30/2/2008");
 		execute("CRUD.save");
@@ -1142,6 +1142,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"Invoice.printOdt",
 			"Invoice.removeViewDeliveryInInvoice",
 			"Invoice.addViewDeliveryInInvoice",			
+			"Invoice.viewCustomer",
 			"Sections.change",
 			"Customer.changeNameLabel",
 			"Customer.prefixStreet",
@@ -1174,6 +1175,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"Invoice.printOdt",
 			"Invoice.removeViewDeliveryInInvoice",
 			"Invoice.addViewDeliveryInInvoice",									
+			"Invoice.viewCustomer",
 			"Mode.list",
 			"Sections.change",
 			"Invoice.editDetail", // because it is overwrite, otherwise 'Collection.edit'
@@ -1226,9 +1228,9 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("remarks", "Edit at " + df.format(new java.util.Date())); 
 		
 		String productNumber = getValue("product.number");
-		assertTrue("Detail must to have product number", !Is.emptyString(productNumber));
+		assertTrue("Detail must have product number", !Is.emptyString(productNumber));
 		String productDescription = getValue("product.description");
-		assertTrue("Detail must to have product description", !Is.emptyString(productDescription));
+		assertTrue("Detail must have product description", !Is.emptyString(productDescription));
 				
 		execute("Invoice.viewProduct"); 
 		assertNoErrors();
@@ -1244,6 +1246,34 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("year", String.valueOf(getInvoice().getYear()));
 		assertValue("number", String.valueOf(getInvoice().getNumber()));									
 	}
+	
+	public void testShowNewViewAndReturn() throws Exception { 		
+		execute("CRUD.new");							
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
+		execute("CRUD.search");
+		assertNoErrors();		
+		
+		String customerNumber = getValue("customer.number");
+		assertTrue("Invoice must to have customer number", !Is.emptyString(customerNumber));
+		String customerName = getValue("customer.name");
+		assertTrue("Detail must to have customer name", !Is.emptyString(customerName));
+				
+		execute("Invoice.viewCustomer"); 
+		assertNoErrors();
+		assertNoAction("CRUD.new");
+		assertAction("Return.return");
+		assertValue("Customer", "number", customerNumber);
+		assertValue("Customer", "name", customerName);
+		
+		execute("Return.return");
+		assertNoErrors();
+		assertAction("CRUD.new");
+		assertNoAction("Return.return");
+		assertValue("year", String.valueOf(getInvoice().getYear()));
+		assertValue("number", String.valueOf(getInvoice().getNumber()));									
+	}
+	
 	
 	
 	public void testViewCollectionElementWithKeyWithReference() throws Exception {

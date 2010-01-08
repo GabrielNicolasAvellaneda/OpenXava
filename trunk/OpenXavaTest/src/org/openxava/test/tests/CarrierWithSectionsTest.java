@@ -29,4 +29,79 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		execute("CarrierWithSections.fellowCarriersSelected");
 		assertTrue(Is.empty(getValue("fellowCarriersSelected")));
 	}
+	
+	public void testSetControllers() throws Exception {
+		String [] defaultActions = {
+			"List.hideRows",
+			"List.filter",
+			"List.customize",
+			"List.orderBy",
+			"List.viewDetail",
+			"Mode.detailAndFirst",			
+			"Print.generatePdf",
+			"Print.generateExcel",
+			"CRUD.new",
+			"CRUD.deleteSelected",
+			"Carrier.translateAll",
+			"Carrier.deleteAll",
+			"CarrierWithSections.setTypicalController",
+			"CarrierWithSections.setPrintController",
+			"CarrierWithSections.setDefaultControllers",
+			"CarrierWithSections.returnToPreviousControllers"
+		};
+		String [] printActions = {
+			"List.hideRows",
+			"List.filter",
+			"List.customize",
+			"List.orderBy",
+			"List.viewDetail",
+			"Mode.detailAndFirst",							
+			"Print.generatePdf",
+			"Print.generateExcel",
+			"CarrierWithSections.setTypicalController",
+			"CarrierWithSections.setPrintController",
+			"CarrierWithSections.setDefaultControllers",
+			"CarrierWithSections.returnToPreviousControllers"			
+		};		
+		String [] typicalActions = {
+			"List.hideRows",
+			"List.filter",
+			"List.customize",
+			"List.orderBy",
+			"List.viewDetail",
+			"Mode.detailAndFirst",							
+			"Print.generatePdf",
+			"Print.generateExcel",
+			"CRUD.new",
+			"CRUD.deleteSelected",
+			"CarrierWithSections.setTypicalController",
+			"CarrierWithSections.setPrintController",
+			"CarrierWithSections.setDefaultControllers",
+			"CarrierWithSections.returnToPreviousControllers"			
+		};		
+		
+		// Returning with returnToPreviousController
+		assertActions(defaultActions);
+		execute("CarrierWithSections.setTypicalController");
+		assertActions(typicalActions);
+		execute("CarrierWithSections.setPrintController");
+		assertActions(printActions);
+		execute("CarrierWithSections.returnToPreviousControllers");
+		assertActions(typicalActions);
+		execute("CarrierWithSections.returnToPreviousControllers");
+		assertActions(defaultActions);
+		
+		// Returning with setDefaultControllers()
+		assertActions(defaultActions);
+		execute("CarrierWithSections.setTypicalController");
+		assertActions(typicalActions);
+		execute("CarrierWithSections.setPrintController");
+		assertActions(printActions);
+		execute("CarrierWithSections.setDefaultControllers");
+		assertActions(defaultActions);
+		execute("CarrierWithSections.returnToPreviousControllers");
+		assertActions(defaultActions); // Verifies that setDefaultControllers empties the stacks
+		
+	}
+	
 }

@@ -20,6 +20,10 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"HideShowCRUDActions.showDelete",
 		"HideShowCRUDActions.hideSaveDelete",
 		"HideShowCRUDActions.showSaveDelete",
+		"AddRemoveCRUDActions.addDelete",
+		"AddRemoveCRUDActions.removeDelete",
+		"AddRemoveCRUDActions.addSaveDelete",
+		"AddRemoveCRUDActions.removeSaveDelete",		
 		"Mode.list"					
 	};
 	
@@ -48,6 +52,10 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"HideShowCRUDActions.showDelete",
 		"HideShowCRUDActions.hideSaveDelete",
 		"HideShowCRUDActions.showSaveDelete",
+		"AddRemoveCRUDActions.addDelete",
+		"AddRemoveCRUDActions.removeDelete",
+		"AddRemoveCRUDActions.addSaveDelete",
+		"AddRemoveCRUDActions.removeSaveDelete",		
 		"Mode.list"					
 	};
 	
@@ -61,6 +69,10 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"HideShowCRUDActions.showDelete",
 		"HideShowCRUDActions.hideSaveDelete",
 		"HideShowCRUDActions.showSaveDelete",
+		"AddRemoveCRUDActions.addDelete",
+		"AddRemoveCRUDActions.removeDelete",
+		"AddRemoveCRUDActions.addSaveDelete",
+		"AddRemoveCRUDActions.removeSaveDelete",		
 		"Mode.list"					
 	};
 	
@@ -89,5 +101,20 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		execute("HideShowCRUDActions.showSaveDelete");
 		assertActions(detailActions);
 	}
+	
+	public void testAddRemoveActions() throws Exception { 
+		assertActions(listActions);
+		execute("Family.new");
+		assertActions(detailActions);		
+		execute("AddRemoveCRUDActions.removeDelete");
+		assertActions(actionsWithoutDelete);
+		execute("AddRemoveCRUDActions.addDelete");
+		assertActions(detailActions);	
+		execute("AddRemoveCRUDActions.removeSaveDelete");
+		assertActions(actionsWithoutSaveDelete);
+		execute("AddRemoveCRUDActions.addSaveDelete");
+		assertActions(detailActions);
+	}
+	
 					
 }
