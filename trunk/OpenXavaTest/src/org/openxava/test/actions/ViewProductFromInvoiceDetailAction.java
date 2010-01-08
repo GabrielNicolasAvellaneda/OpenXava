@@ -2,6 +2,7 @@ package org.openxava.test.actions;
 
 import java.util.*;
 import javax.ejb.*;
+import javax.inject.*;
 
 import org.openxava.actions.*;
 
@@ -12,6 +13,7 @@ public class ViewProductFromInvoiceDetailAction
 	extends CollectionElementViewBaseAction 
 	implements INavigationAction { 
 
+	@Inject
 	private Map invoiceValues;
 
 	public void execute() throws Exception {				
@@ -25,6 +27,8 @@ public class ViewProductFromInvoiceDetailAction
 			getView().findObject();			
 			getView().setKeyEditable(false);
 			getView().setEditable(false);
+			closeDialog(); // Because getView() is the parent view, so we need to
+							// close the dialog in order to see it
 		}
 		catch (ObjectNotFoundException ex) {
 			getView().clear();

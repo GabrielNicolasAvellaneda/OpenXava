@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 
 
+import javax.inject.*;
+
 import org.openxava.tab.*;
 
 /**
@@ -9,6 +11,7 @@ import org.openxava.tab.*;
  */
 public class SortColumnsAction extends BaseAction {
 	
+	@Inject @Named("xava_customizingTab")
 	private Tab tab;
 	
 

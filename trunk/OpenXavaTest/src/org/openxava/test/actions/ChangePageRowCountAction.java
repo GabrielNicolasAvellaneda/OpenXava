@@ -1,10 +1,13 @@
 package org.openxava.test.actions;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 import org.openxava.tab.*;
 
 public class ChangePageRowCountAction extends BaseAction {
 	
+	@Inject
 	private Tab tab;
 	private int rowCount;
 

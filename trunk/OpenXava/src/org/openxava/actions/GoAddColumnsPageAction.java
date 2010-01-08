@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import javax.inject.*;
+
 import org.openxava.tab.*;
 
 /**
@@ -9,6 +11,7 @@ import org.openxava.tab.*;
 
 public class GoAddColumnsPageAction extends BaseAction {
 	
+	@Inject @Named("customizingTab") 
 	private Tab tab;
 	private int increment;
 	private int page;

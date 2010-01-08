@@ -1,5 +1,6 @@
 package org.openxava.actions;
 
+import javax.inject.*;
 import javax.servlet.http.*;
 
 import org.openxava.controller.*;
@@ -14,6 +15,7 @@ import org.openxava.util.*;
 public class GoAddColumnsAction extends BaseAction implements INavigationAction , IChangeModeAction, IModuleContextAction {
 	
 	private String collection;
+	@Inject
 	private Tab customizingTab;
 	private ModuleContext context;
 	private HttpServletRequest request; 

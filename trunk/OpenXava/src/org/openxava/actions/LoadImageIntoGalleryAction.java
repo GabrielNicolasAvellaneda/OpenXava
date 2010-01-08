@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 import org.apache.commons.fileupload.*;
 
 
@@ -15,6 +17,8 @@ import org.openxava.util.*;
 public class LoadImageIntoGalleryAction extends ViewBaseAction implements INavigationAction, IProcessLoadedFileAction {
 
 	private List fileItems;
+	
+	@Inject
 	private Gallery gallery;
 	
 

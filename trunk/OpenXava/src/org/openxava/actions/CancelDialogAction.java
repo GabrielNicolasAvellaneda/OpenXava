@@ -12,11 +12,11 @@ public class CancelDialogAction extends ViewBaseAction implements IChainAction {
 	private String nextAction;
 		
 	public void execute() throws Exception {
-		// tmp Actualizar documentación
 		for (MetaAction action: getManager().getMetaActions()) {
+			if (action.getClassName().equals(getClass().getName())) continue;
 			if (action.getName().equals("cancel") || 
-				action.getName().equals("cancelar") || 
-				action.getName().equals("hideDetail")) 
+				action.getName().equals("cancelar") ||  
+				action.getQualifiedName().equals(getView().getHideCollectionElementAction()))
 			{
 				nextAction = action.getQualifiedName();
 			}

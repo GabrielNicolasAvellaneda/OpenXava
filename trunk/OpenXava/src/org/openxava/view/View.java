@@ -3483,7 +3483,7 @@ public class View implements java.io.Serializable {
 
 	public String getEditCollectionElementAction() { 
 		if (editCollectionElementAction != null) return editCollectionElementAction;
-		return isRepresentsEntityReference()?"Collection.view":"Collection.edit"; // tmp ¿changelog, documentación, migración?  
+		return isRepresentsEntityReference()?"Collection.view":"Collection.edit";   
 	}
 	
 	public String getViewCollectionElementAction() {		

@@ -1,8 +1,16 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: if there are define a documentation portlet without putting language then this language will collected from preferences. For installation problems in WebSphere Portal.
-- It can specify style inside portal.
+- Fix: Documentation portlets with no language specified cannot be installed in WebSphere Portal. Now a default value for languages (from portletLocales in xava.properties) is assumed.
+- It's possible to specify the style to use inside portals by means of new properties in xava.properties. 
+- Removed history.txt file.
+- Edit action by default for collections other than @AsEmbeddable, CascadeType.REMOVE or CascadeType.ALL allows only viewing the element.
+- Support for JSR-330, the Java standard for dependency injection. Now it's possible to use @Inject and @Name in action fields instead of <use-object /> in <action/>.
+- Now the action Return.return does not close the dialog.
+- TabBaseAction now extends ViewBaseAction so getView() and methods about dialogs and view navigation are available from it.
+- New methods in BaseAction to change dynamically actions: setControllers(), returnToPreviousControllers(), setDefaultControllers(),  addActions(), removeActions() and clearActions().
+- New methods in ViewBaseAction to manage dialogs: showDialog() and closeDialog().
+- show-dialog and hide-dialog has been dropped from <action/>, this produces a backward incompatibility over 4m1.
 - Collections use dialogs to edit, add and remove elements.
 - DWR engine.js is cached to improve performance.
 - Fix: Paging in collections forgets selected rows.

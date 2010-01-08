@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.inject.*;
+
 
 
 import org.apache.commons.logging.*;
@@ -21,6 +23,8 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 	private static Log log = LogFactory.getLog(EditGalleryAction.class);
 	
 	private String galleryProperty;
+
+	@Inject
 	private Gallery gallery;	
 	
 	

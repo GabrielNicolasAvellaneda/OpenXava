@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import javax.inject.*;
+
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 
@@ -16,6 +18,7 @@ import org.openxava.jpa.*;
 
 public class SetDefaultSchemaAction extends BaseAction {
 	
+	@Inject
 	private String defaultSchema;
 	private String newDefaultSchema;		
 

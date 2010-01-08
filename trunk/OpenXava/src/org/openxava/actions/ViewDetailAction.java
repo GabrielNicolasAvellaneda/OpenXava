@@ -1,15 +1,15 @@
 package org.openxava.actions;
 
 import java.util.*;
+import javax.inject.*;
 import org.openxava.util.*;
-import org.openxava.view.*;
 
 /**
  * @author Javier Paniza
  */
-
 public class ViewDetailAction extends TabBaseAction implements IChainAction, IModelAction {
 	
+	@Inject 
 	private int row = -1; 
 	private boolean explicitRow = false;
 	private int increment;
@@ -19,7 +19,6 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 	private boolean atListBegin;
 	private boolean noElementsInList;
 	private String model;
-	private View view;
 	
 	public void execute() throws Exception {		
 		getView().setModelName(model); 
@@ -81,18 +80,6 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		row = i;		
 	}
 	
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
-	}
-			
-	protected String getModelName() {
-		return view.getModelName();
-	}	
-
 	public String getNextAction() throws XavaException {
 		if (Is.emptyString(nextAction)) {
 			return getEnvironment().getValue("XAVA_SEARCH_ACTION");

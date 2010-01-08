@@ -3,6 +3,8 @@ package org.openxava.test.actions;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.inject.*;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.SetDefaultSchemaAction;
@@ -18,10 +20,11 @@ public class SelectSchemaAction extends SetDefaultSchemaAction {
 	
 	private static Log log = LogFactory.getLog(SelectSchemaAction.class);
 	
+	@Inject
 	private View view;
 	
 	public void execute() throws Exception {
-		String schema = getView().getValueString("schema");
+		String schema = view.getValueString("schema");
 		try {
 			int schemaIndex = Integer.parseInt(schema); // In the case of XML component
 			schema = (String) MetaModel.get("SelectSchema")
@@ -40,14 +43,6 @@ public class SelectSchemaAction extends SetDefaultSchemaAction {
 			ModuleManager manager = (ModuleManager) it.next();
 			if (!manager.getModuleName().equalsIgnoreCase("SelectSchema")) manager.reset();
 		}
-	}
-
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
 	}
 
 }

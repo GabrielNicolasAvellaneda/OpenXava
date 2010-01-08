@@ -3,6 +3,9 @@ package org.openxava.actions;
 /**
  * Allows to show an action previously hidden. <p>
  * 
+ * You can just use the addActions() method of {@link BaseAction} instead of 
+ * implementing this interface.
+ * 
  * @author Javier Paniza
  */
 

@@ -1,5 +1,7 @@
 package org.openxava.test.actions;
 
+import javax.inject.*;
+
 import org.openxava.actions.*;
 import org.openxava.tab.*;
 
@@ -8,6 +10,7 @@ import org.openxava.tab.*;
  */
 public class ShowListPropertyAction extends BaseAction {
 	
+	@Inject
 	private Tab tab;
 	private String property;
 	private int index;

@@ -212,10 +212,15 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 		return (ModuleManager) context.get(request, "manager");
 	}	
 	
-	protected void addActions(String ... qualifiedActions) { // tmp Añadir tests
+	/**
+	 * Actions add added even if they are hidden. <p>
+	 * 
+	 * @since 4m2
+	 */		
+	protected void addActions(String ... qualifiedActions) { 
 		for (String qualifiedAction: qualifiedActions) {
 			MetaAction action = MetaControllers.getMetaAction(qualifiedAction);
-			if (action.isHidden()) { // tmp doc este detalle
+			if (action.isHidden()) { 
 				action = action.cloneMetaAction();
 				action.setHidden(false);
 			}
@@ -223,30 +228,53 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 		}
 	}
 	
-	protected void removeActions(String ... qualifiedActions) { // tmp Añadir tests
+	/**
+	 * @since 4m2
+	 */		
+	protected void removeActions(String ... qualifiedActions) { 
 		for (String qualifiedAction: qualifiedActions) {
 			getManager().removeMetaAction(MetaControllers.getMetaAction(qualifiedAction));
 		}
 	}
-	
-	protected void clearActions() {
+
+	/**
+	 * @since 4m2
+	 */		
+	protected void clearActions() {		
 		getManager().memorizeControllers();										
 		getManager().setControllersNames(IChangeControllersAction.EMPTY_CONTROLLER);
 	}
 	
-	protected void setControllers(String ... controllers) { // tmp doc 
+	/**
+	 * @since 4m2
+	 */	
+	protected void setControllers(String ... controllers) {  
 		nextControllers = controllers;
 	}
-	
-	protected void returnToPreviousControllers() { // tmp doc
-		nextControllers = PREVIOUS_CONTROLLERS;
+
+	/**
+	 * @since 4m2
+	 */	
+	protected void returnToPreviousControllers() { 
+		setControllers(PREVIOUS_CONTROLLERS);
 	}
 	
-	protected void setDefaultControllers() { // tmp doc
-		nextControllers = DEFAULT_CONTROLLERS;
+	/**
+	 * Set the default controllers of the current module. <p>
+	 * 
+	 * The defaults controllers are those declared in application.xml for the
+	 * module, so the initial controllers when the module starts. <br>
+	 * Also, this method clear the stack of controllers navigation, that is, if after
+	 * calling to this method you call to {@link returnToPreviousController}() it will 
+	 * not have effect.<br>
+	 * 
+	 * @since 4m2
+	 */
+	protected void setDefaultControllers() { 
+		setControllers(DEFAULT_CONTROLLERS);
 	}
 
-	public String[] getNextControllers() throws Exception { // tmp doc, y referencia		
+	public String[] getNextControllers() throws Exception { 		
 		return nextControllers;
 	}
        
