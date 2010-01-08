@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: if there are define a documentation portlet without putting language then this language will collected from preferences. For installation problems in WebSphere Portal.
+- It can specify style inside portal.
 - Collections use dialogs to edit, add and remove elements.
 - DWR engine.js is cached to improve performance.
 - Fix: Paging in collections forgets selected rows.
