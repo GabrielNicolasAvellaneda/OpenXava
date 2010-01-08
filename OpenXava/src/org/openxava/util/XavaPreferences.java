@@ -106,6 +106,34 @@ public class XavaPreferences {
 		return getProperties().getProperty("styleCSS", "liferay51/css/everything_unpacked.css").trim();
 	}
 		
+	public String getLiferay51StyleClass() {
+		return getProperties().getProperty("liferay51StyleClass", "org.openxava.web.style.Liferay51Style").trim();
+	}
+	
+	public String getLiferay41StyleClass() {
+		return getProperties().getProperty("liferay41StyleClass", "org.openxava.web.style.Liferay41Style").trim();
+	}
+	
+	public String getLiferay43StyleClass() {
+		return getProperties().getProperty("liferay43StyleClass", "org.openxava.web.style.Liferay43Style").trim();
+	}
+	
+	public String getWebSpherePortal61StyleClass() {
+		return getProperties().getProperty("webSpherePortal61StyleClass", "org.openxava.web.style.WebSpherePortal61Style").trim();
+	}
+
+	public String getWebSpherePortal6StyleClass() {
+		return getProperties().getProperty("webSpherePortal6StyleClass", "org.openxava.web.style.WebSpherePortal6Style").trim();
+	}
+	
+	public String getWebSpherePortalStyleClass() {
+		return getProperties().getProperty("webSpherePortalStyleClass", "org.openxava.web.style.WebSpherePortalStyle").trim();
+	}
+	
+	public String getJetSpeed2StyleClass() {
+		return getProperties().getProperty("JetSpeed2Style", "org.openxava.web.style.JetSpeed2Style").trim();
+	}
+
 	public boolean isMapFacadeAsEJB() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "false").trim());
 	}

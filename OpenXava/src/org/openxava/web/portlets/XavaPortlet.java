@@ -197,25 +197,38 @@ public class XavaPortlet extends GenericPortlet {
 		 }
 	}
 
-	private Style getStyle(RenderRequest request) {		
-		if (style == null) {
-			// Maybe moving this to a XML file (as style-portal.xml) could be
-			// a good idea
-			String portal = request.getPortalContext().getPortalInfo().toLowerCase();
-			if (portal.indexOf("liferay") >= 0) {
-				if (portal.indexOf("4.1.") >= 0 || portal.indexOf("4.2.") >= 0) style = Liferay41Style.getInstance();
-				else if (portal.indexOf("4.3.") >= 0 || portal.indexOf("4.4.") >= 0 || portal.indexOf("5.0.") >= 0) style = Liferay43Style.getInstance();
-				else style = Liferay51Style.getInstance();  
-			}
-			else if (portal.indexOf("websphere portal/6.1") >= 0) style = WebSpherePortal61Style.getInstance(); 
-			else if (portal.indexOf("websphere portal/6") >= 0) style = WebSpherePortal6Style.getInstance();
-			else if (portal.indexOf("websphere portal/5") >= 0) style = WebSpherePortalStyle.getInstance();			
-			else if (portal.indexOf("jetspeed") >= 0) style = JetSpeed2Style.getInstance();
-			else style = Style.getInstance();
-			
-			style.setInsidePortal(true); 
-		}		
+	private Style getStyle(RenderRequest request) {
+		try{
+			if (style == null) {
+				String styleClass = "";
+				XavaPreferences preferences = XavaPreferences.getInstance();
+				
+				// Maybe moving this to a XML file (as style-portal.xml) could be
+				// a good idea
+				String portal = request.getPortalContext().getPortalInfo().toLowerCase();
+				if (portal.indexOf("liferay") >= 0) {
+					if (portal.indexOf("4.1.") >= 0 || portal.indexOf("4.2.") >= 0) styleClass = preferences.getLiferay41StyleClass();
+					else if (portal.indexOf("4.3.") >= 0 || portal.indexOf("4.4.") >= 0 || portal.indexOf("5.0.") >= 0) styleClass = preferences.getLiferay43StyleClass();
+					else styleClass = preferences.getLiferay51StyleClass();
+				}
+				else if (portal.indexOf("websphere portal/6.1") >= 0) styleClass = preferences.getWebSpherePortal61StyleClass();  
+				else if (portal.indexOf("websphere portal/6") >= 0) styleClass = preferences.getWebSpherePortal6StyleClass();
+				else if (portal.indexOf("websphere portal/5") >= 0) styleClass = preferences.getWebSpherePortalStyleClass();			
+				else if (portal.indexOf("jetspeed") >= 0) styleClass = preferences.getJetSpeed2StyleClass();
+				else style = Style.getInstance();
+				
+				if (style == null) style = (Style) Objects.execute(Class.forName(styleClass), "getInstance");
+				
+				style.setInsidePortal(true); 
+			}			
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			style = Style.getInstance();
+		}
+		
 		return style;
 	}
+
 	
 }
