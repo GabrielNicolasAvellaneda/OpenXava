@@ -42,4 +42,13 @@
 		</action>							
 	</controller>
 	
+	<controller name="Order">
+		<extends controller="Invoicing"/>
+		
+		<action name="createInvoice" mode="detail"
+			class="org.openxava.invoicing.actions.CreateInvoiceFromOrderAction">
+			<use-object name="xava_view"/>
+		</action>			
+	</controller>
+	
 </controllers>

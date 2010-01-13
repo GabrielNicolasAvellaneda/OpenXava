@@ -64,10 +64,7 @@ abstract public class CommercialDocument extends Deletable {
 	
 	@Stereotype("MONEY")	
 	@Formula("AMOUNT * 0.10") 		
-	private BigDecimal estimatedProfit;
-
-	// tmp here deleted
-	
+	private BigDecimal estimatedProfit = BigDecimal.ZERO; // tmp Incialización
 		
 	public BigDecimal getEstimatedProfit() {
 		return estimatedProfit;

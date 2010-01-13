@@ -1,9 +1,13 @@
 package org.openxava.invoicing.model;
 
+import java.util.*;
+
 import javax.persistence.*;
 
+import org.apache.commons.beanutils.*;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.jpa.*;
 import org.openxava.util.*;
 
 @Entity
@@ -64,5 +68,15 @@ public class Order extends CommercialDocument {
 					"cannot_delete_order_with_invoice"));
 		}
 	}
+
+	public void createInvoice() throws Exception { // tmp Mostrar alternativas
+		this.invoice = new Invoice();
+		invoice.setOrders(Collections.singleton(this));
+		System.out.println("[Order.createInvoice] describe(this)=" + BeanUtils.describe(this)); // tmp
+		BeanUtils.copyProperties(invoice, this);
+		invoice.setOid(null);
+		XPersistence.getManager().persist(invoice);		
+	}
+	
 	
 }

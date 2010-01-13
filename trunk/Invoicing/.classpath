@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="xava"/>
 	<classpathentry kind="src" path="i18n"/>
 	<classpathentry kind="var" path="POSTGRESQL_DRIVER"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-beanutils.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
