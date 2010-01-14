@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Labels in collection with no 'cascade=CascadeType.REMOVE' 
 - Fix: Documentation portlets with no language specified cannot be installed in WebSphere Portal. Now a default value for languages (from portletLocales in xava.properties) is assumed.
 - It's possible to specify the style to use inside portals by means of new properties in xava.properties. 
 - Removed history.txt file.
