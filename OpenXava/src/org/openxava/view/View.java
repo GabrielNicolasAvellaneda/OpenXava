@@ -1171,8 +1171,25 @@ public class View implements java.io.Serializable {
 				collectionTab.setFilter(filter);
 			}
 			collectionTab.setDefaultOrder(getMetaCollection().getOrder());
+			collectionTabLabels(collectionTab);
 		}
 		return collectionTab;
+	}
+	
+	private void collectionTabLabels(Tab collectionTab){
+		Collection properties = collectionTab.getMetaProperties();
+		Iterator it = properties.iterator();
+		while (it.hasNext()) {
+			MetaProperty property = (MetaProperty) it.next();
+			if (!Is.empty(getParent()) && !Is.empty(getParent().getModelName()) ){
+				String labelId = property.getLabelId();
+				if (Is.empty(labelId)) continue;
+				String result = labelId.replace(
+					getModelName() + ".tab.properties", 
+					getParent().getModelName() + "." + getMemberName());
+				if (Labels.existsExact(result, Locales.getCurrent())) property.setLabelId(result);
+			}
+		}	
 	}
 	
 	private void assertRepresentsCollection(String method) {
@@ -2682,11 +2699,15 @@ public class View implements java.io.Serializable {
 	
 	private void setLabelsIdForMetaPropertiesList() throws XavaException {
 		if (getMemberName() == null || metaPropertiesList == null) return;
+		
 		Collection newList = new ArrayList();
 		Iterator it = metaPropertiesList.iterator();
 		while (it.hasNext()) {
 			MetaProperty p = ((MetaProperty) it.next()).cloneMetaProperty();
-			p.setLabelId(getMetaModel().getMetaComponent().getName() + "." + getMemberName() + "." + p.getName());
+			String prefix = Is.empty(getParent().getMetaModel().getName()) ? 
+				getMetaModel().getMetaComponent().getName() :
+				getParent().getMetaModel().getName();
+			p.setLabelId(prefix + "." + getMemberName() + "." + p.getName());
 			newList.add(p);
 		}
 		metaPropertiesList = newList;
