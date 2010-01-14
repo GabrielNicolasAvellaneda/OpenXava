@@ -17,5 +17,9 @@ public class InvoiceDeliveriesTest extends ModuleTestBase {
 		execute("Invoice.viewDelivery", "row=0,viewObject=xava_view_deliveries");		
 		assertMessage("Delivery displayed");
 	}
-									
+	
+	public void testLabelInCollection() throws Exception {
+		execute("CRUD.new");
+		assertLabelInCollection("deliveries", 0, "This is my label");
+	}
 }
