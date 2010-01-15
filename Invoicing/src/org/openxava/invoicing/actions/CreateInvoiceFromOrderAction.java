@@ -11,6 +11,10 @@ public class CreateInvoiceFromOrderAction extends ViewBaseAction {
 				Order.class, 			
 				getView().getValue("oid"));
 		order.createInvoice();
+		getView().refresh();
+		addMessage("invoice_created_from_order", 
+			order.getInvoice().getYear(), 
+			order.getInvoice().getNumber());
 	}
 
 }
