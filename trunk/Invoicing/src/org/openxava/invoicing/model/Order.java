@@ -1,5 +1,6 @@
 package org.openxava.invoicing.model;
 
+import java.math.*;
 import java.util.*;
 
 import javax.persistence.*;
@@ -71,28 +72,22 @@ public class Order extends CommercialDocument {
 
 	public void createInvoice() throws Exception { // tmp Mostrar alternativas
 		Invoice invoice = new Invoice();
-		// invoice.setOrders(Collections.singleton(this));
-		System.out.println("[Order.createInvoice] describe(this)=" + BeanUtils.describe(this)); // tmp
 		BeanUtils.copyProperties(invoice, this);
 		invoice.setOid(null);		
+		invoice.setDetails(new ArrayList());
 		XPersistence.getManager().persist(invoice);
 		copyDetailsToInvoice(invoice);
-				
+		this.invoice = invoice; // tmp Después de persist		
 	}
 
 	private void copyDetailsToInvoice(Invoice invoice) throws Exception {
-		Collection<Detail> invoiceDetails = null;		
-		if (this.getDetails() != null) {
-			invoiceDetails = new ArrayList<Detail>();
-			for (Detail orderDetail: new ArrayList<Detail>(getDetails())) {
-				Detail invoiceDetail = (Detail) BeanUtils.cloneBean(orderDetail);
-				invoiceDetail.setOid(null);
-				invoiceDetail.setParent(invoice);
-				//XPersistence.getManager().persist(invoiceDetail);
-				invoiceDetails.add(invoiceDetail);
-			}
-		}
-		invoice.setDetails(invoiceDetails);		
+		// No añadir a las líneas
+		for (Detail orderDetail: getDetails()) {
+			Detail invoiceDetail = (Detail) BeanUtils.cloneBean(orderDetail);							
+			invoiceDetail.setOid(null);
+			invoiceDetail.setParent(invoice);
+			XPersistence.getManager().persist(invoiceDetail);
+		}				
 	}
 		
 }

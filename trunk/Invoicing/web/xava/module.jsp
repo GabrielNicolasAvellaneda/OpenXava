@@ -1,3 +1,5 @@
+<% System.out.println("[module.jsp] 10"); // tmp %>
+
 <%@ include file="imports.jsp"%>
 
 <%@page import="org.openxava.web.dwr.Module"%>
@@ -24,7 +26,7 @@ private String getAdditionalParameters(HttpServletRequest request) {
 	return result.toString();
 }
 %>
-
+<% System.out.println("[module.jsp] 20"); // tmp %>
 <%
 if (request.getAttribute("style") == null) {	
 	request.setAttribute("style", org.openxava.web.style.Style.getInstance());
@@ -33,6 +35,7 @@ if (request.getAttribute("style") == null) {
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+<% System.out.println("[module.jsp] 30"); // tmp %>
 <%
 Servlets.setCharacterEncoding(request, response);
 Locales.setCurrent(request);
@@ -58,6 +61,7 @@ boolean isPortlet = (session.getAttribute(Ids.decorate(request, "xava.portlet.up
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
 %>
+<% System.out.println("[module.jsp] 40"); // tmp %>
 <% if (!isPortlet) { %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -68,7 +72,7 @@ Module.setStyle(style);
 <%@page import="org.openxava.web.servlets.Servlets"%><%@page import="org.openxava.util.Is"%>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 
-
+<% System.out.println("[module.jsp] 50"); // tmp %>
 <head>
 	<title><%=managerHome.getModuleDescription() %></title>
 	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>" rel="stylesheet" type="text/css"> 
@@ -102,7 +106,8 @@ Module.setStyle(style);
 </head>
 <body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
-<% } %>	  
+<% } %>
+<% System.out.println("[module.jsp] 60"); // tmp %>	  
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="true"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>	
@@ -160,3 +165,4 @@ window.onload = <%=onLoadFunction%>;
 setTimeout('<%=onLoadFunction%>()', 1000);
 document.additionalParameters="<%=getAdditionalParameters(request)%>"; 
 </script>
+<% System.out.println("[module.jsp] 999"); // tmp %>
