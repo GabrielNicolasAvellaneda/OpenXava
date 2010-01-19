@@ -182,9 +182,11 @@ public class DeliveryTest extends ModuleTestBase {
 	public void testFocusWhenSectionsAndGroupsInHeader() throws Exception {
 		execute("CRUD.new");
 		assertFocusOn("invoice.year");
+					
 		setValue("shortcut", "DY");
+		
 		assertValue("remarks", "Delayed");
-		assertFocusOn("remarks");
+		assertFocusOn("remarks");		
 	}
 	
 	

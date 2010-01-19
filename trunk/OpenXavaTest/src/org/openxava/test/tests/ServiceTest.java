@@ -13,13 +13,15 @@ public class ServiceTest extends ModuleTestBase {
 		super(nombreTest, "Service");		
 	}
 		
+	
 	public void testFocusOnDescriptionsListInsideAggregate() throws Exception {
 		execute("CRUD.new");
-		setValue("family", "1");
+		setValue("family", "1");		
 		assertFocusOn("detail.subfamily");
 		setValue("detail.subfamily", "1");
-		assertFocusOn("detail.type");		
+		assertFocusOn("detail.type");
 	}
+	
 	
 	public void testRemoveAggregateFromCollectionWithReferenceToParentAsKey() throws Exception {
 		execute("CRUD.new");		
