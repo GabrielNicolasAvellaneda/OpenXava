@@ -231,8 +231,8 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 				message.append(", ");
 		}
 		log.debug(message);
-		
-		ResultSet rs = ps.executeQuery();
+				
+		ResultSet rs = ps.executeQuery();				
 		position(rs);
 
 		return rs;

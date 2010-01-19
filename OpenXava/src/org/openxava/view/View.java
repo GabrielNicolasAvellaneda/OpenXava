@@ -82,6 +82,7 @@ public class View implements java.io.Serializable {
 	
 	private boolean focusForward;
 	private String focusPropertyId;
+	private String focusCurrentId; 
 	private Map membersNamesWithHidden;
 	private Map groupsViews;
 	private Collection membersNamesInGroup;
@@ -1889,8 +1890,9 @@ public class View implements java.io.Serializable {
 		try {			
 			this.firstLevel = firstLevel; 
 			formattedProperties = null; 
-			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));						
-			setIdFocusProperty(getRequest().getParameter("xava_focus_property"));
+			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));
+			setIdFocusProperty(getRequest().getParameter("xava_previous_focus")); 
+			setFocusCurrentId(getRequest().getParameter("xava_current_focus")); 
 			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
 			if (isRepresentsCollection()) fillCollectionInfo(qualifier);
 			
@@ -3377,7 +3379,8 @@ public class View implements java.io.Serializable {
 	}
 	
 	public String getFocusPropertyId() { 		
-		try {
+		try {			
+			if (!Is.emptyString(focusCurrentId)) return focusCurrentId;
 			if (!Is.emptyString(focusPropertyId) && !focusForward) return focusPropertyId;
 			return calculateFocusPropertyId();
 		}
@@ -3494,6 +3497,11 @@ public class View implements java.io.Serializable {
 	private void setIdFocusProperty(String string) {
 		focusPropertyId = Ids.undecorate(string); 
 	}
+	
+	private void setFocusCurrentId(String string) {
+		focusCurrentId = Ids.undecorate(string); 
+	}
+	
 
     /**
      * Sets the focus in the provided property

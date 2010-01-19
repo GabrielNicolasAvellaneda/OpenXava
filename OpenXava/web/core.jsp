@@ -29,8 +29,11 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 <INPUT type="hidden" name="<xava:id name='xava_action_already_processed'/>" value=""/>
 <INPUT type="hidden" name="<xava:id name='xava_action_application'/>" value="<%=request.getParameter("application")%>"/>
 <INPUT type="hidden" name="<xava:id name='xava_action_module'/>" value="<%=request.getParameter("module")%>"/>
-<INPUT type="hidden" name="<xava:id name='xava_changed_property'/>"/> 
-<INPUT type="hidden" name="<xava:id name='xava_focus_property'/>"/> 
+<INPUT type="hidden" name="<xava:id name='xava_changed_property'/>"/>
+<INPUT type="hidden" id="<xava:id name='xava_current_focus'/>" 
+	name="<xava:id name='xava_current_focus'/>"/>
+<INPUT type="hidden" id="<xava:id name='xava_previous_focus'/>" 
+	name="<xava:id name='xava_previous_focus'/>"/>
 <INPUT type="hidden" name="<xava:id name='xava_focus_forward'/>"/> 
 <INPUT type="hidden" id="<xava:id name='xava_focus_property_id'/>" 
 	name="<xava:id name='xava_focus_property_id'/>"/>
