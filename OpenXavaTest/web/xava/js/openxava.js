@@ -71,7 +71,7 @@ openxava.refreshPage = function(result) {
 		if (result.showDialog) {
 			dialog = openxava.getDialog(result.application, result.module);
 		}
-		openxava.strokeActions = result.strokeActions; 		
+		openxava.strokeActions = result.strokeActions;
 		var changedParts = result.changedParts;
 		for (var id in changedParts) {
 			changed = changed + id + ", ";  			
@@ -86,7 +86,7 @@ openxava.refreshPage = function(result) {
 			}			
 		}
 		if (openxava.initTheme != null) openxava.initTheme();
-		if (result.focusPropertyId != null) {
+		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
 		}
@@ -451,14 +451,24 @@ openxava.isSubmitNeeded = function(form) {
 	return form.enctype=="multipart/form-data";
 }
 
+openxava.onBlur = function(application, module, property) {
+	openxava.getElementById(application, module, "xava_previous_focus").value = property;
+	openxava.getElementById(application, module, "xava_current_focus").value = "";
+}
+
+openxava.onFocus = function(application, module, property) {
+	openxava.getElementById(application, module, "xava_previous_focus").value = "";
+	openxava.getElementById(application, module, "xava_current_focus").value = property;	
+}
+
 openxava.throwPropertyChanged = function(application, module, property) {
 	if (openxava.isRequesting(application, module)) return;	
 	document.throwPropertyChange = true;
-	var form = openxava.getForm(application, module); 
-	form[openxava.decorateId(application, module, "xava_focus_forward")].value = "true";
-	form[openxava.decorateId(application, module, "xava_focus_property")].value=property;	
+	var form = openxava.getForm(application, module);
+	form[openxava.decorateId(application, module, "xava_focus_forward")].value = "true";	
+	form[openxava.decorateId(application, module, "xava_previous_focus")].value=property;
 	form[openxava.decorateId(application, module, "xava_changed_property")].value=property;
-	setTimeout ('openxava.requestOnChange("' + application + '", "' + module + '")', 100);		
+	setTimeout ('openxava.requestOnChange("' + application + '", "' + module + '")', 100);	
 }
 
 openxava.requestOnChange = function(application, module) {
