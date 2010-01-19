@@ -168,15 +168,22 @@ public class ModuleTestBase extends TestCase {
 		setFormValue(name, value, true);
 	}
 	
-	private void setFormValue(String name, String value, boolean refreshIfNeeded) throws Exception {
+	private void setFormValue(String name, String value, boolean refreshIfNeeded) throws Exception {		
 		setFormValue(name, value, refreshIfNeeded, true);
 	}
 
 	private void setFormValue(String name, String value, boolean refreshIfNeeded, boolean decorateName) throws Exception {
 		boolean refreshNeeded = false;		
-		String id = decorateName?decorateId(name):name; 
+		String id = decorateName?decorateId(name):name;
+		// Setting value to xava_previous_focus and xava_current_focus is for deceiving
+		// the server to it will think that the focus is in the current
+		// editor. The ideal way would be to put the real focus in editor, but HtmlUnit
+		// throws the onchange events two times (when focus move, and when value changes)
+		// in this case, which it's worse.
+		getElementById("xava_previous_focus").setAttribute("value", id);
+		getElementById("xava_current_focus").setAttribute("value", "");
 		try {	
-			HtmlInput input = getInputByName(id); 
+			HtmlInput input = getInputByName(id); 			
 			assertNotDisable(name, input);
 			if (input instanceof HtmlCheckBoxInput) {
 				if ("true".equalsIgnoreCase(value) && !input.isChecked() ||
@@ -192,7 +199,7 @@ public class ModuleTestBase extends TestCase {
 				setRadioButtonsValue(id, value);
 			}
 			else {
-				input.setValueAttribute(value);
+				input.setValueAttribute(value);				
 			}
 			if (!Is.emptyString(input.getOnChangeAttribute())) refreshNeeded = true;
 		}
@@ -201,6 +208,7 @@ public class ModuleTestBase extends TestCase {
 				HtmlSelect select = getForm().getSelectByName(id);
 				assertNotDisable(name, select);
 				select.setSelectedAttribute(value, true);
+				select.blur(); 
 				refreshNeeded = !Is.emptyString(select.getOnChangeAttribute());
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
@@ -226,9 +234,9 @@ public class ModuleTestBase extends TestCase {
 		if (HtmlElement.ATTRIBUTE_VALUE_EMPTY.equals(value)) return true;
 		return !"false".equalsIgnoreCase(value);		
 	}
-
+	
 	private void focus(HtmlElement element) throws Exception {
-		element.focus();
+		element.focus();		
 		Thread.sleep(20);				
 	}
 
