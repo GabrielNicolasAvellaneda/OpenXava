@@ -6,7 +6,7 @@
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
- * $Date: 2010-01-19 11:21:10 $
+ * $Date: 2010-01-21 09:56:33 $
  * $Rev: 5685 $
  */
 
@@ -4008,6 +4008,9 @@ $.extend($.livequery, {
 	},
 	
 	registerPlugin: function() {
+		/* Removed, because it produces a degradation performance problem
+		 * with OpenXava, really with any AJAX application that uses 
+		 * an unique HTML page
 		$.each( arguments, function(i,n) {
 			// Short-circuit if the method doesn't exist
 			if (!$.fn[n]) return;
@@ -4027,6 +4030,7 @@ $.extend($.livequery, {
 				return r;
 			}
 		});
+		*/
 	},
 	
 	run: function(id) {

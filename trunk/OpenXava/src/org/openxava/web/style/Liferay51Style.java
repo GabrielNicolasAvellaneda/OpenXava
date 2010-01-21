@@ -1,6 +1,5 @@
 package org.openxava.web.style;
 
-import java.util.*;
 
 /**
  * For Liferay 5.1. <p>
