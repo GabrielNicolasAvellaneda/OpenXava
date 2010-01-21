@@ -539,7 +539,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoErrors();
 		assertNoAction("Delivery.generateNumber"); // of property
 		assertNoAction("Delivery.setDefaultType"); // of reference as descriptions-list
-		assertNoAction("Delivery.setDefaultInvoice"); // of reference 
+		assertNoAction("Delivery.setDefaultInvoice"); // of reference 		
 		execute("CRUD.new");
 		assertAction("Delivery.generateNumber");
 		assertAction("Delivery.setDefaultType");

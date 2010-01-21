@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Improved performance with large tables in list mode.
+- Fix: Degradation of performance when the user is working in the same page during some time.
 - Fix: Focus cannot be controlled when using OnChange actions. The next field is focused after the action.
 - Fix: JavaScript error (not noticeable by the user) ox_...__xava_focus_property is not defined.
 - Fix: Labels in collection with no 'cascade=CascadeType.REMOVE' 

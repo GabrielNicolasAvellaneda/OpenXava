@@ -231,7 +231,10 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 				message.append(", ");
 		}
 		log.debug(message);
-				
+		
+		if ((current + chunkSize) < Integer.MAX_VALUE) { 
+			ps.setMaxRows(current + chunkSize + 1); 
+		}		
 		ResultSet rs = ps.executeQuery();				
 		position(rs);
 
