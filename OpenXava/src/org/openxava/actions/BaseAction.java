@@ -6,8 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
-import org.openxava.util.Locales;
-import org.openxava.util.Messages;
+import org.openxava.util.*;
 import org.openxava.web.DescriptionsLists;
 
 /**
@@ -184,6 +183,7 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	 * @since 4m1
 	 */    
 	protected ModuleContext getContext() {  
+		if (context == null) throw new XavaException("context_null_in_action");
 		return context;
 	}
 
@@ -209,7 +209,7 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	 * @since 4m1
 	 */	
 	protected ModuleManager getManager() { 
-		return (ModuleManager) context.get(request, "manager");
+		return (ModuleManager) getContext().get(request, "manager");
 	}	
 	
 	/**

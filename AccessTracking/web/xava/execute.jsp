@@ -3,6 +3,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="javax.swing.KeyStroke" %>
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
+<%@ page import="org.openxava.view.View" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.Users" %>
 <%@ page import="org.openxava.util.Locales" %>
@@ -42,10 +43,18 @@ if (manager.isListMode()) {
 manager.setApplicationName(request.getParameter("application"));
 manager.setModuleName(request.getParameter("module"));
 manager.executeBeforeEachRequestActions(request, errors, messages); 
-org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xava_view");
+View view = (View) context.get(request, "xava_view");
 view.setRequest(request);
 view.setErrors(errors);
 view.setMessages(messages);
+
+java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews");
+for (Iterator it = previousViews.iterator(); it.hasNext(); ) {
+	View previousView = (View) it.next();
+	previousView.setRequest(request);
+	previousView.setErrors(errors);
+	previousView.setMessages(messages);	
+}
 
 tab.setRequest(request);
 if (manager.isListMode()) {

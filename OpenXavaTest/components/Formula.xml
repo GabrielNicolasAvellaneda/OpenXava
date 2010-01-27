@@ -21,7 +21,7 @@
 	
 	<aggregate name="FormulaIngredient">
 		<property name="oid" type="String" key="true" hidden="true">
-			<default-value-calculator class="org.openxava.calculators.UUIDCalculator"/>
+			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
 		</property>
 		
 		<reference name="ingredient" model="Ingredient"/>
@@ -39,6 +39,7 @@
 		
 		<collection-view collection="ingredients">
 			<on-select-element-action action="Formula.onSelectIngredient"/>
+			<list-properties>image, ingredient.name</list-properties>
 		</collection-view>
 		
 		<members>

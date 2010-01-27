@@ -349,12 +349,13 @@ public class CustomerWithSectionTest extends CustomerTest {
 			// In OX2 many to many is not supported, we simulate it using a collection of aggregates,
 			// therefore the User Interface it's not the same (because it's a collection of aggragates)
 			execute("Collection.new", "viewObject=xava_view_section1_states");
-			setValue("states.state.id", "AK");
-			assertValue("states.state.name", "ALASKA");
-			execute("Collection.save", "viewObject=xava_view_section1_states");						
-			setValue("states.state.id", "CA");
-			assertValue("states.state.name", "CALIFORNIA");
-			execute("Collection.save", "viewObject=xava_view_section1_states");			
+			setValue("state.id", "AK");
+			assertValue("state.name", "ALASKA");
+			execute("Collection.save");
+			execute("Collection.new", "viewObject=xava_view_section1_states");
+			setValue("state.id", "CA");
+			assertValue("state.name", "CALIFORNIA");
+			execute("Collection.save");			
 		}
 		
 		assertCollectionRowCount("states", 2);

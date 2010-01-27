@@ -35,7 +35,7 @@ public class SelectSchemaTest extends ModuleTestBase {
 		
 		// select second schema: COMPANYB
 		changeModule("SelectSchema");
-		// setValue("schema", "2"); // For XML components
+		//setValue("schema", "2"); // For XML components
 		setValue("schema", String.valueOf(SelectSchema.Schema.COMPANYB.ordinal())); // For annotated POJOs
 		execute("SelectSchema.set");
 		assertNoErrors();

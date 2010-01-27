@@ -111,13 +111,21 @@
 			<on-change class="org.openxava.test.actions.OnChangeCarrierInDeliveryAction"/>
 		</property-view>
 		
+		<property-view property="type.number">
+			<on-change class="org.openxava.test.actions.OnChangeDeliveryTypeAction"/>
+		</property-view>				
+		
 		<reference-view reference="invoice" view="Simple">		
 			<action action="Delivery.setDefaultInvoice"/>
 		</reference-view>
+				
 		
-		<reference-view reference="type">	
+		<reference-view reference="type">
+				
 			<descriptions-list order="${number} desc"/>
+			
 			<action action="Delivery.setDefaultType"/>
+			
 		</reference-view>
 		
 		<reference-view reference="carrier">
@@ -212,14 +220,14 @@
 		<property-view property="carrier.number">
 			<on-change class="org.openxava.test.actions.OnChangeCarrierInDeliveryAction"/>
 		</property-view>
-		
+				
 		<reference-view reference="invoice" view="Simple">		
 			<action action="Delivery.setDefaultInvoice"/>
 		</reference-view>
 		
 		<reference-view reference="type">	
 			<descriptions-list order="${number} desc"/>
-			<action action="Delivery.setDefaultType"/>
+			<action action="Delivery.setDefaultType"/>			
 		</reference-view>
 		
 		<reference-view reference="carrier">

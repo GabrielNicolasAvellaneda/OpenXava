@@ -28,7 +28,7 @@ public class FamilyProductsReportAction extends JasperReportBaseAction implement
 	public void execute() throws Exception { 
 		super.execute();
 		if (goBackOnFinish) {
-			returnToPreviousView();
+			closeDialog();
 		}
 	}	
 

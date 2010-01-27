@@ -1,29 +1,31 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4m2 (2010-1-26)
+------------------------
+- Collections use dialogs to edit, add and remove elements.
+- Support for JSR-330, the Java standard for dependency injection. Now it's possible to use @Inject and @Named in action fields instead of <use-object /> in <action/>.
+- Show messages/errors animated.
+- New methods in BaseAction to change dynamically actions: setControllers(), returnToPreviousControllers(), setDefaultControllers(),  addActions(), removeActions() and clearActions().
+- New methods in ViewBaseAction to manage dialogs: showDialog() and closeDialog().
 - Improved performance with large tables in list mode.
+- It's possible to specify the style to use inside portals by means of new properties in xava.properties. 
+- Removed history.txt file.
+- Edit action by default for collections other than @AsEmbeddable, CascadeType.REMOVE or CascadeType.ALL allows only viewing the element.
+- Now the action Return.return does not close the dialog.
+- TabBaseAction now extends ViewBaseAction so getView() and methods about dialogs and view navigation are available from it.
+- show-dialog and hide-dialog has been dropped from <action/>, this produces a BACKWARD INCOMPATIBILITY over 4m1.
+- DWR engine.js is cached to improve performance.
+- No error occurs, but only a warning, when <use-object /> (from controllers.xml) tries to inject in an non-existing property. This feature improves backward compatibility.
+- New getFieldsAnnotatedWith() method in Classes utility class.
+- Fix: Hibernate log is not shown when retrieving the entity metadata.
 - Fix: Degradation of performance when the user is working in the same page during some time.
 - Fix: Focus cannot be controlled when using OnChange actions. The next field is focused after the action.
 - Fix: JavaScript error (not noticeable by the user) ox_...__xava_focus_property is not defined.
 - Fix: Labels in collection with no 'cascade=CascadeType.REMOVE' 
 - Fix: Documentation portlets with no language specified cannot be installed in WebSphere Portal. Now a default value for languages (from portletLocales in xava.properties) is assumed.
-- It's possible to specify the style to use inside portals by means of new properties in xava.properties. 
-- Removed history.txt file.
-- Edit action by default for collections other than @AsEmbeddable, CascadeType.REMOVE or CascadeType.ALL allows only viewing the element.
-- Support for JSR-330, the Java standard for dependency injection. Now it's possible to use @Inject and @Named in action fields instead of <use-object /> in <action/>.
-- Now the action Return.return does not close the dialog.
-- TabBaseAction now extends ViewBaseAction so getView() and methods about dialogs and view navigation are available from it.
-- New methods in BaseAction to change dynamically actions: setControllers(), returnToPreviousControllers(), setDefaultControllers(),  addActions(), removeActions() and clearActions().
-- New methods in ViewBaseAction to manage dialogs: showDialog() and closeDialog().
-- show-dialog and hide-dialog has been dropped from <action/>, this produces a backward incompatibility over 4m1.
-- Collections use dialogs to edit, add and remove elements.
-- DWR engine.js is cached to improve performance.
 - Fix: Paging in collections forgets selected rows.
-- Show messages/errors animated.
 - Fix: Problems with checkbox 'select/deselect all' with several collections and @OnSelectElementAction.
-- No error occurs, but only a warning, when <use-object /> (from controllers.xml) tries to inject in an non-existing property. This feature improves backward compatibility.
-- New getFieldsAnnotatedWith() method in Classes utility class.
-- Row actions in collections of entities (with no @AsEmbedded) is 'view' by default, before it was 'edit'.
 - Fix: Timing problems in junit test combining on-change properties and actions.
 - Fix: In @OnChange for descriptions list references when the value is zero it's converted to null.
 - Fix: Automatic label generation (Strings.javaIdentifierToNaturalLabel() method) does not work fine with acronyms.

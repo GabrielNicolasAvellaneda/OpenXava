@@ -11,7 +11,10 @@
 		<property name="name" type="String"
 			size="40" required="true"/>			  			
 		<reference name="partOf" model="Ingredient"/>
-		<reference name="favouriteFormula" model="Formula"/>		
+		<reference name="favouriteFormula" model="Formula"/>
+		<finder name="byName" arguments="String name">
+			<condition>${name} = {0}</condition>
+		</finder>				
 	</entity>
 	
 	<view>

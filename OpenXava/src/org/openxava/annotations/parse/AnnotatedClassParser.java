@@ -2239,19 +2239,13 @@ public class AnnotatedClassParser {
 
 	private static Collection obtainManagedClassNamesUsingHibernate() {
 		// The next code is Hibernate dependent.
-		// This code has to be modified in order to work with Glassfish, OpenJPA, etc.		
-		Level currentLogLevel = Logger.getLogger("org.hibernate").getLevel();
-		Logger.getLogger("org.hibernate").setLevel(Level.OFF); 
-		try {
-			EntityManager manager = XPersistence.createManager();
-			org.hibernate.impl.SessionImpl impl = (org.hibernate.impl.SessionImpl) manager.getDelegate();
-			Collection result = impl.getSessionFactory().getAllClassMetadata().keySet();
-			manager.close();
-			return result;
-		}		
-		finally {
-			Logger.getLogger("org.hibernate").setLevel(currentLogLevel);
-		}
+		// This code has to be modified in order to work with Glassfish, OpenJPA, etc.
+		// The ideal way is to rewrite this code using the new JPA 2.0 metadata support
+		EntityManager manager = XPersistence.createManager();
+		org.hibernate.impl.SessionImpl impl = (org.hibernate.impl.SessionImpl) manager.getDelegate();
+		Collection result = impl.getSessionFactory().getAllClassMetadata().keySet();
+		manager.close();
+		return result;
 	}
 
 	private void notApply(String memberName, Class annotation, String validMemberTypes) throws XavaException {
