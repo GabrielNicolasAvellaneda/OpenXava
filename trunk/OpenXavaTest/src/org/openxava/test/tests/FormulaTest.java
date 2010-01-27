@@ -4,6 +4,8 @@ import java.net.URL;
 
 import javax.persistence.Query;
 
+import org.openxava.calculators.*;
+import org.openxava.hibernate.*;
 import org.openxava.jpa.XPersistence;
 import org.openxava.test.model.Formula;
 import org.openxava.test.model.FormulaIngredient;
@@ -32,13 +34,12 @@ public class FormulaTest extends ModuleTestBase {
 		Formula formula = Formula.findByName("HTML TEST");
 		Ingredient ingredient = Ingredient.findByName("LECHE");
 		for (int x = 0; x <= 12; x++){
-			FormulaIngredient fi = new FormulaIngredient();
+			FormulaIngredient fi = new FormulaIngredient();			
 			fi.setFormula(formula);
 			fi.setIngredient(ingredient);
 			XPersistence.getManager().persist(fi);
-			XPersistence.getManager().flush();
 		}
-		XPersistence.commit();
+		XPersistence.commit(); 
 		
 		//
 		execute("Mode.detailAndFirst");

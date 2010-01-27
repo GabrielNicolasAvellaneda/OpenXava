@@ -22,12 +22,12 @@ public class ColorWithGroupsAndChangeControllersTest extends ModuleTestBase {
 		assertNotExists("property2");
 		assertActions(new String[] {});
 		setValue("group", String.valueOf(Color.Group.GROUP1.ordinal())); // For annotated POJOs
-		// setValue("group", "1"); // For XML components
+		//setValue("group", "1"); // For XML components
 		assertExists("property1");
 		assertNotExists("property2");
 		assertActions(new String[] { "ReturnPreviousModule.return" });
 		setValue("group", String.valueOf(Color.Group.GROUP2.ordinal())); // For annotated POJOs
-		// setValue("group", "2"); // For XML components
+		//setValue("group", "2"); // For XML components
 		assertNotExists("property1");
 		assertExists("property2");
 		assertActions(new String[] { "ReturnPreviousModule.return", "ActionWithImage.new" });

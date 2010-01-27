@@ -4,6 +4,7 @@ package org.openxava.application.meta;
 import java.util.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.annotations.parse.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -83,33 +84,21 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	}
 
 	private void generateDefaultModulesFromJPAEntities() throws XavaException { 
-		Object parser = null;
 		try {
-			// At the momment, annotated EJB is parsed only if parser is available in classpath
-			parser = Class.forName("org.openxava.annotations.parse.AnnotatedClassParser").newInstance();						
-		}
-		catch (Exception ex) {
-			return;
-		}		
-		Collection classNames = null;
-		try {
-			classNames = (Collection) Objects.execute(parser, "friendMetaApplicationGetManagedClassNames");			
+			Collection classNames = AnnotatedClassParser.friendMetaApplicationGetManagedClassNames();
+			for (Iterator it=classNames.iterator(); it.hasNext(); ) {
+				String className = (String) it.next();
+				String modelName = Strings.lastToken(className, ".");
+				if (!metaModules.containsKey(modelName)) {
+					createDefaultModule(modelName);
+				}			
+			}							
 		}
 		catch (Exception ex) {
 			log.error(ex);
 			throw new XavaException("default_modules_from_jpa_error");
 		}
-		for (Iterator it=classNames.iterator(); it.hasNext(); ) {
-			String className = (String) it.next();
-			String modelName = Strings.lastToken(className, ".");
-			if (!metaModules.containsKey(modelName)) {
-				createDefaultModule(modelName);
-			}			
-		}				
-	}
-		
-
-	
+	}			
 
 	/**
 	 * In the same order that they are found in application.xml/aplicacion.xml. <p>
