@@ -70,18 +70,17 @@ public class Order extends CommercialDocument {
 		}
 	}
 
-	public void createInvoice() throws Exception { // tmp Mostrar alternativas
+	public void createInvoice() throws Exception { 
 		Invoice invoice = new Invoice();
 		BeanUtils.copyProperties(invoice, this);
 		invoice.setOid(null);		
-		invoice.setDetails(new ArrayList());
+		invoice.setDetails(new ArrayList());		
 		XPersistence.getManager().persist(invoice);
 		copyDetailsToInvoice(invoice);
-		this.invoice = invoice; // tmp Después de persist		
+		this.invoice = invoice; 		
 	}
 
 	private void copyDetailsToInvoice(Invoice invoice) throws Exception {
-		// No añadir a las líneas
 		for (Detail orderDetail: getDetails()) {
 			Detail invoiceDetail = (Detail) BeanUtils.cloneBean(orderDetail);							
 			invoiceDetail.setOid(null);
