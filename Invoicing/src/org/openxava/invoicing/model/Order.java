@@ -10,6 +10,7 @@ import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
+import org.openxava.validators.*;
 
 @Entity
 @Views({
@@ -70,14 +71,25 @@ public class Order extends CommercialDocument {
 		}
 	}
 
-	public void createInvoice() throws Exception { 
-		Invoice invoice = new Invoice();
-		BeanUtils.copyProperties(invoice, this);
-		invoice.setOid(null);		
-		invoice.setDetails(new ArrayList());		
-		XPersistence.getManager().persist(invoice);
-		copyDetailsToInvoice(invoice);
-		this.invoice = invoice; 		
+	public void createInvoice() throws ValidationException {
+		if (this.invoice != null) {
+			throw new ValidationException("impossible_create_invoice_order_already_has_one"); 
+		}
+		if (!isDelivered()) {
+			throw new ValidationException("impossible_create_invoice_order_is_not_delivered");
+		}
+		try {
+			Invoice invoice = new Invoice();
+			BeanUtils.copyProperties(invoice, this);
+			invoice.setOid(null);		
+			invoice.setDetails(new ArrayList());		
+			XPersistence.getManager().persist(invoice);
+			copyDetailsToInvoice(invoice);
+			this.invoice = invoice;
+		}
+		catch (Exception ex) {
+			throw new SystemException("impossible_create_invoice", ex);
+		}
 	}
 
 	private void copyDetailsToInvoice(Invoice invoice) throws Exception {
