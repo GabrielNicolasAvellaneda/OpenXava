@@ -229,6 +229,10 @@ public class Tab implements java.io.Serializable {
 		}		
 		return names.toString();
 	}
+	
+	public int getColumnWidth(int columnIndex) { // tmp
+		return 100;
+	}
 		
 	public MetaProperty getMetaProperty(int i) {
 		return (MetaProperty) getMetaProperties().get(i);
