@@ -3,7 +3,7 @@ if (openxava == null) var openxava = {};
 openxava.init = function(application, module) {
 	dwr.util.useLoadingMessage(openxava.loadingMessage);
 	document.onkeydown = openxava.processKey;  
-	openxava.ajaxRequest(application, module, true); 
+	openxava.ajaxRequest(application, module, true); 	
 }
 
 openxava.ajaxRequest = function(application, module, firstRequest) {
@@ -86,6 +86,7 @@ openxava.refreshPage = function(result) {
 			}			
 		}
 		if (openxava.initTheme != null) openxava.initTheme();
+		openxava.initLists(); 
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
@@ -177,6 +178,15 @@ openxava.updateRootIds = function(application, moduleFrom, moduleTo) {
 	openxava.getElementById( 
 			application, moduleFrom, "view_member").id =	
 				openxava.decorateId(application, moduleTo, "view_member");	
+}
+
+openxava.initLists = function() { 
+	$(".xava_resizable").resizable({
+		handles: 'e',
+		resize: function(event, ui) { 
+			$("." + event.target.id).width($(event.target).width() - 1);
+		}
+	});			
 }
 
 openxava.getDialog = function(application, module) {  
