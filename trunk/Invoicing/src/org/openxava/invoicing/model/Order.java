@@ -1,6 +1,5 @@
 package org.openxava.invoicing.model;
 
-import java.math.*;
 import java.util.*;
 
 import javax.persistence.*;
