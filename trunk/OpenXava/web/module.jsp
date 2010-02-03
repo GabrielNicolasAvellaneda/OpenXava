@@ -53,7 +53,7 @@ if (manager.isFormUpload()) {
 	new Module().requestMultipart(request, response, app, module);
 }
 String browser = request.getHeader("user-agent"); 
-boolean isPortlet = (session.getAttribute(Ids.decorate(request, "xava.portlet.uploadActionURL")) != null);
+boolean isPortlet = (session.getAttribute(Ids.decorate(app, request.getParameter("module"), "xava.portlet.uploadActionURL")) != null);
 
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
