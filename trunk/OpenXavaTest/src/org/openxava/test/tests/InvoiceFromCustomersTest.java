@@ -21,6 +21,12 @@ public class InvoiceFromCustomersTest extends ModuleTestBase {
 		super(testName, "InvoiceFromCustomers");		
 	}
 	
+	public void testGenerateExcelInASecondModule() throws Exception{
+		execute("Invoice.listOfCustomer", "row=0");
+		execute("Print.generateExcel");
+		assertAction("Print.generateExcel");
+	}
+	
 	public void testSelectedFromCalledModuleNotPropagateToCallerModule() throws Exception {
 		assertRowUnchecked(0);
 		execute("Invoice.listOfCustomer", "row=0");
