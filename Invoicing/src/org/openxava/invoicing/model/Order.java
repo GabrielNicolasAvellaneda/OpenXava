@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.apache.commons.beanutils.*;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.invoicing.actions.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -30,8 +31,10 @@ public class Order extends CommercialDocument {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
+	@OnChange(ShowHideCreateInvoiceAction.class)
 	private Invoice invoice;
 	
+	@OnChange(ShowHideCreateInvoiceAction.class)
 	private boolean delivered;
 
 	public boolean isDelivered() {
