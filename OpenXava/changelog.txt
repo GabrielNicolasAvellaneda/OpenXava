@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: 'forwardUri' in a 'nextModule' inside portal
 - commons-beanutils.jar (already included in OX) is exported from the Eclipse OpenXava project.
 
 OpenXava 4m2 (2010-1-26)
