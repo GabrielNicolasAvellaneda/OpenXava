@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: modify empty reference not must show the dialog
 - Fix: 'forwardUri' in a 'nextModule' inside portal
 - commons-beanutils.jar (already included in OX) is exported from the Eclipse OpenXava project.
 

@@ -1,10 +1,9 @@
 package org.openxava.actions;
 
-import java.util.*;
+import java.util.Map;
 
-
-
-import org.openxava.view.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 
@@ -13,24 +12,25 @@ import org.openxava.view.*;
  */
 
 public class ModifyFromReferenceAction extends NavigationFromReferenceBaseAction  {
+	private static Log log = LogFactory.getLog(ModifyFromReferenceAction.class);
 	
 	private boolean exists = true;
 	
 	
 	public void execute() throws Exception {
 		super.execute();
+		
 		Map key = getReferenceSubview().getKeyValuesWithValue();
 		if (key.isEmpty()) {
-			addError("cannot_modify_empty_reference");
-			returnToPreviousView();
+			closeDialog();
 			exists = false;
+			addError("cannot_modify_empty_reference");
 			return;
 		}
 		getView().setKeyEditable(false);
 		getView().setValues(key);
-
 	}
-		
+	
 	public String getCustomController() {	
 		return getModel() + "Modification";
 	}

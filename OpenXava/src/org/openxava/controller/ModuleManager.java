@@ -1190,11 +1190,12 @@ public class ModuleManager {
 		setHideDialog(true);
 	}
 
-	private void setHideDialog(boolean hideDialog) { 
-		if (dialogLevel > 0 && hideDialog) reloadAllUINeeded = true; 
+	private void setHideDialog(boolean hideDialog) {
+		if (dialogLevel > 0 && hideDialog) reloadAllUINeeded = true;
 		this.hideDialog = dialogLevel > 0 && hideDialog;
 		dialogLevel--;
 		if (dialogLevel < 0) dialogLevel = 0;
+		this.showDialog = false;
 	}
 	
 	public MetaAction getLastExecutedMetaAction() {
