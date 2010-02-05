@@ -34,6 +34,13 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
+	public void testModifyEmptyReferenceNotMustShowTheDialog() throws Exception{
+		execute("CRUD.new");
+		assertValue("type.number", "");
+		execute("Reference.modify", "model=DeliveryType,keyProperty=type.number");
+		assertNoDialog();
+		assertError("Impossible to modify an empty reference");
+	}
 	
 	public void testSecondLevelDialogReturningWithCancelButton() throws Exception { 
 		assertSecondLevelDialogReturning(false);
