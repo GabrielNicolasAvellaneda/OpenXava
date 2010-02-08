@@ -5,14 +5,13 @@
 <%@page import="org.openxava.web.Actions"%>
 
 <%
-	String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
+String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
 String cssSelectedRow = style.getSelectedRow();
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
-
-<table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 	<%
 		if (lineAction != null) {
@@ -33,10 +32,17 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 <%
 	// Heading
 Iterator it = subview.getMetaPropertiesList().iterator();
-while (it.hasNext()) {
+for (int columnIndex=0; it.hasNext(); columnIndex++) {
 	MetaProperty p = (MetaProperty) it.next();
+	String label = p.getQualifiedLabel(request).replaceAll(" ", "&nbsp;");
+	int columnWidth = subview.getCollectionColumnWidth(columnIndex);
+	String width = columnWidth<0?"":"width: " + columnWidth + "px";
 %>
-	<th class=<%=style.getListHeaderCell()%>><%=p.getLabel(request)%>&nbsp;</th>
+	<th class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
+		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden; <%=width%>" >		
+		<%=label%>&nbsp;
+		</div>
+	</th>
 <%
 	}
 %>
@@ -81,15 +87,17 @@ while (itAggregates.hasNext()) {
 </td>
 <%
 	f++;
-	it = subview.getMetaPropertiesList().iterator();
-	while (it.hasNext()) {
+	it = subview.getMetaPropertiesList().iterator();	
+	for (int columnIndex = 0; it.hasNext(); columnIndex++) { 
 		MetaProperty p = (MetaProperty) it.next();
 		String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
 		String cellStyle = align + style.getListCellStyle();
+		int columnWidth = subview.getCollectionColumnWidth(columnIndex);
+		String width = columnWidth<0?"":"width: " + columnWidth + "px";
 		String fvalue = null;
 		Object value = null;
 		String propertyName = p.getName();
-		value = Maps.getValueFromQualifiedName(row, propertyName);
+		value = Maps.getValueFromQualifiedName(row, propertyName);		
 		if (p.hasValidValues()) {
 			if (value instanceof Number) {
 				fvalue = p.getValidValueLabel(request, ((Number) value).intValue());
@@ -103,7 +111,11 @@ while (itAggregates.hasNext()) {
 			fvalue = WebEditors.format(request, p, value, errors, view.getViewName(), true);	
 		}
 %>
-	<td class="<%=cssCellClass%>" style="<%=cellStyle%>"><%=fvalue%>&nbsp;</td>
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
+	<div class="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
+	<%=fvalue.replaceAll(" ", "&nbsp;")%>&nbsp;
+	</div>
+	</td>	
 <%
 	}
 }
