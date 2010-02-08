@@ -8,6 +8,7 @@ import java.util.prefs.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
+import org.hibernate.annotations.*;
 
 import org.openxava.component.*;
 import org.openxava.converters.*;
@@ -37,6 +38,7 @@ public class Tab implements java.io.Serializable {
 	private final static String PROPERTIES_NAMES = "propertiesNames";
 	private final static String ROWS_HIDDEN = "rowsHidden";
 	private final static String FILTER_VISIBLE = "filterVisible";
+	private final static String COLUMN_WIDTH = "columnWidth."; 
 	
 	
 	private static Log log = LogFactory.getLog(Tab.class);
@@ -84,11 +86,12 @@ public class Tab implements java.io.Serializable {
 	private Map styles;
 	private View collectionView;
 	private boolean filterVisible=XavaPreferences.getInstance().isShowFilterByDefaultInList();
+	private Map<String, Integer> columnWidths;
 	
 	private static int nextOid = 0; 
 	public int oid = nextOid++; 
 	
-	public List getMetaProperties() {
+	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
 			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;
 			try {				
@@ -230,9 +233,18 @@ public class Tab implements java.io.Serializable {
 		return names.toString();
 	}
 	
-	public int getColumnWidth(int columnIndex) { // tmp
-		return 100;
+	public int getColumnWidth(int columnIndex) { 
+		if (columnWidths == null) return -1;
+		Integer result = columnWidths.get(getMetaProperty(columnIndex).getQualifiedName());		
+		return result==null?-1:result;
 	}
+	
+	public void setColumnWidth(int columnIndex, int width) { 
+		if (columnWidths == null) columnWidths = new HashMap<String, Integer>(); 
+		columnWidths.put(getMetaProperty(columnIndex).getQualifiedName(), width);
+		saveUserPreferences();
+	}
+	
 		
 	public MetaProperty getMetaProperty(int i) {
 		return (MetaProperty) getMetaProperties().get(i);
@@ -1070,7 +1082,15 @@ public class Tab implements java.io.Serializable {
 				setPropertiesNames(propertiesNames);
 			}
 			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);
-			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);			
+			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);
+			if (columnWidths != null) columnWidths.clear();
+			for (MetaProperty property: getMetaProperties()) {
+				int value = preferences.getInt(COLUMN_WIDTH + property.getQualifiedName(), -1);
+				if (value >= 0) {
+					if (columnWidths == null) columnWidths = new HashMap<String, Integer>();
+					columnWidths.put(property.getQualifiedName(), value);
+				}
+			}
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_load_preferences_tab"),ex);
@@ -1084,6 +1104,14 @@ public class Tab implements java.io.Serializable {
 			preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
 			preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
 			preferences.putBoolean(FILTER_VISIBLE, filterVisible);
+			if (columnWidths != null) {
+				for (Map.Entry<String, Integer> columnWidth: columnWidths.entrySet()) {
+					preferences.putInt(
+						COLUMN_WIDTH + columnWidth.getKey(),
+						columnWidth.getValue()
+					);
+				}
+			}
 			preferences.flush();
 		}
 		catch (Exception ex) {

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.prefs.*;
 
 import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
@@ -64,9 +65,11 @@ import org.openxava.web.meta.MetaEditor;
 
 public class View implements java.io.Serializable {
 	
+	private final static String COLUMN_WIDTH = "collectionColumnWidth."; 
+	
 	private static Log log = LogFactory.getLog(View.class);
 	private static final long serialVersionUID = -7582669617830655121L;
-	private static Collection defaultListActionsForCollections;	
+	private static Collection defaultListActionsForCollections;
 	
 	private String viewObject;  
 	private String propertyPrefix; 
@@ -93,7 +96,7 @@ public class View implements java.io.Serializable {
 	private Collection membersNamesWithoutSections;
 	private Collection membersNamesWithoutSectionsAndCollections; 
 	private View parent;	
-	private Collection metaPropertiesList;
+	private List<MetaProperty> metaPropertiesList;
 	private boolean knowIfDisplayDetailInCollection;
 	private boolean displayDetailInCollection;
 	private String lastPropertyKeyName;
@@ -830,8 +833,8 @@ public class View implements java.io.Serializable {
 		return groupsViews;
 	}
 
-	private Collection namesToMetaProperties(View view, Collection names) throws XavaException {
-		Collection metas = new ArrayList();
+	private List<MetaProperty> namesToMetaProperties(View view, Collection names) throws XavaException {
+		List<MetaProperty> metas = new ArrayList();
 		Iterator it = names.iterator();
 		while (it.hasNext()) {
 			String name = (String) it.next();
@@ -2682,9 +2685,9 @@ public class View implements java.io.Serializable {
 		return metaMembersIncludingGroups;
 	}
 			
-	public Collection getMetaPropertiesList() throws XavaException {		
+	public List<MetaProperty> getMetaPropertiesList() throws XavaException {		
 		if (metaPropertiesList == null) {
-			metaPropertiesList = new ArrayList();
+			metaPropertiesList = new ArrayList<MetaProperty>();
 			Iterator it = getMetaModel().getPropertiesNames().iterator();
 			while (it.hasNext()) {
 				MetaProperty pr= getMetaModel().getMetaProperty((String) it.next());
@@ -2702,7 +2705,7 @@ public class View implements java.io.Serializable {
 	private void setLabelsIdForMetaPropertiesList() throws XavaException {
 		if (getMemberName() == null || metaPropertiesList == null) return;
 		
-		Collection newList = new ArrayList();
+		List<MetaProperty> newList = new ArrayList();
 		Iterator it = metaPropertiesList.iterator();
 		while (it.hasNext()) {
 			MetaProperty p = ((MetaProperty) it.next()).cloneMetaProperty();
@@ -2716,7 +2719,7 @@ public class View implements java.io.Serializable {
 	}
 	
 		
-	private void setMetaPropertiesList(Collection metaProperties) throws XavaException {  
+	private void setMetaPropertiesList(List<MetaProperty> metaProperties) throws XavaException {  
 		this.metaPropertiesList = metaProperties;
 		setLabelsIdForMetaPropertiesList();
 	}
@@ -3622,6 +3625,36 @@ public class View implements java.io.Serializable {
 	private void setCollectionEditableFixed(boolean collectionEditableFixed) {
 		this.collectionEditableFixed = collectionEditableFixed;
 	}
+	
+	public void setCollectionColumnWidth(int columnIndex, int width) { 
+		try {
+			getPreferences().putInt(
+				COLUMN_WIDTH + getMetaPropertiesList().get(columnIndex).getQualifiedName(), 
+				width
+			);
+			getPreferences().flush();
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("impossible_store_column_width"),ex);
+		}
+	}
+	
+	public int getCollectionColumnWidth(int columnIndex) { 
+		try {
+			return getPreferences().getInt(
+				COLUMN_WIDTH + getMetaPropertiesList().get(columnIndex).getQualifiedName(), -1 				
+			);
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("impossible_load_column_width"),ex);
+			return -1;
+		}
+	}	
+	
+	private Preferences getPreferences() throws BackingStoreException { 		
+		return Users.getCurrentPreferences().node("view." + getMetaModel().getName() + "." + getViewName() + ".");
+	}
+
 
 	public String getHideCollectionElementAction() { 		
 		return hideCollectionElementAction == null?"Collection.hideDetail":hideCollectionElementAction;		

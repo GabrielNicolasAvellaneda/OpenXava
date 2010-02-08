@@ -11,7 +11,9 @@
 <%@ page import="org.openxava.controller.meta.MetaControllers"%>
 <%@page import="org.openxava.web.Actions"%>
 
-<jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+
+<%@page import="org.openxava.util.Users"%>
+<%@page import="java.util.prefs.Preferences"%><jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -99,15 +101,18 @@ String rowStyle = "border-bottom: 1px solid;";
 java.util.Collection properties = tab.getMetaProperties();
 java.util.Iterator it = properties.iterator();
 int columnIndex = 0;
+Preferences preferences = Users.getCurrentPreferences();
 while (it.hasNext()) {
 	MetaProperty property = (MetaProperty) it.next();
 	String align = "";
 	if (style.isAlignHeaderAsData()) {
 		align =property.isNumber() && !property.hasValidValues()?"vertical-align: middle;text-align: right":"vertical-align: middle";
 	}
+	int columnWidth = tab.getColumnWidth(columnIndex);
+	String width = columnWidth<0?"":"width: " + columnWidth + "px"; 
 %>
-<th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px">
-<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden" > 
+<th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" >
+<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden; <%=width%>" > 
 <%
 	if (tab.isCustomize()) {
 %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><%
@@ -170,7 +175,7 @@ while (it.hasNext()) {
 	</a>
 </th>
 <%
-	it = properties.iterator();
+it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
 String [] conditionComparators = tab.getConditionComparators();
 int iConditionValues = -1;
@@ -187,9 +192,11 @@ while (it.hasNext()) {
 		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
+		int columnWidth = tab.getColumnWidth(columnIndex);
+		String width = columnWidth<0?"":"width: " + columnWidth + "px";
 %>
 <th class="<%=style.getListSubheaderCell()%>" align="left">
-<div class="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" style="overflow: hidden">
+<div class="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
 <% 		
 		if (isValidValues) {
 %>
@@ -295,6 +302,8 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		MetaProperty p = tab.getMetaProperty(c);
 		String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
 		String cellStyle = align + style.getListCellStyle();
+		int columnWidth = tab.getColumnWidth(c);
+		String width = columnWidth<0?"":"width: " + columnWidth + "px"; 		
 		String fvalue = null;
 		if (p.hasValidValues()) {
 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
@@ -304,7 +313,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		}
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
-	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden;">
+	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
 	<%=fvalue.replaceAll(" ", "&nbsp;")%>&nbsp;
 	</div>
 	</td>

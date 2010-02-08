@@ -180,11 +180,16 @@ openxava.updateRootIds = function(application, moduleFrom, moduleTo) {
 				openxava.decorateId(application, moduleTo, "view_member");	
 }
 
-openxava.initLists = function() { 
+openxava.initLists = function() {  
 	$(".xava_resizable").resizable({
 		handles: 'e',
 		resize: function(event, ui) { 
-			$("." + event.target.id).width($(event.target).width() - 1);
+			var newWidth = $(event.target).width() - 1;
+			$(event.target).parent().width(newWidth);
+			$("." + event.target.id).width(newWidth);
+		},
+		stop: function(event, ui) {			
+			Tab.setColumnWidth(event.target.id, $(event.target).width());
 		}
 	});			
 }

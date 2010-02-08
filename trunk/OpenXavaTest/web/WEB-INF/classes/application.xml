@@ -275,7 +275,7 @@
 		<controller name="ListOnly"/>			
 		<mode-controller name="Void"/>
 	</module>
-			<module name="CustomerInvoices" folder="invoicing.variations">		<model name="Invoice"/>		<tab name="Simple"/>				<controller name="CustomerInvoices"/>	</module>
+			<module name="CustomerInvoices" folder="invoicing.variations">		<model name="Invoice"/>		<tab name="Simple"/>				<controller name="CustomerInvoices"/>		<controller name="Print"/>	</module>
 	
 	<module name="Family" folder="warehousing">
 		<model name="Family"/>
