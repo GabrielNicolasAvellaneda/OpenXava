@@ -23,6 +23,6 @@ class DWRBase {
 		if (!context.exists(application, module, "manager")) { // This user has not execute this module yet 
 			throw new SecurityException("9876");  
 		}
-	}
+	}	
 
 }

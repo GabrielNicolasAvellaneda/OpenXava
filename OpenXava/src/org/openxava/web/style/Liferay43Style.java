@@ -204,7 +204,7 @@ public class Liferay43Style extends Style {
 		return "liferay-list-selected"; 
 	}	
 
-	public String getFrameHeaderStartDecoration() { 		
+	public String getFrameHeaderStartDecoration() {
 		return "<table style='float:left; clear:none'><tr><td>\n" +
 			"<div class='portlet'><div class='portlet-topper' style='position: static; padding-right: 8px;'><table width='100%'><tr>"; // position: static needed for ie7 + liferay 4.3			
 	}	

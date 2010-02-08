@@ -1,8 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: modify empty reference not must show the dialog
-- Fix: 'forwardUri' in a 'nextModule' inside portal
+- The user can resize the column widths for list and collections using the mouse, and the values are persisted by user.
+- Fix: Trying to modify an empty reference shows an error but must not show a dialog.
+- Fix: 'forwardUri' in a 'nextModule' fails inside a portal.
 - commons-beanutils.jar (already included in OX) is exported from the Eclipse OpenXava project.
 
 OpenXava 4m2 (2010-1-26)
