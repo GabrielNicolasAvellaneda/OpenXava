@@ -28,7 +28,7 @@ public class LinkTag extends TagSupport implements IActionTag {
 	public int doStartTag() throws JspException {		
 		try {
 			if (Is.emptyString(getAction())) {  
-				return SKIP_BODY;
+				return EVAL_BODY_INCLUDE; 
 			}
 			hasBody=false;
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
@@ -100,8 +100,10 @@ public class LinkTag extends TagSupport implements IActionTag {
 				pageContext.getOut().print(
 					MetaControllers.getMetaAction(getAction()).getLabel(
 						pageContext.getRequest()));								
-			}			
-			pageContext.getOut().print("</a>");
+			}
+			if (!Is.emptyString(getAction())) {
+				pageContext.getOut().print("</a>");
+			}
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

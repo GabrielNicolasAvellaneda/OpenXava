@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Clicking on any part of the row, for list or collection, goes to the detail.
+- Fix: Filtering by year or month in list mode fails with Oracle.
 - The user can resize the column widths for list and collections using the mouse, and the values are persisted by user.
 - Fix: Trying to modify an empty reference shows an error but must not show a dialog.
 - Fix: 'forwardUri' in a 'nextModule' fails inside a portal.

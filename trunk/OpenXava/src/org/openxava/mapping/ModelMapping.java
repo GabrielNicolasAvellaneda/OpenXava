@@ -226,8 +226,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 				DatabaseMetaData metaData = con.getMetaData();
 				supportsSchemasInDataManipulation = metaData.supportsSchemasInDataManipulation();
 				Collection timeDateFunctions = Strings.toCollection(metaData.getTimeDateFunctions().toUpperCase());
-				supportsYearFunction = timeDateFunctions.contains("YEAR"); 
-				supportsMonthFunction = timeDateFunctions.contains("MONTH");
+				
+				boolean oracle = "Oracle".equalsIgnoreCase(metaData.getDatabaseProductName()); 
+				supportsYearFunction = oracle?false:timeDateFunctions.contains("YEAR"); 
+				supportsMonthFunction = oracle?false:timeDateFunctions.contains("MONTH");
 				databaseMetadataLoaded = true;
 				con.close();				
 			}
