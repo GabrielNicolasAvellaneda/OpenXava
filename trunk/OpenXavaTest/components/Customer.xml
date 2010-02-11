@@ -393,7 +393,7 @@
 	</view>
 	
 	<tab>
-		<row-style style="highlight" property="type" value="steady"/>
+		<row-style style="row-highlight" property="type" value="steady"/>
 		<properties>name, type, seller.name, address.city, seller.level.description, address.state.name</properties>	
 	</tab>
 	
