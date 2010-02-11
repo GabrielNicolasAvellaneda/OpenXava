@@ -282,7 +282,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 <tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
 <%
-	if (!org.openxava.util.Is.emptyString(action)) {
+	if (!org.openxava.util.Is.emptyString(action)) { 
 %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <%
@@ -313,9 +313,11 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		}
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
-	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-	<%=fvalue.replaceAll(" ", "&nbsp;")%>&nbsp;
-	</div>
+		<xava:link action='<%=action%>' argv='<%="row=" + f + actionArgv%>' cssClass='<%=cssStyle%>' cssStyle="text-decoration: none;">
+			<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
+				<%=fvalue.replaceAll(" ", "&nbsp;")%>&nbsp;
+			</div>
+		</xava:link>	
 	</td>
 <%
 	}

@@ -40,7 +40,7 @@
 		</property-view>
 		<collection-view collection="customers" view="SimpleWithDeliveryPlaces">
 			<list-properties>number, name, remarks, relationWithSeller, seller.level.description, type</list-properties>
-			<row-style style="highlight" property="type" value="steady"/>
+			<row-style style="row-highlight" property="type" value="steady"/>
 		</collection-view>
 			
 		<members>number; name; level; regions; customers</members>
