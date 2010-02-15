@@ -42,7 +42,7 @@
 			-->
 						
 			<!-- Linux -->  
-			<property name="schema.path" value="/home/javi/openxava-3b/tomcat/common/lib/postgresql-8.3-604.jdbc3.jar"/>
+			<property name="schema.path" value="/home/javi/java/openxava-3.1.4/tomcat/common/lib/postgresql-8.4-701.jdbc3.jar"/>
 						
 		</ant>
 	</target>	

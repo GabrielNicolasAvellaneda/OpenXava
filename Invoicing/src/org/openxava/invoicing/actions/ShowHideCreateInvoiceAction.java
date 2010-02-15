@@ -9,8 +9,7 @@ public class ShowHideCreateInvoiceAction
 	private boolean show;
 
 	public void execute() throws Exception {
-		// tmp show =  isOrderCreated() && isDelivered() && !hasInvoice();
-		show = true; // tmp
+		show =  isOrderCreated() && isDelivered() && !hasInvoice();		
 	}
 
 	private boolean isOrderCreated() {
