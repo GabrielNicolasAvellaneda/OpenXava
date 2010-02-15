@@ -6,7 +6,11 @@ import org.openxava.model.*;
 
 import static org.openxava.jpa.XPersistence.*;
 
-public class CreateInvoiceFromOrderAction extends ViewBaseAction {
+public class CreateInvoiceFromOrderAction extends ViewBaseAction 
+	implements IHideActionAction // tmp
+{
+	
+	private boolean hideAction = false;
 
 	public void execute() throws Exception {
 		Object oid = getView().getValue("oid");
@@ -23,6 +27,11 @@ public class CreateInvoiceFromOrderAction extends ViewBaseAction {
 		addMessage("invoice_created_from_order", 
 			order.getInvoice().getYear(), 
 			order.getInvoice().getNumber());
+		hideAction = true;
+	}
+
+	public String getActionToHide() {
+		return hideAction?"Order.createInvoice":null;
 	}
 
 }
