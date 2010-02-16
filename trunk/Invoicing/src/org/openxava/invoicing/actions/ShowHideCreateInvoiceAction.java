@@ -4,7 +4,8 @@ import org.openxava.actions.*;
 
 public class ShowHideCreateInvoiceAction 
 	extends OnChangePropertyBaseAction 
-	implements IShowActionAction, IHideActionAction {
+	implements IShowActionAction, 
+		IHideActionAction {
 	
 	private boolean show;
 
