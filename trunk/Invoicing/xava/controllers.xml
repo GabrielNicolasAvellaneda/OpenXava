@@ -43,7 +43,12 @@
 		<action name="createInvoice" mode="detail"
 			class="org.openxava.invoicing.actions.CreateInvoiceFromOrderAction">
 			<use-object name="xava_view"/>
-		</action>			
+		</action>
+		
+		<!-- tmp -->
+		<action name="createInvoiceFromSelectedOrders" mode="list"
+			class="org.openxava.invoicing.actions.CreateInvoiceFromSelectedOrdersAction"/>
+					
 	</controller>
 	
 </controllers>
