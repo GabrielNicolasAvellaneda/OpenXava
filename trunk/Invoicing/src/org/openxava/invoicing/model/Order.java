@@ -84,6 +84,7 @@ public class Order extends CommercialDocument {
 			Invoice invoice = new Invoice();
 			BeanUtils.copyProperties(invoice, this);
 			invoice.setOid(null);		
+			// tmp Hay que poner la fecha de hoy
 			invoice.setDetails(new ArrayList());		
 			XPersistence.getManager().persist(invoice);
 			copyDetailsToInvoice(invoice);
@@ -94,13 +95,19 @@ public class Order extends CommercialDocument {
 		}
 	}
 
-	private void copyDetailsToInvoice(Invoice invoice) throws Exception {
-		for (Detail orderDetail: getDetails()) {
-			Detail invoiceDetail = (Detail) BeanUtils.cloneBean(orderDetail);							
-			invoiceDetail.setOid(null);
-			invoiceDetail.setParent(invoice);
-			XPersistence.getManager().persist(invoiceDetail);
-		}				
+	// tmp private void copyDetailsToInvoice(Invoice invoice) throws Exception { 
+	public void copyDetailsToInvoice(Invoice invoice) { // tmp
+		try {
+			for (Detail orderDetail: getDetails()) {
+				Detail invoiceDetail = (Detail) BeanUtils.cloneBean(orderDetail);							
+				invoiceDetail.setOid(null);
+				invoiceDetail.setParent(invoice);
+				XPersistence.getManager().persist(invoiceDetail);
+			}
+		}
+		catch (Exception ex) { // tmp
+			throw new SystemException("impossible_create_invoice", ex); // tmp Cambiar i18n
+		}		
 	}
 		
 }
