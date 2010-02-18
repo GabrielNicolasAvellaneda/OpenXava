@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 import org.openxava.annotations.*;
+import org.openxava.validators.*;
 
 @Entity
 @Views({
@@ -33,6 +34,24 @@ public class Invoice extends CommercialDocument {
 
 	public void setOrders(Collection<Order> orders) {
 		this.orders = orders;
+	}
+
+	public static Invoice createFromOrders(Collection<Order> orders) throws ValidationException { // tmp
+		Invoice invoice = null;
+		for (Order order: orders) {
+			if (invoice == null) {
+				order.createInvoice();
+				invoice = order.getInvoice();
+			}
+			else {
+				order.setInvoice(invoice);
+				order.copyDetailsToInvoice(invoice);
+			}
+		}
+		if (invoice == null) {
+			throw new ValidationException("No hay pedidos, colega"); // tmp i18n
+		}
+		return invoice;
 	}
 
 }
