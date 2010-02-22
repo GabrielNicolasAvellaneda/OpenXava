@@ -190,5 +190,8 @@ abstract public class CommercialDocument extends Deletable {
 		this.amount = amount;
 	}
 
+	public String toString() { //  tmp
+		return year + "/" + number;
+	}
 	
 }
