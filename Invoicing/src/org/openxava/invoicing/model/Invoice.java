@@ -53,5 +53,5 @@ public class Invoice extends CommercialDocument {
 		}
 		return invoice;
 	}
-
+	
 }

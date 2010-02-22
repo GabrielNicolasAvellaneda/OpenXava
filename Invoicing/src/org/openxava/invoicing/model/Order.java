@@ -84,7 +84,7 @@ public class Order extends CommercialDocument {
 			Invoice invoice = new Invoice();
 			BeanUtils.copyProperties(invoice, this);
 			invoice.setOid(null);		
-			// tmp Hay que poner la fecha de hoy
+			invoice.setDate(new Date()); 			
 			invoice.setDetails(new ArrayList());		
 			XPersistence.getManager().persist(invoice);
 			copyDetailsToInvoice(invoice);
