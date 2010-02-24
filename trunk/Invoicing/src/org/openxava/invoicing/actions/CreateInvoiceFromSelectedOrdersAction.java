@@ -13,10 +13,10 @@ public class CreateInvoiceFromSelectedOrdersAction extends TabBaseAction {
 	public void execute() throws Exception {
 		Collection<Order> orders = getSelectedOrders();
 		Invoice invoice = Invoice.createFromOrders(orders);
-		addMessage("Invoice " + invoice + " created from orders " + orders);
+		addMessage("invoice_created_from_orders", invoice, orders);
 	}
 	
-	private Collection<Order> getSelectedOrders() throws FinderException { // tmp ¿mover a Tab y poner en OX4?
+	private Collection<Order> getSelectedOrders() throws FinderException { 
 		Collection<Order> result = new ArrayList<Order>(); 
 		for (Map key: getTab().getSelectedKeys()) {
 			Order order = (Order) MapFacade.findEntity("Order", key);
@@ -26,3 +26,4 @@ public class CreateInvoiceFromSelectedOrdersAction extends TabBaseAction {
 	}
 
 }
+
