@@ -23,7 +23,7 @@ import org.openxava.jpa.*;
 		"remarks" +
 	"}"	
 )
-abstract public class CommercialDocument extends Deletable { 
+abstract public class CommercialDocument extends Deletable {
 	
 	@Transient
 	private boolean removing = false; 
@@ -190,7 +190,7 @@ abstract public class CommercialDocument extends Deletable {
 		this.amount = amount;
 	}
 
-	public String toString() { //  tmp
+	public String toString() { 
 		return year + "/" + number;
 	}
 	

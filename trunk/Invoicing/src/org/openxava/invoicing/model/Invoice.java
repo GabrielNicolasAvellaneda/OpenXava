@@ -6,7 +6,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 import org.openxava.validators.*;
 
-@Entity
+@Entity 
 @Views({
 	@View( extendsView="super.DEFAULT",
 		members="orders { orders } "
@@ -36,7 +36,7 @@ public class Invoice extends CommercialDocument {
 		this.orders = orders;
 	}
 
-	public static Invoice createFromOrders(Collection<Order> orders) throws ValidationException { // tmp
+	public static Invoice createFromOrders(Collection<Order> orders) throws ValidationException { 
 		Invoice invoice = null;
 		for (Order order: orders) {
 			if (invoice == null) {
@@ -49,7 +49,7 @@ public class Invoice extends CommercialDocument {
 			}
 		}
 		if (invoice == null) {
-			throw new ValidationException("No hay pedidos, colega"); // tmp i18n
+			throw new ValidationException("impossible_create_invoice_orders_not_specified");
 		}
 		return invoice;
 	}
