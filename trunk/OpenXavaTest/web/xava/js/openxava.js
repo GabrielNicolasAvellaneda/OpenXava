@@ -86,7 +86,7 @@ openxava.refreshPage = function(result) {
 			}			
 		}
 		if (openxava.initTheme != null) openxava.initTheme();
-		openxava.initLists(); 
+		openxava.initLists(result.application, result.module);  
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
@@ -180,7 +180,7 @@ openxava.updateRootIds = function(application, moduleFrom, moduleTo) {
 				openxava.decorateId(application, moduleTo, "view_member");	
 }
 
-openxava.initLists = function() {  
+openxava.initLists = function(application, module) {  
 	$(".xava_resizable").resizable({
 		handles: 'e',
 		resize: function(event, ui) { 
@@ -192,6 +192,20 @@ openxava.initLists = function() {
 			Tab.setColumnWidth(event.target.id, $(event.target).width());
 		}
 	});			
+	$('.' + openxava.decorateId(application, module, "tipable")).qtip({     
+		style: { 
+			name: 'light',
+			tip: { corner: 'topMiddle' },      
+			width: { min: 0, max: 600 },
+			border: { width: 1 , radius: 5 }
+		},
+	    position: {
+			target: 'mouse',
+			corner: { target: 'topMiddle', tooltip: 'bottomMiddle' }, 
+			adjust: { screen:true, resize:true }
+		},
+		show: { effect: { length: 800 } }
+	});	
 }
 
 openxava.getDialog = function(application, module) {  
@@ -362,14 +376,6 @@ openxava.manageFilterRow = function(application, module, id, tabObject) {
 		link.title=this.hideFiltersMessage;
 		Tab.setFilterVisible(application, module, true, tabObject);
 	}    
-}
-
-openxava.executeAction = function(application, module, confirmMessage, takesLong, action) { 
-	openxava.executeAction(application, module, confirmMessage, takesLong, action, null, null);
-}
-
-openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv) { 
-	openxava.executeAction(application, module, confirmMessage, takesLong, action, argv, null, null);
 }
 
 openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv, range, alreadyProcessed) {

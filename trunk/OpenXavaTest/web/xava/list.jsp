@@ -7,13 +7,13 @@
 <%@ page import="org.openxava.web.WebEditors" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.web.Ids" %>
-<%@ page import="org.openxava.controller.meta.MetaAction"%>
-<%@ page import="org.openxava.controller.meta.MetaControllers"%>
-<%@page import="org.openxava.web.Actions"%>
+<%@ page import="org.openxava.controller.meta.MetaAction" %>
+<%@ page import="org.openxava.controller.meta.MetaControllers" %>
+<%@ page import="org.openxava.web.Actions" %>
+<%@ page import="org.openxava.util.Users" %>
+<%@ page import="java.util.prefs.Preferences" %>
 
-
-<%@page import="org.openxava.util.Users"%>
-<%@page import="java.util.prefs.Preferences"%><jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+<jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -311,11 +311,12 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		else {
 			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName(), true);
 		}
+		Object title = WebEditors.formatTitle(request, p, model.getValueAt(f, c), errors, view.getViewName(), true); 
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
 		<xava:link action='<%=action%>' argv='<%="row=" + f + actionArgv%>' cssClass='<%=cssStyle%>' cssStyle="text-decoration: none;">
-			<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-				<%=fvalue.replaceAll(" ", "&nbsp;")%>&nbsp;
+			<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
+				<%=fvalue%>&nbsp;
 			</div>
 		</xava:link>	
 	</td>
