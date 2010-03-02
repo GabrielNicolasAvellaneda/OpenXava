@@ -31,7 +31,7 @@ public class SellerTest extends ModuleTestBase {
 		for (int i=0; i<c; i++) {
 			String type = getValueInCollection("customers", i, "type");			
 			if ("Steady".equals(type)) {				
-				assertRowStyleInCollection("customers", i, "highlight");				
+				assertRowStyleInCollection("customers", i, "row-highlight");				
 				found = true;
 			}
 			else {
@@ -188,8 +188,8 @@ public class SellerTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testEntityReferenceCollections() throws Exception {
-		createCustomers();
+	public void testEntityReferenceCollections() throws Exception { 		
+		createCustomers(); 
 		createSeller66();
 		createSeller67();
 		verifySeller66();

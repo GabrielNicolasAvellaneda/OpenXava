@@ -13,12 +13,6 @@ public class CarrierWithCalculatedFellowsTest extends ModuleTestBase {
 		super(testName, "CarrierWithCalculatedFellows");		
 	}
 	
-	public void testMemoFormatterInListOfCalculatedCollection() throws Exception {
-		execute("List.viewDetail", "row=0");
-		assertValueInCollection("fellowCarriersCalculated", 0, 2, "compañero de uno, de tres y de cuatro. Pero, por a...");
-		assertValueInCollection("fellowCarriersCalculated", 1, 2, "no es muy amigable");
-	}
-	
 	public void testDefaultListActionsForCollectionsDoesNotApplyToCalculatedCollections_emptyCollectionActionIsNotShown() throws Exception {
 		execute("CRUD.new");
 		assertNoErrors();

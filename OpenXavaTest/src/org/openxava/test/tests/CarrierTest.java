@@ -189,7 +189,7 @@ public class CarrierTest extends CarrierTestBase {
 		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); 
 		assertNoErrors();
 		assertDialog();
-		assertValue("description", "CAMIONES PEQUEÑOS");
+		assertValue("description", "CAMIONES PEQUEÃ‘OS");
 	}
 	
 	
@@ -214,8 +214,9 @@ public class CarrierTest extends CarrierTestBase {
 		assertValue("Warehouse", "name", "NEW WAREHOUSE");
 		assertNoAction("Mode.list"); 	// Inside a dialog mode actions are disable
 		
-		execute("NewCreation.cancel");
+		execute("NewCreation.cancel");		
 		execute("WarehouseReference.createNewNoDialog");
+		
 		assertNoDialog(); 		
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
@@ -223,7 +224,6 @@ public class CarrierTest extends CarrierTestBase {
 		assertValue("Warehouse", "name", "NEW WAREHOUSE");
 		assertNoAction("Mode.list"); 	// When navigate to another view actions are disable		
 	}
-	
 	
 	public void testDeleteUsingBeforeReferenceSearch_dialogLabel() throws Exception {
 		assertListNotEmpty();
