@@ -101,11 +101,32 @@ public class WebEditors {
 		}
 		return result.toString();
 	}
+	
 
 	/** 
 	 * @return If has a multiple converter return a array of string else return a string
 	 */
 	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException { 
+		Object result = formatToStringOrArrayImpl(request, p, object, errors, viewName, fromList);
+		if (fromList && result != null && !hasMarkup(result)) {
+			return result.toString().replaceAll(" ", "&nbsp;"); 
+		}
+		return result; 
+	}
+	
+	public static Object formatTitle(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException { 
+		Object result = formatToStringOrArrayImpl(request, p, object, errors, viewName, fromList);
+		if (result != null && hasMarkup(result)) {
+			return p.getLabel(); 
+		}
+		return result; 		
+	}
+
+	private static boolean hasMarkup(Object result) { 
+		return result.toString().contains("<") && result.toString().contains(">");
+	}
+
+	public static Object formatToStringOrArrayImpl(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException {  
 		try {
 			MetaEditor ed = getMetaEditorFor(p, viewName); 			
 			if (fromList && !Is.empty(ed.getListFormatterClassName())){

@@ -18,7 +18,6 @@ import org.openxava.util.*;
 import org.openxava.view.meta.*;
 import org.openxava.web.*;
 import org.openxava.web.style.*;
-import org.w3c.dom.*;
 import org.xml.sax.*;
 
 import com.gargoylesoftware.htmlunit.*;
@@ -205,14 +204,14 @@ public class ModuleTestBase extends TestCase {
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			try {							
-				HtmlSelect select = getForm().getSelectByName(id);
+				HtmlSelect select = getSelectByName(id); 
 				assertNotDisable(name, select);
 				select.setSelectedAttribute(value, true);
 				select.blur(); 
 				refreshNeeded = !Is.emptyString(select.getOnChangeAttribute());
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
-				HtmlTextArea textArea = getForm().getTextAreaByName(id);
+				HtmlTextArea textArea = getTextAreaByName(id); 
 				assertNotDisable(name, textArea);
 				textArea.setText(value);
 				refreshNeeded = !Is.emptyString(textArea.getOnChangeAttribute());
@@ -279,19 +278,19 @@ public class ModuleTestBase extends TestCase {
 			}			
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
-			try {
-				HtmlSelect select = getForm().getSelectByName(id);				
+			try {				
+				HtmlSelect select = getSelectByName(id); 
 				return ((HtmlOption )select.getSelectedOptions().get(0)).getValueAttribute();
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
-				return getForm().getTextAreaByName(id).getText();
+				return getTextAreaByName(id).getText(); 
 			}
 		}
 	}
 	
 	/*
-	 * This is needed because a bug of HtmlUnit 2.6, where to get values from
-	 * form fails in some circumstances. 
+	 * This is needed because a bug of HtmlUnit 2.6/2.7, where to get values from
+	 * form fails in some circumstances. Though currently OX uses HtmlUnit 2.5
 	 */
 	private HtmlInput getInputByName(String name) { 
 		HtmlElement el = page.getElementByName(name);
@@ -302,6 +301,36 @@ public class ModuleTestBase extends TestCase {
 			throw new com.gargoylesoftware.htmlunit.ElementNotFoundException("input", "name", name);
 		}
 	}
+	
+	/*
+	 * This is needed because a bug of HtmlUnit 2.6/2.7, where to get values from
+	 * form fails in some circumstances. Though currently OX uses HtmlUnit 2.5
+	 */
+	private HtmlSelect getSelectByName(String name) {  
+		HtmlElement el = page.getElementByName(name);
+		if (el instanceof HtmlSelect) {
+			return (HtmlSelect) el;
+		}
+		else {
+			throw new com.gargoylesoftware.htmlunit.ElementNotFoundException("select", "name", name);
+		}
+	}
+	
+	/*
+	 * This is needed because a bug of HtmlUnit 2.6/2.7, where to get values from
+	 * form fails in some circumstances. Though currently OX uses HtmlUnit 2.5
+	 */
+	private HtmlTextArea getTextAreaByName(String name) {  
+		HtmlElement el = page.getElementByName(name);
+		if (el instanceof HtmlTextArea) {
+			return (HtmlTextArea) el;
+		}
+		else {
+			throw new com.gargoylesoftware.htmlunit.ElementNotFoundException("text area", "name", name);
+		}
+	}
+	
+	
 
 	private String [] getFormValues(String name) {		
 		List elements = getForm().getInputsByName(name);
@@ -411,7 +440,7 @@ public class ModuleTestBase extends TestCase {
 	protected void resetModule() throws Exception {		
 		client = new WebClient(getBrowserVersion());		
 		client.setThrowExceptionOnFailingStatusCode(false); // Because some .js are missing in Liferay 4.1
-		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3		
+		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3
 		if (getLocale() != null) {
 			client.addRequestHeader("Accept-Language", getLocale());			
 			Locale.setDefault(new Locale(getLocale(), ""));
@@ -431,7 +460,7 @@ public class ModuleTestBase extends TestCase {
 	
 	private BrowserVersion getBrowserVersion() {
 		if (browserVersion == null) {
-			String browser = getProperty("browser", "firefox2"); // FF2 because FF3 in HtmlUnit 2.5 has a bug with setFocus()
+			String browser = getProperty("browser", "firefox2"); // FF2 because FF3 in HtmlUnit 2.5 has a bug with setFocus()			
 			if ("firefox3".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_3;
 			else if ("firefox2".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_2;
 			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7;
@@ -506,32 +535,31 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * Execute the action clicking in the link or button.
 	 */
-	protected void execute(String action) throws Exception { 
-		// Before click in the buttom, we blur from the current element
+	protected void execute(String action) throws Exception {
+		// Before click in the buttom, we blur from the current element		
 		HtmlElement focusedElement = page.getFocusedElement();
-		if (focusedElement != null) {
+		if (focusedElement != null) {			
 			focusedElement.blur();
 		}
-		
-		throwChangeOfLastNotNotifiedProperty();
+				
+		throwChangeOfLastNotNotifiedProperty();		
 		if (page.getElementsByName(Ids.decorate(application, module, ACTION_PREFIX + "." + action)).size() > 1) { // Action of list/collection
 			execute(action, null);
 			return;
 		}	
 
-		Element element  = getElementById(action);		
-		if (element instanceof ClickableElement) {			
-			Page newPage = ((ClickableElement) element).click();
-			if (newPage instanceof HtmlPage) {
-				page = (HtmlPage) newPage;			
-			}
-			resetForm(); 
+		HtmlElement element  = getElementById(action);
+		
+		if (element instanceof HtmlAnchor) {
+			// Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances
+			page.executeJavaScript(((HtmlAnchor)element).getHrefAttribute()); 
 		}
 		else {
-			fail(XavaResources.getString("clickable_not_found", decorateId(action)));   
+			element.click();
 		}
 		
-		restorePage();
+		resetForm(); 
+		restorePage(); 
 	}
 	
 	private void throwChangeOfLastNotNotifiedProperty() throws Exception {		
@@ -543,7 +571,7 @@ public class ModuleTestBase extends TestCase {
 	}
 										 	
 	private void waitUntilPageIsLoaded() throws Exception { 		
-		client.waitForBackgroundJavaScriptStartingBefore(10000);		
+		client.waitForBackgroundJavaScriptStartingBefore(10000); 
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
@@ -579,7 +607,7 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void execute(String action, String arguments) throws Exception {
 		throwChangeOfLastNotNotifiedProperty();
-		ClickableElement element = null;
+		HtmlElement element = null;
 		String moduleMarkForAnchor = "executeAction('" + application + "', '" + module + "'";		
 		for (Iterator it = page.getAnchors().iterator(); it.hasNext(); ) {			
 			HtmlAnchor anchor = (HtmlAnchor) it.next();			
@@ -599,7 +627,7 @@ public class ModuleTestBase extends TestCase {
 					element = anchor;				
 				}				
 			}
-		}
+		}		
 		if (arguments == null && element == null) { // We try if it is a button
 			String moduleMarkForButton = "executeAction(\"" + application + "\", \"" + module + "\"";
 			HtmlElement inputElement = page.getElementById(decorateId(action));
@@ -614,14 +642,14 @@ public class ModuleTestBase extends TestCase {
 			}			
 		}
 		if (element != null) {
-			Page newPage = element.click();
-			if (newPage instanceof HtmlPage) {
-				resetForm();
-				page = (HtmlPage) client.getWebWindows().get(0).getEnclosedPage(); 
+			if (element instanceof HtmlAnchor) {
+				// Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances
+				page.executeJavaScript(((HtmlAnchor)element).getHrefAttribute()); 
 			}
-			else {
-				page = null;
+			else {			
+				element.click();
 			}
+			resetForm(); 
 		}
 		else {
 			if (isReferenceActionWithObsoleteStyle(action, arguments)) {		
@@ -632,15 +660,12 @@ public class ModuleTestBase extends TestCase {
 			fail(XavaResources.getString("clickable_not_found", action));
 		}			
 
-		restorePage();		
+		restorePage();				
 	}
 	
 	private void restorePage() throws Exception {
-		List windows = client.getWebWindows();		
-		if (windows.size() > 1) {
-			page = (HtmlPage) ((WebWindow) windows.get(0)).getEnclosedPage();
-			refreshPage();
-		}
+		Page newPage = client.getWebWindows().get(0).getEnclosedPage();
+		page = newPage instanceof HtmlPage?(HtmlPage) newPage:null;
 	}
 	
 	private String refineArgumentsForReferenceActionWithObsoleteStyle(String arguments) {
@@ -780,7 +805,7 @@ public class ModuleTestBase extends TestCase {
 	 * It is not very advisable because this will cause dependency
 	 * to HTML and it will be difficult migrate to another presentation technology.
 	 */
-	protected String getHtml() throws IOException {
+	protected String getHtml() throws Exception {
 		return page.asXml()	
 			.replaceAll("&apos;", "'") 
 			.replaceAll("&lt;", "<")
@@ -940,7 +965,7 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(XavaResources.getString("action_found_in_ui", action), !getActions().contains(action));
 	}
 	
-	private Collection getActions() throws Exception {
+	private Collection getActions() throws Exception { 
 		String dialog = getTopDialog();
 		if (dialog == null) return getActions(getElementById("core"));
 		return getActions(getElementById(dialog));		
@@ -1273,8 +1298,8 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 	
-	private HtmlInput getCheckable(String id, int row) {
-		return (HtmlInput) getForm().getInputByValue(id + ":" + row); 
+	private HtmlInput getCheckable(String id, int row) { 
+		return (HtmlInput) getForm().getInputByValue(id + ":" + row);
 	}
 	
 	private HtmlInput getCheckable(String value) {
@@ -1287,8 +1312,9 @@ public class ModuleTestBase extends TestCase {
 			log.warn(XavaResources.getString("row_already_selected"));
 		}
 		else{
-			input.click();
-			waitUntilPageIsLoaded();	
+			input.click();			
+			waitUntilPageIsLoaded();			
+			if (!input.isChecked()) input.setChecked(true); // Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances
 		}
 	}
 	
@@ -1297,6 +1323,7 @@ public class ModuleTestBase extends TestCase {
 			HtmlInput input = getForm().getInputByValue(id + ":" + value); 
 			input.click();
 			waitUntilPageIsLoaded();
+			if (!input.isChecked()) input.setChecked(true); // Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString("must_exist", id));
@@ -1308,6 +1335,7 @@ public class ModuleTestBase extends TestCase {
 		if (input.isChecked()){
 			input.click();
 			waitUntilPageIsLoaded();
+			if (!input.isChecked()) input.setChecked(false); // Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances
 		}
 		else{
 			log.warn(XavaResources.getString("row_already_unselected"));
@@ -1557,8 +1585,8 @@ public class ModuleTestBase extends TestCase {
 		return metaModule;
 	}
 
-	protected void assertValidValues(String name, String [][] values) throws Exception {
-		Collection options = getForm().getSelectByName(decorateId(name)).getOptions(); 
+	protected void assertValidValues(String name, String [][] values) throws Exception { 
+		Collection options = getSelectByName(decorateId(name)).getOptions();
 		assertEquals(XavaResources.getString("unexpected_valid_values", name), values.length, options.size());
 		int i=0;
 		for (Iterator it = options.iterator(); it.hasNext(); i++) {

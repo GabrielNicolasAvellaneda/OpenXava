@@ -748,7 +748,7 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 	
-	private void setConditionValuesImpl(String [] values) throws XavaException {	
+	private void setConditionValuesImpl(String [] values) throws XavaException {
 		if (Arrays.equals(this.conditionValues, values)) return;		
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
 		this.conditionValues = values;				

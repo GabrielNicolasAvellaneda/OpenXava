@@ -110,7 +110,8 @@ Module.setStyle(style);
 		}       
 	</script>				
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js"></script>				
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js"></script>	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.qtip.js"></script>	
 	<script type="text/javascript">
 		$ = jQuery;
 		if (typeof portalJQuery != "undefined") {  

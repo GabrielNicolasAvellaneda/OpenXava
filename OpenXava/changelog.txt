@@ -1,8 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- Tooltip for cells in list and collections. 	
+- Removed MemoFormatter for list mode. The new tooltip and resizing columns are better options.
+- Russian translation of documentation improved.
+- Style 'highlight' from openxava.css renamed to 'row-highlight'.
 - Clicking on any part of the row, for list or collection, goes to the detail.
-- Fix: Filtering by year or month in list mode fails with Oracle.
+- Fix: Filtering by year or month in list mode fails with Oracle and latest PostgreSQL versions.
 - The user can resize the column widths for list and collections using the mouse, and the values are persisted by user.
 - Fix: Trying to modify an empty reference shows an error but must not show a dialog.
 - Fix: 'forwardUri' in a 'nextModule' fails inside a portal.

@@ -202,6 +202,7 @@ public class View implements java.io.Serializable {
 	}	
 			
 	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
+		if (getModelName() == null) return Collections.EMPTY_LIST; 
 		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());
 		if (isRepresentsAggregate()) { 			
 			metaMembers = extractAggregateRecursiveReference(metaMembers);					
@@ -803,7 +804,7 @@ public class View implements java.io.Serializable {
 		try {
 			if (isCollectionCalculated() || !isDefaultListActionsForCollectionsIncluded()) return Collections.EMPTY_LIST; 
 			if (defaultListActionsForCollections == null) {			
-					MetaController controller = MetaControllers.getMetaController("DefaultListActionsForCollections"); // Si no existe: ¿Advertencia?
+					MetaController controller = MetaControllers.getMetaController("DefaultListActionsForCollections"); // Si no existe: ï¿½Advertencia?
 					Collection result = new ArrayList();
 					for (Iterator it = controller.getAllMetaActions().iterator(); it.hasNext();) {
 						MetaAction action = (MetaAction) it.next();
