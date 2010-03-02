@@ -280,7 +280,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValue("address.street", "C/ DOCTOR PESSET");
 	}
 	
-	public void testAddingToManyToManyCollectionFromANewObject() throws Exception { 
+	public void testAddingToManyToManyCollectionFromANewObject() throws Exception {
 		execute("CRUD.new");
 		
 		// The minimum data to save a customer
@@ -307,7 +307,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public void testManyToManyCollection() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
-		assertCollectionRowCount("states", 0);
+		assertCollectionRowCount("states", 0); // tmp Falla
 		
 		assertAddingStates();
 		
@@ -356,9 +356,8 @@ public class CustomerWithSectionTest extends CustomerTest {
 			setValue("state.id", "CA");
 			assertValue("state.name", "CALIFORNIA");
 			execute("Collection.save");			
-		}
-		
-		assertCollectionRowCount("states", 2);
+		}		
+		assertCollectionRowCount("states", 2); 
 		assertValueInCollection("states", 0, 0, "AK");
 		assertValueInCollection("states", 0, 1, "ALASKA");		
 		assertValueInCollection("states", 1, 0, "CA");
@@ -580,7 +579,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		for (int i=0; i<c; i++) {
 			String type = getValueInList(i, "type");
 			if ("Steady".equals(type)) {				
-				assertRowStyleInList(i, "highlight");				
+				assertRowStyleInList(i, "row-highlight");				
 				found = true;
 			}
 			else { 

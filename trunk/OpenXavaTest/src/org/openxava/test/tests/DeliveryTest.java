@@ -64,7 +64,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertDialog();
 		
 		execute("Reference.createNew", "model=Customer,keyProperty=customer.number");
-		assertNotExists("vehicle"); 
+		assertNotExists("vehicle");
 		assertNotExists("customerDiscount"); 
 		assertExists("website"); 
 		assertDialog();
@@ -86,15 +86,16 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoDialog();
 	}
 	
+	
 	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception { 
 		execute("CRUD.new");
-		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");
+		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");		
 		assertDialog();
 		
 		setValue("year", "2002");
-		setValue("number", "1");
-		execute("Reference.search", "keyProperty=customer.number");
-		execute("ReferenceSearch.choose", "row=1");
+		setValue("number", "1");		
+		execute("Reference.search", "keyProperty=customer.number");		
+		execute("ReferenceSearch.choose", "row=1"); 
 		assertValue("customer.name", "Juanillo");
 		setValue("customer.number", "1");
 		assertValue("customer.name", "Javi"); 
@@ -679,7 +680,7 @@ public class DeliveryTest extends ModuleTestBase {
 		
 		// To list mode and order
 		execute("Mode.list");
-		assertActions(listActions);
+		assertActions(listActions); 
 		execute("List.orderBy", "property=invoice.year"); // ascending
 		execute("List.orderBy", "property=invoice.year"); // descending
 		assertNoErrors();
@@ -777,7 +778,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("deliveredBy", usesAnnotatedPOJO()?"0":"1");
 		setValue("employee", "JUNIT EMPLOYEE");		
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 				
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
@@ -786,7 +787,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "63");
 		setValue("description", "JUNIT BY CARRIER");
 		setValue("deliveredBy", usesAnnotatedPOJO()?"1":"2");
-		setValue("carrier.number", "1");		
+		setValue("carrier.number", "1"); 		
 		execute("CRUD.save");
 		assertNoErrors();
 				
@@ -803,7 +804,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("carrier.number", "1");
 				
 		execute("CRUD.new");
-		setValue("invoice.year", "2002");
+		setValue("invoice.year", "2002"); 
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "62");
@@ -881,12 +882,12 @@ public class DeliveryTest extends ModuleTestBase {
 		// Verifying if date property is well in list 
 		// Only works if there are lest than 11 object (because see in first page)		
 		execute("Mode.list");
-		assertActions(listActions);
+		assertActions(listActions);  
 		assertNoErrors();
 		int quantity = getListRowCount();
 		boolean found = false;
 		int i = 0;
-		for (i = 0; i < quantity; i++) {
+		for (i = 0; i < quantity; i++) { 
 			String number = getValueInList(i, "number");						
 			if ("66".equals(number)) {				
 				assertValueInList(i, "date", "2/22/97");
@@ -927,8 +928,8 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("transportMode", "");
 		assertValue("driverType", "DRIVERX");	
 	}
-	
-	public void testOnChangeWithQualifiedProperty() throws Exception { 
+
+	public void testOnChangeWithQualifiedProperty() throws Exception {  
 		execute("CRUD.new");		
 		// Left from field
 		assertValue("remarks", "No remarks");
@@ -944,20 +945,22 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "2");
 		assertValue("remarks", "No remarks");
 		
-		// Searching with reference search button
+		// Searching with reference search button		
 		setValue("remarks", "");
 		searchInvoiceWithList("2004", "2");
 		assertValue("invoice.year", "2004");		
 		assertValue("invoice.number", "2"); 
 		assertValue("remarks", "No remarks");
 		setValue("remarks", "");
+		
 		searchInvoiceWithList("2002", "1");
 		assertValue("invoice.year", "2002");		
 		assertValue("invoice.number", "1"); 
 		assertValue("remarks", "First invoice of year");
 		setValue("remarks", "");
+		
 		searchInvoiceWithList("2004", "2");
-		assertValue("invoice.year", "2004");		
+		assertValue("invoice.year", "2004"); 		
 		assertValue("invoice.number", "2"); 
 		assertValue("remarks", "No remarks");							
 	}
@@ -967,7 +970,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("remarks", "No remarks");
 		setValue("deliveredBy", usesAnnotatedPOJO()?"1":"2");
 		assertNoMessages();
-		setValue("carrier.number", "3");
+		setValue("carrier.number", "3"); 
 		assertMessagesCount(1);
 		assertMessage("Carrier changed");		
 		assertValue("remarks", "The carrier is 3");				
@@ -1044,7 +1047,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoEditable("advice"); // in section				
 	}
 	
-	public void testValidValuesInList() throws Exception {
+	public void testValidValuesInList() throws Exception { 
 		int quantity = getListRowCount();
 		assertTrue("For this test is needed at least one created delivery", quantity > 0);
 		Collection values = new ArrayList();
@@ -1061,7 +1064,7 @@ public class DeliveryTest extends ModuleTestBase {
 			}
 			fail("Only the next values are valid: " + values);
 		}
-		assertTrue("For this test is need at least one delivery with value in 'distance' property", thereIsOne);
+		assertTrue("For this test is need at least one delivery with value in 'distance' property", thereIsOne); 
 	}
 	 
 	public void testSetValueAgainstPropertiesOfSectionsHiddenAndShowed() throws Exception {
@@ -1088,8 +1091,9 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("Reference.search", "keyProperty=xava.Delivery.invoice.number");
 		setConditionValues(
 			new String [] { year, number, "", "true" }
-		);
-		execute("List.filter");
+		);		
+		execute("List.filter");		
+		assertListRowCount(1); 
 		execute("ReferenceSearch.choose", "row=0");							
 	}
 	

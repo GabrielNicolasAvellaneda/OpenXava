@@ -30,7 +30,7 @@ public class ServiceTest extends ModuleTestBase {
 		setValue("family", "1");		
 		setValue("detail.subfamily", "1");
 		setValue("detail.type", "2"); // Assuming that 2 exists
-		execute("Collection.new", "viewObject=xava_view_section0_additionalDetails");
+		execute("Collection.new", "viewObject=xava_view_section0_additionalDetails");		
 		setValue("subfamily", "1");
 		setValue("type.number", "2");
 		execute("Collection.save");		
