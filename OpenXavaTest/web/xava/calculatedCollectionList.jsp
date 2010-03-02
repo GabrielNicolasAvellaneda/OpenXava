@@ -110,10 +110,11 @@ while (itAggregates.hasNext()) {
 		else {
 			fvalue = WebEditors.format(request, p, value, errors, view.getViewName(), true);	
 		}
+		Object title = WebEditors.formatTitle(request, p, value, errors, view.getViewName(), true); 
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">	
 	<xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'>
-	<div class="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
+	<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
 	<%=fvalue.replaceAll(" ", "&nbsp;")%>&nbsp;
 	</div>
 	</xava:link>
