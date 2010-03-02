@@ -28,7 +28,7 @@ import org.openxava.validators.*;
 	@Tab(name="Deleted", baseCondition = "deleted = true")
 })
 public class Order extends CommercialDocument {
-	
+		
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
 	@OnChange(ShowHideCreateInvoiceAction.class)
@@ -95,8 +95,7 @@ public class Order extends CommercialDocument {
 		}
 	}
 
-	// tmp private void copyDetailsToInvoice(Invoice invoice) throws Exception { 
-	public void copyDetailsToInvoice(Invoice invoice) { // tmp
+	public void copyDetailsToInvoice(Invoice invoice) { 	 
 		try {
 			for (Detail orderDetail: getDetails()) {
 				Detail invoiceDetail = (Detail) BeanUtils.cloneBean(orderDetail);							
@@ -105,9 +104,10 @@ public class Order extends CommercialDocument {
 				XPersistence.getManager().persist(invoiceDetail);
 			}
 		}
-		catch (Exception ex) { // tmp
-			throw new SystemException("impossible_create_invoice", ex); // tmp Cambiar i18n
+		catch (Exception ex) { 
+			throw new SystemException("impossible_copy_details_to_invoice", ex); 
 		}		
 	}
+
 		
 }
