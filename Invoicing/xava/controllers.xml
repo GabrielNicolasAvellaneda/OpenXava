@@ -4,7 +4,8 @@
 
 <controllers>
  
-	<env-var name="XAVA_SEARCH_ACTION" value="Invoicing.searchExcludingDeleted"/>
+	<env-var name="XAVA_SEARCH_ACTION" value="Invoicing.searchExcludingDeleted"/>	
+	<object name="invoicing_currentInvoiceKey" class="java.util.Map" scope="global"/>
 
 	<controller name="Invoicing">
 	
@@ -45,9 +46,34 @@
 			<use-object name="xava_view"/>
 		</action>
 			
+		<!-- tmp use-object -->	
 		<action name="createInvoiceFromSelectedOrders" mode="list"
-			class="org.openxava.invoicing.actions.CreateInvoiceFromSelectedOrdersAction"/>
+			class="org.openxava.invoicing.actions.CreateInvoiceFromSelectedOrdersAction">
+			<use-object name="invoicing_currentInvoiceKey"/>
+		</action>	
 					
 	</controller>
 	
+	<controller name="CurrentInvoiceEdition">
+	
+		<action name="load" 			 
+			class="org.openxava.invoicing.actions.LoadCurrentInvoiceAction"
+			hidden="true"			
+			on-init="true">			
+			<use-object name="xava_view"/>
+			<use-object name="invoicing_currentInvoiceKey"/>
+		</action>	
+	
+	
+		<action name="save" 
+			class="org.openxava.invoicing.actions.SaveInvoiceAction"			
+			keystroke="Control S">			
+			<use-object name="xava_view"/>
+		</action>	
+	
+		<action name="return" 
+			class="org.openxava.actions.ReturnPreviousModuleAction"/>
+			
+	</controller>
+		
 </controllers>
