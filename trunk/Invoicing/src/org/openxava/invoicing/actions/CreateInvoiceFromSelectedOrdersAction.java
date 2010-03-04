@@ -8,14 +8,28 @@ import org.openxava.actions.*;
 import org.openxava.invoicing.model.*;
 import org.openxava.model.*;
 
-public class CreateInvoiceFromSelectedOrdersAction extends TabBaseAction {
+public class CreateInvoiceFromSelectedOrdersAction 
+	extends TabBaseAction	
+	implements IChangeModuleAction
+{
+		
+	private Map currentInvoiceKey;
 
 	public void execute() throws Exception {
 		Collection<Order> orders = getSelectedOrders();
 		Invoice invoice = Invoice.createFromOrders(orders);
 		addMessage("invoice_created_from_orders", invoice, orders);
+		// tmp ini
+		setCurrentInvoiceKey(toKey(invoice));
+		// tmp fin
 	}
 	
+	private Map toKey(Invoice invoice) { // tmp
+		Map key = new HashMap();
+		key.put("oid",invoice.getOid());
+		return key;
+	}
+
 	private Collection<Order> getSelectedOrders() throws FinderException { 
 		Collection<Order> result = new ArrayList<Order>(); 
 		for (Map key: getTab().getSelectedKeys()) {
@@ -24,6 +38,22 @@ public class CreateInvoiceFromSelectedOrdersAction extends TabBaseAction {
 		}
 		return result;
 	}
+
+	public void setCurrentInvoiceKey(Map currentInvoiceKey) {
+		this.currentInvoiceKey = currentInvoiceKey;
+	}
+
+	public Map getCurrentInvoiceKey() {
+		return currentInvoiceKey;
+	}
+	
+	public String getNextModule() {
+		return "CurrentInvoiceEdition";
+	}
+
+	public boolean hasReinitNextModule() { 
+		return true;
+	}	
 
 }
 
