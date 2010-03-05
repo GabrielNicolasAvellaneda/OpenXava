@@ -1,21 +1,55 @@
 package org.openxava.model.meta;
 
-import java.math.*;
-import java.rmi.*;
-import java.sql.*;
-import java.text.*;
-import java.util.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
-import javax.servlet.*;
+import javax.servlet.ServletRequest;
 
-import org.apache.commons.logging.*;
-import org.openxava.calculators.*;
-import org.openxava.mapping.*;
-import org.openxava.model.*;
-import org.openxava.util.*;
-import org.openxava.util.meta.*;
-import org.openxava.validators.*;
-import org.openxava.validators.meta.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.calculators.ICalculator;
+import org.openxava.calculators.IHibernateIdGeneratorCalculator;
+import org.openxava.component.MetaComponent;
+import org.openxava.mapping.ModelMapping;
+import org.openxava.mapping.PropertyMapping;
+import org.openxava.model.IModel;
+import org.openxava.tab.meta.MetaTab;
+import org.openxava.util.ElementNotFoundException;
+import org.openxava.util.FieldComparator;
+import org.openxava.util.Is;
+import org.openxava.util.Labels;
+import org.openxava.util.Locales;
+import org.openxava.util.Messages;
+import org.openxava.util.Objects;
+import org.openxava.util.Primitives;
+import org.openxava.util.PropertiesManager;
+import org.openxava.util.Strings;
+import org.openxava.util.XavaException;
+import org.openxava.util.XavaResources;
+import org.openxava.util.meta.MetaSet;
+import org.openxava.util.meta.MetaSetsContainer;
+import org.openxava.validators.IPropertyValidator;
+import org.openxava.validators.TolerantValidator;
+import org.openxava.validators.meta.MetaValidator;
+import org.openxava.validators.meta.MetaValidatorFor;
+import org.openxava.validators.meta.MetaValidators;
+import org.openxava.view.meta.MetaDescriptionsList;
+import org.openxava.view.meta.MetaView;
 
 /**
  * @author Javier Paniza; modified by Radoslaw OStrzycki, Newitech Sp. z o.o.
@@ -49,8 +83,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private PropertyMapping mapping;
 	private DateFormat timeFormat = new SimpleDateFormat("HH:mm"); // 24 hours for all locales
 	private boolean _transient;
-	
-	
+	private String editorURLDescriptionsList = "";
 		
 	public void addValidValue(Object validValue) {
 		getValidValues().add(validValue);
@@ -1069,5 +1102,48 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	public void setSearchKey(boolean searchKey) {
 		this.searchKey = searchKey;
 	}
+	
+	public String getEditorURLDescriptionsList(String tabModelName, String propertyKey, int index, String prefix){
+		if (!Is.empty(editorURLDescriptionsList)) return editorURLDescriptionsList;
+		if (getQualifiedName().indexOf('.') < 0) return "";	
+		
+		tabModelName = tabModelName.substring(tabModelName.lastIndexOf('.') + 1);
+		MetaComponent metaComponent = MetaComponent.get(tabModelName);
+		String reference = getQualifiedName().replace("." + getName(), "");
+		MetaReference metaReference = metaComponent.getMetaEntity().getMetaReference(reference);	
+		
+		Collection<MetaView> metaViews = metaComponent.getMetaEntity().getMetaViews();
+		for (MetaView metaView : metaViews){
+			MetaDescriptionsList metaDescriptionsList = metaView.getMetaDescriptionList(metaReference);
+			if (metaDescriptionsList == null) continue;
 
+			String descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertiesNames();
+			if (Is.empty(descriptionPropertiesNames)) descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertyName();
+			
+			if (descriptionPropertiesNames.contains(getName())) {
+				MetaTab metaTab = metaComponent.getMetaTab();
+				String filterArg = "";
+				if (metaTab.hasFilter()) filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
+
+				editorURLDescriptionsList = "comparatorsDescriptionsList.jsp"
+					+ "?propertyKey=" + propertyKey
+					+ "&index=" + index
+					+ "&prefix=" + prefix
+					+ "&editable=true" 
+					+ "&model=" + metaReference.getReferencedModelName()
+					+ "&keyProperty=" + metaReference.getKeyProperty(propertyKey)
+					+ "&keyProperties=" + metaReference.getKeyProperties()
+					+ "&descriptionProperty=" + metaDescriptionsList.getDescriptionPropertyName()
+					+ "&descriptionProperties=" + metaDescriptionsList.getDescriptionPropertiesNames()
+					+ "&parameterValuesProperties=" + metaReference.getParameterValuesPropertiesInDescriptionsList(metaView)
+					+ "&condition=" + metaDescriptionsList.getCondition()
+					+ "&orderByKey=" + metaDescriptionsList.isOrderByKey()
+					+ "&order=" + metaDescriptionsList.getOrder()
+					+ filterArg;
+				return editorURLDescriptionsList;
+			}
+		}
+		return "";
+	}
+	
 }

@@ -2920,33 +2920,8 @@ public class View implements java.io.Serializable {
 		return depends;
 	}
 	
-	public String getParameterValuesPropertiesInDescriptionsList(MetaReference ref) throws XavaException {		
-		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);		
-		if (descriptionsList == null) return "";
-		String depends = descriptionsList.getDepends();		
-		if (Is.emptyString(depends)) return "";
-		StringTokenizer st = new StringTokenizer(depends, ",");
-		StringBuffer result = new StringBuffer();
-		while (st.hasMoreTokens()) {
-			String member = st.nextToken().trim();
-			try {
-				String reference = member.startsWith("this.")?member.substring(5):member; 
-				MetaModel fromIDepends = getMetaModel().getMetaReference(reference).getMetaModelReferenced();
-				for (Iterator it=fromIDepends.getKeyPropertiesNames().iterator(); it.hasNext();) {
-					String key = (String) it.next();
-					if (result.length() > 0) result.append(',');
-					result.append(member);
-					result.append('.');
-					result.append(key);
-				}
-			}
-			catch (ElementNotFoundException ex) {
-				// not reference, it is simple property
-				if (result.length() > 0) result.append(',');
-				result.append(member);			
-			}			
-		}		
-		return result.toString();
+	public String getParameterValuesPropertiesInDescriptionsList(MetaReference ref) throws XavaException {
+		return ref.getParameterValuesPropertiesInDescriptionsList(getMetaView());
 	}	
 
 	public String getConditionInDescriptionsList(MetaReference ref) throws XavaException {		
