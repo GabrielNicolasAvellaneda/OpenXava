@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- References as combos to filter in list mode
 - Tooltip for cells in list and collections. 	
 - Removed MemoFormatter for list mode. The new tooltip and resizing columns are better options.
 - Russian translation of documentation improved.

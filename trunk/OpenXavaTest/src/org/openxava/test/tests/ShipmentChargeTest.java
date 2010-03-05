@@ -34,6 +34,30 @@ public class ShipmentChargeTest extends ModuleTestBase {
 		assertValue("amount", "150.00");
 	}
 	
+	public void testFilterToDescriptionsList() throws Exception {
+		assertListRowCount(1);
+		assertLabelInList(2, "Number of Shipment");
+		assertLabelInList(3, "Description of Shipment");
+		
+		// reference property: descriptionsList
+		setConditionValues(new String[] { "", "", "", "[.MEDIUM.5.INTERNAL.]"} );
+		execute("List.filter");
+		assertListRowCount(0);
+		
+		setConditionValues(new String[] { "", "", "", "[.SLOW.1.INTERNAL.]"} );
+		execute("List.filter");
+		assertListRowCount(1);
+		
+		// reference property: normal
+		setConditionValues(new String[] { "", "", "1"} );
+		execute("List.filter");
+		assertListRowCount(1);
+		
+		setConditionValues(new String[] { "", "", "10"} );
+		execute("List.filter");
+		assertListRowCount(0);
+	}
+	
 	private void deleteShipmentCharges() {
 		XPersistence.getManager().createQuery("delete from ShipmentCharge").executeUpdate();
 		XPersistence.commit();

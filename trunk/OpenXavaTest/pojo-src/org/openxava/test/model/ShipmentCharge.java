@@ -14,6 +14,7 @@ import org.openxava.annotations.*;
  */
 
 @Entity
+@Tab(properties="mode, amount, shipment.number, shipment.description")
 public class ShipmentCharge {
 	
 	@Id @GeneratedValue(generator="system-uuid") @Hidden 

@@ -9,6 +9,8 @@ import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
+import org.openxava.view.meta.MetaDescriptionsList;
+import org.openxava.view.meta.MetaView;
 
 /**
  * 
@@ -218,5 +220,53 @@ public class MetaReference extends MetaMember implements Cloneable {
 	public void setSearchKey(boolean searchKey) {
 		this.searchKey = searchKey;
 	}
+
+	public String getParameterValuesPropertiesInDescriptionsList(MetaView metaView) throws XavaException {
+		MetaDescriptionsList descriptionsList = metaView.getMetaDescriptionList(this);		
+		if (descriptionsList == null) return "";
+		String depends = descriptionsList.getDepends();		
+		if (Is.emptyString(depends)) return "";
+		StringTokenizer st = new StringTokenizer(depends, ",");
+		StringBuffer result = new StringBuffer();
+		while (st.hasMoreTokens()) {
+			String member = st.nextToken().trim();
+			try {
+				String reference = member.startsWith("this.")?member.substring(5):member; 
+				MetaModel fromIDepends = getMetaModel().getMetaReference(reference).getMetaModelReferenced();
+				for (Iterator it=fromIDepends.getKeyPropertiesNames().iterator(); it.hasNext();) {
+					String key = (String) it.next();
+					if (result.length() > 0) result.append(',');
+					result.append(member);
+					result.append('.');
+					result.append(key);
+				}
+			}
+			catch (ElementNotFoundException ex) {
+				// not reference, it is simple property
+				if (result.length() > 0) result.append(',');
+				result.append(member);			
+			}			
+		}		
+		return result.toString();
+	}
+	
+	public String getKeyProperty(String propertyKey){
+		Collection keys = getMetaModelReferenced().getKeyPropertiesNames();
+		if (keys.size() == 1) return keys.iterator().next().toString();
+		return "";
+	}
+	
+	public String getKeyProperties(){
+		Collection keys = getMetaModelReferenced().getKeyPropertiesNames();
+		if (keys.size() == 1) return "";
 		
+		Iterator<String> it = keys.iterator();
+		StringBuffer sb = new StringBuffer();
+		while (it.hasNext()) {
+			String property = it.next();		
+			sb.append(property);
+			if (it.hasNext()) sb.append(',');
+		}	
+		return sb.toString();
+	}
 }

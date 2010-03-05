@@ -92,7 +92,7 @@ public class FormulaTest extends ModuleTestBase {
 		assertRowCollectionUnchecked("ingredients", 1);
 		
 		// not execute the associated actions if there are no items in the collection
-		setConditionValues("ingredients", new String[] { "", "r"} );
+		setConditionValues("ingredients", new String[] { "", "03C6B61AC0A8011600000000AB4E7ACB"} );	// id milk
 		execute("List.filter", "collection=ingredients");
 		assertCollectionRowCount("ingredients", 0);
 		uncheckAllCollection("ingredients");

@@ -1,24 +1,53 @@
 package org.openxava.tab;
 
-import java.sql.*;
-import java.text.*;
-import java.util.*;
-import java.util.prefs.*;
+import java.sql.Timestamp;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.*;
-import org.hibernate.annotations.*;
-
-import org.openxava.component.*;
-import org.openxava.converters.*;
-import org.openxava.filters.*;
-import org.openxava.mapping.*;
-import org.openxava.model.meta.*;
-import org.openxava.tab.impl.*;
-import org.openxava.tab.meta.*;
-import org.openxava.util.*;
-import org.openxava.view.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.component.MetaComponent;
+import org.openxava.converters.ConversionException;
+import org.openxava.converters.IConverter;
+import org.openxava.filters.IFilter;
+import org.openxava.filters.IRequestFilter;
+import org.openxava.mapping.CmpField;
+import org.openxava.mapping.ModelMapping;
+import org.openxava.mapping.ReferenceMapping;
+import org.openxava.mapping.ReferenceMappingDetail;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.model.meta.MetaProperty;
+import org.openxava.model.meta.MetaReference;
+import org.openxava.tab.impl.EntityTabFactory;
+import org.openxava.tab.impl.IEntityTab;
+import org.openxava.tab.impl.IXTableModel;
+import org.openxava.tab.meta.MetaRowStyle;
+import org.openxava.tab.meta.MetaTab;
+import org.openxava.util.CMPFieldComparator;
+import org.openxava.util.Dates;
+import org.openxava.util.ElementNotFoundException;
+import org.openxava.util.Is;
+import org.openxava.util.Labels;
+import org.openxava.util.Strings;
+import org.openxava.util.Users;
+import org.openxava.util.XavaException;
+import org.openxava.util.XavaPreferences;
+import org.openxava.util.XavaResources;
+import org.openxava.view.View;
+import org.openxava.web.Ids;
 
 
 /**
@@ -63,6 +92,8 @@ public class Tab implements java.io.Serializable {
 	private String condition;
 	private String[] conditionComparators;
 	private String[] conditionValues;
+	private String[] conditionComparatorsToWhere;
+	private Object[] conditionValuesToWhere;
 	private List metaProperties;
 	private int page = 1;
 	private int addColumnsPage = 1; 
@@ -327,6 +358,10 @@ public class Tab implements java.io.Serializable {
 		StringBuffer sb = new StringBuffer();
 		boolean firstCondition = true;
 		metaPropertiesKey = null;
+
+		Collection<Object> valuesToWhere = new ArrayList<Object>();
+		Collection<String> comparatorsToWhere = new ArrayList<String>();
+		
 		if (!Is.emptyString(getBaseConditionForReference())) {
 			sb.append(getSQLBaseConditionForReference());
 			firstCondition = false;						
@@ -335,18 +370,65 @@ public class Tab implements java.io.Serializable {
 			sb.append(getSQLBaseCondition());
 			firstCondition = false;			
 		}				
+
 		if (!(conditionValues == null || conditionValues.length == 0)) {
 			MetaProperty pOrder = null;
-								
-			for (int i = 0; i < this.conditionValues.length; i++) {				
-				MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);				
+			for (int i = 0; i < this.conditionValues.length; i++) {
+				MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);
 				if (orderBy != null && p.getQualifiedName().equals(orderBy)) {
 					pOrder = p;
-				}				
+				}	
 				if (Is.emptyString(this.conditionComparators[i])) {
 					this.conditionValues[i] = ""; 
+					valuesToWhere.add("");
+					comparatorsToWhere.add(this.conditionComparators[i]);
 				}
-				if (!Is.emptyString(this.conditionValues[i])) {					
+				else if (!Is.empty(p.getEditorURLDescriptionsList(getModelName(), Ids.decorate(request, p.getQualifiedName()), i, getCollectionPrefix()))){
+					if (Is.empty(this.conditionValues[i])){
+						comparatorsToWhere.add(this.conditionComparators[i]);
+						valuesToWhere.add(this.conditionValues[i]);
+						if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
+						metaPropertiesKey.add(null);
+						continue;
+					}
+					// by possible multiple key
+					String reference = p.getQualifiedName().replace("." + p.getName(), "");
+					MetaTab tab = MetaComponent.get(getModelName().substring(getModelName().lastIndexOf('.') + 1)).getMetaTab();
+					ReferenceMapping referenceMapping = tab.getMetaModel().getMapping().getReferenceMapping(reference);
+					List<CmpField> fields = (List) referenceMapping.getCmpFields();
+					Collections.sort(fields, CMPFieldComparator.getInstance());
+					String keyValues = this.conditionValues[i].replaceAll("[\\[\\]]", "");
+					StringTokenizer st = new StringTokenizer(keyValues, ".");
+						
+					for (CmpField field : fields) {
+						String property = field.getCmpPropertyName().replace("_" + Strings.firstUpper(reference) + "_" , "");
+						IConverter converter = tab.getMetaComponent().getMetaEntity().getMetaReference(reference).
+							getMetaModelReferenced().getMapping().getConverter(property);
+						String value = st.nextToken();
+						try{
+							if (Class.forName(field.getCmpTypeName()).isEnum()){
+								Enum enumeration = Enum.valueOf((Class<Enum>) Class.forName(field.getCmpTypeName()), value);
+								valuesToWhere.add(String.valueOf(converter == null ? enumeration.ordinal() : converter.toDB(enumeration)));
+							}
+							else valuesToWhere.add(value);
+						}
+						catch(ClassNotFoundException ex){	// primitive type
+							valuesToWhere.add(value);
+						}
+						comparatorsToWhere.add(this.conditionComparators[i]);
+						
+						if (firstCondition) firstCondition = false;
+						else sb.append(" and ");
+						sb.append(field.getColumn());
+						sb.append(' ');
+						sb.append(convertComparator(p, this.conditionComparators[i]));
+						sb.append(" ? ");
+						
+						if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
+						metaPropertiesKey.add(null);
+					}
+				}
+				else if (!Is.emptyString(this.conditionValues[i])) {
 					if (firstCondition) firstCondition = false;
 					else sb.append(" and ");
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();					
@@ -364,8 +446,38 @@ public class Tab implements java.io.Serializable {
 					else {
 						metaPropertiesKey.add(p);
 					}
+					
+					String value = convertStringArgument(this.conditionValues[i].toString());
+					try {				
+						if (YEAR_COMPARATOR.equals(this.conditionComparators[i]) ||
+							MONTH_COMPARATOR.equals(this.conditionComparators[i]) ||
+							YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i])){
+							valuesToWhere.add(value);
+							comparatorsToWhere.add(this.conditionComparators[i]);
+							continue;
+						}
+						Object v = p.parse(value.toString(), getLocale());
+						if (v instanceof Timestamp && "eq".equals(this.conditionComparators[i])) {
+							valuesToWhere.add(Dates.cloneWithoutTime((Timestamp) v));
+							valuesToWhere.add(Dates.cloneWith2359((Timestamp) v));
+							comparatorsToWhere.add(this.conditionComparators[i]);
+							comparatorsToWhere.add(this.conditionComparators[i]);
+						}
+						else {						
+							valuesToWhere.add(v);
+							comparatorsToWhere.add(this.conditionComparators[i]);
+						}
+					}
+					catch (Exception ex) {
+						log.warn(XavaResources.getString("tab_key_value_warning"),ex);
+					}	
+					
 				}
-			}		
+				else{
+					comparatorsToWhere.add(this.conditionComparators[i]);
+					valuesToWhere.add("");
+				}
+			}	// end for	
 			if (pOrder != null) {				
 				if (sb.length() == 0) sb.append(" 1=1 ");
 				sb.append(" order by ");								
@@ -384,10 +496,23 @@ public class Tab implements java.io.Serializable {
 			if (sb.length() == 0) sb.append(" 1=1 ");
 			sb.append(" order by ");						
 			sb.append(getMetaTab().getSQLDefaultOrder());									
-		}			
+		}		
+		
+		// 
+		if (valuesToWhere != null && valuesToWhere.size() > 0){
+			this.conditionValuesToWhere = new Object[valuesToWhere.size()];
+			this.conditionComparatorsToWhere = new String[comparatorsToWhere.size()];
+			Iterator<Object> itValues = valuesToWhere.iterator();
+			Iterator<String> itComparators = comparatorsToWhere.iterator();
+			for (int i = 0; i < valuesToWhere.size(); i++){
+				this.conditionComparatorsToWhere[i] = itComparators.next();
+				this.conditionValuesToWhere[i] = itValues.next();
+			}
+		}
+		
 		return sb.toString();
 	}
-
+	
 	private String decorateColumn(MetaProperty p, String column, int i) throws XavaException {
 		if ("year_comparator".equals(this.conditionComparators[i])) {
 			return p.getMetaModel().getMapping().yearSQLFunction(column);
@@ -429,36 +554,36 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	private Object [] getKey() throws XavaException {
-		if (conditionValues == null || conditionValues.length == 0) { 
+		if (conditionValuesToWhere == null || conditionValuesToWhere.length == 0) { 
 			return filterKey(null);
 		}
 		Collection key = new ArrayList();
 		
-		for (int i = 0; i < this.conditionValues.length; i++) {
-			String value = this.conditionValues[i];
-			if (!Is.emptyString(value)) {
+		for (int i = 0; i < this.conditionValuesToWhere.length; i++) {
+			Object value = this.conditionValuesToWhere[i];
+			if (!Is.empty(value)) {
 								
-				if (STARTS_COMPARATOR.equals(this.conditionComparators[i])) { 
-					value = convertStringArgument(value) + "%";
+				if (STARTS_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) { 
+					value = convertStringArgument(value.toString()) + "%";
 					key.add(value);
 				}
-				else if (CONTAINS_COMPARATOR.equals(this.conditionComparators[i])) {
-					value = "%" + convertStringArgument(value) + "%";
+				else if (CONTAINS_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) {
+					value = "%" + convertStringArgument(value.toString()) + "%";
 					key.add(value);
 				} 
-				else if (YEAR_COMPARATOR.equals(this.conditionComparators[i]) || MONTH_COMPARATOR.equals(this.conditionComparators[i])) {
-					value = convertStringArgument(value);
+				else if (YEAR_COMPARATOR.equals(this.conditionComparatorsToWhere[i]) || MONTH_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) {
+					value = convertStringArgument(value.toString());
 					try {					
-						key.add(new Integer(value));
+						key.add(new Integer(value.toString()));
 					}
 					catch (Exception ex) {
 						log.warn(XavaResources.getString("tab_key_value_warning"),ex);
 						key.add(null);
 					}										
 				}
-				else if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i])) { 
+				else if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) { 
 					try {				
-						StringTokenizer st = new StringTokenizer(value, "/ ,:;");
+						StringTokenizer st = new StringTokenizer(value.toString(), "/ ,:;");
 						if (st.hasMoreTokens()) key.add(new Integer(st.nextToken()));
 						else key.add(null);
 						if (st.hasMoreTokens()) key.add(new Integer(st.nextToken()));
@@ -470,25 +595,7 @@ public class Tab implements java.io.Serializable {
 						key.add(null);
 					}															
 				}
-				else {
-					value = convertStringArgument(value);
-					MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);
-					try {				
-						Object v = p.parse(value, getLocale());
-						if (v instanceof Timestamp && "eq".equals(this.conditionComparators[i])) { 
-							key.add(Dates.cloneWithoutTime((Timestamp) v));
-							key.add(Dates.cloneWith2359((Timestamp) v));												
-						}
-						else {						
-							key.add(v);
-						}
-					}
-					catch (Exception ex) {
-						log.warn(XavaResources.getString("tab_key_value_warning"),ex);
-						key.add(null);
-					}					
-				}
-				
+				else key.add(value);
 			}
 		}		
 		return filterKey(key.toArray());
