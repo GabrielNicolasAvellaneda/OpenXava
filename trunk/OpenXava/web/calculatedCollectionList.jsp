@@ -53,8 +53,7 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 Collection aggregates = subview.getCollectionValues();
 if (aggregates == null) aggregates = java.util.Collections.EMPTY_LIST;
 Iterator itAggregates = aggregates.iterator();
-int f=0;
-while (itAggregates.hasNext()) {
+for (int f=0; itAggregates.hasNext(); f++) {
 	Map row = (Map) itAggregates.next();
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();
 	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();
@@ -86,7 +85,6 @@ while (itAggregates.hasNext()) {
 <input type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="<%=propertyPrefix%>__SELECTED__:<%=f%>" <%=actionOnClick%>/>
 </td>
 <%
-	f++;
 	it = subview.getMetaPropertiesList().iterator();	
 	for (int columnIndex = 0; it.hasNext(); columnIndex++) { 
 		MetaProperty p = (MetaProperty) it.next();

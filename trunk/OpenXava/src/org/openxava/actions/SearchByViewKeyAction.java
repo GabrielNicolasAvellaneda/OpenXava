@@ -26,7 +26,7 @@ import org.openxava.web.WebEditors;
  * its protected methods.<p>
  * 
  * @author Javier Paniza
- * @author Ana Andrés
+ * @author Ana Andrï¿½s
  */
 
 public class SearchByViewKeyAction extends ViewBaseAction {
@@ -52,19 +52,6 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 				values = MapFacade.getValues(getModelName(), keys, getMemberNames());
 			}
 			
-			try {
-				// For inheritance support
-				// A new find is not so slow, possibly because of persistence engine cache
-				Object entity = MapFacade.findEntity(getModelName(), values); 
-				String modelName = Classes.getSimpleName(entity.getClass());
-				if (!modelName.equals(getModelName())) {
-					getView().setModelName(modelName);				
-					values = MapFacade.getValues(modelName, entity, getMemberNames());
-				}
-			}
-			catch (ObjectNotFoundException ex) { // For some special case, as null reference keys				
-			}
-						
 			getView().setEditable(true);	
 			getView().setKeyEditable(false);			
 			setValuesToView(values); 		

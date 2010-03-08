@@ -25,6 +25,6 @@ public class Human extends Nameable {
 	}
 	public void setSex(Sex sex) {
 		this.sex = sex;
-	} 
+	}
 	
 }

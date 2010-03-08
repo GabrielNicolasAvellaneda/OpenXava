@@ -79,7 +79,7 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 			for (int i=0; i<invalidValues.length; i++) {
 				addError("invalid_state", 
 						invalidValues[i].getPropertyName(), 
-						Classes.getSimpleName(invalidValues[i].getBeanClass()), 
+						invalidValues[i].getBeanClass().getSimpleName(), 
 						invalidValues[i].getMessage(), 
 						invalidValues[i].getValue());			
 			}

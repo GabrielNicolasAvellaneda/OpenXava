@@ -226,7 +226,9 @@ public class AnnotatedClassParser {
 		MetaCollection collection = new MetaCollection();
 		collection.setName(pd.getName());
 		MetaReference ref = new MetaReference();
-		ref.setReferencedModelName( ((Class) (((ParameterizedType) pd.getReadMethod().getGenericReturnType()).getActualTypeArguments()[0])).getSimpleName() );
+		java.lang.reflect.Type[] types  = ((ParameterizedType) pd.getReadMethod().getGenericReturnType()).getActualTypeArguments();
+		Class clazz = (Class) ((types[0] instanceof Class) ? types[0] : ((TypeVariable) types[0]).getGenericDeclaration());
+		ref.setReferencedModelName( clazz.getSimpleName() );
 		
 		collection.setMetaReference(ref);
 		model.addMetaCollection(collection);
@@ -2140,9 +2142,19 @@ public class AnnotatedClassParser {
 		
 	private static Collection<String> getManagedClassPackages() {
 		if (managedClassPackages == null) {
-			managedClassPackages = new ArrayList<String>();
+			managedClassPackages = new HashSet<String>();			
 			for (String className: getManagedClassNames()) {
-				managedClassPackages.add(Strings.noLastToken(className, "."));				
+				try {				
+					Class clazz = Class.forName(className);
+					managedClassPackages.add(Strings.noLastToken(className, "."));
+					clazz = clazz.getSuperclass();
+					while ((clazz != null) && clazz.isAnnotationPresent(MappedSuperclass.class)) {
+						managedClassPackages.add(Strings.noLastToken(clazz.getName(), "."));
+						clazz = clazz.getSuperclass();
+					}
+				}
+				catch (ClassNotFoundException ex) {				
+				}
 			}
 		}
 		return managedClassPackages;

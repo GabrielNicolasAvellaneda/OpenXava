@@ -33,7 +33,7 @@ public class InvoiceFromDeliveriesTest extends ModuleTestBase {
 		// Verifying that edit that invoice						
 		execute("Mode.detailAndFirst");		
 		assertNoErrors();
-		assertValue("Invoice", "year", invoiceYear);
+		assertValue("Invoice", "year", invoiceYear); 
 		assertValue("Invoice", "number", invoiceNumber);
 		
 		execute("Sections.change", "activeSection=2");

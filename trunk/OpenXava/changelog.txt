@@ -1,7 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
-- References as combos to filter in list mode
+- References as combos to filter in list mode.
+- Classes.getSimpleName() method dropped. Use getSimpleName() of Class instead. 
+- MapFacade.getValues() adds a __MODEL_NAME__ entry with the model name of the found object.
+- Polimorphic view resolution for collection elements.
+- Fix: Collection of generic (Collection<T>) fails.
+- Fix: MappedSuperClass in different package than child classes fails.
 - Tooltip for cells in list and collections. 	
 - Removed MemoFormatter for list mode. The new tooltip and resizing columns are better options.
 - Russian translation of documentation improved.
