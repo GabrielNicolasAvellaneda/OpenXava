@@ -7,7 +7,10 @@ import org.openxava.actions.*;
  * @author Javier Paniza
  */
 
-public class SaveInvoiceAction extends SaveAction implements IChangeModuleAction {
+public class SaveInvoiceAction 
+	extends SaveAction 
+	implements IChangeModuleAction 
+{
 
 	public String getNextModule() {
 		return PREVIOUS_MODULE;
