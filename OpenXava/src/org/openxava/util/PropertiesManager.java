@@ -5,6 +5,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.model.*;
 
 /**
  * Manages with reflection the properties of a object. <p> 
@@ -55,7 +56,7 @@ public class PropertiesManager implements java.io.Serializable {
 	 * @param propertyName  Property name to obtain its value, 
 	 * 		can be qualified (that is: 'customer.address.street' for example)
 	 * @return Value of the property
-	 * @exception InvocationTargetException  Excepción originated by the original access method
+	 * @exception InvocationTargetException  Excepciï¿½n originated by the original access method
 	 * @exception PropertiesManagerException  Some unexpected problem
 	 */
 	public Object executeGet(String propertyName)
@@ -232,9 +233,11 @@ public class PropertiesManager implements java.io.Serializable {
 		}
 		Object object = objectClass.newInstance();
 		PropertiesManager pm = new PropertiesManager(object);
+		values.remove(MapFacade.MODEL_NAME); 
 		pm.executeSets(values);
 		return object;
 	}
+	
 
 	/**
 	 * Update property from a string, making needed conversions. <p>

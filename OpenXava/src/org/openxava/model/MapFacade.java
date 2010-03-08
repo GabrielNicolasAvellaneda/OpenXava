@@ -81,6 +81,7 @@ import org.openxava.validators.*;
 
 public class MapFacade {
 	
+	public static final String MODEL_NAME = "__MODEL_NAME__";
 	private static Log log = LogFactory.getLog(MapFacade.class);
 	private static Map remotes;
 	private static boolean usesEJBObtained;

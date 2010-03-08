@@ -7,8 +7,10 @@ import java.util.*;
 import javax.ejb.*;
 
 import org.apache.commons.logging.*;
+import org.hibernate.Hibernate;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
+import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -642,7 +644,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		while (itReferences.hasNext()) {
 			MetaReference ref = (MetaReference) itReferences.next();
 			names.put(ref.getName(), getKeyNames(ref.getMetaModelReferenced()));
-		}		
+		}	
 		return names;
 	}
 	
@@ -828,11 +830,18 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return MetaComponent.get(component).getMetaAggregate(aggregate);
 		}
 	}
+	
+	private Map getValues(		
+			MetaModel metaModel, 
+			Object modelObject,
+			Map membersNames) throws XavaException, RemoteException {
+		return getValues(metaModel, modelObject, membersNames, true);
+	}
 
 	private Map getValues(		
 		MetaModel metaModel, 
 		Object modelObject,
-		Map membersNames) throws XavaException, RemoteException {
+		Map membersNames, boolean includeModelName) throws XavaException, RemoteException {
 		try {
 			if (modelObject == null)
 				return null;						
@@ -868,7 +877,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					}
 				}
 			}			
-			result.putAll(r.executeGets(names.toString()));			
+			result.putAll(r.executeGets(names.toString()));
+			if (includeModelName) result.put(MapFacade.MODEL_NAME, Hibernate.getClass(modelObject).getSimpleName()); 
 			return result;
 		} catch (RemoteException ex) {			
 			log.error(ex.getMessage(), ex);
@@ -880,7 +890,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Map getKeyValues(UserInfo userInfo, String modelName, Object entity) throws RemoteException, XavaException {
 		Users.setCurrentUserInfo(userInfo);
 		MetaModel metaModel = getMetaModel(modelName);
-		return getValues(metaModel, entity, getKeyNames(metaModel));
+		return getValues(metaModel, entity, getKeyNames(metaModel), false); 
 	}
 		
 	private void addKey(MetaModel metaModel, Map memberNames) throws XavaException {

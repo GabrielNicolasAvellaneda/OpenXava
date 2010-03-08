@@ -96,7 +96,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "1");		
 		execute("Reference.search", "keyProperty=customer.number");		
 		execute("ReferenceSearch.choose", "row=1"); 
-		assertValue("customer.name", "Juanillo");
+		assertValue("customer.name", "Juanillo"); 
 		setValue("customer.number", "1");
 		assertValue("customer.name", "Javi"); 
 		execute("Sections.change", "activeSection=2");
@@ -146,7 +146,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "666");
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("description", "DELIVERY JUNIT 666");
+		assertValue("description", "DELIVERY JUNIT 666"); 
 		
 		execute("Sections.change", "activeSection=2");
 		assertCollectionRowCount("details", 3);
@@ -218,7 +218,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "66");
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("description", "JUNIT");
+		assertValue("description", "JUNIT"); 
 		
 		execute("CRUD.search");
 		assertNoErrors();
@@ -255,7 +255,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("description", "%SEARCHING");
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("number", "777");
+		assertValue("number", "777"); 
 		assertValue("description", "FOR TEST SEARCHING BY DESCRIPTION");
 		
 		// There are more than one match, returns the first
@@ -292,7 +292,7 @@ public class DeliveryTest extends ModuleTestBase {
 	public void testAggregateInCollectionWithNotHiddenKey() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
-		execute("Sections.change", "activeSection=2");
+		execute("Sections.change", "activeSection=2"); 
 		
 		// The bucle is for choosing a delivery with less than 3 details
 		while (getCollectionRowCount("details") >= 3) {
@@ -347,7 +347,7 @@ public class DeliveryTest extends ModuleTestBase {
 	
 	public void testReferenceAsDescriptionsListWithValidValuesInKey_validateViewPropertiesOnModify() throws Exception { 
 		execute("Mode.detailAndFirst");
-		assertValue("shipment.KEY", "");
+		assertValue("shipment.KEY", ""); 
 		Shipment shipment = (Shipment) Shipment.findAll().iterator().next();
 		setValue("shipment.KEY", toKeyString(shipment));
 		execute("CRUD.save");
@@ -423,7 +423,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
-		setValue("advice", "Validating");
+		setValue("advice", "Validating"); 
 		execute("CRUD.save");
 		assertNoErrors();
 	}
@@ -458,7 +458,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "66");				
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("invoice.year", "2002");
+		assertValue("invoice.year", "2002"); 
 		assertValue("invoice.number", "1");				
 		assertValue("invoice.date", "1/1/02");		
 		assertValue("type.number", "1");
@@ -548,7 +548,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoAction("Delivery.generateNumber"); // of property
 		assertNoAction("Delivery.setDefaultType"); // of reference as descriptions-list
 		assertNoAction("Delivery.setDefaultInvoice"); // of reference 		
-		execute("CRUD.new");
+		execute("CRUD.new"); 
 		assertAction("Delivery.generateNumber");
 		assertAction("Delivery.setDefaultType");
 		assertAction("Delivery.setDefaultInvoice");
@@ -591,7 +591,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "66");
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");						
 		assertValue("type.number", "");	
@@ -632,7 +632,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("description", "JUNIT");
 		setValue("distance", usesAnnotatedPOJO()?"1":"2"); // National, in database 'N'
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");						
 		assertValue("type.number", "");	
@@ -680,7 +680,7 @@ public class DeliveryTest extends ModuleTestBase {
 		
 		// To list mode and order
 		execute("Mode.list");
-		assertActions(listActions); 
+		assertActions(listActions);
 		execute("List.orderBy", "property=invoice.year"); // ascending
 		execute("List.orderBy", "property=invoice.year"); // descending
 		assertNoErrors();
@@ -857,7 +857,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("date", "2/22/97");
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");						
 		assertValue("type.number", "");	
@@ -1040,7 +1040,7 @@ public class DeliveryTest extends ModuleTestBase {
 	
 	public void testEditableAffectsSection() throws Exception {
 		execute("Mode.detailAndFirst");
-		assertEditable("description"); // out of section
+		assertEditable("description"); // out of section 
 		assertEditable("advice"); // in section
 		execute("EditableOnOff.setOff");
 		assertNoEditable("description"); // out of section
@@ -1064,7 +1064,7 @@ public class DeliveryTest extends ModuleTestBase {
 			}
 			fail("Only the next values are valid: " + values);
 		}
-		assertTrue("For this test is need at least one delivery with value in 'distance' property", thereIsOne); 
+		assertTrue("For this test is need at least one delivery with value in 'distance' property", thereIsOne);  
 	}
 	 
 	public void testSetValueAgainstPropertiesOfSectionsHiddenAndShowed() throws Exception {

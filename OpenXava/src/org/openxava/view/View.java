@@ -17,11 +17,13 @@ import java.util.prefs.*;
 
 import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
+import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.IOnChangePropertyAction;
+import org.openxava.annotations.parse.*;
 import org.openxava.calculators.*;
 import org.openxava.component.MetaComponent;
 import org.openxava.controller.ModuleContext;
@@ -173,7 +175,9 @@ public class View implements java.io.Serializable {
 	// you can fill a dialog using a subview from the current view
 	// In that case, inside the dialog this subview will be firstLeve, though
 	// it continues being a subview.
-	private boolean firstLevel; 
+	private boolean firstLevel;
+
+	private String rootModelName;  
 		
 	public View() {
 		oid = nextOid++;
@@ -251,7 +255,7 @@ public class View implements java.io.Serializable {
 		else {
 			Class pojoClass = getMetaModel().getMetaModelContainer().getPOJOClass();
 			while (!java.lang.Object.class.equals(pojoClass)) {
-				parentNames.add(Strings.firstLower(Classes.getSimpleName(pojoClass)));
+				parentNames.add(Strings.firstLower(pojoClass.getSimpleName()));
 				pojoClass = pojoClass.getSuperclass();
 			}		
 		}
@@ -467,8 +471,18 @@ public class View implements java.io.Serializable {
 		}											
 	}
 	
-	public void setValues(Map map) throws XavaException {
-		setValues(map, true);
+	public void setValues(Map values) throws XavaException {		
+		boolean modelChanged = false;
+		if (values != null) {
+			String modelName = (String) values.get(MapFacade.MODEL_NAME);
+			if (modelName != null && !modelName.equals(getModelName()) && !getModelName().contains(".")) {
+				rootModelName = getModelName();
+				setModelName(modelName);
+				modelChanged = true;
+			}
+		}						
+		setValues(values, true);
+		if (modelChanged) refresh(); 
 	}
 	
 	private void setValues(Map map, boolean closeCollections) throws XavaException { 
@@ -1482,9 +1496,15 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * Clear all displayed data. 
+	 * Clear all displayed data.  
 	 */
-	public void clear() throws XavaException {		
+	public void clear() throws XavaException {
+
+		if (rootModelName != null) {			
+			setModelName(rootModelName); 
+			rootModelName = null;
+		}
+
 		setIdFocusProperty(null);
 		setCollectionDetailVisible(false);
 		if (values == null) return;		
@@ -1854,8 +1874,6 @@ public class View implements java.io.Serializable {
 	public void setModelName(String newModel) { 				
 		if (Is.equal(modelName, newModel)) return;		
 		modelName = newModel;
-		keyEditable = true;
-		editable = true;	
 		reloadNeeded = true;		
 		resetMembers();		
 	}
@@ -2332,7 +2350,7 @@ public class View implements java.io.Serializable {
 	 * from persistent storage and fill the view. 
 	 */
 	public void findObject() throws Exception {		
-		findObject(null);
+		findObject(null); 
 	}
 
 	/**
@@ -4297,5 +4315,5 @@ public class View implements java.io.Serializable {
 	public void setTitle(String title) { 
 		this.title = title;
 	}
-				
+					
 }

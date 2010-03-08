@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.ejb.*;
+
 
 
 import org.openxava.model.*;
@@ -18,13 +20,14 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	
 	public void execute() throws Exception {
+		getCollectionElementView().clear(); 
 		getCollectionElementView().setCollectionDetailVisible(true);
-		Collection elements = getCollectionElementView().getCollectionValues(); 
+		Collection elements = getCollectionElementView().getCollectionValues();
 		if (elements == null) return;
 		if (elements instanceof List) {
 			Map keys = (Map) ((List) elements).get(getRow());			
 			Map	values = MapFacade.getValues(getCollectionElementView().getModelName(), keys, getCollectionElementView().getMembersNames());
-			getCollectionElementView().setValues(values);			
+			getCollectionElementView().setValues(values);						
 			getCollectionElementView().setCollectionEditingRow(getRow());
 		}
 		else {

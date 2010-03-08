@@ -226,7 +226,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		Class containerClass = metaModelContainer.getPOJOClass();
 		String containerName = "";
 		while (!java.lang.Object.class.equals(containerClass)) {
-			containerName = Classes.getSimpleName(containerClass);
+			containerName = containerClass.getSimpleName();
 			if (Classes.hasMethod(metaModel.getPOJOClass(), "get" + containerName)) {
 				return Strings.firstLower(containerName);
 			}			

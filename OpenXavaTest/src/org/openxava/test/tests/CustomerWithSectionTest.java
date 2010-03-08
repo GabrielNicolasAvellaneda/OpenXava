@@ -307,7 +307,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public void testManyToManyCollection() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
-		assertCollectionRowCount("states", 0); // tmp Falla
+		assertCollectionRowCount("states", 0);
 		
 		assertAddingStates();
 		
