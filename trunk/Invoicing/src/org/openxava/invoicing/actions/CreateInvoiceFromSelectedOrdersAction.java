@@ -19,9 +19,7 @@ public class CreateInvoiceFromSelectedOrdersAction
 		Collection<Order> orders = getSelectedOrders();
 		Invoice invoice = Invoice.createFromOrders(orders);
 		addMessage("invoice_created_from_orders", invoice, orders);
-		// tmp ini
 		setCurrentInvoiceKey(toKey(invoice));
-		// tmp fin
 	}
 	
 	private Map toKey(Invoice invoice) { // tmp
@@ -38,14 +36,6 @@ public class CreateInvoiceFromSelectedOrdersAction
 		}
 		return result;
 	}
-
-	public void setCurrentInvoiceKey(Map currentInvoiceKey) {
-		this.currentInvoiceKey = currentInvoiceKey;
-	}
-
-	public Map getCurrentInvoiceKey() {
-		return currentInvoiceKey;
-	}
 	
 	public String getNextModule() {
 		return "CurrentInvoiceEdition";
@@ -54,6 +44,14 @@ public class CreateInvoiceFromSelectedOrdersAction
 	public boolean hasReinitNextModule() { 
 		return true;
 	}	
+
+	public void setCurrentInvoiceKey(Map currentInvoiceKey) {
+		this.currentInvoiceKey = currentInvoiceKey;
+	}
+
+	public Map getCurrentInvoiceKey() {
+		return currentInvoiceKey;
+	}
 
 }
 
