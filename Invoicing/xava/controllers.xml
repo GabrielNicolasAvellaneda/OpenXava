@@ -46,7 +46,6 @@
 			<use-object name="xava_view"/>
 		</action>
 			
-		<!-- tmp use-object -->	
 		<action name="createInvoiceFromSelectedOrders" mode="list"
 			class="org.openxava.invoicing.actions.CreateInvoiceFromSelectedOrdersAction">
 			<use-object name="invoicing_currentInvoiceKey"/>
