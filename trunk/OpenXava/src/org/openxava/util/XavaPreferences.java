@@ -309,4 +309,8 @@ public class XavaPreferences {
 		return getProperties().getProperty("defaultPersistenceUnit", "default");
 	}
 
+	public boolean isGenerateDefaultModules(){
+		return "true".equalsIgnoreCase(getProperties().getProperty("generateDefaultModules", "true").trim());		
+	}
+	
 }

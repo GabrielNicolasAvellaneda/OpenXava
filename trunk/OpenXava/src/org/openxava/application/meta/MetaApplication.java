@@ -75,21 +75,23 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	}
 
 	private void generateDefaultModulesFromXMLComponents() throws XavaException {
+		boolean generateDefaultModules = XavaPreferences.getInstance().isGenerateDefaultModules();
 		for (Iterator it=MetaComponent.getAll().iterator(); it.hasNext(); ) {
 			String modelName = ((MetaComponent) it.next()).getName();
-			if (!metaModules.containsKey(modelName)) {
+			if (!metaModules.containsKey(modelName) && generateDefaultModules) {
 				createDefaultModule(modelName);
 			}			
 		}		
 	}
 
-	private void generateDefaultModulesFromJPAEntities() throws XavaException { 
+	private void generateDefaultModulesFromJPAEntities() throws XavaException {
+		boolean generateDefaultModules = XavaPreferences.getInstance().isGenerateDefaultModules();
 		try {
 			Collection classNames = AnnotatedClassParser.friendMetaApplicationGetManagedClassNames();
 			for (Iterator it=classNames.iterator(); it.hasNext(); ) {
 				String className = (String) it.next();
 				String modelName = Strings.lastToken(className, ".");
-				if (!metaModules.containsKey(modelName)) {
+				if (!metaModules.containsKey(modelName) && generateDefaultModules) {
 					createDefaultModule(modelName);
 				}			
 			}							

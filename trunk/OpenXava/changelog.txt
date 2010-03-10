@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Configure the creation or not of default modules. Add property 'generateDefaultModules' in xava.properties
 - References as combos to filter in list mode.
 - Classes.getSimpleName() method dropped. Use getSimpleName() of Class instead. 
 - MapFacade.getValues() adds a __MODEL_NAME__ entry with the model name of the found object.
