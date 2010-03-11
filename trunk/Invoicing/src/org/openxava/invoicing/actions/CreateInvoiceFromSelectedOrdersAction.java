@@ -22,7 +22,7 @@ public class CreateInvoiceFromSelectedOrdersAction
 		setCurrentInvoiceKey(toKey(invoice));
 	}
 	
-	private Map toKey(Invoice invoice) { // tmp
+	private Map toKey(Invoice invoice) { 
 		Map key = new HashMap();
 		key.put("oid",invoice.getOid());
 		return key;
