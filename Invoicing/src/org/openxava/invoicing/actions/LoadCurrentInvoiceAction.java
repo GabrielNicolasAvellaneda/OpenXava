@@ -4,7 +4,8 @@ import java.util.*;
 
 import org.openxava.actions.*;
 
-public class LoadCurrentInvoiceAction extends SearchByViewKeyAction {
+public class LoadCurrentInvoiceAction 
+	extends SearchByViewKeyAction {
 	
 	private Map currentInvoiceKey;
 	
