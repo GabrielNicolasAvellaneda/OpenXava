@@ -142,7 +142,7 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 		
 		// Row 1
 		assertValueInCollection("details", 1, "product.number", "2");
-		assertValueInCollection("details", 1, "product.description", "Arco iris de l·grimas");
+		assertValueInCollection("details", 1, "product.description", "Arco iris de l√°grimas");
 		assertValueInCollection("details", 1, "quantity", "1");		
 		
 		assertValue("remarks", "This is a JUNIT test");
@@ -185,7 +185,7 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 		
 		// Adding another detail		
 		setValue("details.product.number", "2");
-		assertValue("details.product.description", "Arco iris de l·grimas");
+		assertValue("details.product.description", "Arco iris de l√°grimas");
 		assertValue("details.pricePerUnit", "15.00"); 
 		setValue("details.pricePerUnit", "10.00"); 
 		setValue("details.quantity", "1");
