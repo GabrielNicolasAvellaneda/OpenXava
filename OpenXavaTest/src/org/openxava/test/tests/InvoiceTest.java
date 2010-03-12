@@ -473,10 +473,10 @@ public class InvoiceTest extends ModuleTestBase {
 		String detailsCount = getValueInList(0, 5);
 		String paid = getValueInList(0, 6);
 		String importance = Strings.firstUpper(getValueInList(0, 7).toLowerCase());
-		String expectedLine = year + ";" + number + ";" + 
-			date + ";" + amountsSum + ";" + 
-			vat + ";" + detailsCount + ";" +
-			paid + ";" + importance;
+		String expectedLine = year + ";" + number + ";\"" + 
+			date + "\";\"" + amountsSum + "\";\"" + 
+			vat + "\";" + detailsCount + ";\"" +
+			paid + "\";\"" + importance + "\"";
 		
 		execute("Print.generateExcel");
 		assertContentTypeForPopup("text/x-csv");

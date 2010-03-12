@@ -2,6 +2,8 @@ package org.openxava.test.tests;
 
 import java.util.*;
 
+import org.openxava.jpa.XPersistence;
+import org.openxava.test.model.Issue;
 import org.openxava.tests.*;
 
 
@@ -78,6 +80,37 @@ public class IssueTest extends ModuleTestBase {
 		setValue("worker.nickName", "JAVI");
 		assertValue("worker.nickName", "JAVI");
 		assertValue("worker.fullName", "FRANCISCO JAVIER PANIZA LUCAS");		
+	}
+	
+	public void testGenerateExcellWithTextThatContainsSemicolon() throws Exception {
+		// create description whit semicolon
+		execute("CRUD.new");
+		setValue("id", "ABCDE");
+		setValue("description", "UNO;\"DOS\";TRES");
+		execute("CRUD.save");
+		assertNoErrors();
+		execute("Mode.list");
+		
+		// filter by the new and generate csv
+		setConditionValues(new String[] { "ABCDE" });
+		execute("List.filter");
+		assertListRowCount(1);
+		execute("Print.generateExcel");
+		assertContentTypeForPopup("text/x-csv");
+
+		String expectedLine = "\"ABCDE\";\"UNO;\"\"DOS\"\";TRES\"";
+		StringTokenizer excel = new StringTokenizer(getPopupText(), "\n\r");
+		String header = excel.nextToken();
+		assertEquals("header", "Id;Description", header);		
+		String line1 = excel.nextToken();
+		assertEquals("line1", expectedLine, line1);
+		assertTrue("Only one line must have generated", !excel.hasMoreTokens());
+		
+		// delete description with semicolon
+		assertListRowCount(1);
+		checkAll();
+		execute("CRUD.deleteSelected");		
+		assertNoErrors();
 	}
 		
 }
