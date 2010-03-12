@@ -1,12 +1,18 @@
 package org.openxava.util;
 
-import java.io.*;
-import javax.swing.table.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.swing.table.TableModel;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Javier Paniza
  */
 public class TableModels {
+	private static Log log = LogFactory.getLog(TableModels.class);
 	
 	public static String toCSV(TableModel table) {
 		if (table == null) return "";
@@ -29,13 +35,15 @@ public class TableModels {
 		return cvs.toString();
 	}
 
-	private static Object convert(Object valueAt) {		
+	private static Object convert(Object valueAt) {
 		if (!(valueAt instanceof String)) return valueAt;
-		return ((String) valueAt).
+		return "\"" + ((String) valueAt).
 			replaceAll("\n\r", " ").
 			replaceAll("\r\n", " ").
 			replace('\n', ' ').
-			replace('\r', ' ');
+			replace('\r', ' ').
+			replace("\"", "\"\"") +
+			"\"";
 	}
 
 

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Excel exporting error (by text with semicolon)
 - Configure the creation or not of default modules. Add property 'generateDefaultModules' in xava.properties
 - References as combos to filter in list mode.
 - Classes.getSimpleName() method dropped. Use getSimpleName() of Class instead. 
