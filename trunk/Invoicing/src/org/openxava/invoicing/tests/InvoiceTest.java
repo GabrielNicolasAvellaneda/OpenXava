@@ -13,7 +13,6 @@ public class InvoiceTest extends CommercialDocumentTest {
 		assertCollectionRowCount("orders", 0);
 		execute("Collection.add", 
 			"viewObject=xava_view_section1_orders");
-		execute("AddToCollection.add", "row=0");
 		checkFirstOrderWithDeliveredEquals("Yes");
 		checkFirstOrderWithDeliveredEquals("No");
 		execute("AddToCollection.add"); 
@@ -29,7 +28,7 @@ public class InvoiceTest extends CommercialDocumentTest {
 	private void checkFirstOrderWithDeliveredEquals(String value) throws Exception {
 		int c = getListRowCount();
 		for (int i=0; i<c; i++) {
-			if (value.equals(getValueInList(i, 2))) {
+			if (value.equals(getValueInList(i, 10))) { 
 				checkRow(i);
 				return;
 			}
