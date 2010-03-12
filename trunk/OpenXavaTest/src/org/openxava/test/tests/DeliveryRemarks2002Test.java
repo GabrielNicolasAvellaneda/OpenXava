@@ -18,7 +18,7 @@ public class DeliveryRemarks2002Test extends ModuleTestBase {
 		assertListRowCount(1); // We assume that there are only a delivery from 2002
 		assertValueInList(0, 0, "2002");
 		assertValueInList(0, 1, "1");
-		String expectedLine = "2002;1;FOUR LINES CUATRO LINEAS";
+		String expectedLine = "2002;1;\"FOUR LINES CUATRO LINEAS\"";
 		
 		execute("Print.generateExcel");
 		assertContentTypeForPopup("text/x-csv");
