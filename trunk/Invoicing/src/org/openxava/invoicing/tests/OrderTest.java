@@ -1,11 +1,31 @@
 package org.openxava.invoicing.tests;
 
+import sun.reflect.ReflectionFactory.*;
+
 public class OrderTest extends CommercialDocumentTest {
 	
 	public OrderTest(String testName) { 
 		super(testName, "Order"); 				
 	}
 	
+	public void testCreateInvoiceFromOrder() throws Exception { // tmp
+		viewDetailWhere("delivered", "Yes");
+		assertValue("delivered", "true");		
+		int orderDetailCount = getCollectionRowCount("details");
+		
+	}
+	
+	private void viewDetailWhere(String property, String value) throws Exception { // tmp
+		int rowCount = getListRowCount();		
+		for (int row=0; row<rowCount; row++) {			
+			if (value.equals(getValueInList(row, property))) {
+				execute("List.viewDetail", "row=" + row);
+				return;
+			}
+		}		
+		fail("No encontrado " + property + "=" + value); // tmp i18n		
+	}
+
 	public void testSetInvoice() throws Exception {
 		assertListNotEmpty();
 		execute("List.orderBy", "property=number"); 
