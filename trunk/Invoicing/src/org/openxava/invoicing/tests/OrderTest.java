@@ -1,5 +1,11 @@
 package org.openxava.invoicing.tests;
 
+import javax.persistence.*;
+
+import org.openxava.invoicing.model.*;
+import org.openxava.jpa.*;
+import org.openxava.util.*;
+
 import sun.reflect.ReflectionFactory.*;
 
 public class OrderTest extends CommercialDocumentTest {
@@ -8,24 +14,54 @@ public class OrderTest extends CommercialDocumentTest {
 		super(testName, "Order"); 				
 	}
 	
-	public void testCreateInvoiceFromOrder() throws Exception { // tmp
-		viewDetailWhere("delivered", "Yes");
-		assertValue("delivered", "true");		
-		int orderDetailCount = getCollectionRowCount("details");
+	public void testCreateInvoiceFromOrder() throws Exception {
+		// Looking for the order
+		searchOrderSusceptibleToBeInvoiced();
+		int orderDetailCount = getCollectionRowCount("details");		
+		execute("Sections.change", "activeSection=1");
+		assertValue("invoice.year", "");
+		assertValue("invoice.number", "");
 		
+		// Creating the invoice
+		execute("Order.createInvoice");
+		String invoiceYear = getValue("invoice.year");
+		assertTrue("Invoice year must have value", 
+			!Is.emptyString(invoiceYear));
+		String invoiceNumber = getValue("invoice.number");
+		assertTrue("Invoice number must have value", 
+			!Is.emptyString(invoiceNumber));		
+		assertMessage("Invoice " + invoiceYear + "/" + invoiceNumber + 
+			" created from current order"); 
+		assertCollectionRowCount("invoice.details", orderDetailCount);		
+		
+		// Restoring the order for running the test the next time
+		setValue("invoice.year", "");
+		assertValue("invoice.number", "");
+		assertCollectionRowCount("invoice.details", 0);
+		execute("CRUD.save");
+		assertNoErrors();
 	}
 	
-	private void viewDetailWhere(String property, String value) throws Exception { // tmp
-		int rowCount = getListRowCount();		
-		for (int row=0; row<rowCount; row++) {			
-			if (value.equals(getValueInList(row, property))) {
-				execute("List.viewDetail", "row=" + row);
-				return;
-			}
-		}		
-		fail("No encontrado " + property + "=" + value); // tmp i18n		
+	private void searchOrderSusceptibleToBeInvoiced() throws Exception {
+		Order order = getOrderSusceptibleToBeInvoiced();
+		String year = String.valueOf(order.getYear());
+		String number = String.valueOf(order.getNumber());
+		setConditionValues(new String [] { year, number });
+		execute("List.filter");
+		assertListRowCount(1);		
+		execute("Mode.detailAndFirst");
+		assertValue("year", year);
+		assertValue("number", number);
+		assertValue("delivered", "true");				
 	}
-
+	
+	private Order getOrderSusceptibleToBeInvoiced() {
+		Query query = XPersistence.getManager().createQuery(
+			"from Order o where " +
+			"o.delivered = true and o.invoice = null");
+		return (Order) query.getResultList().get(0);
+	}
+	
 	public void testSetInvoice() throws Exception {
 		assertListNotEmpty();
 		execute("List.orderBy", "property=number"); 

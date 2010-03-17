@@ -7,7 +7,7 @@ public class CustomerTest extends ModuleTestBase {
 	public CustomerTest(String testName) {
 		super(testName, "Invoicing", "Customer");				
 	}
-	
+		
 	public void testCreateReadUpdateDelete() throws Exception {
 		// Create
 		execute("CRUD.new");                    
