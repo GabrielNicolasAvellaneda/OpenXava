@@ -4,7 +4,7 @@
 <%
 if (editable) { 
 %>
-<select name="<%=propertyKey%>" class=<%=style.getEditor()%> <%=script%> title="<%=p.getDescription(request)%>">
+<select id="<%=propertyKey%>" name="<%=propertyKey%>" class=<%=style.getEditor()%> <%=script%> title="<%=p.getDescription(request)%>">
 	<option value="<%=baseIndex==0?"":"0"%>"></option>
 <%
 	java.util.Iterator it = p.validValuesLabels(request);

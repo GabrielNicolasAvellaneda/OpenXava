@@ -87,6 +87,7 @@ openxava.refreshPage = function(result) {
 		}
 		if (openxava.initTheme != null) openxava.initTheme();
 		openxava.initLists(result.application, result.module);  
+		openxava.initEditors(result.application, result.module); 
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
@@ -161,6 +162,7 @@ openxava.onCloseDialog = function(event) {
 			this.name = this.name.substring(0, this.name.length - 12);
 		}	
 	);
+	openxava.clearLists(); 
 	dialog.empty();
 }
 
@@ -206,6 +208,24 @@ openxava.initLists = function(application, module) {
 		},
 		show: { effect: { length: 800 } }
 	});	
+}
+
+openxava.addEditorInitFunction  = function(initFunction) { 
+	if (openxava.editorsInitFunctions == null) {
+		openxava.editorsInitFunctions = new Array();
+	}
+	openxava.editorsInitFunctions.push(initFunction);	
+}
+
+openxava.initEditors = function(application, module) { 
+	if (openxava.editorsInitFunctions == null) return;	
+	for (var i in openxava.editorsInitFunctions) {
+		openxava.editorsInitFunctions[i]();
+	}
+}
+
+openxava.clearLists = function(application, module) { 
+	$('.qtip').hide();
 }
 
 openxava.getDialog = function(application, module) {  
@@ -328,34 +348,6 @@ openxava.limitLength = function(ev, max) {
 	if ( target.value.length > max ) {
 		target.value = target.value.substring(0, max);		
 	}	
-}
-
-// JavaScript for numeric editors
-openxava.validateNumeric = function(ev, max, integer) {		
-	if (ev.which == 0) return true;
-	var charCode = (ev.which) ? ev.which : ev.keyCode;		
-	if (charCode == 0 || charCode == 8) return true;		
-	if (ev.ctrlKey) return true;		
-	var target = window.event ? window.event.srcElement : ev.target;	
-	var text = target.value + String.fromCharCode(charCode);	
-	var numerics = 0;			
-	var textLength = text.length;
-	for (var i=0; i < textLength; i++) {		
-		var theChar = text.charAt(i);		
-		if (theChar >= '0' && theChar <= '9') {
-			numerics++;
-			if (numerics > max) {
-				return false;
-			}
-		}	
-		else if (!integer && !(theChar == ',' || theChar == '.' || theChar == '-')) {
-			return false;
-		}
-		else if (integer && theChar != '-') {
-			return false;
-		}
-	}	
-	return true;
 }
 
 // JavaScript for collections and list

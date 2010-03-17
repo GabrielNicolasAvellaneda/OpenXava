@@ -34,7 +34,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 4m3 BETA (2010-2-xx)");		
+		log.info("OpenXava 4m3 BETA (2010-3-xx)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -482,7 +482,7 @@ public class ModuleManager {
 		}				
 	}
 	
-	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
+	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {		
 		if (ex instanceof ValidationException) {		
 			errors.add(((ValidationException)ex).getErrors());
 			messages.removeAll();
@@ -513,7 +513,7 @@ public class ModuleManager {
 			errors.add("invalid_state", 
 					invalidValues[i].getPropertyName(), 
 					invalidValues[i].getBeanClass().getSimpleName(), 
-					invalidValues[i].getMessage(), 
+					"'" + XavaResources.getString(invalidValues[i].getMessage()) + "'", 
 					invalidValues[i].getValue());			
 		}
 		messages.removeAll();		

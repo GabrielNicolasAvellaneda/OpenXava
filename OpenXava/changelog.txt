@@ -1,8 +1,17 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Excel exporting error (by text with semicolon)
-- Configure the creation or not of default modules. Add property 'generateDefaultModules' in xava.properties
+- The JavaScript function openxava.addEditorInitFunction to add code to be executed for initialized JS of custom editors.
+- Any JavaScript file in xava/editors/js is loaded automatically. This folder is for JS of custom editors. 
+- The dot key can be used as decimal separator in any locale. It is converted automatically to the local decimal separator.
+- Fix: Alphabetic characters can be entered in numeric fields. 
+- Attribute id included in Html for all the built-in editors, to facilitate JavaScript manipulation.
+- custom-editors.js is only included if exists. Moreover the usage of this file has been deprecated.
+- Fix: Excel exporting does not work fine when semicolons in the text.
+- The creation of default modules is optional. Added property 'generateDefaultModules' in xava.properties.
+- Fix: Chinese translation of popup calendar was not correctly encoded. 
+- Original RuntimeExceptions from MapFacade.setValues() are propagated to the actions. 
+- ValidationException and RuntimeException in @Prepersist are propagated to the actions.
 - References as combos to filter in list mode.
 - Classes.getSimpleName() method dropped. Use getSimpleName() of Class instead. 
 - MapFacade.getValues() adds a __MODEL_NAME__ entry with the model name of the found object.
@@ -12,6 +21,7 @@ Change Log for OpenXava project
 - Tooltip for cells in list and collections. 	
 - Removed MemoFormatter for list mode. The new tooltip and resizing columns are better options.
 - Russian translation of documentation improved.
+- Removed history.txt file.
 - Style 'highlight' from openxava.css renamed to 'row-highlight'.
 - Clicking on any part of the row, for list or collection, goes to the detail.
 - Fix: Filtering by year or month in list mode fails with Oracle and latest PostgreSQL versions.
@@ -29,7 +39,6 @@ OpenXava 4m2 (2010-1-26)
 - New methods in ViewBaseAction to manage dialogs: showDialog() and closeDialog().
 - Improved performance with large tables in list mode.
 - It's possible to specify the style to use inside portals by means of new properties in xava.properties. 
-- Removed history.txt file.
 - Edit action by default for collections other than @AsEmbeddable, CascadeType.REMOVE or CascadeType.ALL allows only viewing the element.
 - Now the action Return.return does not close the dialog.
 - TabBaseAction now extends ViewBaseAction so getView() and methods about dialogs and view navigation are available from it.

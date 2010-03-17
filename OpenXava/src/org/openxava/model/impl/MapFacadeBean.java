@@ -1255,7 +1255,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		catch (ValidationException ex) {
 			throw ex;
 		}
-		catch (SystemException ex) { 
+		catch (RuntimeException ex) { 
 			// For preserving the exception message
 			throw ex;
 		}

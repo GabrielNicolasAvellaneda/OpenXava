@@ -148,6 +148,12 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			persist(object);			
 			return object;
 		}
+		catch (RuntimeException ex) {  
+			if (ex.getCause() instanceof ValidationException) {
+				throw (ValidationException) ex.getCause();
+			}
+			throw ex;
+		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new CreateException(XavaResources.getString(
