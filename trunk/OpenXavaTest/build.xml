@@ -19,13 +19,6 @@
 		generating portlet.xml with Á(A with acute) and Í(I with acute) 
 		in some windows system -->
 	<property name="portlet.encoding" value="ISO-8859-1"/>
-
-	<target name="touchHistory">
-		<tstamp>
-      		<format property="time" pattern="yyyyMMddHHmmss"/>
-	  	</tstamp> 		
-		<echo file="../OpenXava/history.txt">See the resource history of this file. ${time}</echo>
-	</target>
 		
 	<target name="regenerateGenerator">
 		<ant antfile="../OpenXava/build.xml" target="regenerateGenerator"/>
@@ -67,12 +60,12 @@
 		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
 	</target>
 					
-	<target name="deployWar" depends="touchHistory">		
+	<target name="deployWar">		
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 			
-	<target name="deploy" depends="touchHistory">
+	<target name="deploy">
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>
