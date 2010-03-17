@@ -23,10 +23,13 @@ public class CreateInvoiceFromOrderAction extends ViewBaseAction
 		Order order = getManager().find(  
 			Order.class, oid); 
 		order.createInvoice();
-		getView().refresh();		
+		getView().refresh();
+		addMessage("invoice_created_from_order", order.getInvoice()); // tmp
+		/* tmp
 		addMessage("invoice_created_from_order", 
 			order.getInvoice().getYear(), 
 			order.getInvoice().getNumber());
+			*/
 		hideAction = true;
 	}
 
