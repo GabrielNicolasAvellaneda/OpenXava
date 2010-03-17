@@ -7,16 +7,18 @@
 <%@ page import="org.openxava.web.WebEditors" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.web.Ids" %>
-<%@ page import="org.openxava.controller.meta.MetaAction"%>
-<%@ page import="org.openxava.controller.meta.MetaControllers"%>
-<%@page import="org.openxava.web.Actions"%>
+<%@ page import="org.openxava.controller.meta.MetaAction" %>
+<%@ page import="org.openxava.controller.meta.MetaControllers" %>
+<%@ page import="org.openxava.web.Actions" %>
+<%@ page import="org.openxava.util.Users" %>
+<%@ page import="java.util.prefs.Preferences" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
-	org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 String collection = request.getParameter("collection"); 
 String id = "list";
 String collectionArgv = "";
@@ -69,7 +71,7 @@ String rowStyle = "border-bottom: 1px solid;";
 	}
 %>
 
-<table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">
 	<%
@@ -99,28 +101,33 @@ String rowStyle = "border-bottom: 1px solid;";
 java.util.Collection properties = tab.getMetaProperties();
 java.util.Iterator it = properties.iterator();
 int columnIndex = 0;
+Preferences preferences = Users.getCurrentPreferences();
 while (it.hasNext()) {
 	MetaProperty property = (MetaProperty) it.next();
 	String align = "";
 	if (style.isAlignHeaderAsData()) {
-		align =property.isNumber() && !property.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
+		align =property.isNumber() && !property.hasValidValues()?"vertical-align: middle;text-align: right":"vertical-align: middle";
 	}
+	int columnWidth = tab.getColumnWidth(columnIndex);
+	String width = columnWidth<0?"":"width: " + columnWidth + "px"; 
 %>
-<th class="<%=style.getListHeaderCell()%>" <%=align%>>
+<th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" >
+<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden; <%=width%>" > 
 <%
 	if (tab.isCustomize()) {
 %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><%
 	}
 %>
 <%
+	String label = property.getQualifiedLabel(request).replaceAll(" ", "&nbsp;"); 
 	if (property.isCalculated()) {
 %>
-<%=property.getQualifiedLabel(request)%>&nbsp;
+<%=label%>&nbsp;
 <%
 	} else {
 %>
 <span class="<%=style.getListOrderBy()%>">
-<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getQualifiedLabel(request)%></xava:link>&nbsp;
+<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=label%></xava:link>&nbsp;
 </span>
 <%
 	if (tab.isOrderAscending(property.getQualifiedName())) {
@@ -147,6 +154,7 @@ while (it.hasNext()) {
 <%
 	}
 %>
+</div> 
 </th>
 <%
 	columnIndex++;
@@ -167,10 +175,11 @@ while (it.hasNext()) {
 	</a>
 </th>
 <%
-	it = properties.iterator();
+it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
 String [] conditionComparators = tab.getConditionComparators();
-int iConditionValues = -1; 
+int iConditionValues = -1;
+columnIndex = 0; 
 while (it.hasNext()) {
 	MetaProperty property = (MetaProperty) it.next();
 	if (!property.isCalculated()) {
@@ -179,13 +188,19 @@ while (it.hasNext()) {
 		boolean isString = "java.lang.String".equals(property.getType().getName());
 		boolean isBoolean = "boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName());
 		boolean isDate = java.util.Date.class.isAssignableFrom(property.getType()) && !property.getType().equals(java.sql.Time.class);
+		String editorURLDescriptionsList = property.getEditorURLDescriptionsList(tab.getModelName(), Ids.decorate(request, property.getQualifiedName()), columnIndex, prefix);
 		int maxLength = property.getSize();
 		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
-		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");		
+		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
+		int columnWidth = tab.getColumnWidth(columnIndex);
+		String width = columnWidth<0?"":"width: " + columnWidth + "px";
+%>
+<th class="<%=style.getListSubheaderCell()%>" align="left">
+<div class="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
+<% 		
 		if (isValidValues) {
-%>	
-<th class=<%=style.getListSubheaderCell()%> align="left">
+%>
 <%-- Boolean.toString( ) for base0 is needed in order to work in WebSphere 6 --%>
 <jsp:include page="comparatorsValidValuesCombo.jsp">
 	<jsp:param name="validValues" value="<%=property.getValidValuesLabels(request)%>" />
@@ -194,21 +209,24 @@ while (it.hasNext()) {
 	<jsp:param name="prefix" value="<%=prefix%>"/>
 	<jsp:param name="index" value="<%=iConditionValues%>"/>
 </jsp:include>		
-	<%
-				}
-						else if (isBoolean) {
-			%>
-<th class="<%=style.getListSubheaderCell()%>" align="left">
+<%
+		}
+		else if (!Is.empty(editorURLDescriptionsList)) {
+%>
+<jsp:include page="<%=editorURLDescriptionsList%>" >
+	<jsp:param name="value" value="<%=value%>" />
+</jsp:include>
+<%
+		}
+		else if (isBoolean) {
+%>
 <jsp:include page="comparatorsBooleanCombo.jsp">
 	<jsp:param name="comparator" value="<%=comparator%>" />
 	<jsp:param name="prefix" value="<%=prefix%>"/>
 	<jsp:param name="index" value="<%=iConditionValues%>"/> 
 </jsp:include>
-	<%
-		} else { // Not boolean
-	%>
-<th class=<%=style.getListSubheaderCell()%> align="left">
 <%
+		} else { // Not boolean
 	String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?comparator=" + comparator
 	+ "&isString=" + isString
@@ -221,6 +239,7 @@ while (it.hasNext()) {
 	<%
 		}
 	%>
+</div>	
 </th>
 <%
 	}
@@ -228,7 +247,8 @@ while (it.hasNext()) {
 %>
 <th class=<%=style.getListSubheaderCell()%>></th>
 <%
-	} 
+	}
+	columnIndex++; 
 } // while
 %>
 </tr>
@@ -270,7 +290,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 <tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
 <%
-	if (!org.openxava.util.Is.emptyString(action)) {
+	if (!org.openxava.util.Is.emptyString(action)) { 
 %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <%
@@ -290,6 +310,8 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		MetaProperty p = tab.getMetaProperty(c);
 		String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
 		String cellStyle = align + style.getListCellStyle();
+		int columnWidth = tab.getColumnWidth(c);
+		String width = columnWidth<0?"":"width: " + columnWidth + "px"; 		
 		String fvalue = null;
 		if (p.hasValidValues()) {
 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
@@ -297,8 +319,15 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		else {
 			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName(), true);
 		}
+		Object title = WebEditors.formatTitle(request, p, model.getValueAt(f, c), errors, view.getViewName(), true); 
 %>
-	<td class="<%=cssCellClass%>" style="<%=cellStyle%>"><%=fvalue%>&nbsp;</td>
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
+		<xava:link action='<%=action%>' argv='<%="row=" + f + actionArgv%>' cssClass='<%=cssStyle%>' cssStyle="text-decoration: none; outline: none">
+			<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
+				<%=fvalue%>&nbsp;
+			</div>
+		</xava:link>	
+	</td>
 <%
 	}
 %>
