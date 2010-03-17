@@ -5,5 +5,5 @@ String sPrefix = request.getParameter("prefix");
 String sExtension = request.getParameter("extension"); 
 %> 
  
-<input type="hidden" name="<%=propertyKey%>" value="<%=fvalue%>">  
+<input id="<%=propertyKey%>" type="hidden" name="<%=propertyKey%>" value="<%=fvalue%>">  
 <img src="<%=request.getContextPath()%>/xava/images/<%= sPrefix+fvalue+"."+sExtension%>" alt="<%=fvalue %>"/> 

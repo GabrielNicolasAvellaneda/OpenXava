@@ -1,13 +1,18 @@
 <%@ include file="imports.jsp"%>
 
+<%@page import="java.io.File"%>
 <%@page import="org.openxava.web.dwr.Module"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.util.XavaResources"%>
 <%@page import="org.openxava.util.Locales"%>
 <%@page import="org.openxava.util.XSystem"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
+<%@page import="org.apache.commons.logging.LogFactory" %>
+<%@page import="org.apache.commons.logging.Log" %>
 
 <%! 
+private static Log log = LogFactory.getLog("module.jsp");
+
 private String getAdditionalParameters(HttpServletRequest request) { 
 	StringBuffer result = new StringBuffer();
 	for (java.util.Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
@@ -102,8 +107,14 @@ Module.setStyle(style);
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
 	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>	
+	<% 
+	if (new File(request.getRealPath("/xava/js") + "/custom-editors.js").exists()) { 
+	%>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>
+	<%
+		log.warn(XavaResources.getString("custom_editors_deprecated"));
+	} 
+	%>	
 	<script type="text/javascript">
 		if (typeof jQuery != "undefined") {  
 			portalJQuery = jQuery;
@@ -111,7 +122,16 @@ Module.setStyle(style);
 	</script>				
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js"></script>	
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.qtip.js"></script>	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.qtip.js"></script>
+	<%
+	File jsEditorsFolder = new File(request.getRealPath("/xava/editors/js"));
+	String [] jsEditors = jsEditorsFolder.list();
+	for (int i=0; i<jsEditors.length; i++) {
+	%>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/js/<%=jsEditors[i]%>"></script>
+	<%
+	}
+	%>	
 	<script type="text/javascript">
 		$ = jQuery;
 		if (typeof portalJQuery != "undefined") {  
