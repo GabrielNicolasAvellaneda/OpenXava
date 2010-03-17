@@ -56,10 +56,9 @@ TH.list {
 	font-weight: bold;
 }
 
-
-.highlight {
+.row-highlight A.row-highlight {
 	font-weight: bold;
-	color: #3366ff;	
+	color: #3366ff;
 }
 
 TR.list-subheader {
@@ -137,7 +136,7 @@ TD.jetspeed2-mode {
 
 TD.list-title {
 	font-weight: bold;
-	text-align: center;
+	text-align: left;
 }
 
 .PTitleContent {
