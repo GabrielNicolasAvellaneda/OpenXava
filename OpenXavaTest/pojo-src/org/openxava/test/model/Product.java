@@ -98,6 +98,10 @@ public class Product {
 	private Integer warehouseNumber;
 		
 	@Stereotype("MONEY") @Required
+	@Editor(forViews="Simple", value="Money") // Though it has MONEY stereotype it does not
+											// use Money editor because Product.unitPrice
+											// is overwritten in editors.xml. Using @Editor
+											// we overwrite the overwriting only for Simple view
 	@DefaultValueCalculator(value=DefaultProductPriceCalculator.class, properties=
 		@PropertyValue(name="familyNumber")
 	)
@@ -122,7 +126,7 @@ public class Product {
 	}
 	
 	public BigDecimal getPrice(String country, BigDecimal tariff) throws ProductException, PriceException {
-		if ("España".equals(country) || "Guatemala".equals(country)) {
+		if ("EspaÃ±a".equals(country) || "Guatemala".equals(country)) {
 			return getUnitPrice().add(tariff);   
 		}
 		else {

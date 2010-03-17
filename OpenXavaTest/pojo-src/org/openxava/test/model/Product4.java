@@ -9,6 +9,7 @@ import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.validators.*;
+import org.openxava.validators.*;
 
 /**
  * As Product2 but uses property-based access. <p>
@@ -42,6 +43,22 @@ public class Product4 {
 	private BigDecimal unitPrice;	
 	private Formula formula;	
 	private int subfamilyNumber; 
+	
+	@PrePersist
+	public void validate() throws ValidationException {
+		if (getDescription().contains("OPENXAVA")) {
+			throw new ValidationException("openxava_not_saleable"); 
+		}
+		if (getNumber() == 666) {
+			throw new InvalidStateException(
+				new InvalidValue [] {
+					new InvalidValue(
+						"number_of_man", getClass(), "number",
+						getNumber(), this)
+				}
+			);
+		}
+	}
 		
 	@Id @Column(length=10)
 	public long getNumber() {
