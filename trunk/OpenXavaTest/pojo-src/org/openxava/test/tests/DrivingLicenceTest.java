@@ -22,7 +22,7 @@ public class DrivingLicenceTest extends ModuleTestBase {
 		execute("CRUD.save");
 		// The chunk in Spanish if for a bug of Hiberante Validator, see at
 		// http://opensource.atlassian.com/projects/hibernate/browse/HV-31
-		assertError("3 is not a valid value for Level of Driving licence: Debe ser menor o igual a 2");		
+		assertError("3 is not a valid value for Level of Driving licence: debe ser menor o igual a 2");		
 	}
 	
 }
