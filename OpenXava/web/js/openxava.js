@@ -6,7 +6,7 @@ openxava.init = function(application, module) {
 	openxava.ajaxRequest(application, module, true); 	
 }
 
-openxava.ajaxRequest = function(application, module, firstRequest) {
+openxava.ajaxRequest = function(application, module, firstRequest) {	
 	if (openxava.isRequesting(application, module)) return;	
 	openxava.setRequesting(application, module);
 	document.throwPropertyChange = false; 

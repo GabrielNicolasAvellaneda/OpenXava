@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+
+- Fix: New JS files are not recognized after updating OX version because of browser cache.
+- Clear error message when module reentrance is produced.
+- Fix: Calendar popup is not shown from dialogs.
+- Fix: Fields annotated with @SearchKey are not editable when editing an existing entity.
 - The JavaScript function openxava.addEditorInitFunction to add code to be executed for initialized JS of custom editors.
 - Any JavaScript file in xava/editors/js is loaded automatically. This folder is for JS of custom editors. 
 - The dot key can be used as decimal separator in any locale. It is converted automatically to the local decimal separator.

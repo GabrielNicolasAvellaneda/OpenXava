@@ -135,7 +135,7 @@ public class ServiceTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=1");
 		
-		assertEditable("invoice.year");
+		assertEditable("invoice.year"); 
 		assertEditable("invoice.number");
 		assertNoEditable("invoice.amount");
 		assertNoEditable("invoice.description");

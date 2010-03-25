@@ -153,6 +153,9 @@ public class Module extends DWRBase {
 			getContext(request).remove(application, nextModule, "xava_currentModule");
 		}
 		else {			
+			if (manager.getPreviousModules().contains(nextModule)) {
+				throw new XavaException("module_reentrance_not_allowed", nextModule);
+			}
 			manager.getPreviousModules().push(module);
 		}
 		

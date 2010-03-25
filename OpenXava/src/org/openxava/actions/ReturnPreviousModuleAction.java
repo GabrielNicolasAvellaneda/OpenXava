@@ -15,7 +15,7 @@ public class ReturnPreviousModuleAction extends BaseAction implements IChangeMod
 	}
 
 	public String getNextModule() {
-		return PREVIOUS_MODULE;
+		return PREVIOUS_MODULE;		
 	}
 
 	public boolean hasReinitNextModule() { 
