@@ -227,8 +227,12 @@ public class AnnotatedClassParser {
 		collection.setName(pd.getName());
 		MetaReference ref = new MetaReference();
 		java.lang.reflect.Type[] types  = ((ParameterizedType) pd.getReadMethod().getGenericReturnType()).getActualTypeArguments();
-		Class clazz = (Class) ((types[0] instanceof Class) ? types[0] : ((TypeVariable) types[0]).getGenericDeclaration());
-		ref.setReferencedModelName( clazz.getSimpleName() );
+		Class referencedModelClass = getGenericClass(model.getPOJOClass(), pd);
+		if (referencedModelClass == null) {
+			log.warn(XavaResources.getString("collection_not_added_not_generic_type", pd.getName(), model.getName()));
+			return; 
+		}
+		ref.setReferencedModelName(referencedModelClass.getSimpleName());
 		
 		collection.setMetaReference(ref);
 		model.addMetaCollection(collection);
@@ -236,8 +240,22 @@ public class AnnotatedClassParser {
 		collection.setMetaCalculator(new MetaCalculator()); // This may be annuled by processAnnotations (below)
 		
 		processAnnotations(collection, pd.getReadMethod());
-		processAnnotations(collection, field);				
-				
+		processAnnotations(collection, field);								
+	}
+	
+	private Class getGenericClass(Class finalClass, PropertyDescriptor pd) {
+		java.lang.reflect.Type type  = ((ParameterizedType) pd.getReadMethod().getGenericReturnType()).getActualTypeArguments()[0];
+		if (type instanceof Class) return (Class) type;		
+		if (!(finalClass.getGenericSuperclass() instanceof ParameterizedType)) return null;
+		ParameterizedType superClassType = (ParameterizedType) finalClass.getGenericSuperclass();
+		int i=0;
+		for (java.lang.reflect.Type t: finalClass.getSuperclass().getTypeParameters()) {			
+			if (t.equals(type)) {
+				return (Class) superClassType.getActualTypeArguments()[i];
+			}
+			i++;
+		}
+		return null; 
 	}
 	
 	private void addEmbeddable(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field) throws Exception {

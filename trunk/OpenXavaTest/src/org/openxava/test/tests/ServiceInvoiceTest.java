@@ -17,5 +17,11 @@ public class ServiceInvoiceTest extends ModuleTestBase {
 	public void testDefaultSchemaInHibernateCfg() throws Exception {
 		assertListNotEmpty();
 	}
+	
+	public void testSearchKeyMustBeEditable() throws Exception {
+		execute("Mode.detailAndFirst");
+		assertEditable("year");
+		assertEditable("number");
+	}
 		
 }

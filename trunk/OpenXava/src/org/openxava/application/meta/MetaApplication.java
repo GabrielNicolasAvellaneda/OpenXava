@@ -152,6 +152,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 			return MetaComponent.exists(name);
 		}
 		catch (Exception ex) {
+			log.warn("exists_model_errors", ex);
 			return false;
 		}
 	}

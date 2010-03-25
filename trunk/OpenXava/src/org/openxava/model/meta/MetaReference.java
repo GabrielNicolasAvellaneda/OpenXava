@@ -133,7 +133,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	public String getReferencedModelName() {
 		if (Is.emptyString(referencedModelName)) {
 			referencedModelName = Strings.firstUpper(super.getName());
-		}
+		}		
 		return referencedModelName;
 	}
 	

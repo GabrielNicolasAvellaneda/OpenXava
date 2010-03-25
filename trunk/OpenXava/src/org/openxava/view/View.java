@@ -1744,8 +1744,12 @@ public class View implements java.io.Serializable {
 	 */
 	private boolean isEditableImpl(MetaProperty metaProperty) {  		
 		try {				
-			if (metaProperty.isReadOnly()) return false;
-			if (metaProperty.isKey() || metaProperty.isSearchKey()) return isKeyEditable();			
+			if (metaProperty.isReadOnly()) return false;			
+			if (metaProperty.isKey() || 
+				(metaProperty.isSearchKey() && isRepresentsEntityReference())) 
+			{
+				return isKeyEditable(); 				
+			}
 			if (!isEditable()) return false;			
 			return isMarkedAsEditable(metaProperty.getName());
 		}
@@ -1762,7 +1766,11 @@ public class View implements java.io.Serializable {
 		try {
 			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(metaReference);
 			if (metaReferenceView != null && metaReferenceView.isReadOnly()) return false;
-			if (metaReference.isKey() || metaReference.isSearchKey()) return isKeyEditable(); 									
+			if (metaReference.isKey() || 
+				(metaReference.isSearchKey() && isRepresentsEntityReference())) 
+			{
+				return isKeyEditable(); 				
+			}
 			if (!isEditable()) return false;				
 			return isMarkedAsEditable(metaReference.getName());
 		}

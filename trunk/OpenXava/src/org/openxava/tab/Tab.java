@@ -174,7 +174,7 @@ public class Tab implements java.io.Serializable {
 		return baseCondition;
 	}
 	
-	private String getSQLBaseCondition() throws XavaException { 				
+	private String getSQLBaseCondition() throws XavaException { 		
 		return getMetaTab().getMetaModel().getMapping().changePropertiesByColumns(getBaseCondition());
 	}
 	
