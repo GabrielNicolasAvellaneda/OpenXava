@@ -1,6 +1,41 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4m3 (2010-3-25)
+------------------------
+- The user can resize the column widths for list and collections using the mouse, and the values are persisted by user.
+- Tooltip for cells in list and collections.
+- References as combos to filter in list mode.
+- Clicking on any part of the row, for list or collection, goes to the detail.
+- Polimorphic view resolution for collection elements.
+- Removed MemoFormatter for list mode. The new tooltip and resizing columns are better options.
+- Russian translation of documentation improved.
+- The dot key can be used as decimal separator in any locale. It is converted automatically to the local decimal separator.
+- ValidationException and RuntimeException in @Prepersist are propagated to the actions.
+- Original RuntimeExceptions from MapFacade.setValues() are propagated to the actions.
+- Any JavaScript file in xava/editors/js is loaded automatically. This folder is for JS of custom editors.
+- The JavaScript function openxava.addEditorInitFunction to add code to be executed for initialized JS of custom editors.
+- The creation of default modules is optional. Added property 'generateDefaultModules' in xava.properties.
+- Clear error message when module reentrance is produced.
+- Attribute id included in Html for all the built-in editors, to facilitate JavaScript manipulation.
+- custom-editors.js is only included if exists. Moreover the usage of this file has been deprecated.
+- Classes.getSimpleName() method dropped. Use getSimpleName() of Class instead.
+- Style 'highlight' from openxava.css renamed to 'row-highlight'.
+- MapFacade.getValues() adds a __MODEL_NAME__ entry with the model name of the found object.
+- Removed history.txt file.
+- commons-beanutils.jar (already included in OX) is exported from the Eclipse OpenXava project.
+- Fix: New JS files are not recognized after updating OX version because of browser cache.
+- Fix: Calendar popup is not shown from dialogs.
+- Fix: Fields annotated with @SearchKey are not editable when editing an existing entity.
+- Fix: Alphabetic characters can be entered in numeric fields.
+- Fix: Excel exporting does not work fine when semicolons in the text.
+- Fix: Chinese translation of popup calendar was not correctly encoded. 
+- Fix: Collection of generic (Collection<T>) fails.
+- Fix: MappedSuperClass in different package than child classes fails.
+- Fix: Filtering by year or month in list mode fails with Oracle and latest PostgreSQL versions.
+- Fix: Trying to modify an empty reference shows an error but must not show a dialog.
+- Fix: 'forwardUri' in a 'nextModule' fails inside a portal.
+
 OpenXava 4m2 (2010-1-26)
 ------------------------
 - Collections use dialogs to edit, add and remove elements.
@@ -10,7 +45,6 @@ OpenXava 4m2 (2010-1-26)
 - New methods in ViewBaseAction to manage dialogs: showDialog() and closeDialog().
 - Improved performance with large tables in list mode.
 - It's possible to specify the style to use inside portals by means of new properties in xava.properties. 
-- Removed history.txt file.
 - Edit action by default for collections other than @AsEmbeddable, CascadeType.REMOVE or CascadeType.ALL allows only viewing the element.
 - Now the action Return.return does not close the dialog.
 - TabBaseAction now extends ViewBaseAction so getView() and methods about dialogs and view navigation are available from it.
