@@ -119,6 +119,7 @@ therefore it's show some features more advances of stereotypes.
 	
 	
 	<view name="Simple">
+		<property-view property="unitPrice" editor="Money"/>
 		<members>
 			number, description, unitPrice
 		</members>

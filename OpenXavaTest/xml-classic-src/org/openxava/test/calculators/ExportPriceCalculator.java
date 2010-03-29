@@ -16,7 +16,7 @@ public class ExportPriceCalculator implements ICalculator {
 	private BigDecimal tariff;
 
 	public Object calculate() throws Exception {
-		if ("España".equals(country) || "Guatemala".equals(country)) {
+		if ("EspaÃ±a".equals(country) || "Guatemala".equals(country)) {
 			return euros.add(tariff);   
 		}
 		else {

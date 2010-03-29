@@ -24,6 +24,10 @@
 			<descriptions-list/>
 		</reference-view>
 	</view>
+	
+	<tab>
+		<properties>mode, amount, shipment.number, shipment.description</properties>
+	</tab>
 
 	<entity-mapping table="XAVATEST@separator@SHIPMENTCHARGE">
 		<property-mapping property="oid" column="ID"/>

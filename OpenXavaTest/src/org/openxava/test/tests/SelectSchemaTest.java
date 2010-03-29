@@ -5,7 +5,7 @@ import org.openxava.tests.ModuleTestBase;
 
 /**
  * Create on 04/09/2009 (10:15:51)
- * @autor Ana Andrés
+ * @autor Ana Andrï¿½s
  */
 public class SelectSchemaTest extends ModuleTestBase {
 	
@@ -15,7 +15,7 @@ public class SelectSchemaTest extends ModuleTestBase {
 	
 	public void testInitModules() throws Exception {
 		// select first schema: COMPANYA
-		//setValue("schema", "1"); // For XML components
+		// setValue("schema", "1"); // For XML components
 		setValue("schema", String.valueOf(SelectSchema.Schema.COMPANYA.ordinal())); // For annotated POJOs
 		execute("SelectSchema.set");
 		assertNoErrors();
@@ -35,7 +35,7 @@ public class SelectSchemaTest extends ModuleTestBase {
 		
 		// select second schema: COMPANYB
 		changeModule("SelectSchema");
-		//setValue("schema", "2"); // For XML components
+		// setValue("schema", "2"); // For XML components
 		setValue("schema", String.valueOf(SelectSchema.Schema.COMPANYB.ordinal())); // For annotated POJOs
 		execute("SelectSchema.set");
 		assertNoErrors();
