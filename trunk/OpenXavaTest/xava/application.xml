@@ -177,9 +177,7 @@
 	</module>		<module name="CustomerDemo" folder="invoicing.variations">			<model name="Customer"/>		<view name="Demo"/>
 		<tab name="Demo"/>		<controller name="Typical"/>	</module>	
 			<module name="CustomerReadOnly" folder="invoicing.variations">	
-		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchReadOnly"/>		<model name="Customer"/>		<view name="WithSection"/>		<controller name="Print"/>			</module>
-	
-	<module name="CustomerWithSection" folder="invoicing.variations">	
+		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchReadOnly"/>		<model name="Customer"/>		<view name="WithSection"/>		<controller name="Print"/>			</module>		<module name="CustomerWithSection" folder="invoicing.variations">	
 		<model name="Customer"/>
 		<view name="WithSection"/>
 		<controller name="Customer"/>		

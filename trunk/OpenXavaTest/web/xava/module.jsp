@@ -62,7 +62,8 @@ boolean isPortlet = (session.getAttribute(Ids.decorate(app, request.getParameter
 
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
-String version = org.openxava.controller.ModuleManager.getVersion(); // tmp
+String version = org.openxava.controller.ModuleManager.getVersion();
+String realPath = request.getSession().getServletContext().getRealPath("/");
 %>
 <% if (!isPortlet) { %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -109,7 +110,7 @@ String version = org.openxava.controller.ModuleManager.getVersion(); // tmp
 	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js?ox=<%=version%>'></script>
 	<% 
-	if (new File(request.getRealPath("/xava/js") + "/custom-editors.js").exists()) { 
+	if (new File(realPath + "/xava/js/custom-editors.js").exists()) { 
 	%>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js?ox=<%=version%>'></script>
 	<%
@@ -125,7 +126,7 @@ String version = org.openxava.controller.ModuleManager.getVersion(); // tmp
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.qtip.js?ox=<%=version%>"></script>
 	<%
-	File jsEditorsFolder = new File(request.getRealPath("/xava/editors/js"));
+	File jsEditorsFolder = new File(realPath + "/xava/editors/js");
 	String [] jsEditors = jsEditorsFolder.list();
 	for (int i=0; i<jsEditors.length; i++) {
 	%>
