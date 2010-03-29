@@ -1,13 +1,18 @@
 <%@ include file="imports.jsp"%>
 
+<%@page import="java.io.File"%>
 <%@page import="org.openxava.web.dwr.Module"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.util.XavaResources"%>
 <%@page import="org.openxava.util.Locales"%>
 <%@page import="org.openxava.util.XSystem"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
+<%@page import="org.apache.commons.logging.LogFactory" %>
+<%@page import="org.apache.commons.logging.Log" %>
 
 <%! 
+private static Log log = LogFactory.getLog("module.jsp");
+
 private String getAdditionalParameters(HttpServletRequest request) { 
 	StringBuffer result = new StringBuffer();
 	for (java.util.Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
@@ -53,10 +58,12 @@ if (manager.isFormUpload()) {
 	new Module().requestMultipart(request, response, app, module);
 }
 String browser = request.getHeader("user-agent"); 
-boolean isPortlet = (session.getAttribute(Ids.decorate(request, "xava.portlet.uploadActionURL")) != null);
+boolean isPortlet = (session.getAttribute(Ids.decorate(app, request.getParameter("module"), "xava.portlet.uploadActionURL")) != null);
 
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
+String version = org.openxava.controller.ModuleManager.getVersion();
+String realPath = request.getSession().getServletContext().getRealPath("/");
 %>
 <% if (!isPortlet) { %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -77,7 +84,7 @@ Module.setStyle(style);
 	if (jsFiles != null) {
 		for (int i=0; i<jsFiles.length; i++) {	
 	%>
-	<script src="<%=jsFiles[i]%>" type="text/javascript"></script>
+	<script src="<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
 	<% 	
 		}
 	}
@@ -92,25 +99,41 @@ Module.setStyle(style);
 	<% 
 	} 
 	%> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/dwr-engine.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/dwr-engine.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js?ox=<%=version%>'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js?ox=<%=version%>"></script>	
 	<% } %>	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>	
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js?ox=<%=version%>'></script>
+	<% 
+	if (new File(realPath + "/xava/js/custom-editors.js").exists()) { 
+	%>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js?ox=<%=version%>'></script>
+	<%
+		log.warn(XavaResources.getString("custom_editors_deprecated"));
+	} 
+	%>	
 	<script type="text/javascript">
 		if (typeof jQuery != "undefined") {  
 			portalJQuery = jQuery;
 		}       
 	</script>				
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js"></script>				
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.qtip.js?ox=<%=version%>"></script>
+	<%
+	File jsEditorsFolder = new File(realPath + "/xava/editors/js");
+	String [] jsEditors = jsEditorsFolder.list();
+	for (int i=0; i<jsEditors.length; i++) {
+	%>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/js/<%=jsEditors[i]%>?ox=<%=version%>"></script>
+	<%
+	}
+	%>	
 	<script type="text/javascript">
 		$ = jQuery;
 		if (typeof portalJQuery != "undefined") {  

@@ -3,10 +3,10 @@ if (openxava == null) var openxava = {};
 openxava.init = function(application, module) {
 	dwr.util.useLoadingMessage(openxava.loadingMessage);
 	document.onkeydown = openxava.processKey;  
-	openxava.ajaxRequest(application, module, true); 
+	openxava.ajaxRequest(application, module, true); 	
 }
 
-openxava.ajaxRequest = function(application, module, firstRequest) {
+openxava.ajaxRequest = function(application, module, firstRequest) {	
 	if (openxava.isRequesting(application, module)) return;	
 	openxava.setRequesting(application, module);
 	document.throwPropertyChange = false; 
@@ -86,6 +86,8 @@ openxava.refreshPage = function(result) {
 			}			
 		}
 		if (openxava.initTheme != null) openxava.initTheme();
+		openxava.initLists(result.application, result.module);  
+		openxava.initEditors(result.application, result.module); 
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
@@ -160,6 +162,7 @@ openxava.onCloseDialog = function(event) {
 			this.name = this.name.substring(0, this.name.length - 12);
 		}	
 	);
+	openxava.clearLists(); 
 	dialog.empty();
 }
 
@@ -177,6 +180,52 @@ openxava.updateRootIds = function(application, moduleFrom, moduleTo) {
 	openxava.getElementById( 
 			application, moduleFrom, "view_member").id =	
 				openxava.decorateId(application, moduleTo, "view_member");	
+}
+
+openxava.initLists = function(application, module) {  
+	$(".xava_resizable").resizable({
+		handles: 'e',
+		resize: function(event, ui) { 
+			var newWidth = $(event.target).width() - 1;
+			$(event.target).parent().width(newWidth);
+			$("." + event.target.id).width(newWidth);
+		},
+		stop: function(event, ui) {			
+			Tab.setColumnWidth(event.target.id, $(event.target).width());
+		}
+	});			
+	$('.' + openxava.decorateId(application, module, "tipable")).qtip({     
+		style: { 
+			name: 'light',
+			tip: { corner: 'topMiddle' },      
+			width: { min: 0, max: 600 },
+			border: { width: 1 , radius: 5 }
+		},
+	    position: {
+			target: 'mouse',
+			corner: { target: 'topMiddle', tooltip: 'bottomMiddle' }, 
+			adjust: { screen:true, resize:true }
+		},
+		show: { effect: { length: 800 } }
+	});	
+}
+
+openxava.addEditorInitFunction  = function(initFunction) { 
+	if (openxava.editorsInitFunctions == null) {
+		openxava.editorsInitFunctions = new Array();
+	}
+	openxava.editorsInitFunctions.push(initFunction);	
+}
+
+openxava.initEditors = function(application, module) { 
+	if (openxava.editorsInitFunctions == null) return;	
+	for (var i in openxava.editorsInitFunctions) {
+		openxava.editorsInitFunctions[i]();
+	}
+}
+
+openxava.clearLists = function(application, module) { 
+	$('.qtip').hide();
 }
 
 openxava.getDialog = function(application, module) {  
@@ -301,34 +350,6 @@ openxava.limitLength = function(ev, max) {
 	}	
 }
 
-// JavaScript for numeric editors
-openxava.validateNumeric = function(ev, max, integer) {		
-	if (ev.which == 0) return true;
-	var charCode = (ev.which) ? ev.which : ev.keyCode;		
-	if (charCode == 0 || charCode == 8) return true;		
-	if (ev.ctrlKey) return true;		
-	var target = window.event ? window.event.srcElement : ev.target;	
-	var text = target.value + String.fromCharCode(charCode);	
-	var numerics = 0;			
-	var textLength = text.length;
-	for (var i=0; i < textLength; i++) {		
-		var theChar = text.charAt(i);		
-		if (theChar >= '0' && theChar <= '9') {
-			numerics++;
-			if (numerics > max) {
-				return false;
-			}
-		}	
-		else if (!integer && !(theChar == ',' || theChar == '.' || theChar == '-')) {
-			return false;
-		}
-		else if (integer && theChar != '-') {
-			return false;
-		}
-	}	
-	return true;
-}
-
 // JavaScript for collections and list
 openxava.manageFilterRow = function(application, module, id, tabObject) { 
     var img = openxava.getElementById(application, module, "filter_image_" + id);
@@ -347,14 +368,6 @@ openxava.manageFilterRow = function(application, module, id, tabObject) {
 		link.title=this.hideFiltersMessage;
 		Tab.setFilterVisible(application, module, true, tabObject);
 	}    
-}
-
-openxava.executeAction = function(application, module, confirmMessage, takesLong, action) { 
-	openxava.executeAction(application, module, confirmMessage, takesLong, action, null, null);
-}
-
-openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv) { 
-	openxava.executeAction(application, module, confirmMessage, takesLong, action, argv, null, null);
 }
 
 openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv, range, alreadyProcessed) {

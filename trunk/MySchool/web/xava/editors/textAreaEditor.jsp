@@ -16,7 +16,7 @@ script = script + " onkeyup='return openxava.limitLength(event, " + p.getSize() 
 %>
 
 
-<textarea name="<%=propertyKey%>" class=<%=style.getEditor()%>
+<textarea id="<%=propertyKey%>" name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	rows="<%=rows%>" cols="80"
 	title="<%=p.getDescription(request)%>"	
 	<%=disabled%>
