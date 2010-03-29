@@ -720,7 +720,10 @@
 		</copy>
 		<copy todir="${dist.portlets.dir}/xava/js">
 			<fileset dir="web/xava/js"/>
-		</copy>						
+		</copy>
+		<copy todir="${dist.portlets.dir}/xava/editors/js">
+			<fileset dir="web/xava/editors/js"/>
+		</copy>								
 		<copy todir="${dist.portlets.dir}/xava/editors/calendar">
 			<fileset dir="web/xava/editors/calendar"/>
 		</copy>						
@@ -729,7 +732,7 @@
 		</copy>								
 		<copy todir="${dist.portlets.dir}/xava/editors" file="web/xava/editors/fckEditor.jsp"/>
 		<copy todir="${dist.portlets.dir}/WEB-INF/jsp" >
-			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/calendar/**, xava/editors/FCKeditor/**, xava/editors/FCKEditor.jsp, xava/jasperReport.jsp public/**"/>
+			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/js/**, xava/editors/calendar/**, xava/editors/FCKeditor/**, xava/editors/FCKEditor.jsp, xava/jasperReport.jsp public/**"/>
 		</copy>
 		<copy todir="${dist.portlets.dir}/public" failonerror="false">
 			<fileset dir="web/public"/>
