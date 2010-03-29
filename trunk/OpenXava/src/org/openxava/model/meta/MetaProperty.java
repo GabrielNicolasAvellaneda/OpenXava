@@ -846,7 +846,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	/**
 	 * Convert the argument in a object of type valid
 	 * for assign to this property. <p>
-	 * Convierte el argumento enviado en un objeto de tipo válido
+	 * Convierte el argumento enviado en un objeto de tipo vï¿½lido
 	 * para asignar a esta propiedad. <p>
 	 * 
 	 * If argument is primitive return the match wrapper.
@@ -1103,16 +1103,17 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		this.searchKey = searchKey;
 	}
 	
-	public String getEditorURLDescriptionsList(String tabModelName, String propertyKey, int index, String prefix){
+	public String getEditorURLDescriptionsList(String tabModelName, String propertyKey, int index, String prefix){ // It's better to move this method to WebEditors
 		if (!Is.empty(editorURLDescriptionsList)) return editorURLDescriptionsList;
-		if (getQualifiedName().indexOf('.') < 0) return "";	
+		if (getQualifiedName().indexOf('.') < 0) return "";
+		if (!getMetaModel().isAnnotatedEJB3() && tabModelName.contains(".")) return ""; // Because a bug with XML components and aggregate collections
 		
 		tabModelName = tabModelName.substring(tabModelName.lastIndexOf('.') + 1);
-		MetaComponent metaComponent = MetaComponent.get(tabModelName);
+		MetaComponent metaComponent = MetaComponent.get(tabModelName); 
 		String reference = getQualifiedName().replace("." + getName(), "");
-		MetaReference metaReference = metaComponent.getMetaEntity().getMetaReference(reference);	
+		MetaReference metaReference = metaComponent.getMetaEntity().getMetaReference(reference);			
 		
-		Collection<MetaView> metaViews = metaComponent.getMetaEntity().getMetaViews();
+		Collection<MetaView> metaViews = metaComponent.getMetaEntity().getMetaViews();		
 		for (MetaView metaView : metaViews){
 			MetaDescriptionsList metaDescriptionsList = metaView.getMetaDescriptionList(metaReference);
 			if (metaDescriptionsList == null) continue;
@@ -1121,7 +1122,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (Is.empty(descriptionPropertiesNames)) descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertyName();
 			
 			if (descriptionPropertiesNames.contains(getName())) {
-				MetaTab metaTab = metaComponent.getMetaTab();
+				MetaTab metaTab = metaComponent.getMetaTab();				
 				String filterArg = "";
 				if (metaTab.hasFilter()) filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
 
