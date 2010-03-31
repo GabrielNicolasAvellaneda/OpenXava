@@ -71,8 +71,8 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 		return "websphere-frame-title-label";
 	}
 
-	public String getFrameHeaderStartDecoration() {		
-		return super.getFrameHeaderStartDecoration() + 
+	public String getFrameHeaderStartDecoration(int width) {		
+		return super.getFrameHeaderStartDecoration(width) + 
 			"<div style='width:100%; text-align: left'>";
 	}
 	

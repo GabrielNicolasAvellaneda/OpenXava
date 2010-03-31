@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Frames are right and left justified.   
+
 OpenXava 4m3 (2010-3-25)
 ------------------------
 - The user can resize the column widths for list and collections using the mouse, and the values are persisted by user.
