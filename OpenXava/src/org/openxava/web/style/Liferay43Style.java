@@ -193,7 +193,7 @@ public class Liferay43Style extends Style {
 		return "<div class='portlet-content'><div class='portlet-content-container'>\n";
 	}
 	public String getFrameContentEndDecoration() { 		
-		return "\n</div></div></div></td></tr></table>";
+		return "\n</div></div></div></td></tr></table>";		
 	}
 	
 	public String getListPairSelected() { 
@@ -204,9 +204,10 @@ public class Liferay43Style extends Style {
 		return "liferay-list-selected"; 
 	}	
 
-	public String getFrameHeaderStartDecoration() {
-		return "<table style='float:left; clear:none'><tr><td>\n" +
-			"<div class='portlet'><div class='portlet-topper' style='position: static; padding-right: 8px;'><table width='100%'><tr>"; // position: static needed for ie7 + liferay 4.3			
+	public String getFrameHeaderStartDecoration(int width) {
+		String widthAttribute = width == 0?"":"width=" + width+ "% ";				
+		return "<table " + widthAttribute + "style='float:left; clear:none'><tr><td>\n" +
+			"<div class='portlet'><div class='portlet-topper' style='position: static; padding-right: 8px;'><table width='100%'><tr>"; // position: static needed for ie7 + liferay 4.3
 	}	
 	public String getFrameHeaderEndDecoration() { 
 		return "</tr></table></div>"; 

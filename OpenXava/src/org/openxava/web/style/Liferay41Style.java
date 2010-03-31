@@ -6,7 +6,7 @@ import java.util.*;
  * For Liferay 4.1 and 4.2. <p>
  * 
  * 
- * @author José Luis Santiago
+ * @author Josï¿½ Luis Santiago
  */ 
 
 public class Liferay41Style extends Style {
@@ -168,8 +168,8 @@ public class Liferay41Style extends Style {
 		return "liferay-xava-frame-header";
 	}
 	
-	public String getFrameHeaderStartDecoration() {		
-		return super.getFrameHeaderStartDecoration() + 
+	public String getFrameHeaderStartDecoration(int width) {			
+		return super.getFrameHeaderStartDecoration(width) + 
 			"<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td align='left'>";
 	}
 	

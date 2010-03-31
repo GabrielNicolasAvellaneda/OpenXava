@@ -29,7 +29,7 @@ import org.openxava.test.actions.*;
 		"seller [" +  
 		"	seller; " +
 		"	relationWithSeller;" +
-		"]" +  
+		"]" +		
 		"alternateSeller;" +
 		"deliveryPlaces;" +
 		"remarks" 	

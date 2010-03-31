@@ -45,8 +45,9 @@ boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
 boolean lastWasProperty = false; 
 while (it.hasNext()) {
-	Object m = it.next();
-	lastWasProperty = false; 
+	MetaMember m = (MetaMember) it.next();
+	lastWasProperty = false;
+	int frameWidth = view.isVariousMembersInSameLine(m)?0:100;
 	if (m instanceof MetaProperty) {		
 		MetaProperty p = (MetaProperty) m;		
 		if (!PropertiesSeparator.INSTANCE.equals(m)) {			
@@ -78,7 +79,7 @@ while (it.hasNext()) {
 					"label_" + propertyPrefix + p.getName()); 
 				String label = view.getLabelFor(p);
 	%>					 
-		<%=style.getFrameHeaderStartDecoration() %>
+		<%=style.getFrameHeaderStartDecoration(frameWidth) %>
 		<%=style.getFrameTitleStartDecoration() %>
 		<span id="<%=labelKey%>"><%=label%></span>		
 		<%@ include file="editorIcons.jsp"%>		
@@ -152,8 +153,8 @@ while (it.hasNext()) {
 						request.getParameter("module"),
 						"label_" + propertyPrefix + ref.getName()); 
 					String label = view.getLabelFor(ref);
-	%>					 
-		<%=style.getFrameHeaderStartDecoration() %>
+	%>				
+		<%=style.getFrameHeaderStartDecoration(frameWidth) %>
 		<%=style.getFrameTitleStartDecoration() %>
 		<span id="<%=labelKey%>"><%=label%></span>
 		<%=style.getFrameTitleEndDecoration() %>
@@ -203,7 +204,7 @@ while (it.hasNext()) {
 		<div style="<%=styleCollectionTogether %>">
 	<%			if (withFrame) {
 		%>	
-		<%=style.getFrameHeaderStartDecoration()%>
+		<%=style.getFrameHeaderStartDecoration(frameWidth)%>
 		<%=style.getFrameTitleStartDecoration()%>
 		<%=collection.getLabel(request) %>
 		<%=style.getFrameTitleEndDecoration()%>
@@ -232,7 +233,7 @@ while (it.hasNext()) {
 		%>
 		<tr><td colspan="4">
 		<% }  %>
-		<%=style.getFrameHeaderStartDecoration()%>
+		<%=style.getFrameHeaderStartDecoration(frameWidth)%>
 		<%=style.getFrameTitleStartDecoration()%>
 		<%=group.getLabel(request)%>
 		<%=style.getFrameTitleEndDecoration()%>

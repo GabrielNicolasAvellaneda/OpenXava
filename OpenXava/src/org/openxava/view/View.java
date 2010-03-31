@@ -4246,6 +4246,10 @@ public class View implements java.io.Serializable {
 		return allCollection;
 	}
 	
+	public boolean isVariousMembersInSameLine(MetaMember metaMember) { 
+		return getMetaMembersInLine(metaMember.getName()).size() > 1;
+	}
+	
 	/**
 	 * MetaMembers in same line
 	 */

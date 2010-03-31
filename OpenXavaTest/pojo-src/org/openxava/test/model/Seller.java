@@ -14,9 +14,9 @@ import org.openxava.annotations.*;
 
 @Entity
 @Views ({	
-	@View(members="number; name"),		
+	@View(members="number; name"),			
 	@View(name="Complete",	members="number; name; level; regions; customers"),	
-	@View(name="DecorateName", members="number; name"),
+	@View(name="DecorateName", members="number; name"),	
 	@View(name="ForCustomJSP", members="number; name; level"),
 	@View(name="CannotCreateCustomer", members=
 		"number; name; " +

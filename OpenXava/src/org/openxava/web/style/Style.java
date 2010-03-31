@@ -247,9 +247,12 @@ public class Style {
 		return "";
 	}
 
-	public String getFrameHeaderStartDecoration() { 
+	public String getFrameHeaderStartDecoration(int width) {  
 		StringBuffer r = new StringBuffer();
-		r.append("<table class='");
+		String widthAttribute = width == 0?"":"width=" + width+ "% ";
+		r.append("<table ");
+		r.append(widthAttribute);
+		r.append(" class='");
 		r.append(getFrame());
 		r.append("' style='float:left; margin-right:4px'"); 
 		r.append(getFrameSpacing());
