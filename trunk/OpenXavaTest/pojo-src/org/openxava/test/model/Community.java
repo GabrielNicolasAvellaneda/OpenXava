@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 /**
  * 
  * @author Javier Paniza
@@ -13,6 +15,7 @@ import javax.persistence.*;
 public class Community extends Nameable {
 	
 	@ManyToMany
+	@ListAction("ManyToMany.new") // tmp
 	private Collection<Human> members;
 
 	public void setMembers(Collection<Human> members) {

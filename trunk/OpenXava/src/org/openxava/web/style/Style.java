@@ -246,6 +246,10 @@ public class Style {
 	public String getListTitleWrapper() {
 		return "";
 	}
+	
+	public String getFrameHeaderStartDecoration() {
+		return getFrameHeaderStartDecoration(0); 
+	}
 
 	public String getFrameHeaderStartDecoration(int width) {  
 		StringBuffer r = new StringBuffer();
