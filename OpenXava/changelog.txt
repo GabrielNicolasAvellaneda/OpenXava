@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New defaultLabelFormat property in xava.properties to indicate the default when @LabelFormat would be omitted.
 - New ManyToMany controller for creating new elements from a many to many collection.
 - Frames are right and left justified.   
 

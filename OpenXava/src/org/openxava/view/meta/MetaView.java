@@ -749,7 +749,7 @@ public class MetaView extends MetaElement implements Cloneable {
 
 	public int getLabelFormatForProperty(MetaProperty p) {
 		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
-		if (metaPropertyView == null) return MetaPropertyView.NORMAL_LABEL;
+		if (metaPropertyView == null) return XavaPreferences.getInstance().getDefaultLabelFormat(); 
 		return metaPropertyView.getLabelFormat();
 	}
 	
@@ -774,9 +774,9 @@ public class MetaView extends MetaElement implements Cloneable {
 	
 	public int getLabelFormatForReference(MetaReference ref) {
 		MetaReferenceView metaReferenceView = getMetaReferenceViewFor(ref.getName());
-		if (metaReferenceView == null) return MetaPropertyView.NORMAL_LABEL;
+		if (metaReferenceView == null) return XavaPreferences.getInstance().getDefaultLabelFormat(); 
 		MetaDescriptionsList descriptionsList = metaReferenceView.getMetaDescriptionsList(); 
-		if (descriptionsList == null) return MetaPropertyView.NORMAL_LABEL;
+		if (descriptionsList == null) return XavaPreferences.getInstance().getDefaultLabelFormat();  
 		return descriptionsList.getLabelFormat();		
 	}
 	
