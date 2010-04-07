@@ -19,7 +19,7 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	private String order;
 	private boolean orderByKey;
 	private Collection dependsNames;
-	private int labelFormat;
+	private int labelFormat = XavaPreferences.getInstance().getDefaultLabelFormat(); 
 	
 	
 		

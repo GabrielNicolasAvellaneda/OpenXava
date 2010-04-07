@@ -20,7 +20,7 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	private String label;
 	private boolean readOnly;
 	private String onChangeActionClassName;	
-	private int labelFormat;
+	private int labelFormat = XavaPreferences.getInstance().getDefaultLabelFormat();
 	private int displaySize;
 	
 	

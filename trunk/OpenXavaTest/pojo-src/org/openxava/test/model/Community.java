@@ -15,7 +15,7 @@ import org.openxava.annotations.*;
 public class Community extends Nameable {
 	
 	@ManyToMany
-	@ListAction("ManyToMany.new") // tmp
+	@ListAction("ManyToMany.new") 
 	private Collection<Human> members;
 
 	public void setMembers(Collection<Human> members) {

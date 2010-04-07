@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.logging.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.view.meta.*;
 
 /**
  * @author Javier Paniza
@@ -32,6 +33,7 @@ public class XavaPreferences {
 	private Level hibernateJavaLoggingLevel;
 	private int addColumnsPageRowCount;
 	private int pageRowCount;	
+	private int defaultLabelFormat = -1; 
 	
 	private XavaPreferences() { 		
 	}
@@ -311,6 +313,20 @@ public class XavaPreferences {
 
 	public boolean isGenerateDefaultModules(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("generateDefaultModules", "true").trim());		
+	}
+	
+	public int getDefaultLabelFormat() {
+		if (defaultLabelFormat >= 0) return defaultLabelFormat;
+		String labelFormat = getProperties().getProperty("defaultLabelFormat", "NORMAL");
+		if (labelFormat.equalsIgnoreCase("NORMAL")) defaultLabelFormat = MetaPropertyView.NORMAL_LABEL;
+		else if (labelFormat.equalsIgnoreCase("SMALL")) defaultLabelFormat = MetaPropertyView.SMALL_LABEL;
+		else if (labelFormat.equalsIgnoreCase("NO_LABEL")) defaultLabelFormat = MetaPropertyView.NO_LABEL;
+		else if (labelFormat.equalsIgnoreCase("NOLABEL")) defaultLabelFormat = MetaPropertyView.NO_LABEL;
+		else {
+			defaultLabelFormat = MetaPropertyView.NORMAL_LABEL;
+			log.warn(XavaResources.getString("defaultLabelFormat_illegal_value", labelFormat));
+		}
+		return defaultLabelFormat;
 	}
 	
 }
