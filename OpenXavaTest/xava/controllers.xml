@@ -28,7 +28,7 @@
 	<controller name="Collection">
 		<action name="new" image="images/create_new.gif"
 			class="org.openxava.actions.CreateNewElementInCollectionAction"/>
-	
+			
 		<action name="add" image="images/create_new.gif" 
 			class="org.openxava.actions.GoAddElementsToCollectionAction"/>
 
@@ -36,7 +36,7 @@
 			class="org.openxava.test.actions.HideDetailElementInCollectionWithMessageAction"/>
 							
 		<action name="save" 
-			class="org.openxava.actions.SaveElementInCollectionAction"/>
+			class="org.openxava.actions.SaveElementInCollectionAction"/>		
 
 		<action name="remove" 
 			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
@@ -50,8 +50,8 @@
 		<action name="removeSelected" confirm="true" image="images/delete.gif"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction"/>
 	
-	</controller>	
-					
+	</controller>
+						
 	<controller name="ChangeActiveYear">
 		<!-- Do not remove use-object elements. This module is used to test them -->
 		<action name="showActiveYear" class="org.openxava.test.actions.ShowActiveYearAction"

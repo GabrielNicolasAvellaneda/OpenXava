@@ -475,7 +475,7 @@ public class View implements java.io.Serializable {
 		boolean modelChanged = false;
 		if (values != null) {
 			String modelName = (String) values.get(MapFacade.MODEL_NAME);
-			if (modelName != null && !modelName.equals(getModelName()) && !getModelName().contains(".")) {
+			if (modelName != null && !modelName.equals(getModelName()) && !getModelName().contains(".")) {			
 				rootModelName = getModelName();
 				setModelName(modelName);
 				modelChanged = true;

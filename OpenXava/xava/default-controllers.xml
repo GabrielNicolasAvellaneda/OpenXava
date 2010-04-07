@@ -244,7 +244,22 @@ here that you want to override.
 		<action name="removeSelected" confirm="true" image="images/delete.gif"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction"/>
 											
-	</controller>	
+	</controller>
+	
+	<!-- 
+	These actions are optional to use with ManyToMany collection, they are
+	not added by default. That is, you have to use @ListAction("ManyToMany.new")
+	in your @ManyToMany collection
+	 -->
+	<controller name="ManyToMany">		
+		<action name="new" image="images/new.gif" hidden="true"
+			class="org.openxava.actions.CreateNewElementInManyToManyCollectionAction"/>		
+	</controller>			
+		
+	<controller name="ManyToManyNewElement">		
+		<action name="save" 
+			class="org.openxava.actions.SaveElementInManyToManyCollectionAction"/>			
+	</controller>		
 	
 	<controller name="DefaultListActionsForCollections">
 		<extends controller="Print"/>
