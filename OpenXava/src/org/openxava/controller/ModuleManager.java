@@ -37,10 +37,10 @@ public class ModuleManager {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4m3";
+		return "4m4beta";
 	}
 	final static private String getVersionDate() {
-		return "2010-3-25";
+		return "2010-4-xx";
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
