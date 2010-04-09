@@ -22,8 +22,10 @@ here that you want to override.
 	<object name="xava_previousCustomViews" class="java.util.Stack"/>
 	<object name="xava_gallery" class="org.openxava.session.Gallery"/>
 	<object name="xava_defaultSchema" class="java.lang.String" scope="global"/>
-	<object name="xava_currentModule" class="java.lang.String" />					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>	</controller>				<controller name="Void"/>	
-		<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
+	<object name="xava_currentModule" class="java.lang.String" />
+					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>
+	</controller>				<controller name="Void"/>	
+	<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
 			<set property="restoreModel" value="true"/>					</action>									<action name="save" mode="detail"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="Control S"/>							<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="Control D"/>						<action name="search" mode="detail"			by-default="if-possible"						class="org.openxava.actions.SearchAction"			image="images/find.gif"			keystroke="control B"/>															<action name="searchByViewKey" hidden="true"			by-default="if-possible"						class="org.openxava.actions.SearchByViewKeyAction"/>		
 		<action name="searchExecutingOnChange" hidden="true"
 			by-default="if-possible"			
@@ -284,5 +286,29 @@ here that you want to override.
 	<controller name="WebURL">
 		<action name="go" hidden="true"
 			class="org.openxava.actions.GoToURLAction"/>
-	</controller>								 
+	</controller>		
+	<!-- You can add this controller to your application and you will be able to
+		switch between schemas by appending parameter `schema`.
+		Also you can switch your locale by appending the `locale` parameter.
+		If you append the `user` parameter to the url it will save its value
+		in a session attribute 'xava.user'.
+		All these actions rely on request.getParameter which depends on the presentation
+		layer. 
+		Keep in mind that it is not recommended to based your application behavior
+		on the presentation layer such as this approach. (Openxava is intended to be 
+		independent of the presentation layer).
+	 -->
+	<controller name="UrlParameters">
+		<action name="setSchema" before-each-request="true" hidden="true"
+			class="org.openxava.actions.SetSchemaAction">
+		</action>
+		<action name="setLocale" on-each-request="true" hidden="true"
+			class="org.openxava.actions.SetLocaleAction">
+		</action>
+		<action name="setUser" on-each-request="true" hidden="true"
+			class="org.openxava.actions.SetUserAction">
+		</action>
+	</controller>
+	
+							 
 </controllers>

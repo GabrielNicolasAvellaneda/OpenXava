@@ -1,16 +1,19 @@
 package org.openxava.actions;
 
-import java.util.*;
+import java.util.Iterator;
 
-import javax.inject.*;
+import javax.inject.Inject;
 
-
-
-import org.openxava.mapping.*;
-import org.openxava.model.meta.*;
-import org.openxava.tab.*;
-import org.openxava.util.*;
-import org.openxava.view.*;
+import org.openxava.mapping.ModelMapping;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.model.meta.MetaReference;
+import org.openxava.tab.Tab;
+import org.openxava.util.ElementNotFoundException;
+import org.openxava.util.Is;
+import org.openxava.util.XavaException;
+import org.openxava.view.View;
+import org.openxava.view.meta.MetaReferenceView;
+import org.openxava.view.meta.MetaView;
 
 /**
  * @author Javier Paniza
@@ -35,6 +38,8 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 		getTab().setModelName(subview.getModelName());
 		MetaReference ref = getMetaReference(metaRootModel, getViewInfo().getMemberName());
 		tab.setTabName(tabName);
+		
+		
 		
 		ModelMapping rootMapping = null;
 		try {
@@ -66,7 +71,18 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 		else {
 			getTab().setBaseCondition(null);
 		}
-		
+		MetaView metaView = ref.getMetaModel().getMetaView(subview.getParent().getViewName());
+		if (metaView != null) {
+			MetaReferenceView metaReferenceView
+				= metaView.getMetaReferenceViewFor(ref.getName());
+			if (metaReferenceView != null) {
+				String searchListCondition = metaReferenceView.getSearchListCondition();
+				if (!Is.emptyString(searchListCondition)) {
+					getTab().setBaseCondition(searchListCondition);
+				}
+			}
+		}
+			
 		showDialog();
 		getView().setTitleId("choose_reference_prompt", ref.getLabel()); 
 		 

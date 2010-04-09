@@ -1,9 +1,14 @@
 package org.openxava.actions;
 
-import javax.inject.*;
+import javax.inject.Inject;
 
-import org.openxava.tab.*;
-import org.openxava.util.*;
+import org.openxava.model.meta.MetaCollection;
+import org.openxava.tab.Tab;
+import org.openxava.util.Is;
+import org.openxava.util.Labels;
+import org.openxava.util.XavaResources;
+import org.openxava.view.meta.MetaCollectionView;
+import org.openxava.view.meta.MetaView;
 
 /**
  * 
@@ -25,7 +30,20 @@ public class GoAddElementsToCollectionAction extends CollectionElementViewBaseAc
 	public void execute() throws Exception {		
 		Tab tab = new Tab();
 		tab.setRequest(getTab().getRequest());
-		tab.setModelName(getCollectionElementView().getModelName());	
+		tab.setModelName(getCollectionElementView().getModelName());
+		MetaCollection collection =
+			getCollectionElementView().getParent().getMetaModel().getMetaCollection(getCollectionElementView().getMemberName());
+		if (collection != null) {
+			MetaView metaView = collection.getMetaModel().getMetaView(getView().getViewName());
+			if (metaView != null) {
+				MetaCollectionView collectionView =
+					metaView.getMetaCollectionView(collection.getName()); 
+				if (collectionView != null &&
+						!Is.emptyString(collectionView.getSearchListCondition())) {
+					tab.setBaseCondition(collectionView.getSearchListCondition());
+				}
+			}
+		}
 		setTab(tab);
 		currentCollectionLabel = "'" + 
 			Labels.get(getCollectionElementView().getMemberName(), getRequest().getLocale()) +

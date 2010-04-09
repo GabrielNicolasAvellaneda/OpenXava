@@ -312,7 +312,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertAddingStates();
 		
 		// Using Edit + Remove
-		/* To remove editing collections of entites not available since OX4m2
+		/* To remove editing collections of entities not available since OX4m2
 		execute("Collection.edit", "row=0,viewObject=xava_view_section1_states");
 		execute("Collection.remove", "viewObject=xava_view_section1_states");
 		assertCollectionRowCount("states", 1);

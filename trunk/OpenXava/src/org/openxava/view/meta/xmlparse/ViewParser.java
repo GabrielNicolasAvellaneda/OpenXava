@@ -197,6 +197,7 @@ public class ViewParser extends XmlElementsNames {
 		if (!Is.emptyString(el.getAttribute(xsearch[lang]))) {
 			a.setSearch(ParserUtil.getAttributeBoolean(el, xsearch[lang]) );
 		}		
+		a.setSearchListCondition(ParserUtil.getString(el, xsearch_list_condition[lang])); 
 		fillOnChangeSearchAction(el, a, lang);
 		fillMetaSearchAction(el, a, lang);
 		fillMetaDescriptionsList(el, a, lang);
@@ -228,6 +229,7 @@ public class ViewParser extends XmlElementsNames {
 		a.setRemoveActionName(getAction(el, xremove_action[lang], lang));
 		a.setRemoveSelectedActionName(getAction(el, xremove_selected_action[lang], lang));
 		a.setOnSelectElementActionName(getAction(el, xon_select_element_action[lang], lang));
+		a.setSearchListCondition(ParserUtil.getString(el, xsearch_list_condition[lang])); 
 		fillRowStyles(el, a, lang);
 		fillDetailActions(el, a, lang); 		
 		fillListActions(el, a, lang);
