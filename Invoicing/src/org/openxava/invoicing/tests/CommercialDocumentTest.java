@@ -32,6 +32,7 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	
 	public void testTrash() throws Exception { 
 		assertListOnlyOnePage();
+		execute("List.orderBy", "property=number"); // tmp
 
 		// Deleting from detail mode
 		int initialRowCount = getListRowCount();
@@ -91,12 +92,12 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 				getDocumentRowInList(year, number) < 0);
 	}
 		
-	private void assertDocumentInList(String year, String number) throws Exception {
+	protected void assertDocumentInList(String year, String number) throws Exception { 
 		assertTrue("Document " + year + "/" + number + " must be in list",
 			getDocumentRowInList(year, number) >= 0);
 	}
 	
-	private int getDocumentRowInList(String year, String number) throws Exception {
+	protected int getDocumentRowInList(String year, String number) throws Exception { 
 		int c = getListRowCount();
 		for (int i=0; i<c; i++) {
 			if (year.equals(getValueInList(i, 0)) &&
