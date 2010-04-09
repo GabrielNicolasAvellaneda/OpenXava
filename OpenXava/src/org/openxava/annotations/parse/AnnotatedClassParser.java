@@ -1116,7 +1116,13 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(OnSelectElementActions.class)) {
 			notApply(property.getName(), OnSelectElementActions.class, "collections");
-		}		
+		}
+		if (element.isAnnotationPresent(SearchListCondition.class)) {
+			notApply(property.getName(), SearchListCondition.class, "references & collections");
+		}
+		if (element.isAnnotationPresent(SearchListConditions.class)) {
+			notApply(property.getName(), SearchListConditions.class, "references & collections");
+		}
 	}
 
 	private void processAnnotations(MetaCollection collection, AnnotatedElement element) throws Exception {
@@ -1159,6 +1165,7 @@ public class AnnotatedClassParser {
 			OrderBy orderBy = element.getAnnotation(OrderBy.class);
 			collection.setOrder(wrapWithDollars(orderBy.value()));
 		}		
+
 					
 		for (Object oMetaView: collection.getMetaModel().getMetaViews()) {
 			MetaView metaView = (MetaView) oMetaView;				
@@ -1497,9 +1504,29 @@ public class AnnotatedClassParser {
 				}
 			}
 			
+			// SearchListCondition
+			if (element.isAnnotationPresent(SearchListCondition.class)) {
+				SearchListCondition searchListCondition = element.getAnnotation(SearchListCondition.class);
+				if (isForView(metaView, searchListCondition.forViews(), searchListCondition.notForViews())) {
+					collectionView.setSearchListCondition(searchListCondition.value());
+					mustAddMetaView = true;
+				}
+			}			
+			// SearchListConditions
+			if (element.isAnnotationPresent(SearchListConditions.class)) {
+				SearchListCondition[] searchListConditions = element.getAnnotation(SearchListConditions.class).value();
+				for (SearchListCondition searchListCondition : searchListConditions) {
+					if (isForView(metaView, searchListCondition.forViews(), searchListCondition.notForViews())) {
+						collectionView.setSearchListCondition(searchListCondition.value());
+						mustAddMetaView = true;
+					}
+				}
+			}			
+
 			if (mustAddMetaView) {				
 				metaView.addMetaViewCollection(collectionView);
 			}
+
 		} 			
 		
 		
@@ -1584,7 +1611,6 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(OnChangeSearchs.class)) {
 			notApply(collection.getName(), OnChangeSearchs.class, "references");
 		}																		
-		
 	}
 
 
@@ -1640,7 +1666,7 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(SearchKey.class)) { 						
 			ref.setSearchKey(true);
 		} 
-		
+
 		// Required
 		if (element.isAnnotationPresent(Required.class)) {						
 			ref.setRequired(true);
@@ -1865,11 +1891,30 @@ public class AnnotatedClassParser {
 						mustAddMetaView = true;				
 					}
 				}					
-			}			
-												
+			}
+			
+			// SearchListCondition
+			if (element.isAnnotationPresent(SearchListCondition.class)) {
+				SearchListCondition searchListCondition = element.getAnnotation(SearchListCondition.class);
+				if (isForView(metaView, searchListCondition.forViews(), searchListCondition.notForViews())) {
+					referenceView.setSearchListCondition(searchListCondition.value());
+					mustAddMetaView = true;
+				}
+			}
+			if (element.isAnnotationPresent(SearchListConditions.class)) {
+				SearchListCondition[] searchListConditions = element.getAnnotation(SearchListConditions.class).value();
+				for (SearchListCondition searchListCondition : searchListConditions) {
+					if (isForView(metaView, searchListCondition.forViews(), searchListCondition.notForViews())) {
+						referenceView.setSearchListCondition(searchListCondition.value());
+						mustAddMetaView = true;
+					}
+				}
+			}
+			
 			if (mustAddMetaView) {				
 				metaView.addMetaViewReference(referenceView);
 			}
+			
 
 		}
 

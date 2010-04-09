@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New SetSchemaAction, SetLocaleAction and SetUserAction action to modify session data from url parameters.
+- New @SearchListCondition annotation to specify a condition for the search list used in a references or collections.
 - New defaultLabelFormat property in xava.properties to indicate the default when @LabelFormat would be omitted.
 - New ManyToMany controller for creating new elements from a many to many collection.
 - Frames are right and left justified.   

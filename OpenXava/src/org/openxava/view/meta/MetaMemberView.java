@@ -17,7 +17,8 @@ public class MetaMemberView {
 	
 	private Collection actionsNames;
 	private Collection alwaysEnabledActionsNames;
-	private String editor; 
+	private String editor;
+	private String searchListCondition;
 	
 	
 	
@@ -41,6 +42,12 @@ public class MetaMemberView {
 	}
 	public void setEditor(String editor) {
 		this.editor = editor;
+	}
+	public void setSearchListCondition(String searchListCondition) {
+		this.searchListCondition = searchListCondition;
+	}
+	public String getSearchListCondition() {
+		return searchListCondition;
 	}		
 	
 }

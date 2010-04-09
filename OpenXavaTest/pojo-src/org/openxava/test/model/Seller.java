@@ -1,11 +1,34 @@
 package org.openxava.test.model;
 
-import java.util.*;
+import java.util.Collection;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NoResultException;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Type;
-import org.openxava.annotations.*;
+import org.openxava.annotations.AsEmbedded;
+import org.openxava.annotations.CollectionView;
+import org.openxava.annotations.CollectionViews;
+import org.openxava.annotations.DescriptionsList;
+import org.openxava.annotations.ListProperties;
+import org.openxava.annotations.NoCreate;
+import org.openxava.annotations.NoModify;
+import org.openxava.annotations.OnChange;
+import org.openxava.annotations.Required;
+import org.openxava.annotations.RowStyle;
+import org.openxava.annotations.SearchListCondition;
+import org.openxava.annotations.SearchListConditions;
+import org.openxava.annotations.Stereotype;
+import org.openxava.annotations.Tab;
+import org.openxava.annotations.Tabs;
+import org.openxava.annotations.View;
+import org.openxava.annotations.Views;
 
 /**
  * 
@@ -23,7 +46,9 @@ import org.openxava.annotations.*;
 		"customers { customers }"
 	),
 	@View(name="CustomersAsAggregate", members="number; name; level; customers"),
-	@View(name="LevelNoDescriptionsList", members="number; name; level")		
+	@View(name="LevelNoDescriptionsList", members="number; name; level"),
+	@View(name="SearchListCondition", members="number; name;level;customers"),
+	@View(name="SearchListConditionOff", members="number; name;level;customers")
 })
 @Tabs({
 	@Tab(filter=org.openxava.test.filters.NumbersToLettersFilter.class),
@@ -39,9 +64,12 @@ public class Seller {
 	@Column(length=40) @Required
 	private String name;
 		
-	@DescriptionsList(notForViews="ForCustomJSP, LevelNoDescriptionsList")
+	@DescriptionsList(notForViews="ForCustomJSP, LevelNoDescriptionsList, SearchListCondition, SearchListConditionOff")
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="LEVEL")
 	@OnChange(org.openxava.test.actions.OnChangeVoidAction.class)
+	@SearchListConditions({
+		@SearchListCondition(value="${id}<'C'", forViews="SearchListCondition")
+	})
 	private SellerLevel level;
 
 	@AsEmbedded(forViews="CustomersAsAggregate")
@@ -53,7 +81,8 @@ public class Seller {
 	})
 	@NoCreate(forViews="CannotCreateCustomer")
 	@NoModify(forViews="CannotCreateCustomer")
-	@RowStyle(style="row-highlight", property="type", value="steady")	
+	@RowStyle(style="row-highlight", property="type", value="steady")
+	@SearchListCondition(value="${number} < 5", forViews="SearchListCondition")
 	private Collection<Customer> customers;
 		
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="BOSS")
