@@ -1,12 +1,14 @@
 package org.openxava.invoicing.tests;
 
+import java.math.*;
+import java.util.*;
+
 import javax.persistence.*;
 
 import org.openxava.invoicing.model.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
 
-import sun.reflect.ReflectionFactory.*;
 
 public class OrderTest extends CommercialDocumentTest {
 	
@@ -14,14 +16,65 @@ public class OrderTest extends CommercialDocumentTest {
 		super(testName, "Order"); 				
 	}
 	
+	public void testCreateInvoiceFromSelectedOrders() throws Exception { 
+		assertOrder(2010,  9, 2, 362);
+		assertOrder(2010, 10, 1, 126);
+				
+		execute("List.orderBy", "property=number");
+		checkRow(
+			getDocumentRowInList("2010",  "9") 
+		);
+		checkRow(
+			getDocumentRowInList("2010", "10") 
+		);
+		
+		execute("Order.createInvoiceFromSelectedOrders");
+		
+		String invoiceYear = getValue("year");
+		String invoiceNumber = getValue("number");
+		assertMessage("Invoice " + invoiceYear + "/" + invoiceNumber + 
+			" created from orders: [2010/9, 2010/10]");
+		assertCollectionRowCount("details", 3);
+		assertValue("baseAmount", "488.00");
+		execute("Sections.change", "activeSection=1");
+		assertCollectionRowCount("orders", 2);
+		assertValueInCollection("orders", 0, 0, "2010");
+		assertValueInCollection("orders", 0, 1, "9");
+		assertValueInCollection("orders", 1, 0, "2010");
+		assertValueInCollection("orders", 1, 1, "10");
+		
+		assertAction("CurrentInvoiceEdition.save");		
+		assertAction("CurrentInvoiceEdition.return");
+		
+		checkRowCollection("orders", 0);
+		checkRowCollection("orders", 1);
+		execute("Collection.removeSelected", "viewObject=xava_view_section1_orders");
+		assertNoErrors();
+		
+		execute("CurrentInvoiceEdition.return");
+		assertDocumentInList("2010",  "9");
+		assertDocumentInList("2010", "10");
+	}
+	
+	private void assertOrder(int year, int number, int detailsCount, int baseAmount) {
+		Order order = findOrder("year = " + year + " and number=" + number);
+		assertEquals("To run this test the order " + 
+			order + " must have " +	detailsCount + " details", 
+			detailsCount, order.getDetails().size());
+		assertTrue("To run this test the order " + 
+			order + " must have " +	baseAmount + " as base amount", 
+			order.getBaseAmount().compareTo(new BigDecimal(baseAmount)) == 0);
+	}
+
 	public void testCreateInvoiceFromOrder() throws Exception {
 		// Looking for the order
 		searchOrderSusceptibleToBeInvoiced();
-		int orderDetailCount = getCollectionRowCount("details");		
+		assertValue("delivered", "true"); 
+		int orderDetailsCount = getCollectionRowCount("details");		
 		execute("Sections.change", "activeSection=1");
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");
-		
+				
 		// Creating the invoice
 		execute("Order.createInvoice");
 		String invoiceYear = getValue("invoice.year");
@@ -32,7 +85,7 @@ public class OrderTest extends CommercialDocumentTest {
 			!Is.emptyString(invoiceNumber));		
 		assertMessage("Invoice " + invoiceYear + "/" + invoiceNumber + 
 			" created from current order"); 
-		assertCollectionRowCount("invoice.details", orderDetailCount);		
+		assertCollectionRowCount("invoice.details", orderDetailsCount);		
 		
 		// Restoring the order for running the test the next time
 		setValue("invoice.year", "");
@@ -42,8 +95,49 @@ public class OrderTest extends CommercialDocumentTest {
 		assertNoErrors();
 	}
 	
+	public void testHidesCreateInvoiceFromOrderWhenNotApplicable() throws Exception { 		
+		searchOrderUsingList("delivered = true and invoice <> null"); 
+		assertNoAction("Order.createInvoice");		
+		
+		execute("Mode.list");
+		
+		searchOrderUsingList("delivered = false and invoice = null"); 
+		assertNoAction("Order.createInvoice");		
+				
+		execute("CRUD.new");
+		assertNoAction("Order.createInvoice");		
+	}
+	
+	public void testCreateInvoiceFromOrderExceptions() throws Exception { 
+		assertCreateInvoiceFromOrderException(
+			"delivered = true and invoice <> null",
+			"Impossible to create invoice: the order already has an invoice"
+		);
+		
+		assertCreateInvoiceFromOrderException(
+			"delivered = false and invoice = null",
+			"Impossible to create invoice: the order is not delivered yet"
+		);	
+	}
+	
+	private void assertCreateInvoiceFromOrderException(String condition, String message) throws Exception { 
+		Order order = findOrder(condition);
+		int row = getDocumentRowInList(
+			String.valueOf(order.getYear()), 
+			String.valueOf(order.getNumber())
+		); 
+		checkRow(row);			
+		execute("Order.createInvoiceFromSelectedOrders");
+		assertError(message);
+		uncheckRow(row);
+	}
+	
 	private void searchOrderSusceptibleToBeInvoiced() throws Exception {
-		Order order = getOrderSusceptibleToBeInvoiced();
+		searchOrderUsingList("delivered = true and invoice = null");		
+	}
+	
+	private void searchOrderUsingList(String condition) throws Exception {		
+		Order order = findOrder(condition);
 		String year = String.valueOf(order.getYear());
 		String number = String.valueOf(order.getNumber());
 		setConditionValues(new String [] { year, number });
@@ -51,15 +145,17 @@ public class OrderTest extends CommercialDocumentTest {
 		assertListRowCount(1);		
 		execute("Mode.detailAndFirst");
 		assertValue("year", year);
-		assertValue("number", number);
-		assertValue("delivered", "true");				
+		assertValue("number", number);						
 	}
 	
-	private Order getOrderSusceptibleToBeInvoiced() {
+	private Order findOrder(String condition) {
 		Query query = XPersistence.getManager().createQuery(
-			"from Order o where " +
-			"o.delivered = true and o.invoice = null");
-		return (Order) query.getResultList().get(0);
+			"from Order o where o.deleted = false and " + condition);
+		List orders = query.getResultList();
+		if (orders.isEmpty()) {
+			fail("To run this test you must have some order with " + condition);
+		}
+		return (Order) orders.get(0);
 	}
 	
 	public void testSetInvoice() throws Exception {
@@ -72,6 +168,7 @@ public class OrderTest extends CommercialDocumentTest {
 		assertValue("invoice.year", "");
 		execute("Reference.search", 
 			"keyProperty=invoice.year");
+		execute("List.orderBy", "property=number"); 
 		String year = getValueInList(0, "year");
 		String number = getValueInList(0, "number");		
 		execute("ReferenceSearch.choose", "row=0");
