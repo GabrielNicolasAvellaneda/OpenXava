@@ -83,7 +83,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private PropertyMapping mapping;
 	private DateFormat timeFormat = new SimpleDateFormat("HH:mm"); // 24 hours for all locales
 	private boolean _transient;
-	private String editorURLDescriptionsList = "";
 		
 	public void addValidValue(Object validValue) {
 		getValidValues().add(validValue);
@@ -1101,50 +1100,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	}
 	public void setSearchKey(boolean searchKey) {
 		this.searchKey = searchKey;
-	}
-	
-	public String getEditorURLDescriptionsList(String tabModelName, String propertyKey, int index, String prefix){ // It's better to move this method to WebEditors
-		if (!Is.empty(editorURLDescriptionsList)) return editorURLDescriptionsList;
-		if (getQualifiedName().indexOf('.') < 0) return "";
-		if (!getMetaModel().isAnnotatedEJB3() && tabModelName.contains(".")) return ""; // Because a bug with XML components and aggregate collections
-		
-		tabModelName = tabModelName.substring(tabModelName.lastIndexOf('.') + 1);
-		MetaComponent metaComponent = MetaComponent.get(tabModelName); 
-		String reference = getQualifiedName().replace("." + getName(), "");
-		MetaReference metaReference = metaComponent.getMetaEntity().getMetaReference(reference);			
-		
-		Collection<MetaView> metaViews = metaComponent.getMetaEntity().getMetaViews();		
-		for (MetaView metaView : metaViews){
-			MetaDescriptionsList metaDescriptionsList = metaView.getMetaDescriptionList(metaReference);
-			if (metaDescriptionsList == null) continue;
-
-			String descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertiesNames();
-			if (Is.empty(descriptionPropertiesNames)) descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertyName();
-			
-			if (descriptionPropertiesNames.contains(getName())) {
-				MetaTab metaTab = metaComponent.getMetaTab();				
-				String filterArg = "";
-				if (metaTab.hasFilter()) filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
-
-				editorURLDescriptionsList = "comparatorsDescriptionsList.jsp"
-					+ "?propertyKey=" + propertyKey
-					+ "&index=" + index
-					+ "&prefix=" + prefix
-					+ "&editable=true" 
-					+ "&model=" + metaReference.getReferencedModelName()
-					+ "&keyProperty=" + metaReference.getKeyProperty(propertyKey)
-					+ "&keyProperties=" + metaReference.getKeyProperties()
-					+ "&descriptionProperty=" + metaDescriptionsList.getDescriptionPropertyName()
-					+ "&descriptionProperties=" + metaDescriptionsList.getDescriptionPropertiesNames()
-					+ "&parameterValuesProperties=" + metaReference.getParameterValuesPropertiesInDescriptionsList(metaView)
-					+ "&condition=" + metaDescriptionsList.getCondition()
-					+ "&orderByKey=" + metaDescriptionsList.isOrderByKey()
-					+ "&order=" + metaDescriptionsList.getOrder()
-					+ filterArg;
-				return editorURLDescriptionsList;
-			}
-		}
-		return "";
 	}
 	
 }

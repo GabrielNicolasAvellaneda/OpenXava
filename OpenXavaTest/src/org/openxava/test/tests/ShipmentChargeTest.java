@@ -37,16 +37,17 @@ public class ShipmentChargeTest extends ModuleTestBase {
 	public void testFilterToDescriptionsList() throws Exception {
 		assertListRowCount(1);
 		assertLabelInList(2, "Number of Shipment");
-		assertLabelInList(3, "Description of Shipment");
+		assertLabelInList(3, "Slow");	// fail filter: calculated property and descriptions list
+		assertLabelInList(4, "Description of Shipment");
 		
 		// reference property: descriptionsList
 		setConditionValues(new String[] { "", "", "", "[.MEDIUM.5.INTERNAL.]"} ); // For JPA entities
-		// setConditionValues(new String[] { "", "", "", "[.2.5.1.]"} ); // For XML components
+//		setConditionValues(new String[] { "", "", "", "[.2.5.1.]"} ); // For XML components
 		execute("List.filter");
 		assertListRowCount(0);
 		
 		setConditionValues(new String[] { "", "", "", "[.SLOW.1.INTERNAL.]"} ); // For JPA entities
-		// setConditionValues(new String[] { "", "", "", "[.1.1.1.]"} ); // For XML Components 
+//		setConditionValues(new String[] { "", "", "", "[.1.1.1.]"} ); // For XML Components 
 		execute("List.filter");
 		assertListRowCount(1);
 		

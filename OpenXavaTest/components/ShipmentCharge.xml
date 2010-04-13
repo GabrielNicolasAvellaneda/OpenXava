@@ -17,6 +17,12 @@
 		</property>
 		<reference name="shipment"/>
 		<property name="amount" stereotype="MONEY" required="true"/>
+		
+		<property name="slow" type="boolean">
+			<calculator class="org.openxava.test.calculators.IsSlowCalculator" >
+				<set property="mode"/>
+			</calculator>
+		</property>
 	</entity>
 	
 	<view>
@@ -26,7 +32,7 @@
 	</view>
 	
 	<tab>
-		<properties>mode, amount, shipment.number, shipment.description</properties>
+		<properties>mode, amount, shipment.number, slow, shipment.description</properties>
 	</tab>
 
 	<entity-mapping table="XAVATEST@separator@SHIPMENTCHARGE">

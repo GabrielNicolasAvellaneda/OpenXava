@@ -1,5 +1,6 @@
 package org.openxava.tab;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -41,13 +42,13 @@ import org.openxava.util.Dates;
 import org.openxava.util.ElementNotFoundException;
 import org.openxava.util.Is;
 import org.openxava.util.Labels;
-import org.openxava.util.Strings;
 import org.openxava.util.Users;
 import org.openxava.util.XavaException;
 import org.openxava.util.XavaPreferences;
 import org.openxava.util.XavaResources;
 import org.openxava.view.View;
 import org.openxava.web.Ids;
+import org.openxava.web.WebEditors;
 
 
 /**
@@ -383,38 +384,26 @@ public class Tab implements java.io.Serializable {
 					valuesToWhere.add("");
 					comparatorsToWhere.add(this.conditionComparators[i]);
 				}
-				else if (!Is.empty(p.getEditorURLDescriptionsList(getModelName(), Ids.decorate(request, p.getQualifiedName()), i, getCollectionPrefix()))){
+				else if (!Is.empty(WebEditors.getEditorURLDescriptionsList(getModelName(), Ids.decorate(request, p.getQualifiedName()), i, getCollectionPrefix(), p.getQualifiedName(), p.getName()))){
 					if (Is.empty(this.conditionValues[i])){
 						comparatorsToWhere.add(this.conditionComparators[i]);
 						valuesToWhere.add(this.conditionValues[i]);
-						if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
-						metaPropertiesKey.add(null);
 						continue;
 					}
 					// by possible multiple key
 					String reference = p.getQualifiedName().replace("." + p.getName(), "");
-					MetaTab tab = MetaComponent.get(getModelName().substring(getModelName().lastIndexOf('.') + 1)).getMetaTab();
-					ReferenceMapping referenceMapping = tab.getMetaModel().getMapping().getReferenceMapping(reference);
-					List<CmpField> fields = (List) referenceMapping.getCmpFields();
+					List<CmpField> fields = (List) metaTab.getMetaModel().getMapping().getReferenceMapping(reference).getCmpFields();
 					Collections.sort(fields, CMPFieldComparator.getInstance());
+					
+					MetaTab tab = MetaComponent.get(getModelName().substring(getModelName().lastIndexOf('.') + 1)).getMetaTab();
 					String keyValues = this.conditionValues[i].replaceAll("[\\[\\]]", "");
 					StringTokenizer st = new StringTokenizer(keyValues, ".");
-						
+					
 					for (CmpField field : fields) {
-						String property = field.getCmpPropertyName().replace("_" + Strings.firstUpper(reference) + "_" , "");
-						IConverter converter = tab.getMetaComponent().getMetaEntity().getMetaReference(reference).
-							getMetaModelReferenced().getMapping().getConverter(property);
+						String property = field.getCmpPropertyName().substring(field.getCmpPropertyName().lastIndexOf('_') + 1);
 						String value = st.nextToken();
-						try{
-							if (Class.forName(field.getCmpTypeName()).isEnum()){
-								Enum enumeration = Enum.valueOf((Class<Enum>) Class.forName(field.getCmpTypeName()), value);
-								valuesToWhere.add(String.valueOf(converter == null ? enumeration.ordinal() : converter.toDB(enumeration)));
-							}
-							else valuesToWhere.add(value);
-						}
-						catch(ClassNotFoundException ex){	// primitive type
-							valuesToWhere.add(value);
-						}
+						
+						valuesToWhere.add(getValueConverter(p, tab, property, reference, value, field));
 						comparatorsToWhere.add(this.conditionComparators[i]);
 						
 						if (firstCondition) firstCondition = false;
@@ -425,7 +414,7 @@ public class Tab implements java.io.Serializable {
 						sb.append(" ? ");
 						
 						if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
-						metaPropertiesKey.add(null);
+						metaPropertiesKey.add(p);
 					}
 				}
 				else if (!Is.emptyString(this.conditionValues[i])) {
@@ -513,6 +502,26 @@ public class Tab implements java.io.Serializable {
 		return sb.toString();
 	}
 	
+	private Object getValueConverter(MetaProperty p, MetaTab tab, String property, String reference, String value, CmpField field){
+		IConverter converter = p.getMetaModel().getMapping().getConverter(property);
+		try{
+			if (Class.forName(field.getCmpTypeName()).isEnum()){
+				Enum enumeration = Enum.valueOf((Class<Enum>) Class.forName(field.getCmpTypeName()), value);
+				return String.valueOf(converter == null ? enumeration.ordinal() : converter.toDB(enumeration));
+			}
+			else if (converter != null) {
+				MetaProperty propertyFromReference = tab.getMetaModel().getMetaReference(reference).getMetaModelReferenced().getMetaProperty(property);
+				Object o = WebEditors.parse(getRequest(), propertyFromReference, value, null, "");
+				if (o == null) o = value;
+				return String.valueOf(converter.toDB(o));
+			}
+			else return value;
+		}
+		catch(ClassNotFoundException ex){	// primitive type
+			return value;
+		}
+	}
+
 	private String decorateColumn(MetaProperty p, String column, int i) throws XavaException {
 		if ("year_comparator".equals(this.conditionComparators[i])) {
 			return p.getMetaModel().getMapping().yearSQLFunction(column);
@@ -553,6 +562,12 @@ public class Tab implements java.io.Serializable {
 		return comparator;
 	}
 	
+	private boolean isEmpty(Object value){
+		if (value instanceof Number) return false;
+		if (value instanceof BigDecimal) return false;
+		return Is.empty(value);
+	}
+
 	private Object [] getKey() throws XavaException {
 		if (conditionValuesToWhere == null || conditionValuesToWhere.length == 0) { 
 			return filterKey(null);
@@ -561,7 +576,7 @@ public class Tab implements java.io.Serializable {
 		
 		for (int i = 0; i < this.conditionValuesToWhere.length; i++) {
 			Object value = this.conditionValuesToWhere[i];
-			if (!Is.empty(value)) {
+			if (!isEmpty(value)) {
 								
 				if (STARTS_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) { 
 					value = convertStringArgument(value.toString()) + "%";
