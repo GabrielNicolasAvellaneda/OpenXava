@@ -51,6 +51,12 @@ public class ColorTest extends ModuleTestBase {
 		modifyColorFromFirstUser(2);
 	}
 
+	public void testFilterByNumberZero() throws Exception {
+		setConditionValues(new String[] { "0" });
+		execute("List.filter");
+		assertListRowCount(1);
+	}
+	
 	public void modifyColorFromFirstUser(int id) throws Exception {		
 		// First user
 		execute("List.viewDetail", "row=2");		
@@ -76,5 +82,5 @@ public class ColorTest extends ModuleTestBase {
 		assertNoErrors();		
 		tearDown();
 	}	
-
+	
 }

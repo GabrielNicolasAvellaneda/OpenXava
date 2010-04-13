@@ -1,12 +1,25 @@
 package org.openxava.web;
 
-import javax.servlet.http.*;
+import java.util.Collection;
 
-import org.apache.commons.logging.*;
-import org.openxava.model.meta.*;
-import org.openxava.util.*;
-import org.openxava.view.meta.*;
-import org.openxava.web.meta.*;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.model.meta.MetaMember;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.model.meta.MetaProperty;
+import org.openxava.model.meta.MetaReference;
+import org.openxava.util.ElementNotFoundException;
+import org.openxava.util.Is;
+import org.openxava.util.Locales;
+import org.openxava.util.Messages;
+import org.openxava.util.XavaException;
+import org.openxava.util.XavaResources;
+import org.openxava.view.meta.MetaDescriptionsList;
+import org.openxava.view.meta.MetaView;
+import org.openxava.web.meta.MetaEditor;
+import org.openxava.web.meta.MetaWebEditors;
 
 /**
  * @author Javier Paniza
@@ -218,6 +231,40 @@ public class WebEditors {
 			log.warn(XavaResources.getString("a_depends_b_warning", metaProperty.getName(), "some other"), ex);
 			return false;
 		}
+	}
+	
+	public static String getEditorURLDescriptionsList(String tabModelName, String propertyKey, int index, String prefix, String qualifiedName, String name){
+		if (qualifiedName.indexOf('.') < 0) return "";
+		
+		MetaModel metaModel = MetaModel.get(tabModelName);
+		String reference = qualifiedName.replace("." + name, "");
+		MetaReference metaReference = metaModel.getMetaReference(reference);
+		
+		Collection<MetaView> metaViews = metaModel.getMetaViews();
+		for (MetaView metaView : metaViews){
+			MetaDescriptionsList metaDescriptionsList = metaView.getMetaDescriptionList(metaReference);
+			if (metaDescriptionsList == null) continue;
+
+			String descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertiesNames();
+			if (Is.empty(descriptionPropertiesNames)) descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertyName();
+			if (descriptionPropertiesNames.contains(name)) {
+				return "comparatorsDescriptionsList.jsp"
+					+ "?propertyKey=" + propertyKey
+					+ "&index=" + index
+					+ "&prefix=" + prefix
+					+ "&editable=true" 
+					+ "&model=" + metaReference.getReferencedModelName()
+					+ "&keyProperty=" + metaReference.getKeyProperty(propertyKey)
+					+ "&keyProperties=" + metaReference.getKeyProperties()
+					+ "&descriptionProperty=" + metaDescriptionsList.getDescriptionPropertyName()
+					+ "&descriptionProperties=" + metaDescriptionsList.getDescriptionPropertiesNames()
+					+ "&parameterValuesProperties=" + metaReference.getParameterValuesPropertiesInDescriptionsList(metaView)
+					+ "&condition=" + metaDescriptionsList.getCondition()
+					+ "&orderByKey=" + metaDescriptionsList.isOrderByKey()
+					+ "&order=" + metaDescriptionsList.getOrder();
+			}
+		}
+		return "";
 	}
 
 }

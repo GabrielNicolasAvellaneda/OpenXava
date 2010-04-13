@@ -14,7 +14,7 @@ import org.openxava.annotations.*;
  */
 
 @Entity
-@Tab(properties="mode, amount, shipment.number, shipment.description")
+@Tab(properties="mode, amount, shipment.number, slow, shipment.description")
 public class ShipmentCharge {
 	
 	@Id @GeneratedValue(generator="system-uuid") @Hidden 
@@ -51,7 +51,10 @@ public class ShipmentCharge {
 	@Required @Stereotype("MONEY")
 	private BigDecimal amount;
 	
-
+	public boolean isSlow(){
+		return mode.compareTo(Mode.SLOW) == 0;
+	}
+	
 	public String getOid() {
 		return oid;
 	}

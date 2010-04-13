@@ -197,7 +197,6 @@ public class DeliveryTest extends ModuleTestBase {
 		assertFocusOn("remarks");		
 	}
 	
-	
 	public void testNonExistentReferenceUsedAsKey_ceroValueOnChange() throws Exception {
 		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
 		execute("CRUD.new");
@@ -1117,5 +1116,14 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertExists("advice");
 		assertNotExists("incidents");
+	}
+	
+	public void testFilterDescriptionsListAndEnumLetterType() throws Exception {
+		assertLabelInList(3, "Description of Type");
+		assertLabelInList(7, "Distance");
+//		setConditionValues(new String[] { "", "", "", "1", "", "", "", "1"} );	// For XML components
+		setConditionValues(new String[] { "", "", "", "1", "", "", "", "0"} );	// For annotated POJOs
+		execute("List.filter");
+		assertListRowCount(1);
 	}
 }
