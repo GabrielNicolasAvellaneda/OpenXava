@@ -32,7 +32,7 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	
 	public void testTrash() throws Exception { 
 		assertListOnlyOnePage();
-		execute("List.orderBy", "property=number"); // tmp
+		execute("List.orderBy", "property=number");
 
 		// Deleting from detail mode
 		int initialRowCount = getListRowCount();
