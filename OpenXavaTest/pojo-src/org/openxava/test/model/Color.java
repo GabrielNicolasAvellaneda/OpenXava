@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.openxava.annotations.DescriptionsList;
 import org.openxava.annotations.OnChange;
 import org.openxava.annotations.Required;
 import org.openxava.annotations.Stereotype;
@@ -20,7 +21,7 @@ import org.openxava.test.actions.OnChangeGroupInColorAction;
 
 @Entity
 @Views({
-	@View( name="Ordinary", members="number; name; sample; hexValue"),	
+	@View( name="Ordinary", members="number; name; sample; hexValue; usedTo"),	
 	@View( name="View1", members="property1"), 
 	@View( name="View2", members="property2"), 
 	@View( name="View2Sub1", members="property2Sub1"), 
@@ -50,6 +51,11 @@ public class Color {
 			"negro".equalsIgnoreCase(name)) return "BLACK";
 		return "nocolor";		
 	}
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@DescriptionsList
+	@JoinColumn(name="IDTHING")
+	private Thing usedTo;
 	
 	@Transient
 	private String property1;
@@ -144,6 +150,14 @@ public class Color {
 
 	public void setHexValue(String hexValue) {
 		this.hexValue = hexValue;
+	}
+
+	public Thing getUsedTo() {
+		return usedTo;
+	}
+
+	public void setUsedTo(Thing usedTo) {
+		this.usedTo = usedTo;
 	}
 
 }

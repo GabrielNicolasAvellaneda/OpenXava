@@ -19,6 +19,7 @@ import org.openxava.util.*;
 @EntityValidator(value=DeliveryPlaceValidator.class,
 		properties = { @PropertyValue(name="customer") }
 )
+@Tab(properties="name, address, remarks, preferredWarehouse.name ")
 public class DeliveryPlace {
 	
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="CUSTOMER")
@@ -39,8 +40,8 @@ public class DeliveryPlace {
 	@OnChange(OnChangePreferredWarehouseAction.class)
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumns ({
-		@JoinColumn(name="WAREHOUSE_ZONE"),
-		@JoinColumn(name="WAREHOUSE_NUMBER")
+		@JoinColumn(name="WAREHOUSE_ZONE", referencedColumnName="zone"),
+		@JoinColumn(name="WAREHOUSE_NUMBER", referencedColumnName="number")
 	})	
 	private Warehouse preferredWarehouse;
 
