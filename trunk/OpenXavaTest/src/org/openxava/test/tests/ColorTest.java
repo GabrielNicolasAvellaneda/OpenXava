@@ -57,6 +57,14 @@ public class ColorTest extends ModuleTestBase {
 		assertListRowCount(1);
 	}
 	
+	public void testFilterDescriptionList_keyReferenceWithSameNameThatPropertyFather() throws Exception{
+		assertLabelInList(4, "Name of Used to");
+		assertValueInList(0, 4, "CAR");
+		setConditionValues(new String[] { "", "", "", "1"} );
+		execute("List.filter");
+		assertListNotEmpty();
+	}
+	
 	public void modifyColorFromFirstUser(int id) throws Exception {		
 		// First user
 		execute("List.viewDetail", "row=2");		
