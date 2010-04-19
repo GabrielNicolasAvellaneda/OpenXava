@@ -395,10 +395,11 @@ public class Tab implements java.io.Serializable {
 					List<CmpField> fields = (List) metaTab.getMetaModel().getMapping().getReferenceMapping(reference).getCmpFields();
 					Collections.sort(fields, CMPFieldComparator.getInstance());
 					
+					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();
+					String alias = mapping.getTableToQualifyColumn() + ".";
 					MetaTab tab = MetaComponent.get(getModelName().substring(getModelName().lastIndexOf('.') + 1)).getMetaTab();
 					String keyValues = this.conditionValues[i].replaceAll("[\\[\\]]", "");
 					StringTokenizer st = new StringTokenizer(keyValues, ".");
-					
 					for (CmpField field : fields) {
 						String property = field.getCmpPropertyName().substring(field.getCmpPropertyName().lastIndexOf('_') + 1);
 						String value = st.nextToken();
@@ -408,7 +409,7 @@ public class Tab implements java.io.Serializable {
 						
 						if (firstCondition) firstCondition = false;
 						else sb.append(" and ");
-						sb.append(field.getColumn());
+						sb.append(alias + field.getColumn());
 						sb.append(' ');
 						sb.append(convertComparator(p, this.conditionComparators[i]));
 						sb.append(" ? ");
@@ -420,7 +421,7 @@ public class Tab implements java.io.Serializable {
 				else if (!Is.emptyString(this.conditionValues[i])) {
 					if (firstCondition) firstCondition = false;
 					else sb.append(" and ");
-					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();					
+					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();
 					String column = mapping.getQualifiedColumn(p.getQualifiedName());					
 					sb.append(decorateColumn(p, column, i));
 					sb.append(' ');

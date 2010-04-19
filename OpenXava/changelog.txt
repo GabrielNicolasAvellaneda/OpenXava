@@ -1,8 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: References as combos to filter in list mode: qualify the columns when it create the condition  
 - Fix: References as combos to filter in list mode: using XML components
-- Fix: Mode List: descriptionsList does not apply conditionBase
+- Fix: Mode List: descriptionsList does not apply conditionBase with filter
 - Fix: Filter in mode List with: calculated property and descriptionsList; descriptionsList and enumLetterType property
 - Fix: Filter by number zero.
 

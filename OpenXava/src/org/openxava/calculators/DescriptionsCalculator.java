@@ -1,18 +1,36 @@
 package org.openxava.calculators;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 
-import javax.swing.table.*;
+import javax.swing.table.TableModel;
 
-
-
-import org.openxava.component.*;
-import org.openxava.filters.*;
-import org.openxava.mapping.*;
-import org.openxava.model.meta.*;
-import org.openxava.tab.impl.*;
-import org.openxava.tab.meta.*;
-import org.openxava.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.component.MetaComponent;
+import org.openxava.filters.FilterException;
+import org.openxava.filters.IFilter;
+import org.openxava.mapping.ModelMapping;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.tab.impl.EntityTabFactory;
+import org.openxava.tab.impl.IEntityTab;
+import org.openxava.tab.meta.MetaTab;
+import org.openxava.util.Is;
+import org.openxava.util.KeyAndDescription;
+import org.openxava.util.KeyAndDescriptionComparator;
+import org.openxava.util.Strings;
+import org.openxava.util.XavaException;
 
 /**
  * It obtain a description collection. <p>
@@ -23,6 +41,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 public class DescriptionsCalculator implements ICalculator {
+	private static Log log = LogFactory.getLog(DescriptionsCalculator.class);
 	
 	private static final long serialVersionUID = 3638931156760463239L;
 	
@@ -323,8 +342,8 @@ public class DescriptionsCalculator implements ICalculator {
 	public void setParameters(Collection parameters, IFilter filter) throws FilterException {		
 		if (filter != null) {
 			Object [] param = parameters==null?null:parameters.toArray();			
-			param = (Object []) filter.filter(param);			
-			parameters = Arrays.asList(param);			
+			param = (Object []) filter.filter(param);
+			parameters = param == null ? null : Arrays.asList(param);
 		}
 		this.parameters = parameters;				
 	}
