@@ -20,10 +20,10 @@ import org.openxava.annotations.*;
 	"detail {" +
 	"	family;" +
 	"	detail;" +
-	"	additionalDetails" +
+	"	additionalDetails; " +
 	"}" +
 	"invoice {" +
-	"	invoice" +
+	"	invoice;" +
 	"}"
 )
 public class Service {
@@ -41,6 +41,7 @@ public class Service {
 	private ServiceDetail detail;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@Action("Service.seeMessage")
 	private ServiceInvoice invoice; 
 	
 	@OneToMany (mappedBy="service", cascade=CascadeType.REMOVE)
@@ -93,4 +94,5 @@ public class Service {
 	public void setInvoice(ServiceInvoice invoice) {
 		this.invoice = invoice;
 	}
+
 }

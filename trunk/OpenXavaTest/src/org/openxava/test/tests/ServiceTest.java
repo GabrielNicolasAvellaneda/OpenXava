@@ -1,5 +1,10 @@
 package org.openxava.test.tests;
 
+import javax.persistence.Query;
+
+import org.openxava.jpa.XPersistence;
+import org.openxava.test.model.Service;
+import org.openxava.test.model.ServiceDetail;
 import org.openxava.tests.*;
 
 
@@ -163,6 +168,49 @@ public class ServiceTest extends ModuleTestBase {
 		assertValue("invoice.description", "Primer servicio");	
 		
 	}
-
+	
+	public void testReferenceWithSearchKeyPropertiesInANotEditableView() throws Exception{
+		createService("998", "JUNIT_1");
+		createService("999", "JUNIT_2");
+		
+		execute("Mode.list");
+		setConditionValues(new String[] { "", "junit"} );
+		execute("List.filter");
+		assertListRowCount(2);
+		
+		execute("List.viewDetail", "row=0");
+		assertValue("description", "JUNIT_1");
+		execute("Sections.change", "activeSection=1");
+		assertAction("Reference.search");
+		assertAction("Service.seeMessage");
+		execute("Service.notEditableView");
+		assertNoAction("Reference.search");
+		assertNoAction("Service.seeMessage");
+		
+		execute("Navigation.next");
+		assertValue("description", "JUNIT_2");
+		assertAction("Reference.search");
+		assertAction("Service.seeMessage");
+		
+		// delete services
+		Query query = XPersistence.getManager().createQuery(
+			"delete " +
+			"from Service as o " +
+			"where o.description like :description");
+		query.setParameter("description", "%JUNIT_%");
+		query.executeUpdate();
+		XPersistence.commit();
+	}
+	
+	private void createService(String number, String description) throws Exception{
+		execute("CRUD.new");
+		setValue("number", number);
+		setValue("description", description);
+		setValue("family", "1");
+		setValue("detail.subfamily", "1");
+		setValue("detail.type", "2");
+		execute("CRUD.save");
+		assertMessage("Service created successfully");
+	}
 					
 }

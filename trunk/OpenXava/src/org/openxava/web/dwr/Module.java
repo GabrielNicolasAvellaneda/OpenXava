@@ -337,7 +337,7 @@ public class Module extends DWRBase {
 					"&viewObject=" + containerView.getViewObject() + 
 					"&propertyPrefix=" + containerView.getPropertyPrefix());
 				if ((containerView.hasEditableChanged() || 
-					(containerView.hasKeyEditableChanged() && metaModel.isKey(name))) &&
+					(containerView.hasKeyEditableChanged() && metaModel.isKeyOrSearchKey(name))) &&
 					containerView.propertyHasActions(name))					
 				{
 					put(result, "property_actions_" + qualifiedName, 
