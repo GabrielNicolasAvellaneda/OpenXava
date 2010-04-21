@@ -3793,7 +3793,7 @@ public class View implements java.io.Serializable {
 		if (values == null) values = new HashMap();
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
 			Map.Entry en = (Map.Entry) it.next();
-			boolean isKey = getMetaModel().isKey((String) en.getKey());
+			boolean isKey = getMetaModel().isKeyOrSearchKey((String) en.getKey());
 			if (!oldValues.containsKey(en.getKey()) && en.getValue() != null || 
 				!equals(en.getValue(), oldValues.get(en.getKey())) || 	
 				isKey && hasKeyEditableChanged() || 
@@ -3809,7 +3809,8 @@ public class View implements java.io.Serializable {
 		for (Iterator it=oldValues.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			if (!equals(en.getValue(), values.get(en.getKey())) ||
-				editorMustBeReloaded((String) en.getKey()))  
+				editorMustBeReloaded((String) en.getKey()) ||
+				hasKeyEditableChanged())  
 			{				
 				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
@@ -3928,7 +3929,7 @@ public class View implements java.io.Serializable {
 				result.put(getPropertyPrefix() + name, this);				
 			}					
 		}
-		if (getMetaModel().isKey(name)) {		
+		if (getMetaModel().isKeyOrSearchKey(name)) {		
 			refreshCollections();
 		}
 	}

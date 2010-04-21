@@ -1166,6 +1166,20 @@ abstract public class MetaModel extends MetaElement {
 		return result;
 	}
 	
+	public boolean isKeyOrSearchKey(String name) throws XavaException {		
+		try { 					
+			return getMetaProperty(name).isKey() || getMetaProperty(name).isSearchKey();
+		}
+		catch (ElementNotFoundException ex) {					
+			try {
+				return getMetaReference(name).isKey() || getMetaReference(name).isSearchKey();
+			}
+			catch (ElementNotFoundException ex2) {
+				return false; // If is Metacollection, does no exist or is of another type
+			}			
+		}				
+	}
+	
 	public boolean isKey(String name) throws XavaException {		
 		try { 					
 			return getMetaProperty(name).isKey();
