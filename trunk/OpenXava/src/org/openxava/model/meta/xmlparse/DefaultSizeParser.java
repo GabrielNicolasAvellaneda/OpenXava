@@ -45,7 +45,7 @@ public class DefaultSizeParser extends ParserBase {
 			}
 		}
 		catch (NumberFormatException ex) {			
-			throw new XavaException("default_size_number", "estereotipo", name); // TODO
+			throw new XavaException("default_size_number", "estereotipo", name); 
 		}		
 	}
 	
@@ -69,7 +69,7 @@ public class DefaultSizeParser extends ParserBase {
 			}
 		}
 		catch (NumberFormatException ex) {			
-			throw new XavaException("default_size_number", "tipo", className); // TODO
+			throw new XavaException("default_size_number", "tipo", className); 
 		}
 		
 	}

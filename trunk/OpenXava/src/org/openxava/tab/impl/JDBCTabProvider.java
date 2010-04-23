@@ -50,7 +50,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		}
 	}
 	
-	public void search(String condition, Object key) throws FinderException, RemoteException {				
+	public void search(String condition, Object key) throws FinderException, RemoteException {		
 		current = 0;
 		eof = false;
 		this.key = toArray(key);					

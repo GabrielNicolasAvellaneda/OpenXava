@@ -792,4 +792,12 @@
 			class="org.openxava.test.actions.SelectSchemaAction"/>
 	</controller>
 	
+	<controller name="Service">
+		<extends controller="Typical"/>
+		<action name="notEditableView" mode="detail"
+			class="org.openxava.test.actions.NotEditableViewAction" />
+		<action name="seeMessage" hidden="true"
+			class="org.openxava.test.actions.SeeMessageAction"/>
+	</controller>
+	
 </controllers>

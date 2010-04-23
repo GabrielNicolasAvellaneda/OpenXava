@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import java.util.*;
+
 import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
@@ -151,7 +153,7 @@ public class CarrierTest extends CarrierTestBase {
 		assertRowUnchecked(3);
 	}
 	
-	public void testActionOfCalculatedPropertyAlwaysPresent_referenceKeyEditableWhenInGroup() throws Exception {		
+	public void testActionOfCalculatedPropertyAlwaysPresent_referenceKeyEditableWhenInGroup() throws Exception {
 		execute("CRUD.new");		
 		assertAction("Carrier.translateName");
 		assertExists("calculated");
@@ -189,7 +191,7 @@ public class CarrierTest extends CarrierTestBase {
 		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); 
 		assertNoErrors();
 		assertDialog();
-		assertValue("description", "CAMIONES PEQUEÑOS");
+		assertValue("description", "CAMIONES PEQUEÃ‘OS");
 	}
 	
 	

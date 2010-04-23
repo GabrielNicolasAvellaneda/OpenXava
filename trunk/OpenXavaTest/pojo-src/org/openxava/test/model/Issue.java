@@ -10,8 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.openxava.annotations.Editor;
 import org.openxava.annotations.Required;
 import org.openxava.annotations.Tab;
+import org.openxava.annotations.View;
 
 /**
  * For testing the default schema behaviour. <p>
@@ -21,6 +23,7 @@ import org.openxava.annotations.Tab;
 
 @Entity
 @Tab(defaultOrder="${description} asc")	// failed to change default schema in as400
+@View(name="IssueWeb", members="id, description")
 public class Issue {
 	
 	@Id @Column(length=5) @Required
@@ -43,6 +46,7 @@ public class Issue {
 		this.id = id;
 	}
 
+	@Editor(value="UserAttribute", forViews="IssueWeb")
 	public String getDescription() {
 		return description;
 	}

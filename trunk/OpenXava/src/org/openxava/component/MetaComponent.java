@@ -292,6 +292,7 @@ public class MetaComponent implements Serializable {
 			}
 			metaTabs.put(name, metaTab);		
 		}
+		metaTab.setDefaultValues(); 
 	}
 	
 	/**

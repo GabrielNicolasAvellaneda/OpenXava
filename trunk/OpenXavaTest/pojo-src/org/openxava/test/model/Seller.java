@@ -48,7 +48,8 @@ import org.openxava.annotations.Views;
 	@View(name="CustomersAsAggregate", members="number; name; level; customers"),
 	@View(name="LevelNoDescriptionsList", members="number; name; level"),
 	@View(name="SearchListCondition", members="number; name;level;customers"),
-	@View(name="SearchListConditionOff", members="number; name;level;customers")
+	@View(name="SearchListConditionOff", members="number; name;level;customers"),
+	@View(name="SearchListConditionBlank", members="number; name;level;customers")
 })
 @Tabs({
 	@Tab(filter=org.openxava.test.filters.NumbersToLettersFilter.class),
@@ -64,11 +65,12 @@ public class Seller {
 	@Column(length=40) @Required
 	private String name;
 		
-	@DescriptionsList(notForViews="ForCustomJSP, LevelNoDescriptionsList, SearchListCondition, SearchListConditionOff")
+	@DescriptionsList(notForViews="ForCustomJSP, LevelNoDescriptionsList, SearchListCondition, SearchListConditionOff, SearchListConditionBlank")
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="LEVEL")
 	@OnChange(org.openxava.test.actions.OnChangeVoidAction.class)
 	@SearchListConditions({
-		@SearchListCondition(value="${id}<'C'", forViews="SearchListCondition")
+		@SearchListCondition(value="${id}<'C'", forViews="SearchListCondition"),
+		@SearchListCondition(value="", forViews="SearchListConditionBlank")
 	})
 	private SellerLevel level;
 
@@ -82,7 +84,7 @@ public class Seller {
 	@NoCreate(forViews="CannotCreateCustomer")
 	@NoModify(forViews="CannotCreateCustomer")
 	@RowStyle(style="row-highlight", property="type", value="steady")
-	@SearchListCondition(value="${number} < 5", forViews="SearchListCondition")
+	@SearchListCondition(value="${number} < 5", forViews="SearchListCondition, SearchListConditionBlank")
 	private Collection<Customer> customers;
 		
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="BOSS")
