@@ -71,6 +71,10 @@ Number (the key) can be 0
 		<members>number; name; sample; hexValue; usedTo</members>
 	</view>
 	
+	<tab>
+		<properties>number, name, hexValue, sample, usedTo.name</properties>
+	</tab>
+	
 	<entity-mapping table="XAVATEST@separator@COLOR">
 		<property-mapping
 			property="number" column="NUMBER"/>

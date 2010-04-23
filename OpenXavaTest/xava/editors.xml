@@ -146,4 +146,6 @@
 		<for-stereotype stereotype="RECEPTIONIST" />
 	</editor>
 
+	<editor name="UserAttribute" url="userAttributeEditor.jsp"/>
+	
 </editors>

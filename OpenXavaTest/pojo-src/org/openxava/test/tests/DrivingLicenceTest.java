@@ -20,7 +20,7 @@ public class DrivingLicenceTest extends ModuleTestBase {
 		setValue("level", "3"); // This breaks @Max(2) hibernate validation
 		setValue("description", "JUNIT TEST");
 		execute("CRUD.save");
-		// The chunk in Spanish if for a bug of Hiberante Validator, see at
+		// The chunk in Spanish if for a bug of Hibernate Validator, see at
 		// http://opensource.atlassian.com/projects/hibernate/browse/HV-31
 		assertError("3 is not a valid value for Level of Driving licence: debe ser menor o igual a 2");		
 	}

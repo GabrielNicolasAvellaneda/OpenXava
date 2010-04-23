@@ -1,17 +1,17 @@
 package org.openxava.actions;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import javax.ejb.*;
-
-
-
-import org.openxava.model.*;
-import org.openxava.util.*;
+import org.openxava.model.MapFacade;
+import org.openxava.util.XavaException;
 
 
 /**
  * @author Javier Paniza
+ * Modified by Federico Alcantara. Fix bug 2976466.
  */
 
 public class EditElementInCollectionAction extends CollectionElementViewBaseAction  {
@@ -19,18 +19,27 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 	private int row;
 	
 	
+	@SuppressWarnings("unchecked")
 	public void execute() throws Exception {
 		getCollectionElementView().clear(); 
 		getCollectionElementView().setCollectionDetailVisible(true);
-		Collection elements = getCollectionElementView().getCollectionValues();
-		if (elements == null) return;
-		if (elements instanceof List) {
-			Map keys = (Map) ((List) elements).get(getRow());			
-			Map	values = MapFacade.getValues(getCollectionElementView().getModelName(), keys, getCollectionElementView().getMembersNames());
+		Collection elements;
+		Map keys = null;
+		Map	values = null;
+		if (getCollectionElementView().isCollectionCalculated()){
+			elements = getCollectionElementView().getCollectionValues();
+			if (elements == null) return;
+			if (elements instanceof List) {
+				keys = (Map) ((List) elements).get(getRow());			
+			}
+		} else {
+			keys = (Map) getCollectionElementView().getCollectionTab().getTableModel().getObjectAt(row);
+		}
+		if (keys != null) {
+			values = MapFacade.getValues(getCollectionElementView().getModelName(), keys, getCollectionElementView().getMembersNames());
 			getCollectionElementView().setValues(values);						
 			getCollectionElementView().setCollectionEditingRow(getRow());
-		}
-		else {
+		} else {
 			throw new XavaException("only_list_collection_for_aggregates");
 		}
 		showDialog(getCollectionElementView());

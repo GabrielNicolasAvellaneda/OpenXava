@@ -192,5 +192,8 @@ public class XmlElementsNames {
 	protected final static String [] xformula= { "formula", "formula" };
 	protected final static String [] xlist_formatter = { "list-formatter", "formateador-lista" }; 
 	protected final static String [] xsearch_list_condition = { "search-list-condition", "condicion-lista-busqueda" };
+	protected final static String [] xfor_model = { "for-model", "para-modelo" };
+	protected final static String [] xexcept_for_model = { "except-for-model", "excepto-para-modelo" };
+	protected final static String [] xfor_all_models = { "for-all-models", "para-todos-los-modelos" };
 	
 }

@@ -77,7 +77,7 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 				= metaView.getMetaReferenceViewFor(ref.getName());
 			if (metaReferenceView != null) {
 				String searchListCondition = metaReferenceView.getSearchListCondition();
-				if (!Is.emptyString(searchListCondition)) {
+				if (searchListCondition != null) {
 					getTab().setBaseCondition(searchListCondition);
 				}
 			}

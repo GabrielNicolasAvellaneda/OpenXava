@@ -473,20 +473,15 @@ public class AnnotatedClassParser {
 				if (Is.emptyString(tab.name())) hasDefaultTab = true;
 			}
 		}
-		if (!hasDefaultTab) {
-			component.getMetaTab().setBaseCondition(createBaseCondition(component.getMetaEntity().getPOJOClass(), null)); 
+				
+		if (!hasDefaultTab && !component.getMetaTab().hasBaseCondition()) { 
+			component.getMetaTab().setBaseCondition(createBaseCondition(component.getMetaEntity().getPOJOClass(), null));			
 		}
 	}
 
 	private void addTab(MetaComponent component, Tab tab) throws Exception {
-		MetaTab metaTab = new MetaTab();
+		MetaTab metaTab = new MetaTab();		
 		metaTab.setName(tab.name());
-		if (Is.emptyString(tab.properties())) {
-			metaTab.setDefaultPropertiesNames("*");
-		}
-		else {
-			metaTab.setDefaultPropertiesNames(tab.properties());
-		}
 		String baseCondition = createBaseCondition(component.getMetaEntity().getPOJOClass(), tab); 		
 		metaTab.setBaseCondition(baseCondition); 
 		metaTab.setDefaultOrder(tab.defaultOrder());
@@ -502,9 +497,18 @@ public class AnnotatedClassParser {
 			metaRowStyle.setProperty(rowStyle.property());
 			metaRowStyle.setValue(rowStyle.value());			
 			metaTab.addMetaRowStyle(metaRowStyle);
-		}
-		
+		}			
 		component.addMetaTab(metaTab);
+
+		if (Is.emptyString(tab.properties())) {
+			if (metaTab.getPropertiesNames().isEmpty()) {
+				metaTab.setDefaultPropertiesNames("*");
+			}
+		}
+		else {
+			metaTab.setDefaultPropertiesNames(tab.properties());
+		}		
+
 	}
 
 	private String createBaseCondition(Class pojoClass, Tab tab) throws Exception { 

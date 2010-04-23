@@ -96,12 +96,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		MetaTab tab = new MetaTab();
 		tab.setMetaComponent(component);
 		tab.addDefaultMetaConsults();
+		tab.setDefaultValues(); 
 		return tab;
 	}
 	
 	public static MetaTab createDefault(MetaModel metaModel) { 
 		MetaTab tab = new MetaTab();
-		tab.setMetaModel(metaModel);		
+		tab.setMetaModel(metaModel);	
+		tab.setDefaultValues(); 
 		return tab;
 	}
 
@@ -438,7 +440,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			if (baseCondition.trim().toUpperCase().startsWith("SELECT ")) {
 				return baseCondition;
 			}
-		}
+		}		
 		// basic select
 		StringBuffer select = new StringBuffer("select ");
 		Iterator itProperties = getPropertiesNames().iterator();
@@ -931,6 +933,16 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.modelName = modelName;		
 		this.metaModel = MetaModel.get(modelName);
 		this.metaComponent = this.metaModel.getMetaComponent();
+	}
+
+	public void setDefaultValues() { // tmp
+		for (MetaTab t: MetaTabsDefaultValues.getMetaTabsForModel(getMetaComponent().getName())) {
+			if (t.getMetaFilter() != null && getMetaFilter() == null) setMetaFilter(t.getMetaFilter());
+			if (t.getMetaRowStyles() != null && getMetaRowStyles() == null) setMetaRowStyles(t.getMetaRowStyles());
+			if (t.properties != null && properties == null) properties = t.properties;
+			if (!Is.emptyString(t.getBaseCondition()) && Is.emptyString(getBaseCondition())) setBaseCondition(t.getBaseCondition());
+			if (!Is.emptyString(t.getDefaultOrder()) & Is.emptyString(getDefaultOrder())) setDefaultOrder(t.getDefaultOrder());			
+		}
 	}
 	
 }

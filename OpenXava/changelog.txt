@@ -1,12 +1,14 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Property @SearchKey in a not editable view not hidden their associate actions 
-- Fix: References as combos to filter in list mode: qualify the columns when it create the condition  
-- Fix: References as combos to filter in list mode: using XML components
-- Fix: Mode List: descriptionsList does not apply conditionBase with filter
-- Fix: Filter in mode List with: calculated property and descriptionsList; descriptionsList and enumLetterType property
-- Fix: Filter by number zero.
+- It is possible to define default values for tabs (tabular data) at global level with the new tabs-default-values.xml. 
+- Fix: Poor performance when editing a collection element in a large collection. 
+- Fix: @SearchKey in a not editable view does not hide their associate actions.
+- Fix: References as combos to filter in list mode: qualify the columns when it create the condition.  
+- Fix: References as combos to filter in list mode: using XML components.
+- Fix: Mode List: descriptionsList does not apply conditionBase with filter.
+- Fix: Filter in list mode with calculated property and descriptionsList; descriptionsList and enumLetterType property.
+- Fix: Filter by number zero in list mode.
 - New SetSchemaAction, SetLocaleAction and SetUserAction action to modify session data from url parameters.
 - New @SearchListCondition annotation to specify a condition for the search list used in a references or collections.
 - New defaultLabelFormat property in xava.properties to indicate the default when @LabelFormat would be omitted.

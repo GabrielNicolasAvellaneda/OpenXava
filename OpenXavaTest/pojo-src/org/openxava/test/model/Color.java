@@ -4,12 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.OnChange;
-import org.openxava.annotations.Required;
-import org.openxava.annotations.Stereotype;
-import org.openxava.annotations.View;
-import org.openxava.annotations.Views;
+import org.openxava.annotations.*;
 import org.openxava.jpa.*;
 import org.openxava.test.actions.OnChangeGroupInColorAction;
 
@@ -28,6 +23,7 @@ import org.openxava.test.actions.OnChangeGroupInColorAction;
 	@View( name="View2Sub2", members="property2Sub2"),
 	@View( name="Groups", members="group; group1[property1], group2[property2]")
 })
+@Tab( properties = "number, name, hexValue, sample, usedTo.name" )
 public class Color {
 
 	@Id @Column(length=5)
@@ -38,7 +34,7 @@ public class Color {
 	private String name;
 	
 	@Version 
-	private int version;
+	private Integer version;
 	
 	@Column(length=6)
 	private String hexValue; 
@@ -96,11 +92,11 @@ public class Color {
 		this.number = number;
 	}
 
-	public int getVersion() {
+	public Integer getVersion() {
 		return version;
 	}
 
-	public void setVersion(int version) {
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 

@@ -3,6 +3,8 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
+<%@ page import="org.openxava.filters.IFilter"%>
+<%@ page import="org.openxava.filters.IRequestFilter"%>
 <%@ page import="org.openxava.component.MetaComponent"%>
 <%@ page import="org.openxava.tab.meta.MetaTab"%>
 <%@ page import="org.openxava.util.KeyAndDescription" %>
@@ -45,7 +47,15 @@ DescriptionsCalculator calculator = new DescriptionsCalculator();
 String model = request.getParameter("model");
 if (model == null) model = request.getParameter("modelo");
 MetaTab metaTab = MetaComponent.get(model).getMetaTab();
-
+if (metaTab.getMetaFilter() != null){
+	if (metaTab.getMetaFilter().getFilter() != null) {
+		IFilter filter = metaTab.getMetaFilter().getFilter();
+		if (filter instanceof IRequestFilter) {
+			((IRequestFilter) filter).setRequest(request);
+		}
+		calculator.setParameters(null, filter);
+	}
+}
 calculator.setModel(model);
 calculator.setCondition(metaTab.getBaseCondition());
 calculator.setOrder(metaTab.getDefaultOrder());
