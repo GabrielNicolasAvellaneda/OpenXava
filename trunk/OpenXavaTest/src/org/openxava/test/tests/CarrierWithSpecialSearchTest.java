@@ -1,9 +1,5 @@
 package org.openxava.test.tests;
 
-import org.openxava.tests.ModuleTestBase;
-import org.openxava.jpa.*;
-import org.openxava.test.model.*;
-
 /**
  * @author Javier Paniza
  */
@@ -16,7 +12,7 @@ public class CarrierWithSpecialSearchTest extends CarrierTestBase {
 		
 	public void testSearchCarrierWithDefaultValue() throws Exception {
 		execute("CRUD.new");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("name", "TRES");
 		assertValue("number", "3");

@@ -36,7 +36,7 @@ public class SellerJSPTest extends ModuleTestBase {
 		assertValue("level.description", "");
 		
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("name", "JUNIT");
 		assertValue("level.id", "A");
 		assertValue("level.description", "MANAGER");		

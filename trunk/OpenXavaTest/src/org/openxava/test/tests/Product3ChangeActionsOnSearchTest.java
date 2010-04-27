@@ -16,7 +16,7 @@ public class Product3ChangeActionsOnSearchTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Product3.showDescription"); // description is hide in a init action for test purpose
 		setValue("number", "77");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("description", "ANATHEMA");
 		assertNoEditable("description"); // well: on-change for make this not editable is thrown
 	}

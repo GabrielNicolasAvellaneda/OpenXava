@@ -22,8 +22,10 @@ public class HumanTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("name", "");
 		assertValue("sex", "");
+
 		setValue("name", "JUNIT HUMAN");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
+
 		assertValue("name", "JUNIT HUMAN");
 		assertValue("sex", "0");
 		execute("CRUD.delete");
@@ -106,7 +108,7 @@ public class HumanTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertHumanView();
 		setValue("name", "HOUSE");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertDoctorView();		
 		assertValue("name", "HOUSE");
 		assertValue("sex", "0");
@@ -115,7 +117,7 @@ public class HumanTest extends ModuleTestBase {
 		execute("CRUD.new");		
 		assertHumanView();
 		setValue("name", "JAVI");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertJavaProgrammerView();		
 		assertValue("name", "JAVI");
 		assertValue("sex", "0");

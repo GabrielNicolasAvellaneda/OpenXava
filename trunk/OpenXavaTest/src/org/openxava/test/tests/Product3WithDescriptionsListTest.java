@@ -32,7 +32,7 @@ public class Product3WithDescriptionsListTest extends ModuleTestBase {
 		
 		// Search it
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT PRODUCT");		
 		assertDescriptionValue("family.oid", "FAMILY 66");
@@ -55,7 +55,7 @@ public class Product3WithDescriptionsListTest extends ModuleTestBase {
 				
 		// Search it
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT PRODUCT");
 		assertValue("family.oid", "1037101896763");
@@ -68,7 +68,7 @@ public class Product3WithDescriptionsListTest extends ModuleTestBase {
 		
 		// Verifying that change is done
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT PRODUCT");
 		assertValue("family.oid", "");

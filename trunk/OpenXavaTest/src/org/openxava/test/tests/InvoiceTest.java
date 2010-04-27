@@ -50,6 +50,26 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
+	public void testSearchUsesSimpleView() throws Exception { 
+		execute("CRUD.new");		
+		assertValue("comment", "");
+		assertNoDialog();
+		execute("CRUD.search");
+		assertDialog();
+		assertNotExists("paid");
+		assertNotExists("customerDiscount");
+		assertNotExists("customer.number");
+
+		assertValue("year", "");
+		assertValue("number", "");
+		setValue("year", "2002");
+		setValue("number", "1");
+		execute("Search.search");
+		assertNoDialog();
+		assertNoErrors();
+		assertValue("comment", "INVOICE WITH SPACES");
+	}
+	
 	public void testCollectionSelectionIsCleared() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
@@ -116,7 +136,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("comment", "");
 		setValue("year", "2008");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertError("Object of type Invoice does not exists with key Number:66, Year:2008");
 		assertValue("comment", "");
 	}
@@ -126,7 +146,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("year", "2007");
 		setValue("number", "14");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 		assertValue("comment", "MORE THAN 10 LINES");
 		execute("Sections.change", "activeSection=1");
@@ -153,7 +173,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("year", "");
 		setValue("date", "");
 		setValue("paid", "true");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 	}
 	
@@ -189,7 +209,7 @@ public class InvoiceTest extends ModuleTestBase {
 		// Consult
 		setValue("year", year);
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("paid", "true");
 		
 		// Changing the boolean value
@@ -200,7 +220,7 @@ public class InvoiceTest extends ModuleTestBase {
 		// Consult again
 		setValue("year", year);
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 		assertValue("paid", "false"); // assert if checkbox is false
 		
@@ -593,14 +613,14 @@ public class InvoiceTest extends ModuleTestBase {
 		assertListColumnCount(3);
 	}	
 	
-	public void testDateFormatter() throws Exception {
+	public void testDateFormatter() throws Exception { 
 		// In order to this test works inside Liferay you have to put
 		// locale.default.request=true in portal-ext.properties
 		setLocale("es");		
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		String originalDate = getValue("date"); // For restore at end
 		
@@ -609,7 +629,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("date", "01/01/2004");
 		
@@ -618,7 +638,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("date", "02/01/2004");
 		
@@ -627,7 +647,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("date", "03/01/2004");
 		
@@ -636,7 +656,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("date", "04/01/2004");
 		
@@ -645,7 +665,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("date", "04/01/2030");
 		
@@ -654,7 +674,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("date", "04/01/1931");
 		
@@ -675,7 +695,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		
 		execute("Sections.change", "activeSection=3");
@@ -835,7 +855,7 @@ public class InvoiceTest extends ModuleTestBase {
 		// Consulting	
 		setValue("year", year);
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("year", year);
 		assertValue("number", "66");
 		execute("Sections.change", "activeSection=0");
@@ -897,7 +917,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		setValue("year", year);
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 		assertValueInCollection("details", 1, 0, "Special");
 		assertValueInCollection("details", 1, 1, getProductDescription());
@@ -918,13 +938,13 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("year", year);
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", year);
 		setValue("number", "66");		
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		execute("Sections.change", "activeSection=1");
 		
@@ -962,7 +982,7 @@ public class InvoiceTest extends ModuleTestBase {
 		// Verifying that line is deleted
 		setValue("year", year);
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 
 		assertCollectionRowCount("details", 2);
@@ -1136,6 +1156,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.save",
 			"CRUD.delete",
 			"CRUD.search",
+			"CRUD.refresh",
 			"Invoice.printPdf",
 			"Invoice.printExcel",
 			"Invoice.printRtf",
@@ -1156,7 +1177,7 @@ public class InvoiceTest extends ModuleTestBase {
 				
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		
 		execute("Sections.change", "activeSection=1");
@@ -1169,6 +1190,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.save",
 			"CRUD.delete",
 			"CRUD.search",
+			"CRUD.refresh",
 			"Invoice.printPdf",
 			"Invoice.printExcel",
 			"Invoice.printRtf",
@@ -1188,7 +1210,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"List.customize",
 			"Invoice.printPdfNewAfter"			
 		};		
-		assertActions(aggregateListActions);
+		assertActions(aggregateListActions); 
 		
 		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details");
 		
@@ -1217,7 +1239,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.new");							
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 		execute("Sections.change", "activeSection=1");		
 		assertNoDialog(); 
@@ -1251,7 +1273,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.new");							
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 		
 		String customerNumber = getValue("customer.number");
@@ -1284,7 +1306,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		
 		execute("Sections.change", "activeSection=3");
@@ -1511,17 +1533,17 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.new");
 		// with key
 		String year = getValue("year");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertError("Object of type Invoice does not exists with key Year:" + year);
 		// without key
 		assertTrue(Is.empty(getValue("year")));
 		setValue("date", "1/2/2004");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertError("Object of type Invoice does not exists with key Date:1/2/04, Paid:No");
 		// with reference
 		setValue("customer.number", "43");
 		assertValue("customer.name", "Gonzalo Gonzalez");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertError("Object of type Invoice does not exists with key Number:43, Customer discount:0.25, Paid:No");
 	}
 }

@@ -32,7 +32,7 @@ public class Invoice2Test extends ModuleTestBase {
 		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("amountsSum", "56.00");
 		
 		// Creating another one
@@ -45,7 +45,7 @@ public class Invoice2Test extends ModuleTestBase {
 		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 2);
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("amountsSum", "156.00");
 		
 		// Modifiying
@@ -55,7 +55,7 @@ public class Invoice2Test extends ModuleTestBase {
 		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("details", 2);
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("amountsSum", "256.00");
 		
 		// Removing
@@ -65,7 +65,7 @@ public class Invoice2Test extends ModuleTestBase {
 		execute("Collection.remove");
 		assertNoErrors();
 		assertCollectionRowCount("details", 1);
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("amountsSum", "56.00");
 		
 		execute("CRUD.delete");
@@ -96,7 +96,7 @@ public class Invoice2Test extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("year", "2002");
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertCollectionRowCount("details", 2);
 		assertValueInCollection("details", 0, "product.description", "XAVA");
 		assertValueInCollection("details", 1, "product.description", "IBM ESERVER ISERIES 270");

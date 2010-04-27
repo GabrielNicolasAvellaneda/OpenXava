@@ -234,7 +234,7 @@ public class Module extends DWRBase {
 			MetaAction lastAction = manager.getLastExecutedMetaAction();
 			String model = Labels.get(getView().getModelName());
 			if (lastAction == null) result.setDialogTitle(model);
-			else result.setDialogTitle(lastAction.getDescription() + " " + model);
+			else result.setDialogTitle(lastAction.getDescription() + " - " + model);
 		}		
 	}
 

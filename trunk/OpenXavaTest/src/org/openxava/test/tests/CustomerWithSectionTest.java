@@ -182,7 +182,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public void testOrderAndFilterInNestedCollection() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "4");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("name", "Cuatrero");
 		
 		assertCollectionRowCount("deliveryPlaces", 1);
@@ -208,7 +208,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("Reference.modify", "model=Seller,keyProperty=xava.Customer.seller.number");
 		assertError("Impossible to modify an empty reference");
 		setValue("number", "1");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("name", "Javi");
 		assertValue("seller.name", "MANUEL CHAVARRI");
 		execute("Reference.modify", "model=Seller,keyProperty=xava.Customer.seller.number");		

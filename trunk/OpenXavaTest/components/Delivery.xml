@@ -323,6 +323,13 @@
 		</members>			
 				
 	</view>
+	
+	<view name="Search">
+		<reference-view reference="type">	
+			<descriptions-list order="${number} desc"/>			
+		</reference-view>
+		<members>invoice; type; number; date; description;</members>
+	</view>
 				
 	<tab>
 		<properties>invoice.year, invoice.number, type.number, type.description, number, date, description, distance, dateAsLabel, invoice.sellerDiscount</properties>

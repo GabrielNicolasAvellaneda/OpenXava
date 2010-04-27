@@ -63,7 +63,7 @@ public class ShipmentTest extends ModuleTestBase {
 		setValue("type", usesAnnotatedPOJO()?"0":"1");
 		setValue("mode", usesAnnotatedPOJO()?"1":"2");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("type", usesAnnotatedPOJO()?"0":"1"); 		
 		assertValue("mode", usesAnnotatedPOJO()?"1":"2");
 		assertValue("number", "66");
@@ -83,7 +83,7 @@ public class ShipmentTest extends ModuleTestBase {
 		setValue("type", usesAnnotatedPOJO()?"0":"1");
 		setValue("mode", usesAnnotatedPOJO()?"1":"2");
 		setValue("number", "66");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("number", "66");
 		assertValue("mode", usesAnnotatedPOJO()?"1":"2");
 		assertValue("type", usesAnnotatedPOJO()?"0":"1"); 

@@ -18,6 +18,7 @@ public class ProductTest extends ModuleTestBase {
 		"CRUD.save",
 		"CRUD.delete",
 		"CRUD.search",
+		"CRUD.refresh",
 		"EditableOnOff.setOn",
 		"EditableOnOff.setOff",
 		"Mode.list",
@@ -195,7 +196,7 @@ public class ProductTest extends ModuleTestBase {
 				
 		// Searching for verify
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("number", "66");
 		assertValue("description", "TEST PRODUCT");
@@ -254,7 +255,7 @@ public class ProductTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertActions(detailActions);
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 						
 		assertValue("familyNumber", "1");
 		assertValue("unitPrice", "11");
@@ -319,7 +320,7 @@ public class ProductTest extends ModuleTestBase {
 				
 		execute("CRUD.new");
 		setValue("number", "4");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "4");
 		assertValue("description", "CUATRE");
 		setValue("unitPrice", "555"); // 555 is a forbidden price but only on create

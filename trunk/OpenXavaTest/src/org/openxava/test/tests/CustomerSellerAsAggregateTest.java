@@ -34,7 +34,7 @@ public class CustomerSellerAsAggregateTest extends ModuleTestBase {
 		// Searching to verify
 		assertValue("name", "");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		
 		assertValue("name", "Junit Customer 66");
 		assertValue("seller.number", "66");
@@ -49,7 +49,7 @@ public class CustomerSellerAsAggregateTest extends ModuleTestBase {
 		// Searching to verify
 		assertValue("name", "");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		
 		assertValue("name", "Junit Customer 66");
 		assertValue("seller.number", "66");

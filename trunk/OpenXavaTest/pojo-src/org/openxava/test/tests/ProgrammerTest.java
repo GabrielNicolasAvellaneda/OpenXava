@@ -24,7 +24,7 @@ public class ProgrammerTest extends ModuleTestBase {
 		assertValue("sex", "");
 		assertValue("mainLanguage", "");
 		setValue("name", "JUNIT PROGRAMMER");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("name", "JUNIT PROGRAMMER");
 		assertValue("sex", "1");
 		assertValue("mainLanguage", "EIFFEL");

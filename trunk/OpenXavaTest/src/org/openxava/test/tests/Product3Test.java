@@ -19,8 +19,9 @@ public class Product3Test extends ModuleTestBase {
 		setValue("number", "");
 		String description = getValue("description");
 		assertTrue("description must be empty", Is.emptyString(description));
-		setValue("family.number", "1");
 		execute("CRUD.search");
+		setValue("family.number", "1");
+		execute("Search.search"); 
 		// We assume that exists products of family 1
 		assertNoErrors();
 		description = getValue("description");		
@@ -62,7 +63,7 @@ public class Product3Test extends ModuleTestBase {
 		assertValue("family.description", "");
 		
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT PRODUCT");
 		assertValue("family.number", familyNumber);

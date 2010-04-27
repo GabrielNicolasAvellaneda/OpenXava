@@ -117,7 +117,7 @@ public class SellerTest extends ModuleTestBase {
 	public void testOverwriteCollectionControllers_defaultListActionsForCollections_tabActionsForCollections() throws Exception { 
 		execute("CRUD.new");
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("name", "MANUEL CHAVARRI");
 		execute("Collection.view", "row=0,viewObject=xava_view_customers");
 		execute("Collection.hideDetail");
@@ -150,7 +150,7 @@ public class SellerTest extends ModuleTestBase {
 		assertValues("regions", emptyRegions);		
 		
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValues("regions", regions);
 		
 		setValues("regions", oneRegion);
@@ -159,7 +159,7 @@ public class SellerTest extends ModuleTestBase {
 		assertValues("regions", emptyRegions);
 
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValues("regions", oneRegion);
 		
 		execute("CRUD.delete");
@@ -295,7 +295,7 @@ public class SellerTest extends ModuleTestBase {
 	private void verifySeller66() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertCollectionRowCount("customers", 1);
 		assertValueInCollection("customers", 0, 0, getCustomerNumber1());
@@ -314,7 +314,7 @@ public class SellerTest extends ModuleTestBase {
 	private void deleteSeller(String number) throws Exception {
 		execute("CRUD.new");
 		setValue("number", number);
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 
 		execute("CRUD.delete");											

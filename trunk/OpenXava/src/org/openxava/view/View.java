@@ -4317,6 +4317,7 @@ public class View implements java.io.Serializable {
 				else {
 					title = XavaResources.getString(titleId);
 				}
+				
 			}
 		}
 		return title;

@@ -87,7 +87,7 @@ public class WarehouseTest extends ModuleTestBase {
 		// Search
 		setValue("zoneNumber", "66");
 		setValue("number", "666");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("zoneNumber", "66");
 		assertValue("number", "666");		
 		assertValue("name", "WAREHOUSE JUNIT");
@@ -101,7 +101,7 @@ public class WarehouseTest extends ModuleTestBase {
 		// Verifying modified
 		setValue("zoneNumber", "66");
 		setValue("number", "666");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("zoneNumber", "66");
 		assertValue("number", "666");		
 		assertValue("name", "WAREHOUSE JUNIT MODIFIED");
@@ -116,7 +116,7 @@ public class WarehouseTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("zoneNumber", "66");
 		setValue("number", "666");				
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertError("Object of type Warehouse does not exists with key Warehouse number:666, Zone:66");
 		assertErrorsCount(1);
 		
@@ -287,7 +287,7 @@ public class WarehouseTest extends ModuleTestBase {
 		// Delete
 		setValue("zoneNumber", "66");
 		setValue("number", "666");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		execute("CRUD.delete");		
 		assertNoAction("Warehouse.toLowerCase");
 		assertAction("Warehouse.changeZone");
@@ -296,7 +296,7 @@ public class WarehouseTest extends ModuleTestBase {
 		execute("CRUD.new");		
 		setValue("zoneNumber", "66");
 		setValue("number", "666");				
-		execute("CRUD.search");				
+		execute("CRUD.refresh");				
 		assertError("Object of type Warehouse does not exists with key Warehouse number:666, Zone:66");		
 	}
 				
