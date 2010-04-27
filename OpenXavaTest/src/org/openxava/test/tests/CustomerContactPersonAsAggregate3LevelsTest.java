@@ -40,7 +40,7 @@ public class CustomerContactPersonAsAggregate3LevelsTest extends ModuleTestBase 
 		assertNoErrors();
 		setValue("customer.number", "66");		
 		assertValue("name", "");
-		execute("CRUD.search");	
+		execute("CRUD.refresh");	
 		assertValue("name", "Junit Contact");
 		execute("CRUD.delete");
 		assertNoErrors();

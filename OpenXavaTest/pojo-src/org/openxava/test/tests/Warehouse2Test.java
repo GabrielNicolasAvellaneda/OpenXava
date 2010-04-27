@@ -47,7 +47,7 @@ public class Warehouse2Test extends ModuleTestBase {
 		// Read
 		setValue("key.zoneNumber", "6"); 
 		setValue("key.number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("key.zoneNumber", "6"); 
 		assertValue("key.number", "66");
 		assertValue("name", "WAREHOUSE JUNIT");
@@ -63,7 +63,7 @@ public class Warehouse2Test extends ModuleTestBase {
 		// Verify modified
 		setValue("key.zoneNumber", "6"); 
 		setValue("key.number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("key.zoneNumber", "6"); 
 		assertValue("key.number", "66");
 		assertValue("name", "WAREHOUSE JUNIT MODIFIED");
@@ -74,7 +74,7 @@ public class Warehouse2Test extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("key.zoneNumber", "6"); 
 		setValue("key.number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertError("Object of type Warehouse 2 does not exists with key Number:66, Zone:6");
 	}
 	

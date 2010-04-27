@@ -171,7 +171,7 @@ public class Product2Test extends ModuleTestBase {
 		// Verifying that product 1 has the added image
 		execute("CRUD.new");
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		execute("Gallery.edit", "galleryProperty=photos");
 		assertNoErrors();
@@ -225,7 +225,7 @@ public class Product2Test extends ModuleTestBase {
 		execute("Gallery.return");
 		execute("CRUD.new");
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		execute("Gallery.edit", "galleryProperty=photos");
 		assertNoErrors();
@@ -312,14 +312,14 @@ public class Product2Test extends ModuleTestBase {
 		createProduct(67, "JUNIT ZONE 2", 2);
 		
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("description", "JUNIT ZONE 1");
 		assertExists("zoneOne");
 		
 		execute("CRUD.new");		
 		setValue("number", "67");		
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertNoErrors();		
 		assertValue("description", "JUNIT ZONE 2");
 		assertNotExists("zoneOne");
@@ -415,7 +415,7 @@ public class Product2Test extends ModuleTestBase {
 				
 		// Search for verify
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("number", "66");
 		assertValue("description", "JUNIT PRODUCT");
@@ -433,7 +433,7 @@ public class Product2Test extends ModuleTestBase {
 		
 		// Verifying just modified
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("number", "66");
 		assertValue("description", "JUNIT PRODUCT");

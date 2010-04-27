@@ -128,7 +128,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_seller.number, " +
 				"collection_deliveryPlaces., messages,");
 		setValue("number", "4");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertLoadedParts("errors, editor_number, " +
 				"editor_address.city, " +
 				"editor_address.zipCode, " +
@@ -502,7 +502,7 @@ public class AJAXTest extends ModuleTestBase {
 		
 		// To test that Number:999 is not used as member name
 		setValue("number", "999");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertError("Object of type Product does not exists with key Number:999");
 	}
 	

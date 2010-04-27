@@ -26,13 +26,16 @@ here that you want to override.
 					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>
 	</controller>				<controller name="Void"/>	
 	<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
-			<set property="restoreModel" value="true"/>					</action>									<action name="save" mode="detail"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="Control S"/>							<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="Control D"/>						<action name="search" mode="detail"			by-default="if-possible"						class="org.openxava.actions.SearchAction"			image="images/find.gif"			keystroke="control B"/>															<action name="searchByViewKey" hidden="true"			by-default="if-possible"						class="org.openxava.actions.SearchByViewKeyAction"/>		
+			<set property="restoreModel" value="true"/>					</action>									<action name="save" mode="detail"
+			by-default="if-possible"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="Control S"/>							<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="Control D"/>		
+		<action name="search" mode="detail" 			 
+			class="org.openxava.actions.OpenSearchDialogAction" 
+			image="images/find.gif" 
+			keystroke="control B"/> 				<action name="refresh" mode="detail"						class="org.openxava.actions.SearchAction"			image="images/refresh.gif"			keystroke="control B"/>															<action name="searchByViewKey" hidden="true"						class="org.openxava.actions.SearchByViewKeyAction"/>		
 		<action name="searchExecutingOnChange" hidden="true"
-			by-default="if-possible"			
 			class="org.openxava.actions.SearchExecutingOnChangeAction"/>
 		
-		<action name="searchReadOnly" hidden="true"
-			by-default="if-possible"			
+		<action name="searchReadOnly" hidden="true"					
 			class="org.openxava.actions.SearchReadOnlyAction"/>
 								<action name="deleteSelected" mode="list" confirm="true"			class="org.openxava.actions.DeleteSelectedAction"			keystroke="Control D"/>										</controller>		<controller name="Print">										<action name="generatePdf" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/pdf.gif"			keystroke="Control Alt P">			<set property="type" value="pdf"/>		</action>
 
@@ -134,6 +137,11 @@ here that you want to override.
 			hidden="true"
 			mode="list"/>
 				
+	</controller>
+	
+	<controller name="Search">  
+		<action name="search" class="org.openxava.actions.SearchDialogAction"/> 
+		<action name="cancel" class="org.openxava.actions.CancelDialogAction"/> 
 	</controller>
 	
 	<controller name="AddColumns">
@@ -309,6 +317,8 @@ here that you want to override.
 			class="org.openxava.actions.SetUserAction">
 		</action>
 	</controller>
+	
+	
 	
 							 
 </controllers>

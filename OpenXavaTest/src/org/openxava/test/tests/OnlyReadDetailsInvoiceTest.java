@@ -26,7 +26,8 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"CRUD.new",
 			"CRUD.save",
 			"CRUD.delete",
-			"CRUD.search",			
+			"CRUD.search",
+			"CRUD.refresh",
 			"Mode.list",				
 			"List.filter", 
 			"List.orderBy", 
@@ -39,7 +40,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		Invoice invoice = getInvoice();	
 		setValue("year", String.valueOf(invoice.getYear()));
 		setValue("number", String.valueOf(invoice.getNumber()));
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 
 		String [] aggregatListActions = {
@@ -49,7 +50,8 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"CRUD.new",
 			"CRUD.save",
 			"CRUD.delete",
-			"CRUD.search",						
+			"CRUD.search",
+			"CRUD.refresh",
 			"Mode.list",
 			"Collection.view",
 			"List.filter", 

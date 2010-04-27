@@ -355,7 +355,7 @@ public class CarrierTest extends CarrierTestBase {
 	public void testCollectionWithCondition() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("name", "UNO");
 		assertCollectionRowCount("fellowCarriers", 3);
@@ -367,7 +367,7 @@ public class CarrierTest extends CarrierTestBase {
 	public void testCalculatedCollection() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("name", "UNO");
 		assertCollectionRowCount("fellowCarriersCalculated", 3);
@@ -391,7 +391,7 @@ public class CarrierTest extends CarrierTestBase {
 	public void testListActionInCollection() throws Exception {		
 		execute("CRUD.new");		
 		setValue("number", "1");		
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 
 		assertValueInCollection("fellowCarriers", 0, "name", "DOS");

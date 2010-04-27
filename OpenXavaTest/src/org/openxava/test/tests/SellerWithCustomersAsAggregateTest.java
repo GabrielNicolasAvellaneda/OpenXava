@@ -18,7 +18,7 @@ public class SellerWithCustomersAsAggregateTest extends ModuleTestBase {
 	public void testEntityCollectionAsAggregate() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "3");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("name", "ELISEO FERNANDEZ");
 		assertCollectionRowCount("customers", 0);
 						

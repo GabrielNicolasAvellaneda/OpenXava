@@ -53,7 +53,7 @@ public class CustomerTest extends ModuleTestBase {
 	public void testPdfReportInNestedCollection() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "4");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("name", "Cuatrero");
 		assertCollectionRowCount("deliveryPlaces", 1); // Cuatrero has 1 delivery place
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
@@ -65,7 +65,7 @@ public class CustomerTest extends ModuleTestBase {
 	public void testListActionInNestedCollection() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "4");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("name", "Cuatrero");
 		assertCollectionRowCount("deliveryPlaces", 1); // Cuatrero has 1 delivery place
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
@@ -359,7 +359,7 @@ public class CustomerTest extends ModuleTestBase {
 		
 		// Search just created
 		setValue("number", "66");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("number", "66");
 		assertValue("type", usesAnnotatedPOJO()?"1":"2"); 
 		assertValue("name", "Junit Customer"); // Testing formatter with sets
@@ -385,7 +385,7 @@ public class CustomerTest extends ModuleTestBase {
 		// Verifying modified
 		execute("CRUD.new");
 		setValue("number", "66");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("number", "66");
 		assertValue("type", usesAnnotatedPOJO()?"1":"2"); 
 		assertValue("name", "Junit Customer");
@@ -502,7 +502,7 @@ public class CustomerTest extends ModuleTestBase {
 		// Search just created
 		execute("CRUD.new");
 		setValue("number", "66");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("number", "66");
 		assertValue("type", "1"); 
 		assertValue("name", "Junit Customer");
@@ -619,7 +619,7 @@ public class CustomerTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertCollectionRowCount("deliveryPlaces", 0);
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		
 		assertCollectionRowCount("deliveryPlaces", 2);
 		assertValueInCollection("deliveryPlaces", 0, 0, "DELIVERY JUNIT 1");

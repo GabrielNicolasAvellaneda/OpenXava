@@ -112,7 +112,7 @@ public class OfficeTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("zoneNumber", "2");
 		setValue("number", "2");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		
 		assertValue("zoneNumber", "2");
 		assertValue("number", "2");

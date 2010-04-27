@@ -64,7 +64,7 @@ public class SeveralModulesTest extends ModuleTestBase {
 		selectModuleInPage("Carrier");
 		execute("CRUD.new");
 		setValue("number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();		
 		assertValue("name", "UNO");
 		assertCollectionRowCount("fellowCarriers", 3);

@@ -33,7 +33,7 @@ public class CustomerRadioButtonTest extends ModuleTestBase {
 		
 		
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "66");
 		assertValue("name", "Customer Junit");
 		assertValue("type", usesAnnotatedPOJO()?"1":"2"); // steady

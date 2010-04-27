@@ -32,7 +32,7 @@ public class Office2Test extends ModuleTestBase {
 		setValue("number", "1");
 		setValue("zoneNumber", "1");		
 		setValue("mainWarehouse.number", "1");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("name", "JUNIT OFFICE");
 		
 		// Deleting

@@ -17,7 +17,7 @@ public class Product3WithGroupTest extends ModuleTestBase {
 		assertNoErrors();
 		execute("Product3.showDescription"); // description is hide in a init action for test purpose
 		setValue("number", "77");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("description", "ANATHEMA");
 		assertEditable("description"); // well: on-change for make this not editable not throw
 	}

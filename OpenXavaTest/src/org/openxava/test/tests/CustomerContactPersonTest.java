@@ -18,7 +18,7 @@ public class CustomerContactPersonTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("customer.number", "1");
 		assertValue("customer.name", "Javi");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("name", "Pepe");
 		assertValue("customer.number", "1");

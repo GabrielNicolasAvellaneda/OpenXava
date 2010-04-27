@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- More intuitive 'search' action. Now it uses a dialog to ask for the search data.  
+- New 'refresh' action in CRUD controller. Behaves as the old 'search'. 
+- The default action for CRUD controller now is 'save'. Before it was 'search'.
 - It is possible to define default values for tabs (tabular data) at global level with the new tabs-default-values.xml. 
 - Fix: Poor performance when editing a collection element in a large collection. 
 - Fix: @SearchKey in a not editable view does not hide their associate actions.

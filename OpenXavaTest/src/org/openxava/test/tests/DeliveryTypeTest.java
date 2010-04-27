@@ -75,7 +75,7 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertMessage("Delivery type created successfully");
 				
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT CREATED"); // 'CREATED' is added in postcreate
 		setValue("description", "JUNIT");
@@ -84,7 +84,7 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertMessage("Delivery type modified successfully");
 		
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT MODIFIED"); // 'MODIFIED' is added in postmodify
 		

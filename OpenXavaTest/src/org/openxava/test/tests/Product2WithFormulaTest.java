@@ -36,7 +36,7 @@ public class Product2WithFormulaTest extends ModuleTestBase {
 		// Searching to verify
 		assertValue("description", "");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		
 		assertValue("description", "JUNIT PRODUCT 66");		
 		assertValue("formula.name", "JUNIT FORMULA FROM PRODUCT");

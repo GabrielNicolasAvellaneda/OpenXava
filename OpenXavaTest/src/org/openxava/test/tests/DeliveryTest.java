@@ -34,6 +34,22 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
+	public void testSearchUsesSearchView() throws Exception { 
+		execute("CRUD.new");
+		execute("CRUD.search");
+		assertDialog();
+		assertNotExists("advice");
+		assertNotExists("vehicle");
+		
+		setValue("description", "DELIVERY JUNIT 666");
+		execute("Search.search");
+		assertNoDialog();
+		assertNoErrors();
+		assertValue("description", "DELIVERY JUNIT 666");
+		
+	}
+
+	
 	public void testModifyEmptyReferenceNotMustShowTheDialog() throws Exception{
 		execute("CRUD.new");
 		assertValue("type.number", "");
@@ -130,7 +146,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("year", "2009");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		execute("Sections.change", "activeSection=2");
 		assertValue("vatPercentage", "17");
 		execute("CRUD.delete");
@@ -144,7 +160,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "2");
 		setValue("type.number", "1");
 		setValue("number", "666");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("description", "DELIVERY JUNIT 666"); 
 		
@@ -215,16 +231,16 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");							
 		setValue("type.number", "0");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("description", "JUNIT"); 
 		
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("description", "JUNIT");
 
 		deleteDeliveryType(0);
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("description", "JUNIT");
 
@@ -246,13 +262,13 @@ public class DeliveryTest extends ModuleTestBase {
 		XPersistence.commit();
 	}
 	
-	public void testSearchingByAnyProperty() throws Exception {
+	public void testSearchingByAnyPropertyUsingRefresh() throws Exception {
 		// One result
 		execute("CRUD.new");
 		assertValue("number", "");
 		assertValue("description", "");
 		setValue("description", "%SEARCHING");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("number", "777"); 
 		assertValue("description", "FOR TEST SEARCHING BY DESCRIPTION");
@@ -263,10 +279,34 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("description", "");
 		setValue("driverType", "");
 		setValue("description", "DEL");
+		execute("CRUD.refresh");
+		assertNoErrors();
+		assertValue("description", "DELIVERY JUNIT 666");				
+	}
+	
+	public void testSearchingByAnyProperty() throws Exception {
+		// One result
+		execute("CRUD.new");
+		assertValue("number", "");
+		assertValue("description", "");
 		execute("CRUD.search");
+		setValue("description", "%SEARCHING");
+		execute("Search.search");
+		assertNoErrors();
+		assertValue("number", "777"); 
+		assertValue("description", "FOR TEST SEARCHING BY DESCRIPTION");
+		
+		// There are more than one match, returns the first
+		execute("CRUD.new");
+		assertValue("number", "");
+		assertValue("description", "");
+		execute("CRUD.search");
+		setValue("description", "DEL");
+		execute("Search.search");
 		assertNoErrors();
 		assertValue("description", "DELIVERY JUNIT 666");				
 	}	
+	
 		
 	public void testDateCalendarEditor() throws Exception {
 		execute("CRUD.new");
@@ -409,7 +449,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertType("66");
 		changeModule("DeliveryType");
 		setValue("number", "66");
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		execute("CRUD.delete");		
 		assertMessage("Delivery type deleted successfully");
@@ -455,7 +495,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");		
 		setValue("number", "66");				
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("invoice.year", "2002"); 
 		assertValue("invoice.number", "1");				
@@ -486,6 +526,7 @@ public class DeliveryTest extends ModuleTestBase {
 			"CRUD.save",
 			"CRUD.delete",
 			"CRUD.search",						
+			"CRUD.refresh",
 			"Mode.list",
 			"Reference.search",
 			"Reference.createNew",
@@ -511,7 +552,8 @@ public class DeliveryTest extends ModuleTestBase {
 			"CRUD.new",
 			"CRUD.save",
 			"CRUD.delete",
-			"CRUD.search",						
+			"CRUD.search",
+			"CRUD.refresh",
 			"Mode.list",
 			"Reference.search",
 			"Reference.createNew",
@@ -601,7 +643,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");		
 		setValue("number", "66");				
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");				
@@ -643,7 +685,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");		
 		setValue("number", "66");				
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");						
@@ -796,7 +838,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "63");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("description", "JUNIT BY CARRIER");		
 		assertExists("carrier.number");						    
 		assertNotExists("employee");
@@ -807,7 +849,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "62");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("description", "JUNIT BY EMPLOYEE");
 		assertNotExists("carrier.number");
 		assertExists("employee");
@@ -818,7 +860,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "61");
-		execute("CRUD.search");		
+		execute("CRUD.refresh");		
 		assertValue("description", "JUNIT WITHOUT DELIVEREDBY");		
 		assertNotExists("carrier.number");
 		assertNotExists("employee");
@@ -832,7 +874,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "62");
-		execute("CRUD.search");				
+		execute("CRUD.refresh");				
 		execute("CRUD.delete");
 		assertMessage("Delivery deleted successfully");
 		
@@ -841,7 +883,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "63");
-		execute("CRUD.search");						
+		execute("CRUD.refresh");						
 		execute("CRUD.delete");			
 		assertMessage("Delivery deleted successfully");
 	}
@@ -868,7 +910,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");		
 		setValue("number", "66");	
-		execute("CRUD.search");
+		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");						
