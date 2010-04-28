@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: JavaScript calendar does not throw onchange event when clicking on 'Today'.
 - More intuitive 'search' action. Now it uses a dialog to ask for the search data.  
 - New 'refresh' action in CRUD controller. Behaves as the old 'search'. 
 - The default action for CRUD controller now is 'save'. Before it was 'search'.
