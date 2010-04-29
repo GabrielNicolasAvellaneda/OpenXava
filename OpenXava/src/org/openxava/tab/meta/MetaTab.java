@@ -935,7 +935,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.metaComponent = this.metaModel.getMetaComponent();
 	}
 
-	public void setDefaultValues() { // tmp
+	public void setDefaultValues() { 
 		for (MetaTab t: MetaTabsDefaultValues.getMetaTabsForModel(getMetaComponent().getName())) {
 			if (t.getMetaFilter() != null && getMetaFilter() == null) setMetaFilter(t.getMetaFilter());
 			if (t.getMetaRowStyles() != null && getMetaRowStyles() == null) setMetaRowStyles(t.getMetaRowStyles());
