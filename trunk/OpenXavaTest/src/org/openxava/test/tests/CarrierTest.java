@@ -135,9 +135,34 @@ public class CarrierTest extends CarrierTestBase {
 		resetModule();
 		assertListRowCount(5);
 		assertAction("List.hideRows");
-		assertNoAction("List.showRows");		
+		assertNoAction("List.showRows");	
+		
+		execute("List.hideRows");
+		assertListRowCount(0);
+		assertNoAction("List.hideRows");
+		assertAction("List.showRows");
+		
+		customizeList();
+		assertListRowCount(0);
+		assertNoAction("List.hideRows");
+		assertAction("List.showRows");
+
+		execute("List.showRows");
+		assertListRowCount(5);
+		assertAction("List.hideRows");
+		assertNoAction("List.showRows");
 	}
 	
+	private void customizeList() throws Exception { 
+		execute("List.customize");
+		execute("List.addColumns");
+		checkRow("selectedProperties", "drivingLicence.type");
+		execute("AddColumns.addColumns");
+		
+		execute("List.addColumns");
+		execute("AddColumns.restoreDefault");		
+	}
+
 	public void testJDBCAction() throws Exception {
 		assertListRowCount(5); 		
 		execute("Carrier.deleteAll");

@@ -875,7 +875,6 @@ public class Tab implements java.io.Serializable {
 		if (Arrays.equals(this.conditionValues, values)) return;		
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
 		this.conditionValues = values;				
-		rowsHidden = false;		
 		condition = null;
 	}
 		
@@ -1204,7 +1203,7 @@ public class Tab implements java.io.Serializable {
 			if (propertiesNames != null) {
 				setPropertiesNames(propertiesNames);
 			}
-			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);
+			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);			
 			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);
 			if (columnWidths != null) columnWidths.clear();
 			for (MetaProperty property: getMetaProperties()) {
