@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Little adjustment for space between columns in automatic PDF reports.
 - Fix: After customizing the list all the row are shown, even if they have been hidden using 'Hide them' link.
 - Fix: JavaScript calendar does not throw onchange event when clicking on 'Today'.
 - More intuitive 'search' action. Now it uses a dialog to ask for the search data.  
