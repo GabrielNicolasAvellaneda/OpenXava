@@ -1127,6 +1127,12 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(SearchListConditions.class)) {
 			notApply(property.getName(), SearchListConditions.class, "references & collections");
 		}
+		if (element.isAnnotationPresent(Path.class)) {
+			notApply(property.getName(), Path.class, "collections");
+		}
+		if (element.isAnnotationPresent(Paths.class)) {
+			notApply(property.getName(), Paths.class, "collections");
+		}
 	}
 
 	private void processAnnotations(MetaCollection collection, AnnotatedElement element) throws Exception {
@@ -1169,7 +1175,6 @@ public class AnnotatedClassParser {
 			OrderBy orderBy = element.getAnnotation(OrderBy.class);
 			collection.setOrder(wrapWithDollars(orderBy.value()));
 		}		
-
 					
 		for (Object oMetaView: collection.getMetaModel().getMetaViews()) {
 			MetaView metaView = (MetaView) oMetaView;				
@@ -1527,6 +1532,26 @@ public class AnnotatedClassParser {
 				}
 			}			
 
+			// Path
+			if (element.isAnnotationPresent(Path.class)) {
+				Path path = element.getAnnotation(Path.class);
+				if (isForView(metaView, path.forViews(), path.notForViews())) {
+					collectionView.setPath(path);
+					mustAddMetaView = true;
+				}
+			}
+			
+			// Paths
+			if (element.isAnnotationPresent(Paths.class)) {
+				Path[] paths = element.getAnnotation(Paths.class).value();
+				for (Path path : paths) {
+					if (isForView(metaView, path.forViews(), path.notForViews())) {
+						collectionView.setPath(path);
+						mustAddMetaView = true;
+					}
+				}
+			}
+			
 			if (mustAddMetaView) {				
 				metaView.addMetaViewCollection(collectionView);
 			}
@@ -2033,6 +2058,12 @@ public class AnnotatedClassParser {
 			notApply(ref.getName(), OnSelectElementActions.class, "collections");
 		}		
 		
+		if (element.isAnnotationPresent(Path.class)) {
+			notApply(ref.getName(), Path.class, "collections");
+		}
+		if (element.isAnnotationPresent(Paths.class)) {
+			notApply(ref.getName(), Paths.class, "collections");
+		}
 	}
 
 
