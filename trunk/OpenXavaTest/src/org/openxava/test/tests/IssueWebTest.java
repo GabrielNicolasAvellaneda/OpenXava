@@ -2,6 +2,8 @@ package org.openxava.test.tests;
 
 import org.openxava.tests.ModuleTestBase;
 
+
+
 /**
  * @author Federico Alcantara
  */
@@ -30,12 +32,12 @@ public class IssueWebTest extends ModuleTestBase {
 		// let's get locale en - english for companyA
 		newParameters="&schema=companya&locale=en";
 		resetModule();
-		assertLabelInList(1, "Description");
+		assertLabelInList(1,"Description");
 
-		// let's get locale es - espaï¿½ol for companyA
+		// let's get locale es - espa–ol for companyA
 		newParameters="&schema=companya&locale=es";
 		resetModule();
-		assertLabelInList(1, "DescripciÃ³n");
+		assertLabelInList(1,"Descripci—n");
 	}
 	
 	public void testUrlParametersChangeOfUser() throws Exception {
