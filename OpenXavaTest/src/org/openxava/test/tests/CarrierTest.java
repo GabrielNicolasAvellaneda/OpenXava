@@ -216,9 +216,8 @@ public class CarrierTest extends CarrierTestBase {
 		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); 
 		assertNoErrors();
 		assertDialog();
-		assertValue("description", "CAMIONES PEQUEÃ‘OS");
+		assertValue("description", "CAMIONES PEQUE„OS");
 	}
-	
 	
 	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception {
 		execute("Mode.detailAndFirst");		
