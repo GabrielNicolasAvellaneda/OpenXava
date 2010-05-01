@@ -1941,5 +1941,11 @@ public class ModuleTestBase extends TestCase {
 		String label = page.getElementById("ui-dialog-title-" + decorateId(getTopDialog())).asText();
 		assertEquals(XavaResources.getString("unexpected_dialog_title"), expectedTitle, label); 
 	}
-	
+
+	/**
+	 * @since 4m4
+	 */
+	protected HtmlPage getHtmlPage() {
+		return page;
+	}
 }

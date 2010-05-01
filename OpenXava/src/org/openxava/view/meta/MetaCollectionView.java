@@ -1,12 +1,15 @@
 package org.openxava.view.meta;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
-
-
-import org.openxava.tab.meta.*;
-import org.openxava.util.*;
+import org.openxava.annotations.Path;
+import org.openxava.tab.meta.MetaRowStyle;
+import org.openxava.util.Is;
 
 
 /**
@@ -35,6 +38,7 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 	private String propertiesListNamesAsString;
 	private Collection rowStyles; 
 	private String onSelectElementActionName;
+	private Path path;
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
@@ -218,5 +222,13 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 	public void setOnSelectElementActionName(String onSelectElementActionName) {
 		this.onSelectElementActionName = onSelectElementActionName;
 	}
-	
+
+	public void setPath(Path path) {
+		this.path = path;
+	}
+
+	public Path getPath() {
+		return path;
+	}
+
 }

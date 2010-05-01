@@ -166,4 +166,6 @@
 		<for-stereotype stereotype="ETIQUETA_IMAGEN" />
 	</editor>
 
+	<editor name="TreeView" url="treeViewEditor.jsp">
+	</editor>
 </editors>

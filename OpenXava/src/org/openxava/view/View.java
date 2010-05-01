@@ -1883,7 +1883,7 @@ public class View implements java.io.Serializable {
 		if (Is.equal(modelName, newModel)) return;		
 		modelName = newModel;
 		reloadNeeded = true;		
-		resetMembers();		
+		resetMembers();
 	}
 	
 	private void resetMembers() {

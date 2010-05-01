@@ -23,6 +23,8 @@ here that you want to override.
 	<object name="xava_gallery" class="org.openxava.session.Gallery"/>
 	<object name="xava_defaultSchema" class="java.lang.String" scope="global"/>
 	<object name="xava_currentModule" class="java.lang.String" />
+	<object name="xava_treeViewParser" class="org.openxava.util.TreeViewParser" />
+	<object name="xava_treeViewNodeFullPath" class="java.lang.String" />
 					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>
 	</controller>				<controller name="Void"/>	
 	<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
@@ -317,8 +319,44 @@ here that you want to override.
 			class="org.openxava.actions.SetUserAction">
 		</action>
 	</controller>
-	
-	
-	
-							 
+
+	<!-- This controller integrates Treeview behavior to OpenXava -->	
+	<controller name="TreeView">
+		<action name="new" mode="list" image="images/create_new.gif"
+			class="org.openxava.actions.NewTreeViewItemAction">
+		</action>
+		<action name="remove" class="org.openxava.actions.RemoveTreeViewNodeAction">
+		</action>
+		<action name="save" class="org.openxava.actions.SaveElementInTreeViewAction" 
+			mode="detail">
+		</action>
+		<action name="removeSelected" confirm="true" image="images/delete.gif"
+			class="org.openxava.actions.RemoveSelectedTreeViewNodeAction">
+		</action>
+		<action name="up" mode="list" image="images/level-up.gif"
+			class="org.openxava.actions.TreeViewMoveNodeAction">
+			<set property="actionType" value="UP" />
+		</action>
+		<action name="down" mode="list" image="images/level-down.gif"
+			class="org.openxava.actions.TreeViewMoveNodeAction">
+			<set property="actionType" value="DOWN" />
+		</action>
+		<action name="left" mode="list" image="images/level-left.gif"
+			class="org.openxava.actions.TreeViewMoveNodeAction">
+			<set property="actionType" value="LEFT" />
+		</action>
+		<action name="right" mode="list" image="images/level-right.gif"
+			class="org.openxava.actions.TreeViewMoveNodeAction">
+			<set property="actionType" value="RIGHT" />
+		</action>
+		<action name="expand"
+			class="org.openxava.actions.TreeViewExpandCollapseAction" mode="ALL">
+			<set value="true" property="expanded" />
+		</action>
+		<action name="collapse"
+			class="org.openxava.actions.TreeViewExpandCollapseAction" mode="ALL">
+			<set value="false" property="expanded" />
+		</action>
+	</controller>
+
 </controllers>
