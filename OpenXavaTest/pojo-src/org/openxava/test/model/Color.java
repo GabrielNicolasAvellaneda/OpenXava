@@ -16,14 +16,18 @@ import org.openxava.test.actions.OnChangeGroupInColorAction;
 
 @Entity
 @Views({
-	@View( name="Ordinary", members="number; name; sample; hexValue; usedTo"),	
+	@View( name="Ordinary", members="number; name; sample; hexValue; usedTo, characteristicThing"),
+	@View( name="Ordinary2", members="number; name; sample; hexValue; usedTo, characteristicThing"),	
 	@View( name="View1", members="property1"), 
 	@View( name="View2", members="property2"), 
 	@View( name="View2Sub1", members="property2Sub1"), 
 	@View( name="View2Sub2", members="property2Sub2"),
 	@View( name="Groups", members="group; group1[property1], group2[property2]")
 })
-@Tab( properties = "number, name, hexValue, sample, usedTo.name" )
+@Tabs({
+	@Tab( properties = "number, name, hexValue, sample, usedTo.name, characteristicThing.description"),
+	@Tab( name="Color2", properties = "number, name, hexValue, sample, usedTo.name, characteristicThing.description")	
+})
 public class Color {
 
 	@Id @Column(length=5)
@@ -52,6 +56,19 @@ public class Color {
 	@DescriptionsList
 	@JoinColumn(name="IDTHING")
 	private Thing usedTo;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@DescriptionsLists({
+		@DescriptionsList(
+			condition="${thing.number} = ?", 
+			depends="this.usedTo"),
+		@DescriptionsList(
+			forViews="Ordinary2", 
+			condition="${number} < 2",
+			forTabs="Color2")
+	})
+	@LabelFormat(LabelFormatType.NO_LABEL)
+	private CharacteristicThing characteristicThing;
 	
 	@Transient
 	private String property1;
@@ -154,6 +171,14 @@ public class Color {
 
 	public void setUsedTo(Thing usedTo) {
 		this.usedTo = usedTo;
+	}
+
+	public CharacteristicThing getCharacteristicThing() {
+		return characteristicThing;
+	}
+
+	public void setCharacteristicThing(CharacteristicThing characteristicThing) {
+		this.characteristicThing = characteristicThing;
 	}
 
 }
