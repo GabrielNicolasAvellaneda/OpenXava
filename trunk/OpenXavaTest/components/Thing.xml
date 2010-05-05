@@ -15,7 +15,7 @@
 	
 	<entity-mapping table="XAVATEST@separator@THING">
 		<property-mapping
-			property="number" column="NUMBER"/>		
+			property="number" column="IDTHING"/>		
 		<property-mapping
 			property="name" column="NAME"/>
 	</entity-mapping>

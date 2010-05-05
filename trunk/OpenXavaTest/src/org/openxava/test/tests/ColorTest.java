@@ -1,5 +1,8 @@
 package org.openxava.test.tests;
 
+import javax.persistence.NoResultException;
+
+import org.openxava.test.model.CharacteristicThing;
 import org.openxava.tests.*;
 
 
@@ -57,7 +60,7 @@ public class ColorTest extends ModuleTestBase {
 		assertListRowCount(1);
 	}
 	
-	public void testFilterDescriptionList_keyReferenceWithSameNameThatPropertyFather() throws Exception{
+	public void testFilterDescriptionsList_keyReferenceWithSameNameThatPropertyFather() throws Exception{
 		assertLabelInList(4, "Name of Used to");
 		assertValueInList(0, 4, "CAR");
 		setConditionValues(new String[] { "", "", "", "1"} );
@@ -90,5 +93,42 @@ public class ColorTest extends ModuleTestBase {
 		assertNoErrors();		
 		tearDown();
 	}	
+	public void testFilterDescriptionsList_forTabsAndNotForTabs() throws Exception{
+		try{
+			CharacteristicThing.findByNumber(2);	
+		}
+		catch(NoResultException ex){
+			fail("It must to exist");
+		}
+		
+		
+		// Color: 'usedTo' with descriptionsList and 'characteristicThing' without descriptionsList
+		assertLabelInList(4, "Name of Used to");
+		assertLabelInList(5, "Description of Characteristic thing");
+		assertValueInList(0, 4, "CAR");
+		assertValueInList(0, 5, "3 PLACES");
+		setConditionValues(new String[] { "", "", "", "1", "3 PLACES" } );
+		execute("List.filter");
+		assertNoErrors();
+		assertListRowCount(1);
+		
+		// Color2: 'usedTo' with descriptionsList and 'characteristicThing' with descriptionsList and condition
+		changeModule("Color2");
+		assertLabelInList(4, "Name of Used to");
+		assertLabelInList(5, "Description of Characteristic thing");
+		assertValueInList(0, 4, "CAR");
+		assertValueInList(0, 5, "3 PLACES");
+		setConditionValues(new String[] { "", "", "", "1", "0" } );
+		execute("List.filter");
+		assertNoErrors();
+		assertListRowCount(1);
+
+		try{
+			setConditionValues(new String[] { "", "", "", "", "2"} );	// descriptionsList has a condition: number < 2
+		}
+		catch(IllegalArgumentException ex){
+			assertTrue(ex.getMessage().equals("No option found with value: 2"));
+		}
+	}
 	
 }

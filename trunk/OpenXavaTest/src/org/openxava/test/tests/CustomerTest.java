@@ -2,6 +2,8 @@ package org.openxava.test.tests;
 
 import java.net.URL;
 
+import javax.persistence.NoResultException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.MetaModel;
@@ -689,6 +691,34 @@ public class CustomerTest extends ModuleTestBase {
 	
 	private String getSection() {
 		return section;		
+	}
+	
+	public void testFilterToDescriptionsListWithBaseConditionAndFilter() throws Exception {
+		try{
+			// warehouse has a filter zoneNumber <= 999
+			Warehouse.findByZoneNumberNumber(1000, 1);	
+		}
+		catch(NoResultException ex){
+			fail("It need warehouse with zone number 1000");
+		}
+		
+		setConditionValues(new String[] {"cuatrero"} );
+		execute("List.filter");
+		execute("List.viewDetail", "row=0");
+		
+		assertLabelInCollection("deliveryPlaces", 3, "Name of Preferred warehouse");
+		assertValueInCollection("deliveryPlaces", 0, 3, "CENTRAL VALENCIA");
+		setConditionValues("deliveryPlaces", new String[] { "", "", "", "[.1.1.]"} );
+		execute("List.filter", "collection=deliveryPlaces");
+		assertCollectionNotEmpty("deliveryPlaces");
+		
+		try{
+			setConditionValues("deliveryPlaces", new String[] { "", "", "", "[.1.1000.]"} );	
+		}
+		catch(IllegalArgumentException ex){
+			assertTrue(ex.getMessage().equals("No option found with value: [.1.1000.]"));
+		}
+		
 	}
 	
 }

@@ -46,7 +46,7 @@
 				additionalDetails			
 			</section>
 			<section name="invoice">
-				invoice
+				invoice, <action action="Service.seeMessage"/>
 			</section>
 		</members>
 	</view>	
