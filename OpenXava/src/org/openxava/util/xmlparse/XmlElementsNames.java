@@ -195,5 +195,6 @@ public class XmlElementsNames {
 	protected final static String [] xfor_model = { "for-model", "para-modelo" };
 	protected final static String [] xexcept_for_model = { "except-for-model", "excepto-para-modelo" };
 	protected final static String [] xfor_all_models = { "for-all-models", "para-todos-los-modelos" };
-	
+	protected final static String [] xfor_tabs = { "for-tabs", "para-tabs" };
+	protected final static String [] xnot_for_tabs = { "not-for-tabs", "no-para-tabs" };
 }

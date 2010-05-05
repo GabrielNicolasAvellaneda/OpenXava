@@ -19,8 +19,9 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	private String order;
 	private boolean orderByKey;
 	private Collection dependsNames;
-	private int labelFormat = XavaPreferences.getInstance().getDefaultLabelFormat(); 
-	
+	private int labelFormat = XavaPreferences.getInstance().getDefaultLabelFormat();
+	private String forTabs;
+	private String notForTabs;
 	
 		
 	public String getDescriptionPropertyName() {
@@ -95,6 +96,21 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	public void setLabelFormat(int labelFormat) {
 		this.labelFormat = labelFormat;
 	}
-	
-	
+
+	public String getForTabs() {
+		return forTabs == null ? "" : forTabs;
+	}
+
+	public void setForTabs(String forTabs) {
+		this.forTabs = forTabs;
+	}
+
+	public String getNotForTabs() {
+		return notForTabs == null ? "" : notForTabs;
+	}
+
+	public void setNotForTabs(String notForTabs) {
+		this.notForTabs = notForTabs;
+	}
+
 }

@@ -384,7 +384,7 @@ public class Tab implements java.io.Serializable {
 					valuesToWhere.add("");
 					comparatorsToWhere.add(this.conditionComparators[i]);
 				}
-				else if (!Is.empty(WebEditors.getEditorURLDescriptionsList(getModelName(), Ids.decorate(request, p.getQualifiedName()), i, getCollectionPrefix(), p.getQualifiedName(), p.getName()))){
+				else if (!Is.empty(WebEditors.getEditorURLDescriptionsList(getTabName(), getModelName(), Ids.decorate(request, p.getQualifiedName()), i, getCollectionPrefix(), p.getQualifiedName(), p.getName()))){
 					if (Is.empty(this.conditionValues[i])){
 						comparatorsToWhere.add(this.conditionComparators[i]);
 						valuesToWhere.add(this.conditionValues[i]);
@@ -397,14 +397,13 @@ public class Tab implements java.io.Serializable {
 					
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();
 					String alias = mapping.getTableToQualifyColumn() + ".";
-					MetaTab tab = MetaComponent.get(getModelName().substring(getModelName().lastIndexOf('.') + 1)).getMetaTab();
 					String keyValues = this.conditionValues[i].replaceAll("[\\[\\]]", "");
 					StringTokenizer st = new StringTokenizer(keyValues, ".");
 					for (CmpField field : fields) {
 						String property = field.getCmpPropertyName().substring(field.getCmpPropertyName().lastIndexOf('_') + 1);
 						String value = st.nextToken();
 						
-						valuesToWhere.add(getValueConverter(p, tab, property, reference, value, field));
+						valuesToWhere.add(getValueConverter(p, getMetaTab(), property, reference, value, field));
 						comparatorsToWhere.add(this.conditionComparators[i]);
 						
 						if (firstCondition) firstCondition = false;
