@@ -1,4 +1,4 @@
-package org.openxava.view.meta;
+package org.openxava.web.editors;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -14,15 +14,20 @@ import javax.persistence.OrderBy;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openxava.annotations.Path;
+import org.openxava.annotations.Tree;
 import org.openxava.util.Is;
 import org.openxava.util.Strings;
 import org.openxava.util.XavaException;
 import org.openxava.util.XavaResources;
 
-public class MetaTreeView {
+/**
+ * tmp En paquete editors
+ * 
+ * @author Federico Alcántara
+ */
+public class TreeView {
 	
-	private Log log = LogFactory.getLog(MetaTreeView.class);
+	private Log log = LogFactory.getLog(TreeView.class);
 	
 	private String pathProperty;
 	private String idProperties;
@@ -35,18 +40,18 @@ public class MetaTreeView {
 	private boolean orderDefined;
 	private String idSeparator;
 	@SuppressWarnings("unused")
-	@Path
+	@Tree
 	private String defaultPathAnnotation;
-	private Path treePath;
+	private Tree treePath;
 	private Object itemObject;
 	private Object parentObject;
 	private String collectionName;
 	private Map<String, Boolean> expandedStates;
 	
-	public MetaTreeView(){
+	public TreeView(){
 	}
 	
-	public MetaTreeView(Path path, Object object, Object parent, String collectionName) throws Exception {
+	public TreeView(Tree path, Object object, Object parent, String collectionName) throws Exception {
 		parseTreeView(path, object, parent, collectionName);
 	}
 	
@@ -55,13 +60,13 @@ public class MetaTreeView {
 	 * @param itemObject Object to be parsed.
 	 * @throws Exception
 	 */
-	public void parseTreeView(Path path, Object itemObject, Object parentObject, String collectionName) throws Exception {
+	public void parseTreeView(Tree path, Object itemObject, Object parentObject, String collectionName) throws Exception {
 		this.treePath = path;
 		this.itemObject = itemObject;
 		this.parentObject = parentObject;
 		this.collectionName = collectionName;
 		if (treePath == null) {
-			treePath = this.getClass().getDeclaredField("defaultPathAnnotation").getAnnotation(Path.class);
+			treePath = this.getClass().getDeclaredField("defaultPathAnnotation").getAnnotation(Tree.class);
 		}
 		if (Is.empty(treePath.pathProperty())) {
 			throw new XavaException("error.collectionDoesNotRepresentATreeView");

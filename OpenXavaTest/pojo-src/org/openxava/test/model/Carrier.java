@@ -19,6 +19,7 @@ import org.openxava.jpa.*;
 	@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculatedSize; fellowCarriersCalculated"),
 	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated"),
 	@View(name="FellowsNames", members="number, name; fellowCarriers"), 	
+	@View(name="Fellows", members="number, name; warehouse; fellowCarriers"), 
 	@View(
 		name="WithSections",
 		members=

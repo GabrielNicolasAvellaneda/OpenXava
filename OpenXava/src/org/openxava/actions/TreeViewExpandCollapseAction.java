@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openxava.model.MapFacade;
-import org.openxava.util.TreeViewParser;
-import org.openxava.view.meta.MetaTreeView;
+import org.openxava.web.editors.*;
 
 
 public class TreeViewExpandCollapseAction extends CollectionElementViewBaseAction {
@@ -23,7 +22,7 @@ public class TreeViewExpandCollapseAction extends CollectionElementViewBaseActio
 			Map keyValues = (Map)((List)elements).get(getRow());
 			Object treeNode = (Object)MapFacade.findEntity(getCollectionElementView().getModelName(), keyValues);
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-			MetaTreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
 			metaTreeView.setNodeExpandedState(treeNode, expanded);
 		}
 	}

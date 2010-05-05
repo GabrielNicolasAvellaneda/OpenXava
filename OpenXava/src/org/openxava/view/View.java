@@ -17,13 +17,11 @@ import java.util.prefs.*;
 
 import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
-import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.IOnChangePropertyAction;
-import org.openxava.annotations.parse.*;
 import org.openxava.calculators.*;
 import org.openxava.component.MetaComponent;
 import org.openxava.controller.ModuleContext;
@@ -169,6 +167,7 @@ public class View implements java.io.Serializable {
 	private String title; 
 	private String titleId; 
 	private Object [] titleArguments;
+	private Collection fullOrderActionsNamesList; 
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -1883,7 +1882,7 @@ public class View implements java.io.Serializable {
 		if (Is.equal(modelName, newModel)) return;		
 		modelName = newModel;
 		reloadNeeded = true;		
-		resetMembers();
+		resetMembers();		
 	}
 	
 	private void resetMembers() {
@@ -3300,7 +3299,25 @@ public class View implements java.io.Serializable {
 	 */	
 	public void addListAction(String qualifiedActionName) {		
 		if (actionsNamesList == null) actionsNamesList = new ArrayList(getDefaultListActionsForCollections()); 
-		actionsNamesList.add(qualifiedActionName);
+		if (actionsNamesList.contains(qualifiedActionName))	return;
+		refreshCollection(); 
+		if (getFullOrderActionsNamesList().contains(qualifiedActionName)) {
+			// If already in order we insert it in the correct position
+			ArrayList list = (ArrayList) actionsNamesList;
+			int position = 0;
+			for (Object o : getFullOrderActionsNamesList()) {
+				if (actionsNamesList.contains(o))
+					position++;
+				else if (o.equals(qualifiedActionName)) {
+					((ArrayList) actionsNamesList).add(position, o);
+					return;
+				}
+			}
+		} else {
+			// If it does not exist, we add it at the end of both list 
+			actionsNamesList.add(qualifiedActionName);
+			getFullOrderActionsNamesList().add(qualifiedActionName);
+		}		
 	}
 
 	/**
@@ -3310,7 +3327,8 @@ public class View implements java.io.Serializable {
 	 */	
 	public void removeListAction(String qualifiedActionName) {		
 		if (actionsNamesList == null) actionsNamesList = new ArrayList(getDefaultListActionsForCollections()); 
-		actionsNamesList.remove(qualifiedActionName);		
+		actionsNamesList.remove(qualifiedActionName);
+		refreshCollection(); 
 	}
 		
 	public Collection getActionsNamesList() {		
@@ -3323,8 +3341,12 @@ public class View implements java.io.Serializable {
 	
 	public void setActionsNamesList(Collection collection) {		
 		actionsNamesList = collection;
-	}	
-	
+		if (fullOrderActionsNamesList == null) {
+			fullOrderActionsNamesList = new ArrayList(collection);
+		}
+		refreshCollection();
+	} 
+			                                                                                                                                                                                                                                                                                                                                                                                                                   
 	public Collection getActionsNamesForProperty(MetaProperty p, boolean editable) throws XavaException {		
 		return getMetaView().getActionsNamesForProperty(p, editable);
 	}
@@ -4328,6 +4350,17 @@ public class View implements java.io.Serializable {
 	 */	
 	public void setTitle(String title) { 
 		this.title = title;
+	}		 
+	
+	private Collection getFullOrderActionsNamesList() {
+		if (fullOrderActionsNamesList==null) {
+			fullOrderActionsNamesList = new ArrayList();
+		}
+		return fullOrderActionsNamesList; 
+	}
+	
+	private void setFullOrderActionsNamesList(Collection collection) { 
+		fullOrderActionsNamesList = collection; 
 	}
 					
 }

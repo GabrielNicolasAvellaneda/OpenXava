@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.openxava.model.MapFacade;
-import org.openxava.util.TreeViewParser;
 import org.openxava.validators.ValidationException;
-import org.openxava.view.meta.MetaTreeView;
+import org.openxava.web.editors.*;
 
 public class RemoveTreeViewNodeAction extends CollectionElementViewBaseAction {
 
@@ -21,7 +20,7 @@ public class RemoveTreeViewNodeAction extends CollectionElementViewBaseAction {
 				Map keyValues = getCollectionElementView().getKeyValues();
 				Object treeNode = MapFacade.findEntity(getCollectionElementView().getModelName(), keyValues);
 				TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-				MetaTreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+				TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
 				path = metaTreeView.getNodeFullPath(treeNode);
 				selectedOnes.add(keyValues);
 				if (metaTreeView != null) {

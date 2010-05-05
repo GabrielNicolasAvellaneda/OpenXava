@@ -7,9 +7,8 @@ import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 
-
-
 /**
+ * 
  * @author Federico Alcantara
  */
 
@@ -25,7 +24,7 @@ public abstract class TreeViewTestBase extends ModuleTestBase {
 
 	
 	protected DomElement getTreeViewElementInRow(String collection, int row) {
-		HtmlDivision div = (HtmlDivision) getHtmlPage().getElementById("tree_" + collection);
+		HtmlDivision div = (HtmlDivision) getHtmlPage().getElementById("tree_" + collection); 
 		return div.getElementById("ygtvcontentel" + (row+1));
 	}
 	
@@ -34,16 +33,8 @@ public abstract class TreeViewTestBase extends ModuleTestBase {
 		DomElement element = getTreeViewElementInRow(collection, row);
 		String value = element.getElementsByTagName("span").item(0)
 				.getTextContent().toString();
-
-		for (byte charByte: value.getBytes()) {
-			if (charByte > 0) {
-				char charValue = (char) charByte;
-				returnValue = returnValue + charValue;
-			} else {
-				returnValue = returnValue + " ";
-			}
-		}
-		return returnValue;
+		
+		return value.replace((char) 160, (char) 32); 
 	}
 		
 	protected int getTreeViewRowCount(String collection) throws Exception {

@@ -14,9 +14,14 @@ import javax.persistence.OrderBy;
 import org.openxava.annotations.Editor;
 import org.openxava.annotations.Hidden;
 import org.openxava.annotations.ListProperties;
-import org.openxava.annotations.Path;
+import org.openxava.annotations.Tree;
 import org.openxava.annotations.View;
 import org.openxava.annotations.Views;
+
+/**
+ * 
+ * @author Federico Alcántara 
+ */
 
 @Entity
 @Views({
@@ -42,7 +47,7 @@ public class TreeContainer {
 	@Editor(value="TreeView")
 	@ListProperties("description")
 	@OrderBy("folder, treeOrder")
-	@Path(pathProperty="folder")
+	@Tree(pathProperty="folder")
 	private Collection<TreeItemTwo> treeItemTwos;
 
 	public Integer getId() {

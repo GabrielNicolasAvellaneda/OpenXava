@@ -1,7 +1,9 @@
 package org.openxava.test.tests;
 
+import java.util.*;
+
 import org.openxava.jpa.XPersistence;
-import org.openxava.test.model.TreeItemTwo;
+import org.openxava.test.model.*;
 import org.openxava.util.Is;
 
 
@@ -14,6 +16,34 @@ public class TreeViewTestNoDefaultPath extends TreeViewTestBase {
 	public TreeViewTestNoDefaultPath(String testName) {
 		super(testName, "TreeViewNoDefaultPath");		
 	}
+	
+	protected void setUp() throws Exception {
+		// It does not work, although the data is correctly cretated in database
+		// the TreeView fails to display the tree. It shows the tree flat.
+		XPersistence.getManager().createQuery("delete from TreeItemTwo").executeUpdate();
+		XPersistence.commit();
+		TreeContainer parent = XPersistence.getManager().find(TreeContainer.class, 1);		
+		
+		createTreeItem(parent, "", "ROOT ITEM 1",    0);
+		createTreeItem(parent, "/1", "CHILD ITEM 1",   2);
+		createTreeItem(parent, "/1", "CHILD ITEM 2",   4);
+		createTreeItem(parent, "/1", "CHILD ITEM 3",   6);		
+		createTreeItem(parent, "/1/2", "SUBITEM 1 OF 1", 2);
+		createTreeItem(parent, "/1/2", "SUBITEM 2 OF 1", 4);
+		createTreeItem(parent, "/1/4", "SUBITEM 1 OF 3", 6);		
+		
+		XPersistence.commit();
+		super.setUp();
+	}
+	
+	private void createTreeItem(TreeContainer parent, String path, String description, int treeOrder) throws Exception { 
+		TreeItemTwo item = new TreeItemTwo();
+		item.setFolder(path);
+		item.setDescription(description);
+		item.setTreeOrder(treeOrder);
+		item.setParentContainer(parent);
+		XPersistence.getManager().persist(item);
+	}		
 
 	public void testIfActionsPresent() throws Exception {
 		execute("Mode.detailAndFirst");

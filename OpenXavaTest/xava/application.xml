@@ -6,7 +6,7 @@
 		<model name="Carrier"/>
 		<controller name="Typical"/>
 		<controller name="Carrier"/>
-	</module>			<module name="CarrierFellowsNames">		<model name="Carrier"/>		<view name="FellowsNames"/>		<controller name="Typical"/>	</module>		<module name="CarrierWithCollectionsTogether">		<model name="Carrier"/>		<view name="CollectionsTogether"/>	</module>	
+	</module>			<module name="CarrierFellowsNames">		<model name="Carrier"/>		<view name="FellowsNames"/>		<controller name="Typical"/>	</module>			<module name="CarrierFellows">		<model name="Carrier"/>		<view name="Fellows"/>		<controller name="CarrierFellows"/>	</module>			<module name="CarrierWithCollectionsTogether">		<model name="Carrier"/>		<view name="CollectionsTogether"/>	</module>	
 		
 	<module name="CustomerContactPersonAsAggregate3Levels">
 		<model name="CustomerContactPerson"/>

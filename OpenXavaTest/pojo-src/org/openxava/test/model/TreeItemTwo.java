@@ -9,6 +9,10 @@ import javax.persistence.ManyToOne;
 
 import org.openxava.annotations.View;
 
+/**
+ * 
+ * @author Federico Alcántara 
+ */
 @Entity
 @View(members="description")
 public class TreeItemTwo {

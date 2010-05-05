@@ -1,8 +1,5 @@
 package org.openxava.test.tests;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.openxava.jpa.XPersistence;
 import org.openxava.test.model.TreeItem;
 import org.openxava.util.Is;

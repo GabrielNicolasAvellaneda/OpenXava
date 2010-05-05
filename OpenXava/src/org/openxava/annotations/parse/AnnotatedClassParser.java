@@ -1127,11 +1127,11 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(SearchListConditions.class)) {
 			notApply(property.getName(), SearchListConditions.class, "references & collections");
 		}
-		if (element.isAnnotationPresent(Path.class)) {
-			notApply(property.getName(), Path.class, "collections");
+		if (element.isAnnotationPresent(Tree.class)) {
+			notApply(property.getName(), Tree.class, "collections");
 		}
-		if (element.isAnnotationPresent(Paths.class)) {
-			notApply(property.getName(), Paths.class, "collections");
+		if (element.isAnnotationPresent(Trees.class)) {
+			notApply(property.getName(), Trees.class, "collections");
 		}
 	}
 
@@ -1533,8 +1533,8 @@ public class AnnotatedClassParser {
 			}			
 
 			// Path
-			if (element.isAnnotationPresent(Path.class)) {
-				Path path = element.getAnnotation(Path.class);
+			if (element.isAnnotationPresent(Tree.class)) {
+				Tree path = element.getAnnotation(Tree.class);
 				if (isForView(metaView, path.forViews(), path.notForViews())) {
 					collectionView.setPath(path);
 					mustAddMetaView = true;
@@ -1542,9 +1542,9 @@ public class AnnotatedClassParser {
 			}
 			
 			// Paths
-			if (element.isAnnotationPresent(Paths.class)) {
-				Path[] paths = element.getAnnotation(Paths.class).value();
-				for (Path path : paths) {
+			if (element.isAnnotationPresent(Trees.class)) {
+				Tree[] paths = element.getAnnotation(Trees.class).value();
+				for (Tree path : paths) {
 					if (isForView(metaView, path.forViews(), path.notForViews())) {
 						collectionView.setPath(path);
 						mustAddMetaView = true;
@@ -2058,11 +2058,11 @@ public class AnnotatedClassParser {
 			notApply(ref.getName(), OnSelectElementActions.class, "collections");
 		}		
 		
-		if (element.isAnnotationPresent(Path.class)) {
-			notApply(ref.getName(), Path.class, "collections");
+		if (element.isAnnotationPresent(Tree.class)) {
+			notApply(ref.getName(), Tree.class, "collections");
 		}
-		if (element.isAnnotationPresent(Paths.class)) {
-			notApply(ref.getName(), Paths.class, "collections");
+		if (element.isAnnotationPresent(Trees.class)) {
+			notApply(ref.getName(), Trees.class, "collections");
 		}
 	}
 

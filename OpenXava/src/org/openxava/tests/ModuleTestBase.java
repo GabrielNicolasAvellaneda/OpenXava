@@ -1849,7 +1849,7 @@ public class ModuleTestBase extends TestCase {
 	 * This allows you testing using HtmlUnit APIs directly. <p>
 	 * 
 	 * The use of <b>this method is discoraged</b> because binds your test
-	 * to a HTML implemenation.
+	 * to a HTML implementation.
 	 * Before to use this method look for another more abstract method
 	 * in this class.
 	 */
@@ -1943,9 +1943,17 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	/**
+	 * This allows you testing using HtmlUnit APIs directly. <p>
+	 * 
+	 * The use of <b>this method is discoraged</b> because binds your test
+	 * to a HTML implementation.
+	 * Before to use this method look for another more abstract method
+	 * in this class.
+	 * 
 	 * @since 4m4
 	 */
 	protected HtmlPage getHtmlPage() {
 		return page;
 	}
+	
 }
