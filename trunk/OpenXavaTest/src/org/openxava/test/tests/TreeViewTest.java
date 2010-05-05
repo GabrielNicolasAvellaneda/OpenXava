@@ -98,10 +98,10 @@ public class TreeViewTest extends TreeViewTestBase {
 		String originalPath = item.getPath();
 		assertNotEquals("path should not be empty", "[" + originalPath + "]", "[]");
 		// Move item 2 left
-		checkRowTreeView("treeItems", 1);
+		checkRowTreeView("treeItems", 4);
 		execute("TreeView.left", "viewObject=xava_view_treeItems");
 		// lets get the new position it should be at the bottom
-		assertValueInTreeViewIgnoreCase("treeItems", 3, "CHILD ITEM 2");
+		assertValueInTreeViewIgnoreCase("treeItems", 6, "CHILD ITEM 2");
 		// and its path should be blank and different 
 		TreeItem itemMoved = getTreeItemByDescription("CHILD ITEM 2");
 		String path = itemMoved.getPath();
@@ -114,36 +114,40 @@ public class TreeViewTest extends TreeViewTestBase {
 		assertNotEquals("path should be different than before moving it", "[" + path + "]", "[" + originalPath +"]");
 		
 		// Now let's move it right
-		checkRowTreeView("treeItems", 3);
+		checkRowTreeView("treeItems", 6);
 		execute("TreeView.right", "viewObject=xava_view_treeItems");
 		// should still be in the bottom, but with a path
-		assertValueInTreeViewIgnoreCase("treeItems", 3, "CHILD ITEM 2");
+		assertValueInTreeViewIgnoreCase("treeItems", 6, "CHILD ITEM 2");
 		itemMoved = getTreeItemByDescription("CHILD ITEM 2");
 		assertNotEquals("path should not be empty", "[" + itemMoved.getPath() + "]", "[]");
 		// now let's move it up
-		checkRowTreeView("treeItems", 3);
+		checkRowTreeView("treeItems", 6);
 		execute("TreeView.up", "viewObject=xava_view_treeItems");
 		// now should be the second (zero based = 1)
-		assertValueInTreeViewIgnoreCase("treeItems", 1, "CHILD ITEM 2");
+		assertValueInTreeViewIgnoreCase("treeItems", 4, "CHILD ITEM 2");
 		// now let's move it down
-		checkRowTreeView("treeItems", 1);
+		checkRowTreeView("treeItems", 4);
 		execute("TreeView.down", "viewObject=xava_view_treeItems");
 		// should be again in the bottom
-		assertValueInTreeViewIgnoreCase("treeItems", 3, "CHILD ITEM 2");
+		assertValueInTreeViewIgnoreCase("treeItems", 6, "CHILD ITEM 2");
 
 		// Now let's move an item with children
 		checkRowTreeView("treeItems", 1);
 		// First down
 		execute("TreeView.down", "viewObject=xava_view_treeItems");
-		assertValueInTreeViewIgnoreCase("treeItems", 2, "CHILD ITEM 3");
+		assertValueInTreeViewIgnoreCase("treeItems", 3, "CHILD ITEM 1");
+		assertValueInTreeViewIgnoreCase("treeItems", 5, "SUBITEM 2 OF 1");
 		// now left
-		checkRowTreeView("treeItems", 2);
+		checkRowTreeView("treeItems", 3);
 		execute("TreeView.left", "viewObject=xava_view_treeItems");
-		item = getTreeItemByDescription("CHILD ITEM 3");
+		item = getTreeItemByDescription("CHILD ITEM 1");
 		assertEquals("path should be empty", "[" + item.getPath() + "]", "[]");
-		itemMoved = getTreeItemByDescription("SUBITEM 1 OF CHILD ITEM 3");
-		// its path should be equal to item 3 id
-		assertEquals("It is not a child of Item 3", "[" + itemMoved.getPath() + "]", "[/" + item.getId() + "]");
+		itemMoved = getTreeItemByDescription("SUBITEM 1 OF 1");
+		// its path should be equal to item 1 id
+		assertEquals("It is not a child of Item 1", "[" + itemMoved.getPath() + "]", "[/" + item.getId() + "]");
+		itemMoved = getTreeItemByDescription("SUBITEM 2 OF 1");
+		// its path should be equal to item 1 id
+		assertEquals("It is not a child of Item 1", "[" + itemMoved.getPath() + "]", "[/" + item.getId() + "]");
 	}
 
 	private TreeItem getTreeItemByDescription(String description) throws Exception {
