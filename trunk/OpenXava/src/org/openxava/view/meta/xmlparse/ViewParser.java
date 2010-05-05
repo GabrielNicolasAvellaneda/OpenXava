@@ -395,6 +395,9 @@ public class ViewParser extends XmlElementsNames {
 		m.setCondition(el.getAttribute(xcondition[lang]));
 		m.setOrderByKey(ParserUtil.getAttributeBoolean(el, xorder_by_key[lang]));
 		m.setOrder(el.getAttribute(xorder[lang]));
+		m.setForTabs(el.getAttribute(xfor_tabs[lang]));
+		m.setNotForTabs(el.getAttribute(xnot_for_tabs[lang]));
+		
 		String labelFormat = el.getAttribute(xlabel_format[lang]);
 		if (XNORMAL[lang].equals(labelFormat)) m.setLabelFormat(MetaPropertyView.NORMAL_LABEL);
 		else if (XSMALL[lang].equals(labelFormat)) m.setLabelFormat(MetaPropertyView.SMALL_LABEL);

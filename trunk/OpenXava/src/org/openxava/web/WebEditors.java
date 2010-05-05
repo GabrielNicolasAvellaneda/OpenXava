@@ -1,6 +1,8 @@
 package org.openxava.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +16,7 @@ import org.openxava.util.ElementNotFoundException;
 import org.openxava.util.Is;
 import org.openxava.util.Locales;
 import org.openxava.util.Messages;
+import org.openxava.util.Strings;
 import org.openxava.util.XavaException;
 import org.openxava.util.XavaResources;
 import org.openxava.view.meta.MetaDescriptionsList;
@@ -233,9 +236,11 @@ public class WebEditors {
 		}
 	}
 	
-	public static String getEditorURLDescriptionsList(String tabModelName, String propertyKey, int index, String prefix, String qualifiedName, String name){
+	public static String getEditorURLDescriptionsList(String tabName, String tabModelName, String propertyKey, int index, String prefix, String qualifiedName, String name){
 		if (qualifiedName.indexOf('.') < 0) return "";
 		
+		String url = "";
+		String url_default = "";
 		MetaModel metaModel = MetaModel.get(tabModelName);
 		String reference = qualifiedName.replace("." + name, "");
 		MetaReference metaReference = metaModel.getMetaReference(reference);
@@ -243,12 +248,22 @@ public class WebEditors {
 		Collection<MetaView> metaViews = metaModel.getMetaViews();
 		for (MetaView metaView : metaViews){
 			MetaDescriptionsList metaDescriptionsList = metaView.getMetaDescriptionList(metaReference);
+			
 			if (metaDescriptionsList == null) continue;
+			if (!Is.empty(metaDescriptionsList.getDepends())) continue;
+			Collection<String> forTabs = Is.empty(metaDescriptionsList.getForTabs()) ?
+				new ArrayList<String>():
+				Strings.toCollection(metaDescriptionsList.getForTabs());
+			Collection<String> notForTabs = Is.empty(metaDescriptionsList.getNotForTabs()) ?
+				new ArrayList<String>():
+				Strings.toCollection(metaDescriptionsList.getNotForTabs());
+			
+			if (notForTabs.contains(tabName)) continue;
 
 			String descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertiesNames();
 			if (Is.empty(descriptionPropertiesNames)) descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertyName();
 			if (descriptionPropertiesNames.contains(name)) {
-				return "comparatorsDescriptionsList.jsp"
+				url = "comparatorsDescriptionsList.jsp"
 					+ "?propertyKey=" + propertyKey
 					+ "&index=" + index
 					+ "&prefix=" + prefix
@@ -262,9 +277,11 @@ public class WebEditors {
 					+ "&condition=" + metaDescriptionsList.getCondition()
 					+ "&orderByKey=" + metaDescriptionsList.isOrderByKey()
 					+ "&order=" + metaDescriptionsList.getOrder();
+				if (forTabs.contains(tabName)) return url;
+				if (forTabs.isEmpty()) url_default = url;
 			}
 		}
-		return "";
+		return url_default;
 	}
 
 }

@@ -85,5 +85,16 @@ public @interface DescriptionsList {
      * the description list.
 	 */
 	String order() default "";
-			
+	
+
+	/**
+	 * List of comma separated tab names where this annotation applies.
+	 */		
+	String forTabs() default "";
+	
+
+	/**
+	 * List of comma separated tab names where this annotation applies.
+	 */	
+	String notForTabs() default "";
 }
