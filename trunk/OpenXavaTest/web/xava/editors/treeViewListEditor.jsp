@@ -64,8 +64,8 @@ if(!Is.empty(key)){
 	<div id = "tree_<%=collectionName%>" class="ygtv-checkbox" >
 	</div>
 
-	<div id = "openxavaInput_<%=collectionName%>" style="height:0px">
-		<table id = "<%=tableId%>" name="treeTable_<%=collectionName%>">
+	<div id = "openxavaInput_<%=collectionName%>" style="visibility: hidden; height:0px">
+		<table id = "<%=tableId%>" name="treeTable_<%=collectionName%>" style="height:0px">
 		</table>
 	</div>
 	
