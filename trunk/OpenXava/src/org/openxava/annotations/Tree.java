@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD})
-public @interface Path {
+public @interface Tree {
 	/**
 	 * List of comma separated view names where this annotation applies. <p>
 	 * 

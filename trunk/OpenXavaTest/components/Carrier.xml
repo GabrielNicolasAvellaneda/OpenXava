@@ -134,6 +134,10 @@
 		 <collection-view collection="fellowCarriers" editor="CarriersNames"/>		 
 	</view>
 	
+	<view name="Fellows">
+		 <members>number, name; warehouse; fellowCarriers</members>		 
+	</view>	
+	
 	<view name="CollectionsTogether">
 		<reference-view reference="warehouse">
 			<descriptions-list description-property="name"/>

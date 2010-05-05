@@ -9,9 +9,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.model.MapFacade;
-import org.openxava.util.TreeViewParser;
 import org.openxava.validators.ValidationException;
-import org.openxava.view.meta.MetaTreeView;
+import org.openxava.web.editors.*;
 
 public class RemoveSelectedTreeViewNodeAction extends CollectionBaseAction {
 	private Log log = LogFactory.getLog(RemoveSelectedTreeViewNodeAction.class);
@@ -19,7 +18,7 @@ public class RemoveSelectedTreeViewNodeAction extends CollectionBaseAction {
 	@SuppressWarnings("unchecked")
 	public void execute() throws Exception {
 		TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-		MetaTreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+		TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
 		Map values;
 		try{						
 			Collection selectedOnes = getMapsSelectedValues();

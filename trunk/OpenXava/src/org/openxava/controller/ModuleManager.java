@@ -40,7 +40,7 @@ public class ModuleManager {
 		return "4m4beta";
 	}
 	final static private String getVersionDate() {
-		return "2010-4-xx";
+		return "2010-5-xx";
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	

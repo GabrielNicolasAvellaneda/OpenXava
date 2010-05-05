@@ -1,17 +1,19 @@
-package org.openxava.view.meta;
+package org.openxava.web.editors;
 
 import java.lang.reflect.Field;
 
-import org.openxava.annotations.MoveNodeDownAction;
-import org.openxava.annotations.MoveNodeLeftAction;
-import org.openxava.annotations.MoveNodeRightAction;
-import org.openxava.annotations.MoveNodeUpAction;
 import org.openxava.model.MapFacade;
 import org.openxava.tab.impl.IXTableModel;
 import org.openxava.util.Is;
 import org.openxava.view.View;
 
-public class MetaTreeViewActions {
+/**
+ * 
+ * @author Federico Alcántara 
+ */
+
+public class TreeViewActions {
+	
 	private static final String UP_ACTION = "TreeView.up";
 	private static final String DOWN_ACTION = "TreeView.down";
 	private static final String LEFT_ACTION = "TreeView.left";
@@ -21,13 +23,13 @@ public class MetaTreeViewActions {
 	private String downAction = DOWN_ACTION;
 	private String leftAction = LEFT_ACTION;
 	private String rightAction = RIGHT_ACTION;
-	private MetaTreeView metaTreeView;
+	private TreeView metaTreeView;
 	
-	public MetaTreeViewActions() {
+	public TreeViewActions() {
 		
 	}
 	
-	public MetaTreeViewActions(View view, MetaTreeView metaTreeView) throws Exception {
+	public TreeViewActions(View view, TreeView metaTreeView) throws Exception {
 		this.metaTreeView = metaTreeView;
 		parseActions(view);
 	}
@@ -47,33 +49,6 @@ public class MetaTreeViewActions {
 				} else {
 					upAction = "";
 					downAction = "";
-				}
-				if (field != null) {
-					// Up and Down default actions are suppressed if nodeOrder is not defined in @TreeView
-					MoveNodeUpAction moveUpAction = field.getAnnotation(MoveNodeUpAction.class);
-					MoveNodeDownAction moveDownAction = field.getAnnotation(MoveNodeDownAction.class);
-					if (moveUpAction != null) {
-						upAction = validateAction(upAction,
-								moveUpAction.value(), view.getViewName(),
-								moveUpAction.forViews(), moveUpAction.notForViews());
-					}
-					if (moveDownAction != null) {
-						downAction = validateAction(downAction,
-								moveUpAction.value(), view.getViewName(),
-								moveUpAction.forViews(), moveUpAction.notForViews());
-					}
-
-					MoveNodeLeftAction moveLeftAction = field.getAnnotation(MoveNodeLeftAction.class);
-					MoveNodeRightAction moveRightAction = field.getAnnotation(MoveNodeRightAction.class);
-					if (moveLeftAction != null) {
-						leftAction = validateAction(LEFT_ACTION, moveUpAction.value(), view.getViewName(),
-								moveUpAction.forViews(), moveUpAction.notForViews());
-					}
-					if (moveRightAction != null) {
-						rightAction = validateAction(RIGHT_ACTION, moveUpAction.value(), view.getViewName(),
-								moveUpAction.forViews(), moveUpAction.notForViews());
-					}
-	
 				}
 			}
 		} else {

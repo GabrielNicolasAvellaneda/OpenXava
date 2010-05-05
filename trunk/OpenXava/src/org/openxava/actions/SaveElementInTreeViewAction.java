@@ -5,8 +5,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.model.MapFacade;
-import org.openxava.util.TreeViewParser;
-import org.openxava.view.meta.MetaTreeView;
+import org.openxava.web.editors.*;
 
 
 
@@ -25,7 +24,7 @@ public class SaveElementInTreeViewAction extends SaveElementInCollectionAction {
 		// This should only be done on new elements!
 		if (entity == null) {
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-			MetaTreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
 			if (metaTreeView != null && returnValue != null){
 				if (!returnValue.containsKey(metaTreeView.getPathProperty())) {
 					String fullPath = (String) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_NODE_FULL_PATH);

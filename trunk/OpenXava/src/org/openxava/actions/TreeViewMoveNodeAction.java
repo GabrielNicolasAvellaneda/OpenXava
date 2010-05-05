@@ -9,8 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.jpa.XPersistence;
 import org.openxava.util.Is;
-import org.openxava.util.TreeViewParser;
-import org.openxava.view.meta.MetaTreeView;
+import org.openxava.web.editors.*;
 
 public class TreeViewMoveNodeAction extends CollectionElementViewBaseAction {
 	private static Log log = LogFactory.getLog(TreeViewMoveNodeAction.class);
@@ -24,7 +23,7 @@ public class TreeViewMoveNodeAction extends CollectionElementViewBaseAction {
 	private int row = -1;
 	private List<Object> entities;
 	private List<Object> selectedEntities;
-	private MetaTreeView metaTreeView;
+	private TreeView metaTreeView;
 	
 	@SuppressWarnings("unchecked")
 	public void execute() throws Exception {

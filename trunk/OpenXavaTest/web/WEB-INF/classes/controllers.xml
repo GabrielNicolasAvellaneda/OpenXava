@@ -563,8 +563,20 @@
     	    	
 		<action name="onSelectFellowCarriersCalulated" hidden="true" 
 			class="org.openxava.test.actions.OnSelectFellowCarriersCalculatedAction"/>
+			    	
+	</controller>
+	
+	<controller name="CarrierFellows">
+		<extends controller="Typical"/>
+
+		<action name="removeTranslateName" mode="detail"
+			class="org.openxava.test.actions.RemoveTranslateNameAction"/>
+
+		<action name="addTranslateName" mode="detail"
+			class="org.openxava.test.actions.AddTranslateNameAction"/>				
     	
 	</controller>
+	
 	
 	<controller name="JavaProgrammer">
 	

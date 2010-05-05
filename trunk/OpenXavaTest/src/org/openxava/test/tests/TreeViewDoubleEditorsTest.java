@@ -1,5 +1,11 @@
 package org.openxava.test.tests;
 
+/**
+ * 
+ * 
+ * @author Federico Alcántara 
+ */
+
 public class TreeViewDoubleEditorsTest extends TreeViewTestBase {
 	public TreeViewDoubleEditorsTest(String testName) {
 		super(testName, "TreeContainer");		

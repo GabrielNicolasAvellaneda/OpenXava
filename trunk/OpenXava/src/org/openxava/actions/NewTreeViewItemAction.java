@@ -6,8 +6,12 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.model.MapFacade;
-import org.openxava.util.TreeViewParser;
-import org.openxava.view.meta.MetaTreeView;
+import org.openxava.web.editors.*;
+
+/**
+ * 
+ * @author Federico Alcántara 
+ */
 
 public class NewTreeViewItemAction extends CollectionElementViewBaseAction {
 	private static Log log = LogFactory.getLog(NewTreeViewItemAction.class);
@@ -24,7 +28,7 @@ public class NewTreeViewItemAction extends CollectionElementViewBaseAction {
 			Map keyValue = keyValues[keyValues.length - 1];
 			Object treeNode = MapFacade.findEntity(getCollectionElementView().getCollectionTab().getModelName(), keyValue);
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-			MetaTreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
 			if (metaTreeView != null){
 				try {
 					fullPath = metaTreeView.getNodeFullPath(treeNode);

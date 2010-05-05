@@ -7,8 +7,8 @@
 <%@page import="org.openxava.controller.meta.MetaAction"%>
 <%@page import="org.openxava.controller.meta.MetaControllers"%>
 <%@page import="org.openxava.tab.impl.IXTableModel" %>
-<%@page import="org.openxava.view.meta.MetaTreeView" %>
-<%@page import="org.openxava.view.meta.MetaTreeViewActions" %>
+<%@page import="org.openxava.web.editors.TreeView" %>
+<%@page import="org.openxava.web.editors.TreeViewActions" %>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
@@ -19,18 +19,18 @@
 <%@page import="org.openxava.util.Is"%>
 
 <%@page import="org.apache.commons.beanutils.PropertyUtils"%>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/style/yui2/fonts/fonts-min.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/style/yui2/treeview/treeview.css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/yui2/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/yui2/treeview-min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/editors/treeview/yui2/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/editors/treeview/treeview.css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/treeview/yui2/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/treeview/yui2/treeview-min.js"></script>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
-<jsp:useBean id="treeParser" class="org.openxava.util.TreeViewParser" scope="session" />
+<jsp:useBean id="treeParser" class="org.openxava.web.editors.TreeViewParser" scope="session" />
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 
 <%
-String viewObject = request.getParameter("viewObject"); // Id to access to the view object of the collection
+	String viewObject = request.getParameter("viewObject"); // Id to access to the view object of the collection
 View collectionView = (View) context.get(request, viewObject); // We get the collection view by means of context
 View rootView = collectionView.getRoot(); // In this case we use the root view
 String collectionName = request.getParameter("collectionName");
@@ -48,12 +48,12 @@ String prefixIdRow = Ids.decorate(request, prefix);
 String xavaId = Ids.decorate(request, "xava_selected");
 tab.reset();
 context.put(request, tabObject, tab);
-context.put(request, org.openxava.util.TreeViewParser.XAVA_TREE_VIEW_PARSER, treeParser);
+context.put(request, org.openxava.web.editors.TreeViewParser.XAVA_TREE_VIEW_PARSER, treeParser);
 treeParser.createMetaTreeView(tab, viewObject, collectionName, style, errors);
 String javaScriptCode = treeParser.parse(tab.getModelName());
 String module = request.getParameter("module");
 String tableId = Ids.decorate(request.getParameter("application"), module, collectionName);
-MetaTreeViewActions metaTreeViewActions = new MetaTreeViewActions(collectionView, treeParser.getMetaTreeView(tab.getModelName()));
+TreeViewActions metaTreeViewActions = new TreeViewActions(collectionView, treeParser.getMetaTreeView(tab.getModelName()));
 
 if(!Is.empty(key)){
 %>

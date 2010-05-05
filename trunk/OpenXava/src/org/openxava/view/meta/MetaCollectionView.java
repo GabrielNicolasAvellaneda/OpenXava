@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.openxava.annotations.Path;
+import org.openxava.annotations.Tree;
 import org.openxava.tab.meta.MetaRowStyle;
 import org.openxava.util.Is;
 
@@ -38,7 +38,7 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 	private String propertiesListNamesAsString;
 	private Collection rowStyles; 
 	private String onSelectElementActionName;
-	private Path path;
+	private Tree path;
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
@@ -223,11 +223,11 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 		this.onSelectElementActionName = onSelectElementActionName;
 	}
 
-	public void setPath(Path path) {
+	public void setPath(Tree path) {
 		this.path = path;
 	}
 
-	public Path getPath() {
+	public Tree getPath() {
 		return path;
 	}
 

@@ -1,4 +1,4 @@
-package org.openxava.util;
+package org.openxava.web.editors;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openxava.annotations.Path;
+import org.openxava.annotations.Tree;
 import org.openxava.model.MapFacade;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.tab.Tab;
 import org.openxava.tab.impl.IXTableModel;
+import org.openxava.util.*;
 import org.openxava.view.View;
 import org.openxava.view.meta.MetaCollectionView;
-import org.openxava.view.meta.MetaTreeView;
 import org.openxava.view.meta.MetaView;
 import org.openxava.web.WebEditors;
 import org.openxava.web.style.Style;
 
 /**
+ * Parse the tree view.
  * 
  * @author Federico Alcantara
- * Parse the tree view.
  */
 public class TreeViewParser {
 	private static Log log = LogFactory.getLog(TreeViewParser.class);
@@ -38,7 +38,7 @@ public class TreeViewParser {
 	private String viewObject;
 	private Style style;
 	private Messages errors;
-	private MetaTreeView metaTreeView;
+	private TreeView metaTreeView;
 	private class TreeNodeHolder{
 		public TreeNodeHolder(Object treeNode, int index) {
 			this.treeNode = treeNode;
@@ -50,10 +50,10 @@ public class TreeViewParser {
 		private boolean rendered;
 	}
 	private Map<String, List<TreeNodeHolder>> groups;
-	private Path treePath;
+	private Tree treePath;
 	private Object parentObject;
 	private String collectionName;
-	private Map<String, MetaTreeView> metaTreeViews;
+	private Map<String, TreeView> metaTreeViews;
 	
 	public TreeViewParser(){
 	}
@@ -86,7 +86,7 @@ public class TreeViewParser {
 						treePath = metaCollectionView.getPath();
 					}
 			
-					metaTreeView = new MetaTreeView(
+					metaTreeView = new TreeView(
 							treePath, treeNode, this.parentObject, collectionName);
 					getMetaTreeViews().put(tab.getModelName(), metaTreeView);
 					log.debug("Added metaTreeView for:" + tab.getModelName());
@@ -95,7 +95,7 @@ public class TreeViewParser {
 		}
 	}
 
-	public MetaTreeView getMetaTreeView(String modelName) {
+	public TreeView getMetaTreeView(String modelName) {
 		return getMetaTreeViews().get(modelName);
 	}
 	
@@ -224,9 +224,9 @@ public class TreeViewParser {
 		return returnValue;
 	}
 
-	public Map<String, MetaTreeView> getMetaTreeViews() {
+	public Map<String, TreeView> getMetaTreeViews() {
 		if (metaTreeViews == null) {
-			metaTreeViews = new HashMap<String, MetaTreeView>();
+			metaTreeViews = new HashMap<String, TreeView>();
 		}
 		return metaTreeViews;
 	}
