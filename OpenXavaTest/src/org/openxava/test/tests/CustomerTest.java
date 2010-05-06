@@ -706,7 +706,7 @@ public class CustomerTest extends ModuleTestBase {
 		execute("List.filter");
 		execute("List.viewDetail", "row=0");
 		
-		assertLabelInCollection("deliveryPlaces", 3, "Name of Preferred warehouse");
+		assertLabelInCollection("deliveryPlaces", 3, "Name of Preferred warehouse"); 
 		assertValueInCollection("deliveryPlaces", 0, 3, "CENTRAL VALENCIA");
 		setConditionValues("deliveryPlaces", new String[] { "", "", "", "[.1.1.]"} );
 		execute("List.filter", "collection=deliveryPlaces");

@@ -179,6 +179,7 @@ public class Customer implements IWithName {
 	private Seller alternateSeller;
 		
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	@ListProperties("name, address, remarks, preferredWarehouse.name")
 	private Collection<DeliveryPlace> deliveryPlaces;
 	
 	@ManyToMany	

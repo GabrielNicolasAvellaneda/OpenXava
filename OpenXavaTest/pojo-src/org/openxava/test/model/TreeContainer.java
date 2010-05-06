@@ -38,13 +38,13 @@ public class TreeContainer {
 	private String description;
 
 	@OneToMany(mappedBy="parentContainer", cascade = CascadeType.REMOVE)
-	@Editor(value="TreeView")
+	@Editor("TreeView")
 	@ListProperties("description")
 	@OrderBy("path, treeOrder")
 	private Collection<TreeItem> treeItems;
 	
 	@OneToMany(mappedBy="parentContainer", cascade = CascadeType.REMOVE)
-	@Editor(value="TreeView")
+	@Editor("TreeView")
 	@ListProperties("description")
 	@OrderBy("folder, treeOrder")
 	@Tree(pathProperty="folder")

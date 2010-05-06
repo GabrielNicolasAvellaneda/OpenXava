@@ -21,7 +21,6 @@ import org.openxava.util.XavaException;
 import org.openxava.util.XavaResources;
 
 /**
- * tmp En paquete editors
  * 
  * @author Federico Alcántara
  */

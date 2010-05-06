@@ -76,6 +76,8 @@
   order-by-key (true|false) "false"    
   order CDATA #IMPLIED
   label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
+  for-tabs CDATA #IMPLIED
+  not-for-tabs CDATA #IMPLIED
 >
 
 <!ELEMENT property-view (on-change?, action*)>

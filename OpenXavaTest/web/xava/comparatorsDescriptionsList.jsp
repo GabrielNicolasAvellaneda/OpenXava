@@ -57,7 +57,10 @@ if (metaTab.getMetaFilter() != null){
 	}
 }
 calculator.setModel(model);
-calculator.setCondition(metaTab.getBaseCondition());
+String condition = metaTab.getBaseCondition();
+if (!Is.empty(condition) && !Is.empty(request.getParameter("condition"))) condition = condition + " AND ";
+condition = condition + request.getParameter("condition");
+calculator.setCondition(condition);
 calculator.setOrder(metaTab.getDefaultOrder());
 calculator.setUseConvertersInKeys(true);
 String keyProperty = request.getParameter("keyProperty");

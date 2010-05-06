@@ -5,10 +5,22 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 /**
- * Used for defining TreeView characteristics.
- * The TreeView concept is based on
+ * With <code>@Tree</code> you can instruct OpenXava to visualize collections 
+ * as a tree instead of a list. <p> 
  * 
+ * Applies to collections.
+ * 
+ * Example:
+ * <pre>
+ * &nbsp;@OneToMany(mappedBy="parentContainer", cascade = CascadeType.REMOVE)
+ * &nbsp;@Editor("TreeView")
+ * &nbsp;@ListProperties("description")
+ * &nbsp;@OrderBy("path, treeOrder")
+ * &nbsp;private Collection<TreeItem> treeItems;
+ * </pre>	
+ *  
  * @author Federico Alcantara
  *
  */

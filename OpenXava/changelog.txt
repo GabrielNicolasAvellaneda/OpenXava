@@ -1,8 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- Add 'forTabs' and 'notForTabs' in @DescriptionsList
-- Fix: Mode List: @DescriptionsList does not apply 'condition', and if it has 'depends' show plane property.
+- @Tree annotation and TreeView editor for displaying collections using a tree.
+- Add 'forTabs' and 'notForTabs' in @DescriptionsList.
+- Fix: Mode List: @DescriptionsList does not apply 'condition', and if it has 'depends' it shows plane property.
 - Fix: Adding and removing actions to a collection is not refreshed instantly. 
 - The addListAction and removeListAction methods of View preserve the original order of the actions.
 - Little adjustment for space between columns in automatic PDF reports.
