@@ -9,9 +9,9 @@ import org.openxava.util.Is;
  * @author Federico Alcantara
  */
 
-public class TreeViewTestNoDefaultPath extends TreeViewTestBase {
+public class TreeViewTestNoDefaultPathTest extends TreeViewTestBase {
 	
-	public TreeViewTestNoDefaultPath(String testName) {
+	public TreeViewTestNoDefaultPathTest(String testName) {
 		super(testName, "TreeViewNoDefaultPath");		
 	}
 		
