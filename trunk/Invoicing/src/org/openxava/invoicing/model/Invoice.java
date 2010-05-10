@@ -19,7 +19,11 @@ import org.openxava.validators.*;
 	
 })
 @Tabs({
-	@Tab(baseCondition = "deleted = false"),
+	@Tab(
+		baseCondition = "deleted = false", 
+		properties="year, number, date, customer.number, customer.name," +
+			"vatPercentage, estimatedProfit, baseAmount, " +
+			"vat, totalAmount, amount, remarks"),
 	@Tab(name="Deleted", baseCondition = "deleted = true")
 })
 public class Invoice extends CommercialDocument {
