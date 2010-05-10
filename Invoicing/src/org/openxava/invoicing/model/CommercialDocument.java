@@ -28,11 +28,12 @@ abstract public class CommercialDocument extends Deletable {
 	@Transient
 	private boolean removing = false; 
 		
+	@SearchKey 
 	@Column(length=4) 
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
 	
-	
+	@SearchKey 
 	@Column(length=6)	
 	@ReadOnly 	
 	private int number;	

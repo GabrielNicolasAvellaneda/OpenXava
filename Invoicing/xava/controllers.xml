@@ -50,6 +50,16 @@
 			class="org.openxava.invoicing.actions.CreateInvoiceFromSelectedOrdersAction">
 			<use-object name="invoicing_currentInvoiceKey"/>
 		</action>	
+				
+		<action name="searchInvoice" 
+			hidden="true"
+			image="images/search.gif"
+			class="org.openxava.invoicing.actions.SearchInvoiceFromOrderAction">
+			<use-object name="xava_view"/>
+			<use-object name="xava_referenceSubview"/>
+			<use-object name="xava_tab"/>
+			<use-object name="xava_currentReferenceLabel"/>
+		</action>		
 					
 	</controller>
 	
