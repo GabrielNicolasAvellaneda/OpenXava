@@ -32,9 +32,15 @@ public class Color {
 
 	@Id @Column(length=5)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@LabelStyles({
+		@LabelStyle("reverse-label"),
+		@LabelStyle("italic-label")	
+	})
 	private Integer number;
 	
 	@Column(length=20) @Required
+	@LabelStyle(value="bold-label", notForViews="Ordinary2")
+	@LabelFormat(LabelFormatType.SMALL)
 	private String name;
 	
 	@Version 
@@ -55,6 +61,7 @@ public class Color {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList
 	@JoinColumn(name="IDTHING")
+	@LabelStyle("italic-label")
 	private Thing usedTo;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
