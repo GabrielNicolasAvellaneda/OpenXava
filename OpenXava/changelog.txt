@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New styles in openxava.css to use in @LabelStyle: 'bold-label', 'italic-label' and 'reverse-label'.
+- New 'defaultLabelStyle' property in xava.properties to indicate the default when @LabelStyle would be omitted. 
+- New @LabelStyle annotation to specify a style for the label.
 - @Tree annotation and TreeView editor for displaying collections using a tree.
 - Add 'forTabs' and 'notForTabs' in @DescriptionsList.
 - Fix: Mode List: @DescriptionsList does not apply 'condition', and if it has 'depends' it shows plane property.

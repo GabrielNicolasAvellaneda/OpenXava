@@ -86,6 +86,8 @@ import org.openxava.annotations.HideDetailAction;
 import org.openxava.annotations.HideDetailActions;
 import org.openxava.annotations.LabelFormat;
 import org.openxava.annotations.LabelFormats;
+import org.openxava.annotations.LabelStyle;
+import org.openxava.annotations.LabelStyles;
 import org.openxava.annotations.ListAction;
 import org.openxava.annotations.ListActions;
 import org.openxava.annotations.ListProperties;
@@ -1130,14 +1132,27 @@ public class AnnotatedClassParser {
 				}					
 			}			
 			
-			
-						
-			if (mustAddMetaView) {				
-				metaView.addMetaViewProperty(propertyView);
+			// LabelStyle
+			if (element.isAnnotationPresent(LabelStyle.class)) {
+				LabelStyle labelStyle = element.getAnnotation(LabelStyle.class);
+				if (isForView(metaView, labelStyle.forViews(), labelStyle.notForViews())) {
+					propertyView.setLabelStyle(labelStyle.value());
+					mustAddMetaView = true;	
+				}
 			}
+			if (element.isAnnotationPresent(LabelStyles.class)){
+				LabelStyle [] labelStyles = element.getAnnotation(LabelStyles.class).value();
+				for(LabelStyle labelStyle : labelStyles){
+					if (isForView(metaView, labelStyle.forViews(), labelStyle.notForViews())) {
+						propertyView.addLabelStyle(labelStyle.value());
+						mustAddMetaView = true;
+					}
+				}
+			}
+						
+			if (mustAddMetaView) metaView.addMetaViewProperty(propertyView);
 
 		}
-		
 		
 		// Not applicable
 		if (element.isAnnotationPresent(ListProperties.class)) {
@@ -1784,7 +1799,10 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(OnChangeSearchs.class)) {
 			notApply(collection.getName(), OnChangeSearchs.class, "references");
-		}																		
+		}		
+		if (element.isAnnotationPresent(LabelStyle.class)) {
+			notApply(collection.getName(), LabelStyle.class, "properties & references");
+		}
 	}
 
 
@@ -2025,6 +2043,26 @@ public class AnnotatedClassParser {
 						}						
 					}
 				}					
+			}
+			
+			// LabelStyle
+			if (element.isAnnotationPresent(LabelStyle.class)) {
+				LabelStyle labelStyle = element.getAnnotation(LabelStyle.class);
+				MetaDescriptionsList metaDescriptionsList = referenceView.getMetaDescriptionsList();
+				if (isForView(metaView, labelStyle.forViews(), labelStyle.notForViews())) {
+					metaDescriptionsList.setLabelStyle(labelStyle.value());
+					mustAddMetaView = true;
+				}
+			}
+			if (element.isAnnotationPresent(LabelStyles.class)){
+				LabelStyle [] labelStyles = element.getAnnotation(LabelStyles.class).value();
+				for(LabelStyle labelStyle : labelStyles){
+					MetaDescriptionsList metaDescriptionsList = referenceView.getMetaDescriptionsList();
+					if (isForView(metaView, labelStyle.forViews(), labelStyle.notForViews())) {
+						metaDescriptionsList.addLabelStyle(labelStyle.value());
+						mustAddMetaView = true;
+					}
+				}
 			}
 			
 			if (processEditorAnnotation(element, metaView, referenceView)) {

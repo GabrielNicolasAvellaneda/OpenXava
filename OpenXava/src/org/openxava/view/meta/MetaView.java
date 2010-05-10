@@ -1,12 +1,29 @@
 package org.openxava.view.meta;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.StringTokenizer;
 
-import org.openxava.actions.*;
-import org.openxava.model.meta.*;
-import org.openxava.util.*;
-import org.openxava.util.meta.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.actions.IOnChangePropertyAction;
+import org.openxava.actions.OnChangeSearchAction;
+import org.openxava.model.meta.MetaMember;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.model.meta.MetaProperty;
+import org.openxava.model.meta.MetaReference;
+import org.openxava.util.ElementNotFoundException;
+import org.openxava.util.Is;
+import org.openxava.util.XavaException;
+import org.openxava.util.XavaPreferences;
+import org.openxava.util.meta.MetaElement;
 
 /**
  * 
@@ -14,6 +31,7 @@ import org.openxava.util.meta.*;
  * @author Javier Paniza
  */
 public class MetaView extends MetaElement implements Cloneable {
+	private static Log log = LogFactory.getLog(MetaView.class);
 	
 	// WARNING!: If you add properties you must see if is needed to make a clon of they
 	
@@ -836,5 +854,17 @@ public class MetaView extends MetaElement implements Cloneable {
 		this.extendsView = extendsView;
 	}
 	
+	public String getLabelStyleForProperty(MetaProperty p) {
+		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
+		if (metaPropertyView == null) return ""; 
+		return metaPropertyView.getLabelStyle();
+	}
 	
+	public String getLabelStyleForReference(MetaReference ref) {
+		MetaReferenceView metaReferenceView = getMetaReferenceViewFor(ref.getName());
+		if (metaReferenceView == null) return ""; 
+		MetaDescriptionsList descriptionsList = metaReferenceView.getMetaDescriptionsList(); 
+		if (descriptionsList == null) return "";  
+		return descriptionsList.getLabelStyle();		
+	}	
 }

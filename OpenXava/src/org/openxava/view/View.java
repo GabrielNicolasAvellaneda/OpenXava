@@ -4362,5 +4362,13 @@ public class View implements java.io.Serializable {
 	private void setFullOrderActionsNamesList(Collection collection) { 
 		fullOrderActionsNamesList = collection; 
 	}
+	
+	public String getLabelStyleForProperty(MetaProperty p) throws XavaException {		
+		return getMetaView().getLabelStyleForProperty(p);
+	}
+	
+	public String getLabelStyleForReference(MetaReference ref) throws XavaException {		
+		return getMetaView().getLabelStyleForReference(ref);
+	}
 					
 }
