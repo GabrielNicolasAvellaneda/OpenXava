@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * <pre>
  * &nbsp;@LabelStyle({
  * &nbsp;&nbsp;&nbsp;@LabelFormat(value="bold-label" ),
- * &nbsp;&nbsp;&nbsp;@LabelFormat(value="italic-label")
+ * &nbsp;&nbsp;&nbsp;@LabelFormat(forViews="Complete", value="italic-label")
  * &nbsp;})
  * </pre>
  * 

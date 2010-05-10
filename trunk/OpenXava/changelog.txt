@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- @Depends not working properly in Safari with numeric values.
 - New styles in openxava.css to use in @LabelStyle: 'bold-label', 'italic-label' and 'reverse-label'.
 - New 'defaultLabelStyle' property in xava.properties to indicate the default when @LabelStyle would be omitted. 
 - New @LabelStyle annotation to specify a style for the label.
