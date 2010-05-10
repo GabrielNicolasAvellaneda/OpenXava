@@ -34,6 +34,7 @@ public class XavaPreferences {
 	private int addColumnsPageRowCount;
 	private int pageRowCount;	
 	private int defaultLabelFormat = -1; 
+	private String defaultLabelStyle="";
 	
 	private XavaPreferences() { 		
 	}
@@ -327,6 +328,11 @@ public class XavaPreferences {
 			log.warn(XavaResources.getString("defaultLabelFormat_illegal_value", labelFormat));
 		}
 		return defaultLabelFormat;
+	}
+	
+	public String getDefaultLabelStyle(){
+		if (!Is.empty(defaultLabelStyle)) return defaultLabelStyle;
+		return getProperties().getProperty("defaultLabelStyle", "");
 	}
 	
 }

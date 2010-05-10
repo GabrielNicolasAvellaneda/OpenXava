@@ -22,6 +22,7 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	private int labelFormat = XavaPreferences.getInstance().getDefaultLabelFormat();
 	private String forTabs;
 	private String notForTabs;
+	private String labelStyle = "";
 	
 		
 	public String getDescriptionPropertyName() {
@@ -113,4 +114,16 @@ public class MetaDescriptionsList implements java.io.Serializable {
 		this.notForTabs = notForTabs;
 	}
 
+	public String getLabelStyle() {
+		return labelStyle;
+	}
+
+	public void setLabelStyle(String labelStyle) {
+		this.labelStyle = labelStyle;
+	}
+	
+	public void addLabelStyle(String labelStyle){
+		if (this.labelStyle == null) this.labelStyle = "";
+		this.labelStyle = this.labelStyle + " " + labelStyle;
+	}
 }

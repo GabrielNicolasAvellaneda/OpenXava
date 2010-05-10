@@ -22,6 +22,7 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	private String onChangeActionClassName;	
 	private int labelFormat = XavaPreferences.getInstance().getDefaultLabelFormat();
 	private int displaySize;
+	private String labelStyle;
 	
 	
 	public String getPropertyName() {
@@ -91,6 +92,19 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	// @Trifon
 	public void setDisplaySize(int displaySize) {
 		this.displaySize = displaySize;
+	}
+
+	public String getLabelStyle() {
+		return labelStyle;
+	}
+
+	public void setLabelStyle(String labelStyle) {
+		this.labelStyle = labelStyle;
+	}
+	
+	public void addLabelStyle(String labelStyle){
+		if (this.labelStyle == null) this.labelStyle = "";
+		this.labelStyle = this.labelStyle + " " + labelStyle;
 	}
 	
 }
