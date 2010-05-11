@@ -14,10 +14,11 @@ import java.lang.annotation.Target;
  * Example:
  * <pre>
  * &nbsp;@LabelStyle({
- * &nbsp;&nbsp;&nbsp;@LabelFormat(value="bold-label" ),
- * &nbsp;&nbsp;&nbsp;@LabelFormat(forViews="Complete", value="italic-label")
+ * &nbsp;&nbsp;&nbsp;@LabelStyle(value="bold-label" ),
+ * &nbsp;&nbsp;&nbsp;@LabelStyle(forViews="Complete", value="italic-label")
  * &nbsp;})
  * </pre>
+ * You can apply each style in a different view (if you put forViews) or you can apply several styles in the same property (if you don't put forViews).<br>
  * 
  * Create on 07/05/2010 (12:37:01)
  * @author Ana Andres
