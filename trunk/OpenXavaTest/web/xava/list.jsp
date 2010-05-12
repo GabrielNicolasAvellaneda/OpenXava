@@ -37,7 +37,8 @@ action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action
 String viewObject = request.getParameter("viewObject");
 String actionArgv = viewObject != null && !viewObject.equals("")?",viewObject=" + viewObject:"";
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject; 
-org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject); 
+org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
+java.util.Collection rowActions = view.isRepresentsCollection()?view.getRowActionsNames():manager.getRowActionsNames(); 
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
 String displayFilter=""; 
@@ -73,7 +74,7 @@ String rowStyle = "border-bottom: 1px solid;";
 
 <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
-<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">
+<th class="<%=style.getListHeaderCell()%>" style="text-align: center">
 	<%
 		String imageFilterPrefix = request.getContextPath() + "/xava/images/";
 	%>
@@ -165,7 +166,7 @@ while (it.hasNext()) {
 	if (filter) {
 %>
 <tr id="<xava:id name='<%="tr_list_filter_" + id%>'/>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
-<th class=<%=style.getListSubheaderCell()%> style="text-align: center" width="60">
+<th class=<%=style.getListSubheaderCell()%> style="text-align: center">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
 <th class=<%=style.getListSubheaderCell()%> width="5">
@@ -293,6 +294,12 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	if (!org.openxava.util.Is.emptyString(action)) { 
 %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
+<%
+	}
+	for (java.util.Iterator itRowActions = rowActions.iterator(); itRowActions.hasNext(); ) { 	
+		String rowAction = (String) itRowActions.next();		
+%>
+<xava:action action='<%=rowAction%>' argv='<%="row=" + f + actionArgv%>'/>
 <%
 	}
 	String actionOnClick = Actions.getActionOnClick(
