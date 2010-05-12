@@ -1,6 +1,5 @@
 package org.openxava.actions;
 
-import javax.inject.*;
 import javax.servlet.http.*;
 
 import org.openxava.controller.*;
@@ -19,10 +18,23 @@ import org.openxava.util.*;
 abstract public class TabBaseAction extends ViewBaseAction implements IModuleContextAction {
 		
 	private Tab tab;	
+	private int row = -1;
 	
 	private ModuleContext context; 
 	private HttpServletRequest request;
 	private String collection;
+	
+	/**
+	 * Returns the indexes of the selected rows. <p>
+	 * 
+	 * If row property has value return an array with it as unique value.
+	 * This happens when the action has been clicked from the row, 
+	 * 
+	 * @return
+	 */
+	protected int [] getSelected() {
+		return row<0?getTab().getSelected():new int [] { row };		
+	}
 
 	protected Tab getTab() throws XavaException {
 		if (tab == null ) {			
@@ -67,4 +79,17 @@ abstract public class TabBaseAction extends ViewBaseAction implements IModuleCon
 		}
 	}
 
+	/**
+	 * This property has value when the action has been clicked from the row. <p>
+	 * 
+	 * If not its value is -1.
+	 */
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
 }

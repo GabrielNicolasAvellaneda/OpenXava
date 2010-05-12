@@ -41,6 +41,7 @@ public class MetaAction extends MetaElement implements Cloneable {
 	private boolean confirm;
 	private boolean onEachRequest;
 	private boolean beforeEachRequest;
+	private boolean inEachRow; 
 	
 	public MetaAction() {
 	}
@@ -298,6 +299,14 @@ public class MetaAction extends MetaElement implements Cloneable {
 
 	public void setBeforeEachRequest(boolean beforeEachRequest) {
 		this.beforeEachRequest = beforeEachRequest;
+	}
+
+	public void setInEachRow(boolean inEachRow) {
+		this.inEachRow = inEachRow;
+	}
+
+	public boolean isInEachRow() {
+		return inEachRow;
 	}
 	
 }

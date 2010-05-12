@@ -3330,6 +3330,24 @@ public class View implements java.io.Serializable {
 		actionsNamesList.remove(qualifiedActionName);
 		refreshCollection(); 
 	}
+	
+	public Collection getRowActionsNames() { 
+		Collection rowActionsNames = new ArrayList();
+		if (isCollectionEditable() && isRowAction(getRemoveSelectedCollectionElementsAction())) {
+			rowActionsNames.add(getRemoveSelectedCollectionElementsAction());
+		}		
+		for (Object action: getActionsNamesList()) {
+			if (isRowAction(action)) {
+				rowActionsNames.add(action);
+			}			
+		}
+		return rowActionsNames;
+	}
+	
+	private boolean isRowAction(Object qualifiedAction) {
+		if (Is.emptyString((String) qualifiedAction)) return false;
+		return MetaControllers.getMetaAction((String) qualifiedAction).isInEachRow();
+	}
 		
 	public Collection getActionsNamesList() {		
 		return actionsNamesList==null?getDefaultListActionsForCollections():actionsNamesList;
