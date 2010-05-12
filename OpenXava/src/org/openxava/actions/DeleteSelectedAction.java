@@ -15,7 +15,7 @@ public class DeleteSelectedAction extends TabBaseAction implements IModelAction 
 	private String model;
 		
 	public void execute() throws Exception {				
-		int [] selectedOnes = getTab().getSelected();
+		int [] selectedOnes = getSelected(); 
 		if (selectedOnes != null) {						
 			for (int i = 0; i < selectedOnes.length; i++) {				
 				Map key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[i]);
@@ -38,5 +38,5 @@ public class DeleteSelectedAction extends TabBaseAction implements IModelAction 
 	public void setModel(String modelName) {
 		this.model = modelName;		
 	}
-
+	
 }

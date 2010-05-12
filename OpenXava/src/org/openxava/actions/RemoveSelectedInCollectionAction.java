@@ -1,20 +1,16 @@
 package org.openxava.actions;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import org.openxava.model.MapFacade;
 import org.openxava.validators.ValidationException;
 
 /**
  * Create on 05/09/2006 (9:12:51)
- * @autor Ana Andrés
+ * @autor Ana AndrÃ©s
  */
 
 public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
-
-	
 	
 	public void execute() throws Exception {
 		try{						

@@ -103,6 +103,18 @@ public class ModuleManager {
 		this.controllersNames = MODIFIED_CONTROLLERS;
 		actionsChanged = true; 
 	}
+	
+	public Collection getRowActionsNames() { 
+		Collection actions = new ArrayList(); 
+		for (MetaAction action: getMetaActions()) {
+			if (action.isHidden()) continue;
+			if (action.getQualifiedName().equals(getEnvironment().getValue("XAVA_LIST_ACTION"))) continue;
+			if (action.isInEachRow()) {
+				actions.add(action.getQualifiedName());
+			}
+		}
+		return actions;
+	}
 
 	public Collection<MetaAction> getMetaActions() { 
 		if (metaActions == null) {

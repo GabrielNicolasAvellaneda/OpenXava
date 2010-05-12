@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Delete action for collections and list is shown in each row.
+- New in-each-row attribute in <action/> to show actions for list mode or collection in each row.  
 - @Depends not working properly in Safari with numeric values.
 - New styles in openxava.css to use in @LabelStyle: 'bold-label', 'italic-label' and 'reverse-label'.
 - New 'defaultLabelStyle' property in xava.properties to indicate the default when @LabelStyle would be omitted. 
