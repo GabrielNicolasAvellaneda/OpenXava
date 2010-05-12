@@ -1,8 +1,12 @@
 package org.openxava.test.actions;
 
+import java.rmi.*;
 import java.util.*;
 
+import javax.ejb.*;
+
 import org.openxava.actions.*;
+import org.openxava.model.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;
 
@@ -13,7 +17,7 @@ public class TranslateCarrierNameAction extends CollectionBaseAction {
 	
 	private boolean all = false;
 	private String targetLanguage;
-	
+		
 
 	public void execute() throws Exception {
 		Iterator it = (all?getObjects():getSelectedObjects()).iterator();
@@ -53,6 +57,6 @@ public class TranslateCarrierNameAction extends CollectionBaseAction {
 			throw new IllegalArgumentException("Only 'ES' or 'EN' are allowed for 'targetLanguage'");
 		}
 		this.targetLanguage = targetLanguage;
-	}	
-	
+	}
+			
 }

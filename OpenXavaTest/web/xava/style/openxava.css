@@ -198,3 +198,16 @@ TD.list-title {
 	border-left-width: 1px;
 	border-left-style: solid;
 }
+
+.bold-label {
+	font-weight:bold;
+}
+
+.italic-label {
+	font-style:italic; 
+}
+
+.reverse-label {
+	color: white;
+	background-color: black;
+}

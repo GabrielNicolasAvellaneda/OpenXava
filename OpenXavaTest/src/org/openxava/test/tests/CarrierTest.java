@@ -1,7 +1,5 @@
 package org.openxava.test.tests;
 
-import java.util.*;
-
 import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
@@ -13,6 +11,29 @@ public class CarrierTest extends CarrierTestBase {
 	
 	public CarrierTest(String testName) {
 		super(testName, "Carrier");		
+	}
+	
+
+	public void testRowActions() throws Exception {
+		assertListRowCount(5);
+		execute("CRUD.deleteSelected", "row=2");
+		assertListRowCount(4);
+		execute("Mode.detailAndFirst");
+		
+		assertCollectionRowCount("fellowCarriers", 2);
+		assertValueInCollection("fellowCarriers", 0, "name", "DOS");
+		assertValueInCollection("fellowCarriers", 1, "name", "CUATRO");
+		assertCollectionRowCount("fellowCarriersCalculated", 2);
+		assertValueInCollection("fellowCarriersCalculated", 0, "name", "DOS");
+		assertValueInCollection("fellowCarriersCalculated", 1, "name", "CUATRO");
+				
+		execute("Carrier.translateName", "row=0,viewObject=xava_view_fellowCarriers");
+		assertValueInCollection("fellowCarriers", 0, "name", "TWO");
+		assertValueInCollection("fellowCarriers", 1, "name", "CUATRO");
+		
+		execute("Carrier.translateName", "row=1,viewObject=xava_view_fellowCarriersCalculated");
+		assertValueInCollection("fellowCarriersCalculated", 0, "name", "TWO");
+		assertValueInCollection("fellowCarriersCalculated", 1, "name", "FOUR");	
 	}
 	
 	public void testCustomizeCollection() throws Exception {

@@ -15,10 +15,11 @@ abstract public class CarrierTestBase extends ModuleTestBase {
 		super(testName, moduleName);		
 	}
 
-	protected void setUp() throws Exception {
+	
+	protected void tearDown() throws Exception {
 		deleteCarriers();		
-		createCarriers();  		
-		super.setUp();
+		createCarriers();		
+		super.tearDown();
 	}
 
 	private void createCarriers() throws Exception {

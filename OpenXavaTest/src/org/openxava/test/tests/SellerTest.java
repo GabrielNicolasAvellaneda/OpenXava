@@ -304,8 +304,7 @@ public class SellerTest extends ModuleTestBase {
 		assertValueInCollection("customers", 0, 3, getCustomer1().getRelationWithSeller());
 		assertValueInCollection("customers", 0, 4, getCustomer1().getSeller().getLevel().getDescription());
 		
-		checkRowCollection("customers", 0);
-		execute("Collection.removeSelected", "viewObject=xava_view_customers");
+		execute("Collection.removeSelected", "row=0,viewObject=xava_view_customers"); 
 		assertMessage("Association between Customer and Seller has been removed, but Customer is still in database");
 		assertNoErrors();
 		assertCollectionRowCount("customers", 0);		
