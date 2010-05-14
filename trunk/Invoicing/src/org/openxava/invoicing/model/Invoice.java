@@ -30,6 +30,7 @@ public class Invoice extends CommercialDocument {
 	
 	@OneToMany(mappedBy="invoice")
 	@CollectionView("NoCustomerNoInvoice")
+	@NewAction("Invoice.addOrders")
 	private Collection<Order> orders;
 	
 	public Collection<Order> getOrders() {
