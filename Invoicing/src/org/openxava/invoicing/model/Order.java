@@ -24,7 +24,11 @@ import org.openxava.validators.*;
 	)
 })
 @Tabs({
-	@Tab(baseCondition = "deleted = false"),
+	@Tab(baseCondition = "deleted = false",	
+		properties="year, number, date, customer.number, customer.name," +
+			"delivered, vatPercentage, estimatedProfit, baseAmount, " +
+			"vat, totalAmount, amount, remarks"
+	),
 	@Tab(name="Deleted", baseCondition = "deleted = true")
 })
 public class Order extends CommercialDocument {
@@ -32,7 +36,7 @@ public class Order extends CommercialDocument {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@ReferenceView("NoCustomerNoOrders")
 	@OnChange(ShowHideCreateInvoiceAction.class)
-	@OnChangeSearch(OnChangeSearchInvoiceAction.class) // tmp
+	@OnChangeSearch(OnChangeSearchInvoiceAction.class) 
 	@SearchAction("Order.searchInvoice") 
 	private Invoice invoice;
 	

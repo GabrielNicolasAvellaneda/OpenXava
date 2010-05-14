@@ -84,5 +84,20 @@
 			class="org.openxava.actions.ReturnPreviousModuleAction"/>
 			
 	</controller>
+	
+	<controller name="Invoice">
+		<extends controller="Invoicing"/>		
+				
+		<action name="addOrders" 
+			image="images/create_new.gif"
+			hidden="true"
+			class="org.openxava.invoicing.actions.GoAddOrdersToInvoiceAction">			
+			<use-object name="xava_tab"/>
+			<use-object name="xava_currentCollectionLabel"/>
+			<use-object name="xava_collectionViewObject"/>
+			<use-object name="xava_view"/>
+		</action>						
+				
+	</controller>
 		
 </controllers>
