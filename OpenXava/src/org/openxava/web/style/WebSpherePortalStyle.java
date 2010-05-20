@@ -203,6 +203,10 @@ public class WebSpherePortalStyle extends Style {
 		return "/wps/themes/html/title_alt_maximize.gif";
 	}
 	
+	public String getMinimizeImage() {
+		return "/wps/themes/html/title_alt_minimize.gif";
+	}	
+	
 	public String getRemoveImage() {
 		return "/wps/images/icons/Delete.gif";
 	}
