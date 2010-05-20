@@ -619,3 +619,18 @@ openxava.hasOnSelectAll = function(application, module){
 openxava.effectShow = function(application, module, id) {
 	$("#"+openxava.decorateId(application, module, id)).show("clip", null, "slow", null);
 }
+
+openxava.showFrame = function(id) { 
+	$("#"+id+"content").show();
+	$("#"+id+"hide").show();
+	$("#"+id+"show").hide();
+	View.setFrameClosed(id, false);
+}
+
+
+openxava.hideFrame = function(id) { 
+	$("#"+id+"content").hide();
+	$("#"+id+"hide").hide();
+	$("#"+id+"show").show();
+	View.setFrameClosed(id, true);
+}

@@ -57,7 +57,8 @@ manager.setModuleName(module); // In order to show the correct description in he
 if (manager.isFormUpload()) {
 	new Module().requestMultipart(request, response, app, module);
 }
-String browser = request.getHeader("user-agent"); 
+String browser = request.getHeader("user-agent");
+style.setBrowser(browser); 
 boolean isPortlet = (session.getAttribute(Ids.decorate(app, request.getParameter("module"), "xava.portlet.uploadActionURL")) != null);
 
 Module.setPortlet(isPortlet);
@@ -103,6 +104,7 @@ String realPath = request.getSession().getServletContext().getRealPath("/");
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/View.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js?ox=<%=version%>'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js?ox=<%=version%>"></script>

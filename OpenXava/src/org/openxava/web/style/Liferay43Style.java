@@ -1,7 +1,5 @@
 package org.openxava.web.style;
 
-import java.util.*;
-
 /**
  * For Liferay 4.3, 4.4 and 5.0. <p>
  * 
@@ -189,13 +187,17 @@ public class Liferay43Style extends Style {
 		return "liferay-xava-cell-wrapper";		
 	}
 
-	public String getFrameContentStartDecoration() { 		
-		return "<div class='portlet-content'><div class='portlet-content-container'>\n";
-	}
+	
+	public String getFrameContentStartDecoration(String id, boolean closed) {
+		String closedStyle = closed?"style='display: none;'":"";
+		return "<div id='" + id + "' " + closedStyle + " class='portlet-content'><div class='portlet-content-container'>\n";			
+	}	
+	
+	
 	public String getFrameContentEndDecoration() { 		
 		return "\n</div></div></div></td></tr></table>";		
 	}
-	
+		
 	public String getListPairSelected() { 
 		return "liferay-list-selected"; 
 	}
@@ -204,11 +206,12 @@ public class Liferay43Style extends Style {
 		return "liferay-list-selected"; 
 	}	
 
-	public String getFrameHeaderStartDecoration(int width) {
+	public String getFrameHeaderStartDecoration(int width) { 
 		String widthAttribute = width == 0?"":"width=" + width+ "% ";				
 		return "<table " + widthAttribute + "style='float:left; clear:none'><tr><td>\n" +
 			"<div class='portlet'><div class='portlet-topper' style='position: static; padding-right: 8px;'><table width='100%'><tr>"; // position: static needed for ie7 + liferay 4.3
 	}	
+	
 	public String getFrameHeaderEndDecoration() { 
 		return "</tr></table></div>"; 
 	}
@@ -219,7 +222,8 @@ public class Liferay43Style extends Style {
 		return "</span></td>";
 	}
 	public String getFrameActionsStartDecoration() { 
-		return "<td align='right'>";
+		return isFirefox()?"<td align='right' valign='bottom'>":"<td align='right'>"; 		
+		
 	}	
 	public String getFrameActionsEndDecoration() { 
 		return "</td>";
@@ -310,13 +314,18 @@ public class Liferay43Style extends Style {
 		return "";
 	}
 	
-	public String getRestoreImage() {
-		return getImagesFolder() + "portlet/minimize.png"; 
+	public String getRestoreImage() { 
+		return getImagesFolder() + "portlet/restore.png";
 	}
 	
 	public String getMaximizeImage() {
 		return getImagesFolder() + "portlet/maximize.png"; 
 	}
+	
+	public String getMinimizeImage() {
+		return getImagesFolder() + "portlet/minimize.png";
+	}	
+	
 	
 	public String getRemoveImage() {
 		return getImagesFolder() + "portlet/close.png";

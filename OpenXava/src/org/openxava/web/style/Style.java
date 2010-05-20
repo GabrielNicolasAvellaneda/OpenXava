@@ -29,6 +29,7 @@ public class Style {
 	private static Style instance = null;
 	private String cssFile; 
 	private boolean insidePortal; 
+	private String browser; 
 	
 	public Style() { 		
 	}
@@ -287,12 +288,22 @@ public class Style {
 	}		
 	
 	public String getFrameContentStartDecoration() { 
-		StringBuffer r = new StringBuffer();
-		r.append("<tr><td class='");
+		return getFrameContentStartDecoration(UUID.randomUUID().toString(), false);
+	}
+		
+	public String getFrameContentStartDecoration(String id, boolean closed) { 
+		StringBuffer r = new StringBuffer();		
+		r.append("<tr id='");
+		r.append(id);
+		r.append("' ");
+		if (closed) r.append("style='display: none;'");
+		r.append("><td class='");
 		r.append(getFrameContent());		
 		r.append("'>\n");
 		return r.toString();
 	}
+	
+	
 	public String getFrameContentEndDecoration() { 
 		return "\n</td></tr></table>";
 	}
@@ -440,6 +451,13 @@ public class Style {
 	public String getMaximizeImage() {
 		return "images/maximize.gif";
 	}
+	
+	/**
+	 * If it starts with 'xava/' the context path is inserted before.
+	 */
+	public String getMinimizeImage() { 
+		return "images/minimize.gif";
+	}	
 
 	/**
 	 * If it starts with 'xava/' the context path is inserted before.
@@ -495,6 +513,18 @@ public class Style {
 	
 	public String getSelectedRowStyle(){
 		return "";
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+	
+	protected boolean isFirefox() { 
+		return browser == null?false:browser.contains("Firefox");
 	}
 	
 }

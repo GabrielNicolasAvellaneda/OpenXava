@@ -3,6 +3,8 @@ package org.openxava.test.tests;
 import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 /**
  * @author Javier Paniza
  */
@@ -11,8 +13,7 @@ public class CarrierTest extends CarrierTestBase {
 	
 	public CarrierTest(String testName) {
 		super(testName, "Carrier");		
-	}
-	
+	}	
 
 	public void testRowActions() throws Exception {
 		assertListRowCount(5);

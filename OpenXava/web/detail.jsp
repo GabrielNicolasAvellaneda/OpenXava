@@ -43,7 +43,8 @@ boolean first = !"false".equals(sfirst);
 String slast = request.getParameter("last");
 boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
-boolean lastWasProperty = false; 
+boolean lastWasProperty = false;
+int frameCounter = 0;
 while (it.hasNext()) {
 	MetaMember m = (MetaMember) it.next();
 	lastWasProperty = false;
@@ -82,15 +83,23 @@ while (it.hasNext()) {
 		<%=style.getFrameHeaderStartDecoration(frameWidth) %>
 		<%=style.getFrameTitleStartDecoration() %>
 		<span id="<%=labelKey%>"><%=label%></span>		
-		<%@ include file="editorIcons.jsp"%>		
-		<%=style.getFrameTitleEndDecoration() %>
+		<%@ include file="editorIcons.jsp"%>
+		<%=style.getFrameTitleEndDecoration() %>	
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + p.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
+			"&closed=" + view.isFrameClosed(frameId); 
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 					
 		<%=style.getFrameHeaderEndDecoration() %>
-		<%=style.getFrameContentStartDecoration() %>						
-		<%	} // withFrame %>
-	<jsp:include page="<%=urlEditor%>" />
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId))%>
+		<%	} // withFrame %> 
+	<jsp:include page="<%=urlEditor%>" />		
 	<%
 			if (withFrame) {
-		%>			
+		%>
 		<%=style.getFrameContentEndDecoration() %>		
 		<%
 			} // withFrame		
@@ -158,8 +167,16 @@ while (it.hasNext()) {
 		<%=style.getFrameTitleStartDecoration() %>
 		<span id="<%=labelKey%>"><%=label%></span>
 		<%=style.getFrameTitleEndDecoration() %>
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + ref.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
+			"&closed=" + view.isFrameClosed(frameId); 		
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 					
 		<%=style.getFrameHeaderEndDecoration() %>
-		<%=style.getFrameContentStartDecoration() %>						
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId)) %>						
 		<%		} // withFrame
 		
 				String urlReferenceEditor = null;
@@ -208,8 +225,16 @@ while (it.hasNext()) {
 		<%=style.getFrameTitleStartDecoration()%>
 		<%=collection.getLabel(request) %>
 		<%=style.getFrameTitleEndDecoration()%>
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + collection.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
+			"&closed=" + view.isFrameClosed(frameId);
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 					
 		<%=style.getFrameHeaderEndDecoration()%>
-		<%=style.getFrameContentStartDecoration()%>
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId))%>
 	<%			} // withFrame
 		%>	
 		<jsp:include page="collection.jsp"> 
@@ -237,8 +262,16 @@ while (it.hasNext()) {
 		<%=style.getFrameTitleStartDecoration()%>
 		<%=group.getLabel(request)%>
 		<%=style.getFrameTitleEndDecoration()%>
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_group_" + view.getPropertyPrefix() + group.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId + 
+			"&closed=" + view.isFrameClosed(frameId); 
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 			
 		<%=style.getFrameHeaderEndDecoration()%>
-		<%=style.getFrameContentStartDecoration() %>
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId)) %>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>
