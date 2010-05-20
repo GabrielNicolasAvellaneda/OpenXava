@@ -14,10 +14,10 @@ import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
-import org.openxava.view.*;
 import org.openxava.web.*;
 import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
+import org.openxava.view.View; 
 
 /**
  * For accessing to module execution from DWR. <p>
@@ -53,7 +53,7 @@ public class Module extends DWRBase {
 			this.response = response;
 			this.application = application;
 			this.module = module;
-			this.firstRequest = firstRequest==null?false:firstRequest; 
+			this.firstRequest = firstRequest==null?false:firstRequest;
 			checkSecurity(request, application, module);
 			setPageReloadedLastTime(false);
 			Users.setCurrent(request);
@@ -77,14 +77,14 @@ public class Module extends DWRBase {
 				}
 				result.setForwardInNewWindow("true".equals(request.getSession().getAttribute("xava_forward_inNewWindow")));
 				request.getSession().removeAttribute("xava_forward");
-				request.getSession().removeAttribute("xava_forward_inNewWindow");				
+				request.getSession().removeAttribute("xava_forward_inNewWindow");
 			}
-			else if (manager.getNextModule() != null) { 				
+			else if (manager.getNextModule() != null) {
 				changeModule(result);
 			}
 			else {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
-			}			
+			}
 			result.setViewMember(getView().getMemberName());
 			result.setStrokeActions(getStrokeActions());
 			return result;

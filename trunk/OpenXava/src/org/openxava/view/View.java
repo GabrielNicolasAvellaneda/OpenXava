@@ -65,7 +65,8 @@ import org.openxava.web.meta.MetaEditor;
 
 public class View implements java.io.Serializable {
 	
-	private final static String COLUMN_WIDTH = "collectionColumnWidth."; 
+	private final static String COLUMN_WIDTH = "collectionColumnWidth.";
+	private final static String FRAME_CLOSED = "frameClosed."; 
 	
 	private static Log log = LogFactory.getLog(View.class);
 	private static final long serialVersionUID = -7582669617830655121L;
@@ -167,7 +168,7 @@ public class View implements java.io.Serializable {
 	private String title; 
 	private String titleId; 
 	private Object [] titleArguments;
-	private Collection fullOrderActionsNamesList; 
+	private Collection fullOrderActionsNamesList;
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -4388,5 +4389,30 @@ public class View implements java.io.Serializable {
 	public String getLabelStyleForReference(MetaReference ref) throws XavaException {		
 		return getMetaView().getLabelStyleForReference(ref);
 	}
-					
+	
+	public void setFrameClosed(String frameId, boolean frameClosed) { 
+		try {
+			getRoot().getPreferences().putBoolean(
+				FRAME_CLOSED + frameId, 
+				frameClosed
+			);
+			getRoot().getPreferences().flush();
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("impossible_store_frame_status"),ex);
+		}
+	}
+	
+	public boolean isFrameClosed(String frameId) { 
+		try {
+			return getRoot().getPreferences().getBoolean(
+				FRAME_CLOSED + frameId, false 				
+			);
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("impossible_load_frame_status"),ex);
+			return false;
+		}
+	}		
+						
 }

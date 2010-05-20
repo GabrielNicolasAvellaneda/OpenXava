@@ -40,9 +40,11 @@ public class WebSpherePortal61Style extends WebSpherePortal6Style {
 		return "</tr></table>";
 	}
 		
-	public String getFrameContentStartDecoration() {
-		return "<div class='" + getFrameContent() + "'>\n";		
+	public String getFrameContentStartDecoration(String id, boolean closed) { 
+		String closedStyle = closed?"style='display: none;'":"";
+		return "<div id='" + id + "' " + closedStyle + " class='" + getFrameContent() + "'>\n";
 	}
+	
 	public String getFrameContentEndDecoration() { 
 		return "\n</div></td></tr></table>";
 	}

@@ -138,6 +138,10 @@ public class JetSpeed2Style extends Style {
 		return "decorations/images/maximized.gif";
 	}
 	
+	public String getMinimizeImage() {
+		return "decorations/images/minimized.gif";
+	}	
+	
 	public String getRemoveImage() {
 		return "decorations/layout/images/close.gif";
 	}

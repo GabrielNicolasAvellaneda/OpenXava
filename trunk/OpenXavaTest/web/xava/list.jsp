@@ -266,7 +266,6 @@ if (tab.isRowsHidden()) {
 <%
 	}
 else {
-
 IXTableModel model = tab.getTableModel(); 
 totalSize = tab.getTotalSize();
 if (totalSize > 0) {

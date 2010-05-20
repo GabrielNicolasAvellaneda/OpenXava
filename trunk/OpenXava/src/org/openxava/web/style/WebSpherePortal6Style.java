@@ -97,6 +97,10 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 		return "xava/images/maximize.gif";
 	}
 	
+	public String getMinimizeImage() { 
+		return "xava/images/minimize.gif";
+	}	
+	
 	public String getInitThemeScript() {  
 		return "javascriptEventController.enableAll();";
 	}

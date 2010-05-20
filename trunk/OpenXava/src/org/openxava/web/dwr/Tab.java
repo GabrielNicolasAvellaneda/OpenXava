@@ -1,7 +1,5 @@
 package org.openxava.web.dwr;
 
-import java.util.prefs.*;
-
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
@@ -49,7 +47,7 @@ public class Tab extends DWRBase {
 			}
 			catch (ElementNotFoundException ex) { 
 				// If it has not tab maybe it's a calculated collection
-				View view = (View) getContext(request).get(application, module, "xava_view");
+				org.openxava.view.View view = (org.openxava.view.View) getContext(request).get(application, module, "xava_view");
 				view.getSubview(collection).setCollectionColumnWidth(columnIndex, width);
 			}
 		}

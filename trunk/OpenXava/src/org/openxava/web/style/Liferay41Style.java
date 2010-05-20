@@ -1,12 +1,10 @@
 package org.openxava.web.style;
 
-import java.util.*;
-
 /**
  * For Liferay 4.1 and 4.2. <p>
  * 
  * 
- * @author Jos� Luis Santiago
+ * @author José Luis Santiago
  */ 
 
 public class Liferay41Style extends Style {
@@ -271,8 +269,12 @@ public class Liferay41Style extends Style {
 	}
 	
 	public String getRestoreImage() {
-		return "/html/themes/brochure/images/portlet/minimize.gif";
+		return "/html/themes/brochure/images/portlet/restore.gif"; 
 	}
+	
+	public String getMinimizeImage() { 
+		return "/html/themes/brochure/images/portlet/minimize.gif";
+	}	
 	
 	public String getMaximizeImage() {
 		return "/html/themes/brochure/images/portlet/maximize.gif";
