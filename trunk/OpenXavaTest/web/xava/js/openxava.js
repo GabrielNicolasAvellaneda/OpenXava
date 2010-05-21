@@ -240,7 +240,8 @@ openxava.getDialog = function(application, module) {
 			modal: true,
 			resizable: true,
 			width: 'auto',
-			height: 'auto',				
+			height: 'auto',
+			bgiframe: true,
 			close: openxava.onCloseDialog
 		});
 		openxava.dialogs[dialogId] = dialog;		

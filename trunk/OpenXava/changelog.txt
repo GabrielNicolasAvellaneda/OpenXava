@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Dialog does not hide combo boxes from back view in IE6. 
 - The user can minimize and restore any frame, storing the frame status by user.
 - Delete action for collections and list is shown in each row.
 - New in-each-row attribute in <action/> to show actions for list mode or collection in each row.  
