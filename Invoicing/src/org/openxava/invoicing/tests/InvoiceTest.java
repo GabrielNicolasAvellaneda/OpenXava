@@ -6,7 +6,7 @@ public class InvoiceTest extends CommercialDocumentTest {
 		super(testName, "Invoice"); 				
 	}
 	
-	public void testAddOrders() throws Exception {
+	public void testAddOrders() throws Exception { 
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");

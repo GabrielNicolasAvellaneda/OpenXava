@@ -96,8 +96,20 @@
 			<use-object name="xava_currentCollectionLabel"/>
 			<use-object name="xava_collectionViewObject"/>
 			<use-object name="xava_view"/>
-		</action>						
-				
+		</action>
+		
 	</controller>
+	
+	<controller name="AddOrdersToInvoice">
+		<extends controller="AddToCollection"/>
+		<action name="add" 
+			class="org.openxava.invoicing.actions.AddOrdersToInvoiceAction">
+			<use-object name="xava_view"/>			
+			<use-object name="xava_tab"/>			
+			<use-object name="xava_collectionViewObject" action-property="viewObject"/>
+			<use-object name="xava_currentCollectionLabel"/>			
+		</action>
+	</controller>
+	
 		
 </controllers>
