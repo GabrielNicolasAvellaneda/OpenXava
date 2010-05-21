@@ -33,7 +33,7 @@ import org.openxava.validators.*;
 })
 public class Order extends CommercialDocument {
 		
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne 
 	@ReferenceView("NoCustomerNoOrders")
 	@OnChange(ShowHideCreateInvoiceAction.class)
 	@OnChangeSearch(OnChangeSearchInvoiceAction.class) 
@@ -78,6 +78,11 @@ public class Order extends CommercialDocument {
 					"cannot_delete_order_with_invoice"));
 		}
 	}
+	
+	public void setDeleted(boolean deleted) { 
+		if (deleted) validateOnRemove();
+		super.setDeleted(deleted);		
+	}
 
 	public void createInvoice() throws ValidationException {
 		if (this.invoice != null) {
@@ -100,7 +105,7 @@ public class Order extends CommercialDocument {
 			throw new SystemException("impossible_create_invoice", ex);
 		}
 	}
-
+	
 	public void copyDetailsToInvoice(Invoice invoice) { 	 
 		try {
 			for (Detail orderDetail: getDetails()) {
@@ -115,5 +120,8 @@ public class Order extends CommercialDocument {
 		}		
 	}
 
-		
+	public void copyDetailsToInvoice() { 
+		copyDetailsToInvoice(getInvoice());
+	}
+			
 }

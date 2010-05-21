@@ -12,5 +12,9 @@ public class GoAddOrdersToInvoiceAction extends GoAddElementsToCollectionAction 
 			" and ${delivered} = true and ${invoice.oid} is null"
 		);
 	}
+	
+	public String getNextController() {
+		return "AddOrdersToInvoice";
+	}
 
 }
