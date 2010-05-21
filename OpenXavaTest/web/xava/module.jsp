@@ -127,6 +127,7 @@ String realPath = request.getSession().getServletContext().getRealPath("/");
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js?ox=<%=version%>"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.qtip.js?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.bgiframe.min.js?ox=<%=version%>"></script>
 	<%
 	File jsEditorsFolder = new File(realPath + "/xava/editors/js");
 	String [] jsEditors = jsEditorsFolder.list();
