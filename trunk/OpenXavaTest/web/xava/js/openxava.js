@@ -498,6 +498,7 @@ openxava.setFocus = function(application, module) {
 	var element = form.elements[elementDecoratedName];  
 	
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
+		if (!$(element).is(':visible')) return; 
 		if (element.type != "hidden") {
 			element.focus();
 		}

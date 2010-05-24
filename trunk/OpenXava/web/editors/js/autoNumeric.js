@@ -146,6 +146,7 @@
 					}
 				} // end rules for number key press
 			}).keyup(function (e){ //start keyup - this will format the input
+				
 				if (d.aSep === '' || kdCode == 9 || kdCode == 35 || kdCode == 36 || kdCode == 37 || kdCode == 39){// allows the tab(9), end(35), home(36) left(37) & right(39) arrows and when there is no thousand separator to bypass the autoGroup function 
 					return; //kuCode 35 & 36 Home and end keys fix thanks to JPM USA 
 				}
@@ -154,8 +155,9 @@
 				    this.value = this.value.substr(0,cPos) + ',' + 
 						this.value.substr(cPos+1);
 				}
-
-				$('#' + this.id).val(autoGroup(this.value, d));
+				
+				if (navigator.appName == "Microsoft Internet Explorer") return; // Added by Javier Paniza to avoid a bug with IE and onchange events
+				$('#' + this.id).val(autoGroup(this.value, d));				
 			});
 			$(this).blur(function (){
 				if ($('#' + this.id).val() != ''){
