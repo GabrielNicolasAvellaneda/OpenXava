@@ -52,10 +52,9 @@ public class EditorTag extends TagSupport {
 									
 			Messages errors = (Messages) request.getAttribute("errors"); 													
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
-			String xavaFocusProperty = Ids.decorate(application, module, "xava_focus_property");
 			
 			String scriptFocus =  
-				"onblur=\"openxava.onBlur(" +
+				" onblur=\"openxava.onBlur(" +
 				"'" + application + "'," +
 				"'" + module + "'," +
 				"'" + propertyKey + "'" +
@@ -67,13 +66,14 @@ public class EditorTag extends TagSupport {
 				")\"";  
 			
 			String script = throwsChanged? 
-				"onchange=\"openxava.throwPropertyChanged(" +
+				" onchange=\"openxava.throwPropertyChanged(" +
 				"'" + application + "'," +
 				"'" + module + "'," +
 				"'" + propertyKey + "'" +
 				")\""  
 			:
 			"";
+
 			script = script + scriptFocus;
 
 			boolean editable = explicitEditable?this.editable:view.isEditable(property);  
@@ -85,7 +85,7 @@ public class EditorTag extends TagSupport {
 			if (displaySize > -1) {
 				maxSize = "maxSize=" + displaySize + "&";
 			}
-			editorURL = editorURL + nexus + maxSize + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;
+			editorURL = editorURL + nexus + maxSize + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;			
 			
 			if (org.openxava.web.WebEditors.mustToFormat(metaProperty, view.getViewName())) {
 				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors, view.getViewName(), false);
