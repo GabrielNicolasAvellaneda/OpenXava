@@ -86,6 +86,7 @@ openxava.refreshPage = function(result) {
 			}			
 		}
 		if (openxava.initTheme != null) openxava.initTheme();
+		openxava.clearLists(result.application, result.module); 
 		openxava.initLists(result.application, result.module);  
 		openxava.initEditors(result.application, result.module); 
 		if (result.focusPropertyId != null) { 

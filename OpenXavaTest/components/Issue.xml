@@ -29,6 +29,11 @@ default schema behaviour
 		<property name="comment" stereotype="MEMO"/>
 	</aggregate>
 	
+	<view name="IssueWeb">
+		<property-view property="description" editor="UserAttribute"/>
+		<members>id, description</members>
+	</view>
+	
 	<tab>
 		<default-order>${description}</default-order>
 	</tab>

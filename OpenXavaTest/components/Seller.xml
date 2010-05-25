@@ -85,6 +85,16 @@
 	<view name="SearchListConditionOff">
 		<members>number; name;level;customers</members>
 	</view>
+	
+	<view name="SearchListConditionBlank">
+		<reference-view reference="level">
+			<search-list-condition></search-list-condition>
+		</reference-view>
+		<collection-view collection="customers">
+			<search-list-condition>${number} &lt; 5</search-list-condition>
+		</collection-view>				
+		<members>number; name;level;customers</members>
+	</view>
 
 	<tab>
 		<filter class="org.openxava.test.filters.NumbersToLettersFilter"/>

@@ -192,6 +192,10 @@
 		</reference-view>			
 		
 		<reference-view reference="alternateSeller" view="DecorateName" create="false"/>
+		
+		<collection-view collection="deliveryPlaces">
+			<list-properties>name, address, remarks, preferredWarehouse.name</list-properties>
+		</collection-view>
 				  
 		<members>
 			number;
@@ -233,6 +237,10 @@
 		<collection-view collection="states">
 			<list-properties>state.id, state.name</list-properties>
 		</collection-view>
+		
+		<collection-view collection="deliveryPlaces">
+			<list-properties>name, address, remarks, preferredWarehouse.name</list-properties>
+		</collection-view>		
 		
 		<members>
 			number; 

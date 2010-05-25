@@ -56,7 +56,7 @@
 	</module>
 	
 	<module name="Color2">
-		<model name="Color"/>		<tab name="Color2"/>		<view name="Ordinary2"/>
+		<model name="Color"/>				<view name="Ordinary2"/>		<tab name="Color2"/>
 		<controller name="TypicalNotResetOnSave"/> 
 	</module>
 	
