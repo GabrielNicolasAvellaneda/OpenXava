@@ -16,6 +16,8 @@ String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
 String align = p.isNumber()?"style='text-align:right'":"";
+String browser = request.getHeader("user-agent").toLowerCase();
+boolean bSafari = (browser != null && browser.indexOf("safari") != -1 && browser.indexOf("chrome") == -1) ? true : false;
 boolean editable="true".equals(request.getParameter("editable"));
 String disabled=editable?"":"disabled";
 String script = request.getParameter("script");
@@ -39,7 +41,7 @@ if (p.isNumber()) {
 		maxLength += sizeIncrement;
 	}
 	String integer = p.getScale() == 0?"true":"false";	
-	numericAlt = getNumericAlt(p.getSize(), p.getScale());  
+	numericAlt = getNumericAlt(bSafari, p.getSize(), p.getScale());  
 	numericClass = "xava_numeric"; 
 }	
 
@@ -77,7 +79,7 @@ if (editable || !label) {
 <%!
 private static Log log = LogFactory.getLog("textEditor.jsp");
 
-private String getNumericAlt(int size, int scale) {
+private String getNumericAlt(boolean bSafari, int size, int scale) {
 	try {		
 		DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locales.getCurrent());
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
@@ -87,7 +89,12 @@ private String getNumericAlt(int size, int scale) {
 		else {
 			switch (symbols.getGroupingSeparator()) {		
 				case ',':
-					result.append("c"); // comma
+					if (bSafari) {
+						result.append("x"); // none when browser is Safari
+					}					
+					else {
+						result.append("c"); // comma
+					}
 					break;
 				case '.':
 					result.append("p"); // period

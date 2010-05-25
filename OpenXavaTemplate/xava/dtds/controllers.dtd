@@ -28,6 +28,7 @@
  by-default (never|if-possible|almost-always|always) "never"
  takes-long (true|false) "false"
  confirm (true|false) "false"
+ in-each-row (true|false) "false"
 >
 
 <!ELEMENT use-object EMPTY>

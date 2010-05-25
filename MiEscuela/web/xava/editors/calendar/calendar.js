@@ -13,7 +13,7 @@
  * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
  */
 
-// $Id: calendar.js,v 1.20 2010-03-29 09:31:24 javierpaniza Exp $
+// $Id: calendar.js,v 1.21 2010-05-25 12:19:37 javierpaniza Exp $
 
 /** The Calendar object constructor. */
 if (typeof Calendar == "undefined") { // By Javier Paniza, in order to work in a multi-portlet environment
@@ -614,8 +614,8 @@ Calendar.cellClick = function(el, ev) {
 		// unless "today" was clicked, we assume no date was clicked so
 		// the selected handler will know not to close the calenar when
 		// in single-click mode.
-		// cal.dateClicked = (el.navtype == 0);
-		cal.dateClicked = false;
+		cal.dateClicked = (el.navtype == 0);
+		//cal.dateClicked = false; // We comment this in order that 'Today' link throws onchange events
 		var year = date.getFullYear();
 		var mon = date.getMonth();
 		function setMonth(m) {
