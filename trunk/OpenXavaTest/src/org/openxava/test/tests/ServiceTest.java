@@ -3,8 +3,6 @@ package org.openxava.test.tests;
 import javax.persistence.Query;
 
 import org.openxava.jpa.XPersistence;
-import org.openxava.test.model.Service;
-import org.openxava.test.model.ServiceDetail;
 import org.openxava.tests.*;
 
 

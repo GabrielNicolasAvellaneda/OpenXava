@@ -29,6 +29,7 @@
  por-defecto (nunca|si-posible|casi-siempre|siempre) "nunca"
  cuesta (true|false) "false" 
  confirmar (true|false) "false"
+ en-cada-fila (true|false) "false"
 >
 
 <!ELEMENT usa-objeto EMPTY>

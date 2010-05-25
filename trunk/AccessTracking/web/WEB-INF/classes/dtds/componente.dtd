@@ -59,7 +59,7 @@
   alineado-por-columnas (true|false) "false"
 >
 
-<!ELEMENT vista-referencia (((busqueda-al-cambiar?,accion-buscar?)|lista-descripciones?), accion*)>
+<!ELEMENT vista-referencia (((condicion-lista-busqueda?,busqueda-al-cambiar?,accion-buscar?)|lista-descripciones?), accion*)>
 <!ATTLIST vista-referencia
   referencia CDATA #REQUIRED
   vista CDATA #IMPLIED
@@ -81,6 +81,8 @@
   ordenado-por-clave (true|false) "false"    
   orden CDATA #IMPLIED
   formato-etiqueta (NORMAL|PEQUENA|SIN_ETIQUETA) "NORMAL"
+  para-tabs CDATA #IMPLIED
+  no-para-tabs CDATA #IMPLIED
 >
 
 <!ELEMENT vista-propiedad (al-cambiar?, accion*)>
@@ -103,7 +105,7 @@
   clase CDATA #REQUIRED
 >
 
-<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, estilo-fila*, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-quitar-seleccionados?, accion-lista*, accion-detalle*, accion-al-seleccionar-elemento?)>
+<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, condicion-lista-busqueda?, estilo-fila*, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-quitar-seleccionados?, accion-lista*, accion-detalle*, accion-al-seleccionar-elemento?)>
 <!ATTLIST vista-coleccion
   coleccion CDATA #REQUIRED
   vista CDATA #IMPLIED
@@ -306,7 +308,9 @@
  valor CDATA #REQUIRED
 >
 
-
+<!ELEMENT condicion-lista-busqueda
+   (#PCDATA)
+>
 
 <!ELEMENT condicion
    (#PCDATA)
