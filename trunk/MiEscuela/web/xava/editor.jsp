@@ -1,5 +1,8 @@
 <%@ include file="imports.jsp"%>
 
+
+<%@page import="org.openxava.util.XavaPreferences"%>
+<%@page import="org.openxava.util.Is"%>
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -22,6 +25,8 @@ boolean throwPropertyChanged = view.throwsPropertyChanged(p);
 	
 
 int labelFormat = view.getLabelFormatForProperty(p);
+String labelStyle = view.getLabelStyleForProperty(p);
+if (Is.empty(labelStyle)) labelStyle = XavaPreferences.getInstance().getDefaultLabelStyle();
 String label = view.getLabelFor(p);
 %>
 <%@ include file="htmlTagsEditor.jsp"%>
@@ -33,7 +38,7 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
-<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + p.getName()%>'/>">
+<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + p.getName()%>'/>" class="<%=labelStyle%>">
 <%=label%>
 </span>
 <% } %>
@@ -47,7 +52,7 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 	
 %>
 <table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
-<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + p.getName()%>'/>" class="<%=style.getSmallLabel()%>"><%=label%></span>
+<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + p.getName()%>'/>" class="<%=style.getSmallLabel()%> <%=labelStyle%>"><%=label%></span>
 <%@ include file="editorIcons.jsp"%>
 </td></tr>
 <tr><td style='vertical-align: middle'>
