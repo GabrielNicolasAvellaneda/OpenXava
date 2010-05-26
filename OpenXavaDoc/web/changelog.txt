@@ -1,6 +1,43 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4m4 (2010-5-25)
+------------------------
+- The user can minimize and restore any frame, storing the frame status by user.
+- Delete action for collections and list is shown in each row.
+- New in-each-row attribute in <action/> to show actions for list mode or collection in each row.  
+- @Tree annotation and TreeView editor for displaying collections using a tree.
+- More intuitive 'search' action. Now it uses a dialog to ask for the search data.
+- It is possible to define default values for tabs (tabular data) at global level with the new tabs-default-values.xml.
+- Frames are right and left justified.
+- New ManyToMany controller for creating new elements from a many to many collection.
+- New 'refresh' action in CRUD controller. Behaves as the old 'search'.
+- The default action for CRUD controller now is 'save'. Before it was 'search'.
+- New @SearchListCondition annotation to specify a condition for the search list used in a references or collections.
+- New defaultLabelFormat property in xava.properties to indicate the default when @LabelFormat would be omitted.
+- New styles in openxava.css to use in @LabelStyle: 'bold-label', 'italic-label' and 'reverse-label'.
+- New 'defaultLabelStyle' property in xava.properties to indicate the default when @LabelStyle would be omitted. 
+- New @LabelStyle annotation to specify a style for the label.
+- Add 'forTabs' and 'notForTabs' in @DescriptionsList.
+- The addListAction and removeListAction methods of View preserve the original order of the actions.
+- Little adjustment for space between columns in automatic PDF reports.
+- New SetSchemaAction, SetLocaleAction and SetUserAction action to modify session data from url parameters.  
+- Fix: Mode List: @DescriptionsList does not apply 'condition', and if it has 'depends' it shows plane property.
+- Fix: Adding and removing actions to a collection is not refreshed instantly. 
+- Fix: After customizing the list all the row are shown, even if they have been hidden using 'Hide them' link.
+- Fix: JavaScript calendar does not throw onchange event when clicking on 'Today'.
+- Fix: On change events are not thrown with numeric fields in IE.
+- Fix: Dialog does not hide combo boxes from back view in IE6. 
+- Fix: @Depends not working properly in Safari with numeric values.
+- Fix: Poor performance when editing a collection element in a large collection. 
+- Fix: @SearchKey in a not editable view does not hide their associate actions.
+- Fix: References as combos to filter in list mode: qualify the columns when it create the condition.  
+- Fix: References as combos to filter in list mode: using XML components.
+- Fix: Mode List: descriptionsList does not apply conditionBase with filter.
+- Fix: Filter in list mode with calculated property and descriptionsList; descriptionsList and enumLetterType property.
+- Fix: Filter by number zero in list mode.
+   
+
 OpenXava 4m3 (2010-3-25)
 ------------------------
 - The user can resize the column widths for list and collections using the mouse, and the values are persisted by user.
