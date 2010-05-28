@@ -236,5 +236,28 @@ abstract public class CommercialDocumentTest extends ModuleTestBase {
 	private String getNumber() {
 		return number;
 	}
+	
+	protected void assertCustomerInList(String customerNumber) throws Exception { // tmp
+		/*
+		assertListNotEmpty();
+		int c = getListRowCount();
+		for (int i=0; i<c; i++) {
+			if (!customerNumber.equals(getValueInList(i, "customer.number"))) {
+				fail("Customer in row " + i + " is not of customer " + customerNumber); 
+			}
+		}
+		*/		
+		assertValueForAllRows("customer.number", customerNumber);
+	}
+	
+	protected void assertValueForAllRows(String property, String value) throws Exception { // tmp 
+		assertListNotEmpty();
+		int c = getListRowCount();
+		for (int i=0; i<c; i++) {
+			if (!value.equals(getValueInList(i, property))) {
+				fail(property + " in row " + i + " is not " + value); 
+			}
+		}		
+	}	
 		
 }

@@ -159,30 +159,43 @@ public class OrderTest extends CommercialDocumentTest {
 		return (Order) orders.get(0);
 	}
 	
-	public void testOnChangeInvoice() throws Exception { // tmp
+	public void testOnChangeInvoice() throws Exception { 
 		execute("CRUD.new");
 		assertValue("customer.number", "");
-		execute("Sections.change", "activeSection=1");
+		execute("Sections.change", "activeSection=1");		
 		execute("Order.searchInvoice", 
 			"keyProperty=invoice.number");
+		
 		execute("List.orderBy", "property=customer.number");		
-		String customer1Number = getValueInList(0, "customer.number");
-		String customer1Name = getValueInList(0, "customer.name");
+		String customer1Number = getValueInList(0, "customer.number");		
+		String invoiceYear1 = getValueInList(0, "year");
+		String invoiceNumber1 = getValueInList(0, "number");
 		execute("List.orderBy", "property=customer.number");		
 		String customer2Number = getValueInList(0, "customer.number");
 		String customer2Name = getValueInList(0, "customer.name");
+		assertNotEquals("Must be invoices of different customer",
+			customer1Number, customer2Number);
 		
 		execute("ReferenceSearch.choose", "row=0");
 		execute("Sections.change", "activeSection=0");
-		setValue("customer.number", customer2Number);
-		setValue("customer.name", customer2Name);
+		assertValue("customer.number", customer2Number);
+		assertValue("customer.name", customer2Name);
 		
 		execute("Sections.change", "activeSection=1");
+		setValue("invoice.year", invoiceYear1);
+		setValue("invoice.number", invoiceNumber1);
+				
+		assertError("Customer Nº " + customer1Number + " of invoice " +
+			invoiceYear1 + "/" + invoiceNumber1 + 
+			" does not match with Customer Nº " +
+			customer2Number + " of the current order");
 		
-		 
+		assertValue("invoice.year", "");
+		assertValue("invoice.number", "");
+		assertValue("invoice.date", "");		
 	}
 	
-	public void testSearchInvoiceFromOrder() throws Exception { // tmp
+	public void testSearchInvoiceFromOrder() throws Exception { 
 		execute("CRUD.new");
 		setValue("customer.number", "1");
 		execute("Sections.change", "activeSection=1");
@@ -198,7 +211,8 @@ public class OrderTest extends CommercialDocumentTest {
 		assertCustomerInList("2");		
 	}
 	
-	private void assertCustomerInList(String customerNumber) throws Exception { // tmp
+	/* tmp
+	private void assertCustomerInList(String customerNumber) throws Exception { 
 		assertListNotEmpty();
 		int c = getListRowCount();
 		for (int i=0; i<c; i++) {
@@ -207,6 +221,7 @@ public class OrderTest extends CommercialDocumentTest {
 			}
 		}		
 	}
+	*/
 
 	public void testSetInvoice() throws Exception {
 		assertListNotEmpty();
