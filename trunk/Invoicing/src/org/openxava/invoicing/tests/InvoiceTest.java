@@ -6,61 +6,45 @@ public class InvoiceTest extends CommercialDocumentTest {
 		super(testName, "Invoice"); 				
 	}
 	
-	public void testAddOrders() throws Exception { // tmp 
+	public void testAddOrders() throws Exception {  
 		assertListNotEmpty();
 		execute("List.orderBy", "property=number"); 
 		execute("Mode.detailAndFirst");
-		String customerNumber = getValue("customer.number"); // tmp
+		String customerNumber = getValue("customer.number");
+		deleteDetails(); 
+		assertCollectionRowCount("details", 0); 
+		assertValue("baseAmount", "0.00"); 		
 		execute("Sections.change", "activeSection=1");
 		assertCollectionRowCount("orders", 0);
 		execute("Invoice.addOrders", 
 			"viewObject=xava_view_section1_orders");		
-		assertCustomerInList(customerNumber); // tmp
+		assertCustomerInList(customerNumber); 
+		assertValueForAllRows(5, "Yes"); 
+		String firstOrderBaseAmount = getValueInList(0, 8); 
+		int ordersRowCount = getListRowCount(); 
 		execute("AddOrdersToInvoice.add", "row=0"); 
 		assertMessage("1 element(s) added to Orders of Invoice");
 		assertCollectionRowCount("orders", 1);
-		checkRowCollection("orders", 0);
-		execute("Collection.removeSelected", 
-			"viewObject=xava_view_section1_orders");
-		assertCollectionRowCount("orders", 0);
-	}
-	
-	public void testAddOrders2() throws Exception { // tmp Quitar 
-		assertListNotEmpty();
-		execute("Mode.detailAndFirst");
-		// tmp String customerNumber = getValue("customer.number"); // tmp
+		execute("Sections.change", "activeSection=0");
+		assertCollectionNotEmpty("details");
+		assertValue("baseAmount", firstOrderBaseAmount);
 		execute("Sections.change", "activeSection=1");
-		assertCollectionRowCount("orders", 0);
-		// tmp execute("Collection.add",
-		execute("Invoice.addOrders", // tmp
+		execute("Invoice.addOrders", 
 			"viewObject=xava_view_section1_orders");
-		// tmp checkFirstOrderWithDeliveredEquals("Yes");
-		// tmp checkFirstOrderWithDeliveredEquals("No");
-		// tmp assertCustomerInList(customerNumber); // tmp
-		// tmp assertValueForAllRows("delivered", "Yes"); // tmp
-		
-		// tmp execute("AddToCollection.add"); 
-		execute("AddOrdersToInvoice.add", "row=0"); // tmp
-		// tmp assertError("ERROR! 1 element(s) NOT added to Orders of Invoice");
-		assertMessage("1 element(s) added to Orders of Invoice");
-		assertCollectionRowCount("orders", 1);
+		assertListRowCount(ordersRowCount - 1); 
+		execute("AddToCollection.cancel");		
 		checkRowCollection("orders", 0);
 		execute("Collection.removeSelected", 
 			"viewObject=xava_view_section1_orders");
 		assertCollectionRowCount("orders", 0);
-	}
+	}	
 	
-	
-	private void checkFirstOrderWithDeliveredEquals(String value) throws Exception {
-		int c = getListRowCount();
+	private void deleteDetails() throws Exception { 		
+		int c = getCollectionRowCount("details");
 		for (int i=0; i<c; i++) {
-			if (value.equals(getValueInList(i, 10))) { 
-				checkRow(i);
-				return;
-			}
+			checkRowCollection("details", i);
 		}
-		fail("Must be at least one row with delivered=" + value);
-	}
-	
+		execute("Collection.removeSelected", "viewObject=xava_view_section0_details");		
+	}	
 					
 }

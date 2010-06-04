@@ -13,9 +13,9 @@ import org.openxava.validators.*;
 
 public class AddOrdersToInvoiceAction extends AddElementsToCollectionAction {
 		
-	public void execute() throws Exception { // tmp	
+	public void execute() throws Exception { 	
 		super.execute();
-		getView().refresh(); // tmp
+		getView().refresh(); 
 	}
 
 	protected void associateEntity(Map keyValues) throws ValidationException,
