@@ -211,18 +211,6 @@ public class OrderTest extends CommercialDocumentTest {
 		assertCustomerInList("2");		
 	}
 	
-	/* tmp
-	private void assertCustomerInList(String customerNumber) throws Exception { 
-		assertListNotEmpty();
-		int c = getListRowCount();
-		for (int i=0; i<c; i++) {
-			if (!customerNumber.equals(getValueInList(i, "customer.number"))) {
-				fail("Customer in row " + i + " is not of customer " + customerNumber); 
-			}
-		}		
-	}
-	*/
-
 	public void testSetInvoice() throws Exception {
 		assertListNotEmpty();
 		execute("List.orderBy", "property=number"); 
