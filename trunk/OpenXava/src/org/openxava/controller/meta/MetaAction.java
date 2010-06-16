@@ -259,9 +259,10 @@ public class MetaAction extends MetaElement implements Cloneable {
 		return getConfirmMessage(Locale.getDefault());
 	}
 	
-	public String getConfirmMessage(Locale locale) {
+	public String getConfirmMessage(Locale locale, String... argv) {
 		if (!isConfirm()) return "";
 		String description = getDescription(locale);
+		if (argv != null && argv.length > 0) return XavaResources.getString(locale, "are_you_sure_row_action", description, argv[0]);
 		if (Is.emptyString(description)) return XavaResources.getString(locale, "are_you_sure"); 
 		return XavaResources.getString(locale, "are_you_sure_action", description);
 	}	
@@ -270,6 +271,12 @@ public class MetaAction extends MetaElement implements Cloneable {
 		return getConfirmMessage(getLocale(request));
 	}
 
+	public String getConfirmMessage(ServletRequest request, String argv){
+		String row = argv.substring(argv.indexOf("row=") + 4);
+		if (row.indexOf(",") >= 0 ) row = row.substring(0, row.indexOf(","));
+		return getConfirmMessage(getLocale(request), row);
+	}
+	
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}

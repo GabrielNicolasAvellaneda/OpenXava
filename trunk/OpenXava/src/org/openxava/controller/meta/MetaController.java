@@ -75,7 +75,7 @@ public class MetaController extends MetaElement {
 		Iterator it = metaActions.iterator();
 		while (it.hasNext()) {
 			MetaAction metaAction = (MetaAction) it.next();			
-			if (mode.equals(metaAction.getMode()) || Is.emptyString(metaAction.getMode())) {
+			if (mode.equals(metaAction.getMode()) || Is.emptyString(metaAction.getMode()) || "NONE".equals(metaAction.getMode())) {
 				int pos = indexOf(result, metaAction);
 				if (pos < 0) result.add(metaAction);
 				else {
