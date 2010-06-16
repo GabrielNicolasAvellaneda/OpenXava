@@ -93,6 +93,7 @@ public class ColorTest extends ModuleTestBase {
 		assertNoErrors();		
 		tearDown();
 	}	
+	
 	public void testFilterDescriptionsList_forTabsAndNotForTabs() throws Exception{
 		try{
 			CharacteristicThing.findByNumber(2);	
@@ -100,7 +101,6 @@ public class ColorTest extends ModuleTestBase {
 		catch(NoResultException ex){
 			fail("It must to exist");
 		}
-		
 		
 		// Color: 'usedTo' with descriptionsList and 'characteristicThing' without descriptionsList
 		assertLabelInList(4, "Name of Used to");
@@ -131,4 +131,16 @@ public class ColorTest extends ModuleTestBase {
 		}
 	}
 	
+	public void testShowActionOnlyInEachRow() throws Exception{
+		// confirmMessage with row
+		String html = getHtml();
+		assertTrue(html.contains("Delete record on row 2: Are you sure?"));
+		
+		// action with mode=NONE: it display only in each row
+		assertAction("CRUD.deleteRow");
+		setConditionValues(new String[] { "", "ZZZZZ"});
+		execute("List.filter");
+		assertListRowCount(0);
+		assertNoAction("CRUD.deleteRow");
+	}
 }

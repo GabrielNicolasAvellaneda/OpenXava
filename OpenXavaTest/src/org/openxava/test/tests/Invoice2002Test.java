@@ -14,6 +14,7 @@ public class Invoice2002Test extends ModuleTestBase {
 		"Print.generateExcel",
 		"CRUD.new",
 		"CRUD.deleteSelected",
+		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
 		"List.filter",
 		"List.customize",

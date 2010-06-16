@@ -42,6 +42,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"Print.generateExcel",
 			"CRUD.new",
 			"CRUD.deleteSelected",
+			"CRUD.deleteRow", 
 			"Carrier.translateAll",
 			"Carrier.deleteAll",
 			"CarrierWithSections.setTypicalController",
@@ -74,10 +75,11 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"Print.generateExcel",
 			"CRUD.new",
 			"CRUD.deleteSelected",
+			"CRUD.deleteRow", 
 			"CarrierWithSections.setTypicalController",
 			"CarrierWithSections.setPrintController",
 			"CarrierWithSections.setDefaultControllers",
-			"CarrierWithSections.returnToPreviousControllers"			
+			"CarrierWithSections.returnToPreviousControllers"
 		};		
 		
 		// Returning with returnToPreviousController

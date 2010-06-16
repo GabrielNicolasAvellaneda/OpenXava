@@ -34,6 +34,7 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"Print.generateExcel",
 		"Family.new",
 		"CRUD.deleteSelected",
+		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
 		"List.filter",
 		"List.customize",
