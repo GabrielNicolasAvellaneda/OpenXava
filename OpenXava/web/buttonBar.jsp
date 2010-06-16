@@ -1,6 +1,9 @@
 <%@ include file="imports.jsp"%>
 
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
+<%@ page import="org.openxava.util.XavaPreferences"%>
+<%@ page import="org.openxava.util.Is"%>
+<%@ page import="org.openxava.util.Labels"%>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -23,6 +26,7 @@ if (manager.isButtonBarVisible()) {
 	while (it.hasNext()) {
 		MetaAction action = (MetaAction) it.next();
 		if (action.isHidden()) continue;
+		if ("NONE".equals(action.getMode())) continue;
 		if (action.hasImage()) { 
 		%>
 		<xava:image action="<%=action.getQualifiedName()%>"/>
@@ -64,6 +68,22 @@ if (manager.isButtonBarVisible()) {
 		}
 	}
 		%>
+	</td>
+	<td align="right" style="width: 20px; height: 16px;">
+		<%
+		String language = request.getLocale().getLanguage();
+		String href = "http://openxava.wikispaces.com/help_" + language;
+		String target = XavaPreferences.getInstance().isHelpInNewWindow() ? "_blank" : "";
+		if (!Is.empty(XavaPreferences.getInstance().getHelpPrefix())) { 
+			href = 
+				"/" + manager.getApplicationName() + "/" + 
+				XavaPreferences.getInstance().getHelpPrefix() +
+				manager.getModuleName() +
+				"_" + language + 
+				XavaPreferences.getInstance().getHelpSufix();
+		} 
+		%>
+		<a href="<%=href%>" target="<%=target%>"><img src="/<%=manager.getApplicationName()%>/xava/images/help.gif"/></a>
 	</td>
 	<td class="<%=style.getButtonBarEnd(onBottom)%>" style="<%=style.getButtonBarEndStyle()%>" width=1>&nbsp;</td>
 	</tr>

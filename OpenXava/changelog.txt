@@ -1,6 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- 'controllers.xml': new mode 'NONE' to action only display in each row.
+- Fix: checkbox 'select/deselect all' not display in choose list (rows with radio button). 
+- Delete action in each row: it display message with the row number.
+- Fix: when you shorten columns if the value contain '-' it produces two lines.
+- Help module: new 'helpPrefix', 'helpSufix' and 'helpInNewWindow' properties in xava.properties. By default it use 'http://openxava.wikispaces.com/help_'. 
+
 OpenXava 4m4 (2010-5-25)
 ------------------------
 - The user can minimize and restore any frame, storing the frame status by user.

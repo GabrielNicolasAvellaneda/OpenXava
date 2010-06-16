@@ -35,6 +35,9 @@ public class XavaPreferences {
 	private int pageRowCount;	
 	private int defaultLabelFormat = -1; 
 	private String defaultLabelStyle="";
+	private String helpPrefix="";
+	private String helpSufix="";
+	private boolean helpInNewWindow=false;
 	
 	private XavaPreferences() { 		
 	}
@@ -334,5 +337,18 @@ public class XavaPreferences {
 		if (!Is.empty(defaultLabelStyle)) return defaultLabelStyle;
 		return getProperties().getProperty("defaultLabelStyle", "");
 	}
+
+	public String getHelpPrefix() {
+		if (Is.empty(helpPrefix)) helpPrefix = getProperties().getProperty("helpPrefix", "").trim();	
+		return helpPrefix;
+	}
 	
+	public String getHelpSufix(){
+		if (Is.empty(helpSufix)) helpSufix = getProperties().getProperty("helpSufix", "").trim();	
+		return helpSufix;	
+	}
+	
+	public boolean isHelpInNewWindow(){
+		return "true".equalsIgnoreCase(getProperties().getProperty("helpInNewWindow", "true").trim());		
+	}
 }

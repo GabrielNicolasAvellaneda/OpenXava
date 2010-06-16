@@ -49,7 +49,8 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(module);
 			pageContext.getOut().print("', ");									
 			pageContext.getOut().print("'");
-			pageContext.getOut().print(metaAction.getConfirmMessage(request));
+			if (!Is.empty(getArgv())) pageContext.getOut().print(metaAction.getConfirmMessage(request, getArgv()));	
+			else pageContext.getOut().print(metaAction.getConfirmMessage(request));
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(", ");			
 			pageContext.getOut().print(metaAction.isTakesLong());

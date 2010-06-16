@@ -123,11 +123,7 @@ public class WebEditors {
 	 * @return If has a multiple converter return a array of string else return a string
 	 */
 	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException { 
-		Object result = formatToStringOrArrayImpl(request, p, object, errors, viewName, fromList);
-		if (fromList && result != null && !hasMarkup(result)) {
-			return result.toString().replaceAll(" ", "&nbsp;"); 
-		}
-		return result; 
+		return formatToStringOrArrayImpl(request, p, object, errors, viewName, fromList);
 	}
 	
 	public static Object formatTitle(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException { 
