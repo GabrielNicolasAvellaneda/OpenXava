@@ -33,6 +33,7 @@ public class ProductTest extends ModuleTestBase {
 		"Print.generateExcel",
 		"CRUD.new",
 		"CRUD.deleteSelected",
+		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
 		"List.filter",
 		"List.customize",

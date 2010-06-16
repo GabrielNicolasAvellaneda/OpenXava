@@ -17,7 +17,7 @@ public class CarrierTest extends CarrierTestBase {
 
 	public void testRowActions() throws Exception {
 		assertListRowCount(5);
-		execute("CRUD.deleteSelected", "row=2");
+		execute("CRUD.deleteRow", "row=2");
 		assertListRowCount(4);
 		execute("Mode.detailAndFirst");
 		
@@ -238,7 +238,7 @@ public class CarrierTest extends CarrierTestBase {
 		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); 
 		assertNoErrors();
 		assertDialog();
-		assertValue("description", "CAMIONES PEQUEÃ‘OS");
+		assertValue("description", "CAMIONES PEQUEÑOS");
 	}
 	
 	
