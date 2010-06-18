@@ -211,6 +211,11 @@ public class MetaAction extends MetaElement implements Cloneable {
 	public Collection getMetaSets() {
 		return metaSets==null?new ArrayList():metaSets;
 	}
+	
+	public boolean appliesToMode(String mode) {
+		if ("NONE".equals(getMode())) return false;
+		return Is.emptyString(getMode()) || getMode().equals(mode);
+	}
 
 	public boolean isHidden() {
 		return hidden;
@@ -259,6 +264,7 @@ public class MetaAction extends MetaElement implements Cloneable {
 		return getConfirmMessage(Locale.getDefault());
 	}
 	
+	/** @param argv  Since 4m5 */
 	public String getConfirmMessage(Locale locale, String... argv) {
 		if (!isConfirm()) return "";
 		String description = getDescription(locale);
@@ -267,16 +273,17 @@ public class MetaAction extends MetaElement implements Cloneable {
 		return XavaResources.getString(locale, "are_you_sure_action", description);
 	}	
 	
-	public String getConfirmMessage(ServletRequest request) {
-		return getConfirmMessage(getLocale(request));
-	}
-
+	/** @since 4m5*/
 	public String getConfirmMessage(ServletRequest request, String argv){
 		String row = argv.substring(argv.indexOf("row=") + 4);
 		if (row.indexOf(",") >= 0 ) row = row.substring(0, row.indexOf(","));
 		return getConfirmMessage(getLocale(request), row);
 	}
 	
+	public String getConfirmMessage(ServletRequest request) {
+		return getConfirmMessage(getLocale(request));
+	}
+
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}
@@ -314,6 +321,10 @@ public class MetaAction extends MetaElement implements Cloneable {
 
 	public boolean isInEachRow() {
 		return inEachRow;
+	}
+
+	public String toString() {
+		return getQualifiedName();
 	}
 	
 }

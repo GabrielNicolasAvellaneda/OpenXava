@@ -3,8 +3,6 @@ package org.openxava.test.tests;
 import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
-import com.gargoylesoftware.htmlunit.html.*;
-
 /**
  * @author Javier Paniza
  */
@@ -226,8 +224,8 @@ public class CarrierTest extends CarrierTestBase {
 		assertLabel("drivingLicence", "Driving licence"); 
 		assertValue("remarks","");
 		DrivingLicence licence = new DrivingLicence();
-		licence.setType("C ");
-		licence.setLevel(1);				
+		licence.setType("C ");			
+		licence.setLevel(2); 
 		String key = MetaModel.getForPOJO(licence).toString(licence);
 		setValue("drivingLicence.KEY", key);		
 		assertNoErrors();
@@ -238,7 +236,7 @@ public class CarrierTest extends CarrierTestBase {
 		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__"); 
 		assertNoErrors();
 		assertDialog();
-		assertValue("description", "CAMIONES PEQUEÑOS");
+		assertValue("description", "CAMIONES GRANDES");
 	}
 	
 	

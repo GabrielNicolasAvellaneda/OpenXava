@@ -17,7 +17,7 @@
  nombre CDATA #REQUIRED
  etiqueta CDATA #IMPLIED
  descripcion CDATA #IMPLIED
- modo (detail|list|ALL) "ALL" 
+ modo (detail|list|ALL|NONE) "ALL" 
  metodo CDATA #IMPLIED
  imagen CDATA #IMPLIED
  atajo-de-teclado CDATA #IMPLIED

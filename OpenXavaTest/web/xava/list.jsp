@@ -90,12 +90,16 @@ String rowStyle = "border-bottom: 1px solid;";
 </th>
 <th class="<%=style.getListHeaderCell()%>" width="5">
 	<%
-		String actionOnClickAll = Actions.getActionOnClickAll(
-		request.getParameter("application"), request.getParameter("module"), 
-		onSelectCollectionElementAction, viewObject, prefix, cssSelectedRow,
-		selectedRowStyle, rowStyle);
+		if (!singleSelection){
+			String actionOnClickAll = Actions.getActionOnClickAll(
+			request.getParameter("application"), request.getParameter("module"), 
+			onSelectCollectionElementAction, viewObject, prefix, cssSelectedRow,
+			selectedRowStyle, rowStyle);
 	%>
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=prefix%>selected_all" <%=actionOnClickAll%> />
+	<%
+		}
+	%>
 </th>
 <%
 	tab.reset();
@@ -330,7 +334,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
 		<xava:link action='<%=action%>' argv='<%="row=" + f + actionArgv%>' cssClass='<%=cssStyle%>' cssStyle="text-decoration: none; outline: none">
 			<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-				<%=fvalue%>&nbsp;
+				<nobr><%=fvalue%>&nbsp;</nobr>
 			</div>
 		</xava:link>	
 	</td>

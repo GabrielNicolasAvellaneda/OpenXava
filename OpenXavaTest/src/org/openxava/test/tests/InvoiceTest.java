@@ -98,7 +98,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		execute("Invoice.printPdf");
 		assertNoErrors(); 
-		assertMessage("The print was successful");
+		assertMessage("The print was successful"); 
 		assertContentTypeForPopup("application/pdf");
 		
 		execute("Invoice.printExcel");
@@ -1171,6 +1171,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"Reference.createNew",			
 			"Reference.modify",
 			"Mode.list",
+			"Mode.split",
 			"Invoice.printPdfNewAfter"
 		};		
 		assertActions(initialActions);
@@ -1199,6 +1200,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"Invoice.addViewDeliveryInInvoice",									
 			"Invoice.viewCustomer",
 			"Mode.list",
+			"Mode.split",
 			"Sections.change",
 			"Invoice.editDetail", // because it is overwrite, otherwise 'Collection.edit'
 			"Collection.new",

@@ -15,13 +15,13 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-abstract public class TabBaseAction extends ViewBaseAction implements IModuleContextAction {
+abstract public class TabBaseAction extends ViewBaseAction /* implements IModuleContextAction */ {
 		
 	private Tab tab;	
 	private int row = -1;
 	
-	private ModuleContext context; 
-	private HttpServletRequest request;
+	// tmp private ModuleContext context; 
+	// tmp private HttpServletRequest request;
 	private String collection;
 	
 	/**
@@ -39,7 +39,7 @@ abstract public class TabBaseAction extends ViewBaseAction implements IModuleCon
 	protected Tab getTab() throws XavaException {
 		if (tab == null ) {			
 			String tabObject = Is.emptyString(collection)?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
-			tab = (Tab) context.get(request, tabObject);
+			tab = (Tab) getContext().get(getRequest(), tabObject);
 			if (tab.getCollectionView() != null) {				
 				tab.getCollectionView().refreshCollections(); 				
 			}
@@ -47,6 +47,7 @@ abstract public class TabBaseAction extends ViewBaseAction implements IModuleCon
 		return tab;
 	}
 
+	/* tmp
 	public void setContext(ModuleContext context) {
 		this.context = context;
 		
@@ -56,6 +57,7 @@ abstract public class TabBaseAction extends ViewBaseAction implements IModuleCon
 		super.setRequest(request);
 		this.request = request; 
 	}
+	*/
 
 	public String getCollection() {
 		return collection;

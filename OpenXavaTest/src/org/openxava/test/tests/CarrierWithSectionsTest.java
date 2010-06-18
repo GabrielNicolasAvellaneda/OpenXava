@@ -38,6 +38,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"List.orderBy",
 			"List.viewDetail",
 			"Mode.detailAndFirst",			
+			"Mode.split",
 			"Print.generatePdf",
 			"Print.generateExcel",
 			"CRUD.new",
@@ -57,6 +58,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"List.orderBy",
 			"List.viewDetail",
 			"Mode.detailAndFirst",							
+			"Mode.split",
 			"Print.generatePdf",
 			"Print.generateExcel",
 			"CarrierWithSections.setTypicalController",
@@ -71,6 +73,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"List.orderBy",
 			"List.viewDetail",
 			"Mode.detailAndFirst",							
+			"Mode.split",
 			"Print.generatePdf",
 			"Print.generateExcel",
 			"CRUD.new",
@@ -79,7 +82,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"CarrierWithSections.setTypicalController",
 			"CarrierWithSections.setPrintController",
 			"CarrierWithSections.setDefaultControllers",
-			"CarrierWithSections.returnToPreviousControllers"
+			"CarrierWithSections.returnToPreviousControllers"			
 		};		
 		
 		// Returning with returnToPreviousController

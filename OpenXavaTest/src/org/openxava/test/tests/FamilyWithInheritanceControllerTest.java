@@ -25,7 +25,8 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"AddRemoveCRUDActions.removeDelete",
 		"AddRemoveCRUDActions.addSaveDelete",
 		"AddRemoveCRUDActions.removeSaveDelete",		
-		"Mode.list"					
+		"Mode.list",
+		"Mode.split"
 	};
 	
 	
@@ -36,6 +37,7 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
+		"Mode.split",
 		"List.filter",
 		"List.customize",
 		"List.orderBy",
@@ -59,7 +61,8 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"AddRemoveCRUDActions.removeDelete",
 		"AddRemoveCRUDActions.addSaveDelete",
 		"AddRemoveCRUDActions.removeSaveDelete",		
-		"Mode.list"					
+		"Mode.list",
+		"Mode.split"
 	};
 	
 	private String [] actionsWithoutSaveDelete = {
@@ -77,7 +80,8 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"AddRemoveCRUDActions.removeDelete",
 		"AddRemoveCRUDActions.addSaveDelete",
 		"AddRemoveCRUDActions.removeSaveDelete",		
-		"Mode.list"					
+		"Mode.list",					
+		"Mode.split"
 	};
 	
 	public FamilyWithInheritanceControllerTest(String testName) {

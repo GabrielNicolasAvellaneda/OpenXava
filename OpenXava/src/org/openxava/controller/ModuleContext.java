@@ -88,7 +88,7 @@ public class ModuleContext {
 	 * If does not exist the it create one, as defined in controllers.xml. <p>
 	 */	
 	public Object get(String application, String module, String objectName) throws XavaException {
-		Map context = getContext(application, module, objectName); 
+		Map context = getContext(application, module, objectName);
 		Object o = context.get(objectName);
 		if (o == null) {
 			o = createObject(objectName);
@@ -124,12 +124,12 @@ public class ModuleContext {
 		if (Is.emptyString(module)) {
 			throw new XavaException("application_and_module_required_in_request");
 		}				
-		Map context = getContext(application, module, objectName); 
+		Map context = getContext(application, module, objectName);
 		context.put(objectName, value);
 	}
 		
 	public void put(String application, String module, String objectName, Object value) throws XavaException {
-		Map context = getContext(application, module, objectName); 
+		Map context = getContext(application, module, objectName);
 		context.put(objectName, value);
 	}
 

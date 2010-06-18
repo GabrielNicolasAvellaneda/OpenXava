@@ -22,6 +22,7 @@ public class ProductTest extends ModuleTestBase {
 		"EditableOnOff.setOn",
 		"EditableOnOff.setOff",
 		"Mode.list",
+		"Mode.split",
 		"Product.setLimitZoneTo1",
 		"Product.setLimitZoneTo0",
 		"Product.changeProductPrice",
@@ -35,6 +36,7 @@ public class ProductTest extends ModuleTestBase {
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
+		"Mode.split",
 		"List.filter",
 		"List.customize",
 		"List.orderBy",
@@ -351,6 +353,7 @@ public class ProductTest extends ModuleTestBase {
 	public void testGoFromListToDetailAlwaysSetDefaultController_editableWellOnSearch() throws Exception {
 		String [] changeProductPriceActions = {
 			"Mode.list",
+			"Mode.split",
 			"ChangeProductsPrice.save",
 			"ChangeProductsPrice.editDescription",
 			"Gallery.edit"

@@ -827,7 +827,10 @@ public class ModuleTestBase extends TestCase {
 		return getPopupPage().getWebResponse().getContentAsString();
 	}
 
-	protected void setConditionValues(String [] values) throws Exception {
+	/**
+	 * @param Varargs since 4m5.
+	 */
+	protected void setConditionValues(String ... values) throws Exception { 
 		setCollectionCondition("conditionValue", values);
 	}
 
@@ -841,13 +844,17 @@ public class ModuleTestBase extends TestCase {
 			}
 		}
 	}
-	
-	protected void setConditionComparators(String [] values) throws Exception {
+
+	/**
+	 * 
+	 * @param values  varargs since 4m5 
+	 */
+	protected void setConditionComparators(String ... values) throws Exception { 
 		filterConditionComparators(values);
 		setCollectionCondition("conditionComparator", values); 
 	}
 	
-	protected void setConditionValues(String collection, String [] values) throws Exception {
+	protected void setConditionValues(String collection, String [] values) throws Exception { 
 		String collectionId = Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_") + "_conditionValue";
 		setCollectionCondition(collectionId, values);
 	}

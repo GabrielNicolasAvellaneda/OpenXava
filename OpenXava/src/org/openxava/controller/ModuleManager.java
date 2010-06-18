@@ -37,10 +37,10 @@ public class ModuleManager {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4m4";
+		return "4m5 beta";
 	}
 	final static private String getVersionDate() {
-		return "2010-5-25";
+		return "2010-6-xx";
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -57,8 +57,8 @@ public class ModuleManager {
 	private Collection metaActions;
 	private String applicationName;
 	private String moduleName;
-	private Set hiddenActions;	
-	private String modeControllerName = "Mode";
+	private Set hiddenActions;		
+	private String modeControllerName = XavaPreferences.getInstance().getDefaultModeController(); 
 	private Collection metaControllers;
 	private MetaController metaControllerMode;
 	private HttpSession session;
@@ -117,13 +117,13 @@ public class ModuleManager {
 	}
 
 	public Collection<MetaAction> getMetaActions() { 
-		if (metaActions == null) {
+		if (metaActions == null) { 
 			try {			
 				Iterator it = getMetaControllers().iterator();
 				metaActions = new ArrayList();
 				while (it.hasNext()) {
-					MetaController contr = (MetaController) it.next();					
-					metaActions.addAll(contr.getMetaActionsForMode(getModeName()));									
+					MetaController contr = (MetaController) it.next();														
+					metaActions.addAll(contr.getAllMetaActions()); 
 				} 										
 				removeHiddenActions();
 			}
@@ -133,17 +133,18 @@ public class ModuleManager {
 			}			
 		}		
 		return metaActions;		
-	}
+	}		
 		
 	public Collection getMetaActionsOnInit() {
 		if (metaActionsOnInit == null) {
 			try {			
 				Iterator it = getMetaControllers().iterator();
 				metaActionsOnInit = new ArrayList();
+				metaActionsOnInit.addAll(getMetaControllerMode().getMetaActionsOnInit()); 
 				while (it.hasNext()) {
 					MetaController contr = (MetaController) it.next();
 					metaActionsOnInit.addAll(contr.getMetaActionsOnInit());									
-				} 										
+				} 														
 			}
 			catch (Exception ex) {
 				log.error(XavaResources.getString("controller_init_action_error"),ex);
@@ -155,8 +156,8 @@ public class ModuleManager {
 	
 	
 	public Collection getMetaActionsMode() {
-		try {			
-			return getMetaControllerMode().getMetaActions();						
+		try {									
+			return getMetaControllerMode().getAllMetaActions(); 
 		}
 		catch (Exception ex) {
 			log.error(XavaResources.getString("controllers_actions_error", getModeControllerName()),ex);
@@ -405,7 +406,6 @@ public class ModuleManager {
 					else {
 						memorizeControllers();										
 						setControllersNames(nextControllers);
-						executeInitAction(request, errors, messages);
 					}
 				}
 			}			
@@ -961,7 +961,11 @@ public class ModuleManager {
 	} 
 
 	public boolean isListMode() {
-		return IChangeModeAction.LIST.equals(getModeName());
+		return IChangeModeAction.LIST.equals(getModeName());		
+	}
+	
+	public boolean isSplitMode() { 
+		return "split".equals(getModeName());
 	}
 	
 	public String getModeName() {
@@ -972,7 +976,6 @@ public class ModuleManager {
 		if (Is.equal(modeName, newModelName)) return;
 		reloadAllUINeeded = true;
 		modeName = newModelName;		
-		metaActions = null;
 		defaultActionQualifiedName = null;
 	}
 
@@ -982,22 +985,33 @@ public class ModuleManager {
 			int max = -1;
 			while (it.hasNext()) {
 				MetaAction a = (MetaAction) it.next();
+				if (!a.appliesToMode(getModelName())) continue; 
 				if (a.getByDefault() > max) {
 					max = a.getByDefault();					
 					defaultActionQualifiedName = a.getQualifiedName();					
 				}
-			}			
+			}
+			if (isListMode()) {
+				MetaAction a = MetaControllers.getMetaAction("List.filter");
+				if (a.getByDefault() > max) {
+					max = a.getByDefault();					
+					defaultActionQualifiedName = a.getQualifiedName();					
+				}
+			}
 		}		
 		return defaultActionQualifiedName;
 	}
 	
-	public boolean isXavaView() throws XavaException{
+	public boolean isXavaView() throws XavaException{ 
 		// For that a upload form does not delete the view data.
 		// It's a ad hoc solution. It can be improved 
-		if (isFormUpload()) return false; 							
+		if (isFormUpload()) return false;
+		
 		return "xava/detail".equals(getViewName()) ||
 				(getViewName().equals(defaultView)); // Because a custom JSP page can use xava_view too
+		
 	}
+	
 
 	public String getXavaViewName() throws XavaException {
 		return getMetaModule().getViewName();		
@@ -1223,5 +1237,5 @@ public class ModuleManager {
 	public int getDialogLevel() { 
 		return dialogLevel;
 	}
-			
+	
 }
