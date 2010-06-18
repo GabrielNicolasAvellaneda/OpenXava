@@ -16,8 +16,31 @@
 		the resources in 'Labels.properties' or '${application}-labels.properties'
 		take preference over it.
 		That is to say, it is better specify the labels in resources files and not here.		
-	-->	
+	-->
 	
+	<controller name="HidingActions">
+	
+		<action  name="hideGeneratePdf" mode="list" 
+			class="org.openxava.test.actions.HideActionAction">
+			<set property="action" value="Print.generatePdf"/>			
+		</action>
+		
+		<action  name="hideHideGeneratePdf" mode="list"
+			class="org.openxava.test.actions.HideActionAction">
+			<set property="action" value="HidingActions.hideGeneratePdf"/>			
+		</action>					
+	
+		<action  name="hideSave" mode="detail" 
+			class="org.openxava.test.actions.HideActionAction">
+			<set property="action" value="CRUD.save"/>			
+		</action>
+		
+		<action  name="hideHideSave" mode="detail"
+			class="org.openxava.test.actions.HideActionAction">
+			<set property="action" value="HidingActions.hideSave"/>			
+		</action>				
+	
+	</controller>	
 	
 	<!-- 
 	This 'Collection' controllers override the default 'Collection' controller
@@ -388,6 +411,7 @@
 					
 	<controller name="Warehouse">
 		<extends controller="Typical"/>
+		<extends controller="HidingActions"/> 
 		
 		<action name="showListTitle" hidden="true" on-init="true"
 			class="org.openxava.test.actions.ShowListTitleAction"/>		
@@ -556,7 +580,7 @@
 		<action name="translateAll" 
 			class="org.openxava.test.actions.TranslateAllCarrierNameAction"/>
 		
-		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction">
+		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction" mode="list">
 			<set property="model" value="Carrier" />
 		</action>
 		

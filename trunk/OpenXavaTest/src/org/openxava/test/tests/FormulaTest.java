@@ -4,8 +4,6 @@ import java.net.URL;
 
 import javax.persistence.Query;
 
-import org.openxava.calculators.*;
-import org.openxava.hibernate.*;
 import org.openxava.jpa.XPersistence;
 import org.openxava.test.model.Formula;
 import org.openxava.test.model.FormulaIngredient;

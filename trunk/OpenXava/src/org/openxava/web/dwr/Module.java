@@ -43,7 +43,7 @@ public class Module extends DWRBase {
 	private ModuleManager manager;
 	private boolean firstRequest; 
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception {
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception { 
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module);		
@@ -174,7 +174,7 @@ public class Module extends DWRBase {
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {
-		request(request, response, application, module, null, null, null, null, false); 		
+		request(request, response, application, module, null, null, null, null, false);  		
 		memorizeLastMessages();				
 	}	
 
@@ -207,7 +207,7 @@ public class Module extends DWRBase {
 				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected, additionalParameters)	
 			);			
 		}	
-		if (!manager.isListMode()) {
+		if (!manager.isListMode()) {			
 			result.setFocusPropertyId(getView().getFocusPropertyId());
 		}
 	}
@@ -247,10 +247,14 @@ public class Module extends DWRBase {
 			if (manager.isActionsChanged()) {									
 				if (manager.getDialogLevel() > 0) { 
 					put(result, "bottom_buttons", "bottomButtons.jsp?buttonBar=false");					
-				}				
+				}		
 				else {						
 					put(result, "button_bar", "buttonBar.jsp");
 					put(result, "bottom_buttons", "bottomButtons.jsp");
+					if (manager.isSplitMode()) {
+						put(result, "list_button_bar", "buttonBar.jsp?xava_mode=list");
+						put(result, "list_bottom_buttons", "bottomButtons.jsp?xava_mode=list");					
+					}
 				}
 			}					
 			Messages errors = (Messages) request.getAttribute("errors");
@@ -268,7 +272,10 @@ public class Module extends DWRBase {
 				fillChangedErrorImages(result);
 				fillChangedLabels(result); 
 			}
-		}		
+			if (manager.isSplitMode()) {
+				put(result, "list_view", "list.jsp");
+			}
+		}	
 		return result;
 	}
 
@@ -383,6 +390,7 @@ public class Module extends DWRBase {
 	private void memorizeLastMessages() { 
 		memorizeLastMessages(module);
 	}
+
 	
 	private void memorizeLastMessages(String module) {  
 		ModuleContext context = getContext(request);		
@@ -395,9 +403,9 @@ public class Module extends DWRBase {
 			context.put(application, module, ERRORS_LAST_REQUEST, errors);
 		}			
 	}
-
 	
-	private void restoreLastMessages() { 
+
+	public static void restoreLastMessages(HttpServletRequest request, String application, String module) {  
 		ModuleContext context = getContext(request);		
 		if (context.exists(application, module, MESSAGES_LAST_REQUEST)) {
 			Messages messages = (Messages) context.get(application, module, MESSAGES_LAST_REQUEST);
@@ -410,6 +418,10 @@ public class Module extends DWRBase {
 			context.remove(application, module, ERRORS_LAST_REQUEST);			
 		}		
 	}
+	
+	private void restoreLastMessages() {
+		restoreLastMessages(request, application, module); 
+	}	
 	
 	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws UnsupportedEncodingException {
 		StringBuffer result = new StringBuffer(getURIPrefix());

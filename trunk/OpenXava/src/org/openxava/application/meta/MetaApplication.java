@@ -162,8 +162,8 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 		module.setMetaApplication(this);
 		module.setName(modelName);			
 		module.setModelName(modelName);
-		module.addControllerName("Navigation");
-		module.addControllerName("List");
+		// tmp module.addControllerName("Navigation");
+		// tmp module.addControllerName("List");
 		if (MetaControllers.contains(modelName)) {
 			module.addControllerName(modelName);
 		}

@@ -34,11 +34,7 @@ public class XavaPreferences {
 	private int addColumnsPageRowCount;
 	private int pageRowCount;	
 	private int defaultLabelFormat = -1; 
-	private String defaultLabelStyle="";
-	private String helpPrefix="";
-	private String helpSufix="";
-	private boolean helpInNewWindow=false;
-	
+
 	private XavaPreferences() { 		
 	}
 	
@@ -334,21 +330,25 @@ public class XavaPreferences {
 	}
 	
 	public String getDefaultLabelStyle(){
-		if (!Is.empty(defaultLabelStyle)) return defaultLabelStyle;
 		return getProperties().getProperty("defaultLabelStyle", "");
 	}
 
 	public String getHelpPrefix() {
-		if (Is.empty(helpPrefix)) helpPrefix = getProperties().getProperty("helpPrefix", "").trim();	
-		return helpPrefix;
+		return getProperties().getProperty("helpPrefix", "").trim();	
 	}
 	
-	public String getHelpSufix(){
-		if (Is.empty(helpSufix)) helpSufix = getProperties().getProperty("helpSufix", "").trim();	
-		return helpSufix;	
+	public String getHelpSuffix(){
+		return getProperties().getProperty("helpSuffix", "").trim(); 		
+	}
+	
+	/** @since 4m5 */
+	public String getDefaultModeController() { 
+		return getProperties().getProperty("defaultModeController", "Mode");
 	}
 	
 	public boolean isHelpInNewWindow(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("helpInNewWindow", "true").trim());		
 	}
+
+		
 }

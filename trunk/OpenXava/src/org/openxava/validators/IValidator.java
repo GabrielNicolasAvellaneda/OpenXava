@@ -23,7 +23,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public interface IValidator {
+public interface IValidator extends java.io.Serializable {
 	
 	/**
 	 * Does validation. <p>

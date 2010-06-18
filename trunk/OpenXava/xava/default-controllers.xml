@@ -25,8 +25,14 @@ here that you want to override.
 	<object name="xava_currentModule" class="java.lang.String" />
 	<object name="xava_treeViewParser" class="org.openxava.util.TreeViewParser" />
 	<object name="xava_treeViewNodeFullPath" class="java.lang.String" />
-					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>
-	</controller>				<controller name="Void"/>	
+	
+	<controller name="Typical">
+		<extends controller="Navigation"/>
+		<extends controller="Print"/>		
+		<extends controller="CRUD"/>
+	</controller>
+	
+	<controller name="Void"/>	
 	<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
 			<set property="restoreModel" value="true"/>					</action>									<action name="save" mode="detail"
 			by-default="if-possible"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="Control S"/>							<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="Control D"/>		
@@ -40,7 +46,8 @@ here that you want to override.
 		<action name="searchReadOnly" hidden="true"					
 			class="org.openxava.actions.SearchReadOnlyAction"/>
 								<action name="deleteSelected" mode="list" confirm="true"			class="org.openxava.actions.DeleteSelectedAction"
-			image="images/delete.gif"			keystroke="Control D"/>
+			image="images/delete.gif"
+			keystroke="Control D"/>
 		
 		<action name="deleteRow" mode="NONE" confirm="true"
 			class="org.openxava.actions.DeleteSelectedAction"
@@ -48,12 +55,77 @@ here that you want to override.
 			in-each-row="true"/>								</controller>		<controller name="Print">										<action name="generatePdf" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/pdf.gif"			keystroke="Control Alt P">			<set property="type" value="pdf"/>		</action>
 
 		<action name="generateExcel" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/excel.gif"			keystroke="Control Alt X">			<set property="type" value="csv"/>			</action>
-							</controller>		<controller name="Mode">		<action name="detailAndFirst"			class="org.openxava.actions.GoDetailAction"			keystroke="F8">			<set property="nextAction" value="Navigation.first"/>		</action>		<action name="list"			class="org.openxava.actions.GoListAction"			keystroke="F9"/>		<action name="detail"			hidden="true"			class="org.openxava.actions.GoDetailAction"/>	</controller>		<controller name="List">		
+							</controller>
 	
-		<action name="init" on-init="true"
+	<controller name="DetailList">
+		<action name="initList" on-init="true"
 			class="org.openxava.actions.InitListAction"
-			hidden="true"/>
-				<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="F7"			hidden="true"
+			hidden="true"/>	
+		<action name="detailAndFirst"
+			class="org.openxava.actions.GoDetailAction"
+			keystroke="F8">
+			<set property="nextAction" value="Navigation.first"/>
+		</action>
+		<action name="list"
+			class="org.openxava.actions.GoListAction"
+			keystroke="F9"/>
+	</controller>
+	
+	<controller name="DetailOnly">
+	</controller>	
+	
+	<controller name="Mode">
+		<action name="initList" on-init="true"
+			class="org.openxava.actions.InitListAction"
+			hidden="true"/>		
+		<action name="detailAndFirst"
+			class="org.openxava.actions.GoDetailAction"
+			keystroke="F8">
+			<set property="nextAction" value="Navigation.first"/>
+		</action>
+		<action name="list"
+			class="org.openxava.actions.GoListAction"
+			keystroke="F9"/>
+		<action name="split"
+			class="org.openxava.actions.GoSplitAction"
+			keystroke="F10"/>
+		<action name="detail"
+			hidden="true"
+			class="org.openxava.actions.GoDetailAction"/>		
+		<action name="initView"
+			class="org.openxava.actions.SetEditableAction"
+			hidden="true" on-init="true">
+			<set property="editable" value="false"/>
+			<set property="keyEditable" value="false"/>
+		</action>															
+	</controller>
+	
+	<controller name="ListOnly">
+		<action name="initList" on-init="true"
+			class="org.openxava.actions.InitListAction"
+			hidden="true"/>		
+		<action name="init"
+			class="org.openxava.actions.GoListAction"
+			hidden="true" on-init="true"/>
+	</controller>	
+		
+	<controller name="SplitOnly">
+		<action name="initList" on-init="true"
+			class="org.openxava.actions.InitListAction"
+			hidden="true"/>		
+		<action name="initMode"
+			class="org.openxava.actions.GoSplitAction"
+			hidden="true" on-init="true"/>
+		<action name="initView"
+			class="org.openxava.actions.SetEditableAction"
+			hidden="true" on-init="true">
+			<set property="editable" value="false"/>
+			<set property="keyEditable" value="false"/>
+		</action>						
+	</controller>			
+			<controller name="List">		
+
+		<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="F7"			hidden="true"
 			mode="list"
 			image="images/edit.gif">
 			<set property="nextAction" value="Mode.detail"/>		</action>	
@@ -284,12 +356,7 @@ here that you want to override.
 		<extends controller="Print"/>
 	</controller>		<controller name="Sections">		<action name="change" 			class="org.openxava.actions.ChangeSectionAction"
 			keystroke="Control 1..9"/>
-	</controller>		<controller name="ListOnly">
-		<action name="init"
-			class="org.openxava.actions.GoListAction"
-			hidden="true" on-init="true"/>
-	</controller>
-	
+	</controller>			
 	<!-- 
 	If you want that your module use the default schema in the object
 	'xava_defaultSchema' you module has to use this controller,

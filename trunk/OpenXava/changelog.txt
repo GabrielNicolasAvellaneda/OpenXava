@@ -1,11 +1,19 @@
 Change Log for OpenXava project
 ===============================
 
-- 'controllers.xml': new mode 'NONE' to action only display in each row.
+- IValidator and IPropertyValidator now are serializable.
+- New mode 'NONE' for actions in controllers.xml to be displayed only in each row.
 - Fix: checkbox 'select/deselect all' not display in choose list (rows with radio button). 
 - Delete action in each row: it display message with the row number.
 - Fix: when you shorten columns if the value contain '-' it produces two lines.
-- Help module: new 'helpPrefix', 'helpSufix' and 'helpInNewWindow' properties in xava.properties. By default it use 'http://openxava.wikispaces.com/help_'. 
+- Help module: new 'helpPrefix', 'helpSuffix' and 'helpInNewWindow' properties in xava.properties. By default it uses 'http://openxava.wikispaces.com/help_'. 
+- New mode 'split' (labeled as "Both") in addition to already existing 'detail' and 'List' modes.
+- New SetEditableAction action class.
+- The List and Navigation controllers are no longer added automatically.
+- The setConditionValues and setConditionComparators methods of ModuleTestBase use varargs.
+- Actions from mode-controller with on-init=true are executed on module initialization.
+- New defaultModeController property in xava.property to define the default initial mode. 
+- View editable and keyEditable properties are false at module initialization. 
 
 OpenXava 4m4 (2010-5-25)
 ------------------------

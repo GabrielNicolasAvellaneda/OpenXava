@@ -916,7 +916,7 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	
-	public String getModelName() {		
+	public String getModelName() {
 		return modelName;
 	}
 

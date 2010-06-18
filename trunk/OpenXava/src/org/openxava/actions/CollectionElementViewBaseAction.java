@@ -24,7 +24,9 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	protected View getCollectionElementView() throws XavaException {
 		if (collectionElementView == null) {
 			if (viewObject == null) collectionElementView = super.getView(); // In a dialog
-			else collectionElementView = (View) getContext().get(getRequest(), viewObject);
+			else {
+				collectionElementView = (View) getContext().get(getRequest(), viewObject);
+			}
 			collectionElementView.refreshCollections(); 
 		}
 		return collectionElementView;

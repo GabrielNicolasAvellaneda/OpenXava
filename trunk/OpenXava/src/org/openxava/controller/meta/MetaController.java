@@ -59,34 +59,8 @@ public class MetaController extends MetaElement {
 	
 	public boolean containsMetaAction(String actionName) {
 		return metaActions.contains(new MetaAction(actionName));
-	}
-	public Collection<MetaAction> getMetaActionsForMode(String mode) throws XavaException {
-		if (Is.emptyString(mode)) return Collections.EMPTY_LIST;
-		
-		List<MetaAction> result = new ArrayList<MetaAction>();
-		// Adding parents
-		Iterator itParents = getParents().iterator();
-		while (itParents.hasNext()) {
-			MetaController parent = (MetaController) itParents.next();
-			result.addAll(parent.getMetaActionsForMode(mode));
-		}
-				
-		// and now ours 
-		Iterator it = metaActions.iterator();
-		while (it.hasNext()) {
-			MetaAction metaAction = (MetaAction) it.next();			
-			if (mode.equals(metaAction.getMode()) || Is.emptyString(metaAction.getMode()) || "NONE".equals(metaAction.getMode())) {
-				int pos = indexOf(result, metaAction);
-				if (pos < 0) result.add(metaAction);
-				else {
-					result.remove(pos);
-					result.add(pos, metaAction);
-				} 
-			}
-		}		
-		return result;
-	}
-	
+	}	
+
 	// Search by name, so ignoring the controller name
 	private int indexOf(List<MetaAction> actions, MetaAction metaAction) { 
 		for (int i=0; i<actions.size(); i++) {
@@ -112,7 +86,7 @@ public class MetaController extends MetaElement {
 		Iterator it = metaActions.iterator();
 		while (it.hasNext()) {
 			MetaAction metaAction = (MetaAction) it.next();						
-			int pos = result.indexOf(metaAction);
+			int pos = indexOf(result, metaAction); 
 			if (pos < 0) result.add(metaAction);
 			else {
 				result.remove(pos);

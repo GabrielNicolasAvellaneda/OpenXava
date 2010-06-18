@@ -5,18 +5,42 @@ import java.util.*;
 
 import org.openxava.hibernate.*;
 import org.openxava.model.meta.*;
-import org.openxava.tests.*;
 import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
  */
 
-public class WarehouseTest extends ModuleTestBase {
+public class WarehouseTest extends WarehouseSplitTestBase {
 	
 		
 	public WarehouseTest(String testName) {
 		super(testName, "Warehouse");		
+	}
+	
+	
+	public void testSplitMode() throws Exception {
+		assertAction("Mode.detailAndFirst");
+		assertNoAction("Mode.list");
+		assertAction("Mode.split");		
+		assertAction("List.filter"); // List is shown
+		assertNotExists("zoneNumber"); // Detail is not shown
+
+		execute("Mode.split");
+		assertAction("Mode.detailAndFirst");
+		assertAction("Mode.list");
+		assertNoAction("Mode.split");
+		assertAction("List.filter"); // List is shown
+		assertExists("zoneNumber"); // Detail is shown
+		
+		super.testSplitMode(); 
+		
+		execute("Mode.detailAndFirst");
+		assertNoAction("Mode.detailAndFirst");
+		assertAction("Mode.list");
+		assertAction("Mode.split");
+		assertNoAction("List.filter"); // List is not shown
+		assertExists("zoneNumber"); // Detail is shown		
 	}
 	
 	public void testDefaultAction() throws Exception {
@@ -143,7 +167,7 @@ public class WarehouseTest extends ModuleTestBase {
 		assertValueInList(0, "table", table);
 		assertTrue("User must to have value", !Is.emptyString(getValueInList(0, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(0, "date", date);
-		assertValueInList(0, "time", time);
+		assertValueInList(0, "time", time);  
 		assertValueInList(0, "type", "Create");
 		assertValueInList(0, "authorized", "Yes");
 		assertValueInList(0, "recordId", expectedRecordId);		
@@ -393,7 +417,7 @@ public class WarehouseTest extends ModuleTestBase {
 		assertAction("Warehouse.toLowerCase");
 		assertNoAction("Warehouse.changeZone");
 		executeDefaultAction(); // Execute search and not new 
-		assertNoErrors();
+		assertNoErrors(); 
 		assertAction("Warehouse.toLowerCase");
 		assertNoAction("Warehouse.changeZone");
 	}

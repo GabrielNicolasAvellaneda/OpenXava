@@ -66,9 +66,10 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		}		
 		if (key != null) {		
 			getView().setValues(key);						
-		}		
+		}	
+				
 	}
-
+	
 	public int getRow() {
 		return row;
 	}
@@ -79,9 +80,10 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		if (row >= 0) explicitRow = true;  
 		row = i;		
 	}
+		
 	
 	public String getNextAction() throws XavaException {
-		if (Is.emptyString(nextAction)) {
+		if (Is.emptyString(nextAction) || getManager().isSplitMode()) { 
 			return getEnvironment().getValue("XAVA_SEARCH_ACTION");
 		} 		
 		return nextAction;

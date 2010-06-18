@@ -24,6 +24,7 @@ public class DeliveryTest extends ModuleTestBase {
 		"CRUD.deleteRow",
 		"Remarks.hideRemarks",
 		"Mode.detailAndFirst",
+		"Mode.split",
 		"List.filter",
 		"List.customize",
 		"List.orderBy",
@@ -188,7 +189,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "13");
 		setValue("description", "DETAIL 13");
 		execute("DeliveryDetail.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertMessage("The action Save for delivery detail executed");
 		assertCollectionRowCount("details", 3);
 		
@@ -529,6 +530,7 @@ public class DeliveryTest extends ModuleTestBase {
 			"CRUD.search",						
 			"CRUD.refresh",
 			"Mode.list",
+			"Mode.split",
 			"Reference.search",
 			"Reference.createNew",
 			"Reference.modify",
@@ -556,6 +558,7 @@ public class DeliveryTest extends ModuleTestBase {
 			"CRUD.search",
 			"CRUD.refresh",
 			"Mode.list",
+			"Mode.split",
 			"Reference.search",
 			"Reference.createNew",
 			"Reference.modify",
@@ -572,7 +575,7 @@ public class DeliveryTest extends ModuleTestBase {
 		};
 				
 		execute("CRUD.new");
-		assertActions(initialActions);
+		assertActions(initialActions);  
 		
 		execute("Delivery.hideActions");
 		assertActions(minimumActions);
@@ -722,7 +725,7 @@ public class DeliveryTest extends ModuleTestBase {
 		
 		// To list mode and order
 		execute("Mode.list");
-		assertActions(listActions);
+		assertActions(listActions); 
 		execute("List.orderBy", "property=invoice.year"); // ascending
 		execute("List.orderBy", "property=invoice.year"); // descending
 		assertNoErrors();
@@ -924,7 +927,7 @@ public class DeliveryTest extends ModuleTestBase {
 		// Verifying if date property is well in list 
 		// Only works if there are lest than 11 object (because see in first page)		
 		execute("Mode.list");
-		assertActions(listActions);  
+		assertActions(listActions);   
 		assertNoErrors();
 		int quantity = getListRowCount();
 		boolean found = false;

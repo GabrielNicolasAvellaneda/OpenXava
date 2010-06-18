@@ -33,6 +33,7 @@ public class CustomerTest extends ModuleTestBase {
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
+		"Mode.split",
 		"List.filter",
 		"List.orderBy",
 		"List.viewDetail",

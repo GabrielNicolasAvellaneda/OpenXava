@@ -2,8 +2,8 @@ if (openxava == null) var openxava = {};
 
 openxava.init = function(application, module) {
 	dwr.util.useLoadingMessage(openxava.loadingMessage);
-	document.onkeydown = openxava.processKey;  
-	openxava.ajaxRequest(application, module, true); 	
+	document.onkeydown = openxava.processKey;
+	openxava.initUI(application, module); 
 }
 
 openxava.ajaxRequest = function(application, module, firstRequest) {	
@@ -86,9 +86,7 @@ openxava.refreshPage = function(result) {
 			}			
 		}
 		if (openxava.initTheme != null) openxava.initTheme();
-		openxava.clearLists(result.application, result.module); 
-		openxava.initLists(result.application, result.module);  
-		openxava.initEditors(result.application, result.module); 
+		openxava.initUI(result.application, result.module); 
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
@@ -120,6 +118,12 @@ openxava.refreshPage = function(result) {
 	openxava.showMessages(result); 
 	openxava.resetRequesting(result); 
 	document.body.style.cursor='auto';
+}
+
+openxava.initUI = function(application, module) { 
+	openxava.clearLists(application, module); 
+	openxava.initLists(application, module);  
+	openxava.initEditors(application, module);	
 }
 
 openxava.showMessages = function(result) { 

@@ -20,7 +20,8 @@ public class SearchInvoiceFromDeliveryAction extends ViewBaseAction {
 			Map membersNames = getView().getMembersNames();
 			Map values = MapFacade.getValues(getModelName(), key, membersNames);
 			getView().setValues(values);			
-			getView().setKeyEditable(false);						
+			getView().setKeyEditable(false);
+			getView().setEditable(true);
 		}
 		catch (ObjectNotFoundException ex) {
 			getView().clear();

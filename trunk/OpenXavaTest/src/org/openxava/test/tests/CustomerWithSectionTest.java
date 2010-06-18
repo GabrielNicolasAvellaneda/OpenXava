@@ -16,6 +16,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow", 
 		"Mode.detailAndFirst",
+		"Mode.split",
 		"List.filter",
 		"List.orderBy",
 		"List.viewDetail",
@@ -32,6 +33,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
+		"Mode.split",
 		"List.filter",
 		"List.orderBy",
 		"List.viewDetail",
@@ -264,7 +266,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		setValue("Seller", "number", "66");
 		setValue("Seller", "name", "SELLER JUNIT 66");
 		execute("NewCreation.saveNew");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertValue("alternateSeller.number", "66");
 		assertValue("alternateSeller.name", "DON SELLER JUNIT 66"); // The 'DON' is added by an on-change action
 		deleteSeller(66);
@@ -374,7 +376,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 	
 	public void testCustomizeList() throws Exception { 
-		doTestCustomizeList_moveAndRemove();
+		doTestCustomizeList_moveAndRemove(); 
 		tearDown();	setUp();
 		doTestCustomizeList_generatePDF();
 		tearDown();	setUp();

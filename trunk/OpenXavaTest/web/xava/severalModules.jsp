@@ -17,5 +17,3 @@
 	<jsp:param name="application" value="OpenXavaTest"/>
 	<jsp:param name="module" value="CustomerWithSection"/>
 </jsp:include>
-
-

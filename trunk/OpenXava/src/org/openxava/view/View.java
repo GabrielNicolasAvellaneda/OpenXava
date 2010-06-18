@@ -775,9 +775,7 @@ public class View implements java.io.Serializable {
 				newView.setRemoveSelectedCollectionElementsAction(metaCollectionView.getRemoveSelectedActionName());
 				newView.setOnSelectCollectionElementAction(metaCollectionView.getOnSelectElementActionName());
 				boolean editable = false;
-				boolean keyEditable = false;
 				if (!metaCollectionView.isReadOnly()) {
-					keyEditable = isEditable();
 					if (newView.isRepresentsAggregate()) editable = isEditable();															
 				}				
 				newView.setCollectionEditable(!metaCollectionView.isReadOnly() && !metaCollectionView.isEditOnly());
@@ -786,8 +784,8 @@ public class View implements java.io.Serializable {
 				}
 				else {
 					newView.setCollectionEditable(isEditable());
-				}
-				newView.setCollectionMembersEditables(keyEditable || metaCollectionView.isEditOnly());								
+				}								
+				newView.setCollectionMembersEditables(!metaCollectionView.isReadOnly() || metaCollectionView.isEditOnly()); 
 				newView.setViewName(metaCollectionView.getViewName());
 				Collection actionsListNames = metaCollectionView.getActionsListNames();
 				if (!actionsListNames.isEmpty()) {					
@@ -1499,7 +1497,6 @@ public class View implements java.io.Serializable {
 	 * Clear all displayed data.  
 	 */
 	public void clear() throws XavaException {
-
 		if (rootModelName != null) {			
 			setModelName(rootModelName); 
 			rootModelName = null;

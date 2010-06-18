@@ -16,6 +16,7 @@ public class FamilyTest extends ModuleTestBase {
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
+		"Mode.split",
 		"List.filter",
 		"List.customize",
 		"List.orderBy",

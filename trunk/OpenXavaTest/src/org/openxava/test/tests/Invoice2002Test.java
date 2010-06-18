@@ -16,6 +16,7 @@ public class Invoice2002Test extends ModuleTestBase {
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
 		"Mode.detailAndFirst",
+		"Mode.split", 
 		"List.filter",
 		"List.customize",
 		"List.orderBy",

@@ -8,7 +8,7 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public interface IPropertyValidator {
+public interface IPropertyValidator extends java.io.Serializable {
 
 	/**
 	 * Validate. <p>

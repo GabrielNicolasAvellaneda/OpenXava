@@ -13,12 +13,14 @@ public class ChangeProductsPriceTest extends ModuleTestBase {
 		"Navigation.first",
 		"Navigation.next",		
 		"Mode.list",									
+		"Mode.split",
 		"ChangeProductsPrice.save",
 		"ChangeProductsPrice.editDescription"
 	};
 	
 	private String [] listActions = {
 		"Mode.detailAndFirst",
+		"Mode.split", 
 		"List.filter",
 		"List.customize",
 		"List.orderBy",
