@@ -209,9 +209,7 @@
 		<model name="Customer"/>		
 		<view name="TypeWithRadioButton"/>
 		<controller name="Typical"/>
-	</module>
-	
-	<module name="BeforeGoingToCustomer">
+	</module>		<module name="BeforeGoingToCustomer">
 		<model name="Customer"/>
 		<view name="Intermediate"/>
 		<controller name="ChangeModule"/>

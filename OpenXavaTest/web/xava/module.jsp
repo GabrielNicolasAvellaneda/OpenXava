@@ -78,7 +78,7 @@
 	String version = org.openxava.controller.ModuleManager.getVersion();
 	String realPath = request.getSession().getServletContext()
 			.getRealPath("/");
-	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;  	
+	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;	
 %>
 <jsp:include page="execute.jsp"/>
 <%
@@ -178,7 +178,7 @@
 	}
 %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>
-	<input id="<xava:id name='loading'/>" type="hidden" value="true"/>
+	<input id="<xava:id name='loading'/>" type="hidden" value="<%=coreViaAJAX%>"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>
 	<input id="<xava:id name='view_member'/>" type="hidden" value=""/>
 		
@@ -227,6 +227,8 @@
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
 		openxava.loadingMessage = '<xava:message key="loading"/>';
+		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
+		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';
 		<%String initThemeScript = style.getInitThemeScript();

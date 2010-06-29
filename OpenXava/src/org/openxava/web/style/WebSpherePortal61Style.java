@@ -52,8 +52,10 @@ public class WebSpherePortal61Style extends WebSpherePortal6Style {
 	protected String getImageMessageBaseURI() { 
 		return "/wps/themes/html/Portal/"; 		
 	}
-
 	
+	public String getCurrentRow() { // tmp
+		return super.getCurrentRow() + " webpshere-current-row"; 
+	}	
 
 	public static Style getInstance() {
 		if (instance == null) {

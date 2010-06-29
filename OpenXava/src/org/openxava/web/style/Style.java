@@ -196,13 +196,12 @@ public class Style {
 		return "list-pair";
 	}
 	
-	public String getListPairEvents(String additionalClass) {  
+	/** 
+	 * @param  Since v4m5 it has no parameters
+	 */
+	public String getListPairEvents() {  
 		return "";
-	}
-	
-	public String getListPairEvents(String additionalClass, String selectedClass) { 		
-		return "";
-	}
+	}	
 	
 	public String getListPairCell() { 
 		return getListPair();
@@ -212,14 +211,13 @@ public class Style {
 		return "list-odd";
 	}
 	
-	public String getListOddEvents(String additionalClass) {  
+	/** 
+	 * @param  Since v4m5 it has no parameters
+	 */
+	public String getListOddEvents() {   
 		return "";
-	}	
-	
-	public String getListOddEvents(String additionalClass, String selectedClass) {  
-		return "";
-	}
-	
+	}		
+		
 	public String getListOddCell() { 
 		return getListOdd();
 	}
@@ -525,6 +523,13 @@ public class Style {
 	
 	protected boolean isFirefox() { 
 		return browser == null?false:browser.contains("Firefox");
+	}
+		
+	/**
+	 * @since 4m5
+	 */
+	public String getCurrentRow() {
+		return "current-row"; 
 	}
 	
 }

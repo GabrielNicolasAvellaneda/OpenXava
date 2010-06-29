@@ -118,7 +118,7 @@ public class Tab implements java.io.Serializable {
 	private Map styles;
 	private View collectionView;
 	private boolean filterVisible=XavaPreferences.getInstance().isShowFilterByDefaultInList();
-	private Map<String, Integer> columnWidths;
+	private Map<String, Integer> columnWidths;	
 	
 	private static int nextOid = 0; 
 	public int oid = nextOid++; 
@@ -1483,5 +1483,5 @@ public class Tab implements java.io.Serializable {
 	public void clearSelected() {
 		selected = null;
 	}
-	
+		
 }

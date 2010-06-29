@@ -6,17 +6,17 @@ import org.openxava.controller.meta.MetaAction;
 import org.openxava.util.Is;
 
 /**
- * Utility class to help in action code generato for JSPs.
+ * Utility class to help in action code generated for JSPs.
  * 
  * Create on 30/10/2009 (16:32:16)
- * @author Ana Andrés
+ * @author Ana AndrÃ©s
  */
 public class Actions {
 	private static Log log = LogFactory.getLog(Actions.class);
 	
 	public static String getActionOnClick(String application, String module, 
 			String onSelectCollectionElementAction, int row, String viewObject, String idRow,
-			String cssSelectedRow, String cssClass, String selectedRowStyle, String rowStyle,
+			String selectedRowStyle, String rowStyle,
 			MetaAction onSelectCollectionElementMetaAction){
 		return "onClick=\"openxava.onSelectElement(" +
 			"'" + application + "'," + 
@@ -26,8 +26,6 @@ public class Actions {
 			"this.checked," + 
 			"'" + idRow + "'," +  
 			!Is.empty(onSelectCollectionElementAction) + "," +
-			"'" + cssSelectedRow + "'," + 
-			"'" + cssClass + "'," +
 			"'" + selectedRowStyle + "'," +
 			"'" + rowStyle + "'," +
 			"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 
@@ -37,7 +35,7 @@ public class Actions {
 	
 	public static String getActionOnClickAll(String application, String module, 
 			String onSelectCollectionElementAction, String viewObject, String prefix,
-			String cssSelectedRow, String selectedRowStyle, String rowStyle){
+			String selectedRowStyle, String rowStyle){
 		return  "onClick=\"openxava.onSelectAll(" +
 			"'" + application + "'," + 
 			"'" + module + "'," + 
@@ -45,8 +43,7 @@ public class Actions {
 			"'viewObject=" + viewObject + "'," +
 			"this.checked," + 
 			!Is.empty(onSelectCollectionElementAction) + "," +
-			"'" + prefix + "'," +
-			"'" + cssSelectedRow + "'," + 
+			"'" + prefix + "'," + 
 			"'" + selectedRowStyle + "'," +
 			"'" + rowStyle + "'" + 
 			")\"";

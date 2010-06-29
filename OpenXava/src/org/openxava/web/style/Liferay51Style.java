@@ -54,18 +54,20 @@ public class Liferay51Style extends Liferay43Style {
 		return "portlet-section-body results-row";		
 	}
 	
-	public String getListPairEvents(String additionalClass) { 		
-		return "onmouseover=\"this.className = 'portlet-section-body-hover results-row hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-body results-row " + additionalClass + "';\"";
+	public String getListPairEvents() { 
+		return "onmouseover=\"$(this).removeClass('" + getSelectedRow() + " portlet-section-body').addClass('portlet-section-body-hover hover');\"" +  
+			"onmouseout=\"$(this).removeClass('portlet-section-body-hover hover').addClass('portlet-section-body'); openxava.markRows()\""; 			
 	}
 	
 	public String getListOdd() { 
 		return "portlet-section-alternate results-row alt";		
 	}
 	
-	public String getListOddEvents(String additionalClass) { 
-		return "onmouseover=\"this.className = 'portlet-section-alternate-hover results-row alt hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-alternate results-row alt " + additionalClass + "';\"";		
-	}
-				
+	public String getListOddEvents() { 
+		return "onmouseover=\"$(this).removeClass('" + getSelectedRow() + " portlet-section-alternate').addClass('portlet-section-alternate-hover hover');\"" +  
+			"onmouseout=\"$(this).removeClass('portlet-section-alternate-hover hover').addClass('portlet-section-alternate'); openxava.markRows()\"";				
+	}	
+
 	public String getAscendingImage() {
 		return "ascending-white.gif";
 	}

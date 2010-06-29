@@ -31,8 +31,8 @@ Locale currentLocale = Locales.getCurrent(); //Trifon
 for (Iterator it=tab.getColumnsToAdd().iterator(); it.hasNext();) {
 	String property = (String) it.next();
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
-	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 
-	String events=f%2==0?style.getListPairEvents(cssCellClass):style.getListOddEvents(cssCellClass);		
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 			
+	String events=f%2==0?style.getListPairEvents():style.getListOddEvents(); 
 	f++;
 	String propertyI18n = Labels.getQualified(property, currentLocale); // Trifon
 %>

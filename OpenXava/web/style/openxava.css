@@ -61,6 +61,19 @@ TH.list {
 	color: #3366ff;
 }
 
+.current-row  {	
+	font-weight: bold;
+	outline-color: blue;
+	outline-style: solid;
+	outline-width: thin;
+}
+
+/* tmp */
+.websphere-current-row {	
+	color: black;
+}
+
+
 TR.list-subheader {
 	font-weight: normal;
 	background: #dddddd;	 

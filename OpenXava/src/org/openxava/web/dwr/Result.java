@@ -24,7 +24,8 @@ public class Result {
 	private boolean hideDialog; 
 	private String dialogTitle; 
 	private int dialogLevel; 
-	private String viewMember;    
+	private String viewMember;
+	private int currentRow; 
 	
 	public Result() {
 	}
@@ -151,6 +152,14 @@ public class Result {
 
 	public void setViewMember(String viewMember) {
 		this.viewMember = viewMember;
+	}
+
+	public void setCurrentRow(int currentRow) {
+		this.currentRow = currentRow;
+	}
+
+	public int getCurrentRow() {
+		return currentRow;
 	}
 	
 }

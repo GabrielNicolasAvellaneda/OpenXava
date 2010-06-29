@@ -27,7 +27,7 @@ import org.openxava.web.*;
  * @author Javier Paniza
  */
 
-public class ModuleManager {
+public class ModuleManager implements java.io.Serializable {
 	
 	private static Log log = LogFactory.getLog(ModuleManager.class);
 	
