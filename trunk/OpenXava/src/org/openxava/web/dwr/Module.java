@@ -19,6 +19,8 @@ import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 import org.openxava.view.View; 
 
+import sun.reflect.ReflectionFactory.*;
+
 /**
  * For accessing to module execution from DWR. <p>
  * 
@@ -43,7 +45,7 @@ public class Module extends DWRBase {
 	private ModuleManager manager;
 	private boolean firstRequest; 
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception { 
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception {		
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module);		
@@ -210,6 +212,12 @@ public class Module extends DWRBase {
 		if (!manager.isListMode()) {			
 			result.setFocusPropertyId(getView().getFocusPropertyId());
 		}
+		
+		if (manager.isSplitMode()) {
+			int row = (Integer) getContext(request).get(application, module, "xava_row");
+			result.setCurrentRow(row);
+		}
+		
 	}
 
 	private void setDialogLevel(Result result) {
@@ -272,9 +280,13 @@ public class Module extends DWRBase {
 				fillChangedErrorImages(result);
 				fillChangedLabels(result); 
 			}
-			if (manager.isSplitMode()) {
+			
+			if (manager.isSplitMode() && 
+				manager.getLastExecutedMetaAction().appliesToMode(IChangeModeAction.LIST)) 
+			{
 				put(result, "list_view", "list.jsp");
 			}
+			
 		}	
 		return result;
 	}

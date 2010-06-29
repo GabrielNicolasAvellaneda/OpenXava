@@ -16,7 +16,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class ModuleContext {
+public class ModuleContext implements java.io.Serializable { 
 	
 	private static Log log = LogFactory.getLog(ModuleContext.class);
 	

@@ -1,7 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- IValidator and IPropertyValidator now are serializable.
+- Fix: Several nested tooltip for cells when executing several times actions over a collection/list.
+- Fix: JavaScript memory leak (so performance degradation) when working some time with a collection/list. 
+- ModuleManager, ModuleContext, IValidator and IPropertyValidator now are serializable.
 - New mode 'NONE' for actions in controllers.xml to be displayed only in each row.
 - Fix: checkbox 'select/deselect all' not display in choose list (rows with radio button). 
 - Delete action in each row: it display message with the row number.

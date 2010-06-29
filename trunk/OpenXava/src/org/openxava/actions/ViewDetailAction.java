@@ -9,8 +9,8 @@ import org.openxava.util.*;
  */
 public class ViewDetailAction extends TabBaseAction implements IChainAction, IModelAction {
 	
-	@Inject 
-	private int row = -1; 
+	@Inject  
+	private int row = Integer.MIN_VALUE; 
 	private boolean explicitRow = false;
 	private int increment;
 	private Map key;	
@@ -57,6 +57,7 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 			key = null;
 		}
 		else {
+			if (row < 0) row = 0; 
 			key = (Map) getTab().getTableModel().getObjectAt(row);			
 		}
 		if (key == null) {
@@ -77,7 +78,7 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 	public void setRow(int i) {
 		// If row is injected twice, the second time is an explict row assignament
 		//   that is, not from xava_row session object but using row=7 in action call
-		if (row >= 0) explicitRow = true;  
+		if (row != Integer.MIN_VALUE) explicitRow = true;   
 		row = i;		
 	}
 		

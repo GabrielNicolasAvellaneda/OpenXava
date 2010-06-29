@@ -15,7 +15,7 @@ here that you want to override.
 	<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchByViewKey"/>	<env-var name="XAVA_LIST_ACTION" value="List.viewDetail"/>		<object name="xava_view" class="org.openxava.view.View"/>		<object name="xava_referenceSubview" class="org.openxava.view.View"/>	
 	<object name="xava_tab" class="org.openxava.tab.Tab"/>		
 	<object name="xava_mainTab" class="org.openxava.tab.Tab"/>		
-	<object name="xava_customizingTab" class="org.openxava.tab.Tab"/>	<object name="xava_row" class="java.lang.Integer" value="0"/>			<object name="xava_newImageProperty" class="java.lang.String"/>
+	<object name="xava_customizingTab" class="org.openxava.tab.Tab"/>		<object name="xava_row" class="java.lang.Integer" value="-1"/>		<object name="xava_newImageProperty" class="java.lang.String"/>
 	<object name="xava_currentCollectionLabel" class="java.lang.String"/>
 	<object name="xava_collectionViewObject" class="java.lang.String"/>		<object name="xava_previousControllers" class="java.util.Stack"/>
 	<object name="xava_previousViews" class="java.util.Stack"/>

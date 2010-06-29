@@ -145,15 +145,12 @@ public class Liferay43Style extends Style {
 	public String getListPair() { 
 		return "portlet-section-body";		
 	}
-	
-	public String getListPairEvents(String additionalClass) { 		
-		return "onmouseover=\"this.className = 'portlet-section-body-hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-body " + additionalClass + "';\"";
+
+	public String getListPairEvents() { 		
+		return "onmouseover=\"$(this).removeClass('" + getSelectedRow() + " portlet-section-body').addClass('portlet-section-body-hover');\"" +  
+			"onmouseout=\"$(this).removeClass('portlet-section-body-hover').addClass('portlet-section-body'); openxava.markRows()\""; 
 	}
-	
-	public String getListPairEvents(String additionalClass, String selectedClass) { 		
-		return "onmouseover=\"this.className = 'portlet-section-body-hover results-row hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-body results-row " + additionalClass + " " + selectedClass + "';\"";
-	}
-	
+		
 	public String getListPairCell() {
 		return getListCell();
 	}
@@ -162,14 +159,11 @@ public class Liferay43Style extends Style {
 		return "portlet-section-alternate";		
 	}
 	
-	public String getListOddEvents(String additionalClass) { 
-		return "onmouseover=\"this.className = 'portlet-section-alternate-hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-alternate " + additionalClass + "';\"";		
+	public String getListOddEvents() {  
+		return "onmouseover=\"$(this).removeClass('" + getSelectedRow() + " portlet-section-alternate').addClass('portlet-section-alternate-hover');\"" +  
+			"onmouseout=\"$(this).removeClass('portlet-section-alternate-hover').addClass('portlet-section-alternate'); openxava.markRows()\""; 
 	}
-
-	public String getListOddEvents(String additionalClass, String selectedClass) { 
-		return "onmouseover=\"this.className = 'portlet-section-alternate-hover results-row alt hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-alternate results-row alt " + additionalClass + " " + selectedClass + "';\"";		
-	}
-	
+		
 	public String getListOddCell() { 
 		return getListCell();		
 	}

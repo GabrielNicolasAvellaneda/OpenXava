@@ -6,7 +6,6 @@
 
 <%
 String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
-String cssSelectedRow = style.getSelectedRow();
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
@@ -25,7 +24,7 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 		String actionOnClickAll = Actions.getActionOnClickAll(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, idCollection, propertyPrefix, 
-		cssSelectedRow, selectedRowStyle, rowStyle);
+		selectedRowStyle, rowStyle);
 	%>
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=propertyPrefix%>selected_all" <%=actionOnClickAll%> />
 	</th>
@@ -63,8 +62,8 @@ for (int f=0; itAggregates.hasNext(); f++) {
 		cssClass = cssClass + " " + selectedClass;		
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; 
 	}		
-	String idRow = Ids.decorate(request, propertyPrefix) + f;
-	String events=f%2==0?style.getListPairEvents(selectedClass):style.getListOddEvents(selectedClass);
+	String idRow = Ids.decorate(request, propertyPrefix) + f;	
+	String events=f%2==0?style.getListPairEvents():style.getListOddEvents(); 
 %>
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 <%
@@ -86,7 +85,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 	String actionOnClick = Actions.getActionOnClick(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, f, idCollection, idRow,
-		cssSelectedRow, cssClass, selectedRowStyle, rowStyle, 
+		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction);
 %>
 <td class="<%=cssCellClass%>" width="5" style="<%=style.getListCellStyle()%>">

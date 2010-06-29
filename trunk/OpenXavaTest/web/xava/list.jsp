@@ -53,9 +53,10 @@ String lastRow = request.getParameter("lastRow");
 boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
 String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
-String cssSelectedRow = style.getSelectedRow();
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
+int currentRow = ((Number) context.get(request, "xava_row")).intValue(); 
+String cssCurrentRow = style.getCurrentRow(); 
 %>
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
@@ -93,7 +94,7 @@ String rowStyle = "border-bottom: 1px solid;";
 		if (!singleSelection){
 			String actionOnClickAll = Actions.getActionOnClickAll(
 			request.getParameter("application"), request.getParameter("module"), 
-			onSelectCollectionElementAction, viewObject, prefix, cssSelectedRow,
+			onSelectCollectionElementAction, viewObject, prefix,
 			selectedRowStyle, rowStyle);
 	%>
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=prefix%>selected_all" <%=actionOnClickAll%> />
@@ -274,7 +275,7 @@ IXTableModel model = tab.getTableModel();
 totalSize = tab.getTotalSize();
 if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
-	String checked=tab.isSelected(f)?"checked='true'":"";
+	String checked=tab.isSelected(f)?"checked='true'":"";	
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
 	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 
 	String cssStyle = tab.getStyle(f);
@@ -282,14 +283,13 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		cssClass = cssClass + " " + cssStyle; 
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
-	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);
+	String events=f%2==0?style.getListPairEvents():style.getListOddEvents(); 
 	String cssClassToActionOnClick = cssClass;
 	if (tab.isSelected(f)){
-		cssClass = cssSelectedRow + " " + cssClass;
+		cssClass = "_XAVA_SELECTED_ROW_ " + cssClass; 
 		rowStyle = rowStyle + " " + selectedRowStyle;
-		events = f%2==0?style.getListPairEvents(cssStyle, cssSelectedRow):style.getListOddEvents(cssStyle, cssSelectedRow);
 	}
-	String prefixIdRow = Ids.decorate(request, prefix);
+	String prefixIdRow = Ids.decorate(request, prefix);	
 %>
 <tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
@@ -308,7 +308,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	String actionOnClick = Actions.getActionOnClick(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, f, viewObject, prefixIdRow + f,
-		cssSelectedRow, cssClassToActionOnClick, selectedRowStyle, rowStyle, 
+		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction);
 %>
 	</td>
@@ -331,7 +331,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		}
 		Object title = WebEditors.formatTitle(request, p, model.getValueAt(f, c), errors, view.getViewName(), true); 
 %>
-	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">	
 		<xava:link action='<%=action%>' argv='<%="row=" + f + actionArgv%>' cssClass='<%=cssStyle%>' cssStyle="text-decoration: none; outline: none">
 			<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
 				<nobr><%=fvalue%>&nbsp;</nobr>
