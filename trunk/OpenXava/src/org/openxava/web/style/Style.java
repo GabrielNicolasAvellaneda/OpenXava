@@ -532,4 +532,11 @@ public class Style {
 		return "current-row"; 
 	}
 	
+	/**
+	 * @since 4m5
+	 */
+	public String getCurrentRowCell() {
+		return ""; 
+	}
+		
 }

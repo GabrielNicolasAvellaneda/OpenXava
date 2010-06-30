@@ -53,9 +53,13 @@ public class WebSpherePortal61Style extends WebSpherePortal6Style {
 		return "/wps/themes/html/Portal/"; 		
 	}
 	
-	public String getCurrentRow() { // tmp
-		return super.getCurrentRow() + " webpshere-current-row"; 
+	public String getCurrentRow() { 
+		return "wpsTableSelectedRow";
 	}	
+	
+	public String getCurrentRowCell() { 
+		return getCurrentRow();
+	}
 
 	public static Style getInstance() {
 		if (instance == null) {

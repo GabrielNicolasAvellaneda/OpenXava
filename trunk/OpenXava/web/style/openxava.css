@@ -68,12 +68,6 @@ TH.list {
 	outline-width: thin;
 }
 
-/* tmp */
-.websphere-current-row {	
-	color: black;
-}
-
-
 TR.list-subheader {
 	font-weight: normal;
 	background: #dddddd;	 
