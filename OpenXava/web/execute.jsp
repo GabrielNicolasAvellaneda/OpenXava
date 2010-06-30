@@ -30,7 +30,7 @@ request.setAttribute("tab", t);
 %>
 <jsp:useBean id="tab" class="org.openxava.tab.Tab" scope="request"/>
 <%
-if (manager.isListMode()) { 
+if (manager.isListMode() || manager.isSplitMode()) { 
 	tab.deselectVisualizedRows();
 }
 %>

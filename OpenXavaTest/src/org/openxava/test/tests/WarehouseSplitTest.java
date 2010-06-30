@@ -21,5 +21,19 @@ public class WarehouseSplitTest extends WarehouseSplitTestBase {
 
 		super.testSplitMode();
 	}
+	
+	public void testCheckedRows() throws Exception {
+		checkRow(1);
+		checkRow(3);
+		execute("List.filter");
+		assertRowsChecked(1, 3);;		
+		uncheckRow(1);
+		uncheckRow(3);
+		assertRowUnchecked(1);
+		assertRowUnchecked(3);
+		execute("List.filter");
+		assertRowUnchecked(1);
+		assertRowUnchecked(3);		
+	}
 		
 }
