@@ -140,17 +140,31 @@ openxava.initSelectedRows = function() {
 	$("._XAVA_SELECTED_ROW_").addClass(openxava.selectedRowClass);
 }
 
-openxava.initCurrentRow = function(application, module, currentRow) { 
+openxava.initCurrentRow = function(application, module, currentRow) {
+	/* tmp 
 	$("._XAVA_CURRENT_ROW_")
 		.removeClass("_XAVA_CURRENT_ROW_")
 		.removeClass(openxava.currentRowClass);
+	*/
+	// tmp ini
+	$("._XAVA_CURRENT_ROW_")
+		.removeClass("_XAVA_CURRENT_ROW_")
+		.removeClass(openxava.currentRowClass)
+		.children()
+			.removeClass(openxava.currentRowCellClass);
+	// tmp fin
 	if (currentRow == null) return;
 	var id = openxava.decorateId(application, module, "" + currentRow);		
-	$("#" + id).addClass("_XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass);	
+	// tmp $("#" + id).addClass("_XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass);
+	// tmp ini
+	$("#" + id).addClass("_XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass).
+		children().addClass(openxava.currentRowCellClass);
+	// tmp fin
 }
 
 openxava.markRows = function() { 	
-	$("._XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass);
+	$("._XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass)
+		.children().addClass(openxava.currentRowCellClass); // tmp
 	openxava.initSelectedRows();
 }
 
