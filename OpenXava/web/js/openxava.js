@@ -140,17 +140,21 @@ openxava.initSelectedRows = function() {
 	$("._XAVA_SELECTED_ROW_").addClass(openxava.selectedRowClass);
 }
 
-openxava.initCurrentRow = function(application, module, currentRow) { 
+openxava.initCurrentRow = function(application, module, currentRow) {
 	$("._XAVA_CURRENT_ROW_")
 		.removeClass("_XAVA_CURRENT_ROW_")
-		.removeClass(openxava.currentRowClass);
+		.removeClass(openxava.currentRowClass)
+		.children()
+			.removeClass(openxava.currentRowCellClass);
 	if (currentRow == null) return;
 	var id = openxava.decorateId(application, module, "" + currentRow);		
-	$("#" + id).addClass("_XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass);	
+	$("#" + id).addClass("_XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass).
+		children().addClass(openxava.currentRowCellClass);
 }
 
 openxava.markRows = function() { 	
-	$("._XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass);
+	$("._XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass)
+		.children().addClass(openxava.currentRowCellClass); 
 	openxava.initSelectedRows();
 }
 
