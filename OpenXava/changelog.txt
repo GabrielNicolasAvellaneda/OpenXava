@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Style for checked rows is also applied in the list for adding new columns.
 - Fix: Several nested tooltip for cells when executing several times actions over a collection/list.
 - Fix: JavaScript memory leak (so performance degradation) when working some time with a collection/list. 
 - ModuleManager, ModuleContext, IValidator and IPropertyValidator now are serializable.

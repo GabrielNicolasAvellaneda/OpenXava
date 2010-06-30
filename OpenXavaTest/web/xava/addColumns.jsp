@@ -6,7 +6,8 @@
 <%@ page import="org.openxava.util.Labels" %> <%-- Trifon --%>
 
 
-<jsp:useBean id="context" class="org.openxava.controller.ModuleContext"
+
+<%@page import="org.openxava.web.Ids"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext"
 scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -32,13 +33,19 @@ for (Iterator it=tab.getColumnsToAdd().iterator(); it.hasNext();) {
 	String property = (String) it.next();
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
 	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 			
-	String events=f%2==0?style.getListPairEvents():style.getListOddEvents(); 
+	String events=f%2==0?style.getListPairEvents():style.getListOddEvents();
+	String rowId = Ids.decorate(request, "xavaPropertiesList") + f;
+	String actionOnClick = org.openxava.web.Actions.getActionOnClick(
+			request.getParameter("application"), request.getParameter("module"), 
+			null, f, null, rowId,
+			"", "", 
+			null);	
 	f++;
 	String propertyI18n = Labels.getQualified(property, currentLocale); // Trifon
 %>
-<tr class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
+<tr id="<%=rowId%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>" width="5">
-		<INPUT type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="selectedProperties:<%=property%>"/>
+		<INPUT type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="selectedProperties:<%=property%>" <%=actionOnClick%>/>
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
 		<%=property%>

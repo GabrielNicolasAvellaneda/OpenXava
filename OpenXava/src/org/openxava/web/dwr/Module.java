@@ -19,8 +19,6 @@ import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 import org.openxava.view.View; 
 
-import sun.reflect.ReflectionFactory.*;
-
 /**
  * For accessing to module execution from DWR. <p>
  * 

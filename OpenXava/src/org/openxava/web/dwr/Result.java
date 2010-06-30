@@ -25,7 +25,7 @@ public class Result {
 	private String dialogTitle; 
 	private int dialogLevel; 
 	private String viewMember;
-	private int currentRow; 
+	private int currentRow = -1;  
 	
 	public Result() {
 	}
