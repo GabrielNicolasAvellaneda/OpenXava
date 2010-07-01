@@ -18,6 +18,15 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		super(testName, "Warehouse");		
 	}
 	
+	public void testNewNotChangedToDetailFromSplit() throws Exception { 
+		execute("Mode.split");
+		execute("CRUD.new");
+		assertAction("Mode.detailAndFirst");
+		assertAction("Mode.list");
+		assertNoAction("Mode.split");
+		assertAction("List.filter"); // List is shown
+		assertExists("zoneNumber"); // Detail is shown
+	}
 	
 	public void testSplitMode() throws Exception {
 		assertAction("Mode.detailAndFirst");

@@ -61,7 +61,7 @@ public class ModuleManager implements java.io.Serializable {
 	private String modeControllerName = XavaPreferences.getInstance().getDefaultModeController(); 
 	private Collection metaControllers;
 	private MetaController metaControllerMode;
-	private HttpSession session;
+	transient private HttpSession session; 
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;

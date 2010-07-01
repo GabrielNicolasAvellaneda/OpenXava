@@ -26,6 +26,40 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
+	public void testListReloadInSplitMode() throws Exception { 
+		changeModule("DeliveryType");
+		execute("Mode.split");
+		assertLoadedParts("core");
+		execute("CRUD.new");
+		assertLoadedParts("editor_comboDeliveries," + // Because it is set editable
+				"editor_description," + // Because it is set editable
+				"editor_number," + // Because it is set editable
+				"list_view," + // Because CRUD.new is also a list action 
+				"errors, messages");
+		execute("CRUD.new");
+		assertLoadedParts("errors, messages, list_view");
+		execute("Navigation.next");
+		assertLoadedParts("editor_description," + // list_view is not loaded: Good! 
+				"editor_number," +  
+				"errors, messages");
+		assertListRowCount(6);
+		execute("CRUD.new");
+		setValue("number", "66");
+		setValue("description", "JUNIT DELIVERY TYPE");
+		execute("DeliveryType.saveNotReset");
+		assertListRowCount(7);
+		assertLoadedParts("editor_description," +
+				"list_view," + // Because DeliveryType.saveNotReset changes data that can be in the list
+				"editor_number," +  
+				"errors, messages");	
+		execute("CRUD.delete");
+		assertListRowCount(6);
+		assertLoadedParts("editor_description," +
+				"list_view," + // Because CRUD.delete changes data that can be in the list
+				"editor_number," +  
+				"errors, messages");		
+	}
+	
 	public void testAlwaysReloadEditor() throws Exception { 
 		changeModule("Warehouse");
 		execute("CRUD.new");

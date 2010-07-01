@@ -280,7 +280,8 @@ public class Module extends DWRBase {
 			}
 			
 			if (manager.isSplitMode() && 
-				manager.getLastExecutedMetaAction().appliesToMode(IChangeModeAction.LIST)) 
+				(manager.getLastExecutedMetaAction().appliesToMode(IChangeModeAction.LIST) ||
+					getView().descriptionsListsRefreshed())) 
 			{
 				put(result, "list_view", "list.jsp");
 			}
