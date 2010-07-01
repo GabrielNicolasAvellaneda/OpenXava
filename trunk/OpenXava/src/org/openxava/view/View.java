@@ -3977,6 +3977,10 @@ public class View implements java.io.Serializable {
 		MetaDescriptionsList descriptionsList = getParent().getMetaView().getMetaDescriptionList(ref);
 		return descriptionsList;
 	}
+	
+	public boolean descriptionsListsRefreshed() {   
+		return refreshDescriptionsLists;
+	}
 
 	/**
 	 * Refresh the displayed data of all the references as descriptions list of this
