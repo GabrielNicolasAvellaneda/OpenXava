@@ -967,7 +967,18 @@ public class AnnotatedClassParser {
 			}
 			else {
 				property.setSize(column.length());
-			}			
+			}
+			// This will take care of the scale for fractional size different than 2
+			if (column.scale() > 0) {
+				property.setScale(column.scale());
+			}
+			if (column.precision() > 0) {
+				if (column.scale() > 0) {
+					property.setSize(column.precision() + 1 + column.scale());
+				} else {
+					property.setSize(column.precision());
+				}
+			}
 		}
 		else if (element.isAnnotationPresent(Digits.class)) {
 			Digits digits = element.getAnnotation(Digits.class);
