@@ -77,6 +77,7 @@ public class ModuleManager implements java.io.Serializable {
 	private boolean hideDialog;  
 	private MetaAction lastExecutedMetaAction;
 	private int dialogLevel = 0;  
+	private boolean modifiedControllers = false;
 
 	
 		
@@ -248,6 +249,10 @@ public class ModuleManager implements java.io.Serializable {
 							MetaAction a = MetaControllers.getMetaAction(xavaAction);
 							long ini = System.currentTimeMillis();
 							executeAction(a, errors, messages, av, request);
+							if (modifiedControllers) {
+								this.controllersNames = MODIFIED_CONTROLLERS;
+							}
+							modifiedControllers = false;
 							long time = System.currentTimeMillis() - ini;
 							log.debug("Execute " + xavaAction + "=" + time + " ms");	
 						}
@@ -633,14 +638,14 @@ public class ModuleManager implements java.io.Serializable {
 			return;						
 		}
 		Object controllers = previousControllers.pop(); 
-		
 		if (controllers instanceof String []) { // The list of controllers
 			setControllersNames((String [])controllers);
 		}
 		else { // A collection of metaactions
 			this.metaActions = (Collection) controllers;
 			this.actionsChanged = true; 
-		}
+			this.modifiedControllers = true;
+		}		
 	}
 	
 	private void restorePreviousCustomView() throws XavaException { 
