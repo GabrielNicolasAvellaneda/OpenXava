@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.servlet.*;
 
+import org.openxava.jpa.XPersistence;
 import org.openxava.util.*;
 import net.sf.jasperreports.engine.*;
 
@@ -95,6 +96,12 @@ abstract public class JasperReportBaseAction extends ViewBaseAction implements I
 		JasperPrint jprint = null;
 		if (ds == null) {
 			Connection con = DataSourceConnectionProvider.getByComponent(modelName).getConnection();
+			// If the schema is changed through URL or XPersistence.setDefaultSchema, the connection
+			// contains the original catalog (schema) instead of the new one, thus rendering the
+			// wrong data on the report. This is a fix for such behavior.
+			if (!Is.emptyString(XPersistence.getDefaultSchema())) {
+				con.setCatalog(XPersistence.getDefaultSchema());
+			}
 			jprint = JasperFillManager.fillReport(report, parameters, con);
 			con.close();
 		}
