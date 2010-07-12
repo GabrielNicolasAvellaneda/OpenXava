@@ -18,6 +18,7 @@
 		That is to say, it is better specify the labels in resources files and not here.		
 	-->
 	
+	
 	<controller name="HidingActions">
 	
 		<action  name="hideGeneratePdf" mode="list" 

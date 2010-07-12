@@ -401,6 +401,10 @@ openxava.manageFilterRow = function(application, module, id, tabObject) {
 	}    
 }
 
+openxava.setPageRowCount = function(application, module, collection, select) {	
+	openxava.executeAction(application, module, '', false, "List.setPageRowCount", "rowCount=" + select.value + ",collection=" + collection)
+}
+
 openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv, range, alreadyProcessed) {
 	if (confirmMessage != "" && !confirm(confirmMessage)) return;
 	if (takesLong) { 

@@ -7,6 +7,8 @@ import org.openxava.hibernate.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 /**
  * @author Javier Paniza
  */
@@ -16,6 +18,24 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		
 	public WarehouseTest(String testName) {
 		super(testName, "Warehouse");		
+	}
+	
+	public void testChangePageRowCount() throws Exception {
+		assertChangeRowCount(10, 5);		
+		tearDown(); setUp();
+		assertChangeRowCount(5, 10);
+	}
+
+	private void assertChangeRowCount(int initialRowCount, int finalRowCount) throws Exception, InterruptedException {
+		HtmlSelect combo = (HtmlSelect) getHtmlPage().getElementById(decorateId("list_rowCount"));
+		assertListRowCount(initialRowCount);
+		String comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
+		assertEquals(String.valueOf(initialRowCount), comboRowCount);
+		combo.setSelectedAttribute(String.valueOf(finalRowCount), true);
+		Thread.sleep(1500);
+		assertListRowCount(finalRowCount);
+		comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
+		assertEquals(String.valueOf(finalRowCount), comboRowCount);
 	}
 	
 	public void testNewNotChangedToDetailFromSplit() throws Exception { 
@@ -82,6 +102,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertListRowCount(10);
 		execute("Warehouse.changePageRowCount");
 		assertListRowCount(20);
+		assertChangeRowCount(20, 10); 
 	}
 	
 	/**
@@ -239,7 +260,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		execute("List.goPage", "page=6");
 		assertListRowCount(10);
 		execute("List.goNextPage");
-		assertListRowCount(3); // It sssumed 63 objects
+		assertListRowCount(3); // It assumes 63 objects
 	}
 				
 	public void testNotLoseFilterOnChangeMode() throws Exception {

@@ -12,12 +12,12 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public class ChangeSectionAction extends BaseAction implements IModuleContextAction, IRequestAction {
+public class ChangeSectionAction extends BaseAction implements IModuleContextAction /* tmp , IRequestAction */ {
 	
 	private int activeSection;
 	private String viewObject;
 	private ModuleContext context;
-	private HttpServletRequest request;
+	// tmp transient private HttpServletRequest request; // tmp 
 	
 	
 	public void execute() throws Exception {
@@ -36,13 +36,15 @@ public class ChangeSectionAction extends BaseAction implements IModuleContextAct
 		this.context = context;
 	}
 	
+	/* tmp
 	public void setRequest(HttpServletRequest request) {
 		super.setRequest(request);
 		this.request = request;
 	}
+	*/
 	
 	private View getView() throws XavaException {
-		return (View) context.get(request, viewObject==null?"xava_view":viewObject);
+		return (View) context.get(getRequest(), viewObject==null?"xava_view":viewObject);
 	}
 
 	public String getViewObject() {

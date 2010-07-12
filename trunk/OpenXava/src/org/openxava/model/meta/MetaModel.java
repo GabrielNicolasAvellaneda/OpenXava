@@ -1607,7 +1607,8 @@ abstract public class MetaModel extends MetaElement {
 		for (Iterator it = getMembersNames().iterator(); it.hasNext();) {
 			Object name = it.next();
 			if (getMapMetaProperties().containsKey(name)) {
-				if (getMetaProperty((String)name).isTransient()) continue; 
+				if (getMetaProperty((String)name).isTransient()) continue;
+				if (getMetaProperty((String)name).isHidden()) continue; 
 				if (Is.emptyString(prefix)) result.add(name);
 				else result.add(prefix + name);				
 			}

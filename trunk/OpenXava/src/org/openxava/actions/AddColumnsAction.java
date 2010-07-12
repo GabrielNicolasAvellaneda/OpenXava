@@ -1,32 +1,22 @@
 package org.openxava.actions;
 
 import java.util.Arrays;
-
 import javax.inject.*;
-import javax.servlet.http.HttpServletRequest;
-
-
-
 import org.openxava.tab.Tab;
 
 /**
  * @author Javier Paniza
  */
-public class AddColumnsAction extends BaseAction implements IRequestAction, INavigationAction, IChangeModeAction {
+public class AddColumnsAction extends BaseAction implements INavigationAction, IChangeModeAction {
 	
-	private HttpServletRequest request;
 	@Inject @Named("xava_customizingTab")
 	private Tab tab;
 	
 	
 	public void execute() throws Exception {
-		String [] values = request.getParameterValues("selectedProperties");		
+		String [] values = getRequest().getParameterValues("selectedProperties");		
 		getTab().addProperties(Arrays.asList(values));
 		
-	}
-	
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
 	}
 
 	public Tab getTab() {

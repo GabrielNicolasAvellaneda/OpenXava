@@ -123,7 +123,11 @@ here that you want to override.
 			<set property="keyEditable" value="false"/>
 		</action>						
 	</controller>			
-			<controller name="List">		
+			<controller name="List">
+	
+		<action name="setPageRowCount"
+			class="org.openxava.actions.SetPageRowCountAction"
+			hidden="true"/>				
 
 		<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="F7"			hidden="true"
 			mode="list"

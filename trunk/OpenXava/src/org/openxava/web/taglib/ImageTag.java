@@ -20,6 +20,9 @@ public class ImageTag extends TagSupport implements IActionTag {
 	
 	private String action;
 	private String argv;
+	private String cssClass;
+	private String cssStyle;
+	
 	
 	public int doStartTag() throws JspException {
 		try {	
@@ -39,6 +42,16 @@ public class ImageTag extends TagSupport implements IActionTag {
 				pageContext.getOut().print(Ids.decorate(application, module, getAction())); 
 				pageContext.getOut().println("'");
 			}
+			if (!Is.emptyString(getCssClass())) {
+				pageContext.getOut().print(" class='");
+				pageContext.getOut().print(getCssClass());
+				pageContext.getOut().print("'");	
+			}
+			if (!Is.emptyString(getCssStyle())) {
+				pageContext.getOut().print(" style='");
+				pageContext.getOut().print(getCssStyle());
+				pageContext.getOut().print("'");	
+			}			
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().print("'");			
@@ -67,7 +80,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print("\talt='");
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().println("'");
-			pageContext.getOut().println("\tborder='0' align='middle'/></a>");
+			pageContext.getOut().println("\tborder='0' align='absmiddle'/></a>"); 
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -90,6 +103,22 @@ public class ImageTag extends TagSupport implements IActionTag {
 
 	public void setArgv(String string) {
 		argv = string;
+	}
+
+	public void setCssClass(String cssClass) {
+		this.cssClass = cssClass;
+	}
+
+	public String getCssClass() {
+		return cssClass;
+	}
+
+	public void setCssStyle(String cssStyle) {
+		this.cssStyle = cssStyle;
+	}
+
+	public String getCssStyle() {
+		return cssStyle;
 	}
 
 }

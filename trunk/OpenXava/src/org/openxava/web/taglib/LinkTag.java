@@ -5,7 +5,6 @@ import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
 import org.apache.commons.logging.*;
-import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 import org.openxava.web.*;

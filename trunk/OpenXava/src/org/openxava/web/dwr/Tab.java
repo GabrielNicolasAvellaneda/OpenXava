@@ -4,7 +4,6 @@ import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.util.*;
-import org.openxava.view.*;
 
 /**
  * For accessing to the Tab from DWR. <p>

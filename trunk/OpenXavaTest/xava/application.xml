@@ -225,8 +225,7 @@
 		<model name="Invoice"/>
 		<tab name="ActiveYear"/>
 		<controller name="Typical"/>	
-	</module>	
-	
+	</module>		
 	<module name="InvoiceNestedSections" folder="invoicing.variations">
 		<model name="Invoice"/>
 		<view name="NestedSections"/>

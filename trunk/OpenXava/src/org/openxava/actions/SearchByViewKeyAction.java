@@ -33,7 +33,6 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(SearchByViewKeyAction.class);
-	private HttpServletRequest request;
 
 	public void execute() throws Exception {				
 		try {									
@@ -135,8 +134,8 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			Object property = entry.getKey();
 			if (!Is.empty(entry.getValue())) {
 				MetaProperty mp = metaEntity.getMetaProperty(property.toString());
-				String propertyName = mp.getQualifiedLabel(request);
-				String value = WebEditors.format(request, mp, entry.getValue(), getErrors(), getView().getViewName());
+				String propertyName = mp.getQualifiedLabel(getRequest());
+				String value = WebEditors.format(getRequest(), mp, entry.getValue(), getErrors(), getView().getViewName());
 				separator = sb.length() == 0 ? "" : ", ";
 				sb.append(separator + propertyName + ":" + value);
 			}
@@ -144,9 +143,4 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		return "'" + sb.toString().trim() + "'";
 	}
 	
-	public void setRequest(HttpServletRequest request) {	
-		super.setRequest(request);
-		this.request = request;
-	}
-		
 }
