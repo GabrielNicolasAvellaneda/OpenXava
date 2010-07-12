@@ -68,6 +68,7 @@ public class Tab implements java.io.Serializable {
 	private final static String PROPERTIES_NAMES = "propertiesNames";
 	private final static String ROWS_HIDDEN = "rowsHidden";
 	private final static String FILTER_VISIBLE = "filterVisible";
+	private final static String PAGE_ROW_COUNT = "pageRowCount"; 
 	private final static String COLUMN_WIDTH = "columnWidth."; 
 	
 	
@@ -1204,6 +1205,7 @@ public class Tab implements java.io.Serializable {
 			}
 			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);			
 			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);
+			pageRowCount = preferences.getInt(PAGE_ROW_COUNT, pageRowCount); 
 			if (columnWidths != null) columnWidths.clear();
 			for (MetaProperty property: getMetaProperties()) {
 				int value = preferences.getInt(COLUMN_WIDTH + property.getQualifiedName(), -1);
@@ -1225,6 +1227,7 @@ public class Tab implements java.io.Serializable {
 			preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
 			preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
 			preferences.putBoolean(FILTER_VISIBLE, filterVisible);
+			preferences.putInt(PAGE_ROW_COUNT, pageRowCount); 
 			if (columnWidths != null) {
 				for (Map.Entry<String, Integer> columnWidth: columnWidths.entrySet()) {
 					preferences.putInt(
@@ -1388,6 +1391,7 @@ public class Tab implements java.io.Serializable {
 
 	public void setPageRowCount(int pageRowCount) {
 		this.pageRowCount = pageRowCount;
+		saveUserPreferences(); 
 	}
 
 	/**
