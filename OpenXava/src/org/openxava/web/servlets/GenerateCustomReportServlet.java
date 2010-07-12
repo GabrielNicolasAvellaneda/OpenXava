@@ -17,7 +17,7 @@ import org.openxava.util.*;
  * To generate custom Jasper Reports from that extends <code>JasperReportBaseAction</code>.
  * 
  * @author Javier Paniza
- * @author Daniel García Salas
+ * @author Daniel GarcÃ­a Salas
  */
 
 public class GenerateCustomReportServlet extends HttpServlet { 	

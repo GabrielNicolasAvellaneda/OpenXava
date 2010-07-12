@@ -371,25 +371,58 @@ if (lastRow != null) {
 <% if (!tab.isRowsHidden()) { %>
 <table width="100%" class="<%=style.getListInfo()%>">
 <tr class='<%=style.getListInfoDetail()%>'>
-<td class='<%=style.getListInfoDetail()%>' style='vertical-align: middle'>
+<td class='<%=style.getListInfoDetail()%>'>
 <%
 int last=tab.getLastPage();
 int current=tab.getPage();
 if (current > 1) {
 %>
-<xava:image action='List.goPreviousPage' argv='<%=collectionArgv%>'/>
-<% } 
+<xava:image action='List.goPreviousPage' argv='<%=collectionArgv%>' cssClass="page-navigation page-navigation-arrow"/>
+<%
+}
+else {
+%>
+<span class='<%=style.getPageNavigationArrowDisable()%>'><img 
+	src='<%=request.getContextPath()%>/xava/images/previous_page_disable.gif' 
+	border=0 align="absmiddle"/></span>
+<%	
+} 
 for (int i=1; i<=last; i++) {
 if (i == current) {
-%>	 
- <b><%=i%></b>
+%>
+<span class="<%=style.getPageNavigationSelected()%>"><%=i%></span>
 <% } else { %>
- <xava:link action='List.goPage' argv='<%="page=" + i + collectionArgv%>'><%=i%></xava:link>
+<xava:link action='List.goPage' argv='<%="page=" + i + collectionArgv%>' cssClass="<%=style.getPageNavigation()%>"><%=i%></xava:link>
 <% }} 
 if (!tab.isLastPage()) {
 %>
- <xava:image action='List.goNextPage' argv='<%=collectionArgv%>'/> 
-<% } %>	 
+<xava:image action='List.goNextPage' argv='<%=collectionArgv%>' cssClass='<%=style.getPageNavigationArrow()%>'/>
+<% 
+} 
+else {
+%>
+<span class='<%=style.getPageNavigationArrowDisable()%>'><img 
+	src='<%=request.getContextPath()%>/xava/images/next_page_disable.gif' 
+	border=0 align="absmiddle"/></span>
+<%	
+} 
+%>
+&nbsp;
+<select id="<xava:id name='<%=id + "_rowCount"%>'/>" class=<%=style.getEditor()%>
+	onchange="openxava.setPageRowCount('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=collection==null?"":collection%>', this)">
+	<% 
+	int [] rowCounts = { 5, 10, 15, 20, 30, 50 };
+	for (int i=0; i<rowCounts.length; i++) {
+		String selected = rowCounts[i] == tab.getPageRowCount()?"selected='selected'":""; 	
+	%>	
+	<option value="<%=rowCounts[i]%>" <%=selected %>><%=rowCounts[i]%></option>
+	<%
+	}
+	%>
+</select>
+<span class="<%=style.getRowsPerPage()%>">	 
+<xava:message key="rows_per_page"/>
+</span>
 </td>
 <td style='text-align: right; vertical-align: middle' class='<%=style.getListInfoDetail()%>'>
 <% if (XavaPreferences.getInstance().isShowCountInList()) { %>

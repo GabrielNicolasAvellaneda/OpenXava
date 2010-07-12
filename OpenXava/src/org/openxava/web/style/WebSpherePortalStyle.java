@@ -74,7 +74,7 @@ public class WebSpherePortalStyle extends Style {
 	}
 	
 	public String getListInfoDetail() {
-		return "";
+		return "list-info-detail"; 
 	}
 	
 	public String getListTitle() {

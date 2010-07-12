@@ -12,20 +12,19 @@ import org.openxava.util.*;
 
 public class GenerateReportAction extends TabBaseAction implements IForwardAction {
 	
-	private HttpServletRequest request;
 	private String type;	
 
 	public void execute() throws Exception {
 		if (!("pdf".equals(getType()) || "csv".equals(getType()))) {
 			throw new XavaException("report_type_not_supported", getType(), "pdf, csv");
 		}
-		request.getSession().setAttribute("xava_reportTab", getTab());		
-		request.getSession().setAttribute("xava_selectedRowsReportTab", getTab().getSelected()); 
+		getRequest().getSession().setAttribute("xava_reportTab", getTab());		
+		getRequest().getSession().setAttribute("xava_selectedRowsReportTab", getTab().getSelected()); 
 		if (!Is.emptyString(XHibernate.getDefaultSchema())) {
-			request.getSession().setAttribute("xava_hibernateDefaultSchemaTab", XHibernate.getDefaultSchema());
+			getRequest().getSession().setAttribute("xava_hibernateDefaultSchemaTab", XHibernate.getDefaultSchema());
 		}
 		if (!Is.emptyString(XPersistence.getDefaultSchema())) {
-			request.getSession().setAttribute("xava_jpaDefaultSchemaTab", XPersistence.getDefaultSchema());
+			getRequest().getSession().setAttribute("xava_jpaDefaultSchemaTab", XPersistence.getDefaultSchema());
 		}
 	}
 	
@@ -33,19 +32,10 @@ public class GenerateReportAction extends TabBaseAction implements IForwardActio
 		return true;				
 	}
 
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	public void setRequest(HttpServletRequest request) {
-		super.setRequest(request);
-		this.request = request;
-	}
-
 	public String getForwardURI() {		
 		return "/xava/list." + getType() + 
-			"?application=" + request.getParameter("application") +
-			"&module=" + request.getParameter("module") +
+			"?application=" + getRequest().getParameter("application") +
+			"&module=" + getRequest().getParameter("module") +
 			"&time=" + System.currentTimeMillis();
 	}
 

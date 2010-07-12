@@ -3229,8 +3229,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public boolean isCollectionMembersEditables() {		
-		return collectionMembersEditables;
-		
+		return collectionMembersEditables;		
 	}
 
 	public void setCollectionMembersEditables(boolean b) {		

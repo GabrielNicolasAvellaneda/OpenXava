@@ -18,7 +18,7 @@ import org.openxava.util.*;
 
 abstract public class BaseContextFilter implements IRequestFilter {
 
-	private HttpServletRequest request;	
+	transient private HttpServletRequest request; 	
 	private ModuleContext context;
 	
 

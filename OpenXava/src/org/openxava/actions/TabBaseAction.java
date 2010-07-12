@@ -15,13 +15,11 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-abstract public class TabBaseAction extends ViewBaseAction /* implements IModuleContextAction */ {
+abstract public class TabBaseAction extends ViewBaseAction {
 		
 	private Tab tab;	
 	private int row = -1;
 	
-	// tmp private ModuleContext context; 
-	// tmp private HttpServletRequest request;
 	private String collection;
 	
 	/**
@@ -46,18 +44,6 @@ abstract public class TabBaseAction extends ViewBaseAction /* implements IModule
 		}
 		return tab;
 	}
-
-	/* tmp
-	public void setContext(ModuleContext context) {
-		this.context = context;
-		
-	}
-	
-	public void setRequest(HttpServletRequest request) { 
-		super.setRequest(request);
-		this.request = request; 
-	}
-	*/
 
 	public String getCollection() {
 		return collection;

@@ -61,25 +61,36 @@ for (Iterator it=tab.getColumnsToAdd().iterator(); it.hasNext();) {
 
 <table width="100%" class="<%=style.getListInfo()%>">
 <tr class='<%=style.getListInfoDetail()%>'>
-<td class='<%=style.getListInfoDetail()%>' style='vertical-align: middle'>
+<td class='<%=style.getListInfoDetail()%>'>
 <%
 int last=tab.getAddColumnsLastPage();
 int current=tab.getAddColumnsPage();
 if (current > 1) {
 %>
-<xava:image action='List.goAddColumnsPreviousPage'/>
-<% } 
+<xava:image action='List.goAddColumnsPreviousPage' cssClass="page-navigation page-navigation-arrow"/>
+<% 
+} else { 
+%>
+<span class='<%=style.getPageNavigationArrowDisable()%>'><img 
+	src='<%=request.getContextPath()%>/xava/images/previous_page_disable.gif' 
+	border=0 align="absmiddle"/></span>
+<%
+} 
 for (int i=1; i<=last; i++) {
 if (i == current) {
 %>	 
- <b><%=i%></b>
+ <span class="<%=style.getPageNavigationSelected()%>"><%=i%></span>
 <% } else { %>
- <xava:link action='List.goAddColumnsPage' argv='<%="page=" + i%>'><%=i%></xava:link>
+ <xava:link action='List.goAddColumnsPage' argv='<%="page=" + i%>' cssClass="<%=style.getPageNavigation()%>"><%=i%></xava:link>
 <% }
 } 
 if (current < last) {
 %>
- <xava:image action='List.goAddColumnsNextPage'/> 
+ <xava:image action='List.goAddColumnsNextPage' cssClass='<%=style.getPageNavigationArrow()%>'/>
+<% } else { %>
+<span class='<%=style.getPageNavigationArrowDisable()%>'><img 
+	src='<%=request.getContextPath()%>/xava/images/next_page_disable.gif' 
+	border=0 align="absmiddle"/></span>  
 <% } %>	 
 </td>
 </tr>

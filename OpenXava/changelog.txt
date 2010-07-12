@@ -1,6 +1,15 @@
 Change Log for OpenXava project
 ===============================
 
+- Hidden properties are not available to add by the user in list and collections.
+- Fix: Bug on dialogs when opening another dialog such as reference search.
+- Upgrade Jasperreports to 3.5.3
+- Fix: @Column scale attribute ignored.
+- Fix: Jasper report actions does not show correct data after changing schema.
+- Improved look & feel of page navigation for list and collections.
+- The user can change the row count of list and collections, and the setting is stored by user.
+- The pageRowCount property of Tab is persistent, storing its value by user. 
+- New cssClass and cssStyle attributes available for <xava:image /> taglib.
 - Style for checked rows is also applied in the list for adding new columns.
 - Fix: Several nested tooltip for cells when executing several times actions over a collection/list.
 - Fix: JavaScript memory leak (so performance degradation) when working some time with a collection/list. 

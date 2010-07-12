@@ -36,8 +36,8 @@ public class Module extends DWRBase {
 	private static boolean portlet;
 	private static Style style;
 	
-	private HttpServletRequest request;
-	private HttpServletResponse response;
+	transient private HttpServletRequest request; 
+	transient private HttpServletResponse response; 
 	private String application;
 	private String module;
 	private ModuleManager manager;

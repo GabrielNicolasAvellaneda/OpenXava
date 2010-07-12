@@ -234,8 +234,9 @@ public class Style {
 		return "list-info";
 	}
 	
-	public String getListInfoDetail() {
-		return getListInfo();
+	public String getListInfoDetail() { 
+		return getListInfo() + " list-info-detail" + ((isIE7() || isIE6())?" ie7":""); 
+		
 	}
 		
 	public String getListTitle() {
@@ -521,9 +522,20 @@ public class Style {
 		return browser;
 	}
 	
-	protected boolean isFirefox() { 
+	protected boolean isFirefox() { 		
 		return browser == null?false:browser.contains("Firefox");
 	}
+	
+	/** @since 4m5 */
+	protected boolean isIE6() { 		
+		return browser == null?false:browser.contains("MSIE 6");
+	}
+	
+	/** @since 4m5 */
+	protected boolean isIE7() { 		
+		return browser == null?false:browser.contains("MSIE 7");
+	}
+	
 		
 	/**
 	 * @since 4m5
@@ -538,5 +550,41 @@ public class Style {
 	public String getCurrentRowCell() {
 		return ""; 
 	}
-		
+	
+	/**
+	 * @since 4m5
+	 */
+	public String getPageNavigationArrowDisable() { 
+		return "page-navigation page-navigation-arrow page-navigation-arrow-disable"; 
+	}
+	
+	/**
+	 * @since 4m5
+	 */
+	public String getPageNavigationSelected() { 		
+		return "page-navigation-selected";
+	}
+	
+	/**
+	 * @since 4m5
+	 */
+	public String getPageNavigation() { 		
+		return "page-navigation";
+	}
+	
+	/**
+	 * @since 4m5
+	 */
+	public String getPageNavigationArrow() { 		
+		return "page-navigation page-navigation-arrow";
+	}
+	
+	/**
+	 * @since 4m5
+	 */
+	public String getRowsPerPage() { 		
+		return "rows-per-page";
+	}
+	
+	
 }
