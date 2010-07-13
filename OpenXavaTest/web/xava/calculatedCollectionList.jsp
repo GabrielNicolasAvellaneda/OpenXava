@@ -10,7 +10,8 @@ String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
-<table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+
+<%@page import="org.openxava.util.XavaPreferences"%><table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 	<%
 		if (lineAction != null) {
@@ -36,9 +37,21 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 	String label = p.getQualifiedLabel(request).replaceAll(" ", "&nbsp;");
 	int columnWidth = subview.getCollectionColumnWidth(columnIndex);
 	String width = columnWidth<0?"":"width: " + columnWidth + "px";
+	// tmp ini
+	/*
+	String tabObject = request.getParameter("tabObject");
+	org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
+	*/
+	boolean resizeColumns = XavaPreferences.getInstance().isResizeColumns();
+	// tmp fin
 %>
 	<th class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
-		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden; <%=width%>" >		
+		<%-- tmp ini --%>
+		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):(""))%>" style="overflow: hidden; <%=width%>" >
+		<%-- tmp fin --%>
+		<%-- tmp 
+		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden; <%=width%>" >
+		--%>		
 		<%=label%>&nbsp;
 		</div>
 	</th>

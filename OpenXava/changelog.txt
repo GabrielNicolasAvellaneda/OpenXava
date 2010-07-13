@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Column resizing and customizing list can be disabled. 
 - Hidden properties are not available to add by the user in list and collections.
 - Fix: Bug on dialogs when opening another dialog such as reference search.
 - Upgrade Jasperreports to 3.5.3
