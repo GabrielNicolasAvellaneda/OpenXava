@@ -119,10 +119,12 @@ public class Tab implements java.io.Serializable {
 	private Map styles;
 	private View collectionView;
 	private boolean filterVisible=XavaPreferences.getInstance().isShowFilterByDefaultInList();
+	private Boolean customizeAllowed=null; 
+	private Boolean resizeColumns=null; 
 	private Map<String, Integer> columnWidths;	
 	
 	private static int nextOid = 0; 
-	public int oid = nextOid++; 
+	public int oid = nextOid++;
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
@@ -272,10 +274,12 @@ public class Tab implements java.io.Serializable {
 		return result==null?-1:result;
 	}
 	
-	public void setColumnWidth(int columnIndex, int width) { 
-		if (columnWidths == null) columnWidths = new HashMap<String, Integer>(); 
-		columnWidths.put(getMetaProperty(columnIndex).getQualifiedName(), width);
-		saveUserPreferences();
+	public void setColumnWidth(int columnIndex, int width) {
+		if (isResizeColumns()) { 
+			if (columnWidths == null) columnWidths = new HashMap<String, Integer>(); 
+			columnWidths.put(getMetaProperty(columnIndex).getQualifiedName(), width);
+			saveUserPreferences();
+		}
 	}
 	
 		
@@ -1180,6 +1184,27 @@ public class Tab implements java.io.Serializable {
 		condition = null;
 		conditionComparators = null;		
 	}
+	
+	/** @since 4m5 */
+	public boolean isCustomizeAllowed() { 
+		if (customizeAllowed == null) return XavaPreferences.getInstance().isCustomizeList();
+		return customizeAllowed;
+	}
+	/** @since 4m5 */
+	public void setCustomizeAllowed(boolean customizeAllowed) { 
+		this.customizeAllowed = customizeAllowed;
+	}
+	
+	/** @since 4m5 */
+	public boolean isResizeColumns() { 
+		if (resizeColumns == null) return XavaPreferences.getInstance().isResizeColumns(); 
+		return resizeColumns;
+	}
+	/** @since 4m5 */
+	public void setResizeColumns(boolean resizeColumns) { 
+		this.resizeColumns = resizeColumns;
+	}
+	
 	 	
 	public boolean isCustomize() {
 		return customize;

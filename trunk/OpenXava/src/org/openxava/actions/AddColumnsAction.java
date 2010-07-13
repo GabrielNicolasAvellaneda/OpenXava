@@ -3,6 +3,7 @@ package org.openxava.actions;
 import java.util.Arrays;
 import javax.inject.*;
 import org.openxava.tab.Tab;
+import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
@@ -14,9 +15,9 @@ public class AddColumnsAction extends BaseAction implements INavigationAction, I
 	
 	
 	public void execute() throws Exception {
-		String [] values = getRequest().getParameterValues("selectedProperties");		
-		getTab().addProperties(Arrays.asList(values));
-		
+		if (!XavaPreferences.getInstance().isCustomizeList()) return; 
+		String [] values = getRequest().getParameterValues("selectedProperties");
+		getTab().addProperties(Arrays.asList(values));		
 	}
 
 	public Tab getTab() {
