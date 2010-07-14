@@ -82,13 +82,13 @@ String cssCurrentRow = style.getCurrentRow();
 	<input name="xava_image_filter_prefix" type="hidden" value="<%=imageFilterPrefix%>"/>     
 	<a id="<xava:id name='<%="filter_link_" + id%>'/>" href="javascript:openxava.manageFilterRow('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
 		src='<%=imageFilterPrefix%><%=imageFilter%>.gif' border='0'/></a>
-	<% if (tab.isCustomizeAllowed()) { // tmp %> 
+	<% if (tab.isCustomizeAllowed()) { %> 
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
 	<%
 		if (tab.isCustomize()) {
 	%><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><%
 		}
-	} // tmp
+	} 
 	%>
 </th>
 <th class="<%=style.getListHeaderCell()%>" width="5">
@@ -120,12 +120,7 @@ while (it.hasNext()) {
 	String width = columnWidth<0?"":"width: " + columnWidth + "px"; 
 %>
 <th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" >
-<%-- tmp ini --%>
 <div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="<%=((tab.isResizeColumns())?("xava_resizable"):("")) %>" style="overflow: hidden; <%=width%>" > 
-<%-- tmp fin --%>
-<%-- tmp 
-<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden; <%=width%>" >
---%> 
 <%
 	if (tab.isCustomize()) {
 %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><%
@@ -300,6 +295,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 %>
 <tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
+	<nobr> 
 <%
 	if (!org.openxava.util.Is.emptyString(action)) { 
 %>
@@ -318,6 +314,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction);
 %>
+	</nobr> 
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
 	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> />

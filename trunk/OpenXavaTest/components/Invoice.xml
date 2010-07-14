@@ -230,6 +230,21 @@
 
 	</view>
 	
+	<view name="NotAllActionsInDetails">
+	
+		<collection-view collection="details">
+			<new-action action=""/>
+			<remove-action action=""/>
+			<remove-selected-action action=""/>
+		</collection-view>
+		
+		<members>
+			year, number, date, paid;
+			details;
+		</members>
+
+	</view>	
+	
 	<view name="CustomerAsAggregateWithDeliveryPlaces">
 		<reference-view reference="customer" 
 			view="SimpleWithDeliveryPlaces" 

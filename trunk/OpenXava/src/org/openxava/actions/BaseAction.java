@@ -219,6 +219,7 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	 */		
 	protected void addActions(String ... qualifiedActions) { 
 		for (String qualifiedAction: qualifiedActions) {
+			if (Is.emptyString(qualifiedAction)) continue; 
 			MetaAction action = MetaControllers.getMetaAction(qualifiedAction);
 			if (action.isHidden()) { 
 				action = action.cloneMetaAction();

@@ -72,6 +72,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 	if (lineAction != null) {
 %>
 <td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
+<nobr>
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 <% 
 	for (java.util.Iterator itRowActions = subview.getRowActionsNames().iterator(); itRowActions.hasNext(); ) { 	
@@ -81,6 +82,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 <%
 	}
 %>
+</nobr>
 </td>
 <%
 	} 
