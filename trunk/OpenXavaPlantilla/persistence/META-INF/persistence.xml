@@ -8,6 +8,7 @@
              
     <!-- Tomcat + Hypersonic -->
     <persistence-unit name="default">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>java:comp/env/jdbc/@fuentedatos@</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
@@ -17,6 +18,7 @@
         
     <!-- JBoss + Hypersonic 
     <persistence-unit name="default">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>java:/@fuentedatos@</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
@@ -27,6 +29,7 @@
     
     <!-- WebSphere + AS/400 
     <persistence-unit name="default">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/@fuentedatos@</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
@@ -38,6 +41,7 @@
     
     <!-- JUnit Hypersonic -->
     <persistence-unit name="junit">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
 			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
