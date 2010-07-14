@@ -20,7 +20,7 @@ public class SellerTest extends ModuleTestBase {
 	public SellerTest(String testName) {
 		super(testName, "Seller");		
 	}
-	
+		
 	public void testRowStyleInCollections() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertValue("number", "1");
@@ -132,7 +132,14 @@ public class SellerTest extends ModuleTestBase {
 
 	
 	
-	public void testCustomEditorWithMultipleValuesFormatter() throws Exception {
+	public void testCustomEditorWithMultipleValuesFormatter_arraysInList() throws Exception {
+
+		// Arrays in list
+		assertValueInList(0, 0, "1");
+		assertValueInList(0, 1, "MANUEL CHAVARRI");
+		assertValueInList(0, 2, "1/3"); // This is a String []
+		
+		// Multiple values formatters
 		String [] emptyRegions = {};
 		String [] regions = { "1", "3" };
 		String [] oneRegion = { "2" };

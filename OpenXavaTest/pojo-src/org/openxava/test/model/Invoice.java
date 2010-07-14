@@ -63,6 +63,10 @@ import org.openxava.util.*;
 		"year, number, date, paid;" +
 		"details;"
 	),
+	@View(name="NotAllActionsInDetails", members=
+		"year, number, date, paid;" +
+		"details;"
+	),	
 	@View(name="Deliveries", members=
 		"year, number, date;" +
 		"deliveries;"
@@ -173,6 +177,9 @@ public class Invoice {
 	@DetailAction(forViews="DEFAULT", value="Invoice.viewProduct")
 	@ReadOnly(forViews="OnlyReadDetails")
 	@EditOnly(forViews="OnlyEditDetails")
+	@NewAction(forViews="NotAllActionsInDetails", value="")
+	@RemoveAction(forViews="NotAllActionsInDetails", value="")
+	@RemoveSelectedAction(forViews="NotAllActionsInDetails", value="")
 	private Collection<InvoiceDetail> details;
 				
 	@OneToMany (mappedBy="invoice")

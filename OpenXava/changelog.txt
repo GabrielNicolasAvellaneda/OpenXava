@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- HibernatePersistence declared explicitly as provider for JPA.
+- Fix: Arrays are not displayed nicely in list and collections.
+- Fix: Row actions in several lines when the list shows many properties.
+- Fix: Detail collection actions (like @RemoveAction) with empty action name fails.
 - Column resizing and customizing list can be disabled. 
 - Hidden properties are not available to add by the user in list and collections.
 - Fix: Bug on dialogs when opening another dialog such as reference search.
