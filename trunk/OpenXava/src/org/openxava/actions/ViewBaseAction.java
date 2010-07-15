@@ -22,6 +22,7 @@ abstract public class ViewBaseAction extends BaseAction {
 	@Inject
 	private Stack previousViews;
 	private boolean dialogShown = false; 
+	private boolean closeDialogDisallowed = false;
 	
 	/**
 	 * Creates a new view and shows it. <p>
@@ -145,6 +146,14 @@ abstract public class ViewBaseAction extends BaseAction {
 	protected void setControllers(String... controllers) {
 		if (dialogShown) getManager().restorePreviousControllers(); 
 		super.setControllers(controllers);
+	}
+
+	public void setCloseDialogDisallowed(boolean closeDialogDisallowed) {
+		this.closeDialogDisallowed = closeDialogDisallowed;
+	}
+
+	public boolean isCloseDialogDisallowed() {
+		return closeDialogDisallowed;
 	}
 	
 }
