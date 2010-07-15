@@ -43,5 +43,15 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	public void setViewObject(String viewObject) {
 		this.viewObject = viewObject;
 	}
+
+	@Override
+	protected void closeDialog() { 
+		if (isCloseDialogDisallowed()) {
+			getCollectionElementView().reset();
+		} else {
+			super.closeDialog();
+		}
+	}	
+
 		
 }
