@@ -75,7 +75,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		
 		execute("Collection.new", "viewObject=xava_view_receptionists");
 		assertDialog();		
-		assertActions(new String [] { "Collection.save", "Collection.hideDetail" });
+		assertActions(new String [] { "Collection.save", "Collection.saveAndStay", "Collection.hideDetail" });
 		assertNotExists("deliveryPlaces");
 		assertNotExists("receptionists");
 		

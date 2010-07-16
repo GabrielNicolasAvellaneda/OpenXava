@@ -2,12 +2,15 @@ package org.openxava.actions;
 
 import java.util.Iterator;
 
-import org.openxava.controller.meta.MetaAction;
-
 
 /**
+ * Create a new element in collection. <p>
+ * 
+ * Since 4m5 creates two buttons for the save action, 
+ * ones that closes the dialog and the other that stays.
+ * 
  * @author Javier Paniza
- * 4m5 creates two buttons for the save action, ones that closes the dialog and the other that stays.
+ * 
  */
 
 public class CreateNewElementInCollectionAction extends CollectionElementViewBaseAction {
