@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New Collection.saveAndStay action that allows to save a collection element without closing the dialog.
+- Fix: When a view is not editable its collections have edit action for rows and save action in element view.  
+- Row action is always shows in collections, even when the properties of collection list and detail view match.
 - HibernatePersistence declared explicitly as provider for JPA.
 - Fix: Arrays are not displayed nicely in list and collections.
 - Fix: Row actions in several lines when the list shows many properties.

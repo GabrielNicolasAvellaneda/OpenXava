@@ -60,7 +60,10 @@
 			class="org.openxava.test.actions.HideDetailElementInCollectionWithMessageAction"/>
 							
 		<action name="save" 
-			class="org.openxava.actions.SaveElementInCollectionAction"/>		
+			class="org.openxava.actions.SaveElementInCollectionAction"/>
+			
+		<action name="saveAndStay"
+			class="org.openxava.actions.SaveAndStayElementInCollectionAction"/>								
 
 		<action name="remove" 
 			class="org.openxava.actions.RemoveElementFromCollectionAction"/>

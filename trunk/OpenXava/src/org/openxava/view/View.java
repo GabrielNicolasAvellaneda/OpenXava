@@ -1401,10 +1401,6 @@ public class View implements java.io.Serializable {
 		return getMetaCollection().hasCalculator();
 	}
 	
-	public boolean isDetailMemberInCollection() throws XavaException {		
-		return getCollectionMemberNames().keySet().containsAll(getMembersNamesImpl().keySet());
-	}
-	
 	private Map getCollectionMemberNames() throws XavaException {
 		if (collectionMemberNames == null) {   		
 			Map result = new HashMap();			
@@ -1830,7 +1826,7 @@ public class View implements java.io.Serializable {
 			View subview = (View) it.next();				
 			if (subview.isRepresentsCollection()) {
 				subview.setCollectionEditable(b);
-				if (!subview.isCollectionMembersEditables()) {
+				if (!subview.collectionMembersEditables) { 
 					subview.setKeyEditable(false); 
 					subview.setEditable(false); 
 					continue;
@@ -3228,8 +3224,8 @@ public class View implements java.io.Serializable {
 		setLabelsIdForMetaPropertiesList();
 	}
 
-	public boolean isCollectionMembersEditables() {		
-		return collectionMembersEditables;		
+	public boolean isCollectionMembersEditables() {				
+		return isEditable() && collectionMembersEditables; 
 	}
 
 	public void setCollectionMembersEditables(boolean b) {		

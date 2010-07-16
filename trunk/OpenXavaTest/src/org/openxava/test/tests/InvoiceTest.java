@@ -687,32 +687,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.save");
 		assertNoErrors();		 				
 	}
-		
-	public void testReadOnlyCollectionWithPropertiesInDetailIncludedInListWithoutAction() throws Exception {  
-		deleteInvoiceDeliveries();
-		createDelivery(); 
-				
-		execute("CRUD.new");
-		setValue("year", String.valueOf(getInvoice().getYear()));
-		setValue("number", String.valueOf(getInvoice().getNumber()));
-		execute("CRUD.refresh");
-		assertNoErrors();
-		
-		execute("Sections.change", "activeSection=3");
-		assertCollectionRowCount("deliveries", 1);
-		String number = getValueInCollection("deliveries", 0, 0);
-	
-		assertAction("Collection.view");
-		// The next action display in detail only properties that already are in list
-		execute("Invoice.removeViewDeliveryInInvoice");
-		
-		assertNoAction("Collection.view");		
-		assertValueInCollection("deliveries", 0, 0, number);
-		
-		execute("Invoice.addViewDeliveryInInvoice");
-		assertAction("Collection.view");		
-	}
-	
+
 	public void testValidateExistsRequiredReference() throws Exception { 
 		execute("CRUD.new");		
 		setValue("number", "66");
@@ -774,6 +749,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("amount", getProductUnitPriceMultiplyBy("20"));
 		setValue("product.number", getProductNumber());
 		assertValue("product.description", getProductDescription());
+		assertValue("deliveryDate", getCurrentDate()); 
 		setValue("deliveryDate", "03/18/04"); // Testing multiple-mapping in aggregate
 		setValue("soldBy.number", getProductNumber());
 		execute("Collection.save");		
@@ -805,17 +781,16 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("product.number", getProductNumber());
 		assertValue("product.description", getProductDescription());
 		setValue("deliveryDate", "3/19/04"); // Testing multiple-mapping in aggregate
-		setValue("soldBy.number", getProductNumber());
-		execute("Collection.save");
-		assertCollectionRowCount("details", 2);
-
-		execute("Collection.new", "viewObject=xava_view_section1_details"); 
+		setValue("soldBy.number", getProductNumber());		
+		execute("Collection.saveAndStay");
+		
 		setValue("serviceType", usesAnnotatedPOJO()?"1":"2");
 		setValue("quantity", "2");
 		setValue("unitPrice", getProductUnitPrice());
 		assertValue("amount", getProductUnitPriceMultiplyBy("2"));
 		setValue("product.number", getProductNumber());
 		assertValue("product.description", getProductDescription());
+		assertValue("deliveryDate", getCurrentDate()); 
 		setValue("deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate		
 		execute("Collection.save");
 		assertCollectionRowCount("details", 3);

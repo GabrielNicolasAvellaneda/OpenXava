@@ -13,6 +13,7 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	
 	private View collectionElementView;		
 	private String viewObject;
+	private boolean closeDialogDisallowed = false; 
 
 	abstract public void execute() throws Exception;
 	
@@ -45,13 +46,20 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	}
 
 	@Override
-	protected void closeDialog() { 
+	protected void closeDialog() {  
 		if (isCloseDialogDisallowed()) {
 			getCollectionElementView().reset();
 		} else {
 			super.closeDialog();
 		}
 	}	
+	
+	public void setCloseDialogDisallowed(boolean closeDialogDisallowed) {
+		this.closeDialogDisallowed = closeDialogDisallowed;
+	}
 
+	public boolean isCloseDialogDisallowed() {
+		return closeDialogDisallowed;
+	}
 		
 }
