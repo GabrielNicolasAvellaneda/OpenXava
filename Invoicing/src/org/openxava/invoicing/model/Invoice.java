@@ -24,7 +24,10 @@ import org.openxava.validators.*;
 		properties="year, number, date, customer.number, customer.name," +
 			"vatPercentage, estimatedProfit, baseAmount, " +
 			"vat, totalAmount, amount, remarks"),
-	@Tab(name="Deleted", baseCondition = "deleted = true")
+	@Tab(name="Deleted", 
+		baseCondition = "deleted = true",
+		properties="year, number, date"
+	)
 })
 public class Invoice extends CommercialDocument {
 	
