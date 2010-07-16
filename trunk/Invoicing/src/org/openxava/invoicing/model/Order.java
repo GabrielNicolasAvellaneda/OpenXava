@@ -29,7 +29,10 @@ import org.openxava.validators.*;
 			"delivered, vatPercentage, estimatedProfit, baseAmount, " +
 			"vat, totalAmount, amount, remarks"
 	),
-	@Tab(name="Deleted", baseCondition = "deleted = true")
+	@Tab(name="Deleted", 
+		baseCondition = "deleted = true",
+		properties="year, number, date"
+	)
 })
 public class Order extends CommercialDocument {
 		
