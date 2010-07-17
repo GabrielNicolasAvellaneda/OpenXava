@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
@@ -1486,6 +1487,10 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	private void createOneDetail() throws Exception {
+		Calendar date = Calendar.getInstance();
+		String todayDate = (date.get(Calendar.MONTH) + 1) + "/" +
+				date.get(Calendar.DAY_OF_MONTH) + "/" +
+				(date.get(Calendar.YEAR) - 2000);
 		execute("Sections.change", "activeSection=1");
 		assertNotExists("customer.number");
 		assertNotExists("vatPercentage");
@@ -1501,9 +1506,15 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("product.description", getProductDescription());
 		setValue("deliveryDate", "09/05/2007");
 		setValue("soldBy.number", getProductNumber());
-		execute("Collection.save");
-		assertNoErrors();
+		execute("Collection.saveAndStay");
 		assertMessage("Invoice detail created successfully");
+		// validate if fields are cleared
+		assertValue("quantity", "");
+		// validate that default values were ran
+		assertValue("deliveryDate", todayDate);
+		assertAction("Collection.saveAndStay");
+		execute("Collection.hideDetail");
+		assertNoErrors();
 	}
 
 	public void testInvoiceNotFound() throws Exception {

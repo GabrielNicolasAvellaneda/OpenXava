@@ -65,6 +65,9 @@
 		<action name="saveAndStay"
 			class="org.openxava.actions.SaveAndStayElementInCollectionAction"/>								
 
+		<action name="saveAndStay"
+			class="org.openxava.actions.SaveAndStayElementInCollectionAction"/>			
+
 		<action name="remove" 
 			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
 
