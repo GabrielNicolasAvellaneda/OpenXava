@@ -53,10 +53,12 @@ public class ProductTest extends ModuleTestBase {
 	}
 		
 	public void testMoneyScaleValidator() throws Exception {
-		execute("Mode.detailAndFirst");
-		setValue("unitPrice", "11.123");
-		execute("CRUD.save");
-		assertError("Unit price in Product has too much decimals. Only 2 are allowed");
+		//TODO: There is no point here, the autonumeric,js truncate 
+		// the value to the number of decimals.
+		//execute("Mode.detailAndFirst");
+		//setValue("unitPrice", "11.123");
+		//execute("CRUD.save");
+		//assertError("Unit price in Product has too much decimals. Only 2 are allowed");
 	}
 	
 	public void testCustomizeList_sortProperties() throws Exception {
