@@ -1,11 +1,12 @@
 /**
  * autoNumeric.js
  * @author: Bob Knothe
- * @version: 1.5.3.1
+ * @version: 1.3.2
  *
- * Created by Robert J. Knothe on 2010-05-09. Please report any bug at http://www.decorplanit.com/plugin/
+ * Created by Robert J. Knothe on 2010-02-14. Please report any bug at http://www.decorplanit.com/plugin/
  *
  * Copyright (c) 2010 Robert J. Knothe  http://www.decorplanit.com/plugin/
+ * Adapted to OpenXava by Javier Paniza
  *
  * The MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
@@ -30,27 +31,18 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-(function($) {
-	$.fn.autoNumeric = function(options) {
-		var opts = $.extend({}, $.fn.autoNumeric.defaults, options);// build main options before element iteration
-		return this.each(function() {// iterate and reformat each matched element
+
+(function($){
+	$.fn.autoNumeric = function(){
+		return this.each(function(){
+			var d = $.extend($.fn.autoNumeric.defaults); //sets defaults
 			var iv = $(this); //check input value iv
 			var ii = this.id; //input ID
-			var io = $.metadata ? $.extend({}, opts, iv.metadata()) : opts;// build element specific options io = input options
-			io.mDec = isNaN(io.mDec * 1) ? $('#' + io.mDec).val() * 1 : io.mDec * 1; // decimal places
 			var kdCode = ''; //Key down Code
 			var selectLength = 0; // length of input selected
-			var caretPos = 0; //caret poistion
-			var inLength = 0; //variable to length prior to keypress event
-			var charLeft = 0; //number of characters to the left of the decimal point
-			var numLeft = 0;
-			var numRight = 0;
-			var cmdKey = false;
-			$(this).keydown(function(e){ //start keyDown
-			cmdKey = false;
-			io = $.metadata ? $.extend({}, opts, iv.metadata()) : opts;// build element specific options io = input options
-			io.mDec = isNaN(io.mDec * 1) ? $('#' + io.mDec).val() * 1 : io.mDec * 1; // decimal places
-				if (!e){ // routine for key and character codes on key down
+			var cPos = 0; //caret poistion
+			$(this).keydown(function (e){ //start keyDown
+				if (!e){ // routine for key and character codes
 					e = window.event;
 				}
 				if (e.keyCode){ // IE
@@ -59,27 +51,35 @@
 				else if (e.which){ // FF & O
 					kdCode = e.which;
 				}
-				if(e.metaKey){ // tests for Mac coomand key being pressed down thanks Bart B. for bring to my attention
-					cmdKey = true; // look on line 92
-				}
+			}).keypress(function (e){ // keypress function
+				$.extend(d, autoCode(ii, d)); //update defaults
+				var nLeft = 0; //number of characters to the left of the decimal point
+				var nRight = 0; //number of characters to the right of the decimal point
+				var iLength = 0; // length of input				
+				var allowed = d.aNum + d.aSign + d.aDec + '.'; //allowed input  "." Added by Javier Paniza
 				if (document.selection){ // IE Support to find the caret position
-					this.focus();
+					this.focus ();
 					var select = document.selection.createRange();
 					selectLength = document.selection.createRange().text.length;
 					select.moveStart ('character', -this.value.length);
-					caretPos = (select.text.length - selectLength) * 1;
+					cPos = (select.text.length - selectLength) * 1;
+					iLength = this.value.length * 1; //decimal places to the left of the decimal point
 				}
 				else if (this.selectionStart || this.selectionStart == '0'){ // Firefox support  to find the caret position
 					selectLength = this.selectionEnd * 1 - this.selectionStart * 1;
-					caretPos = this.selectionStart * 1;
+					cPos = this.selectionStart * 1;
+					iLength = this.value.length * 1;
 				} // end caret position
-				inLength = this.value.length; //pass length to keypress event for value left & right of the decimal position & keyUp event to set caret position
-			}).keypress(function(e){ //start keypress
-				var allowed = io.aNum + io.aNeg + io.aDec; //allowed input
-				charLeft = (this.value.lastIndexOf(io.aDec) == -1) ? inLength : inLength - (inLength - this.value.lastIndexOf(io.aDec)); //characters to the left of the decimal point
-				numLeft = countNum(this.value, 0, charLeft); //the number of intergers to the left of the decimal point
-				if (this.value.lastIndexOf(io.aDec) != -1){
-					numRight = countNum(this.value, charLeft, inLength); // //the number of intergers to the right of the decimal point
+				nLeft = iLength - (iLength - this.value.lastIndexOf(d.aDec)); // characters to the left of the decimal point
+				if (nLeft == -1){// if no decimal point is present nLeft = iLength
+					nLeft = iLength;
+				}
+				nRight = (iLength - this.value.lastIndexOf(d.aDec)) -1; //characters to the right of the decimal point
+				if (this.value.lastIndexOf(d.aDec) == -1){ // if no decimal point nRight = 0
+					nRight = 0;	
+				}
+				if (!e){ // routine for key and character codes
+					e = window.event;
 				}
 				var kpCode = ''; //Key Press Code
 				if (e.keyCode){ // IE
@@ -89,222 +89,146 @@
 					kpCode = e.which;
 				}
 				var cCode = String.fromCharCode(kpCode);	//Character code
-				if ((e.ctrlKey || cmdKey) && (kdCode == 67 || kdCode == 86 || kdCode == 88)){ // allows controll key & copy(c=67), past (v=86), cut (v=88) 
+				if ((e.ctrlKey) && (kdCode == 67 || kdCode == 86 || kdCode == 88) || kdCode == 46){ // allows controll key & copy(c=67), past (v=86), cut (v=88) or the delete key (46)
 					return;
 				}
-				if (kdCode == 8 || kdCode == 9 || kdCode == 13 || kdCode == 35 || kdCode == 36 || kdCode == 37 || kdCode == 39 || kdCode == 46){ // allows the backspace (8), tab (9), enter 13, end (35), home(36), left(37) and right(39) arrows key  delete key (46) to function in some browsers (FF & O) //Thanks to Bart Bons on the return key
+				if (kdCode == 8 || kdCode == 9 || kdCode == 35 || kdCode == 36 || kdCode == 37 || kdCode == 39){ // allows the backspace (8), tab (9), end (35), home(36), left(37) and right(39) arrows key to function in some browsers (FF & O)
 					return;
 				}
 				if (allowed.indexOf(cCode) == -1){// checks for allowed characters
 					e.preventDefault();
 				}
-				if (cCode == io.aDec){ // start rules when the decimal charactor key is pressed **********************************************************************************
-					if (selectLength == inLength && selectLength > 0){ // allows the selected input to be replaced with a number - Thanks Bart V.
-						return;
-					}	
-					if (this.value.lastIndexOf(io.aDec) > io.aSign.length && io.pSign == 'p' || io.mDec <= 0 || caretPos < this.value.length - io.mDec && io.pSign == 'p' || caretPos > this.value.indexOf('\u00A0') && io.pSign == 's' || caretPos === 0 && this.value.charAt(0) == '-' || this.value.lastIndexOf(io.aSep) >= caretPos && io.aSep !== '' || caretPos < (this.value.length - (io.aSign.length + 1 + io.mDec)) && io.pSign == 's'){ //prevents decimal point accurcy greater then the allowed 
+				var str = this.value;
+				var chr = '';
+				var cNum = 0; //the number of intergers to the left of the decimal point
+				for (j = 0; j < nLeft; j++){ //counts the numeric characters to the left of the decimal point that has a numeric value
+					chr = str.charAt(j);
+					if (chr >= '0' && chr <= '9'){
+						cNum++;
+					}
+				}
+				if (cCode == d.aDec){ // start rules when the decimal charactor key is pressed **********************************************************************************
+					if (this.value.indexOf(d.aDec) != -1 || d.mDec <= 0 || cPos < this.value.length - d.mDec || cPos === 0 && this.value.charAt(0) == '-' || this.value.lastIndexOf(d.aSep) >= cPos && d.aSep !== ''){ //prevents decimal point accurcy greater then the allowed
 						e.preventDefault();
 					}
 				}  // end rules when the decimal charactor key is pressed
-				if (kpCode == 45 && (caretPos > 0 || this.value.indexOf('-') != -1 || io.aNeg === '')){// rules for negative key press ***********************
-					if (selectLength == inLength){ // allows the selected input to be replaced with a number - Thanks Bart V. 
-						return;
-					}
-					else{
-						e.preventDefault();
-					}
+				if (kpCode == 45 && (cPos > 0 || this.value.indexOf('-') != -1 || d.aSign === '')){// rules for negative key press ***********************
+					e.preventDefault();
 				}
 				if (kpCode >= 48 && kpCode <= 57){ // start rules for number key press **********************************************************************************
-					if (selectLength > 0){ // allows the selected input to be replaced with a number - Thanks Bart V.
+					if (selectLength > 0){ // allows the selected input to be replaced with a number - Thanks Bart.
 						return;
 					}	
-					if (caretPos <= this.value.indexOf('\u00A0') && io.pSign == 'p'){ // prevents numbers to be enter in the currency sign on the left
+					if (this.value.indexOf('-') != -1){ // start rules for controlling a leading zero when the negative sign is present
+						if (cPos === 0){ // rule to prevent numbers from being entered to the left of the negative sign
+							e.preventDefault();
+						}
+						if (this.value.charAt(1) === '0' && this.value.length >= 2 && (cPos == 1 && kpCode == 48 || cPos >= 2 && cPos <= nLeft)){// start rules for controlling the leading zero with a negative sign and the first # value is 0
+							e.preventDefault();
+						}
+						if ((this.value.charAt(1) >= 1 && this.value.charAt(1) <= 9) && (cPos == 1 && kpCode == 48)){ // start rules for controlling the leading zero with a negative sign and the first # value is greater than 0
+							e.preventDefault();
+						}
+					}
+					if (this.value.indexOf('-') == -1 && this.value.length > 0){ //rules for controlling leading zero with a positive value
+						if (this.value.charAt(0) === '0' && cPos > 0 && cPos <= nLeft){
+							e.preventDefault();
+						}
+						if (nLeft > 0 && cPos === 0 && kpCode == 48){
+							e.preventDefault();
+						}
+					}
+					if (cNum >= d.mNum && cPos <= nLeft){ //checks for max numeric characters to the left of the decimal point
 						e.preventDefault();
 					}
-					if (this.value.indexOf('\u00A0') != -1 && caretPos > this.value.indexOf('\u00A0') && io.pSign == 's'){ // prevents numbers to be enter in the currency sign on the righ
+					if (this.value.indexOf(d.aDec) != -1 && cPos >= (this.value.length - nRight) && nRight >= d.mDec){  // rules controls the maximum decimal places on both positive and negative values
 						e.preventDefault();
 					}
-					if (this.value.indexOf('-') != -1 && caretPos === 0){ // prevents numbers from being entered to the left negative sign
-						e.preventDefault();
-					}
-					if (numLeft >= io.mNum && caretPos <= charLeft){ //checks for max numeric characters to the left of the decimal point
-						e.preventDefault();
-					}
-					if (this.value.indexOf(io.aDec) != -1 && caretPos >= charLeft + 1 && numRight >= io.mDec){ //checks for max numeric characters to the left and right of the decimal point
-						e.preventDefault();
-					}					
 				} // end rules for number key press
-			}).keyup(function(e){ //start keyup
-				if (io.aSep === '' || e.keyCode == 9 || e.keyCode == 20 || e.keyCode == 35 || e.keyCode == 36 || e.keyCode == 37 || e.keyCode == 39 || kdCode == 9 || kdCode == 13 || kdCode == 20 || kdCode == 35 || kdCode == 36 || kdCode == 37 || kdCode == 39){// allows the tab(9), end(35), home(36) left(37) & right(39) arrows and when there is no thousand separator to bypass the autoGroup function 
+			}).keyup(function (e){ //start keyup - this will format the input
+				
+				if (d.aSep === '' || kdCode == 9 || kdCode == 35 || kdCode == 36 || kdCode == 37 || kdCode == 39){// allows the tab(9), end(35), home(36) left(37) & right(39) arrows and when there is no thousand separator to bypass the autoGroup function 
 					return; //kuCode 35 & 36 Home and end keys fix thanks to JPM USA 
 				}
-				// if(kdCode == 110 && this.value.indexOf(io.aDec) == -1 && io.mDec > 0 && caretPos >= this.value.length - io.mDec && this.value.lastIndexOf(io.aSep) < caretPos && this.value.lastIndexOf('-') < caretPos){ // start modification for period key to enter a comma on numeric pad
-					// $(this).val(this.value.substring(0, caretPos) + io.aDec + this.value.substring(inLength, caretPos));
-				// } // end mod
-				$(fixId(ii)).val(autoGroup(this.value, io)); // adds the thousand sepparator
-				var outLength = this.value.length;	
-				charLeft = (this.value.lastIndexOf(io.aDec) == -1) ? outLength : outLength - (outLength - this.value.lastIndexOf(io.aDec));
-				numLeft = countNum(this.value, 0, charLeft); //the number of intergers to the left of the decimal point
-				if (numLeft > io.mNum){
-					$(fixId(ii)).val(''); // if max number of characters are exceeeded
-				}	
-				var setCaret = 0; // start - determines the new caret position 
-				if (inLength < outLength){
-					setCaret = caretPos + (outLength - inLength);
+				// Next if added by Javier Paniza
+				if (d.aDec == ',' && this.value.charAt(cPos) == '.') {
+				    this.value = this.value.substr(0,cPos) + ',' + 
+						this.value.substr(cPos+1);
 				}
-				if (inLength > outLength){
-					if(selectLength > 0){
-						setCaret = (outLength - (inLength - (caretPos + selectLength)));
-					}
-					else if((inLength - 2) == outLength){
-						if(kdCode == 8){
-							setCaret = (caretPos - 2);
-						}
-						else if(kdCode == 46 && caretPos == io.aSign.length + 1 && io.aSign != ''){
-							setCaret = caretPos;
-						}
-						else{
-							setCaret = (caretPos - 1);
-						}	
-					}
-					else{
-						if(kdCode == 8){
-							setCaret = (caretPos - 1);
-						}
-						else{
-							setCaret = caretPos;
-						}	
-					}
-				} 
-				if (inLength == outLength){
-					if(this.value.charAt(caretPos - 1) == io.aSep && kdCode == 8){
-						setCaret = (caretPos - 1);
-					}
-					else if(this.value.charAt(caretPos) == io.aSep && kdCode == 46){
-						setCaret = (caretPos + 1);
-					}
-					else if(outLength === 1){
-						setCaret = (caretPos + 1);
-					}
-					else {
-						setCaret = caretPos;
-					}	
+				
+				if (navigator.appName == "Microsoft Internet Explorer") return; // Added by Javier Paniza to avoid a bug with IE and onchange events
+				$('#' + this.id).val(autoGroup(this.value, d));				
+			});
+			$(this).blur(function (){
+				if ($('#' + this.id).val() != ''){
+					autoCheck(iv, ii, d);
 				}
-				if (io.aSign != '' && io.pSign == 'p' && caretPos <= io.aSign.length && selectLength != inLength){
-					setCaret = io.aSign.length + 1;
-				}
-				if (selectLength == inLength && io.pSign == 's' && selectLength != inLength){
-					setCaret = outLength - io.aSign.length - 1;
-				}
-				if (inLength === 0 && io.pSign == 's'){
-					setCaret = outLength - io.aSign.length - 1;
-				}
-				if (outLength === 0 && io.aSign.length && io.pSign == 's'){
-					setCaret = outLength - io.aSign.length - 1;
-				}
-				if (io.aSign != '' && io.pSign == 's' && caretPos >= outLength - io.aSign.length && selectLength != inLength){
-					setCaret = outLength - io.aSign.length - 1;
-				}
-				if (outLength == io.aSign.length + 2 && io.pSign == 's'){
-					setCaret = 1;
-				} // ends - determines the new caret position 
-				var iField = this;  // start - set caret position
-				iField.focus();
-				if (document.selection) {
-					var iRange = iField.createTextRange();
-					iRange.collapse(true);
-					iRange.moveStart("character", setCaret);
-					iRange.moveEnd("character", 0);
-					iRange.select();
-				}
-				else if (iField.selectionStart || iField.selectionStart == '0') {
-					iField.selectionStart = setCaret;
-					iField.selectionEnd = setCaret;
-				} // end - set caret position
-			}).change(function(){ //start change - thanks to Javier P. corrected the inline onChange event
-				if ($(fixId(ii)).val() != ''){
-					autoCheck(iv, ii, io);
-				}	
-			}).bind('paste', function(){setTimeout(function(){autoCheck(iv, ii, io);}, 0); }); // thanks to Josh of Digitalbush.com
+			});
+			$(this).bind('paste', function(){setTimeout(function(){autoCheck(iv, ii, d);}, 0); }); // thanks to Josh of Digitalbush.com
 		});
 	};
-	function fixId(myid) { //thanks to Anthony & Evan C
-		myid = myid.replace(/\[/g, "\\[").replace(/\]/g, "\\]"); 
-		return '#' + myid.replace(/(:|\.)/g,'\\$1');
-	}
-	function countNum(str, start, end){ // private function to count the numeric characters to the left and right of the decimal point
-		var chr = '';
-		var numCount = 0; 
-		for (j = start; j < end; j++){
-			chr = str.charAt(j);
-			if (chr >= '0' && chr <= '9'){
-				numCount++;
+	$.fn.autoNumeric.defaults = {
+		aNum: '0123456789', //allowed  numeric values
+		aSign: '', // allowed negative sign / character
+		aSep: ',', // allowed housand separator character
+		aDec: '.', // allowed decimal separator character
+		mNum: 9, // max number of numerical characters to the left of the decimal
+		mDec: 2, // max number of decimal places
+		dGroup: /(\d)((\d{3}?)+)$/, // digital grouping for the thousand separator used in Format
+		rMethod: 'S' // rounding method used
+	};
+	function autoCode(ii, d){ // function to update the defaults settings
+		var fCode = $('#'+ii).attr('alt');
+		var lookUp = 'dp' + fCode.charAt(5); 
+		if (fCode !== ''){
+			d.aSign = (fCode.charAt(0) === 'n') ? '-' : ''; //Negative allowed?
+			d.mNum = (fCode.charAt(1) === '0') ? d.mNum = 15 : fCode.charAt(1) * 1; // max interger value 
+			if (fCode.charAt(2) != 'c'){ // thousand seperator
+				if (fCode.charAt(2) === 'a'){
+					d.aSep = '\'';
+				}
+				else if (fCode.charAt(2) === 'p'){
+					d.aSep = '.';
+				}
+				else if (fCode.charAt(2) === 's'){
+					d.aSep = ' ';
+				}
+				else {
+					d.aSep = '';
+				}
 			}
+			if (fCode.charAt(3) != 3){ // digital grouping
+				d.dGroup = (fCode.charAt(3) == 2) ? /(\d)((\d)(\d{2}?)+)$/ : /(\d)((\d{4}?)+)$/;
+			}
+			d.aDec = (fCode.charAt(4) === 'c') ? ',' : d.aDec; // decimal sepatator
+			d.mDec = (fCode.charAt(5) <= '9') ? fCode.charAt(5) * 1 : $('#' + lookUp).val() * 1; // decimal places
+			d.rMethod = (fCode.charAt(6) !== '') ? fCode.charAt(6) : d.rMethod; // rounding method
 		}
-		return numCount;
+		return d;
 	}
-	function autoGroup(iv, io){ // private function that places the thousand separtor
-		if (io.aSep != ''){
-			var digitalGroup = '';
-			if (io.dGroup == 2){
-				digitalGroup = /(\d)((\d)(\d{2}?)+)$/;
-			}
-			else if (io.dGroup == 4){
-				digitalGroup = /(\d)((\d{4}?)+)$/;
-			}
-			else {
-				digitalGroup = /(\d)((\d{3}?)+)$/;
-			}
-			for (k = 0; k < io.aSign.length; k++){ //clears the currency or other symbols and space
-				iv = iv.replace(io.aSign.charAt(k), '').replace("\u00A0",'');
-			}
-			iv = iv.split(io.aSep).join(''); //removes the thousand sepparator
-			var ivSplit = iv.split(io.aDec); // splits the string at the decimal string
-			var s = ivSplit[0]; // assigns the whole number to the a varibale (s)
-			while(digitalGroup.test(s)){ 
-				s = s.replace(digitalGroup, '$1'+io.aSep+'$2'); //re-inserts the thousand sepparator via a regualer expression
-			}
-			if (io.mDec !== 0 && ivSplit.length > 1){ 
-				iv = s + io.aDec + ivSplit[1]; //joins the whole number with the deciaml value
-			}
-			else {
-				iv = s; // if whole numers only
-			}
-			if (iv.indexOf('-') != -1 && io.aSign != '' && io.pSign == 'p'){ // places the currency sign to the left (prefix)
-				iv = iv.replace('-', '');
-				return '-' + io.aSign + '\u00A0' + iv;
-			}
-			else if (iv.indexOf('-') == -1  && io.aSign != '' && io.pSign == 'p'){
-				return io.aSign + '\u00A0' + iv;
-			}
-			if (iv.indexOf('-') != -1 && io.aSign != '' && io.pSign == 's'){  // places the currency sign to the right (suffix)
-				iv = iv.replace('-', '');
-			return '-'+ iv + '\u00A0' + io.aSign;
-			}
-			else if (iv.indexOf('-') == -1  && io.aSign != '' && io.pSign == 's'){
-				return iv + '\u00A0' + io.aSign;
-			}
-			else {
-				return iv;
-			}
+	function autoGroup(iv, d){ // places the thousand separtor
+		iv = iv.split(d.aSep).join('');
+		var ivSplit = iv.split(d.aDec);
+		var s = ivSplit[0];
+		while(d.dGroup.test(s)){
+			s = s.replace(d.dGroup, '$1'+d.aSep+'$2');
+		}
+		if (d.mDec !== 0 && ivSplit.length > 1){
+			iv = s + d.aDec + ivSplit[1];
 		}
 		else {
-			return iv;
-		}
+			iv = s;
+		}	
+		return iv;
 	}
-	function autoRound(iv, mDec, mRound){ // private fumction for round the number - please note this handled as text - Javascript math function can return inaccurate values
-		iv += ''; //to string
+	function autoRound(iv, mDec, rMethod){ // rounding function via text
 		var ivRounded = '';
 		var i = 0;
 		var nSign = ''; 
+		iv = iv + ''; // convert to string
 		if (iv.charAt(0) == '-'){ //Checks if the iv (input Value)is a negative value
 			nSign = (iv * 1 === 0) ? '' : '-'; //determines if the value is zero - if zero no negative sign
 			iv = iv.replace('-', ''); // removes the negative sign will be added back later if required			
-		}
-		if ((iv * 1) > 0){
-			while (iv.substr(0,1) == '0' && iv.length > 1) { 
-				iv = iv.substr(1,9999); 
-			}
 		}
 		var dPos = iv.lastIndexOf('.'); //decimal postion as an integer
 		if (dPos === 0){// prefix with a zero if the decimal point is the first character
@@ -340,18 +264,18 @@
 		for(i = 0; i <= rLength; i++){ //populate ivArray with each digit in rLength
 			ivArray[i] = iv.charAt(i);
 		}
-		var odd = (iv.charAt(rLength) == '.') ? (iv.charAt(rLength - 1) % 2) : (iv.charAt(rLength) % 2);
-		if ((tRound > 4 && mRound === 'S') || //Round half up symetric
-			(tRound > 4 && mRound === 'A' && nSign === '') || //Round half up asymetric positive values
-			(tRound > 5 && mRound === 'A' && nSign == '-') || //Round half up asymetric negative values
-			(tRound > 5 && mRound === 's') || //Round half down symetric
-			(tRound > 5 && mRound === 'a' && nSign === '') || //Round half down asymetric positive values
-			(tRound > 4 && mRound === 'a' && nSign == '-') || //Round half down asymetric negative values
-			(tRound > 5 && mRound === 'B') || //Round half even "Banker's Rounding"
-			(tRound == 5 && mRound === 'B' && odd == 1) || //Round half even "Banker's Rounding"
-			(tRound > 0 && mRound === 'C' && nSign === '') || //Round to ceiling toward positive infinite
-			(tRound > 0 && mRound === 'F' && nSign == '-') || //Round to floor toward negative inifinte			
-			(tRound > 0 && mRound === 'U')){ //round up away from zero 
+		var odd = (iv.charAt(rLength) == '.') ? (iv.charAt(rLength - 1) % 2) : (iv.charAt(rLength) % 2); 
+		if ((tRound > 4 && rMethod === 'S') || //Round half up symetric
+			(tRound > 4 && rMethod === 'A' && nSign === '') || //Round half up asymetric positive values
+			(tRound > 5 && rMethod === 'A' && nSign == '-') || //Round half up asymetric negative values
+			(tRound > 5 && rMethod === 's') || //Round half down symetric
+			(tRound > 5 && rMethod === 'a' && nSign === '') || //Round half down asymetric positive values
+			(tRound > 4 && rMethod === 'a' && nSign == '-') || //Round half down asymetric negative values
+			(tRound > 5 && rMethod === 'B') || //Round half even "Banker's Rounding"
+			(tRound == 5 && rMethod === 'B' && odd == 1) || //Round half even "Banker's Rounding"
+			(tRound > 0 && rMethod === 'C' && nSign === '') || //Round to ceiling toward positive infinite
+			(tRound > 0 && rMethod === 'F' && nSign == '-') || //Round to floor toward negative inifinte			
+			(tRound > 0 && rMethod === 'U')){ //round up away from zero 
 			for(i = (ivArray.length - 1); i >= 0; i--){ //Round up the last digit if required, and continue until no more 9's are found
 				if (ivArray[i] == '.'){
 					continue;
@@ -375,19 +299,21 @@
 		}
 		return nSign + ivRounded; //return rounded value
 	} 
-	function autoCheck(iv, ii, io){ // private function that blur event and pasted values for field compliance--
-		iv = iv.val();
-		if (iv.length > 25){ //maximum length of pasted value
-			$(fixId(ii)).val('');
+	function autoCheck(iv, ii, d){ //test pasted value for field compliance--
+		var getPaste = iv.val();
+		if (getPaste.length > 25){ //maximum length of pasted value
+			$('#' + ii).val('');
 			return;
 		}
+		$.extend(d, autoCode(ii, d)); //update var p with the fields settings
+		var allowed = d.aNum + d.aSign + d.aDec;
 		var eNeg = '';
-		if (io.aNeg == '-'){ //escape the negative sign
+		if (d.aSign == '-'){ //escape the negative sign
 			eNeg = '\\-';
 		}
-		var reg = new RegExp('[^'+eNeg+io.aNum+io.aDec+']','gi'); // regular expreession constructor to delete any characters not allowed for the input field.
-		var testPaste = iv.replace(reg,''); //deletes all characters that are not permeinted in this field
-		if (testPaste.lastIndexOf('-') > 0 || testPaste.indexOf(io.aDec) != testPaste.lastIndexOf(io.aDec)){
+		var reg = new RegExp('[^'+eNeg+d.aNum+d.aDec+']','gi'); // regular expreession constructor to delete any characters not allowed for the input field.
+		var testPaste = getPaste.replace(reg,''); //deletes all characters that are not permeinted in this field
+		if (testPaste.lastIndexOf('-') > 0 || testPaste.indexOf(d.aDec) != testPaste.lastIndexOf(d.aDec)){
 			testPaste = '';
 		} 
 		var rePaste = '';
@@ -401,7 +327,7 @@
 				nSign = '-';
 				continue;
 			}
-			if (s[i] == io.aDec && s.length -1 == i){ //if the last charter is a decimal point it is dropped
+			if (s[i] == d.aDec && s.length -1 == i){ //if the last charter is a decimal point it is dropped
 				break;
 			}
 			if (rePaste.length === 0 && s[i] == '0' && (s[i+1] >= 0 || s[i+1] <= 9)){//controls leading zero
@@ -412,82 +338,62 @@
 			}
 		}
 		rePaste = nSign + rePaste;
-		if (rePaste.indexOf(io.aDec) == -1 && rePaste.length > (io.mNum + nNeg)){  // check to see if the maximum & minimum values have been exceeded when no decimal point is present
+		if (rePaste.indexOf(d.aDec) == -1 && rePaste.length > (d.mNum + nNeg)){  // check to see if the maximum & minimum values have been exceeded when no decimal point is present
 			rePaste = '';
 		}
-		if (rePaste.indexOf(io.aDec) > (io.mNum + nNeg)){  // check to see if the maximum & minimum values have been exceeded when the decimal point is present
+		if (rePaste.indexOf(d.aDec) > (d.mNum + nNeg)){  // check to see if the maximum & minimum values have been exceeded when the decimal point is present
 			rePaste = '';
 		}
-		if (rePaste.indexOf(io.aDec) != -1 && (io.aDec != '.')){
-			rePaste = rePaste.replace(io.aDec, '.');
+		if (rePaste.indexOf(d.aDec) != -1 && (d.aDec != '.')){
+			rePaste = rePaste.replace(d.aDec, '.');
 		}	
-		rePaste = autoRound(rePaste, io.mDec, io.mRound);
-		if (io.aDec != '.'){
-			rePaste = rePaste.replace('.', io.aDec);
+		rePaste = autoRound(rePaste, d.mDec, d.rMethod);
+		if (d.aDec != '.'){
+			rePaste = rePaste.replace('.', d.aDec);
 		}
-		if (rePaste !== '' && io.aSep !== ''){
-			rePaste = autoGroup(rePaste, io);
+		if (rePaste !== '' && d.aSep !== ''){
+			rePaste = autoGroup(rePaste, d);
 		}
-		$(fixId(ii)).val(rePaste);
-		return false;
+		$('#' + ii).val(rePaste);
 	}
-	$.fn.autoNumeric.Strip = function(ii, options){ // public function that stripes the format and converts decimal seperator to a period
-		var opts = $.extend({}, $.fn.autoNumeric.defaults, options);
-		var io = $.metadata ? $.extend({}, opts, $(fixId(ii)).metadata()) : opts;
-		io.mDec = isNaN(io.mDec * 1) ? $('#' + io.mDec).val() * 1 : io.mDec * 1; // decimal places
-		var iv = $(fixId(ii)).val();
-		iv = iv.replace(io.aSign, '').replace('\u00A0','');
-		var reg = new RegExp('[^'+'\\-'+io.aNum+io.aDec+']','gi'); // regular expreession constructor
+	$.fn.autoNumeric.Strip = function(ii){ // stripe format and convert decimal seperator to a period
+		var iv = $('#' + ii).val();
+		var d = $.extend($.fn.autoNumeric.defaults);
+		$.extend(d, autoCode(ii, d));
+		var eNeg = '';
+		if (d.aSign == '-'){ //escape the negative sign
+			eNeg = '\\-';
+		}
+		var reg = new RegExp('[^'+eNeg+d.aNum+d.aDec+']','gi'); // regular expreession constructor
 		iv = iv.replace(reg,''); //deletes all characters that are not permitted in this field
-		var nSign = ''; 
-		if (iv.charAt(0) == '-'){ //Checks if the iv (input Value)is a negative value
-			nSign = (iv * 1 === 0) ? '' : '-'; //determines if the value is zero - if zero no negative sign
-			iv = iv.replace('-', ''); // removes the negative sign will be added back later if required			
+		if (iv.indexOf(d.aDec) != -1 && (d.aDec != '.')){
+			iv = iv.replace(d.aDec, '.');
 		}
-		iv = iv.replace(io.aDec, '.');
-		if (iv * 1 > 0){
-			while (iv.substr(0,1) == '0' && iv.length > 1) { 
-				iv = iv.substr(1,9999); 
-			}
+		if (iv * 1 === 0 && eNeg !== ''){
+			iv = iv.replace('-', '');
 		}
-		iv = (iv.lastIndexOf('.') === 0) ? ('0' + iv) : iv;
-		iv = (iv * 1 === 0) ? '0' : iv;
-		return nSign + iv;
+		return iv;
 	};
-	$.fn.autoNumeric.Format = function(ii, iv, options){ //  public function that recieves a numeric string and formats to the target input field
-		iv += ''; //to string
-		var opts = $.extend({}, $.fn.autoNumeric.defaults, options);
-		var io = $.metadata ? $.extend({}, opts, $(fixId(ii)).metadata()) : opts;
-		io.mDec = isNaN(io.mDec * 1) ? $('#' + io.mDec).val() * 1 : io.mDec * 1; // decimal places
-		iv = autoRound(iv, io.mDec, io.mRound);
+	$.fn.autoNumeric.Format = function(ii, iv){ //  function that recieves a numeric string and formats to the target input field
+		var d = $.extend($.fn.autoNumeric.defaults);
+		$.extend(d, autoCode(ii, d));
+		iv = autoRound(iv, d.mDec, d.rMethod);
 		var nNeg = 0;
-		if (iv.indexOf('-') != -1 && io.aNeg === ''){ //deletes negative value
+		if (iv.indexOf('-') != -1 && d.aSign === ''){ //deletes negative value
 			iv = '';
 		}
-		else if (iv.indexOf('-') != -1 && io.aNeg == '-'){
+		else if (iv.indexOf('-') != -1 && d.aSign == '-'){
 			nNeg = 1;
 		}
-		if (iv.indexOf('.') == -1 && iv.length > (io.mNum + nNeg)){  // check to see if the maximum & minimum values have been exceeded when no decimal point is present
+		if (iv.indexOf('.') == -1 && iv.length > (d.mNum + nNeg)){  // check to see if the maximum & minimum values have been exceeded when no decimal point is present
 			iv = '';
 		}
-		else if (iv.indexOf('.') > (io.mNum + nNeg)){ // check to see if the maximum & minimum values have been exceeded when a decimal point is present
+		else if (iv.indexOf('.') > (d.mNum + nNeg)){ // check to see if the maximum & minimum values have been exceeded when a decimal point is present
 			iv = '';
 		}
-		if (io.aDec != '.'){ //replaces the decimal point with the new sepatator
-			iv = iv.replace('.', io.aDec);
+		if (d.aDec != '.'){ //replaces the decimal point with the new sepatator
+			iv = iv.replace('.', d.aDec);
 		}
-		return autoGroup(iv, io);
-	};
-	$.fn.autoNumeric.defaults = {// plugin defaults
-		aNum: '0123456789', //allowed  numeric values
-		aNeg: '', // allowed negative sign / character
-		aSep: ',', // allowed thousand separator character
-		aDec: '.', // allowed decimal separator character
-		aSign: '', // allowed currency symbol
-		pSign: 'p', // placement of currency sign prefix or suffix
-		mNum: 9, // max number of numerical characters to the left of the decimal
-		mDec: 2, // max number of decimal places
-		dGroup: 3, // digital grouping for the thousand separator used in Format
-		mRound: 'S' //  method used for rounding
+		return autoGroup(iv, d);
 	};
 })(jQuery);

@@ -7,7 +7,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * Revision: $Id: jquery.metadata.js,v 1.1 2010-07-18 03:35:50 falcantara Exp $
+ * Revision: $Id: jquery.metadata.js,v 1.2 2010-07-19 09:46:53 javierpaniza Exp $
  *
  */
 
