@@ -37,7 +37,7 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4m5 beta";
+		return "4m5beta2";
 	}
 	final static private String getVersionDate() {
 		return "2010-6-xx";

@@ -17,6 +17,7 @@ MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
 String align = p.isNumber()?"style='text-align:right'":"";
 String browser = request.getHeader("user-agent").toLowerCase();
+boolean bSafari = (browser != null && browser.indexOf("safari") != -1 && browser.indexOf("chrome") == -1) ? true : false;
 boolean editable="true".equals(request.getParameter("editable"));
 String disabled=editable?"":"disabled";
 String script = request.getParameter("script");
@@ -40,7 +41,7 @@ if (p.isNumber()) {
 		maxLength += sizeIncrement;
 	}
 	String integer = p.getScale() == 0?"true":"false";	
-	numericAlt = getNumericAlt(p.getSize(), p.getScale());  
+	numericAlt = getNumericAlt(bSafari, p.getSize(), p.getScale());  
 	numericClass = "xava_numeric"; 
 }	
 
@@ -52,12 +53,13 @@ if (fillWithZeros && fvalue.length() > 0) {
 if (editable || !label) {
 %>
 <input id="<%=propertyKey%>"
-    name="<%=propertyKey%>" class="<%=style.getEditor()%> <%=numericClass%> <%=numericAlt%>"
+    name="<%=propertyKey%>" class="<%=style.getEditor()%> <%=numericClass%>"
 	type="text" 
 	title="<%=p.getDescription(request)%>"
 	<%=align%>
 	maxlength="<%=maxLength%>" 
 	size="<%=size%>"
+	<%=numericAlt%> 
 	value="<%=Strings.change(fvalue, "\"", "&quot;")%>"	
 	<%=disabled%>
 	<%=script%>
@@ -77,34 +79,51 @@ if (editable || !label) {
 <%!
 private static Log log = LogFactory.getLog("textEditor.jsp");
 
-private String getNumericAlt(int size, int scale) {
+private String getNumericAlt(boolean bSafari, int size, int scale) {
 	try {		
 		DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locales.getCurrent());
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
-		StringBuffer result = new StringBuffer("{");
-		result.append("aNeg:'-' "); // Negatives always allowed
-		result.append(",mNum:");
-		result.append(Integer.toString(size));
-		if (scale == 0 || !df.isGroupingUsed()) {
-			result.append(",aSep:'' "); // no grouping separator
-		} else {
-			result.append(",aSep:'");
-			result.append(symbols.getGroupingSeparator());
-			result.append("'");
-			result.append(",dGroup:");
-			result.append(df.getGroupingSize());
+		StringBuffer result = new StringBuffer("alt='n"); // Negatives always allowed
+		result.append(size > 9?"0":Integer.toString(size)); // Size
+		if (scale == 0 || !df.isGroupingUsed()) result.append("x"); // no grouping separator
+		else {
+			switch (symbols.getGroupingSeparator()) {		
+				case ',':
+					if (bSafari) {
+						result.append("x"); // none when browser is Safari
+					}					
+					else {
+						result.append("c"); // comma
+					}
+					break;
+				case '.':
+					result.append("p"); // period
+					break;
+				case ' ':
+					result.append("s"); // space
+					break;
+				case '\'': 
+					result.append("a"); // apostrophe
+					break;					
+				default:
+					result.append("x"); // none					
+			}
 		}
-		result.append(",aDec:'");
-		result.append(symbols.getDecimalSeparator());
+		result.append(df.getGroupingSize());
+		switch (symbols.getDecimalSeparator()) {		
+			case ',':
+				result.append("c"); // comma
+				break;
+			default:
+				result.append("p"); // period		
+		}
+		result.append(scale > 9?"9":Integer.toString(scale)); // Scale
 		result.append("'");
-		result.append(",mDec:");
-		result.append(Integer.toString(scale)); // Scale
-		result.append("}");
 		return result.toString();
 	}
 	catch (Exception ex) {
 		log.warn(XavaResources.getString("default_numeric_editor_configuration")); 
-		return "{mDec:2}";
+		return "alt='n0c3p2'";
 	}
 }
 %>
