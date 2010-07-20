@@ -82,7 +82,6 @@ public class Seller {
 		@CollectionView(forViews="Complete", value="SimpleWithDeliveryPlaces")
 	})
 	@NoCreate(forViews="CannotCreateCustomer")
-	@NoModify(forViews="CannotCreateCustomer")
 	@RowStyle(style="row-highlight", property="type", value="steady")
 	@SearchListCondition(value="${number} < 5", forViews="SearchListCondition, SearchListConditionBlank")
 	private Collection<Customer> customers;

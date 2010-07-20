@@ -17,12 +17,19 @@ import org.openxava.calculators.*;
 @Entity
 @Table(name="INVOICE")
 @IdClass(InvoiceKey.class) // We reuse the key class for Invoice
-@View( members =
-	"year, number, date;" + 
-	"vatPercentage, amountsSum;" +
-	"customer;" +
-	"details;"
-)
+@Views({
+	@View( members =
+		"year, number, date;" + 
+		"vatPercentage, amountsSum;" +
+		"customer;" +
+		"details;"
+	),
+	@View( name="NoModifyDetails", members =
+		"year, number, date;" + 
+		"details;"
+	)
+})
+
 public class Invoice2 {
 	
 	@Transient
@@ -53,7 +60,8 @@ public class Invoice2 {
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
 	@org.hibernate.validator.Size(min=1)
 	@ListProperties("product.description, quantity, unitPrice, amount")
-	@XOrderBy("product.description desc") 
+	@XOrderBy("product.description desc")
+	@NoModify(forViews="NoModifyDetails") 
 	private Collection<InvoiceDetail2> details;
 	
 	boolean isRemoving() {

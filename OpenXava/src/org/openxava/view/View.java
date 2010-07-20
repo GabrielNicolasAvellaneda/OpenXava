@@ -66,7 +66,9 @@ import org.openxava.web.meta.MetaEditor;
 public class View implements java.io.Serializable {
 	
 	private final static String COLUMN_WIDTH = "collectionColumnWidth.";
-	private final static String FRAME_CLOSED = "frameClosed."; 
+	private final static String FRAME_CLOSED = "frameClosed.";
+	private final static String COLLECTION_VIEW_ACTION = "Collection.view"; 
+	private final static String COLLECTION_EDIT_ACTION = "Collection.edit"; 
 	
 	private static Log log = LogFactory.getLog(View.class);
 	private static final long serialVersionUID = -7582669617830655121L;
@@ -766,9 +768,23 @@ public class View implements java.io.Serializable {
 				if (!actionsDetailNames.isEmpty()) {
 					newView.setActionsNamesDetail(new ArrayList(actionsDetailNames));
 				}
-				newView.setEditCollectionElementAction(metaCollectionView.getEditActionName());
+				
+				if (!metaCollectionView.isModifyReference()) {
+					String viewAction = newView.getViewCollectionElementAction() == null?
+						COLLECTION_VIEW_ACTION:newView.getViewCollectionElementAction();
+					newView.setEditCollectionElementAction(viewAction);
+				}
+				else {
+					newView.setEditCollectionElementAction(metaCollectionView.getEditActionName());
+				}
 				newView.setViewCollectionElementAction(metaCollectionView.getViewActionName());
-				newView.setNewCollectionElementAction(metaCollectionView.getNewActionName());
+				
+				if (!metaCollectionView.isCreateReference()) {
+					newView.setNewCollectionElementAction("");
+				}
+				else {
+					newView.setNewCollectionElementAction(metaCollectionView.getNewActionName());
+				}
 				newView.setSaveCollectionElementAction(metaCollectionView.getSaveActionName());
 				newView.setHideCollectionElementAction(metaCollectionView.getHideActionName());
 				newView.setRemoveCollectionElementAction(metaCollectionView.getRemoveActionName());
@@ -785,7 +801,10 @@ public class View implements java.io.Serializable {
 				else {
 					newView.setCollectionEditable(isEditable());
 				}								
-				newView.setCollectionMembersEditables(!metaCollectionView.isReadOnly() || metaCollectionView.isEditOnly()); 
+				newView.setCollectionMembersEditables(
+					( !metaCollectionView.isReadOnly() || 
+					metaCollectionView.isEditOnly() ) &&
+					metaCollectionView.isModifyReference());
 				newView.setViewName(metaCollectionView.getViewName());
 				Collection actionsListNames = metaCollectionView.getActionsListNames();
 				if (!actionsListNames.isEmpty()) {					
@@ -3550,11 +3569,11 @@ public class View implements java.io.Serializable {
 
 	public String getEditCollectionElementAction() { 
 		if (editCollectionElementAction != null) return editCollectionElementAction;
-		return isRepresentsEntityReference()?"Collection.view":"Collection.edit";   
+		return isRepresentsEntityReference()?COLLECTION_VIEW_ACTION:COLLECTION_EDIT_ACTION;
 	}
 	
 	public String getViewCollectionElementAction() {		
-		return viewCollectionElementAction == null?"Collection.view":viewCollectionElementAction;
+		return viewCollectionElementAction == null?COLLECTION_VIEW_ACTION:viewCollectionElementAction;
 	}
 		
 	public void setEditCollectionElementAction(String editCollectionElementAction) {		
@@ -3699,9 +3718,9 @@ public class View implements java.io.Serializable {
 		this.hideCollectionElementAction = hideCollectionElementAction;
 	}
 
-	public String getNewCollectionElementAction() {  		
+	public String getNewCollectionElementAction() {		
 		if (!Is.emptyString(newCollectionElementAction)) return newCollectionElementAction;
-		if (newCollectionElementAction != null) return "";
+		if (newCollectionElementAction != null) return "";		
 		return isRepresentsEntityReference()?"Collection.add":"Collection.new";
 	}
 
