@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @NoCreate and @NoModify annotations doesn't work for collections.
+- Russian translation of Reference Guide and other documentation improved.
 - New Collection.saveAndStay action that allows to save a collection element without closing the dialog.
 - Fix: When a view is not editable its collections have edit action for rows and save action in element view.  
 - Row action is always shows in collections, even when the properties of collection list and detail view match.
@@ -26,6 +28,7 @@ Change Log for OpenXava project
 - Fix: checkbox 'select/deselect all' not display in choose list (rows with radio button). 
 - Delete action in each row: it display message with the row number.
 - Fix: when you shorten columns if the value contain '-' it produces two lines.
+- Default module help text in English, Spanish and Russian.
 - Help module: new 'helpPrefix', 'helpSuffix' and 'helpInNewWindow' properties in xava.properties. By default it uses 'http://openxava.wikispaces.com/help_'. 
 - New mode 'split' (labeled as "Both") in addition to already existing 'detail' and 'List' modes.
 - New SetEditableAction action class.

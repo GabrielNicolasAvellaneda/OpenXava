@@ -160,7 +160,7 @@ public class Customer implements IWithName {
 	@ReadOnly(forViews="SomeMembersReadOnly")
 	@AsEmbedded(forViews="SellerAsAggregate, SellerAsAggregate2Levels")
 	@NoFrame(notForViews="SellerAsAggregate, Demo") 
-	@ReferenceView(forViews="SellerAsAggregate2Levels", value="LevelNoDescriptionsList")
+	@ReferenceView(forViews="SellerAsAggregate2Levels", value="LevelNoDescriptionsList")	
 	private Seller seller;
 	
 	@DefaultValueCalculator(

@@ -24,9 +24,8 @@ public class ModuleContext implements java.io.Serializable {
 		MetaControllers.setContext(MetaControllers.WEB);		
 	}
 	
-	
-	private Map contexts = new HashMap();
-	private Map globalContext = null;
+	private transient Map contexts = null; 
+	private transient Map globalContext = null; 
 	
 
 	/**
@@ -161,10 +160,10 @@ public class ModuleContext implements java.io.Serializable {
 			return getGlobalContext();
 		}
 		String id = application + "/" + module;
-		Map context = (Map) contexts.get(id);
+		Map context = (Map) getContexts().get(id);
 		if (context == null) {
 			context = new HashMap();			
-			contexts.put(id, context);
+			getContexts().put(id, context);
 		}
 		return context;
 	}
@@ -188,12 +187,20 @@ public class ModuleContext implements java.io.Serializable {
 		return globalContext;
 	}
 	
+	private Map getContexts() {
+		if (contexts == null) {
+			contexts = new HashMap();
+		}
+		return contexts;
+	}
+
+	
 	/**
 	 * All objects with this name in all the active modules of the user session.
 	 */	
 	public Collection getAll(String objectName) { 
 		Collection allContexts = new ArrayList();
-		if (contexts == null || contexts.isEmpty()) return allContexts;
+		if (contexts == null || contexts.isEmpty()) return allContexts;		
 		
 		Iterator it = contexts.entrySet().iterator();
 		while (it.hasNext()){

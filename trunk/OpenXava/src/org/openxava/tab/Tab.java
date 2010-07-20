@@ -1511,6 +1511,6 @@ public class Tab implements java.io.Serializable {
 
 	public void clearSelected() {
 		selected = null;
-	}	
+	}
 		
 }
