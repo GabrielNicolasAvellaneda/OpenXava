@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New getParentView() method in CollectionElementViewBaseAction.
 - Fix: @NoCreate and @NoModify annotations doesn't work for collections.
 - Russian translation of Reference Guide and other documentation improved.
 - New Collection.saveAndStay action that allows to save a collection element without closing the dialog.
