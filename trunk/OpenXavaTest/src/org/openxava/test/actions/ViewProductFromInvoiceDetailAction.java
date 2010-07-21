@@ -23,8 +23,8 @@ public class ViewProductFromInvoiceDetailAction
 			Map key = new HashMap();
 			key.put("number", number);
 			getView().setModelName("Product");			
-			getView().setValues(key);
-			getView().findObject();			
+			getParentView().setValues(key); // It's possible to use getParentView() as
+			getView().findObject();			// alternative to getView()
 			getView().setKeyEditable(false);
 			getView().setEditable(false);
 			closeDialog(); // Because getView() is the parent view, so we need to

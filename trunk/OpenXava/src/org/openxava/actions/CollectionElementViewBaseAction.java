@@ -22,6 +22,11 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 		return getCollectionElementView().getRoot();		
 	}
 	
+	/** @since 4m5 */
+	protected View getParentView() throws XavaException {
+		return getCollectionElementView().getParent();
+	}
+	
 	protected View getCollectionElementView() throws XavaException {
 		if (collectionElementView == null) {
 			if (viewObject == null) collectionElementView = super.getView(); // In a dialog
