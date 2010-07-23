@@ -100,16 +100,22 @@
 		
 	</controller>
 	
-	<controller name="AddOrdersToInvoice">
-		<extends controller="AddToCollection"/>
-		<action name="add" 
-			class="org.openxava.invoicing.actions.AddOrdersToInvoiceAction">
-			<use-object name="xava_view"/>			
-			<use-object name="xava_tab"/>			
-			<use-object name="xava_collectionViewObject" action-property="viewObject"/>
-			<use-object name="xava_currentCollectionLabel"/>			
-		</action>
-	</controller>
+	<controller name="CustomerOrders">
 	
-		
+		<action  name="new" 
+			class="org.openxava.invoicing.actions.NewOrderForCurrentUserAction"
+			image="images/new.gif"
+			keystroke="Control N">
+			<use-object name="xava_view"/>			
+		</action>	
+	
+		<action name="save" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			image="images/save.gif"
+			keystroke="Control S">			
+			<use-object name="xava_view"/>
+		</action>
+
+	</controller>	
+
 </controllers>
