@@ -7,6 +7,7 @@ import javax.persistence.*;
 import org.apache.commons.beanutils.*;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.filters.*;
 import org.openxava.invoicing.actions.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
@@ -32,7 +33,13 @@ import org.openxava.validators.*;
 	@Tab(name="Deleted", 
 		baseCondition = "deleted = true",
 		properties="year, number, date"
-	)
+	),
+	@Tab(name="CurrentCustomer", 
+		baseCondition = "cast (${customer.number} as varchar) = ?",
+		filter=UserFilter.class,	
+		properties="year, number, date, customer.number, customer.name," +
+			"delivered, baseAmount, vat, totalAmount"
+	),
 })
 public class Order extends CommercialDocument {
 		
