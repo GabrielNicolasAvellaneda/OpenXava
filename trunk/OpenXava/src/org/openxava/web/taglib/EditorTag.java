@@ -51,7 +51,7 @@ public class EditorTag extends TagSupport {
 			request.setAttribute(valueKey, value);
 									
 			Messages errors = (Messages) request.getAttribute("errors"); 													
-			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
+			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property);
 			
 			String scriptFocus =  
 				" onblur=\"openxava.onBlur(" +

@@ -175,9 +175,13 @@
 		<action name="new" image="images/create_new.gif" 
 			class="org.openxava.test.actions.NewDeliveryDetailAction"/>			
 		<action name="hideDetail"
-			class="org.openxava.test.actions.HideDeliveryDetailAction"/>			
+			class="org.openxava.test.actions.HideDeliveryDetailAction"/>						
 		<action name="save" 
-			class="org.openxava.test.actions.SaveDeliveryDetailAction"/>			
+			class="org.openxava.test.actions.SaveDeliveryDetailAction"/>	
+		<action name="saveFailing" 
+			class="org.openxava.test.actions.SaveElementInCollectionFailingAction">
+			<use-object name="xava_view"/>
+		</action>			
 		<action name="remove" 
 			class="org.openxava.test.actions.RemoveDeliveryDetailAction"/>			
 		<action name="removeSelected" confirm="true" image="images/delete.gif"
@@ -364,6 +368,13 @@
 			class="org.openxava.test.actions.ViewCustomerFromInvoiceAction"/>
 		
 	</controller>
+		
+	<controller name="InvoiceDetail2">
+		<action name="new" image="images/create_new.gif"
+			class="org.openxava.test.actions.CreateNewInvoiceDetail2Action"/>							
+		<action name="showProductList"   
+			class="org.openxava.test.actions.ShowProductListAction"/>				
+	</controller>	
 	
 	<controller name="CustomerInvoices">
 		<action name="return" class="org.openxava.actions.ReturnPreviousModuleAction"/>

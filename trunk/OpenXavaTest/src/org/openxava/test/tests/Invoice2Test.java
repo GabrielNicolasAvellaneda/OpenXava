@@ -13,6 +13,19 @@ public class Invoice2Test extends ModuleTestBase {
 		super(testName, "Invoice2");		
 	}
 	
+	public void testDependentEditorsForHiddenPropertiesInCollectionElement() throws Exception {
+		execute("CRUD.new");
+		execute("InvoiceDetail2.new", "viewObject=xava_view_details");
+		assertNotExists("familyList");
+		assertNotExists("productList");
+		execute("InvoiceDetail2.showProductList");
+		assertExists("familyList");
+		assertExists("productList");
+		assertValidValuesCount("productList", 1);
+		setValue("familyList", "1");
+		assertValidValuesCount("productList", 7);
+	}
+	
 	public void testTouchContainerFromCallback() throws Exception {
 		if (!usesAnnotatedPOJO()) return; // This case is only implemented in JPA
 		execute("CRUD.new");
@@ -22,7 +35,7 @@ public class Invoice2Test extends ModuleTestBase {
 		assertCollectionRowCount("details", 0);
 		
 		// Creating a new detail
-		execute("Collection.new", "viewObject=xava_view_details");
+		execute("InvoiceDetail2.new", "viewObject=xava_view_details");
 		assertNotExists("details.invoice.year"); 
 		setValue("quantity", "7");
 		setValue("unitPrice", "8");
@@ -36,7 +49,7 @@ public class Invoice2Test extends ModuleTestBase {
 		assertValue("amountsSum", "56.00");
 		
 		// Creating another one
-		execute("Collection.new", "viewObject=xava_view_details");
+		execute("InvoiceDetail2.new", "viewObject=xava_view_details");
 		setValue("quantity", "10");
 		setValue("unitPrice", "10");
 		assertValue("amount", "100.00");
@@ -78,7 +91,7 @@ public class Invoice2Test extends ModuleTestBase {
 		setValue("vatPercentage", "16");
 		setValue("customer.number", "1");
 		assertCollectionRowCount("details", 0);
-		execute("Collection.new", "viewObject=xava_view_details");
+		execute("InvoiceDetail2.new", "viewObject=xava_view_details");
 		setValue("quantity", "7");
 		setValue("unitPrice", "8");
 		assertValue("amount", "56.00");

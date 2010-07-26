@@ -6,9 +6,9 @@ package org.openxava.actions;
 
 public interface IRemoteAction extends IAction, java.io.Serializable {
 	
-	void executeBefore() throws Exception;
+	void executeBefore() throws Exception; 
 	
-	void executeAfter() throws Exception;
+	void executeAfter() throws Exception; 	
 	
 	boolean isExecuteOnServer();
 	

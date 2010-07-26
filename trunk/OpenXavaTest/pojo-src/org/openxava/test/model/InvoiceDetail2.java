@@ -5,6 +5,7 @@ import java.math.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.test.actions.*;
 
 /**
  * 
@@ -33,6 +34,12 @@ public class InvoiceDetail2 {
 	
 	@Stereotype("MONEY") @Required
 	private BigDecimal unitPrice;
+	
+	@Transient @Stereotype("FAMILY")
+	private int familyList;
+	
+	@Transient @Stereotype("PRODUCT2")
+	private int productList;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@ReferenceView("SimpleWithFamily") 
@@ -119,5 +126,20 @@ public class InvoiceDetail2 {
 		this.product = product;
 	}
 
+	public void setFamilyList(int familyList) {
+		this.familyList = familyList;
+	}
+
+	public int getFamilyList() {
+		return familyList;
+	}
+
+	public void setProductList(int productList) {
+		this.productList = productList;
+	}
+
+	public int getProductList() {
+		return productList;
+	}
 
 }

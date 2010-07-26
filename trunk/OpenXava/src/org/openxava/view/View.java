@@ -2095,7 +2095,7 @@ public class View implements java.io.Serializable {
 		}		 		 				
 	}
 	
-	public boolean throwsPropertyChanged(String propertyName) throws XavaException {		
+	public boolean throwsPropertyChanged(String propertyName) throws XavaException {
 		int idx = propertyName.indexOf('.'); 
 		if (idx >= 0) {
 			String reference = propertyName.substring(0, idx);
@@ -3090,6 +3090,7 @@ public class View implements java.io.Serializable {
 			membersNamesWithoutSectionsAndCollections = null;
 			membersNamesWithHidden = null;
 			membersNamesInGroup = null;
+			metaPropertiesQualified = null; 
 			reloadNeeded = true;			
 			refreshCollection();
 		}
