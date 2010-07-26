@@ -96,7 +96,7 @@
 
 <head>
 	<title><%=managerHome.getModuleDescription()%></title>
-	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>" rel="stylesheet" type="text/css"> 
+	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>?ox=<%=version%>" rel="stylesheet" type="text/css"> 
 	<%
  		String[] jsFiles = style.getNoPortalModuleJsFiles();
  			if (jsFiles != null) {
@@ -116,7 +116,7 @@
 				.iterator(); it.hasNext();) {
 			String cssFile = (String) it.next();
 	%>
-	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>"/>
+	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>?ox=<%=version%>"/>
 	<%
 		}
 	%> 	
