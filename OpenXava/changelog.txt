@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: SaveElementInCollectionAction changes the view if not super.execute() is called.
+- Fix: Dependent properties in a collection element does not react to events when they are hidden and shown.
 - New getParentView() method in CollectionElementViewBaseAction.
 - Fix: @NoCreate and @NoModify annotations doesn't work for collections.
 - Russian translation of Reference Guide and other documentation improved.

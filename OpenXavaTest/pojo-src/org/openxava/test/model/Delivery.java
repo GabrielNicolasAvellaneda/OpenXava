@@ -187,6 +187,7 @@ public class Delivery {
 	@org.hibernate.validator.Size(max=3)
 	@NewAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.new")
 	@SaveAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.save")
+	@DetailAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.saveFailing") 
 	@HideDetailAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.hideDetail")
 	@RemoveAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.remove")
 	@RemoveSelectedAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.removeSelected")

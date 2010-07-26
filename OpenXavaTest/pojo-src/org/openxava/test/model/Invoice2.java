@@ -61,7 +61,8 @@ public class Invoice2 {
 	@org.hibernate.validator.Size(min=1)
 	@ListProperties("product.description, quantity, unitPrice, amount")
 	@XOrderBy("product.description desc")
-	@NoModify(forViews="NoModifyDetails") 
+	@NoModify(forViews="NoModifyDetails")
+	@NewAction("InvoiceDetail2.new") 
 	private Collection<InvoiceDetail2> details;
 	
 	boolean isRemoving() {

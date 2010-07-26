@@ -354,7 +354,7 @@ public class ModuleManager implements java.io.Serializable {
 				if (!Is.emptyString(error))	errors.add(error);
 				((IProcessLoadedFileAction) action).setFileItems(fileItems==null?Collections.EMPTY_LIST:fileItems);
 			}
-						
+			
 			if (action instanceof IRemoteAction) {
 				IRemoteAction remote = (IRemoteAction) action;
 				remote.executeBefore();					
@@ -448,7 +448,7 @@ public class ModuleManager implements java.io.Serializable {
 			}						
 			if (action instanceof ILoadFileAction) {					
 				setFormUpload(((ILoadFileAction) action).isLoadFile());
-			}			
+			}
 			if (metaAction != null) {
 				getObjectsFromAction(action, metaAction);
 			}
@@ -713,9 +713,9 @@ public class ModuleManager implements java.io.Serializable {
 		return xavaValues == null?Collections.EMPTY_MAP:xavaValues; 
 	}
 
-	private void getObjectsFromAction(IAction action, MetaAction metaAction) throws XavaException {
-		getObjectsFromActionInjectFields(action, metaAction); 
+	private void getObjectsFromAction(IAction action, MetaAction metaAction) throws XavaException { 
 		getObjectsFromActionUseObjects(action, metaAction);
+		getObjectsFromActionInjectFields(action, metaAction); 
 	}
 
 	private void getObjectsFromActionInjectFields(IAction action,
@@ -777,9 +777,9 @@ public class ModuleManager implements java.io.Serializable {
 		return objectName;
 	}
 
-	private void setObjectsInAction(IAction action, MetaAction metaAction) throws XavaException {
-		setObjectsToActionInjectFields(action, metaAction); 
+	private void setObjectsInAction(IAction action, MetaAction metaAction) throws XavaException { 
 		setObjectsToActionUseObjects(action, metaAction);		
+		setObjectsToActionInjectFields(action, metaAction); 
 	}
 
 	private void setObjectsToActionInjectFields(IAction action, MetaAction metaAction) {

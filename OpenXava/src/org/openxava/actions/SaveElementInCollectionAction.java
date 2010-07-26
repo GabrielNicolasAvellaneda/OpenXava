@@ -22,7 +22,7 @@ import org.openxava.view.*;
 
 public class SaveElementInCollectionAction extends CollectionElementViewBaseAction {
 	
-	private boolean containerSaved = false;	
+	private boolean containerSaved = false;
 	
 	public void execute() throws Exception {		
 		Map containerKey = saveIfNotExists(getCollectionElementView().getParent());

@@ -9,16 +9,18 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
+abstract public class CollectionElementViewBaseAction extends ViewBaseAction { 
+	
+
 	
 	private View collectionElementView;		
 	private String viewObject;
-	private boolean closeDialogDisallowed = false; 
+	private boolean closeDialogDisallowed = false;
 
 	abstract public void execute() throws Exception;
 	
 	public View getView() { 
-		if (viewObject != null) return super.getView();
+		if (viewObject != null) return super.getView();		
 		return getCollectionElementView().getRoot();		
 	}
 	
@@ -66,5 +68,5 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	public boolean isCloseDialogDisallowed() {
 		return closeDialogDisallowed;
 	}
-		
+	
 }
