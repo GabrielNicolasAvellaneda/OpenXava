@@ -52,9 +52,10 @@
 	</aggregate>	
 	
 	<view>
-		<property-view property="amountsSum" read-only="true"/>	
+		<property-view property="amountsSum" read-only="true"/>			
 		<reference-view reference="customer" view="Simplest"/>
 		<collection-view collection="details">
+			<new-action action="InvoiceDetail2.new"/>
 			<list-properties>product.description, quantity, unitPrice, amount</list-properties>
 		</collection-view>
 		
@@ -67,8 +68,33 @@
 		
 	</view>
 	
+	<view name="NoModifyDetails">
+		<property-view property="amountsSum" read-only="true"/>			
+		<reference-view reference="customer" view="Simplest"/>
+		<collection-view collection="details" modify-reference="false">			
+			<new-action action="InvoiceDetail2.new"/>
+			<list-properties>product.description, quantity, unitPrice, amount</list-properties>
+		</collection-view>
+		
+		<members>
+			year, number, date; 
+			details;
+		</members>			
+		
+	</view>
+	
 	<view model="InvoiceDetail2">
 		<reference-view reference="product" view="SimpleWithFamily"/>
+		<property name="familyList" stereotype="FAMILY"/>
+		<property name="productList" stereotype="PRODUCT2"/>
+		<members>
+			quantity;
+			unitPrice;
+			familyList;
+			productList;
+			amount;
+			product		
+		</members>		
 	</view>
 	
 	<entity-mapping table="XAVATEST@separator@INVOICE">

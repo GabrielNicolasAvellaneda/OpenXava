@@ -141,7 +141,8 @@
 			<save-action action="DeliveryDetail.save"/>
 			<hide-detail-action action="DeliveryDetail.hideDetail"/>
 			<remove-action action="DeliveryDetail.remove"/>
-			<remove-selected-action action="DeliveryDetail.removeSelected"/> 
+			<remove-selected-action action="DeliveryDetail.removeSelected"/>
+			<detail-action  action="DeliveryDetail.saveFailing"/> 
 		</collection-view>
    
 		<members>
@@ -243,7 +244,8 @@
 			<save-action action="DeliveryDetail.save"/>
 			<hide-detail-action action="DeliveryDetail.hideDetail"/>
 			<remove-action action="DeliveryDetail.remove"/>
-			<remove-selected-action action="DeliveryDetail.removeSelected"/> 
+			<remove-selected-action action="DeliveryDetail.removeSelected"/>
+			<detail-action  action="DeliveryDetail.saveFailing"/> 
 		</collection-view>
 
 		<members>

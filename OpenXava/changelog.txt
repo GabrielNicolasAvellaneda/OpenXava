@@ -1,45 +1,47 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4m5 (2010-7-28)
+------------------------
+- New mode 'split' (labeled as "Both") in addition to already existing 'detail' and 'List' modes.
+- The user can change the row count of list and collections, and the setting is stored by user.
+- Improved look & feel of page navigation for list and collections.
+- New Collection.saveAndStay action that allows to save a collection element without closing the dialog.
+- Default module help text in English, Spanish and Russian.
+- New defaultModeController property in xava.property to define the default initial mode.
+- Russian translation of Reference Guide and other documentation improved.
+- Help module: new 'helpPrefix', 'helpSuffix' and 'helpInNewWindow' properties in xava.properties. By default it uses 'http://openxava.wikispaces.com/help_'.
+- New getParentView() method in CollectionElementViewBaseAction.
+- Column resizing and customizing list can be disabled.
+- New mode 'NONE' for actions in controllers.xml to be displayed only in each row.
+- The pageRowCount property of Tab is persistent, storing its value by user.
+- Row action is always shows in collections, even when the properties of collection list and detail view match.
+- Actions from mode-controller with on-init=true are executed on module initialization.
+- HibernatePersistence declared explicitly as provider for JPA.
+- Hidden properties are not available to add by the user in list and collections.
+- Upgrade Jasperreports to 3.5.3
+- New SetEditableAction action class.
+- New cssClass and cssStyle attributes available for <xava:image /> taglib.
+- The List and Navigation controllers are no longer added automatically.
+- Style for checked rows is also applied in the list for adding new columns.
+- ModuleManager, ModuleContext, IValidator and IPropertyValidator now are serializable.
+- View editable and keyEditable properties are false at module initialization.
+- Delete action in each row: it display message with the row number.
+- The setConditionValues and setConditionComparators methods of ModuleTestBase use varargs.
 - Fix: SaveElementInCollectionAction changes the view if not super.execute() is called.
 - Fix: Dependent properties in a collection element does not react to events when they are hidden and shown.
-- New getParentView() method in CollectionElementViewBaseAction.
 - Fix: @NoCreate and @NoModify annotations doesn't work for collections.
-- Russian translation of Reference Guide and other documentation improved.
-- New Collection.saveAndStay action that allows to save a collection element without closing the dialog.
 - Fix: When a view is not editable its collections have edit action for rows and save action in element view.  
-- Row action is always shows in collections, even when the properties of collection list and detail view match.
-- HibernatePersistence declared explicitly as provider for JPA.
 - Fix: Arrays are not displayed nicely in list and collections.
 - Fix: Row actions in several lines when the list shows many properties.
 - Fix: Detail collection actions (like @RemoveAction) with empty action name fails.
-- Column resizing and customizing list can be disabled. 
-- Hidden properties are not available to add by the user in list and collections.
 - Fix: Bug on dialogs when opening another dialog such as reference search.
-- Upgrade Jasperreports to 3.5.3
 - Fix: @Column scale attribute ignored.
 - Fix: Jasper report actions does not show correct data after changing schema.
-- Improved look & feel of page navigation for list and collections.
-- The user can change the row count of list and collections, and the setting is stored by user.
-- The pageRowCount property of Tab is persistent, storing its value by user. 
-- New cssClass and cssStyle attributes available for <xava:image /> taglib.
-- Style for checked rows is also applied in the list for adding new columns.
 - Fix: Several nested tooltip for cells when executing several times actions over a collection/list.
 - Fix: JavaScript memory leak (so performance degradation) when working some time with a collection/list. 
-- ModuleManager, ModuleContext, IValidator and IPropertyValidator now are serializable.
-- New mode 'NONE' for actions in controllers.xml to be displayed only in each row.
 - Fix: checkbox 'select/deselect all' not display in choose list (rows with radio button). 
-- Delete action in each row: it display message with the row number.
 - Fix: when you shorten columns if the value contain '-' it produces two lines.
-- Default module help text in English, Spanish and Russian.
-- Help module: new 'helpPrefix', 'helpSuffix' and 'helpInNewWindow' properties in xava.properties. By default it uses 'http://openxava.wikispaces.com/help_'. 
-- New mode 'split' (labeled as "Both") in addition to already existing 'detail' and 'List' modes.
-- New SetEditableAction action class.
-- The List and Navigation controllers are no longer added automatically.
-- The setConditionValues and setConditionComparators methods of ModuleTestBase use varargs.
-- Actions from mode-controller with on-init=true are executed on module initialization.
-- New defaultModeController property in xava.property to define the default initial mode. 
-- View editable and keyEditable properties are false at module initialization. 
 
 OpenXava 4m4 (2010-5-25)
 ------------------------
@@ -75,8 +77,7 @@ OpenXava 4m4 (2010-5-25)
 - Fix: References as combos to filter in list mode: using XML components.
 - Fix: Mode List: descriptionsList does not apply conditionBase with filter.
 - Fix: Filter in list mode with calculated property and descriptionsList; descriptionsList and enumLetterType property.
-- Fix: Filter by number zero in list mode.
-   
+- Fix: Filter by number zero in list mode.  
 
 OpenXava 4m3 (2010-3-25)
 ------------------------

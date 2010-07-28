@@ -21,7 +21,7 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 		if (!(ev.getEntity() instanceof IModel)) return false;
 		applyConverter((IModel) ev.getEntity(), 
 				Arrays.asList(ev.getPersister().getPropertyNames()),
-				ev.getState());		
+				ev.getState()); 		
 		return false;
 	}
 

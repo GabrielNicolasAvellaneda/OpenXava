@@ -49,7 +49,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		MetaCollection metaCollection = getMetaCollection();
 		int maximum = metaCollection.getMaximum(); 
 		if (maximum > 0) {
-			if (getCollectionElementView().getCollectionValues().size() >= maximum) {
+			if (getCollectionElementView().getCollectionSize() >= maximum) {
 				Messages errors = new Messages();
 				errors.add("maximum_elements", new Integer(maximum), metaCollection.getName(), metaCollection.getMetaModel().getName());
 				throw new ValidationException(errors);
@@ -96,10 +96,10 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	}
 
 	private void saveAggregate(Map containerKey) throws Exception{
-		if (getCollectionElementView().getKeyValuesWithValue().isEmpty()) { 
+		if (getCollectionElementView().getKeyValuesWithValue().isEmpty()) {
 			createAggregate(containerKey);			
 		}
-		else {				
+		else {
 			try {				
 				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), getValuesToSave());
 				addMessage("aggregate_modified", getCollectionElementView().getModelName());
@@ -113,7 +113,8 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	private void createAggregate(Map containerKey) throws Exception {
 		validateMaximum();
-		int row = getCollectionElementView().getCollectionValues().size();
+		int row = getMetaCollection().getMetaModel().isAnnotatedEJB3()?
+			0:getCollectionElementView().getCollectionSize(); 		
 		MapFacade.createAggregate(
 			getCollectionElementView().getModelName(),						
 			containerKey, row+1, // +1 for start in 1, because 0 is equals to no value					

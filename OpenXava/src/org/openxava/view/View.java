@@ -1297,10 +1297,30 @@ public class View implements java.io.Serializable {
 			}
 		}
 		else {
-			// If not calculated we obtain the data from the Tab
+			// If not calculated we obtain the data from the Tab			
 			return getCollectionValues(getCollectionTab().getAllKeys());
 		}
+	}
+	
+	/**
+	 * The size of the collection. <p>
+	 * 
+	 * In order to call this method <b>this</b> view must represents a collection.
+	 * 
+	 * @since 4m5
+	 */	
+	public int getCollectionSize() throws XavaException { 
+		assertRepresentsCollection("getCollectionSize()");
+		if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded()) {
+			return getCollectionValues().size();
+		}
+		else {
+			// If not calculated we obtain the data from the Tab
+			getCollectionTab().reset(); 
+			return getCollectionTab().getAllKeys().length;
+		}
 	}	
+	
 		
 	/**
 	 * A list of selected collection element when each element is a map 
@@ -3834,14 +3854,13 @@ public class View implements java.io.Serializable {
 		{			
 			result.put(getPropertyPrefix(), getParent());
 			return;
-		}		 		
- 
+		}		 				
 		if (displayReferenceWithNotCompositeEditor() && 
 			getParent().hasEditableMemberChanged(getMemberName()))
 		{			
 			result.put(getPropertyPrefix(), getParent());
 			return;
-		}				
+		}		
 		if (oldValues == null) oldValues = Collections.EMPTY_MAP;
 		if (values == null) values = new HashMap();
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
@@ -3858,7 +3877,7 @@ public class View implements java.io.Serializable {
 				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
 			oldValues.remove(en.getKey());			
-		}
+		}		
 		for (Iterator it=oldValues.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			if (!equals(en.getValue(), values.get(en.getKey())) ||
@@ -3874,7 +3893,7 @@ public class View implements java.io.Serializable {
 				String action = (String) it.next();
 				result.put(getPropertyPrefix() + action, this);
 			}
-		}
+		}		
 			
 		if (hasSubviews()) {
 			Iterator itSubviews = getSubviews().values().iterator();
@@ -3898,7 +3917,7 @@ public class View implements java.io.Serializable {
 					subview.fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);					
 				}
 			}
-		}
+		}		
 		if (hasGroups()) {
 			Iterator itSubviews = getGroupsViews().entrySet().iterator();
 			while (itSubviews.hasNext()) {
@@ -3909,12 +3928,11 @@ public class View implements java.io.Serializable {
 					subview.fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);
 				}
 			}
-		}						
+		}
 		if (!sectionChanged && hasSections()) {
 			// Only the displayed data matters here
 			getSectionView(getActiveSection()).fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);	
 		}
-		
 	}
 
 	private boolean hasEditableMemberChanged(String member) { 
