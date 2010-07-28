@@ -36,7 +36,7 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
-	public void testSaveElementInCollectionWithUseObjectView() throws Exception { 
+	public void testSaveElementInCollectionWithUseObjectView() throws Exception {  
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=2");
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");

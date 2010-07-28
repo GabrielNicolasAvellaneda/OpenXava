@@ -15,7 +15,7 @@ public class SelectSchemaTest extends ModuleTestBase {
 	
 	public void testInitModules() throws Exception {
 		// select first schema: COMPANYA
-		// setValue("schema", "1"); // For XML components
+		//setValue("schema", "1"); // For XML components
 		setValue("schema", String.valueOf(SelectSchema.Schema.COMPANYA.ordinal())); // For annotated POJOs
 		execute("SelectSchema.set");
 		assertNoErrors();

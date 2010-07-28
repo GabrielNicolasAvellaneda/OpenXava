@@ -22,7 +22,7 @@ public class SaveAction extends ViewBaseAction {
 		try {
 			Map values = null;
 			if (getView().isKeyEditable()) {
-				// Create
+				// Create			
 				if (isResetAfter()) {					
 					MapFacade.create(getModelName(), getValuesToSave());
 					addMessage("entity_created", getModelName());

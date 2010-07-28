@@ -39,7 +39,7 @@ public class InvoiceDetail2 {
 	private int familyList;
 	
 	@Transient @Stereotype("PRODUCT2")
-	private int productList;
+	private long productList;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@ReferenceView("SimpleWithFamily") 
@@ -134,11 +134,11 @@ public class InvoiceDetail2 {
 		return familyList;
 	}
 
-	public void setProductList(int productList) {
+	public void setProductList(long productList) {
 		this.productList = productList;
 	}
 
-	public int getProductList() {
+	public long getProductList() {
 		return productList;
 	}
 

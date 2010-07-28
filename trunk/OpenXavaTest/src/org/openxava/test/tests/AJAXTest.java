@@ -30,7 +30,7 @@ public class AJAXTest extends ModuleTestBase {
 		changeModule("DeliveryType");
 		execute("Mode.split");
 		assertLoadedParts("core");
-		execute("CRUD.new");
+		execute("CRUD.new");		
 		assertLoadedParts("editor_comboDeliveries," + // Because it is set editable
 				"editor_description," + // Because it is set editable
 				"editor_number," + // Because it is set editable
@@ -39,7 +39,8 @@ public class AJAXTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertLoadedParts("errors, messages, list_view");
 		execute("Navigation.next");
-		assertLoadedParts("editor_description," + // list_view is not loaded: Good! 
+		assertLoadedParts("editor_description," + // list_view is not loaded: Good!
+				// "editor_comboDeliveries," + // Only with XML components, because in XML is a view property, and in JPA is a transient property 
 				"editor_number," +  
 				"errors, messages");
 		assertListRowCount(6);
@@ -49,6 +50,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("DeliveryType.saveNotReset");
 		assertListRowCount(7);
 		assertLoadedParts("editor_description," +
+				// "editor_comboDeliveries," + // Only with XML components
 				"list_view," + // Because DeliveryType.saveNotReset changes data that can be in the list
 				"editor_number," +  
 				"errors, messages");	

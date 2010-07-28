@@ -37,15 +37,7 @@ import org.openxava.tab.impl.IEntityTab;
 import org.openxava.tab.impl.IXTableModel;
 import org.openxava.tab.meta.MetaRowStyle;
 import org.openxava.tab.meta.MetaTab;
-import org.openxava.util.CMPFieldComparator;
-import org.openxava.util.Dates;
-import org.openxava.util.ElementNotFoundException;
-import org.openxava.util.Is;
-import org.openxava.util.Labels;
-import org.openxava.util.Users;
-import org.openxava.util.XavaException;
-import org.openxava.util.XavaPreferences;
-import org.openxava.util.XavaResources;
+import org.openxava.util.*;
 import org.openxava.view.View;
 import org.openxava.web.Ids;
 import org.openxava.web.WebEditors;
@@ -297,15 +289,21 @@ public class Tab implements java.io.Serializable {
 	 * 
 	 * Suitable for UI.
 	 */
-	public IXTableModel getTableModel() throws Exception {		
+	public IXTableModel getTableModel() {		
 		if (tableModel == null) {
 			try {
 				tableModel = createTableModel();			
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
-				restoreDefaultProperties(); // if fails because user customized list uses properties no longer existing 
-				tableModel = createTableModel();
+				restoreDefaultProperties(); // if fails because user customized list uses properties no longer existing
+				try {
+					tableModel = createTableModel();
+				}
+				catch (Exception ex2) { 
+					log.error(ex2.getMessage(), ex2);
+					throw new SystemException(ex2);
+				}
 			}
 		}
 		return tableModel;
@@ -1375,9 +1373,9 @@ public class Tab implements java.io.Serializable {
 	 */	
 	public Map [] getAllKeys() { 
 		Collection allKeys = new ArrayList();
-		for (int i = 0; i < tableModel.getRowCount(); i++) {			
+		for (int i = 0; i < getTableModel().getRowCount(); i++) { 					
 			try {
-				allKeys.add(tableModel.getObjectAt(i));
+				allKeys.add(getTableModel().getObjectAt(i)); 				
 			}
 			catch (Exception ex) {
 				allKeys.add(Collections.EMPTY_MAP);

@@ -333,7 +333,7 @@ public class Module extends DWRBase {
 
 	private void fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(Map result) { 		
 		View view = getView();			
-		Collection changedMembers = view.getChangedPropertiesActionsAndReferencesWithNotCompositeEditor().entrySet();
+		Collection changedMembers = view.getChangedPropertiesActionsAndReferencesWithNotCompositeEditor().entrySet();		
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			String qualifiedName = (String) en.getKey();

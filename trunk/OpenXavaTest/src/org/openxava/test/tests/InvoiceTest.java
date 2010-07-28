@@ -792,7 +792,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("product.number", getProductNumber());
 		assertValue("product.description", getProductDescription());
 		assertValue("deliveryDate", getCurrentDate()); 
-		setValue("deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate		
+		setValue("deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate
 		execute("Collection.save");
 		assertCollectionRowCount("details", 3);
 				

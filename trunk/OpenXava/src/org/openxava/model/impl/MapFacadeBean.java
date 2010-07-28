@@ -1546,7 +1546,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}
 			else if (metaModel.containsMetaReference(memberName)) {
 				MetaReference ref = metaModel.getMetaReference(memberName);
-				value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());
+				value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());				
 			}
 			else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
 				value = en.getValue();

@@ -11,6 +11,7 @@
 	<for stereotype="SUBFAMILY_DEPENDS_REFERENCE" type="int"/>
 	<for stereotype="SERVICE_TYPE" type="int"/>
 	<for stereotype="NO_FORMATING_STRING" type="String"/>
+	<for stereotype="PRODUCT2" type="long"/>
 	<for stereotype="PRODUCT3" type="long"/>
 	<for stereotype="WAREHOUSE" type="org.openxava.test.model.Warehouse"/>
 	<for stereotype="PERSON_NAME" type="String"/>
