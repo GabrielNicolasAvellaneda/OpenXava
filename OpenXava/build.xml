@@ -738,9 +738,11 @@
 			<fileset dir="web/public"/>
 		</copy>		
 		<copy todir="${dist.portlets.dir}/xava" file="web/xava/jasperReport.jsp"/>
-		<copy todir="${dist.portlets.dir}/xava/help" >
+		
+		<copy todir="${dist.portlets.dir}/xava/help" failonerror="false">
 			<fileset dir="web/help"/>
 		</copy>
+		
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
 	</target>
 	

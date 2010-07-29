@@ -46,9 +46,7 @@ if (collectionEditable || collectionMembersEditables) {
 	lineAction = subview.getEditCollectionElementAction();
 }
 else {
-	if (!subview.isDetailMemberInCollection()) {
-		lineAction = subview.getViewCollectionElementAction();
-	}
+	lineAction = subview.getViewCollectionElementAction();
 }
 String propertyPrefix = propertyPrefixAccumulated == null?collectionName + ".":propertyPrefixAccumulated + collectionName + "."; 
 %>

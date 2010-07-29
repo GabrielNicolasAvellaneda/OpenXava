@@ -2,12 +2,13 @@ if (openxava == null) var openxava = {};
 
 openxava.init = function(application, module) {
 	dwr.util.useLoadingMessage(openxava.loadingMessage);
-	document.onkeydown = openxava.processKey;  
-	openxava.ajaxRequest(application, module, true); 	
+	document.onkeydown = openxava.processKey;
+	openxava.initUI(application, module);
+ 
 }
 
-openxava.ajaxRequest = function(application, module, firstRequest) {	
-	if (openxava.isRequesting(application, module)) return;	
+openxava.ajaxRequest = function(application, module, firstRequest) {
+	if (openxava.isRequesting(application, module)) return;
 	openxava.setRequesting(application, module);
 	document.throwPropertyChange = false; 
 	openxava.getElementById(application, module, "loading").value=true;    
@@ -21,7 +22,7 @@ openxava.ajaxRequest = function(application, module, firstRequest) {
 			openxava.refreshPage); 			
 }
 
-openxava.refreshPage = function(result) {
+openxava.refreshPage = function(result) {	
 	var changed = "";	
 	if (result.error != null) {		
 		openxava.systemError(result);
@@ -84,11 +85,8 @@ openxava.refreshPage = function(result) {
 				errors = true;
 				break;
 			}			
-		}
-		if (openxava.initTheme != null) openxava.initTheme();
-		openxava.clearLists(result.application, result.module); 
-		openxava.initLists(result.application, result.module);  
-		openxava.initEditors(result.application, result.module); 
+		} 
+		openxava.initUI(result.application, result.module, result.currentRow); 
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
@@ -122,11 +120,42 @@ openxava.refreshPage = function(result) {
 	document.body.style.cursor='auto';
 }
 
+openxava.initUI = function(application, module, currentRow) {
+	if (openxava.initTheme != null) openxava.initTheme(); 
+	openxava.clearLists(application, module); 
+	openxava.initLists(application, module);	
+	openxava.initEditors(application, module);
+	openxava.initSelectedRows();
+	openxava.initCurrentRow(application, module, currentRow); 
+}
+
 openxava.showMessages = function(result) { 
 	var messagesIsEmpty = openxava.getElementById(result.application, result.module, "messages_table") == null;
 	var errorsIsEmpty = openxava.getElementById(result.application, result.module, "errors_table") == null;
 	if (!messagesIsEmpty) openxava.effectShow(result.application, result.module, "messages");
 	if (!errorsIsEmpty) openxava.effectShow(result.application, result.module, "errors");
+}
+
+openxava.initSelectedRows = function() { 
+	$("._XAVA_SELECTED_ROW_").addClass(openxava.selectedRowClass);
+}
+
+openxava.initCurrentRow = function(application, module, currentRow) {
+	$("._XAVA_CURRENT_ROW_")
+		.removeClass("_XAVA_CURRENT_ROW_")
+		.removeClass(openxava.currentRowClass)
+		.children()
+			.removeClass(openxava.currentRowCellClass);
+	if (currentRow == null) return;
+	var id = openxava.decorateId(application, module, "" + currentRow);		
+	$("#" + id).addClass("_XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass).
+		children().addClass(openxava.currentRowCellClass);
+}
+
+openxava.markRows = function() { 	
+	$("._XAVA_CURRENT_ROW_").addClass(openxava.currentRowClass)
+		.children().addClass(openxava.currentRowCellClass); 
+	openxava.initSelectedRows();
 }
 
 openxava.disableElements = function(result) {	
@@ -194,7 +223,7 @@ openxava.initLists = function(application, module) {
 		stop: function(event, ui) {			
 			Tab.setColumnWidth(event.target.id, $(event.target).width());
 		}
-	});			
+	});				
 	$('.' + openxava.decorateId(application, module, "tipable")).qtip({     
 		style: { 
 			name: 'light',
@@ -208,7 +237,7 @@ openxava.initLists = function(application, module) {
 			adjust: { screen:true, resize:true }
 		},
 		show: { effect: { length: 800 } }
-	});	
+	}).removeClass(openxava.decorateId(application, module, "tipable")); 		
 }
 
 openxava.addEditorInitFunction  = function(initFunction) { 
@@ -370,6 +399,10 @@ openxava.manageFilterRow = function(application, module, id, tabObject) {
 		link.title=this.hideFiltersMessage;
 		Tab.setFilterVisible(application, module, true, tabObject);
 	}    
+}
+
+openxava.setPageRowCount = function(application, module, collection, select) {	
+	openxava.executeAction(application, module, '', false, "List.setPageRowCount", "rowCount=" + select.value + ",collection=" + collection)
 }
 
 openxava.executeAction = function(application, module, confirmMessage, takesLong, action, argv, range, alreadyProcessed) {
@@ -536,30 +569,21 @@ openxava.clearConditionComparators = function(application, module, prefix) {
 	}
 }
 
-openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, confirmMessage, takesLong) {
+openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, selectedRowStyle, rowStyle, confirmMessage, takesLong, selectingAll) { 	
 	var row = $("#" + idRow)[0];
 	if (checkValue) {
-		var cssClass = cssSelectedRow + " " + cssRow;		
-		row.className=cssClass;
-		row.onmouseout = function() {
-            this.className = cssClass;
-        }
+		$(row).addClass("_XAVA_SELECTED_ROW_").addClass(openxava.selectedRowClass);
 		row.style.cssText = rowStyle + selectedRowStyle;
 	}
 	else {
-		row.className=cssRow;
-		row.onmouseout = function() {
-            this.className = cssRow;
-        }
+		$(row).removeClass("_XAVA_SELECTED_ROW_").removeClass(openxava.selectedRowClass);
 		row.style.cssText = rowStyle;
-	}
-	
+	}	
 	if (hasOnSelectAction){
 		argv = argv + ",selected=" + checkValue;
 		openxava.executeAction(application, module, confirmMessage, takesLong, action, argv);	
-	}
-	
-	openxava.hasOnSelectAll(application, module);
+	}	
+	if (!selectingAll) openxava.hasOnSelectAll(application, module);
 }
 
 openxava.clearLog = function(message) { 
@@ -570,23 +594,21 @@ openxava.log = function(message) {
 	$('#xava_console').append(message).append("<br/>");
 }
 
-openxava.onSelectAll = function(application, module, action, argv, checkValue, hasOnSelectAction, prefix, cssSelectedRow, selectedRowStyle, rowStyle){
+openxava.onSelectAll = function(application, module, action, argv, checkValue, hasOnSelectAction, prefix, selectedRowStyle, rowStyle){
 	var selected = document.getElementsByName(openxava.decorateId(application, module, "xava_selected"));
 	var first = -1;
 	var last = 0;
 	var alreadyProcessed = "";
-
+	var selectedPrefix = prefix == ""?"selected:":prefix; 
 	for (var i=0; i<selected.length; i++) {
-		if (selected[i].value.search(prefix) != -1){
+		if (selected[i].value.indexOf(selectedPrefix) == 0){ 
 			var row = selected[i].value.replace(prefix + "selected:", "");
 			if (selected[i].value.search("__SELECTED__") != -1) row = selected[i].value.replace(prefix + "__SELECTED__:", "");	// calculatedCollections
 			if (first < 0) first = row;
 			if (selected[i].checked==checkValue) alreadyProcessed = alreadyProcessed + "_" + i;
 			else{
 				var idRow = openxava.decorateId(application, module, prefix) + row;
-				var cssRow = ($("#" + idRow)[0]).className;
-				if (!checkValue) cssRow = cssRow.replace(cssSelectedRow, "");
-				openxava.onSelectElement(application, module, action, argv, checkValue, idRow, null, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, null, null);
+				openxava.onSelectElement(application, module, action, argv, checkValue, idRow, null, selectedRowStyle, rowStyle, null, null, true);  
 				last = row;
 			}
 			selected[i].checked=checkValue?1:0;
@@ -599,7 +621,6 @@ openxava.onSelectAll = function(application, module, action, argv, checkValue, h
 		var range = first + "_" + last;
 		openxava.executeAction(application, module, "", "", action, argv, range, alreadyProcessed);
 	}
-	else openxava.hasOnSelectAll(application, module);
 }
 
 openxava.hasOnSelectAll = function(application, module){
@@ -608,9 +629,11 @@ openxava.hasOnSelectAll = function(application, module){
 		var selected = document.getElementsByName(openxava.decorateId(application, module, "xava_selected"));
 		var all = selected.length > 0;
 		var e = 0;	// when there are several collections: it checks that the collection has at least one element
+		
+		var value = selectedAll[i].value.replace("selected_all", ""); 
+		var selectedPrefix = value == ""?"selected:":value; 
 		for (var j=0; j<selected.length && all; j++){
-			var value = selectedAll[i].value.replace("selected_all", "");
-			if (selected[j].value.search(value) != -1) {
+			if (selected[j].value.indexOf(selectedPrefix) == 0){ 
 				e++;
 				all = selected[j].checked;
 			}
