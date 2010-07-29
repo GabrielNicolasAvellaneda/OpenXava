@@ -18,8 +18,7 @@ public class NewOrderForCurrentUserAction extends NewAction {
 		View customerView = getView().getSubview("customer");
 		customerView.setValue("number", customerNumber);
 		customerView.findObject();
-		customerView.setKeyEditable(false);
-		
+		customerView.setKeyEditable(false);		
 	}
 
 }
