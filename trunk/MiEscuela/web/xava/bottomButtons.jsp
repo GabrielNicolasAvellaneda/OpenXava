@@ -7,7 +7,9 @@
 <%
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
-boolean buttonBar = !"false".equalsIgnoreCase(request.getParameter("buttonBar")); 
+boolean buttonBar = !"false".equalsIgnoreCase(request.getParameter("buttonBar"));
+String mode = request.getParameter("xava_mode"); 
+if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName(); 
 %>
 
 <button name="xava.DEFAULT_ACTION" type="submit" 
@@ -19,7 +21,7 @@ java.util.Iterator it = manager.getMetaActions().iterator();
 while (it.hasNext()) {
 	MetaAction action = (MetaAction) it.next();
 	if (action.isHidden()) continue;
-	if (!buttonBar || !action.hasImage()) { 
+	if (action.appliesToMode(mode) && (!buttonBar || !action.hasImage())) {   
 	%>
 	<xava:button action="<%=action.getQualifiedName()%>"/>
 	<%

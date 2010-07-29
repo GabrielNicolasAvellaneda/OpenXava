@@ -6,12 +6,12 @@
 
 <%
 String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
-String cssSelectedRow = style.getSelectedRow();
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
-<table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+
+<%@page import="org.openxava.util.XavaPreferences"%><table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 	<%
 		if (lineAction != null) {
@@ -25,7 +25,7 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 		String actionOnClickAll = Actions.getActionOnClickAll(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, idCollection, propertyPrefix, 
-		cssSelectedRow, selectedRowStyle, rowStyle);
+		selectedRowStyle, rowStyle);
 	%>
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=propertyPrefix%>selected_all" <%=actionOnClickAll%> />
 	</th>
@@ -37,9 +37,10 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 	String label = p.getQualifiedLabel(request).replaceAll(" ", "&nbsp;");
 	int columnWidth = subview.getCollectionColumnWidth(columnIndex);
 	String width = columnWidth<0?"":"width: " + columnWidth + "px";
+	boolean resizeColumns = XavaPreferences.getInstance().isResizeColumns();
 %>
 	<th class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
-		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="xava_resizable" style="overflow: hidden; <%=width%>" >		
+		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):(""))%>" style="overflow: hidden; <%=width%>" >
 		<%=label%>&nbsp;
 		</div>
 	</th>
@@ -63,14 +64,15 @@ for (int f=0; itAggregates.hasNext(); f++) {
 		cssClass = cssClass + " " + selectedClass;		
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; 
 	}		
-	String idRow = Ids.decorate(request, propertyPrefix) + f;
-	String events=f%2==0?style.getListPairEvents(selectedClass):style.getListOddEvents(selectedClass);
+	String idRow = Ids.decorate(request, propertyPrefix) + f;	
+	String events=f%2==0?style.getListPairEvents():style.getListOddEvents(); 
 %>
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 <%
 	if (lineAction != null) {
 %>
 <td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
+<nobr>
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 <% 
 	for (java.util.Iterator itRowActions = subview.getRowActionsNames().iterator(); itRowActions.hasNext(); ) { 	
@@ -80,13 +82,14 @@ for (int f=0; itAggregates.hasNext(); f++) {
 <%
 	}
 %>
+</nobr>
 </td>
 <%
 	} 
 	String actionOnClick = Actions.getActionOnClick(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, f, idCollection, idRow,
-		cssSelectedRow, cssClass, selectedRowStyle, rowStyle, 
+		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction);
 %>
 <td class="<%=cssCellClass%>" width="5" style="<%=style.getListCellStyle()%>">

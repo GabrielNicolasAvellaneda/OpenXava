@@ -40,12 +40,27 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 
 <div <%=style.getModuleSpacing()%> >
 
-	<% if (buttonBar) { %>
-    <div id='<xava:id name="button_bar"/>' class='<%=style.getButtonBar()%>'>		
-		<jsp:include page="buttonBar.jsp"/>
+    <% if (manager.isSplitMode()) { %>    
+	<div id='<xava:id name="list_button_bar"/>' class='<%=style.getButtonBar()%>'>		
+		<jsp:include page="buttonBar.jsp?xava_mode=list"/> 
+	</div>
+	<div id='<xava:id name="list_view"/>'>
+	<jsp:include page='list.jsp'/>
+	</div>
+	<div id='<xava:id name="list_bottom_buttons"/>' style="<%=style.getBottomButtonsStyle()%>">	
+		<jsp:include page="bottomButtons.jsp?xava_mode=list"/>
+	</div>
+	
+	<hr/>
+	<% } %>
+	
+
+	<% if (buttonBar) {	%> 
+    <div id='<xava:id name="button_bar"/>' class='<%=style.getButtonBar()%>'>    
+		<jsp:include page="buttonBar.jsp"/> 
 	</div>
 	<% } %>
-    
+	    
     <% if (messagesOnTop) { %>    
     <div id='<xava:id name="errors"/>' style="display: inline;">
     	<jsp:include page="errors.jsp"/>
@@ -55,7 +70,6 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 		<jsp:include page="messages.jsp"/>
 	</div>            
     <% } %>
-          		 
 	<div id='<xava:id name="view"/>' <%=manager.isListMode()?"":("class='" + style.getDetail() + "'")%> style='padding-top: 2px;'>
 		<jsp:include page='<%=manager.getViewURL()%>'/>		
 	</div>    	
@@ -73,6 +87,7 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 		<jsp:include page="messages.jsp"/>
 	</div>               
     <% } %>
+    
 </div>
  
 </form>
