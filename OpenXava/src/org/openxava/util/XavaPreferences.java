@@ -417,5 +417,9 @@ public class XavaPreferences {
 	public boolean isResizeColumns(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("resizeColumns", "true").trim());
 	}
-
+	
+	/** @since 4m6 */
+	public boolean isSaveAndStayForCollections(){
+		return "true".equalsIgnoreCase(getProperties().getProperty("saveAndStayForCollections", "true").trim());
+	}
 }

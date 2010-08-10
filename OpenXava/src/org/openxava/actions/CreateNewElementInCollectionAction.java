@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.Iterator;
 
+import org.openxava.util.XavaPreferences;
+
 
 /**
  * Create a new element in collection. <p>
@@ -28,7 +30,11 @@ public class CreateNewElementInCollectionAction extends CollectionElementViewBas
 		{ 
 			// The Collection.saveAndStay will function as trapper for the save action,
 			// and will prevent the dialog to close while clearing the form and filling with default values.
-			addActions(getCollectionElementView().getSaveCollectionElementAction(), "Collection.saveAndStay");
+			addActions(getCollectionElementView().getSaveCollectionElementAction());
+			
+			if(XavaPreferences.getInstance().isSaveAndStayForCollections()){
+				addActions("Collection.saveAndStay");
+			}
 		} 		
 		Iterator itDetailActions = getCollectionElementView().getActionsNamesDetail().iterator();		
 		while (itDetailActions.hasNext()) {			

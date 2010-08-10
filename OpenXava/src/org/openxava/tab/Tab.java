@@ -52,20 +52,18 @@ import org.openxava.web.WebEditors;
 public class Tab implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1724100598886966704L;
+	private static Log log = LogFactory.getLog(Tab.class);
 
 	/**
 	 * Prefix used for naming (in session) to the tab objects used for collections.
 	 */
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
+	
 	private final static String PROPERTIES_NAMES = "propertiesNames";
 	private final static String ROWS_HIDDEN = "rowsHidden";
 	private final static String FILTER_VISIBLE = "filterVisible";
 	private final static String PAGE_ROW_COUNT = "pageRowCount"; 
 	private final static String COLUMN_WIDTH = "columnWidth."; 
-	
-	
-	private static Log log = LogFactory.getLog(Tab.class);
-	
 	private final static String STARTS_COMPARATOR = "starts_comparator";
 	private final static String CONTAINS_COMPARATOR = "contains_comparator";
 	private final static String YEAR_COMPARATOR = "year_comparator";
@@ -113,7 +111,9 @@ public class Tab implements java.io.Serializable {
 	private boolean filterVisible=XavaPreferences.getInstance().isShowFilterByDefaultInList();
 	private Boolean customizeAllowed=null; 
 	private Boolean resizeColumns=null; 
-	private Map<String, Integer> columnWidths;	
+	private Map<String, Integer> columnWidths;
+	private String [] filterConditionValues = null; 
+	private boolean filtered = false; 
 	
 	private static int nextOid = 0; 
 	public int oid = nextOid++;
@@ -373,8 +373,8 @@ public class Tab implements java.io.Serializable {
 		else if (!Is.emptyString(getBaseCondition())) {
 			sb.append(getSQLBaseCondition());
 			firstCondition = false;			
-		}				
-
+		}		
+		
 		if (!(conditionValues == null || conditionValues.length == 0)) {
 			MetaProperty pOrder = null;
 			for (int i = 0; i < this.conditionValues.length; i++) {
@@ -881,9 +881,10 @@ public class Tab implements java.io.Serializable {
 	}
 		
 	public String [] getConditionValues() {
+		setFilteredConditionValues(); 
 		return conditionValues; 
 	}
-	
+		
 	private void setConditionComparatorsImpl(String [] comparators) throws XavaException {  
 		if (Arrays.equals(this.conditionComparators, comparators)) return;		
 		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
@@ -1509,6 +1510,52 @@ public class Tab implements java.io.Serializable {
 
 	public void clearSelected() {
 		selected = null;
+	}
+	
+	/** @since 4m6 */
+	public void setConditionValue(String property, Object value) { 
+		List metaPropertiesNC = getMetaPropertiesNotCalculated();
+		int size = metaPropertiesNC.size();
+		if (size > 0) {
+			filterConditionValues = new String[size];
+			for (int i = 0; i < size; i++) {
+				filterConditionValues[i] = "";
+				if (((MetaProperty) metaPropertiesNC.get(i)).getName()
+						.equals(property)) {
+					filterConditionValues[i] = value==null?null:value.toString(); // A little rundimentary, maybe would be better to use a formatter
+					filtered = true;
+				}
+			}
+		}	
+	}
+	
+	private void setFilteredConditionValues() { 
+		if (filtered && filterConditionValues != null) {
+			filtered = false;
+			if (conditionValues == null) {
+				conditionValues = new String[filterConditionValues.length];
+			}
+			if (conditionComparators == null) {
+				conditionComparators = new String[filterConditionValues.length];
+			}
+			int size = (filterConditionValues.length < conditionValues.length)?
+					filterConditionValues.length:conditionValues.length;
+			for (int i = 0; i < size; i++) {
+				if (conditionValues[i] == null) {
+					conditionValues[i] = "";
+				}
+				if (conditionComparators[i] == null) {
+					conditionComparators[i] = "";
+				}
+
+				if (!filterConditionValues[i].equals("")) {
+					conditionValues[i] = filterConditionValues[i];
+					conditionComparators[i] = "eq";
+				}
+			}
+			
+		}
+		
 	}
 		
 }

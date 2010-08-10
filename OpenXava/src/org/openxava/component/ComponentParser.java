@@ -47,7 +47,7 @@ class ComponentParser extends ParserBase {
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
-			throw new XavaException("ejb3_annotations_parse_error", name);
+			throw new XavaException("ejb3_annotations_parse_error", name);			
 		}		
 	}
 
