@@ -153,7 +153,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 		}
 		catch (Exception ex) {
 			log.warn("exists_model_errors", ex);
-			return false;
+			return false;			
 		}
 	}
 	
@@ -162,8 +162,6 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 		module.setMetaApplication(this);
 		module.setName(modelName);			
 		module.setModelName(modelName);
-		// tmp module.addControllerName("Navigation");
-		// tmp module.addControllerName("List");
 		if (MetaControllers.contains(modelName)) {
 			module.addControllerName(modelName);
 		}

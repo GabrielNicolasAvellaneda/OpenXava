@@ -853,4 +853,15 @@
 			class="org.openxava.test.actions.SeeMessageAction"/>
 	</controller>
 	
+	<controller name="ChangeYearCondition">
+		<action name="changeTo2002" mode="list" on-init="true"
+			class="org.openxava.test.actions.ChangeYearConditionAction">
+			<set property="year" value="2002"/>
+		</action>
+		<action name="changeTo2004" mode="list" 
+			class="org.openxava.test.actions.ChangeYearConditionAction" >
+			<set property="year" value="2004"/>
+		</action>
+	</controller>	
+	
 </controllers>

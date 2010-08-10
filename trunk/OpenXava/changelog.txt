@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- New setModuleDescription() method in ModuleManager that changes the portlet title.
+- New saveAndStayForCollections property in xava.properties to choose if the button for save & stay will be in collection element dialog.
+- New setConditionValue() method in Tab for setting the value for the list condition programmatically. 
+
 OpenXava 4m5 (2010-7-28)
 ------------------------
 - New mode 'split' (labeled as "Both") in addition to already existing 'detail' and 'List' modes.

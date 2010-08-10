@@ -37,10 +37,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4m5";
+		return "4m6beta";
 	}
 	final static private String getVersionDate() {
-		return "2010-7-28";
+		return "2010-8-xx";
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -78,7 +78,7 @@ public class ModuleManager implements java.io.Serializable {
 	private MetaAction lastExecutedMetaAction;
 	private int dialogLevel = 0;  
 	private boolean modifiedControllers = false;
-
+	private String moduleDescription; 
 	
 		
 	/**
@@ -948,13 +948,22 @@ public class ModuleManager implements java.io.Serializable {
 	}
 	
 	public String getModuleDescription() {
-		try {
-			return getMetaModule().getMetaApplication().getLabel() + " - " +  
-				getMetaModule().getDescription();
+		if(Is.emptyString(this.moduleDescription)){ 
+			try {
+				return getMetaModule().getMetaApplication().getLabel() + " - " +  
+					getMetaModule().getDescription();
+			}
+			catch (Exception ex) {
+				return XavaResources.getString("unknow_module");
+			}
 		}
-		catch (Exception ex) {
-			return XavaResources.getString("unknow_module");
+		else{ 
+			return this.moduleDescription;
 		}
+	}
+	
+	public void setModuleDescription(String moduleDescription) { 
+		this.moduleDescription = moduleDescription;
 	}
 	
 	public String getModelName() throws XavaException {

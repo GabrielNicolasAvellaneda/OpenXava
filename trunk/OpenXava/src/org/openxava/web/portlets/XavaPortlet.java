@@ -11,6 +11,7 @@ import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.portlet.*;
 import org.apache.commons.logging.*;
 
+import org.openxava.controller.*;
 import org.openxava.util.*;
 import org.openxava.web.*;
 import org.openxava.web.style.*;
@@ -40,7 +41,7 @@ import org.openxava.web.style.*;
  * </pre>
  *
  * @author  Javier Paniza
- * @author  Guy de Pourtalès
+ * @author  Guy de Pourtalï¿½s
  */
 
 public class XavaPortlet extends GenericPortlet {
@@ -82,7 +83,8 @@ public class XavaPortlet extends GenericPortlet {
 	 * @throws IOException
 	 */
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-		Object style = getStyle(request);			
+		Object style = getStyle(request);
+		setTitle(request, response); 
 		request.setAttribute("style", style);
 		request.getPortletSession().setAttribute(Ids.decorate(application, module, "xava.portlet.uploadActionURL"), response.createActionURL().toString(), PortletSession.APPLICATION_SCOPE); 
 		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems", PortletSession.PORTLET_SCOPE));  
@@ -229,6 +231,26 @@ public class XavaPortlet extends GenericPortlet {
 		
 		return style;
 	}
+	
+	/**
+	 * sets the portlet-title
+	 */
+	private void setTitle(RenderRequest request, RenderResponse response){ 
+		String title = null;
+		try {
+			ModuleContext context = (ModuleContext) request.getPortletSession().getAttribute("context", PortletSession.APPLICATION_SCOPE);
+			ModuleManager moduleManager = (ModuleManager)context.get(application, module, "manager");
+			title = moduleManager.getModuleDescription();
+		} 
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("portlet_title_warning"), ex);			
+		}
+		// title will only be set if no Exception occurs	
+		if(title != null){
+			response.setTitle(title);
+		}
+	}
+
 
 	
 }

@@ -2476,7 +2476,7 @@ public class AnnotatedClassParser {
 				// We always have to print the stack trace of ex, because the error can
 				// be other than no connection, then the developer needs info for debug
 				log.warn(XavaResources.getString("managed_classes_not_from_hibernate"), ex);
-				managedClassNames = obtainManagedClassNamesFromFileClassPath();
+				managedClassNames = obtainManagedClassNamesFromFileClassPath();			
 			}
 		}
 		return managedClassNames;
