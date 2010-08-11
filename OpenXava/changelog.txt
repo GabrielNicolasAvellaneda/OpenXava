@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Clear stacktrace when data source does not work. No more 'Module x is not defined'.
 - New setModuleDescription() method in ModuleManager that changes the portlet title.
 - New saveAndStayForCollections property in xava.properties to choose if the button for save & stay will be in collection element dialog.
 - New setConditionValue() method in Tab for setting the value for the list condition programmatically. 
