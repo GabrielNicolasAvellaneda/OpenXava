@@ -120,13 +120,8 @@ public class Tab implements java.io.Serializable {
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
-			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;
-			try {				
-				metaProperties = getMetaTab().getMetaProperties();
-			}
-			catch (Exception ex) {
-				log.error(XavaResources.getString("tab_metaproperties_warning"), ex);
-			}
+			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;				
+			metaProperties = getMetaTab().getMetaProperties();
 		}				
 		return metaProperties;
 	}

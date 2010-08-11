@@ -148,13 +148,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	}
 
 	private boolean existsModel(String name) throws XavaException {
-		try {
-			return MetaComponent.exists(name);
-		}
-		catch (Exception ex) {
-			log.warn("exists_model_errors", ex);
-			return false;			
-		}
+		return MetaComponent.exists(name);
 	}
 	
 	private MetaModule createDefaultModule(String modelName) throws XavaException { 				

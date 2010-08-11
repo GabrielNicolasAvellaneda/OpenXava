@@ -43,12 +43,12 @@ class ComponentParser extends ParserBase {
 	private static MetaComponent parseAnnotatedClass(String name) throws XavaException {
 		AnnotatedClassParser parser = new AnnotatedClassParser();		
 		try {
-			return parser.parse(name);			
+			return parser.parse(name);		
 		}
 		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
-			throw new XavaException("ejb3_annotations_parse_error", name);			
-		}		
+			if (ex instanceof RuntimeException) throw (RuntimeException) ex;
+			else throw new RuntimeException(ex);
+		}				
 	}
 
 	private void createAggregate() throws XavaException {
