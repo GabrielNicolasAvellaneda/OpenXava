@@ -1,10 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- Labels are aligned by default to right. For aligning to left use labelAlign=LEFT in xava.properties.
 - Clear stacktrace when data source does not work. No more 'Module x is not defined'.
 - New setModuleDescription() method in ModuleManager that changes the portlet title.
 - New saveAndStayForCollections property in xava.properties to choose if the button for save & stay will be in collection element dialog.
-- New setConditionValue() method in Tab for setting the value for the list condition programmatically. 
+- New setConditionValue() method in Tab for setting the value for the list condition programmatically.
+- Fix: 'Parse may not be called while parsing' error when several users start at once after deploying. 
 
 OpenXava 4m5 (2010-7-28)
 ------------------------

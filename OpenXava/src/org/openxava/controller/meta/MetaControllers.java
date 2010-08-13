@@ -39,7 +39,8 @@ public class MetaControllers {
 		
 	}
 	
-	private static void setup() throws XavaException {
+	private synchronized static void setup() throws XavaException {
+		if (metaControllers != null) return;
 		metaControllers = new HashMap();
 		ControllersParser.configureControllers(context);		
 	}
