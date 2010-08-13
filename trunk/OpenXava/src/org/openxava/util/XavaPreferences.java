@@ -422,4 +422,10 @@ public class XavaPreferences {
 	public boolean isSaveAndStayForCollections(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("saveAndStayForCollections", "true").trim());
 	}
+	
+	/** @since 4m6 */
+	public String getLabelAlign() {
+		return getProperties().getProperty("labelAlign", "RIGHT");
+	}
+		
 }
