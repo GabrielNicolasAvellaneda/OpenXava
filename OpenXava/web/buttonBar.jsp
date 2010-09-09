@@ -76,7 +76,8 @@ if (manager.isButtonBarVisible()) {
 		String target = XavaPreferences.getInstance().isHelpInNewWindow() ? "_blank" : "";
 		if (!Is.empty(XavaPreferences.getInstance().getHelpPrefix())) { 
 			href = 
-				"/" + manager.getApplicationName() + "/" + 
+				(XavaPreferences.getInstance().getHelpPrefix().startsWith("http:") ? "" :
+					"/" + manager.getApplicationName() + "/") + 
 				XavaPreferences.getInstance().getHelpPrefix() +
 				manager.getModuleName() +
 				"_" + language + 
