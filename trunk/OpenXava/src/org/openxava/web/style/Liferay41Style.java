@@ -36,50 +36,6 @@ public class Liferay41Style extends Style {
 		return "style='padding: 2px;'";
 	}
 		
-	public String getButtonBar() {
-		return "liferay-xava-frame-header"; 
-	}
-	
-	public String getButtonBar2() {
-		return "portlet-header-bar";
-	}
-	
-	public String getButtonBarSpacing() {
-		return "cellpadding=0 cellspacing=0";
-	}	
-	
-	public String getButtonBarStart(boolean onBottom) {
-		return "portlet-header-left";
-	}
-	
-	public String getButtonBarMiddle(boolean onBottom) {
-		return ""; 
-	}
-		
-	public String getButtonBarEnd(boolean onBottom) {
-		return "portlet-header-right";
-	}
-	
-	public String getButtonBarStyle() {
-		return "position: static;";
-	}
-	
-	public String getButtonBarStartStyle() {
-		return "position: static;"; 
-	}
-	
-	public String getButtonBarMiddleStyle() {
-		return "position: static;"; 
-	}
-	
-	public String getButtonBarEndStyle() {
-		return "position: static;"; 
-	}
-		
-	public String getMode(boolean onButton) { 
-		return "list-info";
-	}
-	
 	public String getDetail() {
 		return "";
 	}
@@ -264,10 +220,6 @@ public class Liferay41Style extends Style {
 		return "</li>";		
 	}	
 		
-	public String getCollectionListActions() {
-		return "";
-	}
-	
 	public String getRestoreImage() {
 		return "/html/themes/brochure/images/portlet/restore.gif"; 
 	}

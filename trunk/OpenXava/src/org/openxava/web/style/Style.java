@@ -99,7 +99,7 @@ public class Style {
 	}
 	
 	public String getModule() {
-		return "portlet-font";
+		return "portlet-font";		
 	}
 	
 	public String getModuleSpacing() {
@@ -107,50 +107,21 @@ public class Style {
 	}
 		
 	public String getButtonBar() {
-		return "button-bar";
+		return "ox-button-bar"; 
 	}
 	
-	public String getButtonBar2() {
-		return "";
-	}
-		
-	public String getButtonBarSpacing() {
-		return "";
+	public String getButtonBarButton() { 
+		return "ox-button-bar-button";
 	}	
 	
-	public String getButtonBarStart(boolean onBottom) {
-		return "";
+	public String getButtonBarModeButton() {
+		return "ox-button-bar-button";
 	}
 	
-	
-	public String getButtonBarMiddle(boolean onBottom) {
-		return "";
+	public String getButtonBarActiveModeButton() { 
+		return "ox-button-bar-button active";
 	}
-		
-	public String getButtonBarEnd(boolean onBottom) {
-		return "";
-	}
-	
-	public String getButtonBarStyle() {
-		return "";
-	}
-	
-	public String getButtonBarStartStyle() {
-		return "";
-	}
-	
-	public String getButtonBarMiddleStyle() {
-		return "";
-	}
-	
-	public String getButtonBarEndStyle() {
-		return "";
-	}
-
-	public String getMode(boolean onButton) { 
-		return "mode";
-	}
-	
+							
 	public String getDetail() {
 		return "";
 	}
@@ -432,8 +403,8 @@ public class Style {
 		return "</td><td class='TabRightLow' nowrap='true'>&nbsp;</td>";		
 	}		
 		
-	public String getCollectionListActions() {
-		return "";
+	public String getCollectionListActions() { 
+		return getButtonBar(); 
 	}
 	
 	/**

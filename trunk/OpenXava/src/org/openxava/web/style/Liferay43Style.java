@@ -45,7 +45,7 @@ public class Liferay43Style extends Style {
 	}					
 	
 	public String getModule() {
-		return ""; 		
+		return ""; 				
 	}
 	
 	public String getModuleSpacing() {
@@ -59,52 +59,7 @@ public class Liferay43Style extends Style {
 	public String getEditorWrapper() { 
 		return "liferay-xava-editor-wrapper";
 	}
-			
-	public String getButtonBar() {
-		return ""; 
-	}
-	
-	public String getButtonBar2() {
-		return "portlet-section-header"; 
-	}
-	
-	public String getButtonBarSpacing() {
-		return "cellpadding=0 cellspacing=0";		
-	}	
-	
-	public String getButtonBarStart(boolean onBottom) {
-		return ""; 
-	}
-	
-	public String getButtonBarMiddle(boolean onBottom) {
-		return ""; 
-	}
-		
-	public String getButtonBarEnd(boolean onBottom) {
-		return ""; 
-	}
-	
-	public String getButtonBarStyle() { 		
-		return "position: static; margin-bottom: 4px;"; 
-	}
-	
-	public String getButtonBarStartStyle() {
-		return "position: static;"; 
-	}
-	
-	public String getButtonBarMiddleStyle() {
-		return "position: static;";
-	}
-	
-	public String getButtonBarEndStyle() {
-		return "position: static;"; 
-	}
-
-		
-	public String getMode(boolean onButton) { 
-		return "list-info";
-	}
-	
+									
 	public String getDetail() {
 		return "liferay-table"; 		
 	}
@@ -304,10 +259,6 @@ public class Liferay43Style extends Style {
 		return "</li>";		
 	}	
 		
-	public String getCollectionListActions() {
-		return "";
-	}
-	
 	public String getRestoreImage() { 
 		return getImagesFolder() + "portlet/restore.png";
 	}

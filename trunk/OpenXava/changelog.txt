@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- New showLabelsForToolBarActions property in xava.properties.
+- Visual style of button bar improved, including showing the label for each action.
+- Fix: Help doesn't work for external URL.
+- Fix: Division by 0 generating PDF reports where all columns are little. 
 - Labels are aligned by default to right. For aligning to left use labelAlign=LEFT in xava.properties.
 - Clear stacktrace when data source does not work. No more 'Module x is not defined'.
 - New setModuleDescription() method in ModuleManager that changes the portlet title.

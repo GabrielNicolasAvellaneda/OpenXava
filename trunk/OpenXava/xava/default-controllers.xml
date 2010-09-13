@@ -28,13 +28,15 @@ here that you want to override.
 	
 	<controller name="Typical">
 		<extends controller="Navigation"/>
-		<extends controller="Print"/>		
 		<extends controller="CRUD"/>
+		<extends controller="Print"/>				
 	</controller>
 	
 	<controller name="Void"/>	
-	<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
-			<set property="restoreModel" value="true"/>					</action>									<action name="save" mode="detail"
+	<controller name="CRUD">					 		<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
+			<set property="restoreModel" value="true"/>					</action>
+
+		<action name="save" mode="detail"
 			by-default="if-possible"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="Control S"/>							<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="Control D"/>		
 		<action name="search" mode="detail" 			 
 			class="org.openxava.actions.OpenSearchDialogAction" 
@@ -46,7 +48,6 @@ here that you want to override.
 		<action name="searchReadOnly" hidden="true"					
 			class="org.openxava.actions.SearchReadOnlyAction"/>
 								<action name="deleteSelected" mode="list" confirm="true"			class="org.openxava.actions.DeleteSelectedAction"
-			image="images/delete.gif"
 			keystroke="Control D"/>
 		
 		<action name="deleteRow" mode="NONE" confirm="true"

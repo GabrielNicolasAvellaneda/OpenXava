@@ -35,7 +35,8 @@ private void tightenWidths(int [] widths) {
 		}
 	}	
 	int spaceForBigOnes = max - littleOnesTotal;
-	int widthForBig = spaceForBigOnes / (widths.length - littleOnesCount);
+	int bigOnesCount = widths.length - littleOnesCount; 
+	int widthForBig = bigOnesCount==0?20:spaceForBigOnes / bigOnesCount; 
 	if (widthForBig < 20) widthForBig = 20;
 	for (int i=0; i<widths.length; i++) {
 		if (widths[i] > 20 && widths[i] > widthForBig) widths[i] = widths[i] = widthForBig;

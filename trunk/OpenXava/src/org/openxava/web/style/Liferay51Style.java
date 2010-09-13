@@ -76,10 +76,6 @@ public class Liferay51Style extends Liferay43Style {
 		return "descending-white.gif";
 	}	
 	
-	public String getButtonBar2() {
-		return "portlet-topper";  
-	}
-	
 	public String getSectionBarStartDecoration() {
 		return "<td style='padding-top: 4px;'>\n" +
 				"<ul class='tabs ui-tabs'>"; 
