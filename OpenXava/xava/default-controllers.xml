@@ -238,8 +238,14 @@ here that you want to override.
 		</action>			
 		<action name="cancel"
 			class="org.openxava.actions.CancelInListAction"/>		
-	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>
-		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>		</action>								<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>					</action>										</controller>										<controller name="ImageEditor">
+	</controller>			<controller name="Navigation">
+		<action name="first" mode="detail"
+			image="images/home.gif"
+			class="org.openxava.actions.ViewDetailAction"
+			keystroke="control alt HOME">
+			<set property="goFirst" value="true"/>
+		</action>													<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>
+		</action>									<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>					</action>										</controller>										<controller name="ImageEditor">
 		<action name="changeImage"			
 			class="org.openxava.actions.ChangeImageAction"/>								
 		<action name="deleteImage" confirm="true"

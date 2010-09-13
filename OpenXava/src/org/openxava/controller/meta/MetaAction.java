@@ -166,7 +166,7 @@ public class MetaAction extends MetaElement implements Cloneable {
 	public boolean hasImage() {
 		return !Is.emptyString(this.image);
 	}
-
+	
 	public void _addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {
 			metaSets = new ArrayList();

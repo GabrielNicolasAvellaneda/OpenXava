@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- More intuitive icons for navigation.
 - New showLabelsForToolBarActions property in xava.properties.
 - Visual style of button bar improved, including showing the label for each action.
 - Fix: Help doesn't work for external URL.
