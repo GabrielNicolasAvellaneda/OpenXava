@@ -13,6 +13,7 @@ String actionName = request.getParameter("action");
 if (!Is.emptyString(actionName)) {
 	MetaAction action = MetaControllers.getMetaAction(request.getParameter("action"));
 	String argv = request.getParameter("argv");
+	String label = action.getLabel(request); 
 %>
 
 	
@@ -25,10 +26,10 @@ if (!Is.emptyString(actionName)) {
 		<% } else {%>
 		&nbsp;
 		<% } %>
-		<% if (showLabels || !action.hasImage()) { %>			 				 			
-		<%=action.getLabel(request)%>
-		<% } %>
+		<% if ((showLabels || !action.hasImage()) && !Is.emptyString(label)) { %>			 				 			
+		<%=label%>
 		&nbsp;
+		<% } %>		
 	</xava:link>
 </span>
 <%
