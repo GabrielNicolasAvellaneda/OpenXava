@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import org.openxava.util.*;
+
 
 /**
  * @author Javier Paniza
@@ -10,7 +12,7 @@ public class NewAction extends ViewBaseAction implements IChangeModeAction, IMod
 	private String modelName; 
 	private boolean restoreModel = false; 
 	
-	public void execute() throws Exception {				
+	public void execute() throws Exception {		
 		if (restoreModel) getView().setModelName(modelName); 
 		getView().setKeyEditable(true);
 		getView().setEditable(true);

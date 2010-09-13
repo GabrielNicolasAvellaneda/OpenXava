@@ -93,11 +93,7 @@ public class JetSpeed2Style extends Style {
 	public String getMessages() { 
 		return "portlet-msg-success"; 
 	}
-				
-	public String getMode(boolean onBottom) {	
-		return "jetspeed2-mode";
-	}
-	
+					
 	public String getAscendingImage() {
 		return "ascending-white.gif";
 	}

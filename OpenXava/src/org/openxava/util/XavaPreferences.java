@@ -427,5 +427,10 @@ public class XavaPreferences {
 	public String getLabelAlign() {
 		return getProperties().getProperty("labelAlign", "RIGHT");
 	}
+
+	/** @since 4m6 */
+	public boolean isShowLabelsForToolBarActions(){
+		return "true".equalsIgnoreCase(getProperties().getProperty("showLabelsForToolBarActions", "true").trim());
+	}
 		
 }

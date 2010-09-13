@@ -126,30 +126,6 @@ public class WebSpherePortalStyle extends Style {
 		return "wpsTable";
 	}	
 				
-	public String getMode(boolean onBottom) {	
-		return onBottom?"wpsPagingTableFooterMiddle":"wpsPagingTableHeaderMiddle";
-	}
-	
-	public String getButtonBar() {
-		return "";
-	}
-	
-	public String getButtonBarSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0";
-	}		
-	
-	public String getButtonBarStart(boolean onBottom) {
-		return onBottom?"wpsPagingTableFooterStart":"wpsPagingTableHeaderStart";
-	}
-	
-	public String getButtonBarMiddle(boolean onBottom) {
-		return onBottom?"wpsPagingTableFooterMiddle":"wpsPagingTableHeaderMiddle";
-	}	
-	
-	public String getButtonBarEnd(boolean onBottom) {
-		return onBottom?"wpsPagingTableFooterEnd":"wpsPagingTableHeaderEnd";
-	}	
-	
 	public String getAscendingImage() {
 		return "ascending-white.gif";
 	}
@@ -190,11 +166,7 @@ public class WebSpherePortalStyle extends Style {
 	public String getSectionTabEndDecoration() {
 		return "</td>";		
 	}		
-		
-	public String getCollectionListActions() {
-		return "wpsTableNrmRow";
-	}
-	
+			
 	public String getRestoreImage() {
 		return "/wps/themes/html/title_alt_restore.gif";
 	}
