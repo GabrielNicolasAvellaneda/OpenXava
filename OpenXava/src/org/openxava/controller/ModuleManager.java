@@ -40,7 +40,7 @@ public class ModuleManager implements java.io.Serializable {
 		return "4m6beta";
 	}
 	final static private String getVersionDate() {
-		return "2010-8-xx";
+		return "2010-9-xx";
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -95,12 +95,14 @@ public class ModuleManager implements java.io.Serializable {
 	
 	public void addMetaAction(MetaAction action) {
 		getMetaActions().add(action);
+		defaultActionQualifiedName = null; 
 		this.controllersNames = MODIFIED_CONTROLLERS;
 		actionsChanged = true; 
 	}
 	
 	public void removeMetaAction(MetaAction action) {
 		getMetaActions().remove(action);
+		defaultActionQualifiedName = null; 
 		this.controllersNames = MODIFIED_CONTROLLERS;
 		actionsChanged = true; 
 	}
@@ -643,6 +645,7 @@ public class ModuleManager implements java.io.Serializable {
 		}
 		else { // A collection of metaactions
 			this.metaActions = (Collection) controllers;
+			this.defaultActionQualifiedName = null; 
 			this.actionsChanged = true; 
 			this.modifiedControllers = true;
 		}		
@@ -979,8 +982,13 @@ public class ModuleManager implements java.io.Serializable {
 	}
 	
 	public boolean isSplitMode() { 
-		return "split".equals(getModeName());
+		return IChangeModeAction.SPLIT.equals(getModeName());
 	}
+	
+	/** @since 4m6 */
+	public boolean isDetailMode() { 
+		return IChangeModeAction.DETAIL.equals(getModeName());
+	}	
 	
 	public String getModeName() {
 		return modeName==null?DEFAULT_MODE:modeName;
@@ -999,10 +1007,11 @@ public class ModuleManager implements java.io.Serializable {
 			int max = -1;
 			while (it.hasNext()) {
 				MetaAction a = (MetaAction) it.next();
-				if (!a.appliesToMode(getModelName())) continue; 
+				if (a.isHidden()) continue; 
+				if (!a.appliesToMode(getModeName())) continue;
 				if (a.getByDefault() > max) {
 					max = a.getByDefault();					
-					defaultActionQualifiedName = a.getQualifiedName();					
+					defaultActionQualifiedName = a.getQualifiedName();
 				}
 			}
 			if (isListMode()) {
@@ -1012,7 +1021,7 @@ public class ModuleManager implements java.io.Serializable {
 					defaultActionQualifiedName = a.getQualifiedName();					
 				}
 			}
-		}		
+		}	
 		return defaultActionQualifiedName;
 	}
 	
@@ -1160,13 +1169,15 @@ public class ModuleManager implements java.io.Serializable {
 	private void addToHiddenActions(String action) {
 		if (hiddenActions == null) hiddenActions = new HashSet();
 		hiddenActions.add(action);	
-		actionsChanged = true; 
+		actionsChanged = true;
+		defaultActionQualifiedName = null;
 		metaActions = null;
 	}
 	
 	private void removeFromHiddenActions(String action) {
 		if (hiddenActions == null) return;
-		hiddenActions.remove(action);	
+		hiddenActions.remove(action);
+		defaultActionQualifiedName = null;
 		metaActions = null;		
 		actionsChanged = true; 
 	}

@@ -114,6 +114,7 @@ public class ControllersParser extends ParserBase {
 	
 	private int toByDefault(String byDefault) throws XavaException {		
 		if (xnever[lang].equals(byDefault)) return MetaAction.NEVER;
+		if (xalmost_never[lang].equals(byDefault)) return MetaAction.ALMOST_NEVER;
 		if (xif_possible[lang].equals(byDefault)) return MetaAction.IF_POSSIBLE;
 		if (xalmost_always[lang].equals(byDefault)) return MetaAction.ALMOST_ALWAYS;
 		if (xalways[lang].equals(byDefault)) return MetaAction.ALWAYS;
