@@ -53,6 +53,7 @@ public class XmlElementsNames {
 	protected final static String [] xon_init = { "on-init", "al-iniciar" };
 	protected final static String [] xby_default = { "by-default", "por-defecto" };
 	protected final static String [] xnever  = { "never", "nunca" };
+	protected final static String [] xalmost_never  = { "almost-never", "casi-nunca" }; 
 	protected final static String [] xif_possible = { "if-possible", "si-posible" };
 	protected final static String [] xalmost_always = { "almost-always", "casi-siempre" };
 	protected final static String [] xalways = { "always", "siempre" };

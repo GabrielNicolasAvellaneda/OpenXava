@@ -32,7 +32,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		String comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
 		assertEquals(String.valueOf(initialRowCount), comboRowCount);
 		combo.setSelectedAttribute(String.valueOf(finalRowCount), true);
-		Thread.sleep(1700);
+		Thread.sleep(2200);
 		assertListRowCount(finalRowCount);
 		comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
 		assertEquals(String.valueOf(finalRowCount), comboRowCount);
@@ -77,6 +77,10 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		setConditionValues(new String [] { "1" });
 		executeDefaultAction();
 		assertListRowCount(3);
+		
+		execute("CRUD.new");
+		executeDefaultAction();
+		assertError("Value for Name in Warehouse is required"); // It tried to execute "CRUD.save", the default action
 	}
 	
 	public void testChooseUnselectedRow() throws Exception { 

@@ -119,6 +119,7 @@
 		<action name="save" mode="detail"
 			class="org.openxava.actions.SaveAction"
 			image="images/save.gif"
+			by-default="if-possible"
 			keystroke="F3">			
 			<set property="resetAfter" value="false"/>
 		</action>				
@@ -240,6 +241,7 @@
 		<action name="save" mode="detail"
 			class="org.openxava.actions.SaveAction"
 			image="images/save.gif"
+			by-default="if-possible"
 			keystroke="F3">			
 			<set property="resetAfter" value="false"/>
 		</action>				
@@ -430,7 +432,8 @@
 		<action name="showListTitle" hidden="true" on-init="true"
 			class="org.openxava.test.actions.ShowListTitleAction"/>		
 		
-		<action name="changeZone" mode="detail" class="org.openxava.test.actions.ChangeZoneAction"/>				
+		<action name="changeZone" mode="detail" 
+			class="org.openxava.test.actions.ChangeZoneAction"/>				
 		
 		<action name="toLowerCase" mode="list"
 			class="org.openxava.test.actions.ChangeToLowerCaseAction"/>

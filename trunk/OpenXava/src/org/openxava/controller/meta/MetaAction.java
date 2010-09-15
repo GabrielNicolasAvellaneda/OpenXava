@@ -19,7 +19,9 @@ public class MetaAction extends MetaElement implements Cloneable {
 	
 	private static Log log = LogFactory.getLog(MetaAction.class);
 	
-	public static final int NEVER = 0;
+	public static final int NEVER = -1;
+	/** @since 4m6 */
+	public static final int ALMOST_NEVER = 0; 
 	public static final int IF_POSSIBLE = 1;
 	public static final int ALMOST_ALWAYS = 2;
 	public static final int ALWAYS = 4;

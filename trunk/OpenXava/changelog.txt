@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+
+- Default action is shown as first button in bottom button bar, even if it is already in top button bar.
+- Fix: Incorrect default action (broken in 4m5). 
+- New possible value "almost-never" for by-default attribute of <action/> inside controllers.xml.
 - More intuitive icons for navigation.
 - New showLabelsForToolBarActions property in xava.properties.
 - Visual style of button bar improved, including showing the label for each action.
