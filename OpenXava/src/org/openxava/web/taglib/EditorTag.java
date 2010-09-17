@@ -109,8 +109,9 @@ public class EditorTag extends TagSupport {
 				// If the JSP that uses this tag is in a subfolder
 				pageContext.include("../xava/" + editorURL);								
 			}
-			catch (ServletException ex) { 	
-				log.error(ex.getRootCause().getMessage(), ex.getRootCause());
+			catch (ServletException ex) {
+				Throwable cause = ex.getRootCause() == null?ex:ex.getRootCause(); 
+				log.error(cause.getMessage(), cause);
 				pageContext.include("../xava/editors/notAvailableEditor.jsp");
 			}
 			catch (Exception ex) {	

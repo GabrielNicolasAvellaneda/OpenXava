@@ -25,7 +25,8 @@ here that you want to override.
 	<object name="xava_currentModule" class="java.lang.String" />
 	<object name="xava_treeViewParser" class="org.openxava.util.TreeViewParser" />
 	<object name="xava_treeViewNodeFullPath" class="java.lang.String" />
-	
+	<object name="xava_liferayLibrary" class="org.openxava.session.LiferayLibrary"/>					
+		
 	<controller name="Typical">
 		<extends controller="Navigation"/>
 		<extends controller="CRUD"/>
@@ -449,5 +450,20 @@ here that you want to override.
 			<set value="false" property="expanded" />
 		</action>
 	</controller>
+	
+	<controller name="LiferayDocumentLibrary">
+		<action name="addDocument" image="images/create_new.gif"
+			class="org.openxava.actions.AddLiferayDocumentAction">		
+		</action>		
+		<action name="deleteDocument" image="images/delete.gif"
+			class="org.openxava.actions.DeleteLiferayDocumentAction">		
+		</action>		
+	</controller>
+	
+	<controller name="LoadLiferayDocument">
+		<action name="loadDocument" description="pujar els fitxers"
+			class="org.openxava.actions.LoadLiferayDocumentAction">			
+		</action>	
+	</controller>	
 
 </controllers>

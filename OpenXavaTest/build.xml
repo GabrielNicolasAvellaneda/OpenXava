@@ -18,12 +18,13 @@
 	<!-- portlet.encoding is by default it's UTF-8, but UTF-8 fails 
 		generating portlet.xml with Á(A with acute) and Í(I with acute) 
 		in some windows system
-		  	
+	-->	  	
 	<property name="portlet.encoding" value="ISO-8859-1"/>
-	-->
 	
-	<!-- -->
+	
+	<!-- 
 	<property name="portlet.encoding" value="UTF-8"/>
+	-->
 		
 		
 	<target name="regenerateGenerator">

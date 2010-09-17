@@ -168,4 +168,13 @@
 
 	<editor name="TreeView" url="treeViewEditor.jsp">
 	</editor>
+	
+	<!-- Tested with Liferay 5.2 -->
+	<editor name="DocumentLibrary" url="liferayDocumentLibraryEditor.jsp" always-reload="true">
+		<property name="rootFolderNameOrId" value="OpenXava"/>
+		<property name="alsoDeleteFile" value="true"/>
+		<for-stereotype stereotype="DOCUMENT_LIBRARY" />
+		<for-stereotype stereotype="LIBRERIA_DOCUMENTOS" />
+	</editor>		
+	
 </editors>

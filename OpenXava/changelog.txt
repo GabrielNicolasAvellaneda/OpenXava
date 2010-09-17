@@ -1,7 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
-
+- New editor DocumentLibrary (and stereotype DOCUMENT_LIBRARY) to have a group of documents stored in Liferay Document Library. 
+- Fix: NullPointerException by EditorTag hides the real source of error in some cases. 
 - Default action is shown as first button in bottom button bar, even if it is already in top button bar.
 - Fix: Incorrect default action (broken in 4m5). 
 - New possible value "almost-never" for by-default attribute of <action/> inside controllers.xml.

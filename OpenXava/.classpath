@@ -52,5 +52,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javax.inject.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="lib/portal-kernel.jar"/>
+	<classpathentry kind="lib" path="lib/portal-service.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
