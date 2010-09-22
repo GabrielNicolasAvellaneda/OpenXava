@@ -8,15 +8,27 @@
 <%@ page import="org.openxava.model.meta.MetaReference" %>
 <%@ page import="org.openxava.model.meta.MetaCollection" %>
 <%@ page import="org.openxava.web.WebEditors" %>
-
-
-<%@page import="org.openxava.web.taglib.IdTag"%>
-<%@page import="org.openxava.web.Ids"%>
-<%@page import="org.openxava.model.meta.MetaMember"%>
+<%@ page import="org.openxava.web.taglib.IdTag"%>
+<%@ page import="org.openxava.web.Ids"%>
+<%@ page import="org.openxava.model.meta.MetaMember"%>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
+<%!
+private final static String LAST_TABLE_NOT_CLOSED = "xava.layout.detail.lastTableNotClose";
+private boolean hasFrame(MetaMember m, View view) { 
+	if (m instanceof MetaProperty) {
+		return WebEditors.hasFrame((MetaProperty) m, view.getViewName());
+	}
+  	if (m instanceof MetaReference) {
+  		return !view.displayReferenceWithNoFrameEditor((MetaReference) m);  		
+  	}
+  	return true;
+}
+%>
+
 <%
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
@@ -44,15 +56,37 @@ String slast = request.getParameter("last");
 boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
 boolean lastWasProperty = false;
-int frameCounter = 0;
+boolean firstNoFrameMember = true; 
+boolean firstFrameMember = false; 
 while (it.hasNext()) {
 	MetaMember m = (MetaMember) it.next();
-	lastWasProperty = false;
-	int frameWidth = view.isVariousMembersInSameLine(m)?0:100;
+	lastWasProperty = false;	
+	int frameWidth = view.isVariousMembersInSameLine(m)?0:100;	
+	if (!PropertiesSeparator.INSTANCE.equals(m)) { 
+		if (firstNoFrameMember && !hasFrame(m, view)) {			
+				firstNoFrameMember = false;
+				firstFrameMember = true;	
+				if (request.getAttribute(LAST_TABLE_NOT_CLOSED) == null) { 						
+	%>
+		</tr><tr><td><table><tr>
+	<%
+				}
+				else {
+					request.removeAttribute(LAST_TABLE_NOT_CLOSED);
+				}
+		}
+		else if (firstFrameMember && hasFrame(m, view)){
+			firstFrameMember = false;
+			firstNoFrameMember = true;
+	%>
+		</table>
+	<%	
+		}
+	}
 	if (m instanceof MetaProperty) {		
 		MetaProperty p = (MetaProperty) m;		
 		if (!PropertiesSeparator.INSTANCE.equals(m)) {			
-			boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());		
+			boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
 			lastWasEditor = !hasFrame;
 			lastWasProperty = true;
 			String propertyKey= Ids.decorate(
@@ -146,7 +180,7 @@ while (it.hasNext()) {
 				String propertyInReferencePrefix = propertyPrefix + ref.getName() + ".";
 				boolean withFrame = subview.isFrame() && 
 					(!view.isSection() || view.getMetaMembers().size() > 1);
-				lastWasEditor = !withFrame; 
+				lastWasEditor = !withFrame;
 				boolean firstForSubdetail = first || withFrame;
 				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
 				
@@ -288,6 +322,19 @@ while (it.hasNext()) {
 			</td>			
 <% } %>
 
+
+<% 
+	if (firstFrameMember) {		
+		if (!(view.isSubview() && !view.isFrame())) {	
+%>
+	</table>
+<%  	}
+		else {
+			request.setAttribute(LAST_TABLE_NOT_CLOSED, new Boolean(true));
+		} 
+	}
+%>
+
 <% 	
 	if (view.isFrame() && 
 			!(last && view.getParent() != null && !view.getParent().isFrame()) && 			  		
@@ -297,6 +344,8 @@ while (it.hasNext()) {
 </tr>
 </table>
 <% } %>
+
+
 
 <% } // if (!onlySections) %>
 

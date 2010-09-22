@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Bad layout for header fields when frames.
+- Russian documentation improved. 
 - New editor DocumentLibrary (and stereotype DOCUMENT_LIBRARY) to have a group of documents stored in Liferay Document Library. 
 - Fix: NullPointerException by EditorTag hides the real source of error in some cases. 
 - Default action is shown as first button in bottom button bar, even if it is already in top button bar.

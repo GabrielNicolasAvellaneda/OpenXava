@@ -80,11 +80,11 @@ if (view.displayDetailInCollection(collectionName)) {
 <% if (collectionEditable) { %>
 <jsp:include page="../barButton.jsp">
 	<jsp:param name="action" value="<%=subview.getNewCollectionElementAction()%>"/>
-	<jsp:param name="argv" value="<%="viewObject="+viewName%>"/>
+	<jsp:param name="argv" value='<%="viewObject="+viewName%>'/>
 </jsp:include>
 <jsp:include page="../barButton.jsp">
 	<jsp:param name="action" value="<%=subview.getRemoveSelectedCollectionElementsAction()%>"/>
-	<jsp:param name="argv" value="<%="viewObject="+viewName%>"/>
+	<jsp:param name="argv" value='<%="viewObject="+viewName%>'/>
 </jsp:include>
 
 <% } %>
@@ -94,7 +94,7 @@ while (itListActions.hasNext()) {
 %>
 <jsp:include page="../barButton.jsp">
 	<jsp:param name="action" value="<%=itListActions.next().toString()%>"/>
-	<jsp:param name="argv" value="<%="viewObject="+viewName%>"/>
+	<jsp:param name="argv" value='<%="viewObject="+viewName%>'/>
 </jsp:include>
 <%	
 } // while list actions
