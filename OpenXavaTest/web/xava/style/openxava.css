@@ -285,7 +285,7 @@ TD.list-title {
 	float: left; 	 
 	font-size: 12px;
 	font-weight: bold;	
-	padding: 4px 0px 4px 0px; 
+	padding: 4px 0px 4px 0px;	
 	text-decoration: none;	
 }
 
@@ -293,7 +293,7 @@ TD.list-title {
 	border: 1px solid #A7CEDF;	
 	background-color: #DFF4FF;
 	color: #346799; 
-	padding: 4px 0px 4px 0px; 
+	padding: 4px 0px 4px 0px; 	
 }
 
 .green .ox-button-bar .ox-button-bar-button a:hover {	

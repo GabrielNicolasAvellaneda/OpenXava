@@ -19,14 +19,19 @@ if (!Is.emptyString(actionName)) {
 	
 <span class="<%=style.getButtonBarButton()%>">
 	<xava:link action="<%=action.getQualifiedName()%>" argv='<%=argv%>'>
+		<% boolean showLabel = (showLabels || !action.hasImage()) && !Is.emptyString(label); %>
 		<% if (action.hasImage()) { %>
-		<span style="padding:10px; background: url(<%=request.getContextPath()%>/xava/<%=action.getImage()%>) no-repeat 5px 50%;">
-		&nbsp;
-		</span>
+		<span style="padding:4px; background: url(<%=request.getContextPath()%>/xava/<%=action.getImage()%>) no-repeat 5px 50%;">		
+		<% if (!showLabel) { %>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<% } else { %>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<% } %>
+		</span>		
 		<% } else {%>
 		&nbsp;
 		<% } %>
-		<% if ((showLabels || !action.hasImage()) && !Is.emptyString(label)) { %>			 				 			
+		<% if (showLabel) { %>			 				 			
 		<%=label%>
 		&nbsp;
 		<% } %>		
