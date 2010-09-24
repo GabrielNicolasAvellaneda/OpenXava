@@ -56,11 +56,11 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	abstract protected Object getUniqueResult(Object query);
 		
 
-	public Object find(MetaModel metaModel, Map keyValues) throws FinderException {
+	public Object find(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException {
 		return find(metaModel, keyValues, true);
 	}
 	
-	protected Object find(MetaModel metaModel, Map keyValues, boolean useQueryForFind) throws FinderException {
+	protected Object find(MetaModel metaModel, Map keyValues, boolean useQueryForFind) throws ObjectNotFoundException, FinderException {
 		try {							
 			Object key = null;		
 			// The second question (metaModel.getMetaPropertiesKey().isEmpty())  
@@ -92,6 +92,10 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 						"object_with_key_not_found", metaModel.getName(), keyValues));
 			}
 			return result;
+		}
+		catch (ObjectNotFoundException ex) {
+			// this is to fullfill the contract
+			throw ex;
 		}
 		catch (FinderException ex) {
 			throw ex;

@@ -180,7 +180,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	public void setValues(UserInfo userInfo, String modelName, Map keyValues, Map values)
-		throws FinderException, ValidationException, XavaException, RemoteException 
+		throws ObjectNotFoundException, FinderException, ValidationException, XavaException, RemoteException 
 	{							
 		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 
@@ -190,6 +190,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			beginTransaction();
 			setValues(metaModel, keyValues, values);			
 			commitTransaction();
+		}
+		catch (ObjectNotFoundException ex) {
+			throw ex;
 		}
 		catch (FinderException ex) {
 			throw ex;
@@ -517,7 +520,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 	}
 		
-	private Messages validate(String modelName, Map values, boolean creating) throws XavaException, RemoteException { 							
+	private Messages validate(String modelName, Map values, boolean creating) throws ObjectNotFoundException, XavaException, RemoteException { 							
 		Messages validationErrors = new Messages(); 				
 		MetaModel metaModel = getMetaModel(modelName);
 		Map key = metaModel.extractKeyValues(values);
@@ -731,6 +734,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (XavaException ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_error", metaModel.getName());
+		} catch (ObjectNotFoundException ex) {
+			log.error(ex.getMessage(), ex);
+			throw new XavaException("create_error", metaModel.getName());
 		}
 	}
 
@@ -804,7 +810,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModel,
 		Map keyValues,
 		Map memberNames)
-		throws FinderException, XavaException, RemoteException { 
+		throws ObjectNotFoundException, FinderException, XavaException, RemoteException { 
 		try {									 
 			Map result =
 				getValues(	
@@ -1236,7 +1242,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 		
 	private void setValues(MetaModel metaModel, Map keyValues, Map values)
-		throws FinderException, ValidationException, XavaException {		
+		throws ObjectNotFoundException, FinderException, ValidationException, XavaException {		
 		try {			
 			updateReferencedEntities(metaModel, values);
 			removeKeyFields(metaModel, values);			
@@ -1332,7 +1338,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	private void validate(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)	  
-		throws XavaException, RemoteException {		
+		throws ObjectNotFoundException, XavaException, RemoteException {		
 		Iterator it = values.entrySet().iterator();		
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
@@ -1345,7 +1351,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {
+	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) 
+			throws ObjectNotFoundException, XavaException {
 		try {
 			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
 			Iterator itValidators = metaModel.getMetaValidators().iterator();
@@ -1403,15 +1410,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				}							
 				v.validate(errors);
 			}		
-		}
-		catch (Exception ex) {
+		} catch (ObjectNotFoundException ex) {
+			throw ex;
+		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("validate_model_error", metaModel.getName());
 		}
 	}
 	
 	private void validate(MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)
-		throws ValidationException, XavaException, RemoteException {
+		throws ObjectNotFoundException, ValidationException, XavaException, RemoteException {
 		Messages errors = new Messages();		
 		validate(errors, metaModel, values, keyValues, containerKey, creating);		
 		if (errors.contains()) {
@@ -1430,7 +1438,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 				
-	private Object findEntity(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException {		
+	private Object findEntity(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException, RemoteException {		
 		return getPersistenceProvider().find(metaModel, keyValues);
 	}
 	
