@@ -1548,21 +1548,23 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			String memberName = (String) en.getKey();
-			Object value = null;
-			if (metaModel.containsMetaProperty(memberName)) {
-				value = en.getValue();
+			if (!memberName.equals(MapFacade.MODEL_NAME)) {
+				Object value = null;
+				if (metaModel.containsMetaProperty(memberName)) {
+					value = en.getValue();
+				}
+				else if (metaModel.containsMetaReference(memberName)) {
+					MetaReference ref = metaModel.getMetaReference(memberName);
+					value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());				
+				}
+				else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
+					value = en.getValue();
+				}
+				else {				
+					throw new XavaException("member_not_found", memberName, metaModel.getName());
+				}
+				result.put(memberName, value);
 			}
-			else if (metaModel.containsMetaReference(memberName)) {
-				MetaReference ref = metaModel.getMetaReference(memberName);
-				value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());				
-			}
-			else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
-				value = en.getValue();
-			}
-			else {				
-				throw new XavaException("member_not_found", memberName, metaModel.getName());
-			}
-			result.put(memberName, value);
 		}
 		return result;
 	}
