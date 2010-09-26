@@ -64,6 +64,27 @@ public class ValidateEmbeddedCollectionTest extends ModuleTestBase {
 		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("children", 1);
+		// test modification of Children
+		execute("Collection.edit", "row=0,viewObject=xava_view_children");
+		assertValue("childId", "JOHN");
+		assertValue("description", "THIS IS JOHN");
+		setValue("description", "THIS IS LITTLE JOHN");
+		execute("Collection.save");
+		assertNoErrors();
+		assertValueInCollection("children", 0, "description", "THIS IS LITTLE JOHN");
+		// Add a new child
+		execute("Collection.new", "viewObject=xava_view_children");
+		setValue("childId", "JANE");
+		setValue("description", "THIS IS JANE");
+		execute("Collection.save");
+		assertNoErrors();
+		// Delete from within dialog
+		execute("Collection.edit", "row=0,viewObject=xava_view_children");
+		assertValue("childId", "JANE");
+		assertValue("description", "THIS IS JANE");
+		execute("Collection.remove");
+		assertNoErrors();
+		// Delete from collection list 
 		execute("Collection.removeSelected", "row=0,viewObject=xava_view_children");
 	}
 	
