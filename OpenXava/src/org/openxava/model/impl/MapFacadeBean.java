@@ -180,7 +180,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	public void setValues(UserInfo userInfo, String modelName, Map keyValues, Map values)
-		throws ObjectNotFoundException, FinderException, ValidationException, XavaException, RemoteException 
+		throws FinderException, ValidationException, XavaException, RemoteException  
 	{							
 		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 
@@ -190,9 +190,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			beginTransaction();
 			setValues(metaModel, keyValues, values);			
 			commitTransaction();
-		}
-		catch (ObjectNotFoundException ex) {
-			throw ex;
 		}
 		catch (FinderException ex) {
 			throw ex;
@@ -810,7 +807,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModel,
 		Map keyValues,
 		Map memberNames)
-		throws ObjectNotFoundException, FinderException, XavaException, RemoteException { 
+		throws FinderException, XavaException, RemoteException {  
 		try {									 
 			Map result =
 				getValues(	
@@ -1242,7 +1239,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 		
 	private void setValues(MetaModel metaModel, Map keyValues, Map values)
-		throws ObjectNotFoundException, FinderException, ValidationException, XavaException {		
+		throws FinderException, ValidationException, XavaException { 		
 		try {			
 			updateReferencedEntities(metaModel, values);
 			removeKeyFields(metaModel, values);			
@@ -1438,7 +1435,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 				
-	private Object findEntity(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException, RemoteException {		
+	private Object findEntity(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException { 		
 		return getPersistenceProvider().find(metaModel, keyValues);
 	}
 	

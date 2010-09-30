@@ -4,6 +4,10 @@ import org.openxava.util.Is;
 import org.openxava.util.Messages;
 import org.openxava.validators.IValidator;
 
+/**
+ * 
+ * @author Federico Alcántara
+ */
 public class ChildValidator implements IValidator {
 	private static final long serialVersionUID = 1L;
 	private String description;

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Updating embedded collection element a 'Member not found' exception is thrown.
+- Methods getProperty() of ModuleTestBase renamed to getXavaJUnitProperty().
+- Groovy support.
 - Fix: Bad layout for header fields when frames.
 - Russian documentation improved. 
 - New editor DocumentLibrary (and stereotype DOCUMENT_LIBRARY) to have a group of documents stored in Liferay Document Library. 
