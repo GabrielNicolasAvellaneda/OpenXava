@@ -11,7 +11,7 @@ import org.openxava.test.model.*;
 
 public class OnChangeCustomerNameAction extends OnChangePropertyBaseAction {
 
-	public void execute() throws Exception {			
+	public void execute() throws Exception {
 		String value = (String) getNewValue();
 		if (value == null) return;
 		if (value.startsWith("Javi")) {

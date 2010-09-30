@@ -15,17 +15,16 @@ public class PublicJSPTest extends TestCase {
 	    assertTrue(page.asText().startsWith("The uri of this JSP is"));
 	}
 	
-	private static String getPort() {		
-		return ModuleTestBase.getProperty("port", "8080");				
+	private static String getPort() {						
+		return ModuleTestBase.getXavaJUnitProperty("port", "8080"); 
 	}
 	
 	private static String getHost() {
-		return ModuleTestBase.getProperty("host", "localhost");
+		return ModuleTestBase.getXavaJUnitProperty("host", "localhost"); 
 	}	
 	
 	private static String getApplication() {
-		return ModuleTestBase.getProperty("application", "OpenXavaTest");
+		return ModuleTestBase.getXavaJUnitProperty("application", "OpenXavaTest"); 
 	}
-
 
 }

@@ -2,6 +2,8 @@ package org.openxava.annotations;
 
 import java.lang.annotation.*;
 
+import org.openxava.calculators.*;
+
 /**
  * For calculating its initial value. <p>
  * 

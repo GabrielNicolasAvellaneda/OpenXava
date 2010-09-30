@@ -2409,6 +2409,7 @@ public class AnnotatedClassParser {
 		BeanInfo info = Introspector.getBeanInfo(pojoClass);
 		Map<String, PropertyDescriptor> result = new HashMap<String, PropertyDescriptor>();
 		for (PropertyDescriptor pd: info.getPropertyDescriptors()) {
+			if (pd.getName().equals("metaClass")) continue; 
 			result.put(pd.getName(), pd);				
 		}
 		return result;

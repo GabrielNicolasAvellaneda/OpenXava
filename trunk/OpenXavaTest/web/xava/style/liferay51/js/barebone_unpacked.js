@@ -6,7 +6,7 @@
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
- * $Date: 2010-09-26 19:31:48 $
+ * $Date: 2010-09-30 16:01:34 $
  * $Rev: 5685 $
  */
 

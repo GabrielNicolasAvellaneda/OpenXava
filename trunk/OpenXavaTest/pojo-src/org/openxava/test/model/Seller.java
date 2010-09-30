@@ -62,7 +62,7 @@ public class Seller {
 	@OnChange(forViews="DecorateName", value=org.openxava.test.actions.DecorateNameAction.class)
 	private int number;
 	
-	@Column(length=40) @Required
+	@Column(length=40) @Required	
 	private String name;
 		
 	@DescriptionsList(notForViews="ForCustomJSP, LevelNoDescriptionsList, SearchListCondition, SearchListConditionOff, SearchListConditionBlank")

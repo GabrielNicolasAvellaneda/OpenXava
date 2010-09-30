@@ -35,6 +35,7 @@
 	<property name="jetspeed2.pages.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/pages"/>
 	<property name="portlets.default.locale" value="${user.language}"/>
 	<property name="hibernate.properties" value=""/>
+	<property name="compile.src.path" value="../${project}/src"/>
 			
    <!-- Set up java.class.path -->
    <path id="project.class.path">
@@ -48,7 +49,7 @@
       <pathelement path="${java.class.path}" />
 
    </path>	
-	
+   
 	<target name="init">
 		<tstamp/>
 		<available file="../${project.name}/filtered-files" type="dir"
@@ -442,20 +443,34 @@
 			tofile="../${project.name}/${classes.dir}/jndi.properties" overwrite="true"/>		
 	</target>
 	
-	<target name="compile"> 
-		<!-- We create the 'lib' folder for it does not fails at the first time -->
+	<target name="prepareCompile">
+		<!-- We create the 'lib' and 'classes' folder for it does not fails at the first time -->
 		<mkdir dir="web/WEB-INF/lib"/>
+		<mkdir dir="web/WEB-INF/classes"/>	
+	</target>
+	
+	<target name="compile">
+		<antcall target="compileJava"/>
+		<antcall target="compileGroovy"/> 
+	</target>
+	
+	<target name="compileJava" depends="prepareCompile"> 
 		<javac destdir="../${project}/web/WEB-INF/classes"> 
-			<src path="../${project}/src"/> 
+			<src path="${compile.src.path}"/>
 			<!-- Only needed if you uses XDoclet generated code
 			<src path="../${project}/gen-src"/> 
 			-->
+			<!-- Only needed if you use XML components
 			<src path="../${project}/gen-src-xava"/>  
+			-->
 			<classpath> 
 				<pathelement path="../OpenXava/bin"/>
 				<fileset dir="../OpenXava/web/WEB-INF/lib"> 
 					<include name="**/*.jar"/> 
-				</fileset> 
+				</fileset>
+				<fileset dir="../OpenXava/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 								
 				<fileset dir="web/WEB-INF/lib"> 
 					<include name="**/*.jar"/> 
 				</fileset> 
@@ -463,13 +478,47 @@
 			</classpath> 
 		</javac>  
 		<copy todir="../${project}/web/WEB-INF/classes">
+			<!-- Only needed if you use XML components
 			<fileset dir="../${project}/gen-src-xava" excludes="**/*.java"/>
+			-->
 			<fileset dir="../${project}/xava"/>
 			<fileset dir="../${project}/persistence"/>
 			<fileset dir="../${project}/i18n"/>
 			<fileset dir="../${project}/properties"/>			
 		</copy>		
 	</target> 
+	
+	<target name="compileGroovy" depends="prepareCompile">  
+		<taskdef name="groovyc"
+		  classname="org.codehaus.groovy.ant.Groovyc"
+		  classpath="../OpenXava/web/WEB-INF/lib/groovy-all.jar"/>	
+
+		<groovyc destdir="../${project}/web/WEB-INF/classes"> 
+			<src path="${compile.src.path}"/> 
+			<classpath> 
+				<pathelement path="../OpenXava/bin"/>
+				<fileset dir="../OpenXava/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 				
+				<fileset dir="../OpenXava/web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 
+				<pathelement path="web/WEB-INF/classes"/>
+				<fileset dir="web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 
+				<pathelement path="${j2ee.lib};${xava.compiler.path}"/> 
+			</classpath> 
+		</groovyc>  
+		
+		<copy todir="../${project}/web/WEB-INF/classes">
+			<fileset dir="../${project}/xava"/>
+			<fileset dir="../${project}/persistence"/>
+			<fileset dir="../${project}/i18n"/>
+			<fileset dir="../${project}/properties"/>			
+		</copy>		
+	</target>	    
+	
 		
 	<target name="createEJBJar" 
 		depends="createDist, updateDataSourceInfo, filterWithConfiguration, filterWithoutConfiguration, filter, configureJNDI">
@@ -813,11 +862,11 @@
 	<!-- 
 	 For Hibernate applications with .hbml.xml files, that is,
 	 when code generation from XML components is used, as usual in OpenXava 2.x
-	 -->	
+	 -->
 	<target name="updateSchema">
 	    <taskdef name="schemaupdate"
 	        classname="org.hibernate.tool.hbm2ddl.SchemaUpdateTask"
-	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;${j2ee.lib};${schema.path}"/>
+	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/web/WEB-INF/lib/groovy-all.jar;../OpenXava/bin;${j2ee.lib};${schema.path}"/>
 	    
 	    <schemaupdate
 	    	config="${schema.config.file}"

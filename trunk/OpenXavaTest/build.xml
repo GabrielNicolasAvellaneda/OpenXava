@@ -50,6 +50,13 @@
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 	
+	<!-- If you have not the Groovy Plugin installed you must call this target -->
+	<target name="compileGroovy">
+		<ant antfile="../OpenXava/build.xml" target="compileGroovy">
+			<property name="compile.src.path" value="../${project}/src; ../${project}/pojo-src;"/>
+		</ant>
+	</target>
+	
 	<target name="regenerateHibernate">	
 		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
 	</target>

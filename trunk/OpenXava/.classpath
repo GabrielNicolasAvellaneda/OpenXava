@@ -54,5 +54,6 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal-kernel.jar"/>
 	<classpathentry kind="lib" path="lib/portal-service.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/groovy-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,12 +1,7 @@
 package org.openxava.test.tests;
 
-import java.math.*;
-
 import org.openxava.tests.*;
-import org.openxava.util.*;
-
 import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.*;
 
 import junit.framework.*;
 
@@ -25,12 +20,11 @@ public class TestServletTest extends TestCase {
 	}
 	
 	private String getPort() { 
-		return ModuleTestBase.getProperty("port", "8080");
+		return ModuleTestBase.getXavaJUnitProperty("port", "8080"); 
 	}
 	
 	private String getHost() { 
-		return ModuleTestBase.getProperty("host", "localhost");
-	}	
-	
+		return ModuleTestBase.getXavaJUnitProperty("host", "localhost"); 
+	}		
 
 }

@@ -460,7 +460,7 @@ public class ModuleTestBase extends TestCase {
 	
 	private BrowserVersion getBrowserVersion() {
 		if (browserVersion == null) {
-			String browser = getProperty("browser", "firefox2"); // FF2 because FF3 in HtmlUnit 2.5 has a bug with setFocus()			
+			String browser = getXavaJUnitProperty("browser", "firefox2"); // FF2 because FF3 in HtmlUnit 2.5 has a bug with setFocus()			
 			if ("firefox3".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_3;
 			else if ("firefox2".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_2;
 			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7;
@@ -1738,19 +1738,22 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	/**
-	 * From file xava-junit.properties 
+	 * From file xava-junit.properties
+	 * 
+	 * @since 4m6  Before it was called getProperty() 
 	 */
-	static public String getProperty(String id) {
+	static public String getXavaJUnitProperty(String id) {
 		return getXavaJunitProperties().getProperty(id);
 	}
 	
 	/**
 	 * From file xava-junit.properties 
+	 * 
+	 * @since 4m6  Before it was called getProperty()
 	 */	
-	static public String getProperty(String id, String defaultValue) {
+	static public String getXavaJUnitProperty(String id, String defaultValue) { 
 		return getXavaJunitProperties().getProperty(id, defaultValue);
 	}
-	
 	
 	private static Properties getXavaJunitProperties() {
 		if (xavaJunitProperties == null) {

@@ -42,7 +42,7 @@ import org.openxava.test.validators.*;
 @Views({
 	@View( name = "WithSection" , members = 
 		"number;" +
-		"data {" +
+		"data {" +		
 		"	description;" +
 		"	photos;" +
 		"	familyNumber;" +
@@ -52,7 +52,7 @@ import org.openxava.test.validators.*;
 		"		unitPrice;" +
 		"		unitPriceInPesetas;" +
 		"	]" +
-		"	remarks" + 
+		"	remarks" +		
 		"}"		
 	),
 	@View( name="Simple", members = "number, description, unitPrice" ),
