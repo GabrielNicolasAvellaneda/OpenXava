@@ -5,6 +5,14 @@
 	<property name="project" value="MiEscuela" />
 	<property file="../openxava.properties"/>
 	
+	<!-- 
+	Compila todos los .java y .groovy 
+	No necesitas llamarla si trabajas dentro de Eclipse
+	-->
+	<target name="compilar"> 
+		<ant antfile="../OpenXava/build.xml" target="compile"/>
+	</target>	    	
+	
 	<!-- Construye y despliega la aplicación en formato .war -->	
 	<target name="desplegarWar">
 		<!-- En un directorio -->

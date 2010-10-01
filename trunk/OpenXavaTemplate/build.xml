@@ -6,6 +6,14 @@
 	<property name="ox3" value="true" />
 	<property file="../openxava.properties"/>
 	
+	<!-- 
+	Compile all .java and .groovy 
+	Not needed to call it if you work inside Eclipse
+	-->
+	<target name="compile"> 
+		<ant antfile="../OpenXava/build.xml" target="compile"/>
+	</target>	    	
+	
 	<!-- Build and deploy the application in war format -->	
 	<target name="deployWar">
 		<!-- In a directory -->
