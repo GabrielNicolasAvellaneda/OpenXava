@@ -4,25 +4,30 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.openxava.annotations.Tab;
+
 @Entity
+@Tab(properties = "id, description")
 public class Parent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	private String parentId;
+	@Column(name = "PARENTID")
+	private String id;
 	private String description;
 	@OneToMany(mappedBy="parent", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	private Collection<Child>children;
 	
-	public String getParentId() {
-		return parentId;
+	public String getId() {
+		return id;
 	}
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getDescription() {
 		return description;
@@ -40,7 +45,7 @@ public class Parent implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((parentId == null) ? 0 : parentId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	@Override
@@ -52,10 +57,10 @@ public class Parent implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Parent other = (Parent) obj;
-		if (parentId == null) {
-			if (other.parentId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!parentId.equals(other.parentId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

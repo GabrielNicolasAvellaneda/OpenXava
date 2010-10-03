@@ -11,7 +11,7 @@ import org.openxava.validators.IValidator;
 public class ChildValidator implements IValidator {
 	private static final long serialVersionUID = 1L;
 	private String description;
-	private String childId;
+	private String id;
 
 	public void validate(Messages errors) throws Exception {
 		if (Is.emptyString(getDescription())) {
@@ -27,12 +27,12 @@ public class ChildValidator implements IValidator {
 		this.description = description;
 	}
 
-	public void setChildId(String childId) {
-		this.childId = childId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getChildId() {
-		return childId;
+	public String getId() {
+		return id;
 	}
 
 }
