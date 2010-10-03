@@ -353,7 +353,7 @@ public class AnnotatedClassParser {
 		if (pd.getName().equals("class") || pd.getPropertyType() == null) return;
 		if (isReference(pd, f)) addReference(model, mapping, pd, f, embedded);
 		else if (Collection.class.isAssignableFrom(pd.getPropertyType())) addCollection(model, mapping, pd, f);
-		else if (pd.getPropertyType().isAnnotationPresent(Embeddable.class)) addEmbeddable(model, mapping, pd, f);
+		else if (pd.getPropertyType().isAnnotationPresent(Embeddable.class)) addEmbeddable(model, mapping, pd, f, embedded);
 		else addProperty(model, mapping, pd, f, embedded);
 	}
 	
@@ -405,7 +405,7 @@ public class AnnotatedClassParser {
 		return null; 
 	}
 	
-	private void addEmbeddable(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field) throws Exception {
+	private void addEmbeddable(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field, String parentEmbedded) throws Exception {
 		String modelName = pd.getPropertyType().getSimpleName();
 		if (!model.getMetaComponent().hasMetaAggregate(modelName)) {
 			MetaAggregateForReference metaAggregate = new MetaAggregateForReference();			
@@ -414,7 +414,8 @@ public class AnnotatedClassParser {
 			metaAggregate.setPOJOClassName(pd.getPropertyType().getName());
 			model.getMetaComponent().addMetaAggregate(metaAggregate);
 			parseViews(model.getMetaComponent(), pd.getPropertyType(), modelName);
-			parseMembers(metaAggregate, pd.getPropertyType(), mapping, pd.getName());
+			parseMembers(metaAggregate, pd.getPropertyType(), mapping, 
+					Is.emptyString(parentEmbedded) ? pd.getName() : parentEmbedded + "_" + pd.getName());
 		}				
 		addReference(model, mapping, pd, field, pd.getName());
 	}
