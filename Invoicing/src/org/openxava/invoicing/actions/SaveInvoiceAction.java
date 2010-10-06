@@ -2,11 +2,6 @@ package org.openxava.invoicing.actions;
 
 import org.openxava.actions.*;
 
-/**
- * 
- * @author Javier Paniza
- */
-
 public class SaveInvoiceAction 
 	extends SaveAction 
 	implements IChangeModuleAction 

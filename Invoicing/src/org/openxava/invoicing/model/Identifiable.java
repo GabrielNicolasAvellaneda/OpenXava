@@ -1,7 +1,6 @@
 package org.openxava.invoicing.model;
 
 import javax.persistence.*;
-
 import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
