@@ -9,7 +9,6 @@ import org.openxava.invoicing.model.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
 
-
 public class OrderTest extends CommercialDocumentTest {
 	
 	public OrderTest(String testName) { 
