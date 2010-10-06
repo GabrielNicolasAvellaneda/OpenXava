@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: i18n files are not correctly copied when creating a portlet war.
 - Fix: Choosing reference fails when reference name matches id name of referenced entity.
 - Fix: @Tab fails with multi-level @Embedded.
 - Fix: Updating embedded collection element a 'Member not found' exception is thrown.
