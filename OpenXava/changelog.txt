@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Choosing reference fails when reference name matches id name of referenced entity.
+- Fix: @Tab fails with multi-level @Embedded.
 - Fix: Updating embedded collection element a 'Member not found' exception is thrown.
 - Methods getProperty() of ModuleTestBase renamed to getXavaJUnitProperty().
 - Groovy support.

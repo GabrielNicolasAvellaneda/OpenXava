@@ -12,8 +12,8 @@ import org.openxava.tests.ModuleTestBase;
  * @author Federico Alcantara
  *
  */
-public class EmbeddedableTest extends ModuleTestBase{
-	public EmbeddedableTest(String nameTest) {
+public class SalesRepresentativeTest extends ModuleTestBase{ 
+	public SalesRepresentativeTest(String nameTest) {
 		super(nameTest, "SalesRepresentative");
 	}
 
@@ -33,7 +33,7 @@ public class EmbeddedableTest extends ModuleTestBase{
 	 * Test if CRUD is performing okey.
 	 * @throws Exception
 	 */
-	public void testCRUD() throws Exception {
+	public void testTwoLevelsEmbedded() throws Exception { 
 		assertNoErrors(); // This could happen
 		execute("CRUD.new");
 		assertNoErrors(); // This too
@@ -47,10 +47,14 @@ public class EmbeddedableTest extends ModuleTestBase{
 		execute("CRUD.save");
 		assertNoErrors();
 		
-		// let's read
-		execute("CRUD.new");
-		setValue("repEmployeeNumber", "1");
-		execute("CRUD.refresh");
+		// let's read from list mode
+		execute("Mode.list");
+		assertListRowCount(1);
+		assertValueInList(0, "person.personLastName", "DOE");
+		assertValueInList(0, "person.phoneNumber.phoneDigits", "555-1212");
+		
+		// let's read in detail mode
+		execute("Mode.detailAndFirst");
 		assertValue("repEmployeeNumber", "1");
 		assertValue("repCommissionRate", "3");
 		assertValue("person.personFirstName", "JOHN");
