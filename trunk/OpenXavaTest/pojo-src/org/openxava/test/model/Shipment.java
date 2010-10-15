@@ -55,7 +55,9 @@ public class Shipment {
 	private Timestamp time;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="CUSTOMERCONTACT")
+	@JoinColumns({
+		@JoinColumn(name="CUSTOMERCONTACT", referencedColumnName="CUSTOMER_NUMBER")
+	})
 	@ReferenceView("Simple")
 	private CustomerContactPerson customerContactPerson;
 	

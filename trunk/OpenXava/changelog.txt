@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- JPA 2.0 support: Hibernate upgraded to 3.6.0.
 - Fix: i18n files are not correctly copied when creating a portlet war.
 - Fix: Choosing reference fails when reference name matches id name of referenced entity.
 - Fix: @Tab fails with multi-level @Embedded.

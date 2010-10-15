@@ -223,7 +223,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertFocusOn("remarks");		
 	}
 	
-	public void testNonExistentReferenceUsedAsKey_ceroValueOnChange() throws Exception {
+	public void testZeroValueOnChange() throws Exception {
 		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
 		execute("CRUD.new");
 		assertMessage("type=null");
@@ -232,6 +232,18 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("invoice.date", "1/1/02");						
 		setValue("type.number", "0");
 		assertMessage("type=0"); // Verifies zero as value for on change action
+		deleteDeliveryType(0);
+	}
+	
+	/* This case is not supported since 4m6, because Hibernate 3.6 does not support it
+	public void testNonExistentReferenceUsedAsKey() throws Exception {
+		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
+		execute("CRUD.new");
+		assertMessage("type=null");
+		setValue("invoice.year", "2002");
+		setValue("invoice.number", "1");
+		assertValue("invoice.date", "1/1/02");						
+		setValue("type.number", "0");
 		setValue("number", "66");
 		setValue("description", "JUNIT");		
 		execute("CRUD.save");
@@ -257,6 +269,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertMessage("Delivery deleted successfully");
 	}
+	*/	
 
 	private void createDeliveryType(int number, String description) {
 		DeliveryType type = new DeliveryType();

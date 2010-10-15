@@ -14,12 +14,8 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/asm.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jasperreports.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/antlr.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/ejb3-persistence.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate3.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-annotations.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-validator.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-entitymanager.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jboss-archive-browsing.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-validator.jar"/>
@@ -29,11 +25,9 @@
 	<classpathentry kind="lib" path="lib/commons-codec.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang.jar"/>
-	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/sac.jar"/>
 	<classpathentry kind="lib" path="lib/cssparser.jar"/>
 	<classpathentry kind="lib" path="lib/nekohtml.jar"/>
-	<classpathentry kind="lib" path="lib/xalan.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ox-jdbc-adapters.jar"/>
 	<classpathentry kind="lib" path="lib/htmlunit-core-js.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-logging.jar"/>
@@ -55,5 +49,9 @@
 	<classpathentry kind="lib" path="lib/portal-kernel.jar"/>
 	<classpathentry kind="lib" path="lib/portal-service.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/groovy-all.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jpa2.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/xalan.jar"/>
+	<classpathentry kind="lib" path="lib/serializer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

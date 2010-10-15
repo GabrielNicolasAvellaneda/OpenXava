@@ -555,11 +555,12 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	public void testFilterByBoolean() throws Exception {
-		int total = Invoice.findAll().size();
-		int paidOnes = Invoice.findPaidOnes().size();
+		int total = Invoice.findAll().size();		
+		int paidOnes = Invoice.findPaidOnes().size();		
 		int notPaidOnes = Invoice.findNotPaidOnes().size();
+		
 		assertTrue("It has to have invoices for run this test", total > 0);
-		assertTrue("It has to have paid invoices for run this test", paidOnes > 0);
+		assertTrue("It has to have paid invoices for run this test", paidOnes > 0);		
 		assertTrue("It has to have not paid invoices for run this test", notPaidOnes > 0);
 		assertTrue("The sum of paid and not paid invoices has to match with the total count", total == (paidOnes + notPaidOnes));
 		assertTrue("It has to have less than 10 invoices to run this test", total < 10);
@@ -1345,8 +1346,7 @@ public class InvoiceTest extends ModuleTestBase {
 	private void createDelivery() throws Exception {
 		Delivery delivery = new Delivery();
 		delivery.setInvoice(getInvoice());
-		DeliveryType type = new DeliveryType();
-		type.setNumber(1);
+		DeliveryType type = XPersistence.getManager().find(DeliveryType.class, 1);
 		delivery.setType(type); 		
 		delivery.setNumber(666);
 		delivery.setDate(Dates.create(22,2,2004));

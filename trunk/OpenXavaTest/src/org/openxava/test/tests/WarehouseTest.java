@@ -32,7 +32,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		String comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
 		assertEquals(String.valueOf(initialRowCount), comboRowCount);
 		combo.setSelectedAttribute(String.valueOf(finalRowCount), true);
-		Thread.sleep(2200);
+		Thread.sleep(3000);
 		assertListRowCount(finalRowCount);
 		comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
 		assertEquals(String.valueOf(finalRowCount), comboRowCount);
