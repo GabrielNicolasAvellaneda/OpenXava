@@ -38,7 +38,7 @@ public class Address implements IWithCity {
 	@LabelFormats({ 
 		@LabelFormat(forViews="Demo", value=LabelFormatType.SMALL)
 	})
-	@Action(value="Customer.prefixStreet", alwaysEnabled=true)
+	@Action(value="Customer.prefixStreet", alwaysEnabled=true)	
 	private String street;
 	
 	@Required @Column(length=5) @LabelFormat(LabelFormatType.SMALL)	

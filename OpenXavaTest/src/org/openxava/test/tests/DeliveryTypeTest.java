@@ -89,12 +89,9 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertValue("description", "JUNIT MODIFIED"); // 'MODIFIED' is added in postmodify
 		
 		Delivery delivery = new Delivery();
-		Invoice invoice = new Invoice();
-		invoice.setYear(2002);
-		invoice.setNumber(1);
+		Invoice invoice = Invoice.findByYearNumber(2002, 1);
 		delivery.setInvoice(invoice);
-		DeliveryType deliveryType = new DeliveryType();
-		deliveryType.setNumber(66);
+		DeliveryType deliveryType = XPersistence.getManager().find(DeliveryType.class, 66);		
 		delivery.setType(deliveryType);
 		delivery.setNumber(66);
 		delivery.setDescription("JUNIT FOR DELIVERY TYPE");

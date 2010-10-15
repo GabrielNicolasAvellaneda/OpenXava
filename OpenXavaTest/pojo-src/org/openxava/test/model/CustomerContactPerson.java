@@ -20,13 +20,12 @@ import org.openxava.annotations.*;
  * @author Javier Paniza
  */
 
-@Entity
-@IdClass(CustomerContactPersonKey.class) 
+@Entity 
 @Views({
 	@View(name="CustomerAsAggregate3Levels"), 
 	@View(name="Simple", members="name; customer")
 })
-public class CustomerContactPerson {
+public class CustomerContactPerson implements java.io.Serializable {
 		
 	@ReferenceView(value="Simple")
 	@ReferenceViews({

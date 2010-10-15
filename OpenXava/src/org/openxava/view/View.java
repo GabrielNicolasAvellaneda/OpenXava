@@ -1949,7 +1949,7 @@ public class View implements java.io.Serializable {
 	}
 		
 	private void assignValuesToWebView(String qualifier, boolean firstLevel) { 
-		try {			
+		try {		
 			this.firstLevel = firstLevel; 
 			formattedProperties = null; 
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));
@@ -1959,7 +1959,7 @@ public class View implements java.io.Serializable {
 			if (isRepresentsCollection()) fillCollectionInfo(qualifier);
 			
 			while (it.hasNext()) {
-				Object m = it.next();							
+				Object m = it.next();				
 				if (isMetaProperty(m)) {
 					MetaProperty p = (MetaProperty) m;
 					String propertyKey= qualifier + p.getName();
@@ -1980,11 +1980,11 @@ public class View implements java.io.Serializable {
 					}											
 				}
 				else if (m instanceof MetaReference) {					
-					MetaReference ref = (MetaReference) m;										
+					MetaReference ref = (MetaReference) m;
 					String key = qualifier + ref.getName() + "__KEY__";
-					String value = getRequest().getParameter(key);					
+					String value = getRequest().getParameter(key);				
 					if (value == null) {												
-						View subview = getSubview(ref.getName()); 					 																				
+						View subview = getSubview(ref.getName());						
 						subview.assignValuesToWebView(qualifier + ref.getName() + ".", false); 
 					}
 					else { // References as combo (descriptions-list) and composite key
@@ -1992,12 +1992,12 @@ public class View implements java.io.Serializable {
 					}					
 				}
 				else if (m instanceof MetaCollection) {
-					MetaCollection collec = (MetaCollection) m;						
+					MetaCollection collec = (MetaCollection) m;
 					View subview = getSubview(collec.getName());					 					
 					subview.assignValuesToWebView(qualifier + collec.getName() + ".", false);
 				}
 				else if (m instanceof MetaGroup) {					
-					MetaGroup group = (MetaGroup) m;					
+					MetaGroup group = (MetaGroup) m;
 					View subview = getGroupView(group.getName());
 					subview.assignValuesToWebView(qualifier, false);					 																									
 				}

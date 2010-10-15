@@ -92,7 +92,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 		}
 	}
 	
-	private boolean isManaged(Object object) { 
+	private boolean isManaged(Object object) {
 		try {
 			return XPersistence.getManager().contains(object);
 		}
