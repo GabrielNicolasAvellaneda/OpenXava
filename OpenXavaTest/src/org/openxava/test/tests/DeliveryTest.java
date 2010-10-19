@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -15,6 +16,8 @@ import org.openxava.util.*;
  */
 
 public class DeliveryTest extends ModuleTestBase {
+
+	private static Log log = LogFactory.getLog(DeliveryTest.class);
 	
 	private String [] listActions = {
 		"Print.generatePdf",
@@ -235,8 +238,12 @@ public class DeliveryTest extends ModuleTestBase {
 		deleteDeliveryType(0);
 	}
 	
-	/* This case is not supported since 4m6, because Hibernate 3.6 does not support it
+		
 	public void testNonExistentReferenceUsedAsKey() throws Exception {
+		if (usesAnnotatedPOJO()) { // This case is not supported since 4m6, because Hibernate 3.6 does not support it 
+			log.warn("testNonExistentReferenceUsedAsKey() case not supported in JPA version");
+			return;
+		}
 		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
 		execute("CRUD.new");
 		assertMessage("type=null");
@@ -269,7 +276,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertMessage("Delivery deleted successfully");
 	}
-	*/	
+	
 
 	private void createDeliveryType(int number, String description) {
 		DeliveryType type = new DeliveryType();
