@@ -46,6 +46,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.metamodel.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -2461,13 +2462,13 @@ public class AnnotatedClassParser {
 	 * Only for using from MetaApplication class. <p>
 	 */
 	public static Collection friendMetaApplicationGetManagedClassNames() {
-		return obtainManagedClassNamesFromFileClassPath();
+		return obtainManagedClassNamesFromFileClassPath();		
 	}
 	
 	public static Collection<String> getManagedClassNames() {
-		if (managedClassNames == null) {			 
+		if (managedClassNames == null) {
 			try {
-				managedClassNames = obtainManagedClassNamesUsingHibernate();
+				managedClassNames = obtainManagedClassNamesUsingJPA();
 			}
 			catch (Exception ex) {				
 				// When no database connection is available, no session factory can
@@ -2489,12 +2490,12 @@ public class AnnotatedClassParser {
 		return managedClassNames;
 	}
 	
-	private static Collection obtainManagedClassNamesFromFileClassPath() { 
+	private static Collection obtainManagedClassNamesFromFileClassPath() {  
 		Collection classNames = new ArrayList();
 		URL url = getAnchorURL();		
 		if (url != null) {			
 			File baseClassPath=new File(Strings.change(Strings.noLastToken(url.getPath(), "/"), "%20", " "));
-			fillManagedClassNamesFromFileClassPath(classNames, baseClassPath, null, false);
+			fillManagedClassNamesFromFileClassPath(classNames, baseClassPath, null); 
 		}
 		else {			
 			log.warn(XavaResources.getString("jpa_managed_classes_anchor_not_found", "xava.properties, application.xml, aplicacion.xml"));
@@ -2502,16 +2503,15 @@ public class AnnotatedClassParser {
 		return classNames;
 	}
 		
-	private static void fillManagedClassNamesFromFileClassPath(Collection classNames, File dir, String base, boolean model) {  
+	private static void fillManagedClassNamesFromFileClassPath(Collection classNames, File dir, String base) {   
 		File [] files = dir.listFiles();
 		for (int i=0; i<files.length; i++ ) {
 			File file = files[i];
 			String basePackage = base == null?"":base + dir.getName() + ".";
-			if (file.isDirectory()) {
-				boolean isModelPackage = "model".equals(file.getName()) || "modelo".equals(file.getName());				 
-				fillManagedClassNamesFromFileClassPath(classNames, file, basePackage, isModelPackage?true:model);
+			if (file.isDirectory()) {				 
+				fillManagedClassNamesFromFileClassPath(classNames, file, basePackage);
 			}
-			else if (model && file.getName().endsWith(".class")) {				
+			else if (file.getName().endsWith(".class")) {				
 				String modelName = file.getName().substring(0, file.getName().length() - ".class".length());				
 				String className = basePackage + modelName;
 				try { 
@@ -2550,15 +2550,15 @@ public class AnnotatedClassParser {
 		}
 	}
 
-	private static Collection obtainManagedClassNamesUsingHibernate() {
-		// The next code is Hibernate dependent.
-		// This code has to be modified in order to work with Glassfish, OpenJPA, etc.
-		// The ideal way is to rewrite this code using the new JPA 2.0 metadata support
+	private static Collection obtainManagedClassNamesUsingJPA() {		
+		Collection<String> managedClassNames = new ArrayList<String>();
 		EntityManager manager = XPersistence.createManager();
-		org.hibernate.impl.SessionImpl impl = (org.hibernate.impl.SessionImpl) manager.getDelegate();
-		Collection result = impl.getSessionFactory().getAllClassMetadata().keySet();
+		for (ManagedType t: manager.getMetamodel().getManagedTypes()) {
+			String className = t.getJavaType().getName();
+			managedClassNames.add(className);
+		}
 		manager.close();
-		return result;
+		return managedClassNames;
 	}
 
 	private void notApply(String memberName, Class annotation, String validMemberTypes) throws XavaException {

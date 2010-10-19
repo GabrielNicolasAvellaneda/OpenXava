@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- It's no longer required to put the entities in a package named 'model' or 'modelo'. Any package name is valid for entities.
+- Removed the Hibernate dependent code from AnnotatedClassParser, so now it's possible to use other JPA providers.
 - JPA 2.0 support: Hibernate upgraded to 3.6.0.
 - Fix: i18n files are not correctly copied when creating a portlet war.
 - Fix: Choosing reference fails when reference name matches id name of referenced entity.

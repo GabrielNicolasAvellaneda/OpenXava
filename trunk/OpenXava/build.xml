@@ -737,6 +737,9 @@
 			fork="yes">
 			<classpath> 
 				<pathelement path="../OpenXava/bin"/>
+				<fileset dir="../OpenXava/lib">  
+					<include name="**/*.jar"/> 
+				</fileset>
 				<fileset dir="../OpenXava/web/WEB-INF/lib"> 
 					<include name="**/*.jar"/> 
 				</fileset> 
@@ -897,7 +900,12 @@
     		<fileset dir="../OpenXava/web/WEB-INF"/>
   		</copy>
 		<antcall target="createWebXml"/>		
-		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>		
+		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
+		<!-- Delete the old Hibernate jars (used until v4m5) -->
+		<delete file="../${project}/web/WEB-INF/lib/ejb3-persistence.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/hibernate-annotations.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/hibernate-commons-annotations.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/hibernate-entitymanager.jar"/>
 	</target>
 	
 	<target name="defineHibernateTool">

@@ -171,13 +171,13 @@ public class XPersistence {
 		}
 	}	
 	
-	private static EntityManagerFactory getEntityManagerFactory() {
+	private static EntityManagerFactory getEntityManagerFactory() {	
 		Map properties = getPersistenceUnitProperties();
 		EntityManagerFactory entityManagerFactory = (EntityManagerFactory) 
 			entityManagerFactories.get(properties); 
 		if (entityManagerFactory == null) {	
 			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnit(), properties);
-			entityManagerFactories.put(new HashMap(properties), entityManagerFactory);
+			entityManagerFactories.put(new HashMap(properties), entityManagerFactory);			
 		}
 		return entityManagerFactory;
 	}		
