@@ -143,4 +143,25 @@ public class ColorTest extends ModuleTestBase {
 		assertListRowCount(0);
 		assertNoAction("CRUD.deleteRow");
 	}
+	
+	public void testIgnoreAccentsForStringArgumentsInTheFilter() throws Exception{
+		// create record with name 'marrón'
+		execute("CRUD.new");
+		setValue("name", "marrón");
+		execute("TypicalNotResetOnSave.save");
+		assertNoErrors();
+		
+		// filter by 'marron'
+		execute("Mode.list");
+		setConditionValues("", "marron");
+		execute("List.filter");
+		assertListRowCount(1);
+		assertValueInList(0, 1, "MARRÓN");
+		
+		// delete
+		checkAll();
+		execute("CRUD.deleteSelected");
+		assertNoErrors();
+		assertListRowCount(0);
+	}
 }

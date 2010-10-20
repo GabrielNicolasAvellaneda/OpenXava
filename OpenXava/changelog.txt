@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New 'toIgnoreAccentsForStringArgumentsInConditions' in xava.properties. It find the record whether you're looking for 'camión' or 'camion',...
+- Emails: add sends of attachments.
+- Help: to collect icon from portal.
 - It's no longer required to put the entities in a package named 'model' or 'modelo'. Any package name is valid for entities.
 - Removed the Hibernate dependent code from AnnotatedClassParser, so now it's possible to use other JPA providers.
 - JPA 2.0 support: Hibernate upgraded to 3.6.0.

@@ -658,4 +658,20 @@ public class Strings {
 		return result.toString();
 	}
 	
+	/**
+	 * Change from a vowel with an accent, to vowel with no accent
+	 * 
+	 * If you send "Camión" it returns "Camion"
+	 * 
+	 * @since v4m6
+	 */
+	public static String removeAccents(String value){
+		return value.
+			replace("á", "a").replace("Á", "A").
+			replace("é", "e").replace("É", "E").
+			replace("í", "i").replace("Í", "I").
+			replace("ó", "o").replace("Ó", "O").
+			replace("ú", "u").replace("Ú", "U");
+	}
+	
 }

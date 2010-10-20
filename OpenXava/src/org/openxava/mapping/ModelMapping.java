@@ -33,7 +33,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private boolean supportsSchemasInDataManipulation = true; 
 	private boolean supportsYearFunction = false;  
 	private boolean supportsMonthFunction = false;
-	
+	private boolean supportsTranslateFunction = false;
+
 	
 	abstract public String getModelName() throws XavaException;
 
@@ -206,7 +207,23 @@ abstract public class ModelMapping implements java.io.Serializable {
 		if (supportsMonthFunction()) return "month(" + column + ")";
 		return "extract (month from " + column+ ")";
 	}
-		
+
+	/**
+	 * To ignore accents: just to search 'camión' or 'camion'
+	 * 
+	 * Good performance using 'translate' but is very slow when it use 'replace...'
+	 * 
+	 * @since v4m6
+	 */
+	public String translateSQLFunction(String column){
+		if (supportsTranslateFunction()) return "translate(" + column + ",'aeiouAEIOU','áéíóúÁÉÍÓÚ')";
+		return 
+			"replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(" + 
+			column + 
+			", 'Ú', 'U'), 'ú', 'u'), 'Ó', 'O'), 'ó', 'o'), 'Í', 'I'), " +
+			"'í', 'i'), 'É', 'E'), 'é', 'e'), 'Á', 'A'), 'á', 'a')";
+	}
+
 	private boolean supportsYearFunction() { 
 		loadDatabaseMetadata();
 		return supportsYearFunction; 
@@ -216,7 +233,13 @@ abstract public class ModelMapping implements java.io.Serializable {
 		loadDatabaseMetadata();
 		return supportsMonthFunction; 
 	}
-	
+
+	/** @since v4m6 */
+	private boolean supportsTranslateFunction() {
+		loadDatabaseMetadata();
+		return supportsTranslateFunction;
+	}
+
 	private void loadDatabaseMetadata() {
 		if (!databaseMetadataLoaded) {
 			String componentName = "UNKNOWN";

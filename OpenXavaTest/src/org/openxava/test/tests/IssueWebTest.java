@@ -32,10 +32,10 @@ public class IssueWebTest extends ModuleTestBase {
 		resetModule();
 		assertLabelInList(1, "Description");
 
-		// let's get locale es - espaÃ±ol for companyA
+		// let's get locale es - español for companyA
 		newParameters="&schema=companya&locale=es";
 		resetModule();
-		assertLabelInList(1, "DescripciÃ³n");
+		assertLabelInList(1, "Descripción");
 	}
 	
 	public void testUrlParametersChangeOfUser() throws Exception {

@@ -556,6 +556,13 @@ public class Style {
 	public String getRowsPerPage() { 		
 		return "rows-per-page";
 	}
-	
+
+	/**
+	 * @since 4m6
+	 */
+	public String getHelpImage() {
+		return "images/help.png";
+	}
+
 	
 }

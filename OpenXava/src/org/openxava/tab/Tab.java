@@ -37,7 +37,17 @@ import org.openxava.tab.impl.IEntityTab;
 import org.openxava.tab.impl.IXTableModel;
 import org.openxava.tab.meta.MetaRowStyle;
 import org.openxava.tab.meta.MetaTab;
-import org.openxava.util.*;
+import org.openxava.util.CMPFieldComparator;
+import org.openxava.util.Dates;
+import org.openxava.util.ElementNotFoundException;
+import org.openxava.util.Is;
+import org.openxava.util.Labels;
+import org.openxava.util.Strings;
+import org.openxava.util.SystemException;
+import org.openxava.util.Users;
+import org.openxava.util.XavaException;
+import org.openxava.util.XavaPreferences;
+import org.openxava.util.XavaResources;
 import org.openxava.view.View;
 import org.openxava.web.Ids;
 import org.openxava.web.WebEditors;
@@ -531,6 +541,9 @@ public class Tab implements java.io.Serializable {
 			ModelMapping mapping = p.getMetaModel().getMapping(); 
 			return mapping.yearSQLFunction(column) + " = ? and " + mapping.monthSQLFunction(column);
 		}						
+		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isToIgnoreAccentsForStringArgumentsInConditions()) {
+			column = p.getMetaModel().getMetaComponent().getEntityMapping().translateSQLFunction(column);
+		}
 		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) { 
 			return "upper(" + column + ")"; 
 		}
@@ -540,6 +553,7 @@ public class Tab implements java.io.Serializable {
 
 	private Object convertComparator(MetaProperty p, String comparator) throws XavaException {
 		if (STARTS_COMPARATOR.equals(comparator)) return "like";
+		
 		if (CONTAINS_COMPARATOR.equals(comparator)) return "like";
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
 		if (MONTH_COMPARATOR.equals(comparator)) return "=";
@@ -614,7 +628,10 @@ public class Tab implements java.io.Serializable {
 		return filterKey(key.toArray());
 	}
 	
-	private String convertStringArgument(String value) {  
+	private String convertStringArgument(String value) {
+		if (XavaPreferences.getInstance().isToIgnoreAccentsForStringArgumentsInConditions()){
+			value = Strings.removeAccents(value);
+		}
 		if (XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) {
 			return value.trim().toUpperCase(); 
 		}
