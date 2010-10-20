@@ -432,5 +432,20 @@ public class XavaPreferences {
 	public boolean isShowLabelsForToolBarActions(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("showLabelsForToolBarActions", "true").trim());
 	}
+	
+	/** @since 4m6 */
+	public String getDefaultHelpPrefix(){
+		return "http://openxava.wikispaces.com/help_";		
+	}
+
+	/** @since 4m6
+	 * 
+	 * If <code>true</code> it ignore accents to string arguments for conditions in list and collections. <p>
+	 * 
+	 * The default value is <code>false</code>.<br>
+	 */
+	public boolean isToIgnoreAccentsForStringArgumentsInConditions() {  
+		return "true".equalsIgnoreCase(getProperties().getProperty("toIgnoreAccentsForStringArgumentsInConditions", "false" ).trim()); 
+	}
 		
 }

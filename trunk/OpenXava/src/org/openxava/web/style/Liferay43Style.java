@@ -298,5 +298,9 @@ public class Liferay43Style extends Style {
 	
 	public String getSelectedRowStyle(){
 		return "";
-	}	
+	}
+	
+	public String getHelpImage() {
+		return getImagesFolder() + "common/help.png";
+	}
 }

@@ -97,4 +97,8 @@ public class Liferay51Style extends Liferay43Style {
 		return "selected-row";
 	}
 	
+	public String getHelpImage() {
+		return getImagesFolder() + "portlet/help.png";
+	}
+	
 }

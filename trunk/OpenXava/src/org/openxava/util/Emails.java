@@ -1,19 +1,39 @@
 package org.openxava.util;
 
-import org.openxava.util.XavaPreferences;
-
-import javax.mail.internet.AddressException;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.InternetAddress;
-import javax.mail.*;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
+
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  * @author Janesh Kodikara
  */
 
 public class Emails {
+
+	public static class Attachment {
+		private String name;
+		private File file;
+		
+		public Attachment(String name, File file){
+			this.name = name;
+			this.file = file;
+		}
+	}
 
 	private static class SMTPAuthenticator extends javax.mail.Authenticator {
 	    private String fUser;
@@ -80,28 +100,28 @@ public class Emails {
 
 
     public static void send(String fromEmail, String toEmail,
-                            String subject, String content)
-            throws AddressException, MessagingException {
-
-        // Create a mail session
-        Session session = getMailSession();
-
-        // Construct the message
-        Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(fromEmail));
-        msg = setTORecipients(msg, toEmail);
-        msg.setSubject(subject);
-        msg.setContent(content, MESSAGE_CONTENT_TYPE);
-
-        // Send the message
-        Transport.send(msg);
-    }
-
+			String subject, String content, Attachment... attachments)
+		throws AddressException, MessagingException {
+		
+		// Create a mail session
+		Session session = getMailSession();
+		
+		// Construct the message
+		Message msg = new MimeMessage(session);
+		msg.setFrom(new InternetAddress(fromEmail));
+		msg = setTORecipients(msg, toEmail);
+		msg.setSubject(subject);
+		// content and attachments
+		if (attachments != null && attachments.length > 0 ) addContentAndAttachments(msg, content, attachments);
+		else msg.setContent(content, MESSAGE_CONTENT_TYPE);
+		
+		// Send the message
+		Transport.send(msg);
+	}
 
     public static void send(String fromEmail, String senderName, String toEmail,
                             String subject, String content)
-            throws AddressException, MessagingException, UnsupportedEncodingException
-{
+            throws AddressException, MessagingException, UnsupportedEncodingException{
 
         // Create a mail session
         Session session = getMailSession();
@@ -201,6 +221,27 @@ public class Emails {
         }
         msg.setRecipients(Message.RecipientType.CC, address);
         return msg;
+    }
+    
+    /** @since v4m6 */
+    private static void addContentAndAttachments(Message msg, String content, Attachment... attachments) 
+			throws MessagingException{
+		
+		Multipart multipart = new MimeMultipart();
+		// content
+		MimeBodyPart messagePart = new MimeBodyPart();
+		messagePart.setText(content);
+		multipart.addBodyPart(messagePart);
+		// attachments
+		for (int i = 0; i < attachments.length; i++){
+			MimeBodyPart attachmentPart = new MimeBodyPart();
+			attachmentPart.setDataHandler(new DataHandler(new FileDataSource(attachments[i].file)));
+			attachmentPart.setFileName(attachments[i].name);
+			
+			multipart.addBodyPart(attachmentPart);	
+		}
+		//
+		msg.setContent(multipart);
     }
 
 }

@@ -201,5 +201,9 @@ public class WebSpherePortalStyle extends Style {
 
 	public String getSelectedRowStyle(){
 		return "font-weight: bold;";
-	}	
+	}
+	
+	public String getHelpImage(){
+		return "xava/images/help.png";
+	}
 }
