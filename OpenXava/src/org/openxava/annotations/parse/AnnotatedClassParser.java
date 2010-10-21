@@ -1310,7 +1310,7 @@ public class AnnotatedClassParser {
 
 	private void processAnnotations(MetaCollection collection, AnnotatedElement element) throws Exception {
 		if (element == null) return;	
-		boolean cascadeAndSelfRerence = false;
+		boolean cascadeAndSelfReference = false;
 		if (element.isAnnotationPresent(OneToMany.class)) {
 			collection.setMetaCalculator(null);			
 			OneToMany oneToMany = element.getAnnotation(OneToMany.class);
@@ -1320,9 +1320,10 @@ public class AnnotatedClassParser {
 					addAggregateForCollection(collection.getMetaModel(), getClassNameFor(collection.getMetaReference().getReferencedModelName()), oneToMany.mappedBy());					
 				}
 				else {
-					cascadeAndSelfRerence = true;					
+					cascadeAndSelfReference = true;					
 				}				
 			}
+			collection.setOrphanRemoval(oneToMany.orphanRemoval());
 		}
 		else if (element.isAnnotationPresent(Condition.class)){			
 			collection.setMetaCalculator(null); 
@@ -1355,7 +1356,7 @@ public class AnnotatedClassParser {
 			collectionView.setCollectionName(collection.getName());
 			boolean mustAddMetaView = false;
 			
-			if (cascadeAndSelfRerence) {
+			if (cascadeAndSelfReference) {
 				collectionView.setAsAggregate(true);
 				mustAddMetaView = true;
 			}			
