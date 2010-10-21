@@ -661,17 +661,17 @@ public class Strings {
 	/**
 	 * Change from a vowel with an accent, to vowel with no accent
 	 * 
-	 * If you send "CamiÛn" it returns "Camion"
+	 * If you send "Cami√≥n" it returns "Camion"
 	 * 
 	 * @since v4m6
 	 */
-	public static String removeAccents(String value){
+	public static String removeAccents(String value){ 
 		return value.
-			replace("·", "a").replace("¡", "A").
-			replace("È", "e").replace("…", "E").
-			replace("Ì", "i").replace("Õ", "I").
-			replace("Û", "o").replace("”", "O").
-			replace("˙", "u").replace("⁄", "U");
+			replace("√°", "a").replace("√Å", "A").
+			replace("√©", "e").replace("√â", "E").
+			replace("√≠", "i").replace("√ç", "I").
+			replace("√≥", "o").replace("√ì", "O").
+			replace("√∫", "u").replace("√ö", "U");
 	}
 	
 }

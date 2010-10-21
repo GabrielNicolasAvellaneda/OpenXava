@@ -23,7 +23,12 @@ public class TaskTest extends ModuleTestBase {
 		}
 
 		// In order to run this test you need an user 'junit' in your portal
-		login(getUserLoginName(), "junit");		
+
+		login(getUserLoginName2(), "junit2");
+		assertListRowCount(0);
+		logout();
+		
+		login(getUserLoginName(), "junit");			
 		assertValueInList(0, "user", getUserId());
 		assertValueInList(0, "summary", "FOR USING IN JUNIT TEST");		
 		execute("CRUD.new");
@@ -45,7 +50,6 @@ public class TaskTest extends ModuleTestBase {
 			log.warn("TaskTest is not executed. It needed to be tested against a portal");
 			return;
 		}
-
 		login(getUserLoginName(), "junit");
 		assertAction("Mode.detailAndFirst");
 		assertNoAction("Mode.list");
@@ -68,7 +72,7 @@ public class TaskTest extends ModuleTestBase {
 	}	
 	private String getUserId() {
 		if (!isLiferayEnabled()) return "junit";
-		return XavaPreferences.getInstance().isEMailAsUserNameInPortal()?"junit@openxava.org":"11964"; // For Liferay 4.1: liferay.com.1001				
+		return XavaPreferences.getInstance().isEMailAsUserNameInPortal()?"junit@openxava.org":"11801"; // For Liferay 4.1: liferay.com.1001				
 	}
 			
 }

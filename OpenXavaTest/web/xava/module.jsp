@@ -5,6 +5,7 @@
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.util.XavaResources"%>
 <%@page import="org.openxava.util.Locales"%>
+<%@page import="org.openxava.util.Users"%>
 <%@page import="org.openxava.util.XSystem"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.apache.commons.logging.LogFactory" %>
@@ -41,9 +42,10 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
 	Servlets.setCharacterEncoding(request, response);
-	Locales.setCurrent(request);
+	Locales.setCurrent(request);	
 	request.getSession().setAttribute("xava.user",
 			request.getRemoteUser());
+	Users.setCurrent(request); 
 	String app = request.getParameter("application");
 	String module = (String) context.get(app, request
 			.getParameter("module"), "xava_currentModule");

@@ -444,8 +444,8 @@ public class XavaPreferences {
 	 * 
 	 * The default value is <code>false</code>.<br>
 	 */
-	public boolean isToIgnoreAccentsForStringArgumentsInConditions() {  
-		return "true".equalsIgnoreCase(getProperties().getProperty("toIgnoreAccentsForStringArgumentsInConditions", "false" ).trim()); 
+	public boolean isIgnoreAccentsForStringArgumentsInConditions() {  
+		return "true".equalsIgnoreCase(getProperties().getProperty("ignoreAccentsForStringArgumentsInConditions", "false" ).trim()); 
 	}
 		
 }
