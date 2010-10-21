@@ -14,6 +14,7 @@ boolean onBottom = false;
 String mode = request.getParameter("xava_mode"); 
 if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
 boolean headerButtonBar = !manager.isSplitMode() || mode.equals("list");  
+String helpImage = style.getHelpImage().startsWith("xava/")?request.getContextPath() + "/" + style.getHelpImage():style.getHelpImage();
 
 if (manager.isButtonBarVisible()) {
 %>
@@ -69,28 +70,20 @@ if (manager.isButtonBarVisible()) {
 	}	
 
 	String language = request.getLocale().getLanguage();
-	String href = "http://openxava.wikispaces.com/help_" + language;
+	String href = XavaPreferences.getInstance().getDefaultHelpPrefix() + language;
 	String target = XavaPreferences.getInstance().isHelpInNewWindow() ? "_blank" : "";
-	if (!Is.empty(XavaPreferences.getInstance().getHelpPrefix())) {
+	if (!Is.empty(XavaPreferences.getInstance().getHelpPrefix())) { 
 		href = 
-				(XavaPreferences.getInstance().getHelpPrefix().startsWith("http:") ? "" :
-					"/" + manager.getApplicationName() + "/") + 
-				XavaPreferences.getInstance().getHelpPrefix() +
-				manager.getModuleName() +
-				"_" + language + 
-				XavaPreferences.getInstance().getHelpSuffix();
+			"/" + manager.getApplicationName() + "/" + 
+			XavaPreferences.getInstance().getHelpPrefix() +
+			manager.getModuleName() +
+			"_" + language + 
+			XavaPreferences.getInstance().getHelpSuffix();
 	} 
 	%>
-
 		<span class="<%=style.getButtonBarModeButton()%>"> 
-			<a href="<%=href%>" target="<%=target%>" style="padding-right: 0px;">
-				<span style="background: url(/<%=manager.getApplicationName()%>/xava/images/help.gif) no-repeat 5px 50%;">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span>			 				 			
-			</a> 				
+			<a href="<%=href%>" target="<%=target%>"><img border="0" src="<%=helpImage%>"/></a> 				
 		</span>
-		
-
 	</span>		
 
 	</div>

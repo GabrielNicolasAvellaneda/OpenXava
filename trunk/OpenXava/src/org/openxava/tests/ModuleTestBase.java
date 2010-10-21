@@ -179,8 +179,13 @@ public class ModuleTestBase extends TestCase {
 		// editor. The ideal way would be to put the real focus in editor, but HtmlUnit
 		// throws the onchange events two times (when focus move, and when value changes)
 		// in this case, which it's worse.
-		getElementById("xava_previous_focus").setAttribute("value", id);
-		getElementById("xava_current_focus").setAttribute("value", "");
+		try {
+			getElementById("xava_previous_focus").setAttribute("value", id);
+			getElementById("xava_current_focus").setAttribute("value", "");
+		}
+		catch (ElementNotFoundException ex) {
+			log.warn(XavaResources.getString("impossible_set_focus_properties")); 
+		}
 		try {	
 			HtmlInput input = getInputByName(id); 			
 			assertNotDisable(name, input);

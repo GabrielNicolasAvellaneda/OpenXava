@@ -541,7 +541,7 @@ public class Tab implements java.io.Serializable {
 			ModelMapping mapping = p.getMetaModel().getMapping(); 
 			return mapping.yearSQLFunction(column) + " = ? and " + mapping.monthSQLFunction(column);
 		}						
-		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isToIgnoreAccentsForStringArgumentsInConditions()) {
+		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isIgnoreAccentsForStringArgumentsInConditions()) { 
 			column = p.getMetaModel().getMetaComponent().getEntityMapping().translateSQLFunction(column);
 		}
 		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) { 
@@ -629,7 +629,7 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	private String convertStringArgument(String value) {
-		if (XavaPreferences.getInstance().isToIgnoreAccentsForStringArgumentsInConditions()){
+		if (XavaPreferences.getInstance().isIgnoreAccentsForStringArgumentsInConditions()){
 			value = Strings.removeAccents(value);
 		}
 		if (XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) {
