@@ -437,7 +437,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel parentMetaModel = getMetaModel(modelName);
 		MetaCollection metaCollection = parentMetaModel.getMetaCollection(collectionName);
 		MetaModel childMetaModel = metaCollection.getMetaReference().getMetaModelReferenced();
-		if (metaCollection.isAggregate()) {						
+		if (metaCollection.isAggregate() || metaCollection.isOrphanRemoval()) { 						
 			remove(childMetaModel, collectionElementKeyValues);
 		}
 		else {

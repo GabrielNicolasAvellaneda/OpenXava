@@ -22,7 +22,7 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 					removeElement(values);
 				}
 				
-				if (isEntityReferencesCollection()) {
+				if (isEntityReferencesCollection() && !getCollectionElementView().getMetaCollection().isOrphanRemoval()) { 
 					addMessage("association_removed", getCollectionElementView().getModelName(), 
 							getCollectionElementView().getParent().getModelName());
 				}

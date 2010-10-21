@@ -1252,7 +1252,14 @@ public class View implements java.io.Serializable {
 		return condition.toString();
 	}
 	
-	private MetaCollection getMetaCollection() throws XavaException {
+	/**
+	 * Meta data about the collection, only if this view represents a collection. <p>
+	 * 
+	 * @since 4m6
+	 */	
+	// Before 4m6 it was private
+	public MetaCollection getMetaCollection() throws XavaException { 
+		assertRepresentsCollection("getMetaCollection()");
 		return getParent().getMetaModel().getMetaCollection(getMemberName());
 	}
 

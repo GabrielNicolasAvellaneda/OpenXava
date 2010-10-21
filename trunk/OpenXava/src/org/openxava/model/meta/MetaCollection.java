@@ -24,6 +24,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private int maximum; 
 	private String condition;
 	private String order;
+	private boolean orphanRemoval; 
 	
 	private MetaReference metaReference;
 	private Collection metaCalculatorsPostRemove;
@@ -319,6 +320,14 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 
 	public void setMaximum(int maximum) {
 		this.maximum = maximum;
+	}
+
+	public void setOrphanRemoval(boolean orphanRemoval) {
+		this.orphanRemoval = orphanRemoval;
+	}
+
+	public boolean isOrphanRemoval() {
+		return orphanRemoval;
 	}
 
 }
