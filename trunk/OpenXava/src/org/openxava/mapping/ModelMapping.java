@@ -209,19 +209,19 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	/**
-	 * To ignore accents: just to search 'cami√≥n' or 'camion'
+	 * To ignore accents: just to search 'camiÛn' or 'camion'
 	 * 
 	 * Good performance using 'translate' but is very slow when it use 'replace...'
 	 * 
 	 * @since v4m6
 	 */
 	public String translateSQLFunction(String column){ 
-		if (supportsTranslateFunction()) return "translate(" + column + ",'aeiouAEIOU','√°√©√≠√≥√∫√Å√â√ç√ì√ö')";
+		if (supportsTranslateFunction()) return "translate(" + column + ",'aeiouAEIOU','·ÈÌÛ˙¡…Õ”⁄')";
 		return 
 			"replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(" + 
 			column + 
-			", '√ö', 'U'), '√∫', 'u'), '√ì', 'O'), '√≥', 'o'), '√ç', 'I'), " +
-			"'√≠', 'i'), '√â', 'E'), '√©', 'e'), '√Å', 'A'), '√°', 'a')";
+			", '⁄', 'U'), '˙', 'u'), '”', 'O'), 'Û', 'o'), 'Õ', 'I'), " +
+			"'Ì', 'i'), '…', 'E'), 'È', 'e'), '¡', 'A'), '·', 'a')";
 	}
 
 	private boolean supportsYearFunction() { 
@@ -249,7 +249,15 @@ abstract public class ModelMapping implements java.io.Serializable {
 				DatabaseMetaData metaData = con.getMetaData();
 				supportsSchemasInDataManipulation = metaData.supportsSchemasInDataManipulation();
 				Collection timeDateFunctions = Strings.toCollection(metaData.getTimeDateFunctions().toUpperCase());
-				
+
+				//
+				// another solution instead of the use of 'if' would be to use a xml with 
+				//	the information of the functions from each BBDD
+				if ("DB2 UDB for AS/400".equals(metaData.getDatabaseProductName()) ||
+					"Oracle".equals(metaData.getDatabaseProductName()) ||
+					"PostgresSQL".equals(metaData.getDatabaseProductName())){
+					supportsTranslateFunction = true;
+				}
 				if ("Oracle".equals(metaData.getDatabaseProductName()) ||
 					"PostgreSQL".equals(metaData.getDatabaseProductName())) 
 				{
