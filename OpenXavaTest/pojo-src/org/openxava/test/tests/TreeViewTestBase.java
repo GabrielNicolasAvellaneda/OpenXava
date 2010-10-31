@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import java.util.Iterator;
+
 import org.openxava.jpa.XPersistence;
 import org.openxava.test.model.TreeContainer;
 import org.openxava.test.model.TreeItem;
@@ -9,7 +11,9 @@ import org.openxava.util.XavaResources;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTable;
 
 /**
  * 
@@ -17,13 +21,16 @@ import com.gargoylesoftware.htmlunit.html.HtmlInput;
  */
 
 public abstract class TreeViewTestBase extends ModuleTestBase {
+	private String module;
 	
 	public TreeViewTestBase(String testName, String application, String module) {
 		super(testName, application, module);
+		this.module = module;
 	}
 	
 	public TreeViewTestBase(String testName, String module) {
 		super(testName, module);		
+		this.module = module;
 	}
 
 	@Override
@@ -46,7 +53,6 @@ public abstract class TreeViewTestBase extends ModuleTestBase {
 	}
 	
 	protected String getValueInTreeView(String collection, int row) {
-		String returnValue = "";
 		DomElement element = getTreeViewElementInRow(collection, row);
 		String value = element.getElementsByTagName("span").item(0)
 				.getTextContent().toString();
@@ -73,8 +79,19 @@ public abstract class TreeViewTestBase extends ModuleTestBase {
 	}
 	
 	protected void checkRowTreeView(String collection, int row) throws Exception {
-		getHtmlPage().executeJavaScript("function checkRowTreeView() {var node=tree_" + collection + ".tree.getNodeByIndex(" + (row + 1) + ");" +
-				"tree_" + collection + ".tree.fireEvent('clickEvent',{node:node});}; checkRowTreeView();");
+		HtmlTable table = (HtmlTable) getHtmlPage().getElementById("ox_OpenXavaTest_" + module + "__" + collection);
+		Iterator <HtmlElement> elements = table.getChildElements().iterator();
+		int count = 0;
+		while (elements.hasNext()) {
+			HtmlElement element = elements.next();
+			if (element instanceof HtmlInput) {
+				HtmlInput input = (HtmlInput) element;
+				if (count++ == row) {
+					input.setChecked(true);
+					break;
+				}
+			}
+		}
 	}
 	
 	protected void assertTreeViewRowCount(String collection, int expectedCount) throws Exception {
