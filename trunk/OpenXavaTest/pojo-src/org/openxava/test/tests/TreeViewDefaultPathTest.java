@@ -65,6 +65,7 @@ public class TreeViewDefaultPathTest extends TreeViewTestBase {
 		executeOnTreeViewItem("treeItems", "Collection.edit", 4);
 		setValue("description", "CHILD ITEM 2");
 		execute("TreeView.save");
+
 		
 		// delete Selected
 		checkRowTreeView("treeItems", 6);
@@ -89,6 +90,7 @@ public class TreeViewDefaultPathTest extends TreeViewTestBase {
 		execute("TreeView.removeSelected", "viewObject=xava_view_treeItems");
 		assertNoErrors();
 		assertTreeViewRowCount("treeItems", 4);
+		
 	}
 	
 	public void testItemMove() throws Exception {
