@@ -59,7 +59,7 @@ public class TreeViewParser {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void createMetaTreeView(Tab tab, String viewObject, String collectionName, Style style, Messages errors)
 			throws Exception {
 		this.tab = tab;
@@ -99,25 +99,37 @@ public class TreeViewParser {
 		return getMetaTreeViews().get(modelName);
 	}
 	
+	/**
+	 * Creates the treeview script
+	 * @param modelName
+	 * @return Script for creating the treeview.
+	 * @throws Exception
+	 */
 	public String parse(String modelName) throws Exception {
-		String returnValue = "";
+		StringBuilder returnValue = new StringBuilder("");
 		metaTreeView = getMetaTreeView(modelName);
 		if (metaTreeView != null) {
 			parseGroups();
 			for (String path : groups.keySet()) {
 				if (!Is.empty(returnValue)) {
-					returnValue = returnValue + ",";
+					returnValue.append(",");
 				}
-				returnValue = returnValue + parseTreeNode(path);
+				returnValue.append(parseTreeNode(path));
 			}
-			returnValue = ("new YAHOO.widget.TreeView('tree_" + collectionName +
-					"',[" +
-					returnValue + "]);");
+			
+			
+			returnValue.insert(0, "new YAHOO.widget.TreeView('tree_" + collectionName +
+					"',[");
+			returnValue.append("]);");
 		}
-		return returnValue;
+		return returnValue.toString();
 		
 	}
-		
+	
+	/**
+	 * Creates the group dependency tree
+	 * @throws Exception
+	 */
 	private void parseGroups() throws Exception {
 		Object treeNode;
 		String nodePath;
@@ -138,20 +150,20 @@ public class TreeViewParser {
 		
 	}
 	
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	private String parseTreeNode(String path) throws Exception {
-		String returnValue = "";
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+	private StringBuilder parseTreeNode(String path) throws Exception {
+		StringBuilder returnValue = new StringBuilder("");
 		Object treeNode;
 		boolean expandedState;
 		String expanded="";
-		String html="";
-		String parsedChildren;
+		StringBuilder html = new StringBuilder("");
+		StringBuilder parsedChildren;
 		String styleListCellSpacing = "border=\"1\" cellspacing=\"10\" cellpadding=\"10\"";
 		List<TreeNodeHolder> nodesHolder;
 		String tooltip = XavaResources.getString("double_click_to_edit_view");
 		nodesHolder = groups.get(path);
 		if (nodesHolder == null) {
-			return "";
+			return new StringBuilder("");
 		}
 		if (metaTreeView.isEntityObject()) {
 			Collections.sort(nodesHolder, new Comparator(){
@@ -170,11 +182,17 @@ public class TreeViewParser {
 				int index = nodeHolder.index;
 				HttpServletRequest request = tab.getRequest();
 				treeNode = MapFacade.findEntity(tab.getModelName(), tab.getAllKeys()[index]);
-				html = "";
+				html = new StringBuilder("");
 				if (model.getColumnCount() > 1) {
-					html = "<table class=\"" + style.getList() + "\" " +
-						"width=\"100%\" " + styleListCellSpacing + " style=\"" + style.getListStyle() + "\" " +
-								"title=\"" + tooltip + "\"> <tr>";
+					html.append("<table class=\"");
+					html.append(style.getList());
+					html.append("\" width=\"100%\" ");
+					html.append(styleListCellSpacing);
+					html.append(" style=\"");
+					html.append(style.getListStyle());
+					html.append("\" title=\"");
+					html.append(tooltip);
+					html.append("\"> <tr>");
 					for (int c=0; c<model.getColumnCount(); c++) {
 						MetaProperty p = tab.getMetaProperty(c);
 						String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
@@ -186,10 +204,15 @@ public class TreeViewParser {
 						else {
 							fvalue = WebEditors.format(request, p, model.getValueAt(index, c), errors, viewObject, true);
 						}
-						html = html + "<td class=\"" + (c%2==0?style.getListPairCell():style.getListOddCell()) + "\" " +
-								"style=\"" + cellStyle +"\">" + fvalue +"</td"; 
+						html.append("<td class=\"");
+						html.append((c%2==0?style.getListPairCell():style.getListOddCell()));
+						html.append("\" style=\"");
+						html.append(cellStyle);
+						html.append("\">");
+						html.append(fvalue);
+						html.append("</td"); 
 					}
-					html = html + "</tr></table>";
+					html.append("</tr></table>");
 				} else {
 					if (model.getColumnCount() == 1) {
 						MetaProperty p = tab.getMetaProperty(0);
@@ -200,23 +223,31 @@ public class TreeViewParser {
 						else {
 							fvalue = WebEditors.format(request, p, model.getValueAt(index, 0), errors, viewObject, true);
 						}
-						html = "&nbsp;<span title=\"" + tooltip +
-								"\">" + fvalue + "</span>";
+						html.append("&nbsp;<span title=\"");
+						html.append(tooltip);
+						html.append("\">");
+						html.append(fvalue);
+						html.append("</span>");
 					}
 				}
 				expandedState = metaTreeView.getNodeExpandedState(treeNode);
 				expanded = expandedState?",expanded:true":"";
 				parsedChildren = parseTreeNode(metaTreeView.getNodeFullPath(treeNode));
 				if (!Is.empty(parsedChildren)) {
-					parsedChildren = ",children:[" + parsedChildren + "]";
+					parsedChildren.insert(0, ",children:[");
+					parsedChildren.append("]");
 				}
 				if (!Is.empty(returnValue)) {
-					returnValue = returnValue + ",";
+					returnValue.append(",");
 				}
-				returnValue = returnValue + "{type:'html',editable:true, " +
-						"data:\"" + index +"\", " +
-				"html:'" + html + "'" + expanded +
-				parsedChildren + "}";
+				returnValue.append("{type:'html',editable:true, data:\"");
+				returnValue.append(index);
+				returnValue.append("\", html:'");
+				returnValue.append(html);
+				returnValue.append("'");
+				returnValue.append(expanded);
+				returnValue.append(parsedChildren);
+				returnValue.append("}");
 			} else {
 				break; // if the first one has been rendered, the rest had been too.
 			}
