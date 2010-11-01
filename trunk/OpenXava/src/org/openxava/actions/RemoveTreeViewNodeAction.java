@@ -11,7 +11,7 @@ import org.openxava.web.editors.*;
 
 public class RemoveTreeViewNodeAction extends CollectionElementViewBaseAction {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void execute() throws Exception {
 		String path;
 		List<Map> selectedOnes = new ArrayList<Map>();

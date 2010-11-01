@@ -42,27 +42,33 @@ public class TreeView {
 	@Tree
 	private String defaultPathAnnotation;
 	private Tree treePath;
-	private Object itemObject;
-	private Object parentObject;
+	
+	@SuppressWarnings("rawtypes")
+	private Class nodeClass;
+	
+	@SuppressWarnings("rawtypes")
+	private Class parentClass;
 	private String collectionName;
 	private Map<String, Boolean> expandedStates;
 	
 	public TreeView(){
 	}
 	
-	public TreeView(Tree path, Object object, Object parent, String collectionName) throws Exception {
-		parseTreeView(path, object, parent, collectionName);
+	@SuppressWarnings("rawtypes")
+	public TreeView(Tree path, Class nodeClass, Class parent, String collectionName) throws Exception {
+		parseTreeView(path, nodeClass, parent, collectionName);
 	}
 	
 	/**
 	 * Parse the @TreeView annotation.
-	 * @param itemObject Object to be parsed.
+	 * @param nodeClass Object to be parsed.
 	 * @throws Exception
 	 */
-	public void parseTreeView(Tree path, Object itemObject, Object parentObject, String collectionName) throws Exception {
+	@SuppressWarnings("rawtypes")
+	protected void parseTreeView(Tree path, Class nodeClass, Class parentClass, String collectionName) throws Exception {
 		this.treePath = path;
-		this.itemObject = itemObject;
-		this.parentObject = parentObject;
+		this.nodeClass = nodeClass;
+		this.parentClass = parentClass;
 		this.collectionName = collectionName;
 		if (treePath == null) {
 			treePath = this.getClass().getDeclaredField("defaultPathAnnotation").getAnnotation(Tree.class);
@@ -80,7 +86,7 @@ public class TreeView {
 			this.keyIncrement = 2;
 		}
 		setPathSeparator(treePath.pathSeparator());
-		if (itemObject.getClass().isAnnotationPresent(Id.class)) {
+		if (nodeClass.getClass().isAnnotationPresent(Id.class)) {
 			entityObject = true;
 		} else {
 			entityObject = false;
@@ -99,7 +105,7 @@ public class TreeView {
 	private void parseNodeProperty() throws Exception {
 		if (Is.empty(treePath.idProperties())) {
 			idProperties = "";
-			for (Field field : itemObject.getClass().getDeclaredFields()) {
+			for (Field field : nodeClass.getDeclaredFields()) {
 				if (field.isAnnotationPresent(Id.class)) {
 					if (!Is.empty(idProperties)) {
 						idProperties = idProperties + ",";
@@ -125,13 +131,13 @@ public class TreeView {
 	/**
 	 * Determines if the property orderProperty was defined for the object.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void parseOrderDefined() {
 		orderDefined = false;
 		OrderBy orderBy = null;
 		if (Is.empty(orderProperty)) {
 			try {
-				Field collectionField = parentObject.getClass().getDeclaredField(collectionName);
+				Field collectionField = parentClass.getDeclaredField(collectionName);
 				if (collectionField.isAnnotationPresent(OrderBy.class)) {
 					orderBy = collectionField.getAnnotation(OrderBy.class);
 				}
@@ -144,13 +150,13 @@ public class TreeView {
 			if (orderBy == null){
 				Method collectionMethod = null;
 				try {
-					collectionMethod = parentObject.getClass().getDeclaredMethod("get" + Strings.firstUpper(collectionName), new Class[]{});
+					collectionMethod = parentClass.getDeclaredMethod("get" + Strings.firstUpper(collectionName), new Class[]{});
 				} catch (Exception e) {
 					log.debug(e);
 				}
 				if (collectionMethod == null){
 					try {
-						collectionMethod = parentObject.getClass().getDeclaredMethod("is" + Strings.firstUpper(collectionName), new Class[]{});
+						collectionMethod = parentClass.getDeclaredMethod("is" + Strings.firstUpper(collectionName), new Class[]{});
 					} catch (Exception e) {
 						log.debug(e);
 					}
@@ -168,6 +174,7 @@ public class TreeView {
 		}
 		if (!Is.empty(orderProperty)) {
 			try {
+				Object itemObject = nodeClass.newInstance();
 				Class propertyType = PropertyUtils.getPropertyType(itemObject, orderProperty);
 				if (propertyType.isAssignableFrom(Integer.class)) {
 					orderDefined = true;
@@ -187,8 +194,9 @@ public class TreeView {
 	/**
 	 * Determines if the object is an entity.
 	 */
+	@SuppressWarnings("unchecked")
 	private void parseEntityObject() {
-		entityObject = itemObject.getClass().isAnnotationPresent(javax.persistence.Entity.class);
+		entityObject = nodeClass.isAnnotationPresent(javax.persistence.Entity.class);
 	}
 	
 	/**

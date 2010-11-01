@@ -13,7 +13,7 @@ public class TreeViewExpandCollapseAction extends CollectionElementViewBaseActio
 	private int row;
 	private boolean expanded;
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void execute() throws Exception {
 		Collection elements = getCollectionElementView().getCollectionValues(); 

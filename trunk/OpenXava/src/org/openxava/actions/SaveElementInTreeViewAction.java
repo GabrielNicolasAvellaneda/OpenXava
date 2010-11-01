@@ -11,7 +11,7 @@ import org.openxava.web.editors.*;
 
 public class SaveElementInTreeViewAction extends SaveElementInCollectionAction {
 	public static Log log = LogFactory.getLog(SaveElementInCollectionAction.class);
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected Map getValuesToSave() throws Exception {
 		Map returnValue = super.getValuesToSave();

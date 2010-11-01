@@ -17,7 +17,9 @@ import org.openxava.model.MapFacade;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.tab.Tab;
 import org.openxava.tab.impl.IXTableModel;
-import org.openxava.util.*;
+import org.openxava.util.Is;
+import org.openxava.util.Messages;
+import org.openxava.util.XavaResources;
 import org.openxava.view.View;
 import org.openxava.view.meta.MetaCollectionView;
 import org.openxava.view.meta.MetaView;
@@ -51,9 +53,12 @@ public class TreeViewParser {
 	}
 	private Map<String, List<TreeNodeHolder>> groups;
 	private Tree treePath;
-	private Object parentObject;
+	
+	@SuppressWarnings("rawtypes")
+	private Class parentObject;
 	private String collectionName;
 	private Map<String, TreeView> metaTreeViews;
+	private StringBuilder lastParse = null;
 	
 	public TreeViewParser(){
 	}
@@ -66,31 +71,29 @@ public class TreeViewParser {
 		this.viewObject = viewObject;
 		this.style = style;
 		this.collectionName = collectionName;
-		Object treeNode;
-		if (tab.getTableModel().getTotalSize() > 0) {
-			// check if we have a previous metaTreeView
-			metaTreeView = getMetaTreeView(tab.getModelName());
-			if (metaTreeView == null) {
-				// Initialize metaTreeView for further processing.
-				treeNode = MapFacade.findEntity(tab.getModelName(), tab.getAllKeys()[0]);
-				View collectionView = tab.getCollectionView();
-				View parentView = collectionView.getParent();
-				MetaView metaView = parentView.getMetaModel().getMetaView(parentView.getViewName());
-				MetaCollectionView metaCollectionView = metaView.getMetaCollectionView(collectionName);
-				// Find container
-				Map keyValues = collectionView.getParent().getKeyValues();
-				if (keyValues != null) {
-					this.parentObject = MapFacade.findEntity(collectionView.getParent().getModelName(), keyValues);
-					treePath = null;
-					if (metaCollectionView != null) {
-						treePath = metaCollectionView.getPath();
-					}
-			
-					metaTreeView = new TreeView(
-							treePath, treeNode, this.parentObject, collectionName);
-					getMetaTreeViews().put(tab.getModelName(), metaTreeView);
-					log.debug("Added metaTreeView for:" + tab.getModelName());
+		Class treeNodeClass;
+		metaTreeView = getMetaTreeView(tab.getModelName());
+		// check if we have a previous metaTreeView
+		if (metaTreeView == null) {
+			// Initialize metaTreeView for further processing.
+			treeNodeClass = tab.getCollectionView().getMetaModel().getPOJOClass();
+			View collectionView = tab.getCollectionView();
+			View parentView = collectionView.getParent();
+			MetaView metaView = parentView.getMetaModel().getMetaView(parentView.getViewName());
+			MetaCollectionView metaCollectionView = metaView.getMetaCollectionView(collectionName);
+			// Find container
+			Map keyValues = collectionView.getParent().getKeyValues();
+			if (keyValues != null) {
+				this.parentObject = collectionView.getParent().getMetaModel().getPOJOClass();
+				treePath = null;
+				if (metaCollectionView != null) {
+					treePath = metaCollectionView.getPath();
 				}
+		
+				metaTreeView = new TreeView(
+						treePath, treeNodeClass, this.parentObject, collectionName);
+				getMetaTreeViews().put(tab.getModelName(), metaTreeView);
+				log.debug("Added metaTreeView for:" + tab.getModelName());
 			}
 		}
 	}
@@ -106,24 +109,23 @@ public class TreeViewParser {
 	 * @throws Exception
 	 */
 	public String parse(String modelName) throws Exception {
-		StringBuilder returnValue = new StringBuilder("");
+		lastParse = new StringBuilder("");
 		metaTreeView = getMetaTreeView(modelName);
 		if (metaTreeView != null) {
 			parseGroups();
 			for (String path : groups.keySet()) {
-				if (!Is.empty(returnValue)) {
-					returnValue.append(",");
+				if (!Is.empty(lastParse)) {
+					lastParse.append(",");
 				}
-				returnValue.append(parseTreeNode(path));
+				lastParse.append(parseTreeNode(path));
 			}
 			
 			
-			returnValue.insert(0, "new YAHOO.widget.TreeView('tree_" + collectionName +
+			lastParse.insert(0, "new YAHOO.widget.TreeView('tree_" + collectionName +
 					"',[");
-			returnValue.append("]);");
+			lastParse.append("]);");
 		}
-		return returnValue.toString();
-		
+		return lastParse.toString();
 	}
 	
 	/**
@@ -135,7 +137,6 @@ public class TreeViewParser {
 		String nodePath;
 		groups = new TreeMap<String, List<TreeNodeHolder>>();
 		List<TreeNodeHolder> nodesHolder;
-		
 		for (int index = 0; index < tab.getTableModel().getTotalSize(); index++) {
 			treeNode = MapFacade.findEntity(tab.getModelName(), tab.getAllKeys()[index]);
 			nodePath = metaTreeView.getNodePath(treeNode);
@@ -146,8 +147,6 @@ public class TreeViewParser {
 			}
 			nodesHolder.add(new TreeNodeHolder(treeNode, index));
 		}
-
-		
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
@@ -261,4 +260,5 @@ public class TreeViewParser {
 		}
 		return metaTreeViews;
 	}
+
 }
