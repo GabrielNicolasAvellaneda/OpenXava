@@ -15,7 +15,7 @@ import org.openxava.web.editors.*;
 public class RemoveSelectedTreeViewNodeAction extends CollectionBaseAction {
 	private Log log = LogFactory.getLog(RemoveSelectedTreeViewNodeAction.class);
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void execute() throws Exception {
 		TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
 		TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
@@ -69,7 +69,7 @@ public class RemoveSelectedTreeViewNodeAction extends CollectionBaseAction {
 	 * Is called for each selected row with the values that includes the key
 	 * values. <p>
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	protected void removeElement(Map values) throws Exception {
 		MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), values);
 	}

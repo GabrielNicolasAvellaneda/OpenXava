@@ -1,7 +1,5 @@
 package org.openxava.web.editors;
 
-import java.lang.reflect.Field;
-
 import org.openxava.model.MapFacade;
 import org.openxava.tab.impl.IXTableModel;
 import org.openxava.util.Is;
@@ -38,11 +36,9 @@ public class TreeViewActions {
 		IXTableModel model = view.getCollectionTab().getTableModel();
 		// No actions for Up, Down, Left, Right if you don't have more than one node
 		if (model.getTotalSize() > 1) {
-			//Object treeNode = MapFacade.findEntity(view.getModelName(),(Map)model.getObjectAt(0));
 			Object parent = MapFacade.findEntity(view.getRoot().getModelName(), 
 					view.getRoot().getKeyValues());
 			if (parent != null) {
-				Field field = parent.getClass().getDeclaredField(view.getMemberName());
 				if (metaTreeView.isOrderDefined()) {
 					upAction = UP_ACTION;
 					downAction = DOWN_ACTION;

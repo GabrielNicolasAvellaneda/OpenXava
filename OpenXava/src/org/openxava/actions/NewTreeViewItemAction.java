@@ -10,13 +10,13 @@ import org.openxava.web.editors.*;
 
 /**
  * 
- * @author Federico Alcántara 
+ * @author Federico Alcantara 
  */
 
 public class NewTreeViewItemAction extends CollectionElementViewBaseAction {
 	private static Log log = LogFactory.getLog(NewTreeViewItemAction.class);
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void execute() throws Exception {
 		String fullPath = null;
 		if (getCollectionElementView().isRepresentsAggregate()) {

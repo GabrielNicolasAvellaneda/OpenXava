@@ -25,7 +25,7 @@ public class TreeViewMoveNodeAction extends CollectionElementViewBaseAction {
 	private List<Object> selectedEntities;
 	private TreeView metaTreeView;
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void execute() throws Exception {
 		Object node = null;
 		int[] selected = row != -1 ? new int[] {row} :
@@ -206,7 +206,7 @@ public class TreeViewMoveNodeAction extends CollectionElementViewBaseAction {
 		return returnValue;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void sort(String path) throws Exception {
 		if (metaTreeView.isOrderDefined()) {
 			List<Object> preList = new ArrayList<Object>();
