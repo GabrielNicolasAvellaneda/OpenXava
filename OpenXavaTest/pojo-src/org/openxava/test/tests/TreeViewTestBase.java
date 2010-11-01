@@ -131,13 +131,13 @@ public abstract class TreeViewTestBase extends ModuleTestBase {
 		XPersistence.getManager().createQuery("delete from TreeItemTwo").executeUpdate();
 		XPersistence.commit();
 		TreeContainer parent = XPersistence.getManager().find(TreeContainer.class, 1);		
-		TreeItemTwo root = createTreeItemTwo(parent, null, "2-ROOT ITEM 1",    0);
-		TreeItemTwo child1 = createTreeItemTwo(parent, root, "2-CHILD ITEM 1",   2);
-		createTreeItemTwo(parent, root, "2-CHILD ITEM 2",   4);
-		TreeItemTwo child3 = createTreeItemTwo(parent, root, "2-CHILD ITEM 3",   6);		
-		createTreeItemTwo(parent, child1, "2-SUBITEM 1 OF 1", 2);
-		createTreeItemTwo(parent, child1, "2-SUBITEM 2 OF 1", 4);
-		createTreeItemTwo(parent, child3, "2-SUBITEM 1 OF 3", 6);		
+		TreeItemTwo root = createTreeItemTwo(parent, null, "ROOT ITEM 1",    0);
+		TreeItemTwo child1 = createTreeItemTwo(parent, root, "CHILD ITEM 1",   2);
+		createTreeItemTwo(parent, root, "CHILD ITEM 2",   4);
+		TreeItemTwo child3 = createTreeItemTwo(parent, root, "CHILD ITEM 3",   6);		
+		createTreeItemTwo(parent, child1, "SUBITEM 1 OF 1", 2);
+		createTreeItemTwo(parent, child1, "SUBITEM 2 OF 1", 4);
+		createTreeItemTwo(parent, child3, "SUBITEM 1 OF 3", 6);		
 		
 		XPersistence.commit();
 	}
