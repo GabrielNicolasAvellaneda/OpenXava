@@ -60,6 +60,9 @@ public class TreeViewParser {
 	private Map<String, TreeView> metaTreeViews;
 	private StringBuilder lastParse = null;
 	
+	@SuppressWarnings("rawtypes")
+	private Map[] allKeys;
+	
 	public TreeViewParser(){
 	}
 	
@@ -125,6 +128,7 @@ public class TreeViewParser {
 					"',[");
 			lastParse.append("]);");
 		}
+		allKeys = null;
 		return lastParse.toString();
 	}
 	
@@ -137,8 +141,10 @@ public class TreeViewParser {
 		String nodePath;
 		groups = new TreeMap<String, List<TreeNodeHolder>>();
 		List<TreeNodeHolder> nodesHolder;
-		for (int index = 0; index < tab.getTableModel().getTotalSize(); index++) {
-			treeNode = MapFacade.findEntity(tab.getModelName(), tab.getAllKeys()[index]);
+		int totalSize = tab.getTableModel().getTotalSize();
+		allKeys = tab.getAllKeys();
+		for (int index = 0; index < totalSize; index++) {
+			treeNode = MapFacade.findEntity(tab.getModelName(), allKeys[index]);
 			nodePath = metaTreeView.getNodePath(treeNode);
 			nodesHolder = groups.get(nodePath);
 			if (nodesHolder == null) {
@@ -180,7 +186,7 @@ public class TreeViewParser {
 				IXTableModel model = tab.getTableModel();
 				int index = nodeHolder.index;
 				HttpServletRequest request = tab.getRequest();
-				treeNode = MapFacade.findEntity(tab.getModelName(), tab.getAllKeys()[index]);
+				treeNode = MapFacade.findEntity(tab.getModelName(), allKeys[index]);
 				html = new StringBuilder("");
 				if (model.getColumnCount() > 1) {
 					html.append("<table class=\"");
