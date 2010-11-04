@@ -170,10 +170,12 @@ public class Liferay43Style extends Style {
 	public String getFrameTitleEndDecoration() { 
 		return "</span></td>";
 	}
+
 	public String getFrameActionsStartDecoration() { 
-		return isFirefox()?"<td align='right' valign='bottom'>":"<td align='right'>"; 		
-		
+		return "<td align='right' valign='bottom'>"; 				
 	}	
+
+
 	public String getFrameActionsEndDecoration() { 
 		return "</td>";
 	}	

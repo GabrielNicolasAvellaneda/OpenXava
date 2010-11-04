@@ -81,8 +81,8 @@ if (manager.isButtonBarVisible()) {
 			XavaPreferences.getInstance().getHelpSuffix();
 	} 
 	%>
-		<span class="<%=style.getButtonBarModeButton()%>"> 
-			<a href="<%=href%>" target="<%=target%>"><img border="0" src="<%=helpImage%>"/></a> 				
+		<span class="<%=style.getHelp()%>"> 
+			<a href="<%=href%>" target="<%=target%>"><img src="<%=helpImage%>"/></a> 				
 		</span>
 	</span>		
 

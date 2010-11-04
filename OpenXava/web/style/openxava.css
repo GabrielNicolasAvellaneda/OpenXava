@@ -129,8 +129,6 @@ TD.frame {
 	text-decoration: underline;
 }
 
-
-
 .websphere-list-title {
 	font-weight: bold;	
 }
@@ -315,4 +313,9 @@ TD.list-title {
 .ox-button-bar .ox-button-bar-button.active a:hover {
 	background-color: #d6dcdd;
 	border-color: #B7C0C2;
+}
+
+.ox-help img {
+	border: 0;
+	padding-top: 5px;
 }

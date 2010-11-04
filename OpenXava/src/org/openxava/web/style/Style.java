@@ -563,6 +563,56 @@ public class Style {
 	public String getHelpImage() {
 		return "images/help.png";
 	}
-
+	
+	/** @since 4m6 */
+	final public String getActiveSectionTabStartDecoration(boolean first, boolean last) {
+		if (first) {
+			return getActiveSectionFirstTabStartDecoration();
+		}
+		else if (last){
+			return getActiveSectionLastTabStartDecoration();
+		}
+		return getActiveSectionTabStartDecoration();
+	}
+	
+	/** @since 4m6 */
+	final public String getSectionTabStartDecoration(boolean first, boolean last) {
+		if (first) {
+			return getSectionFirstTabStartDecoration();
+		}
+		else if (last){
+			return getSectionLastTabStartDecoration();
+		}
+		return getSectionTabStartDecoration();
+	}
+	
+	/** @since 4m6 */
+	public String getActiveSectionFirstTabStartDecoration() { 
+		return getActiveSectionTabStartDecoration(); 
+	} 
+	
+	/** @since 4m6 */
+	public String getActiveSectionLastTabStartDecoration() { 
+		return getActiveSectionTabStartDecoration(); 
+	} 
+	
+	/** @since 4m6 */
+	public String getSectionFirstTabStartDecoration() { 
+		return getSectionTabStartDecoration(); 
+	} 
+	
+	/** @since 4m6 */
+	public String getSectionLastTabStartDecoration() { 
+		return getSectionTabStartDecoration(); 
+	}
+		
+	/**
+	 * CSS class for the help icon, link or button. <p>
+	 * 
+	 * @since 4m6
+	 */
+	public String getHelp() {
+		return "ox-help";
+	}
 	
 }

@@ -14,11 +14,11 @@ String restoreImage=style.getRestoreImage().startsWith("xava/")?request.getConte
 
 <span id="<%=frameHideId%>" <%=hideStyle%>>
 	<a href="javascript:openxava.hideFrame('<%=frameId%>')">
-		<img src="<%=minimizeImage%>" border=0/>
+		<img src="<%=minimizeImage%>" border=0 align="absmiddle"/>
 	</a>
 </span> 
 <span id="<%=frameShowId%>"' <%=showStyle%>>
 	<a href="javascript:openxava.showFrame('<%=frameId%>')">
-		<img src="<%=restoreImage%>" border=0/>
+		<img src="<%=restoreImage%>" border=0 align="absmiddle"/>
 	</a>
 </span>

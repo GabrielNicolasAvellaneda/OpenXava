@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Liferay 6 supported, including look & feel integration.
+- Minor changes to TreeView to optimize performance.
 - @OneToMany(orphanRemoval=true) supported: if  an element is removed from a collection the element is deleted from database. 
 - Fix: Users.getCurrent() returns an incorrect user sometimes.
 - New 'ignoreAccentsForStringArgumentsInConditions' in xava.properties. It finds records whether you're looking for 'camión' or 'camion',...

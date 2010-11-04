@@ -447,5 +447,11 @@ public class XavaPreferences {
 	public boolean isIgnoreAccentsForStringArgumentsInConditions() {  
 		return "true".equalsIgnoreCase(getProperties().getProperty("ignoreAccentsForStringArgumentsInConditions", "false" ).trim()); 
 	}
+	
+	/** @since 4m6 */
+	public String getLiferay6StyleClass() {  
+		return getProperties().getProperty("liferay6StyleClass", "org.openxava.web.style.Liferay6Style").trim(); 
+	}
+	
 		
 }
