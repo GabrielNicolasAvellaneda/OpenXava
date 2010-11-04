@@ -209,19 +209,19 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	/**
-	 * To ignore accents: just to search 'camiÛn' or 'camion'
+	 * To ignore accents: just to search 'camiÔøΩn' or 'camion'
 	 * 
 	 * Good performance using 'translate' but is very slow when it use 'replace...'
 	 * 
 	 * @since v4m6
 	 */
 	public String translateSQLFunction(String column){ 
-		if (supportsTranslateFunction()) return "translate(" + column + ",'aeiouAEIOU','·ÈÌÛ˙¡…Õ”⁄')";
+		if (supportsTranslateFunction()) return "translate(" + column + ",'aeiouAEIOU','√°√©√≠√≥√∫√Å√â√ç√ì√ö')";
 		return 
 			"replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(" + 
 			column + 
-			", '⁄', 'U'), '˙', 'u'), '”', 'O'), 'Û', 'o'), 'Õ', 'I'), " +
-			"'Ì', 'i'), '…', 'E'), 'È', 'e'), '¡', 'A'), '·', 'a')";
+			", '√ö', 'U'), '√∫', 'u'), '√ì', 'O'), '√≥', 'o'), '√ç', 'I'), " +
+			"'√≠', 'i'), '√â', 'E'), '√©', 'e'), '√Å', 'A'), '√°', 'a')";
 	}
 
 	private boolean supportsYearFunction() { 

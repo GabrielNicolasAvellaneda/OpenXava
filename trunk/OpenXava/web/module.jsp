@@ -1,12 +1,16 @@
 <%@ include file="imports.jsp"%>
 
 <%@page import="java.io.File"%>
-<%@page import="org.openxava.web.dwr.Module"%>
-<%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.util.XavaResources"%>
 <%@page import="org.openxava.util.Locales"%>
 <%@page import="org.openxava.util.Users"%>
 <%@page import="org.openxava.util.XSystem"%>
+<%@page import="org.openxava.util.Strings"%>
+<%@page import="org.openxava.util.Is"%>
+<%@page import="org.openxava.web.dwr.Module"%>
+<%@page import="org.openxava.web.servlets.Servlets"%>
+<%@page import="org.openxava.web.Ids"%>
+<%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.apache.commons.logging.LogFactory" %>
 <%@page import="org.apache.commons.logging.Log" %>
@@ -88,13 +92,7 @@
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
-
-<%@page import="org.openxava.web.Ids"%>
-<%@page import="org.openxava.util.Strings"%><html xmlns="http://www.w3.org/1999/xhtml" >
-<%@page import="org.openxava.web.servlets.Servlets"%><%@page import="org.openxava.util.Is"%>
 <html xmlns="http://www.w3.org/1999/xhtml" >
-
 
 <head>
 	<title><%=managerHome.getModuleDescription()%></title>
@@ -117,7 +115,7 @@
 		for (java.util.Iterator it = style.getAdditionalCssFiles()
 				.iterator(); it.hasNext();) {
 			String cssFile = (String) it.next();
-	%>
+	%> 
 	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>?ox=<%=version%>"/>
 	<%
 		}

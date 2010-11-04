@@ -41,7 +41,7 @@ import org.openxava.web.style.*;
  * </pre>
  *
  * @author  Javier Paniza
- * @author  Guy de Pourtal�s
+ * @author  Guy de Pourtales
  */
 
 public class XavaPortlet extends GenericPortlet {
@@ -211,7 +211,8 @@ public class XavaPortlet extends GenericPortlet {
 				if (portal.indexOf("liferay") >= 0) {
 					if (portal.indexOf("4.1.") >= 0 || portal.indexOf("4.2.") >= 0) styleClass = preferences.getLiferay41StyleClass();
 					else if (portal.indexOf("4.3.") >= 0 || portal.indexOf("4.4.") >= 0 || portal.indexOf("5.0.") >= 0) styleClass = preferences.getLiferay43StyleClass();
-					else styleClass = preferences.getLiferay51StyleClass();
+					else if (portal.indexOf("5.1.") >= 0 || portal.indexOf("5.2.") >= 0) styleClass = preferences.getLiferay51StyleClass();
+					else styleClass = preferences.getLiferay6StyleClass();
 				}
 				else if (portal.indexOf("websphere portal/6.1") >= 0) styleClass = preferences.getWebSpherePortal61StyleClass();  
 				else if (portal.indexOf("websphere portal/6") >= 0) styleClass = preferences.getWebSpherePortal6StyleClass();
