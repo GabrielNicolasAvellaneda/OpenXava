@@ -5,6 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.openxava.web.editors.ITreeViewReader;
+import org.openxava.web.editors.TreeViewReaderImpl;
+
 
 /**
  * With <code>@Tree</code> you can instruct OpenXava to visualize collections 
@@ -94,4 +97,7 @@ public @interface Tree {
 	 * @return path separator character.
 	 */
 	String pathSeparator() default "/";
+	
+	@SuppressWarnings("rawtypes")
+	Class reader() default TreeViewReaderImpl.class;
 }

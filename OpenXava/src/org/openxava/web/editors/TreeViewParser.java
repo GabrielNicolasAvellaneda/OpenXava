@@ -13,10 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.annotations.Tree;
-import org.openxava.model.MapFacade;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.tab.Tab;
-import org.openxava.tab.impl.IXTableModel;
 import org.openxava.util.Is;
 import org.openxava.util.Messages;
 import org.openxava.util.XavaResources;
@@ -59,9 +57,6 @@ public class TreeViewParser {
 	private String collectionName;
 	private Map<String, TreeView> metaTreeViews;
 	private StringBuilder lastParse = null;
-	
-	@SuppressWarnings("rawtypes")
-	private Map[] allKeys;
 	
 	public TreeViewParser(){
 	}
@@ -128,7 +123,6 @@ public class TreeViewParser {
 					"',[");
 			lastParse.append("]);");
 		}
-		allKeys = null;
 		return lastParse.toString();
 	}
 	
@@ -141,10 +135,12 @@ public class TreeViewParser {
 		String nodePath;
 		groups = new TreeMap<String, List<TreeNodeHolder>>();
 		List<TreeNodeHolder> nodesHolder;
-		int totalSize = tab.getTableModel().getTotalSize();
-		allKeys = tab.getAllKeys();
+		ITreeViewReader reader = metaTreeView.getTreeViewReaderImpl();
+		reader.initialize(tab);
+		int totalSize = reader.getRowCount();
+		//allKeys = tab.getAllKeys();
 		for (int index = 0; index < totalSize; index++) {
-			treeNode = MapFacade.findEntity(tab.getModelName(), allKeys[index]);
+			treeNode = reader.getObjectAt(index);
 			nodePath = metaTreeView.getNodePath(treeNode);
 			nodesHolder = groups.get(nodePath);
 			if (nodesHolder == null) {
@@ -154,8 +150,8 @@ public class TreeViewParser {
 			nodesHolder.add(new TreeNodeHolder(treeNode, index));
 		}
 	}
-	
-	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+		
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private StringBuilder parseTreeNode(String path) throws Exception {
 		StringBuilder returnValue = new StringBuilder("");
 		Object treeNode;
@@ -183,12 +179,12 @@ public class TreeViewParser {
 		for (TreeNodeHolder nodeHolder : nodesHolder) {
 			if (!nodeHolder.rendered) {
 				nodeHolder.rendered = true;
-				IXTableModel model = tab.getTableModel();
+				ITreeViewReader reader = metaTreeView.getTreeViewReaderImpl();
 				int index = nodeHolder.index;
 				HttpServletRequest request = tab.getRequest();
-				treeNode = MapFacade.findEntity(tab.getModelName(), allKeys[index]);
+				treeNode = nodeHolder.treeNode;
 				html = new StringBuilder("");
-				if (model.getColumnCount() > 1) {
+				if (reader.getColumnCount() > 1) {
 					html.append("<table class=\"");
 					html.append(style.getList());
 					html.append("\" width=\"100%\" ");
@@ -198,16 +194,16 @@ public class TreeViewParser {
 					html.append("\" title=\"");
 					html.append(tooltip);
 					html.append("\"> <tr>");
-					for (int c=0; c<model.getColumnCount(); c++) {
+					for (int c=0; c<reader.getColumnCount(); c++) {
 						MetaProperty p = tab.getMetaProperty(c);
 						String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
 						String cellStyle = align + style.getListCellStyle();
 						String fvalue = null;
 						if (p.hasValidValues()) {
-							fvalue = p.getValidValueLabel(request, model.getValueAt(index, c));
+							fvalue = p.getValidValueLabel(reader.getValueAt(index, c));
 						}
 						else {
-							fvalue = WebEditors.format(request, p, model.getValueAt(index, c), errors, viewObject, true);
+							fvalue = WebEditors.format(request, p, reader.getValueAt(index, c), errors, viewObject, true);
 						}
 						html.append("<td class=\"");
 						html.append((c%2==0?style.getListPairCell():style.getListOddCell()));
@@ -219,14 +215,14 @@ public class TreeViewParser {
 					}
 					html.append("</tr></table>");
 				} else {
-					if (model.getColumnCount() == 1) {
+					if (reader.getColumnCount() == 1) {
 						MetaProperty p = tab.getMetaProperty(0);
 						String fvalue = null;
 						if (p.hasValidValues()) {
-							fvalue = p.getValidValueLabel(request, model.getValueAt(index, 0));
+							fvalue = p.getValidValueLabel(reader.getValueAt(index, 0));
 						}
 						else {
-							fvalue = WebEditors.format(request, p, model.getValueAt(index, 0), errors, viewObject, true);
+							fvalue = WebEditors.format(request, p, reader.getValueAt(index, 0), errors, viewObject, true);
 						}
 						html.append("&nbsp;<span title=\"");
 						html.append(tooltip);
@@ -259,6 +255,7 @@ public class TreeViewParser {
 		}
 		return returnValue;
 	}
+
 
 	public Map<String, TreeView> getMetaTreeViews() {
 		if (metaTreeViews == null) {
