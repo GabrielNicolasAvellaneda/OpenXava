@@ -41,7 +41,7 @@ public class TreeView {
 	@SuppressWarnings("unused")
 	@Tree
 	private String defaultPathAnnotation;
-	private Tree treePath;
+	private Tree treeAnnotation;
 	
 	@SuppressWarnings("rawtypes")
 	private Class nodeClass;
@@ -50,6 +50,8 @@ public class TreeView {
 	private Class parentClass;
 	private String collectionName;
 	private Map<String, Boolean> expandedStates;
+	
+	private ITreeViewReader treeViewReader;
 	
 	public TreeView(){
 	}
@@ -66,26 +68,26 @@ public class TreeView {
 	 */
 	@SuppressWarnings("rawtypes")
 	protected void parseTreeView(Tree path, Class nodeClass, Class parentClass, String collectionName) throws Exception {
-		this.treePath = path;
+		this.treeAnnotation = path;
 		this.nodeClass = nodeClass;
 		this.parentClass = parentClass;
 		this.collectionName = collectionName;
-		if (treePath == null) {
-			treePath = this.getClass().getDeclaredField("defaultPathAnnotation").getAnnotation(Tree.class);
+		if (treeAnnotation == null) {
+			treeAnnotation = this.getClass().getDeclaredField("defaultPathAnnotation").getAnnotation(Tree.class);
 		}
-		if (Is.empty(treePath.pathProperty())) {
+		if (Is.empty(treeAnnotation.pathProperty())) {
 			throw new XavaException("error.collectionDoesNotRepresentATreeView");
 		}
-		this.pathProperty = treePath.pathProperty();
-		this.idSeparator = treePath.idSeparator();
+		this.pathProperty = treeAnnotation.pathProperty();
+		this.idSeparator = treeAnnotation.idSeparator();
 		parseNodeProperty();
 		this.orderProperty = null;
-		this.initialExpandedState = treePath.initialExpandedState();
-		this.keyIncrement = treePath.orderIncrement();
+		this.initialExpandedState = treeAnnotation.initialExpandedState();
+		this.keyIncrement = treeAnnotation.orderIncrement();
 		if (this.keyIncrement < 2) {
 			this.keyIncrement = 2;
 		}
-		setPathSeparator(treePath.pathSeparator());
+		setPathSeparator(treeAnnotation.pathSeparator());
 		if (nodeClass.getClass().isAnnotationPresent(Id.class)) {
 			entityObject = true;
 		} else {
@@ -103,7 +105,7 @@ public class TreeView {
 	 * @throws Exception
 	 */
 	private void parseNodeProperty() throws Exception {
-		if (Is.empty(treePath.idProperties())) {
+		if (Is.empty(treeAnnotation.idProperties())) {
 			idProperties = "";
 			for (Field field : nodeClass.getDeclaredFields()) {
 				if (field.isAnnotationPresent(Id.class)) {
@@ -114,7 +116,7 @@ public class TreeView {
 				}
 			}
 		} else {
-			idProperties = treePath.idProperties();
+			idProperties = treeAnnotation.idProperties();
 		}
 		if (Is.empty(idProperties)) {
 			throw new Exception(XavaResources.getString("error.nodePropertiesUndefined"));
@@ -493,5 +495,16 @@ public class TreeView {
 		return expandedStates;
 	}
 	
+	/**
+	 * Creates the implementation of TreeView reader
+	 * @return Object implementing the ITreeViewReader
+	 * @throws Exception
+	 */
+	public ITreeViewReader getTreeViewReaderImpl() throws Exception {
+		if (treeViewReader == null) {
+			treeViewReader = (ITreeViewReader) treeAnnotation.reader().newInstance();
+		}
+		return treeViewReader;
+	}
 
 }
