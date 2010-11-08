@@ -3721,15 +3721,16 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	public int getCollectionColumnWidth(int columnIndex) { 
+	public int getCollectionColumnWidth(int columnIndex) {
+		MetaProperty p = getMetaPropertiesList().get(columnIndex); 
 		try {
-			return getPreferences().getInt(
-				COLUMN_WIDTH + getMetaPropertiesList().get(columnIndex).getQualifiedName(), -1 				
+			return getPreferences().getInt( 				
+				COLUMN_WIDTH + p.getQualifiedName(), Tab.friendViewGetDefaultColumnWitdh(p)	
 			);
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("impossible_load_column_width"),ex);
-			return -1;
+			return Tab.friendViewGetDefaultColumnWitdh(p);
 		}
 	}	
 	

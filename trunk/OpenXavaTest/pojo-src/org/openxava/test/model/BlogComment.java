@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
+import org.openxava.model.*;
 
 /**
  * 

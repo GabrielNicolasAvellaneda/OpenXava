@@ -1,4 +1,4 @@
-package org.openxava.test.model;
+package org.openxava.model;
 
 import javax.persistence.*;
 
@@ -6,7 +6,7 @@ import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
 /**
- * Base class for defining entities with a UUID oid. <p>
+ * Base class for defining entities with a UUID id. <p>
  * 
  * @author Javier Paniza
  */
@@ -17,14 +17,14 @@ public class Identifiable {
 	@Id @GeneratedValue(generator="system-uuid") @Hidden 
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	@Column(length=32)
-	private String oid;
+	private String id;
 
-	public String getOid() {
-		return oid;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setOid(String oid) {
-		this.oid = oid;
-	}	
+	public String getId() {
+		return id;
+	}
 
 }

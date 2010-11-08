@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 import org.openxava.tests.*;
+import org.openxava.util.*;
 
 
 
@@ -9,6 +10,7 @@ import org.openxava.tests.*;
  */
 
 public class AverageSpeedTest extends ModuleTestBase {
+
 	
 	public AverageSpeedTest(String testName) {
 		super(testName, "AverageSpeed");		
@@ -24,6 +26,14 @@ public class AverageSpeedTest extends ModuleTestBase {
 		assertValue("vehicle.model", "");
 		setValue("vehicle.code", "VLV");
 		assertValue("vehicle.model", "");		
+	}
+	
+	// To test the classic way of URL modules
+	protected String getModuleURL() throws XavaException {
+		if (isLiferayEnabled() || isJetspeed2Enabled()) {
+			return super.getModuleURL();
+		}		
+		return "http://" + getHost() + ":" + getPort() + "/OpenXavaTest/xava/module.jsp?application=OpenXavaTest&module=AverageSpeed";
 	}
 	
 }

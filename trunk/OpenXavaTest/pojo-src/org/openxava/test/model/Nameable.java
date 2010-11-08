@@ -3,6 +3,7 @@ package org.openxava.test.model;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.model.*;
 
 /**
  * Base class for entities with a 'name' property. <p> 

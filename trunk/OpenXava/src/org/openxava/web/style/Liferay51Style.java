@@ -10,11 +10,11 @@ package org.openxava.web.style;
 public class Liferay51Style extends Liferay43Style {
 	
 	private static Liferay51Style instance = null;
-	private static String [] noPortalModuleJsFiles = { 
-		"style/liferay51/js/theme_display.js",	
-		"style/liferay51/js/barebone_unpacked.js",
-		"style/liferay51/js/liferay_init.js"
-	};
+	private static String [] noPortalModuleJsFiles = {  
+		"liferay51/js/theme_display.js",	
+		"liferay51/js/barebone_unpacked.js",
+		"liferay51/js/liferay_init.js"
+	};	
 
 	protected Liferay51Style() {
 	}
@@ -95,8 +95,8 @@ public class Liferay51Style extends Liferay43Style {
 		return "<li style='position: static;'>"; // position: static needed for ie7 
 	}
 	
-	protected String getImagesFolder() {
-		return isInsidePortal()?"/html/themes/classic/images/":"style/liferay51/images/"; 
+	protected String getImagesFolder() { 
+		return isInsidePortal()?"/html/themes/classic/images/":"xava/style/liferay51/images/";
 	}
 	
 	public String getSelectedRow(){
