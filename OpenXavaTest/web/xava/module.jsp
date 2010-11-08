@@ -102,7 +102,7 @@
  			if (jsFiles != null) {
  				for (int i = 0; i < jsFiles.length; i++) {
  	%>
-	<script src="<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/xava/style/<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
 	<%
 		}
 			}

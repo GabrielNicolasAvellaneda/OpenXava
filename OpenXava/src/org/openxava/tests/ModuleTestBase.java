@@ -511,7 +511,7 @@ public class ModuleTestBase extends TestCase {
 			return "http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/" + application + "/" + folder + module + ".psml";
 		}
 		else {
-			return"http://" + getHost() + ":" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module;
+			return "http://" + getHost() + ":" + getPort() + "/" + application + "/modules/" + module; 
 		}
 	}
 	

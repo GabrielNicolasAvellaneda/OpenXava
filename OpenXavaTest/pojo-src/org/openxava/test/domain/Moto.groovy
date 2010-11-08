@@ -1,7 +1,7 @@
 package org.openxava.test.domain
 
 import javax.persistence.*;
-
+import org.openxava.model.*;
 import org.openxava.test.model.*;
 
 /**

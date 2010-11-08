@@ -265,12 +265,18 @@ public class Tab implements java.io.Serializable {
 		return names.toString();
 	}
 	
-	public int getColumnWidth(int columnIndex) { 
-		if (columnWidths == null) return -1;
-		Integer result = columnWidths.get(getMetaProperty(columnIndex).getQualifiedName());		
-		return result==null?-1:result;
+	public int getColumnWidth(int columnIndex) {
+		MetaProperty p = getMetaProperty(columnIndex);
+		if (columnWidths == null) return friendViewGetDefaultColumnWitdh(p); 
+		
+		Integer result = columnWidths.get(p.getQualifiedName());		
+		return result==null?friendViewGetDefaultColumnWitdh(p):result; 
 	}
-	
+		
+	public static int friendViewGetDefaultColumnWitdh(MetaProperty p) {
+		return Math.min(p.getSize(), 20) * 7;
+	}
+
 	public void setColumnWidth(int columnIndex, int width) {
 		if (isResizeColumns()) { 
 			if (columnWidths == null) columnWidths = new HashMap<String, Integer>(); 

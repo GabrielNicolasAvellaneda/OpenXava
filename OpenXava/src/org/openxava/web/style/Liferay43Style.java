@@ -291,7 +291,7 @@ public class Liferay43Style extends Style {
 	}
 	
 	protected String getImagesFolder() { 
-		return isInsidePortal()?"/html/themes/classic/images/":"style/liferay43/images/"; 
+		return isInsidePortal()?"/html/themes/classic/images/":"xava/style/liferay43/images/"; 
 	}
 	
 	public String getSelectedRow(){
