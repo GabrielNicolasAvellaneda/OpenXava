@@ -1,44 +1,45 @@
 Change Log for OpenXava project
 ===============================
 
-
-- Default size for columns optimized in list and collections.
-- Friendly URL for modules, like this: /MyApplication/modules/MyModule.
-- New mapped superclass Identifiable with a UUID id, to use as base class for entities. 
+OpenXava 4m6 (2010-11-10)
+-------------------------
+- Groovy support.
 - Liferay 6 supported, including look & feel integration.
+- JPA 2.0 support: Hibernate upgraded to 3.6.0.
+- Friendly URL for modules, like this: /MyApplication/modules/MyModule.
+- Visual style of button bar improved, including showing the label for each action.
+- More intuitive icons for navigation.
+- Labels are aligned by default to right. For aligning to left use labelAlign=LEFT in xava.properties.
+- Default action is shown as first button in bottom button bar, even if it is already in top button bar.
+- New editor DocumentLibrary (and stereotype DOCUMENT_LIBRARY) to have a group of documents stored in Liferay Document Library.
+- New mapped superclass Identifiable with a UUID id, to use as base class for entities.
+- Default size for columns optimized in list and collections.
+- Russian documentation improved.
+- It's no longer required to put the entities in a package named 'model' or 'modelo'. Any package name is valid for entities.
 - Minor changes to TreeView to optimize performance.
 - @OneToMany(orphanRemoval=true) supported: if  an element is removed from a collection the element is deleted from database. 
-- Fix: Users.getCurrent() returns an incorrect user sometimes.
+- New showLabelsForToolBarActions property in xava.properties.
+- New possible value "almost-never" for by-default attribute of <action/> inside controllers.xml.
 - New 'ignoreAccentsForStringArgumentsInConditions' in xava.properties. It finds records whether you're looking for 'camión' or 'camion',...
+- New setModuleDescription() method in ModuleManager that changes the portlet title.
 - Emails: Sending attachments added.
 - Help icon obtained from container portal.
-- Fix: Tests fail to do login against Liferay 6.
-- It's no longer required to put the entities in a package named 'model' or 'modelo'. Any package name is valid for entities.
+- New saveAndStayForCollections property in xava.properties to choose if the button for save & stay will be in collection element dialog.
+- New setConditionValue() method in Tab for setting the value for the list condition programmatically.
 - Removed the Hibernate dependent code from AnnotatedClassParser, so now it's possible to use other JPA providers.
-- JPA 2.0 support: Hibernate upgraded to 3.6.0.
+- Methods getProperty() of ModuleTestBase renamed to getXavaJUnitProperty().
+- Clear stacktrace when data source does not work. No more 'Module x is not defined'.
+- Fix: Tests fail to do login against Liferay 6.
+- Fix: Users.getCurrent() returns an incorrect user sometimes.
 - Fix: i18n files are not correctly copied when creating a portlet war.
 - Fix: Choosing reference fails when reference name matches id name of referenced entity.
 - Fix: @Tab fails with multi-level @Embedded.
 - Fix: Updating embedded collection element a 'Member not found' exception is thrown.
-- Methods getProperty() of ModuleTestBase renamed to getXavaJUnitProperty().
-- Groovy support.
 - Fix: Bad layout for header fields when frames.
-- Russian documentation improved. 
-- New editor DocumentLibrary (and stereotype DOCUMENT_LIBRARY) to have a group of documents stored in Liferay Document Library. 
 - Fix: NullPointerException by EditorTag hides the real source of error in some cases. 
-- Default action is shown as first button in bottom button bar, even if it is already in top button bar.
 - Fix: Incorrect default action (broken in 4m5). 
-- New possible value "almost-never" for by-default attribute of <action/> inside controllers.xml.
-- More intuitive icons for navigation.
-- New showLabelsForToolBarActions property in xava.properties.
-- Visual style of button bar improved, including showing the label for each action.
 - Fix: Help doesn't work for external URL.
 - Fix: Division by 0 generating PDF reports where all columns are little. 
-- Labels are aligned by default to right. For aligning to left use labelAlign=LEFT in xava.properties.
-- Clear stacktrace when data source does not work. No more 'Module x is not defined'.
-- New setModuleDescription() method in ModuleManager that changes the portlet title.
-- New saveAndStayForCollections property in xava.properties to choose if the button for save & stay will be in collection element dialog.
-- New setConditionValue() method in Tab for setting the value for the list condition programmatically.
 - Fix: 'Parse may not be called while parsing' error when several users start at once after deploying. 
 
 OpenXava 4m5 (2010-7-28)
