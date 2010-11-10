@@ -2,7 +2,7 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="4m5"/>
+	<property name="xava.version" value="4m6"/>
 	<property name="xava.workspace" value=".."/>	
 	<property name="openxava.dist.dir" value="/home/javi/openxava"/>
 	<property file="../openxava.properties"/>
@@ -15,8 +15,15 @@
 			author="true"
 			version="true"
 			use="true"
-			windowtitle="OpenXava ${xava.version} API"
-			classpath="../OpenXava/web/WEB-INF/lib/hibernate-validator.jar">
+			windowtitle="OpenXava ${xava.version} API">
+			
+			<classpath> 
+				<pathelement path="../OpenXava/bin"/>
+				<fileset dir="../OpenXava/web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset>
+			</classpath> 
+
 
 		    <fileset dir="${xava.workspace}/OpenXava/src" defaultexcludes="yes"/>			
 
