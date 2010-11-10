@@ -1,11 +1,16 @@
 <%@ include file="imports.jsp"%>
 
 <%@page import="java.io.File"%>
-<%@page import="org.openxava.web.dwr.Module"%>
-<%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.util.XavaResources"%>
 <%@page import="org.openxava.util.Locales"%>
+<%@page import="org.openxava.util.Users"%>
 <%@page import="org.openxava.util.XSystem"%>
+<%@page import="org.openxava.util.Strings"%>
+<%@page import="org.openxava.util.Is"%>
+<%@page import="org.openxava.web.dwr.Module"%>
+<%@page import="org.openxava.web.servlets.Servlets"%>
+<%@page import="org.openxava.web.Ids"%>
+<%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.apache.commons.logging.LogFactory" %>
 <%@page import="org.apache.commons.logging.Log" %>
@@ -41,9 +46,10 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
 	Servlets.setCharacterEncoding(request, response);
-	Locales.setCurrent(request);
+	Locales.setCurrent(request);	
 	request.getSession().setAttribute("xava.user",
 			request.getRemoteUser());
+	Users.setCurrent(request); 
 	String app = request.getParameter("application");
 	String module = (String) context.get(app, request
 			.getParameter("module"), "xava_currentModule");
@@ -86,13 +92,7 @@
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
-
-<%@page import="org.openxava.web.Ids"%>
-<%@page import="org.openxava.util.Strings"%><html xmlns="http://www.w3.org/1999/xhtml" >
-<%@page import="org.openxava.web.servlets.Servlets"%><%@page import="org.openxava.util.Is"%>
 <html xmlns="http://www.w3.org/1999/xhtml" >
-
 
 <head>
 	<title><%=managerHome.getModuleDescription()%></title>
@@ -102,7 +102,7 @@
  			if (jsFiles != null) {
  				for (int i = 0; i < jsFiles.length; i++) {
  	%>
-	<script src="<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/xava/style/<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
 	<%
 		}
 			}
@@ -115,7 +115,7 @@
 		for (java.util.Iterator it = style.getAdditionalCssFiles()
 				.iterator(); it.hasNext();) {
 			String cssFile = (String) it.next();
-	%>
+	%> 
 	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>?ox=<%=version%>"/>
 	<%
 		}

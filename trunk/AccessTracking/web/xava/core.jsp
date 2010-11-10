@@ -41,7 +41,7 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 <div <%=style.getModuleSpacing()%> >
 
     <% if (manager.isSplitMode()) { %>    
-	<div id='<xava:id name="list_button_bar"/>' class='<%=style.getButtonBar()%>'>		
+	<div id='<xava:id name="list_button_bar"/>'>		
 		<jsp:include page="buttonBar.jsp?xava_mode=list"/> 
 	</div>
 	<div id='<xava:id name="list_view"/>'>
@@ -56,7 +56,7 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 	
 
 	<% if (buttonBar) {	%> 
-    <div id='<xava:id name="button_bar"/>' class='<%=style.getButtonBar()%>'>    
+    <div id='<xava:id name="button_bar"/>'>    
 		<jsp:include page="buttonBar.jsp"/> 
 	</div>
 	<% } %>

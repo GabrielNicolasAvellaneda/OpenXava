@@ -94,8 +94,8 @@ if(!Is.empty(key)){
 			anchor.setAttribute("href", "openxava.executeAction('" +
 					application + "', '" + module +"', '', false, '<%=action%>', '" +
 					actionWithArgs + "')");
-			htmlInput.appendChild(anchor);
 			tableDiv.appendChild(htmlInput);
+			tableDiv.appendChild(anchor);
 		}
 		tree_<%=collectionName%>.tree.subscribe("clickEvent", function(args) {
 			tree_<%=collectionName%>.suppress=true;
@@ -144,8 +144,6 @@ if(!Is.empty(key)){
 				openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', "", false, 'TreeView.collapse', actionWithArgs);
 			}
 		});
-		//var myNode = tree_<%=collectionName%>.tree.getNodeByIndex(3);
-		//tree_<%=collectionName%>.tree.fireEvent("clickEvent", {node:myNode});
 		
 	</script>
 	<%

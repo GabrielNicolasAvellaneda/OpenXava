@@ -73,34 +73,43 @@ String keyProperties = "";
 String propertyKey = null;
 if (keys.size() == 1) {		
 	keyProperty = keys.iterator().next().toString();
-	propertyKey = Ids.decorate(request, referenceKey + "." + keyProperty); 
-	Map values = (Map) view.getValue(ref.getName());	
-	values = values == null?java.util.Collections.EMPTY_MAP:values;
-	Object value = values.get(keyProperty);
-	String valueKey = propertyKey + ".value";
-	request.setAttribute(valueKey, value);		
-	String fvalue = value==null?"":value.toString();
-	request.setAttribute(propertyKey + ".fvalue", fvalue);
+	propertyKey = Ids.decorate(request, referenceKey + "." + keyProperty);
+	if (!composite) { 
+		Map values = (Map) view.getValue(ref.getName());	
+		values = values == null?java.util.Collections.EMPTY_MAP:values;
+		Object value = values.get(keyProperty);
+		String valueKey = propertyKey + ".value";
+		request.setAttribute(valueKey, value);		
+		String fvalue = value==null?"":value.toString();
+		request.setAttribute(propertyKey + ".fvalue", fvalue);
+	}
 }
 else {	
-	propertyKey = referenceKey + "__KEY__"; 
-	Map values = (Map) view.getValue(ref.getName());
-	values = values == null?java.util.Collections.EMPTY_MAP:values;
+	propertyKey = referenceKey + "__KEY__";
+	Map values = null; 
+	if (!composite) { 
+		values = (Map) view.getValue(ref.getName());
+		values = values == null?java.util.Collections.EMPTY_MAP:values;
+	}
 	java.util.Iterator it = keys.iterator();
 	StringBuffer sb = new StringBuffer();
 	while (it.hasNext()) {
-		String property = (String) it.next();		
-		Object value = values.get(property);
-		String valueKey = Ids.decorate(request, referenceKey + "." + property) + ".value"; 
-		request.setAttribute(valueKey, value);
+		String property = (String) it.next();
+		if (!composite) { 
+			Object value = values.get(property);
+			String valueKey = Ids.decorate(request, referenceKey + "." + property) + ".value"; 
+			request.setAttribute(valueKey, value);
+		}
 		sb.append(property);
 		if (it.hasNext()) {
 			sb.append(',');
 		}
-	}	
-	String key = ref.getMetaModelReferenced().toString(values); 
-	String fvalue = key==null?"0":key;
-	request.setAttribute(propertyKey + ".fvalue", fvalue);
+	}
+	if (!composite) { 
+		String key = ref.getMetaModelReferenced().toString(values); 
+		String fvalue = key==null?"0":key;
+		request.setAttribute(propertyKey + ".fvalue", fvalue);
+	}
 	keyProperties = sb.toString();
 }
 

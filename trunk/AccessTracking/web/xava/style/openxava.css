@@ -129,8 +129,6 @@ TD.frame {
 	text-decoration: underline;
 }
 
-
-
 .websphere-list-title {
 	font-weight: bold;	
 }
@@ -138,10 +136,6 @@ TD.frame {
 
 TD.mode {
 	font-weight: bold;	
-}
-
-TD.jetspeed2-mode {
-	font-size: x-small;
 }
 
 TD.list-title {
@@ -268,4 +262,60 @@ TD.list-title {
 
 .page-navigation-arrow-disable:hover { 
 	border-color: buttonshadow;	
+}
+
+.ox-button-bar {
+	background: #F6F8FB;
+	margin-bottom: 5px;
+	overflow: hidden;
+	padding: 2px;
+}
+
+.ie6 .ox-button-bar {
+	width: 100%;
+}
+
+.ox-button-bar .ox-button-bar-button a {
+	background: url() no-repeat 5px 50%; 	
+	border: 1px solid #F6F8FB;
+	color: #9EA8AD;
+	display: block;
+	float: left; 	 
+	font-size: 12px;
+	font-weight: bold;	
+	padding: 4px 0px 4px 0px; 
+	text-decoration: none;	
+}
+
+.ox-button-bar .ox-button-bar-button a:hover {
+	border: 1px solid #A7CEDF;	
+	background-color: #DFF4FF;
+	color: #346799; 
+	padding: 4px 0px 4px 0px; 
+}
+
+.green .ox-button-bar .ox-button-bar-button a:hover {	
+	background-color: #D9F4CB;
+	border-color: #BBEAA4
+}
+
+.orange .ox-button-bar .ox-button-bar-button a:hover {
+	background-color: #F4EACB;
+	border-color: #EAD8A4;			
+}
+
+.ox-button-bar .ox-button-bar-button.active a {
+	background-color: #CFD5D7; 
+	border: 1px solid #CFD5D7;
+	color: #000;
+}
+
+.ox-button-bar .ox-button-bar-button.active a:hover {
+	background-color: #d6dcdd;
+	border-color: #B7C0C2;
+}
+
+.ox-help img {
+	border: 0;
+	padding-top: 5px;
 }
