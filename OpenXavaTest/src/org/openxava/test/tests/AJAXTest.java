@@ -50,7 +50,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("DeliveryType.saveNotReset");
 		assertListRowCount(7);
 		assertLoadedParts("editor_description," +
-				//"editor_comboDeliveries," + // Only with XML components
+				//"editor_comboDeliveries," + // Only with XML components 
 				"list_view," + // Because DeliveryType.saveNotReset changes data that can be in the list
 				"editor_number," +  
 				"errors, messages");	

@@ -5,7 +5,7 @@
 <component name="Order">
 
 	<entity>
-		<property name="oid" type="String" key="true" hidden="true">
+		<property name="id" type="String" key="true" hidden="true">
 			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
 		</property>
 		
@@ -36,7 +36,7 @@
 	</entity>
 	
 	<aggregate name="OrderDetail">
-		<property name="oid" type="String" key="true" hidden="true">
+		<property name="id" type="String" key="true" hidden="true">
 			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
 		</property>
 		
@@ -72,7 +72,7 @@
 	</view>
 	
 	<entity-mapping table="XAVATEST@separator@TOrder">
-		<property-mapping property="oid"/>
+		<property-mapping property="id"/>
 		<property-mapping property="year"/>
 		<property-mapping property="number"/>
 		<property-mapping property="date"/>
@@ -87,10 +87,10 @@
 	 <aggregate-mapping aggregate="OrderDetail" table="XAVATEST@separator@OrderDetail">
 		<reference-mapping reference="order">
 			<reference-mapping-detail
-				referenced-model-property="oid" 
-				column="PARENT_OID"/>
+				referenced-model-property="id" 
+				column="PARENT_ID"/>
 		</reference-mapping>			 
-		<property-mapping property="oid"/>
+		<property-mapping property="id"/>
 		<property-mapping property="quantity"/>
 		<reference-mapping reference="product">
 			<reference-mapping-detail

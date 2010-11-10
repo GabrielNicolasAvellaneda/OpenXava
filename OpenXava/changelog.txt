@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+
 - Default size for columns optimized in list and collections.
 - Friendly URL for modules, like this: /MyApplication/modules/MyModule.
 - New mapped superclass Identifiable with a UUID id, to use as base class for entities. 
