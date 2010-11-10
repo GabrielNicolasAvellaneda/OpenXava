@@ -42,12 +42,12 @@ public class ShipmentChargeTest extends ModuleTestBase {
 		
 		// reference property: descriptionsList
  		setConditionValues(new String[] { "", "", "", "[.MEDIUM.5.INTERNAL.]"} ); // For JPA entities
-		// setConditionValues(new String[] { "", "", "", "[.2.5.1.]"} ); // For XML components
+		//setConditionValues(new String[] { "", "", "", "[.2.5.1.]"} ); // For XML components
 		execute("List.filter");
 		assertListRowCount(0);
 		
 		setConditionValues(new String[] { "", "", "", "[.SLOW.1.INTERNAL.]"} ); // For JPA entities
-		// setConditionValues(new String[] { "", "", "", "[.1.1.1.]"} ); // For XML Components 
+		//setConditionValues(new String[] { "", "", "", "[.1.1.1.]"} ); // For XML Components 
 		execute("List.filter");
 		assertListRowCount(1);
 		
