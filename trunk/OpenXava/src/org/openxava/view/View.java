@@ -3725,14 +3725,27 @@ public class View implements java.io.Serializable {
 		MetaProperty p = getMetaPropertiesList().get(columnIndex); 
 		try {
 			return getPreferences().getInt( 				
-				COLUMN_WIDTH + p.getQualifiedName(), Tab.friendViewGetDefaultColumnWitdh(p)	
+				COLUMN_WIDTH + p.getQualifiedName(), defaultColumnWidth(p)	
 			);
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("impossible_load_column_width"),ex);
-			return Tab.friendViewGetDefaultColumnWitdh(p);
+			return defaultColumnWidth(p);
 		}
 	}	
+	
+	private int defaultColumnWidth(MetaProperty p) { 
+		if (getSumPropertiesSize() < 100) return -1;
+		return Tab.friendViewGetDefaultColumnWidth(p);
+	} 
+	
+	private int getSumPropertiesSize() { 
+		int result = 0;
+		for (MetaProperty eachProperty: getMetaPropertiesList()) {
+			result += eachProperty.getSize();
+		}
+		return result;
+	}
 	
 	private Preferences getPreferences() throws BackingStoreException { 		
 		return Users.getCurrentPreferences().node("view." + getMetaModel().getName() + "." + getViewName() + ".");
