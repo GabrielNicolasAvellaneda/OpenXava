@@ -236,6 +236,13 @@ public class Liferay41Style extends Style {
 		return "/html/themes/brochure/images/portlet/close.gif";
 	}
 	
+	/**
+	 * @since 4m6
+	 */
+	public String getHelpImage() { 
+		return "/html/themes/brochure/images/portlet/help.gif";
+	}
+	
 	public boolean isApplySelectedStyleToCellInList() {
 		return false;
 	}

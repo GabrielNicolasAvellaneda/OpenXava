@@ -375,7 +375,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertLabel("alternateSeller", "Secondary seller");
 	}
 	
-	public void testCustomizeList() throws Exception { 
+	public void testCustomizeList() throws Exception {
 		doTestCustomizeList_moveAndRemove(); 
 		tearDown();	setUp();
 		doTestCustomizeList_generatePDF();
@@ -555,7 +555,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInList(0, 5, state); 
 	}
 	
-	public void testCustomizeList_addAndResetModule() throws Exception { 
+	public void testCustomizeList_addAndResetModule() throws Exception {  
 		assertListColumnCount(6);
 		String value = getValueInList(0, 0);
 		execute("List.customize");

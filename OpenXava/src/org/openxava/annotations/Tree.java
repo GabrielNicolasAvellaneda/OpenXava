@@ -98,6 +98,4 @@ public @interface Tree {
 	 */
 	String pathSeparator() default "/";
 	
-	@SuppressWarnings("rawtypes")
-	Class reader() default TreeViewReaderImpl.class; // tmp
 }

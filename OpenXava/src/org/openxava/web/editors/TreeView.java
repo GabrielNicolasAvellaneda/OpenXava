@@ -502,7 +502,9 @@ public class TreeView {
 	 */
 	public ITreeViewReader getTreeViewReaderImpl() throws Exception {
 		if (treeViewReader == null) {
-			treeViewReader = (ITreeViewReader) treeAnnotation.reader().newInstance();
+			// We removed temporally the reader attribute from @Tree for releasing OX4.0.
+			// treeViewReader = (ITreeViewReader) treeAnnotation.reader().newInstance();
+			treeViewReader = new TreeViewReaderImpl(); // Temporary solution
 		}
 		return treeViewReader;
 	}
