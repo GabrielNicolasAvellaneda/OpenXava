@@ -6,7 +6,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
              
-    <!-- Tomcat + Hypersonic -->                                       
+    <!-- Tomcat + Hypersonic -->                                        
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>    	
     	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
@@ -18,9 +18,7 @@
         </properties>
     </persistence-unit>
     
-    
-    
-    <!-- WebSphere + AS/400                            
+    <!-- WebSphere + AS/400                             
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/OpenXavaTestDS</non-jta-data-source>
@@ -32,9 +30,8 @@
         </properties>
     </persistence-unit>
     -->
-    
-        
-    <!-- Tomcat + AS/400      
+            
+    <!-- Tomcat + AS/400       
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>java:comp/env/jdbc/DataSource</non-jta-data-source>
@@ -58,10 +55,9 @@
             <property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
     </persistence-unit>     
-    -->
-    
+    -->    
         
-    <!-- JUnit Hypersonic -->             
+    <!-- JUnit Hypersonic -->              
     <persistence-unit name="junit">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
@@ -73,9 +69,7 @@
     </persistence-unit>
     
     
-     
-    
-	<!-- JUnit AS/400      
+	<!-- JUnit AS/400       
     <persistence-unit name="junit">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
@@ -87,6 +81,6 @@
 			<property name="hibernate.connection.password" value=""/>
         </properties>
     </persistence-unit>
-    -->    
-        
+    -->
+                
 </persistence>

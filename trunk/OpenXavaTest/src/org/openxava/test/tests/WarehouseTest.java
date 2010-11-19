@@ -189,7 +189,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		String table = MetaModel.get("Warehouse").getMapping().getTable();
 				
 		// Verifying the entries in access tracking		
-		changeModule("AccessTracking", "Accesses");
+		changeModule("AccessTracking", "Accesses"); 
 		assertListRowCount(6);
 		
 		String firstRecordId = getValueInList(0, "recordId");

@@ -16,11 +16,11 @@ public class IssueWebTest extends ModuleTestBase {
 		
 	public void testUrlParametersChangeOfDefaultSchema() throws Exception {
 		// let's add schema parameter for companyA
-		newParameters="&schema=companya";
+		newParameters="?schema=companya";
 		resetModule();
 		assertListRowCount(2);
 		// let's add schema parameter for companyB
-		newParameters="&schema=companyb";
+		newParameters="?schema=companyb";
 		resetModule();
 		assertListRowCount(3);
 
@@ -28,23 +28,23 @@ public class IssueWebTest extends ModuleTestBase {
 	
 	public void testUrlParametersChangeOfLocale() throws Exception {
 		// let's get locale en - english for companyA
-		newParameters="&schema=companya&locale=en";
+		newParameters="?schema=companya&locale=en";
 		resetModule();
 		assertLabelInList(1, "Description");
 
 		// let's get locale es - español for companyA
-		newParameters="&schema=companya&locale=es";
+		newParameters="?schema=companya&locale=es";
 		resetModule();
 		assertLabelInList(1, "Descripción");
 	}
 	
 	public void testUrlParametersChangeOfUser() throws Exception {
 		// let's set user to THE_USER in companyA
-		newParameters="&schema=companya&user=THE_USER&locale=en";
+		newParameters="?schema=companya&user=THE_USER&locale=en";
 		resetModule();
 		execute("Mode.detailAndFirst");
 		assertValueIgnoringCase("description", "THE_USER");
-		newParameters="&schema=companya&user=OTHER_USER&locale=en";
+		newParameters="?schema=companya&user=OTHER_USER&locale=en";
 		resetModule();
 		execute("Mode.detailAndFirst");
 		assertValueIgnoringCase("description", "OTHER_USER");
@@ -53,7 +53,7 @@ public class IssueWebTest extends ModuleTestBase {
 	@Override
 	protected String getModuleURL() {
 		String urlModule = super.getModuleURL();
-		urlModule = urlModule + newParameters;
+		urlModule = urlModule + newParameters;		
 		return urlModule;
 	}
 }

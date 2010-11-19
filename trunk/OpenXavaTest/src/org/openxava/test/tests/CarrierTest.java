@@ -14,6 +14,7 @@ public class CarrierTest extends CarrierTestBase {
 	}	
 
 	public void testRowActions() throws Exception {
+		execute("List.orderBy", "property=number"); 
 		assertListRowCount(5);
 		execute("CRUD.deleteRow", "row=2");
 		assertListRowCount(4);

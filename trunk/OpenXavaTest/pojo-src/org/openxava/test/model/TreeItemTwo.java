@@ -23,7 +23,7 @@ public class TreeItemTwo {
 	@Column(length=255)
 	private String folder;
 	
-	@Column(length=20)
+	@Column(length=30)
 	private String description;
 	
 	@ManyToOne

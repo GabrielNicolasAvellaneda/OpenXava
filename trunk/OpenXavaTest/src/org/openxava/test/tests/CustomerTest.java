@@ -107,7 +107,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertLabel("name", "Malnom");
 	}
 		
-	public void testFilterByMemberOfAggregate() throws Exception {
+	public void testFilterByMemberOfAggregate() throws Exception { 
 		assertListRowCount(5);
 		String [] totalCondition = { "", "", "", "V" };		
 		setConditionValues(totalCondition);		
@@ -695,13 +695,13 @@ public class CustomerTest extends ModuleTestBase {
 		return section;		
 	}
 	
-	public void testFilterToDescriptionsListWithBaseConditionAndFilter() throws Exception {
+	public void testFilterToDescriptionsListWithBaseConditionAndFilter() throws Exception { 
 		try{
 			// warehouse has a filter zoneNumber <= 999
 			Warehouse.findByZoneNumberNumber(1000, 1);	
 		}
 		catch(NoResultException ex){
-			fail("It need warehouse with zone number 1000");
+			fail("It needs a warehouse with zone number 1000");
 		}
 		
 		setConditionValues(new String[] {"cuatrero"} );

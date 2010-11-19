@@ -35,7 +35,10 @@ public class Product2Test extends ModuleTestBase {
 		assertNoAction("Product2.reportBySubfamily");
 		assertAction("FamilyProductsReport.generateExcel");
 		setValue("subfamily.number", "2");
-		execute("FamilyProductsReport.generateExcel");
+		// The next line fails on WebSphere Portal 6.1 because of the 
+		// WebSphere6-1/PortalServer/lwo/prereq.odc/shared/app/jakarta-poi.jar file.
+		// Just remove this file and this test will pass. Changing classloading policy of war does not work
+		execute("FamilyProductsReport.generateExcel");  
 		assertNoErrors();
 		assertContentTypeForPopup("application/vnd.ms-excel");
 		assertDialog();

@@ -63,29 +63,29 @@ public class ParentTest extends ModuleTestBase {
 		setValue("id","FATHER");
 		execute("CRUD.refresh");
 		execute("Collection.new", "viewObject=xava_view_children");
-		setValue("id", "JOHN");
-		setValue("description", "THIS IS JOHN");
+		setValue("id", "JANE");
+		setValue("description", "THIS IS JANE");
 		execute("Collection.save");
 		assertNoErrors();
 		assertCollectionRowCount("children", 1);
 		// test modification of Children
 		execute("Collection.edit", "row=0,viewObject=xava_view_children");
-		assertValue("id", "JOHN");
-		assertValue("description", "THIS IS JOHN");
-		setValue("description", "THIS IS LITTLE JOHN");
+		assertValue("id", "JANE");
+		assertValue("description", "THIS IS JANE");
+		setValue("description", "THIS IS LITTLE JANE");
 		execute("Collection.save");
 		assertNoErrors();
-		assertValueInCollection("children", 0, "description", "THIS IS LITTLE JOHN");
+		assertValueInCollection("children", 0, "description", "THIS IS LITTLE JANE");
 		// Add a new child
 		execute("Collection.new", "viewObject=xava_view_children");
-		setValue("id", "JANE");
-		setValue("description", "THIS IS JANE");
+		setValue("id", "JOHN");
+		setValue("description", "THIS IS JOHN");
 		execute("Collection.save");
 		assertNoErrors();
 		// Delete from within dialog
-		execute("Collection.edit", "row=0,viewObject=xava_view_children");
-		assertValue("id", "JANE");
-		assertValue("description", "THIS IS JANE");
+		execute("Collection.edit", "row=1,viewObject=xava_view_children");
+		assertValue("id", "JOHN");
+		assertValue("description", "THIS IS JOHN");
 		execute("Collection.remove");
 		assertNoErrors();
 		// Delete from collection list 

@@ -23,7 +23,7 @@ public class TreeItem {
 	@Column(length=255)
 	private String path;
 	
-	@Column(length=20)
+	@Column(length=30)
 	private String description;
 	
 	@ManyToOne

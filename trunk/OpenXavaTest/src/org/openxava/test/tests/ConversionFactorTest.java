@@ -3,9 +3,9 @@ package org.openxava.test.tests;
 import org.openxava.jpa.XPersistence;
 import org.openxava.tests.ModuleTestBase;
 
-public class DigitsTest extends ModuleTestBase {
+public class ConversionFactorTest extends ModuleTestBase {
 
-	public DigitsTest(String testName) {
+	public ConversionFactorTest(String testName) {
 		super(testName, "ConversionFactor");
 	}
 	
