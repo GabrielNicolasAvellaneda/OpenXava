@@ -40,7 +40,7 @@ public class ModuleManager implements java.io.Serializable {
 		return "4.0";
 	}
 	final static private String getVersionDate() {
-		return "2010-11-xx"; 
+		return "2010-11-22"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	

@@ -1,6 +1,33 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.0 (2010-11-22)
+-------------------------
+Main new features over 3.1.4 for developers:
+- Groovy support.
+- JPA 2.0 support.
+- Support for JSR-330, the Java standard for dependency injection.
+- Dropped support for EntityBeans CMP2.
+- Dropped support for Java 1.4. From now on OX requires Java 5 or better.
+Main new features over 3.1.4 for the users:
+- New mode 'split' (labeled as "Both") in addition to already existing 'detail' and 'List' modes.
+- The user can minimize and restore any frame, storing the frame status by user.
+- Delete action for collections and list is shown in each row.  
+- More intuitive 'search' action. Now it uses a dialog to ask for the search data.
+- The user can resize the column widths for list and collections using the mouse, and the values are persisted by user.
+- Tooltip for cells in list and collections.
+- References as combos to filter in list mode.
+- Clicking on any part of the row, for list or collection, goes to the detail.
+- Popup dialogs supported.
+- Collections use dialogs to edit, add and remove elements.
+- A dialog is used for searching, creating or modifying a reference.
+- New checkbox in list to select and deselect all rows at once.
+- The user can change the row count of list and collections, and the setting is stored by user.
+- Improved look & feel of page navigation for list and collections.
+- Visual style of button bar improved.
+For the full list of new features see below the notes for the versions from 4m1 to 4m6.  
+
+
 OpenXava 4m6 (2010-11-10)
 -------------------------
 - Groovy support.
