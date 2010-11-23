@@ -55,14 +55,6 @@ public class TreeViewReaderImpl implements ITreeViewReader {
 	}
 
 	/**
-	 * @see org.openxava.web.editors.ITreeViewReader#getRowCount()
-	 */
-	public int getRowCount() {
-		return allKeys.length;
-	}
-
-
-	/**
 	 * @see org.openxava.web.editors.ITreeViewReader#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) throws Exception {

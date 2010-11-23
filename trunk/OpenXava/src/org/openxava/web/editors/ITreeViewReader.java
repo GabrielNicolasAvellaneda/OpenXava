@@ -38,12 +38,6 @@ public interface ITreeViewReader {
 	Object getObjectAt(int rowIndex) throws Exception;
 	
 	/**
-	 * Returns the number of records (row) to be processed
-	 * @return actual row count
-	 */
-	int getRowCount();
-	
-	/**
 	 * Retrieves the object value found at row / column
 	 * @param row row to be assessed
 	 * @param column to be read
