@@ -3,8 +3,7 @@
  */
 package org.openxava.web.editors;
 
-import org.openxava.model.meta.MetaProperty;
-import org.openxava.tab.Tab;
+import java.util.Map;
 
 /**
  * Defines the contract for tree view readers.
@@ -12,11 +11,18 @@ import org.openxava.tab.Tab;
  *
  */
 public interface ITreeViewReader {
+
 	/**
-	 * Initialization of the reader
-	 * @param tab
+	 * Initializes the reader
+	 * @param parentModelName name of the parent model of the collection
+	 * @param parentKey key for the parent object
+	 * @param collectionModelName name of the collection model
+	 * @param allKeys all the keys to be read from the collection
+	 * @param columnNames name of the columns in their column order.
+	 * @throws Exception
 	 */
-	void initialize(Tab tab) throws Exception;
+	@SuppressWarnings("rawtypes")
+	void initialize(String parentModelName, Map parentKey, String collectionModelName, Map[] allKeys, String[] columnNames) throws Exception;
 	
 	/**
 	 * Ends the process of reading
@@ -36,19 +42,6 @@ public interface ITreeViewReader {
 	 * @return actual row count
 	 */
 	int getRowCount();
-	
-	/**
-	 * Returns the column count
-	 * @return actual column count
-	 */
-	int getColumnCount();
-	
-	/**
-	 * Returns the column base meta property
-	 * @param columnIndex column number to get
-	 * @return Associated meta property for the given column number
-	 */
-	MetaProperty getMetaProperty(int columnIndex) throws Exception;
 	
 	/**
 	 * Retrieves the object value found at row / column

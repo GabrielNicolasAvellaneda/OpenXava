@@ -51,13 +51,15 @@ public class TreeView {
 	private String collectionName;
 	private Map<String, Boolean> expandedStates;
 	
+	private String treeViewReaderName;
 	private ITreeViewReader treeViewReader;
 	
 	public TreeView(){
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public TreeView(Tree path, Class nodeClass, Class parent, String collectionName) throws Exception {
+	public TreeView(Tree path, Class nodeClass, Class parent, String collectionName, String treeViewReaderName) throws Exception {
+		this.treeViewReaderName = treeViewReaderName;
 		parseTreeView(path, nodeClass, parent, collectionName);
 	}
 	
@@ -500,11 +502,24 @@ public class TreeView {
 	 * @return Object implementing the ITreeViewReader
 	 * @throws Exception
 	 */
-	public ITreeViewReader getTreeViewReaderImpl() throws Exception {
-		if (treeViewReader == null) {
-			// We removed temporally the reader attribute from @Tree for releasing OX4.0.
-			// treeViewReader = (ITreeViewReader) treeAnnotation.reader().newInstance();
-			treeViewReader = new TreeViewReaderImpl(); // Temporary solution
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ITreeViewReader getTreeViewReaderImpl() {
+		if (treeViewReader == null && !Is.emptyString(treeViewReaderName)) {
+			try {
+				Class clazz = Class.forName(treeViewReaderName);
+				if (clazz.isAssignableFrom(ITreeViewReader.class)) {
+					treeViewReader = (ITreeViewReader)clazz.newInstance();
+				}
+			} catch (ClassNotFoundException e) {
+				log.error(e);
+			} catch (InstantiationException e) {
+				log.error(e);
+			} catch (IllegalAccessException e) {
+				log.error(e);
+			}
+			if (treeViewReader == null) {
+				treeViewReader = new TreeViewReaderImpl();
+			}
 		}
 		return treeViewReader;
 	}
