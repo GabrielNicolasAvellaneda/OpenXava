@@ -5,10 +5,8 @@ package org.openxava.web.editors;
 
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.openxava.model.MapFacade;
-import org.openxava.model.meta.MetaProperty;
-import org.openxava.tab.Tab;
-import org.openxava.tab.impl.IXTableModel;
 
 /**
  * Implements the Tree view reader
@@ -17,18 +15,25 @@ import org.openxava.tab.impl.IXTableModel;
  */
 public class TreeViewReaderImpl implements ITreeViewReader {
 
-	private Tab tab;
+	private String collectionModelName;
+	
 	@SuppressWarnings("rawtypes")
 	private Map[] allKeys;
-	private IXTableModel tableModel;
+	
+	private String[] columnNames;
+	
+	private int lastReadRow = -1;
+	
+	private Object lastReadObject = null;
 	
 	/**
-	 * @see org.openxava.web.editors.ITreeViewReader#initialize(org.openxava.tab.Tab)
+	 * @see org.openxava.web.editors.ITreeViewReader#initialize(java.lang.String, java.lang.String[], java.util.Map, java.util.Map[])
 	 */
-	public void initialize(Tab tab) {
-		this.tab = tab;
-		tableModel = tab.getTableModel();
-		allKeys = tab.getAllKeys();
+	@SuppressWarnings("rawtypes")
+	public void initialize(String parentModelName, Map parentKey, String collectionModelName,  Map[] allKeys, String[] columnNames) {
+		this.collectionModelName = collectionModelName;
+		this.allKeys = allKeys;
+		this.columnNames = columnNames;
 	}
 
 	/**
@@ -42,36 +47,27 @@ public class TreeViewReaderImpl implements ITreeViewReader {
 	 * @see org.openxava.web.editors.ITreeViewReader#getRowObject()
 	 */
 	public Object getObjectAt(int rowIndex) throws Exception {
-		return MapFacade.findEntity(tab.getModelName(), allKeys[rowIndex]);
+		if (rowIndex != lastReadRow) {
+			lastReadObject = MapFacade.findEntity(collectionModelName, allKeys[rowIndex]);
+			lastReadRow = rowIndex;
+		}
+		return lastReadObject;
 	}
 
 	/**
 	 * @see org.openxava.web.editors.ITreeViewReader#getRowCount()
 	 */
 	public int getRowCount() {
-		return tableModel.getRowCount();
+		return allKeys.length;
 	}
 
-
-	/**
-	 * @see org.openxava.web.editors.ITreeViewReader#getColumnCount()
-	 */
-	public int getColumnCount() {
-		return tableModel.getColumnCount();
-	}
-
-	/**
-	 * @see org.openxava.web.editors.ITreeViewReader#getMetaProperty(int)
-	 */
-	public MetaProperty getMetaProperty(int column) {
-		return tab.getMetaProperty(column);
-	}
 
 	/**
 	 * @see org.openxava.web.editors.ITreeViewReader#getValueAt(int, int)
 	 */
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return tableModel.getValueAt(rowIndex, columnIndex);
+	public Object getValueAt(int rowIndex, int columnIndex) throws Exception {
+		Object rowObject = getObjectAt(rowIndex);
+		return PropertyUtils.getProperty(rowObject, columnNames[columnIndex]);
 	}
 
 }

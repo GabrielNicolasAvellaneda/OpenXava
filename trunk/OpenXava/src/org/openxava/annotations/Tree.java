@@ -5,9 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.openxava.web.editors.ITreeViewReader;
-import org.openxava.web.editors.TreeViewReaderImpl;
-
 
 /**
  * With <code>@Tree</code> you can instruct OpenXava to visualize collections 

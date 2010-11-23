@@ -57,11 +57,12 @@ public class Style {
 		return "/xava/style/ui-lightness/jquery-ui.css";
 	}
 
-	
 	protected Collection<String> createAdditionalCssFiles() {
 		return Arrays.asList( 
 			"/xava/editors/calendar/skins/aqua/theme.css", 
 			"/xava/style/openxava.css",
+			"/xava/style/yahoo-treeview/fonts/fonts-min.css",
+			"/xava/style/yahoo-treeview/treeview.css",
 			getJQueryCss()
 		);
 	}

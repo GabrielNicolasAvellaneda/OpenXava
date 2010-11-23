@@ -25,7 +25,7 @@ import org.openxava.web.WebEditors;
 import org.openxava.web.style.Style;
 
 /**
- * Parse the tree view.
+ * Parse the tree view and produces a javascript snippet.
  * 
  * @author Federico Alcantara
  */
@@ -57,11 +57,24 @@ public class TreeViewParser {
 	private String collectionName;
 	private Map<String, TreeView> metaTreeViews;
 	private StringBuilder lastParse = null;
+	private StringBuilder indexList;
 	
+	/**
+	 * Default constructor
+	 */
 	public TreeViewParser(){
 	}
 	
 	
+	/**
+	 * Creates the MetaTreeView for later use
+	 * @param tab Tab object containing model, TableModel, etc.
+	 * @param viewObject Visible object
+	 * @param collectionName Name of the collection
+	 * @param style Display style
+	 * @param errors Errors message container
+	 * @throws Exception
+	 */
 	@SuppressWarnings("rawtypes")
 	public void createMetaTreeView(Tab tab, String viewObject, String collectionName, Style style, Messages errors)
 			throws Exception {
@@ -89,25 +102,31 @@ public class TreeViewParser {
 				}
 		
 				metaTreeView = new TreeView(
-						treePath, treeNodeClass, this.parentObject, collectionName);
+						treePath, treeNodeClass, this.parentObject, collectionName, tab.getRequest().getParameter("reader"));
 				getMetaTreeViews().put(tab.getModelName(), metaTreeView);
 				log.debug("Added metaTreeView for:" + tab.getModelName());
 			}
 		}
 	}
 
+	/**
+	 * Returns the saved metaTreeView
+	 * @param modelName name of the model
+	 * @return A MetaTreeView object. Should not be null.
+	 */
 	public TreeView getMetaTreeView(String modelName) {
 		return getMetaTreeViews().get(modelName);
 	}
 	
 	/**
-	 * Creates the treeview script
-	 * @param modelName
+	 * Creates the treeview script to be used in the jsp page
+	 * @param modelName name of the model to render
 	 * @return Script for creating the treeview.
 	 * @throws Exception
 	 */
-	public String parse(String modelName) throws Exception {
+	public String[] parse(String modelName) throws Exception {
 		lastParse = new StringBuilder("");
+		indexList = new StringBuilder("");
 		metaTreeView = getMetaTreeView(modelName);
 		if (metaTreeView != null) {
 			parseGroups();
@@ -123,11 +142,12 @@ public class TreeViewParser {
 					"',[");
 			lastParse.append("]);");
 		}
-		return lastParse.toString();
+		return new String[] {lastParse.toString(), indexList.toString()};
 	}
 	
 	/**
-	 * Creates the group dependency tree
+	 * Creates the group dependency tree. This ensure that the tree is always 
+	 * parseable, even is not well constructed.
 	 * @throws Exception
 	 */
 	private void parseGroups() throws Exception {
@@ -136,9 +156,20 @@ public class TreeViewParser {
 		groups = new TreeMap<String, List<TreeNodeHolder>>();
 		List<TreeNodeHolder> nodesHolder;
 		ITreeViewReader reader = metaTreeView.getTreeViewReaderImpl();
-		reader.initialize(tab);
+		String[] columnNames = new String[tab.getTableModel().getColumnCount()];
+
+		// Gather columnNames
+		for (int columnIndex = 0; columnIndex < tab.getTableModel().getColumnCount(); columnIndex++) {
+			MetaProperty metaProperty = tab.getMetaProperty(columnIndex);
+			columnNames[columnIndex] = metaProperty.getQualifiedName();
+		}
+		
+		// Initialize the reader
+		reader.initialize(tab.getCollectionView().getParent().getModelName(),
+				tab.getCollectionView().getParent().getKeyValues(), tab.getModelName(),  
+				tab.getAllKeys(), columnNames);
 		int totalSize = reader.getRowCount();
-		//allKeys = tab.getAllKeys();
+
 		for (int index = 0; index < totalSize; index++) {
 			treeNode = reader.getObjectAt(index);
 			nodePath = metaTreeView.getNodePath(treeNode);
@@ -150,7 +181,13 @@ public class TreeViewParser {
 			nodesHolder.add(new TreeNodeHolder(treeNode, index));
 		}
 	}
-		
+	
+	/**
+	 * This is the parse method applicable to each node.
+	 * @param path Path to be parsed
+	 * @return A stringbuilder with the script for the node and its children
+	 * @throws Exception
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private StringBuilder parseTreeNode(String path) throws Exception {
 		StringBuilder returnValue = new StringBuilder("");
@@ -181,10 +218,14 @@ public class TreeViewParser {
 				nodeHolder.rendered = true;
 				ITreeViewReader reader = metaTreeView.getTreeViewReaderImpl();
 				int index = nodeHolder.index;
+				if (indexList.length() > 0) {
+					indexList.append(",");
+				}
+				indexList.append(index);
 				HttpServletRequest request = tab.getRequest();
 				treeNode = nodeHolder.treeNode;
 				html = new StringBuilder("");
-				if (reader.getColumnCount() > 1) {
+				if (tab.getTableModel().getColumnCount() > 1) {
 					html.append("<table class=\"");
 					html.append(style.getList());
 					html.append("\" width=\"100%\" ");
@@ -194,7 +235,7 @@ public class TreeViewParser {
 					html.append("\" title=\"");
 					html.append(tooltip);
 					html.append("\"> <tr>");
-					for (int c=0; c<reader.getColumnCount(); c++) {
+					for (int c = 0; c < tab.getTableModel().getColumnCount(); c++) {
 						MetaProperty p = tab.getMetaProperty(c);
 						String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
 						String cellStyle = align + style.getListCellStyle();
@@ -215,7 +256,7 @@ public class TreeViewParser {
 					}
 					html.append("</tr></table>");
 				} else {
-					if (reader.getColumnCount() == 1) {
+					if (tab.getTableModel().getColumnCount() == 1) {
 						MetaProperty p = tab.getMetaProperty(0);
 						String fvalue = null;
 						if (p.hasValidValues()) {
@@ -257,6 +298,11 @@ public class TreeViewParser {
 	}
 
 
+	/**
+	 * Returns the metaTreeviews Map that stores the already
+	 * processed Metatreeview.
+	 * @return A map, never null
+	 */
 	public Map<String, TreeView> getMetaTreeViews() {
 		if (metaTreeViews == null) {
 			metaTreeViews = new HashMap<String, TreeView>();

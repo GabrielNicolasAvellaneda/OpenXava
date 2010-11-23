@@ -167,6 +167,7 @@
 	</editor>
 
 	<editor name="TreeView" url="treeViewEditor.jsp">
+		<property name="reader" value="org.openxava.web.editors.TreeViewReaderImpl" />
 	</editor>
 	
 	<!-- Tested with Liferay 5.2 -->
