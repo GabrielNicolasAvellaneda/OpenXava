@@ -150,6 +150,7 @@ public class TreeViewParser {
 	 * parseable, even is not well constructed.
 	 * @throws Exception
 	 */
+	@SuppressWarnings("rawtypes")
 	private void parseGroups() throws Exception {
 		Object treeNode;
 		String nodePath;
@@ -164,11 +165,13 @@ public class TreeViewParser {
 			columnNames[columnIndex] = metaProperty.getQualifiedName();
 		}
 		
+		Map[] allKeys = tab.getAllKeys();
+		
 		// Initialize the reader
 		reader.initialize(tab.getCollectionView().getParent().getModelName(),
 				tab.getCollectionView().getParent().getKeyValues(), tab.getModelName(),  
-				tab.getAllKeys(), columnNames);
-		int totalSize = reader.getRowCount();
+				allKeys, columnNames);
+		int totalSize = allKeys.length;
 
 		for (int index = 0; index < totalSize; index++) {
 			treeNode = reader.getObjectAt(index);
