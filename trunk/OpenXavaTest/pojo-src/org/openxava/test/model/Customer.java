@@ -143,7 +143,7 @@ public class Customer implements IWithName {
 	@Stereotype("EMAIL") @DisplaySize(30)
 	private String email;
 	
-	@Stereotype("WEBURL") 
+	@Stereotype("WEBURL") @Column(length=100)  
 	private String website;
 		
 	@Stereotype("MEMO") @Column(length=400)	

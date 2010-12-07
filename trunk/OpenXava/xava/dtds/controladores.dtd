@@ -26,6 +26,7 @@
  al-iniciar (true|false) "false"
  en-cada-peticion (true|false) "false"
  antes-de-cada-peticion (true|false) "false"
+ despues-de-cada-peticion (true|false) "false"
  por-defecto (nunca|casi-nunca|si-posible|casi-siempre|siempre) "casi-nunca"
  cuesta (true|false) "false" 
  confirmar (true|false) "false"

@@ -620,11 +620,14 @@
 		<property name="servlets.xml" value=""/>
 		<loadfile property="filters.xml" srcfile="../${project}/web/WEB-INF/filters.xml" failonerror="false"/>
 		<property name="filters.xml" value=""/>
+		<loadfile property="listeners.xml" srcfile="../${project}/web/WEB-INF/listeners.xml" failonerror="false"/> 
+		<property name="listeners.xml" value=""/> 		
   		<copy file="../OpenXava/web/WEB-INF/web.xml" 
   			todir="../${project}/web/WEB-INF" overwrite="true">
     		<filterset>
     			<filter token="servlets.xml" value="${servlets.xml}"/>
     			<filter token="filters.xml" value="${filters.xml}"/>
+    			<filter token="listeners.xml" value="${listeners.xml}"/> 
     		</filterset>
   		</copy>				
 	</target>

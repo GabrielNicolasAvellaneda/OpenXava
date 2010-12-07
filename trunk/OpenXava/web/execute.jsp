@@ -81,4 +81,6 @@ if (hasProcessRequest) {
 		}
 	}
 }
+//after-each-request
+manager.executeAfterEachRequestActions(request, errors, messages);
 %>

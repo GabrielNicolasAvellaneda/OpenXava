@@ -52,7 +52,7 @@
 		<view name="Ordinary"/>
 		<controller name="TypicalNotResetOnSave"/>
 		<controller name="Color"/> 
-	</module>
+	</module>		<module name="ColorinColorado">		<model name="Color"/>		<view name="Ordinary"/>		<controller name="ColorinColorado"/>		<mode-controller name="DetailOnly"/> 	</module>	
 	
 	<module name="Color2">
 		<model name="Color"/>				<view name="Ordinary2"/>		<tab name="Color2"/>

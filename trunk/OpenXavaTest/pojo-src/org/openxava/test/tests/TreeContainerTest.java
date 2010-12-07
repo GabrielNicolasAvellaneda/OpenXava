@@ -6,8 +6,8 @@ package org.openxava.test.tests;
  * @author Federico Alcántara 
  */
 
-public class TreeViewDoubleEditorsTest extends TreeViewTestBase {
-	public TreeViewDoubleEditorsTest(String testName) {
+public class TreeContainerTest extends TreeViewTestBase {
+	public TreeContainerTest(String testName) {
 		super(testName, "TreeContainer");		
 	}
 

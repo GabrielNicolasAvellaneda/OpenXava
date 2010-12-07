@@ -162,6 +162,24 @@ public class MetaController extends MetaElement {
 		}
 		return result;
 	}
+	public Collection getMetaActionsAfterEachRequest() throws XavaException { 
+		Collection result = new ArrayList();
+
+		Iterator itParents = getParents().iterator();
+		while (itParents.hasNext()) {
+			MetaController parent = (MetaController) itParents.next();
+			result.addAll(parent.getMetaActionsAfterEachRequest());
+		}
+
+		Iterator it = metaActions.iterator();		
+		while (it.hasNext()) {
+			MetaAction metaAction = (MetaAction) it.next();			
+			if (metaAction.isAfterEachRequest()) {
+				result.add(metaAction);
+			}
+		}
+		return result;
+	}
 	
 	public Collection getMetaActionsBeforeEachRequest() throws XavaException { 
 		Collection result = new ArrayList();

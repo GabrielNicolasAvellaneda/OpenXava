@@ -423,8 +423,7 @@
 			class="org.openxava.test.actions.VerifyEditablesProductAction"/>			
 		
 	</controller>
-			
-					
+						 				
 	<controller name="Warehouse">
 		<extends controller="Typical"/>
 		<extends controller="HidingActions"/> 
@@ -507,7 +506,8 @@
 			takes-long="true">
 			<set property="format" value="excel"/>
 			<set property="goBackOnFinish" value="false"/>
-		</action>								
+		</action>
+										
 	</controller>		
 
 	<controller name="StateHibernate"> 
@@ -772,6 +772,19 @@
 	
 	<controller name="Color">
 		<action name="seeMessage" class="org.openxava.test.actions.SeeMessageAction" mode="detail"/>
+	</controller>
+	
+	<controller name="ColorinColorado">  		
+		<action name="fillName" 
+			class="org.openxava.test.actions.AddToNameAction">
+			<set property="stringToAdd" value="Colorin "/>
+		</action>
+		 
+		<action name="colorado" after-each-request="true" hidden="true"
+			class="org.openxava.test.actions.AddToNameAction">
+			<set property="stringToAdd" value="Colorado"/>
+		</action>
+								
 	</controller>
 	
 	<controller name="Address">	
