@@ -1798,7 +1798,7 @@ public class ModuleTestBase extends TestCase {
 	 * Current HtmlForm (of HtmlUnit). <p>
 	 * 
 	 * This allow you to access directly to html form elements, but
-	 * <b>it is not very advisable</i> because this will cause dependency
+	 * <b>it is not very advisable</b> because this will cause dependency
 	 * to HTML and HtmlUnit so it will be difficult migrate to another 
 	 * presentation technology.
 	 */	

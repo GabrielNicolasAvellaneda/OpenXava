@@ -46,10 +46,11 @@ public class ModuleManager implements java.io.Serializable {
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 
 		
-	private String user; 
+	private String user;	
 	private Collection metaActionsOnInit;
 	private Collection metaActionsOnEachRequest;
-	private Collection metaActionsBeforeEachRequest; 
+	private Collection metaActionsBeforeEachRequest;
+	private Collection metaActionsAfterEachRequest; 
 	private boolean moduleInitiated;	
 	private String defaultActionQualifiedName;
 	private MetaModule metaModule;
@@ -1067,17 +1068,30 @@ public class ModuleManager implements java.io.Serializable {
 	}
 	
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
+		executeActions(request, errors, messages, getMetaActionsBeforeEachRequest()); 
+	}
+		
+	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
+		executeActions(request, errors, messages, getMetaActionsOnEachRequest());
+	}
+		
+	public void executeAfterEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
+		executeActions(request, errors, messages, getMetaActionsAfterEachRequest());
+	}
+	
+	private void executeActions(HttpServletRequest request, Messages errors, Messages messages, Collection metaActions) {
 		if (!Is.emptyString(getNextModule())) return; // Another module is executing now
 		boolean formUpload = isFormUpload(); 
-		Iterator it = getMetaActionsBeforeEachRequest().iterator();
+		Iterator it = metaActions.iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();
 			if (Is.emptyString(a.getMode()) || a.getMode().equals(getModeName())) { 
 				executeAction(a, errors, messages, request); 
 			}
 		}
-		setFormUpload(formUpload); 
+		setFormUpload(formUpload);
 	}
+	
 	
 	private void executeInitAction(HttpServletRequest request, Messages errors, Messages messages) {
 		if (!Is.emptyString(getNextModule())) return; // Another module is executing now
@@ -1088,18 +1102,6 @@ public class ModuleManager implements java.io.Serializable {
 		}		
 	}
 	
-	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
-		if (!Is.emptyString(getNextModule())) return; // Another module is executing now
-		boolean formUpload = isFormUpload(); 
-		Iterator it = getMetaActionsOnEachRequest().iterator();
-		while (it.hasNext()) {
-			MetaAction a = (MetaAction) it.next();			
-			if (Is.emptyString(a.getMode()) || a.getMode().equals(getModeName())) { 
-				executeAction(a, errors, messages, request);
-			}
-		}	
-		setFormUpload(formUpload); 
-	}
 	
 	private Collection getMetaActionsOnEachRequest() {		
 		if (metaActionsOnEachRequest == null) {
@@ -1135,7 +1137,26 @@ public class ModuleManager implements java.io.Serializable {
 			}	
 		}
 		return metaActionsBeforeEachRequest;		
-	}	
+	}
+	
+	private Collection getMetaActionsAfterEachRequest() { 
+		if (metaActionsAfterEachRequest == null) {
+			try {			
+				Iterator it = getMetaControllers().iterator();
+				metaActionsAfterEachRequest = new ArrayList();
+				while (it.hasNext()) {
+					MetaController contr = (MetaController) it.next();		
+					metaActionsAfterEachRequest.addAll(contr.getMetaActionsAfterEachRequest());
+				} 										
+			}
+			catch (Exception ex) {
+				log.error(XavaResources.getString("controller_after_each_request_action_error"), ex); 
+				return Collections.EMPTY_LIST; 
+			}	
+		}
+		return metaActionsAfterEachRequest;		
+	}
+
 	
 	public String getEnctype() { 		
 		return isFormUpload()?"ENCTYPE='multipart/form-data'":"";		

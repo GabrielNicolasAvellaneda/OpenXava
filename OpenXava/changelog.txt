@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- New after-each-request option for <action/> in controllers.xml. 
+- IForwardAction allows to forward to javascript code, using javascript: as prefix.
+- Fix: TreeView editor does not work in Liferay 6.
+- New listeners.xml in WEB-INF for defining listeners.
+
 OpenXava 4.0 (2010-11-22)
 -------------------------
 Main new features over 3.1.4 for developers:

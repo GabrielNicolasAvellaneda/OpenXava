@@ -10,7 +10,7 @@ class Book extends Identifiable {
 	
 	String titulo
 	
-	@ManyToOne
+	@ManyToOne 
 	Author author
 	
 	@Stereotype("MEMO")

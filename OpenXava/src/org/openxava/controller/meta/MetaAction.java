@@ -43,6 +43,7 @@ public class MetaAction extends MetaElement implements Cloneable {
 	private boolean confirm;
 	private boolean onEachRequest;
 	private boolean beforeEachRequest;
+	private boolean afterEachRequest; 
 	private boolean inEachRow; 
 	
 	public MetaAction() {
@@ -168,7 +169,7 @@ public class MetaAction extends MetaElement implements Cloneable {
 	public boolean hasImage() {
 		return !Is.emptyString(this.image);
 	}
-	
+
 	public void _addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {
 			metaSets = new ArrayList();
@@ -328,5 +329,14 @@ public class MetaAction extends MetaElement implements Cloneable {
 	public String toString() {
 		return getQualifiedName();
 	}
+	
+	public boolean isAfterEachRequest() {
+		return afterEachRequest;
+	}
+
+	public void setAfterEachRequest(boolean afterEachRequest) {
+		this.afterEachRequest = afterEachRequest;
+	}
+	
 	
 }

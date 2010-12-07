@@ -104,9 +104,19 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValue("website", "");
 		execute("WebURL.go", "property=website,viewObject=xava_view_section0");
 		assertError("Empty URL, so you cannot go to it");
-		setValue("website", "http://www.openxava.org/");
+		setValue("website", "http://www.example.com/");
+		execute("WebURL.go", "property=website,viewObject=xava_view_section0");		
+		assertTrue(getHtml().indexOf("You have reached this web page by typing") >= 0);
+	}
+	
+	public void testForwardToJavaScript() throws Exception { 
+		execute("Mode.detailAndFirst");
+		assertNoMessages();
+		assertValue("name", "Javi");
+		setValue("website", "javascript:openxava.executeAction('OpenXavaTest', 'CustomerWithSection', '', false, 'CRUD.new')");
 		execute("WebURL.go", "property=website,viewObject=xava_view_section0");
-		assertTrue(getHtml().indexOf("OpenXava is a productive way") >= 0);
+		assertMessage("OnChangeVoidAction executed");
+		assertValue("name", "");
 	}
 	
 	// To fix a concrete bug

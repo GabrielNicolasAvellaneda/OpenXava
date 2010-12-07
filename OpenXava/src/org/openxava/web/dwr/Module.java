@@ -67,10 +67,9 @@ public class Module extends DWRBase {
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 			if (!Is.emptyString(forwardURI)) {
 				memorizeLastMessages();
-				if (forwardURI.startsWith("http://") || forwardURI.startsWith("https://")) {
+				if (forwardURI.startsWith("http://") || forwardURI.startsWith("https://") || forwardURI.startsWith("javascript:")) {
 					result.setForwardURL(forwardURI);
-				}
-				else {
+				}else{
 					result.setForwardURL(request.getScheme() + "://" + 
 						request.getServerName() + ":" + request.getServerPort() + 
 						request.getContextPath() + forwardURI);
