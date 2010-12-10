@@ -13,7 +13,7 @@ class OrphanageTest extends ModuleTestBase {
 		super(testName, "Orphanage")		
 	}
 	
-	void testOrphanRemovalAsEmbedded() throws Exception {
+	void testOrphanRemovalAsEmbedded() {
 		assertEquals 2, Orphan.count()
 		execute "Mode.detailAndFirst"
 		assertCollectionRowCount "orphans", 2
@@ -26,6 +26,15 @@ class OrphanageTest extends ModuleTestBase {
 		assertCollectionRowCount "orphans", 2
 		assertEquals 2, Orphan.count()
 		assertMessage "Orphan deleted from database"
+	}
+	
+	void testXavaEditorInCustomView() {
+		execute "Mode.detailAndFirst"
+		execute "Orphanage.proposeName"
+		assertValue "name", "EL INTERNADO"
+		setValue "name", "THE ORPHANAGE VII"
+		execute "ProposeName.propose"
+		assertMessage "I think that THE ORPHANAGE VII is already a good name"
 	}
 	
 }

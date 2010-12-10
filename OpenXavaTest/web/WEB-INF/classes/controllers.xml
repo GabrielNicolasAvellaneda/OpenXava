@@ -877,6 +877,19 @@
 			class="org.openxava.test.actions.ChangeYearConditionAction" >
 			<set property="year" value="2004"/>
 		</action>
+	</controller>
+	
+	<controller name="Orphanage">
+		<extends controller="Typical"/>
+		<action name="proposeName" mode="detail"
+			class="org.openxava.test.actions.GoProposeNameAction"/>
+	</controller>
+	
+	<controller name="ProposeName">
+		<action name="propose" mode="detail"
+			class="org.openxava.test.actions.ProposeNameAction"/>
 	</controller>	
+		
+		
 	
 </controllers>

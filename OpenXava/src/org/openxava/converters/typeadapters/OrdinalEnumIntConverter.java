@@ -16,6 +16,7 @@ public class OrdinalEnumIntConverter implements IConverter {
 	}
 
 	public Object toDB(Object o) throws ConversionException {
+		if (o == null) return null; 
 		return ((Enum) o).ordinal();
 	}
 

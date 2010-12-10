@@ -845,8 +845,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	/**
 	 * Convert the argument in a object of type valid
 	 * for assign to this property. <p>
-	 * Convierte el argumento enviado en un objeto de tipo v�lido
-	 * para asignar a esta propiedad. <p>
 	 * 
 	 * If argument is primitive return the match wrapper.
 	 * 

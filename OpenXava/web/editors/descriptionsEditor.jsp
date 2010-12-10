@@ -9,6 +9,8 @@
 <%@ page import="org.openxava.formatters.IFormatter" %>
 <%@ page import="org.openxava.filters.IFilter" %>
 <%@ page import="org.openxava.filters.IRequestFilter" %>
+<%@ page import="org.openxava.mapping.PropertyMapping"%>
+<%@ page import="org.openxava.converters.IConverter"%>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -133,6 +135,15 @@ if (parameterValuesStereotypes != null || parameterValuesProperties != null) {
 			v = view.getRoot();
 		}
 		Object parameterValue = parameterValueKey==null?null:v.getValue(parameterValueKey);
+		
+		PropertyMapping mapping = v.getMetaProperty(parameterValueKey).getMapping();
+		if (mapping != null) {
+			IConverter converter = mapping.getConverter();
+			if (converter != null) {
+				parameterValue = converter.toDB(parameterValue);
+			}
+		}
+
 		p.add(parameterValue);
 	}
 	calculator.setParameters(p, filter);
