@@ -219,7 +219,7 @@ public class ModuleManager implements java.io.Serializable {
 	
 	public boolean hasProcessRequest(HttpServletRequest request) {
 		return isFormUpload() || // May be that in this way upload forms does not work well in multimodule 			 
-			actionOfThisModule(request);				
+			actionOfThisModule(request); 
 	}
 
 	private boolean actionOfThisModule(HttpServletRequest request) {
@@ -1026,14 +1026,26 @@ public class ModuleManager implements java.io.Serializable {
 		return defaultActionQualifiedName;
 	}
 	
-	public boolean isXavaView() throws XavaException{ 
+	public boolean isXavaView(HttpServletRequest request) throws XavaException{  
 		// For that a upload form does not delete the view data.
 		// It's a ad hoc solution. It can be improved 
 		if (isFormUpload()) return false;
 		
-		return "xava/detail".equals(getViewName()) ||
-				(getViewName().equals(defaultView)); // Because a custom JSP page can use xava_view too
-		
+		if ("xava/list".equals(getViewName())) return false;
+		if ("xava/detail".equals(getViewName()) ||				
+				(getViewName().equals(defaultView))) return true;	// Because a custom JSP page can use xava_view too	
+
+		return hasXavaEditor(request);
+	}
+	
+	private boolean hasXavaEditor(HttpServletRequest request) {
+		for (Object oparameter: request.getParameterMap().keySet()) {
+			String parameter = (String) oparameter;
+			if (parameter.endsWith("_EDITABLE_")) { // A dirty trick
+				return true;
+			}
+		}
+		return false;
 	}
 	
 

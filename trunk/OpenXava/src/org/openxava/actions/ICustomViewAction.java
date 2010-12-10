@@ -13,7 +13,7 @@ public interface ICustomViewAction extends IAction {
 	/**
 	 * The id of a view made directly by developer (not OpenXava view). <p>
 	 * 
-	 * In web versión is the name of jsp page (without .jsp extension).
+	 * In web version is the name of jsp page (without .jsp extension).
 	 * This is for inserting jsp (o swing) hand made view in our OpenXava application.
 	 */
 	String getCustomView() throws Exception;	

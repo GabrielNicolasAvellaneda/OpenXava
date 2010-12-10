@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: <xava:editor> doesn't work in a custom view when it is not the main module view.
+- Fix: Converter was not applied to descriptions list parameters.
+- Fix: Depends condition for Enum from a descriptions list is not working. 
 - New after-each-request option for <action/> in controllers.xml. 
 - IForwardAction allows to forward to javascript code, using javascript: as prefix.
 - Fix: TreeView editor does not work in Liferay 6.
