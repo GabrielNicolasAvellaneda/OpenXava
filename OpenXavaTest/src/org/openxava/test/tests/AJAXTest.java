@@ -125,7 +125,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertLoadedParts("core, ");
 		execute("Navigation.next");
-		assertLoadedParts("editor_type, errors, " +
+		assertLoadedParts("editor_type, errors, " + 
 				"editor_number, " +
 				"editor_alternateSeller.number, " +
 				"editor_address.city, " +
@@ -329,7 +329,7 @@ public class AJAXTest extends ModuleTestBase {
 	public void testDescriptionsList() throws Exception {
 		changeModule("Customer");
 		execute("Mode.detailAndFirst");
-		assertValue("number", "1");
+		assertValue("number", "1"); 
 		assertDescriptionValue("address.state.id", "New York");
 		
 		execute("Navigation.next");

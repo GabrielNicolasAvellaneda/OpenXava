@@ -477,7 +477,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 				select.append(referenceMapping.getReferencedTable());
 				// select.append(" as "); // it does not work in Oracle
 				select.append(" T_");				
-				String reference = referenceMapping.getReference();
+				String reference = referenceMapping.getReference();				
 				int idx = reference.lastIndexOf('_'); 
 				if (idx >= 0) {
 					// In the case of reference to entity in aggregate only we will take the last reference name

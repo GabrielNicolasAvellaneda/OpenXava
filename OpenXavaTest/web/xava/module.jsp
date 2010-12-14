@@ -156,7 +156,7 @@
 	<%
 		File jsEditorsFolder = new File(realPath + "/xava/editors/js");		
 		String[] jsEditors = jsEditorsFolder.list();
-		Arrays.sort(jsEditors); // tmp
+		Arrays.sort(jsEditors);
 		for (int i = 0; i < jsEditors.length; i++) {
 	%>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/js/<%=jsEditors[i]%>?ox=<%=version%>"></script>

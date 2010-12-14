@@ -36,8 +36,8 @@ DescriptionsCalculator calculator = (DescriptionsCalculator) request.getSession(
 
 IFilter filter = null;
 String filterClass=request.getParameter("filter");
-if (filterClass==null) filterClass=request.getParameter("filtro");
-if (filterClass != null) {
+if (Is.emptyString(filterClass)) filterClass=request.getParameter("filtro"); 
+if (!Is.emptyString(filterClass)) {
 	String filterKey = propertyKey + ".filter";
 	filter = (IFilter) request.getSession().getAttribute(filterKey);
 	if (filter == null) {

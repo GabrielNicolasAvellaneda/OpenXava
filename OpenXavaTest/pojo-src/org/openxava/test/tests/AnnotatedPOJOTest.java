@@ -7,7 +7,6 @@ import javax.persistence.*;
 import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
-import org.openxava.tests.*;
 import org.openxava.util.*;
 
 import junit.framework.*;
