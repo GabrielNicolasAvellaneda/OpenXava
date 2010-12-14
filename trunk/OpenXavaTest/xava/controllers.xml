@@ -889,7 +889,5 @@
 		<action name="propose" mode="detail"
 			class="org.openxava.test.actions.ProposeNameAction"/>
 	</controller>	
-		
-		
 	
 </controllers>

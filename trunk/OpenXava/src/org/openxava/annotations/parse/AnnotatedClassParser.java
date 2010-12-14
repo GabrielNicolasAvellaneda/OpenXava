@@ -196,6 +196,9 @@ public class AnnotatedClassParser {
 	private static Map<String, MetaComponent> parsingComponents; 
 		
 	public MetaComponent parse(String name) throws Exception {
+		if (name.contains("_")) { 
+			log.warn(XavaResources.getString("underscore_not_allowed_for_class_name", name));
+		}
 		MetaComponent component = new MetaComponent();
 		component.setName(name);
 		putParsingComponent(component);
@@ -1850,7 +1853,11 @@ public class AnnotatedClassParser {
 
 
 	private void processAnnotations(MetaReference ref, AnnotatedElement element) throws XavaException {
-		if (element == null) return;		
+		if (element == null) return;
+		
+		if (ref.getName().contains("_")) { 
+			log.warn(XavaResources.getString("underscore_not_allowed_for_reference_name", ref.getName()));
+		}
 
 		// key
 		if (element.isAnnotationPresent(Id.class)) {

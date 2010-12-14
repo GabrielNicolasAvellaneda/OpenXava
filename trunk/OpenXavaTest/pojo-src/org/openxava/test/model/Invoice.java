@@ -203,7 +203,7 @@ public class Invoice {
 		if (year < 2004) return new BigDecimal("200.00");
 		return new BigDecimal("400.00");
 	}
-		
+	
 	@Stereotype("MONEY")
 	public BigDecimal getAmountsSum() {		
 		BigDecimal result = BigDecimal.ZERO;		

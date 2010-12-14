@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Character & not supported in condition of descriptions list.
 - Fix: <xava:editor> doesn't work in a custom view when it is not the main module view.
 - Fix: Converter was not applied to descriptions list parameters.
 - Fix: Depends condition for Enum from a descriptions list is not working. 

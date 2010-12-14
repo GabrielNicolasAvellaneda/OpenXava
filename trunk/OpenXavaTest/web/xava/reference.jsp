@@ -119,8 +119,14 @@ String script = throwChanged?
 			request.getParameter("application") + "\", \"" + 
 			request.getParameter("module") + "\", \"" +			
 			propertyKey + "\")'":"";
+%>
 
-String editorURL;
+<% if (!composite) { %>
+<span id="<xava:id name='<%="reference_editor_" + view.getPropertyPrefix() + ref.getName()%>'/>">
+<% } %> 
+<input type="hidden" name="<%=editableKey%>" value="<%=editable%>"/>
+
+<%
 if (descriptionsList) {
 	String descriptionProperty = view.getDescriptionPropertyInDescriptionsList(ref);
 	String descriptionProperties = view.getDescriptionPropertiesInDescriptionsList(ref);
@@ -129,9 +135,11 @@ if (descriptionsList) {
 	boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
 	String order = view.getOrderInDescriptionsList(ref); 
 	org.openxava.tab.meta.MetaTab metaTab = ref.getMetaModelReferenced().getMetaComponent().getMetaTab();
-	String filterArg = "";
+	// tmp String filterArg = "";
+	String filter = "";
 	if (metaTab.hasFilter()) {
-		filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
+		// tmp filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
+		filter = metaTab.getMetaFilter().getClassName(); // tmp
 	}
 	if (metaTab.hasBaseCondition()) {
 		if (org.openxava.util.Is.emptyString(condition)) {
@@ -141,34 +149,37 @@ if (descriptionsList) {
 			condition = metaTab.getBaseCondition() + " AND " + condition;
 		}
 	}
-	editorURL = "editors/descriptionsEditor.jsp" // in this way because websphere 6 has problems with jsp:param
-		+ "?script=" + script
-		+ "&propertyKey=" + propertyKey	
-		+ "&editable=" + editable
-		+ "&model=" + ref.getReferencedModelName()
-		+ "&keyProperty=" + keyProperty
-		+ "&keyProperties=" + keyProperties
-		+ "&descriptionProperty=" + descriptionProperty
-		+ "&descriptionProperties=" + descriptionProperties
-		+ "&parameterValuesProperties=" + parameterValuesProperties
-		+ "&condition=" + condition
-		+ "&orderByKey=" + orderByKey
-		+ "&order=" + order
-		+ filterArg;
+%>
+	<jsp:include page="editors/descriptionsEditor.jsp">
+		<jsp:param name="script" value="<%=script%>"/>
+		<jsp:param name="propertyKey" value="<%=propertyKey%>"/>
+		<jsp:param name="editable" value="<%=editable%>"/>
+		<jsp:param name="model" value="<%=ref.getReferencedModelName()%>"/>
+		<jsp:param name="keyProperty" value="<%=keyProperty%>"/>
+		<jsp:param name="keyProperties" value="<%=keyProperties%>"/>
+		<jsp:param name="descriptionProperty" value="<%=descriptionProperty%>"/>
+		<jsp:param name="descriptionProperties" value="<%=descriptionProperties%>"/>
+		<jsp:param name="parameterValuesProperties" value="<%=parameterValuesProperties%>"/>
+		<jsp:param name="condition" value="<%=condition%>"/>
+		<jsp:param name="orderByKey" value="<%=orderByKey%>"/>
+		<jsp:param name="order" value="<%=order%>"/>
+		<jsp:param name="filter" value="<%=filter%>"/>
+	</jsp:include>	
+<%
 }
 else {
-	editorURL = "editors/" + WebEditors.getMetaEditorFor(ref, view.getViewName()).getUrl()
+	String editorURL = "editors/" + WebEditors.getMetaEditorFor(ref, view.getViewName()).getUrl()
 		+ "?script=" + script
 		+ "&propertyKey=" + propertyKey	
 		+ "&editable=" + editable;
+%>
+	<jsp:include page="<%=editorURL%>" />
+<%	
 }
 %>
-<% if (!composite) { %>
-<span id="<xava:id name='<%="reference_editor_" + view.getPropertyPrefix() + ref.getName()%>'/>">
-<% } %> 
-<input type="hidden" name="<%=editableKey%>" value="<%=editable%>"/>
 
-<jsp:include page="<%=editorURL%>" />
+
+
 
 <%
 String keyPropertyForAction = Ids.undecorate(propertyKey); 
