@@ -3,8 +3,6 @@ package org.openxava.mapping;
 import java.sql.*;
 import java.util.*;
 
-import javax.portlet.*;
-
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
@@ -426,14 +424,16 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	/**
-	 * Change the properties inside ${ } by the database qualified(schema + table) columns. <p>
+	 * Change the properties inside ${ } by the database qualified(schema + table) columns.
+	 * Also if the property inside ${ } is a model name it changes by the table name <p>
+	 * 
 	 * For example, it would change:
 	 * <pre>
-	 * select ${number}, ${name}
+	 * select ${number}, ${name} from ${Tercero}
 	 * </pre>
 	 * by
 	 * <pre>
-	 * select G4GENBD.GENTGER.TGRCOD, G4GENBD.GENTGER.TGRDEN
+	 * select G4GENBD.GENTGER.TGRCOD, G4GENBD.GENTGER.TGRDEN from G4GENBD.GENTGER
 	 * </pre>
 	 */
 	public String changePropertiesByColumns(String source)
@@ -443,15 +443,17 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 	/**
 	 * Change the properties inside ${ } by the database columns without table
-	 * and schema as prefix. <p>
+	 * and schema as prefix. Also if the property inside ${ } is a model name it changes
+	 * by the table name.<p>
 	 * 
 	 * For example, it would change:
 	 * <pre>
-	 * select ${number}, ${name}
+	 * select ${number}, ${name} from ${Tercero}
 	 * </pre>
 	 * by
 	 * <pre>
 	 * select TGRCOD, TGRDEN
+	 * from G4GENBD.GENTGER
 	 * </pre>
 	 */
 	public String changePropertiesByNotQualifiedColumns(String source)
@@ -470,8 +472,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 				break;
 			String property = r.substring(i + 2, f);
 			String column = "0"; // thus it remained if it is calculated
-			if (!getMetaModel().isCalculated(property)) {				
-				column = qualified?getQualifiedColumn(property):getColumn(property);				
+			if (!getMetaModel().isCalculated(property)) {
+				column = isModel(property)?
+					getTable(property):
+					qualified?getQualifiedColumn(property):getColumn(property);				
 			}
 			r.replace(i, f + 1, column);
 			i = r.toString().indexOf("${");
@@ -479,7 +483,23 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return r.toString();
 	}
 	
-
+	/**
+	 * @since v4_1
+	 */
+	private String getTable(String name){
+		return MetaComponent.get(name).getEntityMapping().getTable();
+	}
+	
+	/**
+	 * If 'name' starts with an upper case it is a Model else it is a property
+	 * @since v4_1
+	 */
+	public static boolean isModel(String name){
+		String firstLetter = name.substring(0, 1);
+		firstLetter = firstLetter.replaceAll("[A-ZÑ]", "");
+		return Is.empty(firstLetter);
+	}
+	
 	public String changePropertiesByCMPAttributes(String source)
 		throws XavaException {
 		StringBuffer r = new StringBuffer(source);

@@ -254,8 +254,8 @@ public class WebEditors {
 				new ArrayList<String>():
 				Strings.toCollection(metaDescriptionsList.getNotForTabs());
 			
-			if (notForTabs.contains(tabName)) continue;
-
+			if (notForTabs.contains(tabName) || (Is.empty(tabName) && notForTabs.contains("DEFAULT"))) continue;
+			
 			String descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertiesNames();
 			if (Is.empty(descriptionPropertiesNames)) descriptionPropertiesNames = metaDescriptionsList.getDescriptionPropertyName();
 			if (descriptionPropertiesNames.contains(name)) {

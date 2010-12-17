@@ -839,6 +839,17 @@ public class ModuleTestBase extends TestCase {
 		setCollectionCondition("conditionValue", values);
 	}
 
+	/**
+	 * @since v4_1
+	 * 
+	 * It use setConditionValues(String ... values) does not work in groovy test
+	 */
+	protected void setConditionValues(List values) throws Exception {
+		String [] avalues = new String[values.size()];
+		values.toArray(avalues);
+		setCollectionCondition("conditionValue", avalues);
+	}
+	
 	private void setCollectionCondition(String id, String[] values) throws Exception { 
 		for (int i=0; i<values.length; i++) {
 			try {				
