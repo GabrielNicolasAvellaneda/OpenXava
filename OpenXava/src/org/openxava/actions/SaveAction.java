@@ -20,7 +20,7 @@ public class SaveAction extends ViewBaseAction {
     
 	public void execute() throws Exception {		
 		try {
-			Map values = null;
+			Map values = null;			
 			if (getView().isKeyEditable()) {
 				// Create			
 				if (isResetAfter()) {					

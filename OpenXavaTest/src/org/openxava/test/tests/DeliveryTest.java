@@ -988,7 +988,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("distance", usesAnnotatedPOJO()?"0":"1"); // Local
 		assertValue("distance", usesAnnotatedPOJO()?"0":"1");
 		assertValue("vehicle", "MOTORBIKE");
-		assertValue("transportMode", "STREET/ROAD");
+		assertValue("transportMode", "STREET/ROAD"); 
 		assertValue("driverType", "ANY");
 		setValue("distance", usesAnnotatedPOJO()?"1":"2"); // National
 		assertValue("distance", usesAnnotatedPOJO()?"1":"2");

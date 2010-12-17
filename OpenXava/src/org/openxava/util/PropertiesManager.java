@@ -56,7 +56,7 @@ public class PropertiesManager implements java.io.Serializable {
 	 * @param propertyName  Property name to obtain its value, 
 	 * 		can be qualified (that is: 'customer.address.street' for example)
 	 * @return Value of the property
-	 * @exception InvocationTargetException  Excepci�n originated by the original access method
+	 * @exception InvocationTargetException  Exception originated by the original access method
 	 * @exception PropertiesManagerException  Some unexpected problem
 	 */
 	public Object executeGet(String propertyName)

@@ -1,6 +1,7 @@
 package org.openxava.test.model;
 
 import java.math.*;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -27,7 +28,8 @@ import org.openxava.test.validators.*;
 	"subfamily;" +
 	"warehouse, zoneOne;" +
 	"unitPrice, unitPriceInPesetas;" +
-	"unitPriceWithTax" 
+	"unitPriceWithTax;" +
+	"productDetailsSupplierContactDetails"
 )
 public class Product5 {
 	
@@ -85,7 +87,10 @@ public class Product5 {
 	
 	// Only to show in view
 	@Transient @Stereotype("SUBFAMILY_DEPENDS_REFERENCE")
-	private int subfamilyNumber; 
+	private int subfamilyNumber;
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private Collection<ProductDetailsSupplierContactDetails> productDetailsSupplierContactDetails;
 	
 	@Depends("unitPrice") 
 	@Max(999999999999999999L) 	
@@ -192,6 +197,15 @@ public class Product5 {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public void setProductDetailsSupplierContactDetails(
+			Collection<ProductDetailsSupplierContactDetails> productDetailsSupplierContactDetails) {
+		this.productDetailsSupplierContactDetails = productDetailsSupplierContactDetails;
+	}
+
+	public Collection<ProductDetailsSupplierContactDetails> getProductDetailsSupplierContactDetails() {
+		return productDetailsSupplierContactDetails;
 	}
 	
 

@@ -1,9 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
-- In conditions if you put a model name inside ${ } will changed by table name: 'select ${name} from ${Tercero}' => 'select TGRDEN from G4GENBD.GENTGR' 
+- Fix: Fails on save list/collection preferences when the tab or collection name is too long.
+- Fix: Descriptions list of a reference with nested composite keys fails on save.
+- Fix: "List.filter" action present in bottom in detail only modules with before-each-request actions.
+- In conditions if you put a model name inside ${ } it is changed by table name. 
 - Fix: add 'setConditionValues(List values)' in ModuleTestBase because in groovy test class fails with 'setConditionValues(String ... values)'
-- Fix: @DescriptionsList notForTabs, it not run with 'DEFAULT'
+- Fix: @DescriptionsList notForTabs, it does not work with 'DEFAULT'.
 - Fix: Character & not supported in condition of descriptions list.
 - Fix: <xava:editor> doesn't work in a custom view when it is not the main module view.
 - Fix: Converter was not applied to descriptions list parameters.

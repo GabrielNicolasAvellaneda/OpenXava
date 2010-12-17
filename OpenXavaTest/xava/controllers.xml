@@ -449,6 +449,11 @@
 		
 	</controller>
 	
+	<controller name="WarehouseVoid">
+		<action name="doNothing" before-each-request="true" hidden="true"
+			class="org.openxava.test.actions.VoidAction"/>
+	</controller>
+	
 	<controller name="WarehouseSpecialNew">
 		<extends controller="Typical"/>
 		<action  name="new" 
