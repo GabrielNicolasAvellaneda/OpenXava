@@ -1019,7 +1019,7 @@ public class ModuleManager implements java.io.Serializable {
 				MetaAction a = MetaControllers.getMetaAction("List.filter");
 				if (a.getByDefault() > max) {
 					max = a.getByDefault();					
-					defaultActionQualifiedName = a.getQualifiedName();					
+					defaultActionQualifiedName = a.getQualifiedName();
 				}
 			}
 		}	
@@ -1080,7 +1080,10 @@ public class ModuleManager implements java.io.Serializable {
 	}
 	
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
-		executeActions(request, errors, messages, getMetaActionsBeforeEachRequest()); 
+		executeActions(request, errors, messages, getMetaActionsBeforeEachRequest());
+		if (!getMetaActionsBeforeEachRequest().isEmpty()) {
+			defaultActionQualifiedName = null;
+		}	
 	}
 		
 	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {

@@ -58,4 +58,28 @@ class Product5Test extends ModuleTestBase {
 		assertValidValues("subfamily.number", softwareValues);
 	}
 	
+	
+	void testCollectionWithLongNameStoresPreferences() { 
+		execute "CRUD.new"
+		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
+		execute "List.customize", "collection=productDetailsSupplierContactDetails"
+		execute "List.removeColumn", "columnIndex=1,collection=productDetailsSupplierContactDetails"
+		assertCollectionColumnCount "productDetailsSupplierContactDetails", 1
+		
+		resetModule()
+		
+		execute "CRUD.new"
+		assertCollectionColumnCount "productDetailsSupplierContactDetails", 1
+		execute "List.customize", "collection=productDetailsSupplierContactDetails"
+		execute "List.addColumns", "collection=productDetailsSupplierContactDetails"
+		execute "AddColumns.restoreDefault"
+		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
+		
+		resetModule()
+		
+		execute "CRUD.new"
+		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
+	}
+	
+	
 }

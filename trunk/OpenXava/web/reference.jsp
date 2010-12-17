@@ -67,7 +67,7 @@ String label = ref.getLabel(request);
 <% } // !onlyEditor %>
 <%
 
-Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
+Collection keys = ref.getMetaModelReferenced().getAllKeyPropertiesNames(); 
 String keyProperty = "";
 String keyProperties = "";
 String propertyKey = null;
@@ -146,7 +146,7 @@ if (descriptionsList) {
 		else {
 			condition = metaTab.getBaseCondition() + " AND " + condition;
 		}
-	}
+	}	
 %>
 	<jsp:include page="editors/descriptionsEditor.jsp">
 		<jsp:param name="script" value="<%=script%>"/>

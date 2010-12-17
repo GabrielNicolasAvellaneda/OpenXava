@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "ISO-8859-1"?><!DOCTYPE application SYSTEM "dtds/application.dtd"><application name="OpenXavaTest">
 	<module name="Description">
 		<doc url="doc/description" languages="en,es"/>		
-	</module>		<module name="WarehouseSplit">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="SplitOnly"/>        	</module>		<module name="WarehouseListOnly">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="ListOnly"/>        	</module>		<module name="WarehouseDetailOnly">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="DetailOnly"/>        	</module>		<module name="WarehouseDetailList">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="DetailList"/>        	</module>			<module name="Carrier">
+	</module>		<module name="WarehouseSplit">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="SplitOnly"/>        	</module>		<module name="WarehouseListOnly">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="ListOnly"/>        	</module>		<module name="WarehouseDetailOnly">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="DetailOnly"/>        	</module>		<module name="WarehouseDetailList">	    <model name="Warehouse"/>	    	    <controller name="Warehouse"/>	    <mode-controller name="DetailList"/>        	</module>		<module name="WarehouseVoid">	    <model name="Warehouse"/>	    	    <controller name="WarehouseVoid"/>	    <mode-controller name="Void"/>        	</module>				<module name="Carrier">
 		<model name="Carrier"/>
 		<controller name="Typical"/>
 		<controller name="Carrier"/>
@@ -115,8 +115,7 @@
 		<model name="TransportCharge"/>
 		<tab name="WithDistance"/>		
 		<controller name="Typical"/>
-	</module>	 
-	
+	</module>		<module name="TransportChargeWithDescriptionsList" folder="invoicing.variations">		<model name="TransportCharge"/>		<view name="WithDescriptionsList"/>				<controller name="Typical"/>	</module>	 		 	
 				<!--	It is possible to specify label and description	but OpenXava look first in resources files	OpenXavaTest-labels.properties or Labels.properties	-->					<module name="Product" folder="warehousing"		label="Products"		description="Products managament">		<model name="Product"/>		<controller name="Typical"/>		<controller name="Product"/>	
 	</module>			<module name="ProductWithSection" folder="warehousing/variations">		<model name="Product"/>		<view name="WithSection"/>		<controller name="Typical"/>			<controller name="Product"/>		
 		<controller name="MessagesOnEachRequest"/>				</module>			<module name="Product2" folder="warehousing/variations"> 

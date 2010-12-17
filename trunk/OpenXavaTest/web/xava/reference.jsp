@@ -67,7 +67,7 @@ String label = ref.getLabel(request);
 <% } // !onlyEditor %>
 <%
 
-Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
+Collection keys = ref.getMetaModelReferenced().getAllKeyPropertiesNames(); 
 String keyProperty = "";
 String keyProperties = "";
 String propertyKey = null;
@@ -135,11 +135,9 @@ if (descriptionsList) {
 	boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
 	String order = view.getOrderInDescriptionsList(ref); 
 	org.openxava.tab.meta.MetaTab metaTab = ref.getMetaModelReferenced().getMetaComponent().getMetaTab();
-	// tmp String filterArg = "";
 	String filter = "";
 	if (metaTab.hasFilter()) {
-		// tmp filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
-		filter = metaTab.getMetaFilter().getClassName(); // tmp
+		filter = metaTab.getMetaFilter().getClassName(); 
 	}
 	if (metaTab.hasBaseCondition()) {
 		if (org.openxava.util.Is.emptyString(condition)) {
@@ -148,7 +146,7 @@ if (descriptionsList) {
 		else {
 			condition = metaTab.getBaseCondition() + " AND " + condition;
 		}
-	}
+	}	
 %>
 	<jsp:include page="editors/descriptionsEditor.jsp">
 		<jsp:param name="script" value="<%=script%>"/>

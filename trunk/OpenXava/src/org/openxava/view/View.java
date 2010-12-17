@@ -965,6 +965,11 @@ public class View implements java.io.Serializable {
 				}				 							 								
 			} 
 		} 
+		else if (displayAsDescriptionsList()) {
+			if (values == null) values = new HashMap();					
+			value = Strings.removeXSS(value); 
+			values.put(name, value);			
+		}
 		else {			
 			String subview = name.substring(0, idx);
 			String member = name.substring(idx+1);
@@ -1971,7 +1976,7 @@ public class View implements java.io.Serializable {
 					MetaProperty p = (MetaProperty) m;
 					String propertyKey= qualifier + p.getName();
 					String valueKey = propertyKey + ".value";
-					String [] results = getRequest().getParameterValues(propertyKey);					
+					String [] results = getRequest().getParameterValues(propertyKey);
 					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
@@ -2081,13 +2086,10 @@ public class View implements java.io.Serializable {
 	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {
 		MetaModel metaModel = ref.getMetaModelReferenced(); 
 		Class keyClass = metaModel.getPOJOClass(); 
-		Field [] fields = keyClass.getDeclaredFields();
-		Arrays.sort(fields, FieldComparator.getInstance());
 		if (!value.startsWith("[")) value = "";
-		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");		
-		for (int i = 0; i < fields.length; i++) {
-			String propertyName = fields[i].getName();
-			if (!metaModel.isKey(propertyName)) continue;			
+		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");
+		Map referenceValues = new HashMap();
+		for (String propertyName: metaModel.getAllKeyPropertiesNames()) {
 			MetaProperty p = metaModel.getMetaProperty(propertyName);			 													
 			Object propertyValue = null;
 			if (st.hasMoreTokens()) { // if not then null is assumed. This is a case of empty value
@@ -2096,12 +2098,13 @@ public class View implements java.io.Serializable {
 			}			
 			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
 			if (WebEditors.mustToFormat(p, getViewName())) {				
-				getRequest().setAttribute(valueKey, propertyValue);
-				trySetValue(ref.getName() + "." + p.getName(), propertyValue);
+				getRequest().setAttribute(valueKey, propertyValue);				
+				referenceValues.put(propertyName, propertyValue); 				
 			}									
 		}
-		
-		View subview = getSubview(ref.getName()); 
+		View subview = getSubview(ref.getName());		
+		if (subview.values == null) subview.values = new HashMap();
+		subview.values.putAll(Maps.plainToTree(referenceValues)); 		
 		subview.oldValues = subview.values==null?null:new HashMap(subview.values);
 		subview.oldKeyEditable = subview.keyEditable; 
 		subview.oldEditable = subview.editable;

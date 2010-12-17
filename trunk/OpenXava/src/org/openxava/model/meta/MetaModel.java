@@ -634,14 +634,12 @@ abstract public class MetaModel extends MetaElement {
 	/**
 	 * Includes qualified properties in case of key references. <p>
 	 * 
-	 * They are ordered as declared in component definition. <br>
-	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only 
 	 */
-	public Collection getAllKeyPropertiesNames() throws XavaException {  
+	public Collection<String> getAllKeyPropertiesNames() throws XavaException {  
 		if (allKeyPropertiesNames==null) {
 			ArrayList result = new ArrayList();
-			Iterator itRef = getMetaMembersKey().iterator(); 
+			Iterator itRef = getMetaMembersKey().iterator();
 			while (itRef.hasNext()) {
 				MetaMember member = (MetaMember) itRef.next();
 				if (member instanceof MetaProperty) {
@@ -654,8 +652,9 @@ abstract public class MetaModel extends MetaElement {
 						result.add(ref.getName() + "." + itProperties.next());
 					}
 				}
-			}				
-			allKeyPropertiesNames = Collections.unmodifiableCollection(result);
+			}
+			Collections.sort(result); 
+			allKeyPropertiesNames = Collections.unmodifiableCollection(result);						
 		}
 		return allKeyPropertiesNames;
 	}
@@ -1345,11 +1344,16 @@ abstract public class MetaModel extends MetaElement {
 	 */
 	public void fillPOJO(Object pojo, Map values) throws XavaException { 
 		try {
-			values = Maps.plainToTree(values); 			
+			values = Maps.plainToTree(values); 	
+			values.remove(MapFacade.MODEL_NAME);
 			PropertiesManager pm = new PropertiesManager(pojo);			
 			for (Iterator it=values.entrySet().iterator(); it.hasNext();) {
 				Map.Entry en = (Map.Entry) it.next();
-				if (en.getValue() instanceof Map) {
+				if (containsMetaReference((String)en.getKey())) { 
+					if (en.getValue() == null) {
+						pm.executeSet((String)en.getKey(), null);
+						continue;
+					}
 					MetaModel referencedModel = getMetaReference((String)en.getKey()).getMetaModelReferenced();
 					Object referencedObject = pm.executeGet((String)en.getKey());
 					if (referencedObject == null) {
@@ -1472,19 +1476,16 @@ abstract public class MetaModel extends MetaElement {
 	public String toString(Object pojo) throws XavaException {  
 		if (pojo == null) return null;
 		StringBuffer toStringValue = new StringBuffer("[.");
-		// We don't use pojo.getClass(), because pojo can be a PROXY with no fields
-		java.lang.reflect.Field [] fields = getPOJOClass().getDeclaredFields();  
-		Arrays.sort(fields, FieldComparator.getInstance());
 		PropertiesManager pm = new PropertiesManager(pojo);
-		for (int i=0; i < fields.length; i++) {			
+		for (String propertyName: getAllKeyPropertiesNames()) {			
 			try {
-				if (isKey(fields[i].getName())) {					
-					if (isReference(fields[i].getName())) {
-						MetaModel refModel = getMetaReference(fields[i].getName()).getMetaModelReferenced();
-						toStringValue.append(refModel.toString(pm.executeGet(fields[i].getName())));
+				if (isKey(propertyName)) {					
+					if (isReference(propertyName)) {
+						MetaModel refModel = getMetaReference(propertyName).getMetaModelReferenced();
+						toStringValue.append(refModel.toString(pm.executeGet(propertyName)));
 					}
 					else {
-						toStringValue.append(pm.executeGet(fields[i].getName()));
+						toStringValue.append(pm.executeGet(propertyName));
 					}
 					toStringValue.append('.');
 				}
@@ -1493,7 +1494,7 @@ abstract public class MetaModel extends MetaElement {
 				log.error(ex.getMessage(), ex);
 				toStringValue.append(" ").append('.');
 			}
-		}
+		}		
 		toStringValue.append(']');
 		return toStringValue.toString();
 	}	

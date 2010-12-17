@@ -24,7 +24,7 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		setValue("comboDeliveries", toKeyString(delivery));
 		execute("DeliveryType.assertComboDeliveries");
 		assertNoErrors();
-		assertMessage("comboDeliveries=" + toKeyString(delivery));
+		assertMessage("comboDeliveries=" + toKeyString(delivery)); 
 		assertValue("comboDeliveries", toKeyString(delivery));
 	}	
 			

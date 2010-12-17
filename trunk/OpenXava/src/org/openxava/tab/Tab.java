@@ -1026,9 +1026,14 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	
-	private Preferences getPreferences() throws BackingStoreException {		
-		return Users.getCurrentPreferences().node("tab." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".");
+	private Preferences getPreferences() throws BackingStoreException {
+		String nodeName = "tab." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".";
+		if (nodeName.length() > Preferences.MAX_NAME_LENGTH) {
+			nodeName = "tab." + (getMetaTab().getMetaModel().getName() + "." + getTabName() + ".").hashCode(); 		
+		}
+		return Users.getCurrentPreferences().node(nodeName);
 	}
+	
 	public HttpServletRequest getRequest() {
 		return request;
 	}
