@@ -2,8 +2,6 @@ package org.openxava.tab.meta;
 
 import java.util.*;
 
-
-
 import org.openxava.component.*;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
@@ -445,11 +443,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		StringBuffer select = new StringBuffer("select ");
 		Iterator itProperties = getPropertiesNames().iterator();
 		while (itProperties.hasNext()) {
-			select.append("${");
-			select.append(itProperties.next());
-			select.append('}');
-			if (itProperties.hasNext())
-				select.append(", ");
+			String property = (String) itProperties.next();
+			if (ModelMapping.isModel(property)) select.append("0");	// the property is a table name not column name
+			else{
+				select.append("${");
+				select.append(property);
+				select.append('}');
+			}
+			if (itProperties.hasNext()) select.append(", ");
 		}
 		Iterator itHiddenProperties = getHiddenPropertiesNames().iterator();
 		while (itHiddenProperties.hasNext()) {
