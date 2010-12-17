@@ -16,7 +16,7 @@ import org.openxava.test.actions.OnChangeGroupInColorAction;
 
 @Entity
 @Views({
-	@View( name="Ordinary", members="number; name; sample; hexValue; usedTo, characteristicThing"),
+	@View( name="Ordinary", members="number; name; sample; hexValue; usedTo, characteristicThing, anotherCT"),
 	@View( name="Ordinary2", members="number; name; sample; hexValue; usedTo, characteristicThing"),	
 	@View( name="View1", members="property1"), 
 	@View( name="View2", members="property2"), 
@@ -59,7 +59,7 @@ public class Color {
 	}
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList
+	@DescriptionsList(notForTabs="DEFAULT")
 	@JoinColumn(name="IDTHING")
 	@LabelStyle("italic-label")
 	private Thing usedTo;
@@ -76,6 +76,13 @@ public class Color {
 	})
 	@LabelFormat(LabelFormatType.NO_LABEL)
 	private CharacteristicThing characteristicThing;
+	
+	@Transient
+	@ManyToOne(fetch=FetchType.LAZY)
+	@DescriptionsList(
+		condition="${thing.number} = (SELECT idthing FROM ${Thing} WHERE name = 'CAR')"
+	)
+	private CharacteristicThing anotherCT; // to test the change model name by table name: ${Thing} -> THING  
 	
 	@Transient
 	private String property1;
@@ -186,6 +193,14 @@ public class Color {
 
 	public void setCharacteristicThing(CharacteristicThing characteristicThing) {
 		this.characteristicThing = characteristicThing;
+	}
+
+	public CharacteristicThing getAnotherCT() {
+		return anotherCT;
+	}
+
+	public void setAnotherCT(CharacteristicThing anotherCT) {
+		this.anotherCT = anotherCT;
 	}
 
 }

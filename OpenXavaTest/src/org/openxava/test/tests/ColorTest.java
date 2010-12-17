@@ -61,6 +61,7 @@ public class ColorTest extends ModuleTestBase {
 	}
 	
 	public void testFilterDescriptionsList_keyReferenceWithSameNameThatPropertyFather() throws Exception{
+		changeModule("Color2");
 		assertLabelInList(4, "Name of Used to");
 		assertValueInList(0, 4, "CAR");
 		setConditionValues(new String[] { "", "", "", "1"} );
@@ -102,12 +103,12 @@ public class ColorTest extends ModuleTestBase {
 			fail("It must to exist");
 		}
 		
-		// Color: 'usedTo' with descriptionsList and 'characteristicThing' without descriptionsList
+		// Color: 'usedTo' without descriptionsList and 'characteristicThing' without descriptionsList
 		assertLabelInList(4, "Name of Used to");
 		assertLabelInList(5, "Description of Characteristic thing");
 		assertValueInList(0, 4, "CAR");
 		assertValueInList(0, 5, "3 PLACES");
-		setConditionValues(new String[] { "", "", "", "1", "3 PLACES" } );
+		setConditionValues(new String[] { "", "", "", "CAR", "3 PLACES" } );
 		execute("List.filter");
 		assertNoErrors();
 		assertListRowCount(1);
@@ -163,5 +164,18 @@ public class ColorTest extends ModuleTestBase {
 		execute("CRUD.deleteSelected");
 		assertNoErrors();
 		assertListRowCount(0);
+	}
+	
+	public void testChangeModelNameByTableNameInConditions() throws Exception{
+		execute("CRUD.new");
+		assertNoErrors();
+		assertExists("anotherCT.number");
+		assertValidValuesCount("anotherCT.number", 3);
+		String [][] validValues = { 
+			{ "", "" },
+			{ "0", "3 PLACES" },
+			{ "1", "5 PLACES" }
+		};
+		assertValidValues("anotherCT.number", validValues);
 	}
 }
