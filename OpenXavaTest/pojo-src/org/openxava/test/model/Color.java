@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 import org.openxava.jpa.*;
-import org.openxava.test.actions.OnChangeGroupInColorAction;
+import org.openxava.test.actions.*;
 
 /**
  * Number (the key) can be 0
@@ -16,7 +16,7 @@ import org.openxava.test.actions.OnChangeGroupInColorAction;
 
 @Entity
 @Views({
-	@View( name="Ordinary", members="number; name; sample; hexValue; usedTo, characteristicThing, anotherCT"),
+	@View( name="Ordinary", members="number; name; sample; hexValue; usedTo, characteristicThing, anotherCT; mixture"),
 	@View( name="Ordinary2", members="number; name; sample; hexValue; usedTo, characteristicThing"),	
 	@View( name="View1", members="property1"), 
 	@View( name="View2", members="property2"), 
@@ -76,6 +76,14 @@ public class Color {
 	})
 	@LabelFormat(LabelFormatType.NO_LABEL)
 	private CharacteristicThing characteristicThing;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumns({ 
+		@JoinColumn(name="MIXTURE_COLORNAME1", referencedColumnName="COLORNAME1"),
+		@JoinColumn(name="MIXTURE_COLORNAME2", referencedColumnName="COLORNAME2"),
+	})
+	@DescriptionsList(descriptionProperties="fullDescription")
+	private Mixture mixture;
 	
 	@Transient
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -201,6 +209,14 @@ public class Color {
 
 	public void setAnotherCT(CharacteristicThing anotherCT) {
 		this.anotherCT = anotherCT;
+	}
+
+	public Mixture getMixture() {
+		return mixture;
+	}
+
+	public void setMixture(Mixture mixture) {
+		this.mixture = mixture;
 	}
 
 }

@@ -178,4 +178,27 @@ public class ColorTest extends ModuleTestBase {
 		};
 		assertValidValues("anotherCT.number", validValues);
 	}
+	
+	public void testDescriptionsListWithMultipleKeyAndOneValueInBlank() throws Exception{
+		execute("List.viewDetail", "row=0");
+		assertExists("mixture.KEY");
+		String [][] validValues = { 
+			{ "", "" },
+			{ "[.          .VERDE     .]", "----------&-----VERDE:complicated" },
+			{ "[.ROJO      .          .]", "------ROJO&----------:simple" }
+		};
+		assertValidValues("mixture.KEY", validValues);
+		
+		setValue("mixture.KEY", "[.          .VERDE     .]");
+		execute("TypicalNotResetOnSave.save");
+		assertNoErrors();
+		assertMessage("Color modified successfully");
+		assertValue("mixture.KEY", "[.          .VERDE     .]");
+		
+		setValue("mixture.KEY", "");
+		execute("TypicalNotResetOnSave.save");
+		assertNoErrors();
+		assertMessage("Color modified successfully");
+		assertValue("mixture.KEY", "");
+	}
 }

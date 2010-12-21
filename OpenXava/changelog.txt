@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Descriptions list of a reference with multiple key with some values with blanks.
 - Fix: Fails on save list/collection preferences when the tab or collection name is too long.
 - Fix: Descriptions list of a reference with nested composite keys fails on save.
 - Fix: "List.filter" action present in bottom in detail only modules with before-each-request actions.
