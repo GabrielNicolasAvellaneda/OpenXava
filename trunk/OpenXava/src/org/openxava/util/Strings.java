@@ -602,7 +602,7 @@ public class Strings {
 	*/ 
 	public static String removeXSS(String notSafeValue) {
 		if (Is.emptyString(notSafeValue)) { 
-			return ""; 
+			return notSafeValue;
 		} 
 			 		 
 		CharSequence sequence = notSafeValue.subSequence(0, notSafeValue.length()); 
