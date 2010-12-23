@@ -6,7 +6,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
              
-    <!-- Tomcat + Hypersonic -->                                         
+    <!-- Tomcat + Hypersonic -->                                            
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>    	
     	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
@@ -18,8 +18,7 @@
         </properties>
     </persistence-unit>
     
-    
-    <!-- WebSphere + AS/400                              
+    <!-- WebSphere + AS/400                               
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/OpenXavaTestDS</non-jta-data-source>
@@ -32,13 +31,26 @@
     </persistence-unit>
     -->
             
-    <!-- Tomcat + AS/400       
+    <!-- Tomcat + AS/400        
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>java:comp/env/jdbc/DataSource</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.DB2400Dialect"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.default_schema" value="XAVATEST"/>
+        </properties>
+    </persistence-unit>
+    -->
+    
+    <!-- Tomcat + PostgreSQL          
+    <persistence-unit name="default">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<non-jta-data-source>java:comp/env/jdbc/PostgreSQL</non-jta-data-source>
+    	<class>org.openxava.session.GalleryImage</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
@@ -58,7 +70,7 @@
     </persistence-unit>     
     -->    
         
-    <!-- JUnit Hypersonic -->              
+    <!-- JUnit Hypersonic -->               
     <persistence-unit name="junit">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
@@ -68,8 +80,7 @@
 			<property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
     </persistence-unit>
-    
-    
+        
 	<!-- JUnit AS/400       
     <persistence-unit name="junit">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
@@ -83,5 +94,19 @@
         </properties>
     </persistence-unit>
     -->
-                
+    
+    <!-- JUnit PostgreSQL        
+    <persistence-unit name="junit">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost/xavatest"/>
+			<property name="hibernate.default_schema" value="XAVATEST"/>
+			<property name="hibernate.connection.username" value="postgres"/>
+			<property name="hibernate.connection.password" value="openxava"/>
+        </properties>
+    </persistence-unit>
+    -->
+                    
 </persistence>

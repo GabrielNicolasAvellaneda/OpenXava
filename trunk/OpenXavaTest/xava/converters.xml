@@ -7,5 +7,5 @@
 <converters>	<for-stereotype stereotype="REGIONS" 
 		converter-class="org.openxava.test.converters.RegionsConverter"
 		cmp-type="java.lang.String"/>
-		
+				
 </converters>

@@ -44,7 +44,7 @@ public class OfficeTest extends ModuleTestBase {
 		setValue("number", "2");
 		setValue("name", "OFFICE JUNIT 2");
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		
 		execute("Mode.list");
 		assertListRowCount(2);
@@ -54,7 +54,6 @@ public class OfficeTest extends ModuleTestBase {
 	
 	private void deleteAllOffices() throws Exception {
 		int rc = getListRowCount();
-		if (rc < 2) return;
 		for (int i = 0; i < rc; i++) {
 			checkRow(i);
 		}
