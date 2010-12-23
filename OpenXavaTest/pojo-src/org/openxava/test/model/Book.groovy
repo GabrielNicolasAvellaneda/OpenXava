@@ -13,6 +13,8 @@ class Book extends Identifiable {
 	@ManyToOne 
 	Author author
 	
+	boolean outOfPrint 
+	
 	@Stereotype("MEMO")
 	String synopsis
 

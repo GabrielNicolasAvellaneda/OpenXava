@@ -13,7 +13,7 @@
  * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
  */
 
-// $Id: calendar.js,v 1.43 2010-11-22 19:34:11 javierpaniza Exp $
+// $Id: calendar.js,v 1.44 2010-12-23 11:24:00 javierpaniza Exp $
 
 /** The Calendar object constructor. */
 if (typeof Calendar == "undefined") { // By Javier Paniza, in order to work in a multi-portlet environment

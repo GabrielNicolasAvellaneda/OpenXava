@@ -12,7 +12,7 @@ public class DeliveryValidator implements IValidator {
 	
 	public void validate(Messages errors) throws Exception {
 		// This validator is only for verify a error to combine
-		// validators and key references. Hence is empty		
+		// validators and key references. Hence is empty
 	}
 
 	public Object getInvoice() {

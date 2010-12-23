@@ -25,6 +25,7 @@
  on-init (true|false) "false"
  on-each-request (true|false) "false"
  before-each-request (true|false) "false"
+ after-each-request (true|false) "false"
  by-default (never|almost-never|if-possible|almost-always|always) "almost-never"
  takes-long (true|false) "false"
  confirm (true|false) "false"

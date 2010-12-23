@@ -19,10 +19,6 @@
 <%@page import="org.openxava.util.Is"%>
 
 <%@page import="org.apache.commons.beanutils.PropertyUtils"%>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/editors/treeview/yui2/fonts/fonts-min.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/xava/editors/treeview/treeview.css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/treeview/yui2/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/treeview/yui2/treeview-min.js"></script>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -30,7 +26,7 @@
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 
 <%
-	String viewObject = request.getParameter("viewObject"); // Id to access to the view object of the collection
+String viewObject = request.getParameter("viewObject"); // Id to access to the view object of the collection
 View collectionView = (View) context.get(request, viewObject); // We get the collection view by means of context
 View rootView = collectionView.getRoot(); // In this case we use the root view
 String collectionName = request.getParameter("collectionName");
@@ -50,7 +46,9 @@ tab.reset();
 context.put(request, tabObject, tab);
 context.put(request, org.openxava.web.editors.TreeViewParser.XAVA_TREE_VIEW_PARSER, treeParser);
 treeParser.createMetaTreeView(tab, viewObject, collectionName, style, errors);
-String javaScriptCode = treeParser.parse(tab.getModelName());
+String []parseData = treeParser.parse(tab.getModelName());
+String javaScriptCode = parseData[0];
+String indexList = parseData[1];
 String module = request.getParameter("module");
 String tableId = Ids.decorate(request.getParameter("application"), module, collectionName);
 TreeViewActions metaTreeViewActions = new TreeViewActions(collectionView, treeParser.getMetaTreeView(tab.getModelName()));
@@ -66,86 +64,94 @@ if(!Is.empty(key)){
 
 	<div id = "openxavaInput_<%=collectionName%>" style="visibility: hidden; height:0px">
 		<table id = "<%=tableId%>" name="treeTable_<%=collectionName%>" style="height:0px">
-		</table>
+			<tbody id = "<%=tableId%>_body" >
+			<%
+			int count = 0;
+			for (String index: indexList.split(",")) {
+				actionWithArgs = "row=" + index  + actionArgv;
+				String indexId = prefixIdRow + index;
+				String nodeId = xavaId + index;
+				String nodeValue = prefix + "selected:" + index;
+				String nodeRef = "openxava.executeAction('" +
+					request.getParameter("application") + "', '" + request.getParameter("module") +"', '', false, '" + action + "', '" +
+					actionWithArgs + "')";
+				%>
+				<tr id="<%=indexId%>">
+				  <td>
+				    <input type="CHECKBOX" name="<%=xavaId%>" id="<%=nodeId%>"
+				        value = "<%=nodeValue%>" style="height:0px" />
+				    <a href = "<%=nodeRef%>">_</a>
+				  </td>
+				</tr>
+				<%
+				count++;
+			}
+				
+			
+			%>
+		
+			</tbody>
+		</table>		
 	</div>
-	
+
 	<script type="text/javascript">
-		var tree_<%=collectionName%> = {};
-		tree_<%=collectionName%>.tree = <%=javaScriptCode%>
-		tree_<%=collectionName%>.suppress = false; // this will prevent collapse/expand when clicking on label
-		tree_<%=collectionName%>.loading = true; // this will prevent collapse/expand when loading
-		tree_<%=collectionName%>.tree.render();
-		tree_<%=collectionName%>.loading = false;
-		// Create hidden input checkbox to be processed by Openxava & OpenXavaTest
-		for (var nodeIndex = 1; nodeIndex <=  tree_<%=collectionName%>.tree.getNodeCount(); nodeIndex++) {
-			var node = tree_<%=collectionName%>.tree.getNodeByIndex(nodeIndex);
-			var tableId = "<%=tableId%>";
-			var tableDiv = document.getElementById(tableId);
-			var htmlInput = document.createElement('input');
-			var anchor = document.createElement('a');
-			var actionWithArgs = "row=" + (node.data)  + "<%=actionArgv%>";
-			var application='<%=request.getParameter("application")%>';
-			var module='<%=request.getParameter("module")%>';
-			htmlInput.setAttribute("type", "checkbox");
-			htmlInput.setAttribute("id", "<%=xavaId%>" + node.data);
-			htmlInput.setAttribute("name","<%=xavaId%>");
-			htmlInput.setAttribute("value", "<%=prefix%>" + "selected:" + node.data);
-			htmlInput.setAttribute("style", "height:0px");
-			anchor.setAttribute("href", "openxava.executeAction('" +
-					application + "', '" + module +"', '', false, '<%=action%>', '" +
-					actionWithArgs + "')");
-			tableDiv.appendChild(htmlInput);
-			tableDiv.appendChild(anchor);
-		}
-		tree_<%=collectionName%>.tree.subscribe("clickEvent", function(args) {
-			tree_<%=collectionName%>.suppress=true;
-			tree_<%=collectionName%>.tree.onEventToggleHighlight(args);
-			node = args["node"];
-			nodeIndex = node.data;
-			var actionWithArgs = "row=" + nodeIndex  + "<%=actionArgv%>";
+		$(document).ready(function(){
+			var tree_<%=collectionName%> = {};
+			tree_<%=collectionName%>.tree = <%=javaScriptCode%>
+			tree_<%=collectionName%>.suppress = false; // this will prevent collapse/expand when clicking on label
+			tree_<%=collectionName%>.loading = true; // this will prevent collapse/expand when loading
+			tree_<%=collectionName%>.tree.render();
+			tree_<%=collectionName%>.loading = false;
 
-			// syncronize state with openxava hidden input item
-			var htmlInput = document.getElementById("<%=xavaId%>" + node.data);
-			if (htmlInput != null) {
-				if (node.highlightState == 1){
-					htmlInput.checked = true;
-				} else {
-					htmlInput.checked = false;
+			tree_<%=collectionName%>.tree.subscribe("clickEvent", function(args) {
+				tree_<%=collectionName%>.suppress=true;
+				tree_<%=collectionName%>.tree.onEventToggleHighlight(args);
+				node = args["node"];
+				nodeIndex = node.data;
+				var actionWithArgs = "row=" + nodeIndex  + "<%=actionArgv%>";
+	
+				// syncronize state with openxava hidden input item
+				var htmlInput = document.getElementById("<%=xavaId%>" + node.data);
+				if (htmlInput != null) {
+					if (node.highlightState == 1){
+						htmlInput.checked = true;
+					} else {
+						htmlInput.checked = false;
+					}
 				}
-				//alert("HtmlInput checked("+htmlInput.getAttribute('value')+")?:" + node + ":" + node.highlightState + "->" +  htmlInput.checked);
-			}
-		});
-		
-		tree_<%=collectionName%>.tree.subscribe("dblClickEvent", function(args) {
-			node = args["node"];
-			tree_<%=collectionName%>.suppress=true; 
-			var actionWithArgs = "row=" + (node.data)  + "<%=actionArgv%>";
-			openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', "", false, '<%=action%>', actionWithArgs);
-		});
-
-		tree_<%=collectionName%>.tree.subscribe("expand", function(node) {
-			if (tree_<%=collectionName%>.suppress) {
-				tree_<%=collectionName%>.suppress = false;
-				return false;
-			}
-			if (!tree_<%=collectionName%>.loading) {
+			});
+			
+			tree_<%=collectionName%>.tree.subscribe("dblClickEvent", function(args) {
+				node = args["node"];
+				tree_<%=collectionName%>.suppress=true; 
 				var actionWithArgs = "row=" + (node.data)  + "<%=actionArgv%>";
-				openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', "", false, 'TreeView.expand', actionWithArgs);
-			}
-		});
-
-		tree_<%=collectionName%>.tree.subscribe("collapse", function(node) {
-			if (tree_<%=collectionName%>.suppress || tree_<%=collectionName%>.loading) {
-				tree_<%=collectionName%>.suppress = false;
-				return false;
-			}
-			if (!tree_<%=collectionName%>.loading) {
-				var actionWithArgs = "row=" + (node.data)  + "<%=actionArgv%>";
-				openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', "", false, 'TreeView.collapse', actionWithArgs);
-			}
-		});
-		
+				openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', "", false, '<%=action%>', actionWithArgs);
+			});
+	
+			tree_<%=collectionName%>.tree.subscribe("expand", function(node) {
+				if (tree_<%=collectionName%>.suppress) {
+					tree_<%=collectionName%>.suppress = false;
+					return false;
+				}
+				if (!tree_<%=collectionName%>.loading) {
+					var actionWithArgs = "row=" + (node.data)  + "<%=actionArgv%>";
+					openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', "", false, 'TreeView.expand', actionWithArgs);
+				}
+			});
+	
+			tree_<%=collectionName%>.tree.subscribe("collapse", function(node) {
+				if (tree_<%=collectionName%>.suppress || tree_<%=collectionName%>.loading) {
+					tree_<%=collectionName%>.suppress = false;
+					return false;
+				}
+				if (!tree_<%=collectionName%>.loading) {
+					var actionWithArgs = "row=" + (node.data)  + "<%=actionArgv%>";
+					openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', "", false, 'TreeView.collapse', actionWithArgs);
+				}
+			});
+		})
 	</script>
+	
 	<%
 }
 %>
