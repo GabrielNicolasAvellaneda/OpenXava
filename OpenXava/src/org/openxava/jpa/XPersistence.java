@@ -104,11 +104,12 @@ public class XPersistence {
 	 * @return Not null
 	 */
 	public static EntityManager createManager() {
-		return getEntityManagerFactory().createEntityManager();		
+		return new EntityManagerDecorator(getEntityManagerFactory().createEntityManager());		
 	}
 				
 	private static EntityManager openManager() {
-		EntityManager m = getEntityManagerFactory().createEntityManager();		
+		EntityManager m = 
+			new EntityManagerDecorator(getEntityManagerFactory().createEntityManager());		
 		m.getTransaction().begin();
 		currentManager.set(m);
 		return m;

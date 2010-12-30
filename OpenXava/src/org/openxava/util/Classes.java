@@ -47,4 +47,23 @@ public class Classes {
 		fillFieldsAnnotatedWith(result, theClass.getSuperclass(), annotation);
 	}
 	
+	/**
+	 * Returns the collection of methods with the given annotation
+	 * @param theClass Class object to be examined
+	 * @param annotation Annotation type to be search for
+	 * @return a Collection of Method, never null, might be empty.
+	 */
+	public static Collection<Method> getMethodsAnnotatedWith(Class theClass, Class<? extends Annotation> annotation) {
+		Collection<Method> result = new ArrayList<Method>();
+		fillMethodsAnnotatedWith(result, theClass, annotation);
+		return result;
+	}
+
+	private static void fillMethodsAnnotatedWith(Collection<Method> result, Class theClass, Class<? extends Annotation> annotation) {
+		if (Object.class.equals(theClass)) return;
+		for (Method method: theClass.getDeclaredMethods()) {
+			if (method.isAnnotationPresent(annotation)) result.add(method);
+		}
+		fillMethodsAnnotatedWith(result, theClass.getSuperclass(), annotation);
+	}
 }
