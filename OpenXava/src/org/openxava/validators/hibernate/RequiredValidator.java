@@ -19,6 +19,7 @@ public class RequiredValidator implements Validator<Required> {
 	}
 
 	public boolean isValid(Object value) {
+		if (HibernateValidatorInhibitor.isInhibited()) return true; // Usually when saving from MapFacade, MapFacade already has done the validation
 		if (value == null) return false;		
 		try {
 			IPropertyValidator validator = 

@@ -23,7 +23,8 @@ public class EntityValidatorValidator implements Validator<EntityValidator> {
 		metaValidator = AnnotatedClassParser.createEntityValidator(entityValidator);
 	}
 
-	public boolean isValid(Object entity) {		
+	public boolean isValid(Object entity) {	
+		if (HibernateValidatorInhibitor.isInhibited()) return true;  // Usually when saving from MapFacade, MapFacade already has done the validation
 		if (metaValidator.isOnlyOnCreate()) return true;
 		try {			
 			Iterator itSets =  metaValidator.getMetaSetsWithoutValue().iterator();			 

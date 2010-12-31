@@ -15,6 +15,7 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.*;
+import org.openxava.validators.hibernate.*;
 import org.openxava.validators.meta.*;
 
 
@@ -66,19 +67,21 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		getPersistenceProvider().commit(); 
 	}
 
-	private void commitTransaction() {					 
+	private void commitTransaction() {		
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			getPersistenceProvider().commit(); 
 		}
 		else {
 			getPersistenceProvider().flush();
 		}
+		HibernateValidatorInhibitor.setInhibited(false); 
 	}
 
 	private void beginTransaction() {
+		HibernateValidatorInhibitor.setInhibited(true); 
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			getPersistenceProvider().begin();  
-		}
+		}		
 	}
 	
 	public Map getValues(
@@ -1369,40 +1372,42 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 							Map memberValue = getValues(metaModel, keyValues, memberName);
 							value = memberValue.get(set.getPropertyNameFrom());
 						}											
-					}					
-					if (set.getPropertyNameFrom().equals(containerReferenceName)) {					
-						if (containerKey == null) {							
-							Object object = findEntity(metaModel, keyValues);
-							value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
-						}
-						else {							
-							MetaModel containerReference = metaModel.getMetaModelContainer();
-							try {
-								Map containerKeyMap = getPersistenceProvider().keyToMap(containerReference, containerKey);
-								value = getPersistenceProvider().find(containerReference, containerKeyMap);
+					}	
+					if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
+						if (set.getPropertyNameFrom().equals(containerReferenceName)) {
+							if (containerKey == null) {							
+								Object object = findEntity(metaModel, keyValues);
+								value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
 							}
-							catch (ObjectNotFoundException ex) {								
-								value = null;
-							}			
-						}
-					}
-					else if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {						
-						MetaReference ref = metaModel.getMetaReference(set.getPropertyNameFrom());
-						if (ref.isAggregate()) {							
-							value = mapToReferencedObject(metaModel, set.getPropertyNameFrom(), (Map) value);
-						}
-						else {							
-							MetaModel referencedEntity = ref.getMetaModelReferenced();
-							try {
-								if (value != null) {
-									value = findEntity(referencedEntity, (Map) value);
+							else {							
+								MetaModel containerReference = metaModel.getMetaModelContainer();
+								try {
+									Map containerKeyMap = getPersistenceProvider().keyToMap(containerReference, containerKey);
+									value = getPersistenceProvider().find(containerReference, containerKeyMap);
 								}
+								catch (ObjectNotFoundException ex) {								
+									value = null;
+								}			
 							}
-							catch (ObjectNotFoundException ex) {								
-								value = null;
-							}																															
-						}						
-					}								
+						}
+						else {					
+							MetaReference ref = metaModel.getMetaReference(set.getPropertyNameFrom());
+							if (ref.isAggregate()) {							
+								value = mapToReferencedObject(metaModel, set.getPropertyNameFrom(), (Map) value);
+							}
+							else {							
+								MetaModel referencedEntity = ref.getMetaModelReferenced();
+								try {
+									if (value != null) {
+										value = findEntity(referencedEntity, (Map) value);
+									}
+								}
+								catch (ObjectNotFoundException ex) {								
+									value = null;
+								}																															
+							}		
+						}
+					}										
 					mp.executeSet(set.getPropertyName(), value);									
 				}							
 				v.validate(errors);

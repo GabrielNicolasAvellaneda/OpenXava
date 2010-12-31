@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.openxava.test.model;
 
 import javax.persistence.Column;

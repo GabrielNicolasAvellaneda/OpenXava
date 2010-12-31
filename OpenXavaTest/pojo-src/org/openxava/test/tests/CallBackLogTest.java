@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.openxava.test.tests;
 
 import javax.persistence.EntityManager;
@@ -14,8 +11,8 @@ import org.openxava.tests.ModuleTestBase;
  * @author Federico Alcantara
  *
  */
-public class CallBackTest extends ModuleTestBase {
-	public CallBackTest (String nameTest) {
+public class CallBackLogTest extends ModuleTestBase {
+	public CallBackLogTest (String nameTest) {
 		super(nameTest, "CallBackLog");
 	}
 	

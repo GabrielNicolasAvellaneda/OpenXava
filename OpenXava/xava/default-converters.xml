@@ -17,14 +17,6 @@
 		converter-class="org.openxava.converters.IntegerNumberConverter"
 		cmp-type="java.lang.Integer"/>
 		
-	<for-type type="boolean" 
-		converter-class="org.openxava.converters.Boolean01Converter"
-		cmp-type="java.lang.Integer"/>
-		
-	<for-type type="java.lang.Boolean" 
-		converter-class="org.openxava.converters.Boolean01Converter"
-		cmp-type="java.lang.Integer"/>
-		
 	<for-type type="long" 
 		converter-class="org.openxava.converters.LongNumberConverter"
 		cmp-type="java.lang.Long"/>

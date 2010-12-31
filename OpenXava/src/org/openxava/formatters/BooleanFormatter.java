@@ -19,18 +19,26 @@ public class BooleanFormatter implements IFormatter {
 		if (booleanValue == null) {
 			return Labels.get("no", Locales.getCurrent());
 		}
+		boolean r = false;
+		if (booleanValue instanceof Boolean) { 		
+			r = ((Boolean) booleanValue).booleanValue();
+			
+		}
+		else if (booleanValue instanceof Number) {
+			r = ((Number) booleanValue).intValue() != 0;
+		}
 		else {
-			boolean r = ((Boolean) booleanValue).booleanValue();
-			return r?Labels.get("yes", Locales.getCurrent()):Labels.get("no", Locales.getCurrent());
-		}		
+			return "";
+		}
+		return r?Labels.get("yes", Locales.getCurrent()):Labels.get("no", Locales.getCurrent());
 	}
 	
 	public Object parse(HttpServletRequest request, String string) {
 		if (Is.emptyString(string)) return Boolean.FALSE;
 		if (
 			"yes".equalsIgnoreCase(string) ||
-			"SÌ".equalsIgnoreCase(string) ||
-			"SÕ".equalsIgnoreCase(string) ||
+			"S√ç".equalsIgnoreCase(string) ||
+			"S√≠".equalsIgnoreCase(string) ||
 			"Si".equalsIgnoreCase(string) ||
 			"true".equalsIgnoreCase(string) ||
 			"verdadero".equalsIgnoreCase(string)) return Boolean.TRUE;	 				

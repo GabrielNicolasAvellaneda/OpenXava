@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.openxava.jpa;
+package org.openxava.jpa.impl;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

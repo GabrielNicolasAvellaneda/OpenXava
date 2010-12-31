@@ -21,6 +21,7 @@ public class PropertyValidatorValidator implements Validator<PropertyValidator> 
 	}
 
 	public boolean isValid(Object value) {
+		if (HibernateValidatorInhibitor.isInhibited()) return true;  // Usually when saving from MapFacade, MapFacade already has done the validation
 		if (metaValidator.isOnlyOnCreate()) return true;
 		try {			
 			IPropertyValidator v = metaValidator.getPropertyValidator();			

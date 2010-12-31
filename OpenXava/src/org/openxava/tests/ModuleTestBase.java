@@ -840,9 +840,9 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	/**
-	 * @since v4_1
+	 * To be used from Groovy, that does not work with setConditionValues(String ... values).
 	 * 
-	 * It use setConditionValues(String ... values) does not work in groovy test
+	 * @since 4.0.1
 	 */
 	protected void setConditionValues(List values) throws Exception {
 		String [] avalues = new String[values.size()];
@@ -850,7 +850,19 @@ public class ModuleTestBase extends TestCase {
 		setCollectionCondition("conditionValue", avalues);
 	}
 	
-	private void setCollectionCondition(String id, String[] values) throws Exception { 
+	/**
+	 * To be used from Groovy, that does not work with setConditionComparators(String ... values).
+	 * 
+	 * @since 4.0.1
+	 */
+	protected void setConditionComparators(List values) throws Exception {
+		String [] avalues = new String[values.size()];
+		values.toArray(avalues);
+		setConditionComparators(avalues);
+	}
+	
+	
+	private void setCollectionCondition(String id, String[] values) throws Exception {
 		for (int i=0; i<values.length; i++) {
 			try {				
 				setFormValue(id + "." + i, values[i]);	

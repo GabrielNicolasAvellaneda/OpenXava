@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.xml.parsers.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.jpa.impl.*;
 import org.openxava.util.*;
 import org.w3c.dom.*;
 
