@@ -136,11 +136,13 @@ if (parameterValuesStereotypes != null || parameterValuesProperties != null) {
 		}
 		Object parameterValue = parameterValueKey==null?null:v.getValue(parameterValueKey);
 		
-		PropertyMapping mapping = v.getMetaProperty(parameterValueKey).getMapping();
-		if (mapping != null) {
-			IConverter converter = mapping.getConverter();
-			if (converter != null) {
-				parameterValue = converter.toDB(parameterValue);
+		if (parameterValueKey != null) { 
+			PropertyMapping mapping = v.getMetaProperty(parameterValueKey).getMapping();
+			if (mapping != null) {
+				IConverter converter = mapping.getConverter();
+				if (converter != null) {
+					parameterValue = converter.toDB(parameterValue);
+				}
 			}
 		}
 

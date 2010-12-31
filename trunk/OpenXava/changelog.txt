@@ -1,12 +1,18 @@
 Change Log for OpenXava project
 ===============================
 
+- New callback methods that allow to use JPA inside them:  @PreCreate, @PostCreate and @PreDelete.
+- New getMethodsAnnotatedWith() method in Classes utility class.
+- Fix: Entity validator fails when a property name of the entity matches container entity name.
+- Fix: Validators run more than once.
 - Fix: Descriptions list of a reference with multiple key with some values with blanks.
+- Boolean and bool has no default converter.
+- Fix: Filtering by boolean in list when column is boolean fails with some databases.
 - Fix: Fails on save list/collection preferences when the tab or collection name is too long.
 - Fix: Descriptions list of a reference with nested composite keys fails on save.
 - Fix: "List.filter" action present in bottom in detail only modules with before-each-request actions.
 - In conditions if you put a model name inside ${ } it is changed by table name. 
-- Fix: add 'setConditionValues(List values)' in ModuleTestBase because in groovy test class fails with 'setConditionValues(String ... values)'
+- Added setConditionValues(List ) and setConditionComparators(List ) in ModuleTestBase to be used with Groovy.
 - Fix: @DescriptionsList notForTabs, it does not work with 'DEFAULT'.
 - Fix: Character & not supported in condition of descriptions list.
 - Fix: <xava:editor> doesn't work in a custom view when it is not the main module view.

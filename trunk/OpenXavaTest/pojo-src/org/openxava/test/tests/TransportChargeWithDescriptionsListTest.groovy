@@ -1,5 +1,6 @@
 package org.openxava.test.tests;
 
+import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
@@ -17,6 +18,7 @@ class TransportChargeWithDescriptionsListTest extends ModuleTestBase {
 	}
 		
 	void testNestedCompositeKeysInDescriptionsList()  {
+		deleteAllTransportCharges();		
 		assertListRowCount 0 
 		execute "CRUD.new"
 		Delivery delivery = new Delivery([ 
@@ -36,5 +38,10 @@ class TransportChargeWithDescriptionsListTest extends ModuleTestBase {
 		execute "CRUD.delete"
 		assertNoErrors()
 	}	
+	
+	private void deleteAllTransportCharges() {
+		checkAll()
+		execute "CRUD.deleteSelected"
+	}
 	
 }

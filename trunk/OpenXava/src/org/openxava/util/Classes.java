@@ -4,8 +4,6 @@ import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.hibernate.*;
-
 /**
  * Utility class to work with classes. <p>
  * 
@@ -47,11 +45,13 @@ public class Classes {
 		fillFieldsAnnotatedWith(result, theClass.getSuperclass(), annotation);
 	}
 	
-	/**
+	/** 
 	 * Returns the collection of methods with the given annotation
+	 * 
 	 * @param theClass Class object to be examined
 	 * @param annotation Annotation type to be search for
 	 * @return a Collection of Method, never null, might be empty.
+	 * @since 4.0.1
 	 */
 	public static Collection<Method> getMethodsAnnotatedWith(Class theClass, Class<? extends Annotation> annotation) {
 		Collection<Method> result = new ArrayList<Method>();

@@ -53,7 +53,7 @@ class OrderTest extends ModuleTestBase {
 				
 		action.click() // Not dblClick(), it does not reproduce the problem
 		action.click()
-		Thread.sleep(3000)
+		Thread.sleep(4000)
 				
 		assertNoErrors()
 		assertCollectionRowCount("details", 1)
