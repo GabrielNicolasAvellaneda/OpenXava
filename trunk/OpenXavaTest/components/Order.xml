@@ -9,11 +9,11 @@
 			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
 		</property>
 		
-		<property name="year" type="int" size="4">
+		<property name="year" type="int" size="4" search-key="true">
 			<default-value-calculator class="org.openxava.calculators.CurrentYearCalculator"/>
 		</property>
 		
-		<property name="number" type="int" size="6"/>
+		<property name="number" type="int" size="6" search-key="true"/>
 		
 		<property name="date" type="java.util.Date" required="true">
 			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>
@@ -53,6 +53,7 @@
 	</aggregate>
 	
 	<view>
+		<property-view property="number" read-only="true"/>
 		<reference-view reference="customer" view="Simplest"/>
 		<collection-view collection="details">
 			<list-properties>product.number, product.description, quantity, product.unitPrice, amount</list-properties>

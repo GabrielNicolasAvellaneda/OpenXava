@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Reference actions not shown with a @ReadOnly @SearchKey.
 - New callback methods that allow to use JPA inside them:  @PreCreate, @PostCreate and @PreDelete.
 - New getMethodsAnnotatedWith() method in Classes utility class.
 - Fix: Entity validator fails when a property name of the entity matches container entity name.
