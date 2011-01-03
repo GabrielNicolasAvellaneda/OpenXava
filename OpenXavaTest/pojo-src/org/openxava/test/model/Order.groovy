@@ -22,10 +22,12 @@ class Order extends Identifiable {
 	
 	@Column(length=4) 
 	@DefaultValueCalculator(CurrentYearCalculator.class)
+	@SearchKey 
 	int year
 	
 	
-	@Column(length=6)	
+	@Column(length=6)
+	@SearchKey @ReadOnly 
 	int number
 	
 	
