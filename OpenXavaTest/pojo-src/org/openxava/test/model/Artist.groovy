@@ -1,0 +1,22 @@
+package org.openxava.test.model
+
+
+import org.openxava.model.*;
+import org.openxava.annotations.*;
+import javax.persistence.*;
+
+/**
+ * 
+ * @author Javier Paniza 
+ */
+
+@Entity
+class Artist extends Identifiable {
+	
+	@ManyToOne
+	Studio artistStudio // Not the same name of parent entity, to test a case
+	
+	@Column(length=40) @Required
+	String name
+
+}

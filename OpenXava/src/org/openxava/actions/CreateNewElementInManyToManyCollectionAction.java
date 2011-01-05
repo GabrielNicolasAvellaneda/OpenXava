@@ -11,7 +11,7 @@ public class CreateNewElementInManyToManyCollectionAction extends CollectionBase
 	public void execute() throws Exception {
         String collectionModel = getCollectionElementView().getModelName();
         String collection = getCollectionElementView().getMemberName();
-    	showDialog();
+    	showDialog();    	
         getView().setModelName(collectionModel);
         getView().setMemberName(collection);
         setControllers("ManyToManyNewElement", "Dialog");

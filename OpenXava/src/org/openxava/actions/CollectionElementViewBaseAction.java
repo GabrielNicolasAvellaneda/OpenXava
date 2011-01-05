@@ -16,14 +16,21 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	private View collectionElementView;		
 	private String viewObject;
 	private boolean closeDialogDisallowed = false;
+	private boolean dialogOpened = false; 
 
 	abstract public void execute() throws Exception;
 	
 	public View getView() { 
-		if (viewObject != null) return super.getView();		
+		if (viewObject != null && !dialogOpened) return super.getView();		
 		return getCollectionElementView().getRoot();		
 	}
-	
+		
+	protected void showDialog(View viewToShowInDialog) throws Exception {
+		super.showDialog(viewToShowInDialog);
+		dialogOpened = true;
+		collectionElementView = null; 
+	}
+		
 	/** @since 4m5 */
 	protected View getParentView() throws XavaException {
 		return getCollectionElementView().getParent();
@@ -31,7 +38,7 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	
 	protected View getCollectionElementView() throws XavaException {
 		if (collectionElementView == null) {
-			if (viewObject == null) collectionElementView = super.getView(); // In a dialog
+			if (viewObject == null || dialogOpened) collectionElementView = super.getView(); // In a dialog
 			else {
 				collectionElementView = (View) getContext().get(getRequest(), viewObject);
 			}
@@ -58,6 +65,8 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 			getCollectionElementView().reset();
 		} else {
 			super.closeDialog();
+			dialogOpened = false;
+			collectionElementView = null; 
 		}
 	}	
 	

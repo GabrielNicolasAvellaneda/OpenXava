@@ -367,9 +367,10 @@ public class DeliveryTest extends ModuleTestBase {
 		while (getCollectionRowCount("details") >= 3) {
 			execute("Navigation.next");
 		}
-		
+		String number = getValue("number");
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
 		assertMessage("The action New for delivery detail executed");
+		assertValue("description", "DETAIL FOR DELIVERY " + number + "/" + number);
 		setValue("number", "66");
 		setValue("description", "JUNIT DELIVERY DETAIL");
 		execute("DeliveryDetail.save");
