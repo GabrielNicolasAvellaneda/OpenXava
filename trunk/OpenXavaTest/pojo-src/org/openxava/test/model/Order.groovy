@@ -17,7 +17,6 @@ import org.openxava.jpa.*
 	remarks
 	"""
 )
-
 class Order extends Identifiable {
 	
 	@Column(length=4) 
@@ -29,7 +28,6 @@ class Order extends Identifiable {
 	@Column(length=6)
 	@SearchKey @ReadOnly 
 	int number
-	
 	
 	@Required
 	@DefaultValueCalculator(CurrentDateCalculator.class)
