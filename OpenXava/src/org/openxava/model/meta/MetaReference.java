@@ -23,6 +23,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 		
 	private MetaModel metaModelReferenced;
 	private String referencedModelName;
+	private String referencedModelContainerReference;  
 	private String role;
 	private boolean required;
 	private boolean key;
@@ -106,6 +107,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 				catch (ElementNotFoundException ex) {
 					// look for entity (looking for component)
 					metaModelReferenced = MetaComponent.get(getReferencedModelName()).getMetaEntity();
+					if (!Is.empty(referencedModelContainerReference)) metaModelReferenced.setContainerReference(referencedModelContainerReference); 
 				}
 			}
 		}
@@ -268,5 +270,14 @@ public class MetaReference extends MetaMember implements Cloneable {
 			if (it.hasNext()) sb.append(',');
 		}	
 		return sb.toString();
+	}
+
+	public void setReferencedModelContainerReference(
+			String referencedModelContainerReference) {
+		this.referencedModelContainerReference = referencedModelContainerReference;
+	}
+
+	public String getReferencedModelContainerReference() {
+		return referencedModelContainerReference;
 	}
 }

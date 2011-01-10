@@ -13,7 +13,6 @@ class StudioTest extends ModuleTestBase {
 	}
 	
 	void testEmbeddedCollectionElementNotShowParentReference_removingCollectionElementWhenParentNameNotMatchEntityName() {
-		/* tmp Work in progress
 		assertListNotEmpty()
 		execute "Mode.detailAndFirst"
 		assertCollectionRowCount "artists", 0
@@ -27,7 +26,6 @@ class StudioTest extends ModuleTestBase {
 		execute "Collection.remove"
 		assertNoErrors()
 		assertCollectionRowCount "artists", 0
-		*/
 	}
 	
 }
