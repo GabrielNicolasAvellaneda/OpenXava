@@ -209,7 +209,7 @@ public class View implements java.io.Serializable {
 			
 	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
 		if (getModelName() == null) return Collections.EMPTY_LIST; 
-		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());
+		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());		
 		if (isRepresentsAggregate()) { 			
 			metaMembers = extractAggregateRecursiveReference(metaMembers);					
 		}		
@@ -259,8 +259,9 @@ public class View implements java.io.Serializable {
 			while (!java.lang.Object.class.equals(pojoClass)) {
 				parentNames.add(Strings.firstLower(pojoClass.getSimpleName()));
 				pojoClass = pojoClass.getSuperclass();
-			}		
+			}
 		}
+
 		Collection filtered = new ArrayList();
 		Iterator it = metaMembers.iterator();
 		while (it.hasNext()) {

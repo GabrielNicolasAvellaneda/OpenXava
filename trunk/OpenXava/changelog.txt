@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @AsEmbedded delete action only works when container reference name matches container model name.
+- Fix: @AsEmbedded does not hide reference to parent.
 - Fix: getView() from a CreateNewElementInCollectionAction does not return the main view.
 - Fix: Reference actions not shown with a @ReadOnly @SearchKey.
 - New callback methods that allow to use JPA inside them:  @PreCreate, @PostCreate and @PreDelete.
