@@ -1326,8 +1326,6 @@ public class AnnotatedClassParser {
 					cascadeAndSelfReference = true;					
 				}				
 			}
-			collection.getMetaReference()
-				.setReferencedModelContainerReference(oneToMany.mappedBy());
 			collection.setOrphanRemoval(oneToMany.orphanRemoval());
 		}
 		else if (element.isAnnotationPresent(Condition.class)){			

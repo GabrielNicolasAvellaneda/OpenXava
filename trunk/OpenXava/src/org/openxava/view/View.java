@@ -250,16 +250,9 @@ public class View implements java.io.Serializable {
 	}
 
 	private Collection extractAggregateRecursiveReference(Collection metaMembers) {  		
-		Set parentNames = new HashSet();		
-		if (!Is.empty(getMetaModel().getContainerReference())) {
-			parentNames.add(getMetaModel().getContainerReference());
-		}
-		else {
-			Class pojoClass = getMetaModel().getMetaModelContainer().getPOJOClass();
-			while (!java.lang.Object.class.equals(pojoClass)) {
-				parentNames.add(Strings.firstLower(pojoClass.getSimpleName()));
-				pojoClass = pojoClass.getSuperclass();
-			}
+		Set parentNames = new HashSet();
+		if (isRepresentsCollection()) {
+			parentNames.add(getMetaCollection().getMetaReference().getRole());
 		}
 
 		Collection filtered = new ArrayList();

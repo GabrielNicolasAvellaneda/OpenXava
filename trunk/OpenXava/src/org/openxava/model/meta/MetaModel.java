@@ -703,13 +703,13 @@ abstract public class MetaModel extends MetaElement {
 	}
 	
 	/**
-	 * Key members ordered as in component definition.
+	 * Key members.
 	 * 
 	 * @return Collection of <tt>MetaMember</tt>, not null and read only
 	 */
 	public Collection getMetaMembersKey() throws XavaException {
-		Iterator it = getMembersNames().iterator(); // memberNames to keep order		
-		ArrayList result = new ArrayList();
+		Iterator it = getMembersNames().iterator(); 		
+		SortedSet result = new TreeSet(); 
 		while (it.hasNext()) {
 			String name = (String) it.next();
 			if (containsMetaProperty(name)) { 			
