@@ -448,7 +448,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			if (childMetaModel.containsMetaReference(refToParent)) {
 				// If the child contains the reference to its parent we simply update this reference
 				Map nullParentKey = new HashMap();
-				nullParentKey.put(metaCollection.getMetaReference().getMetaModelReferenced().getContainerReference(), null);
+				nullParentKey.put(refToParent, null); 
 				setValues(childMetaModel, collectionElementKeyValues, nullParentKey);
 			}
 			else {

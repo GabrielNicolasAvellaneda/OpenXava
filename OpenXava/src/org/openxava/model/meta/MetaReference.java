@@ -23,7 +23,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 		
 	private MetaModel metaModelReferenced;
 	private String referencedModelName;
-	private String referencedModelContainerReference;  
+	private String referencedModelContainerReference;
 	private String role;
 	private boolean required;
 	private boolean key;
@@ -280,4 +280,6 @@ public class MetaReference extends MetaMember implements Cloneable {
 	public String getReferencedModelContainerReference() {
 		return referencedModelContainerReference;
 	}
+
+	
 }

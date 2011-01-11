@@ -8,13 +8,16 @@ import org.openxava.util.meta.*;
 /**
  * @author Javier Paniza
  */
-abstract public class MetaMember extends MetaElement {
+abstract public class MetaMember extends MetaElement implements Comparable { 
 
 	private MetaModel metaModel;
 	private String labelId;
 	private String qualifiedName;
 	
-	
+
+	public int compareTo(Object o) { 	
+		return getName().compareTo(((MetaMember) o).getName());
+	}
 
 	public MetaModel getMetaModel() {		
 		return metaModel;

@@ -15,6 +15,7 @@
 	<property name="xava.lib" value="../OpenXava/bin"/>	
 	<property name="j2ee.lib" value="../OpenXava/lib/servlet-api.jar;../OpenXava/lib/jta.jar;../OpenXava/lib/ejb.jar;../OpenXava/lib/jsp-api.jar"/>	
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
+	<property name="groovy.lib" location="../OpenXava/web/WEB-INF/lib/groovy-all.jar"/>
 	<property name="logging.lib" location="../OpenXava/web/WEB-INF/lib/commons-logging.jar"/>
 	<property name="generator.dir" value="..${file.separator}OpenXava${file.separator}generator"/>
 	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
@@ -332,7 +333,7 @@
 		<echo>Generating POJOs/Hibernate</echo>
 		<java 
 			classname="HCodeGenerator" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/filtered-files;../${project}/${classes.dir};${xava.generator.path}" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${groovy.lib};${logging.lib};../${project}/filtered-files;../${project}/${classes.dir};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>

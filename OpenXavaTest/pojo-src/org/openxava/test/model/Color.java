@@ -85,7 +85,6 @@ public class Color {
 	@DescriptionsList(descriptionProperties="fullDescription")
 	private Mixture mixture;
 	
-	@Transient
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList(
 		condition="${thing.number} = (SELECT idthing FROM ${Thing} WHERE name = 'CAR')"
