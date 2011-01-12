@@ -1,6 +1,36 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.0.1 (2011-1-11)
+--------------------------
+- New callback methods that allow to use JPA inside them:  @PreCreate, @PostCreate and @PreDelete.
+- Groovy can be use for calculators and validators of XML components.
+- New getMethodsAnnotatedWith() method in Classes utility class.
+- Boolean and bool has no default converter.
+- In conditions if you put a model name inside ${ } it is changed by table name. 
+- Added setConditionValues(List ) and setConditionComparators(List ) in ModuleTestBase to be used with Groovy.
+- New after-each-request option for <action/> in controllers.xml. 
+- IForwardAction allows to forward to javascript code, using javascript: as prefix.
+- New listeners.xml in WEB-INF for defining listeners.
+- Fix: Tomcat start/stop script leaves directory in windows.
+- Fix: @AsEmbedded delete action only works when container reference name matches container model name.
+- Fix: @AsEmbedded does not hide reference to parent.
+- Fix: getView() from a CreateNewElementInCollectionAction does not return the main view.
+- Fix: Reference actions not shown with a @ReadOnly @SearchKey.
+- Fix: Entity validator fails when a property name of the entity matches container entity name.
+- Fix: Validators run more than once.
+- Fix: Descriptions list of a reference with multiple key with some values with blanks.
+- Fix: Filtering by boolean in list when column is boolean fails with some databases.
+- Fix: Fails on save list/collection preferences when the tab or collection name is too long.
+- Fix: Descriptions list of a reference with nested composite keys fails on save.
+- Fix: "List.filter" action present in bottom in detail only modules with before-each-request actions.
+- Fix: @DescriptionsList notForTabs, it does not work with 'DEFAULT'.
+- Fix: Character & not supported in condition of descriptions list.
+- Fix: <xava:editor> doesn't work in a custom view when it is not the main module view.
+- Fix: Converter was not applied to descriptions list parameters.
+- Fix: Depends condition for Enum from a descriptions list is not working. 
+- Fix: TreeView editor does not work in Liferay 6.
+
 OpenXava 4.0 (2010-11-22)
 -------------------------
 Main new features over 3.1.4 for developers:
@@ -26,7 +56,6 @@ Main new features over 3.1.4 for the users:
 - Improved look & feel of page navigation for list and collections.
 - Visual style of button bar improved.
 For the full list of new features see below the notes for the versions from 4m1 to 4m6.  
-
 
 OpenXava 4m6 (2010-11-10)
 -------------------------
