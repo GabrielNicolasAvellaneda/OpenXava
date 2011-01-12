@@ -9,6 +9,8 @@
 <%@ page import="org.openxava.formatters.IFormatter" %>
 <%@ page import="org.openxava.filters.IFilter" %>
 <%@ page import="org.openxava.filters.IRequestFilter" %>
+<%@ page import="org.openxava.mapping.PropertyMapping"%>
+<%@ page import="org.openxava.converters.IConverter"%>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -34,8 +36,8 @@ DescriptionsCalculator calculator = (DescriptionsCalculator) request.getSession(
 
 IFilter filter = null;
 String filterClass=request.getParameter("filter");
-if (filterClass==null) filterClass=request.getParameter("filtro");
-if (filterClass != null) {
+if (Is.emptyString(filterClass)) filterClass=request.getParameter("filtro"); 
+if (!Is.emptyString(filterClass)) {
 	String filterKey = propertyKey + ".filter";
 	filter = (IFilter) request.getSession().getAttribute(filterKey);
 	if (filter == null) {
@@ -133,6 +135,17 @@ if (parameterValuesStereotypes != null || parameterValuesProperties != null) {
 			v = view.getRoot();
 		}
 		Object parameterValue = parameterValueKey==null?null:v.getValue(parameterValueKey);
+		
+		if (parameterValueKey != null) { 
+			PropertyMapping mapping = v.getMetaProperty(parameterValueKey).getMapping();
+			if (mapping != null) {
+				IConverter converter = mapping.getConverter();
+				if (converter != null) {
+					parameterValue = converter.toDB(parameterValue);
+				}
+			}
+		}
+
 		p.add(parameterValue);
 	}
 	calculator.setParameters(p, filter);

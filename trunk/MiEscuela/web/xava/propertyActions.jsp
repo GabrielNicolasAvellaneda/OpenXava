@@ -17,18 +17,18 @@ MetaProperty p = view.getMetaProperty(propertyName);
 if (lastSearchKey) {	
 	String referencedModel = p.getMetaModel().getName();
 %>
-	<% if (view.isSearch() && editable && !p.isReadOnly()) {%>	
+	<% if (view.isSearch() && editable) {%>	
 <xava:action action='<%=view.getSearchAction()%>' argv='<%="keyProperty="+propertyKey%>'/>
 	<% } %>
-	<% if (view.isCreateNew() && editable && !p.isReadOnly()) {%>
+	<% if (view.isCreateNew() && editable) {%>
 <xava:action action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
 	<% } %>
-	<% if (view.isModify() && editable && !p.isReadOnly()) {%>
+	<% if (view.isModify() && editable) {%>
 <xava:action action='Reference.modify' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>	
 	<% } %>
 <% 
 }
-if (editable && !p.isReadOnly()){
+if (editable){
 	for (java.util.Iterator itActions = view.getActionsNamesForReference(lastSearchKey).iterator(); itActions.hasNext();) {
 		String action = (String) itActions.next();
 %>
@@ -37,7 +37,7 @@ if (editable && !p.isReadOnly()){
 	}
 }
 
-for (java.util.Iterator itActions = view.getActionsNamesForProperty(p, editable || p.isReadOnly()).iterator(); itActions.hasNext();) {
+for (java.util.Iterator itActions = view.getActionsNamesForProperty(p, editable).iterator(); itActions.hasNext();) {
 	String action = (String) itActions.next();
 %>
 <xava:action action="<%=action%>" argv='<%="xava.keyProperty="+propertyKey%>'/>
