@@ -17,6 +17,12 @@
 		take preference over it.
 		That is to say, it is better specify the labels in resources files and not here.		
 	-->
+	
+	<controller name="Login">
+	
+		<action name="login" class="org.openxava.test.actions.LoginAction"/>
+	
+	</controller>
 		
 	<controller name="HidingActions">
 	

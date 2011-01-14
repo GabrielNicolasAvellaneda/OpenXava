@@ -15,9 +15,11 @@ import org.hibernate.validator.*;
 
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
+import org.openxava.component.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
+import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
@@ -37,10 +39,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4.0.1";
+		return "4.1beta";
 	}
 	final static private String getVersionDate() {
-		return "2011-1-11"; 
+		return "2011-1-xx"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -926,7 +928,11 @@ public class ModuleManager implements java.io.Serializable {
 		if (!Is.emptyString(getMetaModule().getModeControllerName())) {
 			setModeControllerName(getMetaModule().getModeControllerName());
 			modeName = null;						
-		}
+		}		
+		else if (MetaComponent.get(getMetaModule().getModelName()).isTransient()) {
+			setModeControllerName("DetailOnly");
+			modeName = null;									
+		}		
 		if (!Is.emptyString(getMetaModule().getWebViewURL())) {
 			defaultView = getMetaModule().getWebViewURL();
 			setViewName(defaultView);			

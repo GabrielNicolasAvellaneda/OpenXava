@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New stereotype PASSWORD/CONTRASENA.
+- When the model is transient the default controller-mode for the module is DetailOnly. 
+
 OpenXava 4.0.1 (2011-1-11)
 --------------------------
 - New callback methods that allow to use JPA inside them:  @PreCreate, @PostCreate and @PreDelete.
