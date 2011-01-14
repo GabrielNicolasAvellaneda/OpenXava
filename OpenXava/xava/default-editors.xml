@@ -71,6 +71,11 @@
 		<formatter class="org.openxava.formatters.SQLTimeFormatter" />
 		<for-type type="java.sql.Time" />
 	</editor>
+	
+	<editor name="Password" url="passwordEditor.jsp"> 
+		<for-stereotype stereotype="PASSWORD" /> 
+		<for-stereotype stereotype="CONTRASENA" />
+	</editor>
 
 	<editor name="Money" url="moneyEditor.jsp"> 
 		<formatter class="org.openxava.formatters.MoneyFormatter" />
