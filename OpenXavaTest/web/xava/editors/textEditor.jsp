@@ -22,10 +22,8 @@ boolean editable="true".equals(request.getParameter("editable"));
 String disabled=editable?"":"disabled";
 String script = request.getParameter("script");
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel();
-// tmp ini
 String inputType = request.getParameter("inputType");
 if (inputType == null) inputType = "text"; 
-// tmp fin
 String smaxSize = request.getParameter("maxSize");
 int maxSize = 0;
 if (!org.openxava.util.Is.emptyString(smaxSize)) {

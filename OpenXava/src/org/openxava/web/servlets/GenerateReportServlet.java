@@ -163,7 +163,8 @@ public class GenerateReportServlet extends HttpServlet {
 				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
 				
 			}
-			else if (uri.endsWith(".csv")) {				
+			else if (uri.endsWith(".csv")) {	
+				Servlets.setCharacterEncoding(request, response); // tmp
 				response.setContentType("text/x-csv");
 				synchronized (tab) {
 					tab.setRequest(request);

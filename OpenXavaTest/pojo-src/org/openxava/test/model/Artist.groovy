@@ -1,9 +1,9 @@
 package org.openxava.test.model
 
-
 import org.openxava.model.*;
 import org.openxava.annotations.*;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * 
@@ -18,5 +18,8 @@ class Artist extends Identifiable {
 	
 	@Column(length=40) @Required
 	String name
+	
+	@Max(99l)
+	Integer age
 
 }
