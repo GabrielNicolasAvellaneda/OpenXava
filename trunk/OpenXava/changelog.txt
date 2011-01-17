@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Bean Validation JSR-303 support.
+- Fix: Export to EXCEl in list mode does not work fine with Russian data.
 - New stereotype PASSWORD/CONTRASENA.
 - When the model is transient the default controller-mode for the module is DetailOnly. 
 

@@ -54,5 +54,8 @@
 	<classpathentry kind="lib" path="lib/xalan.jar"/>
 	<classpathentry kind="lib" path="lib/serializer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/activation.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-classic-validator.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/validation-api.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jaxb-api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
