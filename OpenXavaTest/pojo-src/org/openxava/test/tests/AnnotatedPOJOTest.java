@@ -132,7 +132,7 @@ public class AnnotatedPOJOTest extends TestCase {
 	}
 	
 
-	public void testBeanValidationJSR303() throws Exception { // tmp
+	public void testBeanValidationJSR303() throws Exception {
 		Artist a = new Artist();
 		a.setName("TOO OLD ARTIST");
 		a.setAge(120);

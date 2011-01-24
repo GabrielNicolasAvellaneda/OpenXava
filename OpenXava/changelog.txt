@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Automatic horizontal scrollbar for list and collections for not enlarging the UI. 
 - Bean Validation JSR-303 support.
 - Fix: Export to EXCEl in list mode does not work fine with Russian data.
 - New stereotype PASSWORD/CONTRASENA.

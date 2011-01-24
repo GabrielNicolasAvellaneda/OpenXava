@@ -24,11 +24,13 @@ String id = "list";
 String collectionArgv = "";
 String prefix = "";
 String tabObject = request.getParameter("tabObject");
+String scrollId = "list_scroll"; // tmp
 tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
 if (collection != null && !collection.equals("")) {
 	id = collection;
 	collectionArgv=",collection="+collection;
 	prefix = tabObject + "_";
+	scrollId = "collection_scroll"; // tmp
 }
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
 tab.setRequest(request); 
@@ -61,6 +63,7 @@ String cssCurrentRow = style.getCurrentRow();
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
 
+
 <%
 	if (tab.isTitleVisible()) {
 %>
@@ -72,8 +75,12 @@ String cssCurrentRow = style.getCurrentRow();
 <%
 	}
 %>
-
-<table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<%-- tmp ini 
+<div class="<xava:id name='<%=scrollId%>'/>" style="overflow-x: auto; overflow-y: hidden">
+--%>
+<div class="<xava:id name='<%=scrollId%>'/>" style="overflow: auto;">
+<%-- tmp fin --%> 
+  <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
 	<%
@@ -372,6 +379,10 @@ if (lastRow != null) {
 }
 %>
 </table>
+<%-- tmp ini --%>
+</div>
+<%-- tmp fin --%> 
+
 <% if (!tab.isRowsHidden()) { %>
 <table width="100%" class="<%=style.getListInfo()%>">
 <tr class='<%=style.getListInfoDetail()%>'>
@@ -439,3 +450,4 @@ else {
 </tr>
 </table>
 <% } %>
+
