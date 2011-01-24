@@ -12,7 +12,7 @@ class ArtistTest extends ModuleTestBase {
 		super(testName, "Artist")		
 	}
 	
-	void testBeanValidationJSR303() throws Exception { // tmp
+	void testBeanValidationJSR303() throws Exception { 
 		execute "Mode.detailAndFirst"
 		setValue "age", "120"		
 		execute "CRUD.save"
