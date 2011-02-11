@@ -18,10 +18,8 @@ openxava.ajaxRequest = function(application, module, firstRequest) {
 			openxava.getMultipleValues(application, module), 
 			openxava.getSelectedValues(application, module),
 			firstRequest,
-			openxava.refreshPage);
-	// tmp ini	
+			openxava.refreshPage);	
 	$(window).unbind('resize');
-	// tmp fin		
 }
 
 openxava.refreshPage = function(result) {	
@@ -240,19 +238,17 @@ openxava.initLists = function(application, module) {
 		},
 		show: { effect: { length: 800 } }
 	}).removeClass(openxava.decorateId(application, module, "tipable"));
-	// tmp ini
 	openxava.setListsSize(application, module, "list", 1);
 	openxava.setListsSize(application, module, "collection", 0.95);
-	// tmp fin
 }
 
-openxava.setListsSize = function(application, module, type, percentage) { // tmp	
+openxava.setListsSize = function(application, module, type, percentage) { 	
 	var buttonBar = $('#' + openxava.decorateId(application, module, "button_bar"));
 	var scrollId = '.' + openxava.decorateId(application, module, type + "_scroll");
-	$(scrollId).width(50); // tmp
+	$(scrollId).width(50); 
 	$(scrollId).width(buttonBar.width() * percentage);
 	$(window).resize(function() {
-		$(scrollId).width(50); // tmp
+		$(scrollId).width(50); 
 		$(scrollId).width(buttonBar.width() * percentage);
 	});	
 }

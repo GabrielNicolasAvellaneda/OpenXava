@@ -41,7 +41,8 @@ public class ProductTest extends ModuleTestBase {
 		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
-		"List.hideRows"
+		"List.hideRows",
+		"List.sumColumn"
 	};
 		
 	public ProductTest(String testName) {
@@ -62,7 +63,7 @@ public class ProductTest extends ModuleTestBase {
 		assertError("Unit price in Product has too much decimals. Only 2 are allowed");
 	}
 	*/
-	
+		
 	public void testCustomizeList_sortProperties() throws Exception {
 		execute("List.customize");
 		execute("List.addColumns");
@@ -340,7 +341,7 @@ public class ProductTest extends ModuleTestBase {
 		assertActions(listActions);
 		assertValueInList(1, "number", "2");
 		assertValueInList(1, "unitPrice", "20");
-		assertValueInList(1, "unitPriceInPesetas", "3,328");
+		assertValueInList(1, "unitPriceInPesetas", "3,328");			
 	}
 	
 	public void testValidationWithValidatorsChanged() throws Exception {

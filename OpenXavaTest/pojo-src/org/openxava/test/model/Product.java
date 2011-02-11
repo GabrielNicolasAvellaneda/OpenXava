@@ -108,7 +108,7 @@ public class Product {
 	@PropertyValidator(UnitPriceValidator.class)
 	@OnChange(forViews="DEFAULT, WithSection",
 		value=OnChangeProductUnitPriceAction.class
-	)
+	)	
 	private BigDecimal unitPrice;
 		
 	@Stereotype("MEMO")

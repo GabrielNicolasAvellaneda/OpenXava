@@ -223,6 +223,19 @@ here that you want to override.
 			hidden="true"
 			mode="list"/>
 				
+		<action name="sumColumn"
+			class="org.openxava.actions.SumColumnAction"
+			hidden="true"
+			mode="list"
+			image="images/summation.gif"/>
+			
+		<action name="removeColumnSum"
+			class="org.openxava.actions.RemoveColumnSumAction"
+			hidden="true"
+			mode="list"
+			image="images/remove.gif"/>			
+						
+				
 	</controller>
 	
 	<controller name="Search">  

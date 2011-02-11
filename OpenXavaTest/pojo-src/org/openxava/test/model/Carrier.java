@@ -84,7 +84,7 @@ public class Carrier {
 		"${warehouse.number} = ${this.warehouse.number} AND " +
 		"NOT (${number} = ${this.number})"
 	)
-	@Editor(forViews="FellowsNames", value="CarriersNames") 
+	@Editor(forViews="FellowsNames", value="CarriersNames")
 	public Collection<Carrier> getFellowCarriers() { 
 		// At the moment you must write a code that returns the same result
 		// of the @Condition. 

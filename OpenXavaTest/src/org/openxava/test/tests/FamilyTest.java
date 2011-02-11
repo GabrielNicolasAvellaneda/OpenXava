@@ -21,7 +21,8 @@ public class FamilyTest extends ModuleTestBase {
 		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
-		"List.hideRows"
+		"List.hideRows",
+		"List.sumColumn"
 	};
 
 	public FamilyTest(String testName) {

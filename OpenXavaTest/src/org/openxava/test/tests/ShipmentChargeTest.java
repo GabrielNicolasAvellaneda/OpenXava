@@ -26,8 +26,13 @@ public class ShipmentChargeTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("shipment.KEY", "");
 		
-		// Searching and verifying
+		// Verfiying in list
 		execute("Mode.list");
+		assertListRowCount(1);
+		assertValueInList(0, "amount", "150.00"); 
+		assertTotalInList("amount", "150.00");
+		
+		// Searching and verifying
 		execute("Mode.detailAndFirst");		
 		assertValue("mode", usesAnnotatedPOJO()?"0":"1"); 
 		assertValue("shipment.KEY", shipment);

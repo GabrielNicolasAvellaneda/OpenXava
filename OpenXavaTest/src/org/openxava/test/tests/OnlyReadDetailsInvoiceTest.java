@@ -58,7 +58,8 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Collection.view",
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize",			
+			"List.customize",
+			"List.sumColumn",
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are alwasy present						
 		};		

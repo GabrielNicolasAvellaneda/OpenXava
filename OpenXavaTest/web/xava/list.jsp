@@ -24,13 +24,13 @@ String id = "list";
 String collectionArgv = "";
 String prefix = "";
 String tabObject = request.getParameter("tabObject");
-String scrollId = "list_scroll"; // tmp
+String scrollId = "list_scroll"; 
 tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
 if (collection != null && !collection.equals("")) {
 	id = collection;
 	collectionArgv=",collection="+collection;
 	prefix = tabObject + "_";
-	scrollId = "collection_scroll"; // tmp
+	scrollId = "collection_scroll"; 
 }
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
 tab.setRequest(request); 
@@ -75,11 +75,7 @@ String cssCurrentRow = style.getCurrentRow();
 <%
 	}
 %>
-<%-- tmp ini 
-<div class="<xava:id name='<%=scrollId%>'/>" style="overflow-x: auto; overflow-y: hidden">
---%>
-<div class="<xava:id name='<%=scrollId%>'/>" style="overflow: auto;">
-<%-- tmp fin --%> 
+<div class="<xava:id name='<%=scrollId%>'/>" style="overflow: auto;"> 
   <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
@@ -355,7 +351,44 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 </tr>
 <%
 }
-
+%>
+<tr class="<%=style.getTotalRow()%>">
+<td style="<%=style.getTotalEmptyCellStyle()%>"/>
+<td style="<%=style.getTotalEmptyCellStyle()%>"/>
+<%
+for (int c=0; c<model.getColumnCount(); c++) {
+	MetaProperty p = tab.getMetaProperty(c);
+	String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
+	String cellStyle = align + style.getListCellStyle();	
+	if (tab.hasTotal(c)) {
+		String ftotal = WebEditors.format(request, p, tab.getTotal(c), errors, view.getViewName(), true);
+	%> 	
+	<td class="<%=style.getTotalCell()%>" style="<%=style.getTotalCellStyle()%>">
+	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden;">
+	<nobr>
+	<xava:image action='List.removeColumnSum' argv='<%="property="+p.getQualifiedName() + collectionArgv%>' cssStyle="vertical-align: top;"/>
+	<%=ftotal%>&nbsp;
+	</nobr>	
+	</div>	
+	</td>
+	<%	
+	}
+	else if (tab.isTotalCapable(c)) {
+	%>	 	
+	<td style="<%=style.getTotalCapableCellStyle() %>">		
+		<xava:image action='List.sumColumn' argv='<%="property="+p.getQualifiedName() + collectionArgv%>'/>&nbsp;	
+	</td>
+	<%	
+	}
+	else {
+	%>	 
+	<td style="<%=style.getTotalEmptyCellStyle()%>"/>
+	<%		
+	}	
+}
+%>
+</tr>
+<%
 }
 else {
 %>
@@ -379,9 +412,7 @@ if (lastRow != null) {
 }
 %>
 </table>
-<%-- tmp ini --%>
-</div>
-<%-- tmp fin --%> 
+</div> 
 
 <% if (!tab.isRowsHidden()) { %>
 <table width="100%" class="<%=style.getListInfo()%>">

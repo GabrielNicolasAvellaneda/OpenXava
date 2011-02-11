@@ -317,25 +317,33 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	public void setCurrent(int i) {
 		current = i;
 	}
-	public int getResultSize() throws RemoteException {
-		if (this.selectSize == null || keyHasNulls()) return 0;						
+	public int getResultSize() throws RemoteException { 
+		return executeNumberSelect(this.selectSize, "tab_result_size_error").intValue();
+	}
+	
+	public Number getSum(String column) throws RemoteException { 
+		return executeNumberSelect(createSumSelect(column), "column_sum_error"); 		
+	}
+	
+	private Number executeNumberSelect(String select, String errorId) throws RemoteException {
+		if (select == null || keyHasNulls()) return 0;						
 		Connection con = null;
 		try {
 			con = connectionProvider.getConnection();
-			PreparedStatement ps = con.prepareStatement(this.selectSize);			
+			PreparedStatement ps = con.prepareStatement(select);			
 			for (int i = 0; i < key.length; i++) {
 				ps.setObject(i + 1, key[i]);				
 			}			
 			ResultSet rs = ps.executeQuery();
 			rs.next();
-			int size = rs.getInt(1);
+			Number size = (Number) rs.getObject(1);
 			rs.close();
 			ps.close();
 			return size;
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
-			throw new RemoteException(XavaResources.getString("tab_result_size_error"));
+			throw new RemoteException(XavaResources.getString(errorId));
 		}
 		finally {
 			try {
@@ -347,12 +355,27 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		}						
 	}
 	
+	
+	
 	private String createSizeSelect(String select) {
 		if (select == null) return null;		
 		String selectUpperCase = Strings.changeSeparatorsBySpaces(select.toUpperCase());
 		int iniFrom = selectUpperCase.indexOf(" FROM ");
 		int end = selectUpperCase.indexOf("ORDER BY ");
 		StringBuffer sb = new StringBuffer("SELECT COUNT(*) ");
+		if (end < 0) sb.append(select.substring(iniFrom));
+		else sb.append(select.substring(iniFrom, end - 1));
+		return sb.toString();
+	}
+	
+	private String createSumSelect(String column) { 
+		if (select == null) return null;		
+		String selectUpperCase = Strings.changeSeparatorsBySpaces(select.toUpperCase());
+		int iniFrom = selectUpperCase.indexOf(" FROM ");
+		int end = selectUpperCase.indexOf("ORDER BY ");
+		StringBuffer sb = new StringBuffer("SELECT SUM(");
+		sb.append(column); 
+		sb.append(") ");
 		if (end < 0) sb.append(select.substring(iniFrom));
 		else sb.append(select.substring(iniFrom, end - 1));
 		return sb.toString();

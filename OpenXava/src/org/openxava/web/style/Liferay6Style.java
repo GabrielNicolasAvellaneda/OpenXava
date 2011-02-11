@@ -79,6 +79,19 @@ public class Liferay6Style extends Liferay51Style {
 	
 	public String getSectionTabEndDecoration() { 
 		return "</span></span></li>"; 
-	} 	
-
+	}
+	
+	
+	public String getTotalEmptyCellStyle() {  
+		return "border-bottom-style: hidden;";
+	}
+	
+	public String getTotalCell() { 
+		return "";
+	}
+	
+	public String getTotalCellStyle() {  
+		return getTotalCellAlignStyle() + ";border-bottom-style: hidden;";
+	}	
+	
 }

@@ -25,7 +25,8 @@ public class ChangeProductsPriceTest extends ModuleTestBase {
 		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
-		"List.hideRows"
+		"List.hideRows",
+		"List.sumColumn"
 	};
 
 	public ChangeProductsPriceTest(String testName) {

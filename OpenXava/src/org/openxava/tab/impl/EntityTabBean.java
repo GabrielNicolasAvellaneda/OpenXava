@@ -28,6 +28,11 @@ public class EntityTabBean extends SessionBase implements IEntityTabDataProvider
 	public int getResultSize(ITabProvider tabProvider) {
 		dataProvider.setConnectionProvider(getPortableContext());
 		return dataProvider.getResultSize(tabProvider);		
-	}	
+	}
+	
+	public Number getSum(ITabProvider tabProvider, String property) { 
+		dataProvider.setConnectionProvider(getPortableContext());
+		return dataProvider.getSum(tabProvider, property);				
+	}
 		
 }

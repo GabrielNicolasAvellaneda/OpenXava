@@ -7,5 +7,6 @@ public interface IEntityTabDataProvider {
 	
 	DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException;
 	int getResultSize(ITabProvider tabProvider) throws RemoteException;
+	Number getSum(ITabProvider tabProvider, String column); 
 		
 }

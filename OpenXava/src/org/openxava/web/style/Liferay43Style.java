@@ -72,17 +72,15 @@ public class Liferay43Style extends Style {
 		return "border=0 cellspacing=0 cellpadding=0"; 
 	}
 	
-	public String getListStyle() { 
-		return "border-collapse: collapse; border-bottom: 2px solid #CCCCCC;"; 
+	public String getListStyle() {  
+		if (isIE6() || isIE7()) return "border-collapse: collapse; border-bottom-style: hidden;"; 
+		return "border-collapse: collapse; border-bottom: 1px solid #CCCCCC;"; 
 	}	
-	
-	
+		
 	public String getListHeader() { 
 		return "portlet-section-header";		
 	}
-	
-	
-	
+		
 	public String getListHeaderCell() { 		
 		return getListCell();
 	}
@@ -305,4 +303,15 @@ public class Liferay43Style extends Style {
 	public String getHelpImage() {
 		return getImagesFolder() + "common/help.png";
 	}
+			
+	public String getTotalCellStyle() {  
+		return getTotalCellAlignStyle() + ";border-bottom-style: hidden;";
+	}	
+	
+	public String getTotalEmptyCellStyle() {  
+		return "background-color: white; border-bottom-style: hidden;";		
+	}
+
+				
 }
+

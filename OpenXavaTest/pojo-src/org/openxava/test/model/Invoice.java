@@ -34,7 +34,15 @@ import org.openxava.util.*;
 		"details { details }" +			
 		"amounts { amountsSum; vatPercentage; vat }" +
 		"deliveries { deliveries }"		
-	),		
+	),
+	@View(name="NoSections", members=
+		"year, number, date;" +		
+		"customer;" +		
+		"details;" +			
+		"amountsSum;" +
+		"vatPercentage, vat;" +
+		"total"	
+	),	
 	@View(name="Simple", members="year, number, date, yearDiscount;"),
 	@View(name="NestedSections", members=
 		"year, number, date;" +
@@ -85,7 +93,7 @@ import org.openxava.util.*;
 })
 
 @Tabs({
-	@Tab(properties="year, number, date, amountsSum, vat, detailsCount, paid, importance"),
+	@Tab(properties="year, number, date, amountsSum, vat, detailsCount, paid, importance"), 	
 	@Tab(name="Level4Reference", properties="year, number, customer.seller.level.description"),
 	@Tab(name="Simple", properties="year, number, date", 
 		defaultOrder="${year} desc, ${number} desc"
@@ -172,7 +180,10 @@ public class Invoice {
 	
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
 	@OrderBy("serviceType desc") @org.hibernate.validator.Size(min=1)
-	@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")	
+	@ListsProperties({
+		@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free"),
+		@ListProperties(forViews="NoSections", value="product.description, product.unitPrice+, quantity, amount"),  
+	})
 	@EditAction(forViews="DEFAULT", value="Invoice.editDetail")
 	@DetailAction(forViews="DEFAULT", value="Invoice.viewProduct")
 	@ReadOnly(forViews="OnlyReadDetails")

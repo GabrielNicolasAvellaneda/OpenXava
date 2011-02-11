@@ -17,7 +17,7 @@ import org.openxava.jpa.*;
 
 @Entity
 @IdClass(TransportChargeKey.class)
-@View(name="WithDescriptionsList", members="delivery; amount") // tmp
+@View(name="WithDescriptionsList", members="delivery; amount") 
 @Tabs({
 	@Tab(properties="delivery.invoice.year, delivery.invoice.number, delivery.number, amount"),
 	@Tab(name="WithDistance", properties="delivery.invoice.year, delivery.invoice.number, delivery.number, delivery.distance, amount")
@@ -34,7 +34,7 @@ public class TransportCharge {
 	})
 	*/
 	@ReferenceView("MoreSections")
-	@DescriptionsList(forViews="WithDescriptionsList") // tmp
+	@DescriptionsList(forViews="WithDescriptionsList") 
 	private Delivery delivery;
 	
 	@Stereotype("MONEY") @Required

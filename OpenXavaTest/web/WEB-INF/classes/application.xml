@@ -238,8 +238,8 @@
 		<model name="Invoice"/>
 		<view name="Deliveries"/>
 		<controller name="Typical"/>	
-	</module>			<module name="InvoiceNoList" folder="invoicing.variations">		<model name="Invoice"/>		<controller name="Typical"/>			<mode-controller name="Void"/>	</module>
-			
+	</module>			<module name="InvoiceNoList" folder="invoicing.variations">		<model name="Invoice"/>		<controller name="Typical"/>			<mode-controller name="Void"/>	</module>		<module name="InvoiceNoSections" folder="invoicing.variations">		<model name="Invoice"/>		<view name="NoSections"/>		<controller name="Typical"/>		</module>	
+		
 	<module name="InvoiceCustomerAsAggregate">
 		<model name="Invoice"/>
 		<view name="CustomerAsAggregateWithDeliveryPlaces"/>

@@ -351,7 +351,44 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 </tr>
 <%
 }
-
+%>
+<tr class="<%=style.getTotalRow()%>">
+<td style="<%=style.getTotalEmptyCellStyle()%>"/>
+<td style="<%=style.getTotalEmptyCellStyle()%>"/>
+<%
+for (int c=0; c<model.getColumnCount(); c++) {
+	MetaProperty p = tab.getMetaProperty(c);
+	String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
+	String cellStyle = align + style.getListCellStyle();	
+	if (tab.hasTotal(c)) {
+		String ftotal = WebEditors.format(request, p, tab.getTotal(c), errors, view.getViewName(), true);
+	%> 	
+	<td class="<%=style.getTotalCell()%>" style="<%=style.getTotalCellStyle()%>">
+	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden;">
+	<nobr>
+	<xava:image action='List.removeColumnSum' argv='<%="property="+p.getQualifiedName() + collectionArgv%>' cssStyle="vertical-align: top;"/>
+	<%=ftotal%>&nbsp;
+	</nobr>	
+	</div>	
+	</td>
+	<%	
+	}
+	else if (tab.isTotalCapable(c)) {
+	%>	 	
+	<td style="<%=style.getTotalCapableCellStyle() %>">		
+		<xava:image action='List.sumColumn' argv='<%="property="+p.getQualifiedName() + collectionArgv%>'/>&nbsp;	
+	</td>
+	<%	
+	}
+	else {
+	%>	 
+	<td style="<%=style.getTotalEmptyCellStyle()%>"/>
+	<%		
+	}	
+}
+%>
+</tr>
+<%
 }
 else {
 %>

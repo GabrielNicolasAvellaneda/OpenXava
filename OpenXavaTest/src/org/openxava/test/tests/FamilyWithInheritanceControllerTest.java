@@ -42,7 +42,8 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
-		"List.hideRows"
+		"List.hideRows",
+		"List.sumColumn" 
 	};
 	
 	private String [] actionsWithoutDelete = {

@@ -32,7 +32,8 @@ public class DeliveryTest extends ModuleTestBase {
 		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
-		"List.hideRows"
+		"List.hideRows",
+		"List.sumColumn"
 	};
 		
 	public DeliveryTest(String testName) {
@@ -741,7 +742,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	
-	public void testDeleteSelectedOnesAndOrderBy() throws Exception { 
+	public void testDeleteSelectedOnesAndOrderBy() throws Exception {  
 		// Creating new
 		execute("CRUD.new");
 		setValue("invoice.year", "2009");
@@ -830,7 +831,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNotExists("carrier.number");			
 	}
 	
-	public void testEnvironmentVariablesModule() throws Exception { 
+	public void testEnvironmentVariablesModule() throws Exception {  
 		// Verifying if works the action search special for this module 
 
 		// Creating
@@ -921,7 +922,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertMessage("Delivery deleted successfully");
 	}
 	
-	public void testMultipleMappingProperty() throws Exception { 				
+	public void testMultipleMappingProperty() throws Exception {  				
 		// Creating new
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
@@ -955,7 +956,7 @@ public class DeliveryTest extends ModuleTestBase {
 
 		// Verifying if date property is well in list 
 		// Only works if there are lest than 11 object (because see in first page)		
-		execute("Mode.list");
+		execute("Mode.list"); 
 		assertActions(listActions);   
 		assertNoErrors();
 		int quantity = getListRowCount();
@@ -1121,7 +1122,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoEditable("advice"); // in section				
 	}
 	
-	public void testValidValuesInList() throws Exception { 
+	public void testValidValuesInList() throws Exception {  
 		int quantity = getListRowCount();
 		assertTrue("For this test is needed at least one created delivery", quantity > 0);
 		Collection values = new ArrayList();

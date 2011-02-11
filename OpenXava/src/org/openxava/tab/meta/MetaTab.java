@@ -51,6 +51,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Map entityReferencesReferenceNames;
 	private String lastDefaultSchema;
 	private String id;
+	private Collection totalPropertiesNames;
 	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		String id = null;
@@ -350,7 +351,13 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		StringTokenizer st = new StringTokenizer(properties, ",;");
 		List result = new ArrayList();
 		while (st.hasMoreTokens()) {
-			result.add(st.nextToken().trim());
+			String name = st.nextToken().trim();
+			if (name.endsWith("+")) {
+				name = name.substring(0, name.length() - 1);
+				if (totalPropertiesNames == null) totalPropertiesNames = new HashSet();
+				totalPropertiesNames.add(name);
+			}
+			result.add(name);
 		}
 		return result;
 	}
@@ -944,6 +951,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			if (!Is.emptyString(t.getBaseCondition()) && Is.emptyString(getBaseCondition())) setBaseCondition(t.getBaseCondition());
 			if (!Is.emptyString(t.getDefaultOrder()) & Is.emptyString(getDefaultOrder())) setDefaultOrder(t.getDefaultOrder());			
 		}
+	}
+
+	/**
+	 * 
+	 * @since 4.1
+	 */
+	public Collection getTotalPropertiesNames() {
+		return totalPropertiesNames == null?Collections.EMPTY_SET:totalPropertiesNames;
 	}
 	
 }

@@ -106,5 +106,17 @@ public class Liferay51Style extends Liferay43Style {
 	public String getHelpImage() {
 		return getImagesFolder() + "portlet/help.png";
 	}
+		
+	public String getTotalRow() { 
+		return "results-row";
+	}
+	
+	public String getTotalCell() { 
+		return "liferay-xava-cell-wrapper";
+	}		
+	
+	public String getTotalCellStyle() {  
+		return getTotalCellAlignStyle();
+	}	
 	
 }

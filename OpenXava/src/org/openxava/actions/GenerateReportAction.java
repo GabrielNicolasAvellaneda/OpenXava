@@ -1,7 +1,5 @@
 package org.openxava.actions;
 
-import javax.servlet.http.*;
-
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;

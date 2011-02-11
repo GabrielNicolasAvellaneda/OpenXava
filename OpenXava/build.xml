@@ -910,6 +910,9 @@
 		<delete file="../${project}/web/WEB-INF/lib/hibernate-annotations.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/hibernate-commons-annotations.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/hibernate-entitymanager.jar"/>
+		<!-- Delete other unused libraries -->
+		<delete file="../${project}/web/WEB-INF/lib/jboss-archive-browsing.jar"/>
+	
 	</target>
 	
 	<target name="defineHibernateTool">

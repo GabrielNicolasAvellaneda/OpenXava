@@ -30,6 +30,9 @@ public interface ITabProvider extends ISearch {
    * {@link #nextChunk} you will obtain the first chunk and
    * fresh data from db.
    */
-  void reset() throws RemoteException;  
+  void reset() throws RemoteException;
+
+
+  Number getSum(String column) throws RemoteException;   
   
 }
