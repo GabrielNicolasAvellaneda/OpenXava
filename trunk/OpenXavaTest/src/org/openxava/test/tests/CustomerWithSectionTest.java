@@ -106,7 +106,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertError("Empty URL, so you cannot go to it");
 		setValue("website", "http://www.example.com/");
 		execute("WebURL.go", "property=website,viewObject=xava_view_section0");		
-		assertTrue(getHtml().indexOf("You have reached this web page by typing") >= 0);
+		assertTrue(getHtml().indexOf("we maintain a number of domains such as EXAMPLE.COM") >= 0); 		
 	}
 	
 	public void testForwardToJavaScript() throws Exception { 
@@ -174,7 +174,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		setValue("email", "pepe");
 		setValue("website", "openxava");
 		execute("Customer.save");		
-		assertError("Telephone must be a valid number");
+		assertError("Telephone must be a valid number"); 
 		assertError("eMail must be a valid email address");
 		assertError("Web site must be a valid url");
 		setValue("telephone", "123");

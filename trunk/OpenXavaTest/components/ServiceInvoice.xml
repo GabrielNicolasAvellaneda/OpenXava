@@ -19,6 +19,10 @@
 	
 	<view members="year, number, amount; description"/>
 	
+	<tab >
+		<properties>year, number, description, amount+</properties>
+	</tab>
+	
 	<!-- 
 	Do not put here a mapping, 
 	because this entity is for testing default mapping  

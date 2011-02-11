@@ -22,6 +22,7 @@ public class Invoice2002Test extends ModuleTestBase {
 		"List.orderBy",
 		"List.viewDetail",
 		"List.hideRows",
+		"List.sumColumn",
 		"Invoice2002.changeListTitle"
 	};
 

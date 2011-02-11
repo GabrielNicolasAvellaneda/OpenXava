@@ -86,5 +86,9 @@ public class XTableModelDecoratorBase
 	public int getTotalSize() throws RemoteException {
 		return impl.getTotalSize();		
 	}
+
+	public Number getSum(String property) throws RemoteException { 
+		return impl.getSum(property);		
+	}
 	
 }

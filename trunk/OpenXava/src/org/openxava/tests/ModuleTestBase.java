@@ -1071,7 +1071,7 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	protected String getValueInCollection(String collection, int row, String name) throws Exception {
-		int column = getPropertiesList(collection).indexOf(name);		
+		int column = getPropertiesList(collection).indexOf(name); 
 		return getValueInCollection(collection, row, column);
 	}
 
@@ -1080,9 +1080,18 @@ public class ModuleTestBase extends TestCase {
 		MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(collection);
 		List propertiesList = metaCollectionView==null?null:metaCollectionView.getPropertiesListNames();
 		if (propertiesList == null || propertiesList.isEmpty()) propertiesList = getMetaModel().getMetaCollection(collection).getMetaReference().getMetaModelReferenced().getPropertiesNamesWithoutHiddenNorTransient();
-		return propertiesList;
+		return removePropertySuffix(propertiesList);
 	}	
 	
+	private List<String> removePropertySuffix(List<String> propertiesList) { 
+		List<String> result = new ArrayList<String>();
+		for (String property: propertiesList) {
+			if (property.endsWith("+")) result.add(property.substring(0, property.length() - 1));
+			else result.add(property);
+		}
+		return result;
+	}
+
 	private String getCollectionPrefix() {  
 		String viewMember = getViewMember();
 		if (Is.emptyString(viewMember)) return "";
@@ -1152,7 +1161,7 @@ public class ModuleTestBase extends TestCase {
 		if (table.getRowCount() > 2 && "nodata".equals(table.getRow(2).getId())) { 
 			return 0;
 		}						
-		int increment = collectionHasFilterHeader(table)?2:1;
+		int increment = collectionHasFilterHeader(table)?3:1; 
 		return table.getRowCount() - increment;
 	}
 	
@@ -1253,10 +1262,33 @@ public class ModuleTestBase extends TestCase {
 		assertLabelInList("list", XavaResources.getString("list_not_displayed"), column, label);
 	}
 
-
+	protected void assertTotalInList(int column, String total) throws Exception { 
+		assertTotalInList("list", XavaResources.getString("list_not_displayed"), column, total);
+	}
+	
+	protected void assertTotalInList(String name, String total) throws Exception { 
+		assertTotalInList(getMetaTab().getPropertiesNames().indexOf(name), total);
+	}
+	
+	protected void assertTotalInCollection(String collection, int column, String total) throws Exception { 
+		assertTotalInList(collection, XavaResources.getString("collection_not_displayed", collection), column, total);
+	}
+	
+	protected void assertTotalInCollection(String collection, String name, String total) throws Exception { 
+		int column = getPropertiesList(collection).indexOf(name);
+		assertTotalInCollection(collection, column, total);
+	}
+	
 	private void assertLabelInList(String tableId, String message, int column, String label) throws Exception {
 		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, 
 				getTable(tableId, message).getCellAt(0, column+2).asText().trim());
+	}
+	
+	private void assertTotalInList(String tableId, String message, int column, String total) throws Exception { 
+		HtmlTable table = getTable(tableId, message);
+		int row = table.getRowCount() - 1;
+		assertEquals(XavaResources.getString("total_not_match", new Integer(column)), total,   
+			table.getCellAt(row, column+2).asText().trim());
 	}		
 	
 	protected void checkRow(int row) throws Exception {

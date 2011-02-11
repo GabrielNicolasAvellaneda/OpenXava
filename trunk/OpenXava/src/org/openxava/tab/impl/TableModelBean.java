@@ -31,6 +31,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 	private String[] columnsClasses;
 	private String[] heading = new String[0];
 	private int[] indexesPK = { 0 };
+	private List propertiesNames; 
 	boolean allLoaded;
 
 	private Vector data;
@@ -278,6 +279,12 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 		return totalSize; 
 	}
 	
+	public Number getSum(String property) throws RemoteException {		
+		Number result = entityTab.getSum(property);
+		return (Number) convert(result, getPropertiesNames().indexOf(property) + getPKIndexes().length);
+	}
+
+	
 	/**
 	 * If <tt>true</tt> tries to translate the heading. <p> 
 	 * 
@@ -295,6 +302,14 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 
 	public void setTranslateHeading(boolean b) {
 		translateHeading = b;
+	}
+
+	public void setPropertiesNames(List propertiesNames) {
+		this.propertiesNames = propertiesNames;
+	}
+
+	public List getPropertiesNames() {
+		return propertiesNames;
 	}
 
 }

@@ -32,7 +32,7 @@
 	</view>
 	
 	<tab>
-		<properties>mode, amount, shipment.number, slow, shipment.description</properties>
+		<properties>mode, amount+, shipment.number, slow, shipment.description</properties>
 	</tab>
 
 	<entity-mapping table="XAVATEST@separator@SHIPMENTCHARGE">
@@ -61,7 +61,7 @@
 				referenced-model-property="number"/>	
 		</reference-mapping>							
 		<property-mapping
-			property="amount" column="AMOUNT"/>
+			property="amount" column="TOTALAMOUNT"/>
 	</entity-mapping>
 	
 </component>

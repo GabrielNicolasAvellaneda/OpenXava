@@ -220,6 +220,19 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			throw new EJBException(XavaResources.getString("tab_result_size_error"));
 		}
 	}	
+	
+	public Number getSum(ITabProvider tabProvider, String column) { 
+		try {
+			if (tabProvider instanceof JDBCTabProvider) {
+				((JDBCTabProvider) tabProvider).setConnectionProvider(getConnectionProvider());
+			}			
+			return tabProvider.getSum(column);
+		}
+		catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new EJBException(XavaResources.getString("total_problem")); 
+		}
+	}
 		
 	public String getComponentName() {
 		return componentName;
@@ -227,5 +240,6 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	public void setComponentName(String componentName) {
 		this.componentName = componentName;
 	}
+
 	
 }

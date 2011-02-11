@@ -3,16 +3,7 @@ package org.openxava.tab;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -70,6 +61,7 @@ public class Tab implements java.io.Serializable {
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
 	
 	private final static String PROPERTIES_NAMES = "propertiesNames";
+	private final static String TOTAL_PROPERTIES_NAMES = "totalPropertiesNames"; 
 	private final static String ROWS_HIDDEN = "rowsHidden";
 	private final static String FILTER_VISIBLE = "filterVisible";
 	private final static String PAGE_ROW_COUNT = "pageRowCount"; 
@@ -123,10 +115,12 @@ public class Tab implements java.io.Serializable {
 	private Boolean resizeColumns=null; 
 	private Map<String, Integer> columnWidths;
 	private String [] filterConditionValues = null; 
-	private boolean filtered = false; 
+	private boolean filtered = false;
+	private Set<String> totalPropertiesNames; 
 	
 	private static int nextOid = 0; 
 	public int oid = nextOid++;
+	
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
@@ -242,12 +236,22 @@ public class Tab implements java.io.Serializable {
 					getTabName().startsWith(COLLECTION_PREFIX) // Used for collection 
 				) { 
 					metaTab = MetaTab.createDefault(MetaModel.get(getModelName()));
-					metaTab.setName(getTabName());
+					metaTab.setName(getTabName());			
 				}				
 				else throw ex;
 			}
 		}
 		return metaTab;
+	}
+	
+	/**
+	 * The default properties are the initial ones and those to show when the user 
+	 * reset his customizations.
+	 * 
+	 * @since 4.1
+	 */
+	public void setDefaultPropertiesNames(String properties) { 
+		getMetaTab().setDefaultPropertiesNames(properties); 
 	}
 	
 	/**
@@ -1205,6 +1209,7 @@ public class Tab implements java.io.Serializable {
 		cloneMetaTab();
 		getMetaTab().restoreDefaultProperties();		
 		resetAfterChangeProperties();
+		totalPropertiesNames = null; 
 		removeUserPreferences();
 	}
 	
@@ -1213,7 +1218,7 @@ public class Tab implements java.io.Serializable {
 		reset(); 
 		metaProperties = null;
 		metaPropertiesNotCalculated = null;		
-		metaPropertiesKey = null;		
+		metaPropertiesKey = null;
 		conditionValues = null;		
 		orderBy = null;			
 		condition = null;
@@ -1262,7 +1267,8 @@ public class Tab implements java.io.Serializable {
 			String propertiesNames = preferences.get(PROPERTIES_NAMES, null);
 			if (propertiesNames != null) {
 				setPropertiesNames(propertiesNames);
-			}
+			}			
+			totalPropertiesNames = Strings.toSetNullByPass(preferences.get(TOTAL_PROPERTIES_NAMES, null));
 			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);			
 			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);
 			pageRowCount = preferences.getInt(PAGE_ROW_COUNT, pageRowCount); 
@@ -1285,6 +1291,7 @@ public class Tab implements java.io.Serializable {
 			Preferences preferences = getPreferences();			
 
 			preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
+			preferences.put(TOTAL_PROPERTIES_NAMES, Strings.toString(getTotalPropertiesNames())); 
 			preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
 			preferences.putBoolean(FILTER_VISIBLE, filterVisible);
 			preferences.putInt(PAGE_ROW_COUNT, pageRowCount); 
@@ -1592,6 +1599,84 @@ public class Tab implements java.io.Serializable {
 			
 		}
 		
+	}
+	
+	/**
+	 * @since 4.1
+	 */
+	public boolean hasTotal(int column) { 
+		MetaProperty p = getMetaProperty(column);
+		if (!getTotalPropertiesNames().contains(p.getQualifiedName())) return false;
+		if (p.isCalculated()) {
+			log.warn(XavaResources.getString("sum_not_for_calculated_properties", p.getQualifiedName(), p.getMetaModel().getName())); 
+			return false;
+		}
+		if (!p.isNumber()) {
+			log.warn(XavaResources.getString("sum_not_for_not_numeric_properties", p.getQualifiedName(), p.getMetaModel().getName())); 
+			return false;
+		}		
+		return true;
+	}
+	
+	/**
+	 * @since 4.1
+	 */
+	public void addTotalProperty(String property) { 	
+		getTotalPropertiesNames().add(property);
+		saveUserPreferences();
+	}
+	
+	/**
+	 * @since 4.1
+	 */	
+	public void removeTotalProperty(String property) { 
+		getTotalPropertiesNames().remove(property);
+		saveUserPreferences();
+	}
+	
+	/**
+	 * @since 4.1
+	 */
+	public Set<String> getTotalPropertiesNames() {  
+		if (totalPropertiesNames == null) {
+			totalPropertiesNames = new HashSet(getMetaTab().getTotalPropertiesNames());
+		}
+		return totalPropertiesNames;
+	}
+	
+	/**
+	 * @since 4.1
+	 */
+	public boolean isTotalCapable(int column) {  
+		MetaProperty p = getMetaProperty(column);			
+		return !p.isCalculated() && p.isNumber(); 
+	}
+	
+	/**
+	 * @since 4.1
+	 */
+	public Number getTotal(int column) {
+		return getTotal(getMetaProperty(column).getQualifiedName());
+	}
+	
+	/**
+	 * @since 4.1
+	 */
+	public Number getTotal(String qualifiedPropertyName) {   
+		try {
+			return getTableModel().getSum(qualifiedPropertyName);
+		}
+		catch (Throwable ex) {
+			log.warn(XavaResources.getString("total_problem"),ex); 
+			return -1;
+		} 
+	}
+
+	/**
+	 * @since 4.1
+	 */	
+	public String getTotalPropertiesNamesAsString() { 
+		return Strings.toString(getTotalPropertiesNames());
 	}
 		
 }

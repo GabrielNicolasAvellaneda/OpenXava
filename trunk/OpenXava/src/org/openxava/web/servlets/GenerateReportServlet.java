@@ -1,6 +1,7 @@
 package org.openxava.web.servlets;
 
 import java.io.*;
+import java.math.*;
 import java.sql.*;
 import java.text.*;
 import java.util.*;
@@ -110,10 +111,8 @@ public class GenerateReportServlet extends HttpServlet {
 				return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(r);
 			}
 
-			if (r instanceof java.math.BigDecimal) {
-				NumberFormat nf = NumberFormat.getNumberInstance(locale);
-				nf.setMinimumFractionDigits(2);
-				return nf.format(r);
+			if (r instanceof BigDecimal) {
+				return formatBigDecimal(r, locale); 
 			}
 			
 			return r;
@@ -155,6 +154,9 @@ public class GenerateReportServlet extends HttpServlet {
 					tab.setRequest(request);
 					parameters.put("Title", tab.getTitle());									
 					parameters.put("Organization", getOrganization(request, tab));
+					for (String totalProperty: tab.getTotalPropertiesNames()) {
+						parameters.put(totalProperty + "__TOTAL__", getTotal(tab, totalProperty));
+					}
 					is  = getReport(request, response, tab);
 					ds = getDataSource(tab, selectedRows, request);
 				}
@@ -181,6 +183,14 @@ public class GenerateReportServlet extends HttpServlet {
 		}		
 	}
 	
+	private Object getTotal(Tab tab, String totalProperty) { 
+		Object result = tab.getTotal(totalProperty);
+		if (result instanceof BigDecimal) {
+			result = formatBigDecimal(result, Locales.getCurrent());
+		}
+		return result;
+	}
+
 	private void setDefaultSchema(HttpServletRequest request) {
 		String hibernateDefaultSchemaTab = (String) request.getSession().getAttribute("xava_hibernateDefaultSchemaTab");
 		if (hibernateDefaultSchemaTab != null) {
@@ -216,6 +226,8 @@ public class GenerateReportServlet extends HttpServlet {
 		suri.append(tab.getTabName());
 		suri.append("&properties=");
 		suri.append(tab.getPropertiesNamesAsString());		
+		suri.append("&totalProperties=");
+		suri.append(tab.getTotalPropertiesNamesAsString());				
 		response.setCharacterEncoding(XSystem.getEncoding()); 				
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
@@ -233,6 +245,12 @@ public class GenerateReportServlet extends HttpServlet {
 			data = tab.getAllDataTableModel();
 		}
 		return new TableModelDecorator(data, tab.getMetaProperties(), Locales.getCurrent(), labelAsHeader);
+	}
+	
+	private static Object formatBigDecimal(Object number, Locale locale) { 
+		NumberFormat nf = NumberFormat.getNumberInstance(locale);
+		nf.setMinimumFractionDigits(2);
+		return nf.format(number);
 	}
 	
 }

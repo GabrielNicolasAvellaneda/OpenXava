@@ -616,4 +616,29 @@ public class Style {
 		return "ox-help";
 	}
 	
+	public String getTotalRow() { 
+		return "";
+	}
+	
+	public String getTotalCell() { 
+		return "";
+	}
+	
+	public String getTotalCellStyle() {
+		return getTotalCellAlignStyle();
+	}
+	
+	protected String getTotalCellAlignStyle() { 
+		return "vertical-align: middle; text-align: right;	padding-right: 0px;";
+	}
+	
+	public String getTotalEmptyCellStyle() { 
+		return ""; 
+	}
+	
+	public String getTotalCapableCellStyle() { 
+		return getTotalEmptyCellStyle() + "vertical-align: top; text-align: right;	padding: 0px;";
+	}
+	
+	
 }

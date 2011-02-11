@@ -13,9 +13,7 @@ String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
-<%-- tmp ini --%>
 <div class="<xava:id name='collection_scroll'/>" style="overflow: auto;">
-<%-- tmp fin --%>
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 	<%
@@ -139,6 +137,5 @@ for (int f=0; itAggregates.hasNext(); f++) {
 %>
 </tr>
 </table>
-<%-- tmp ini --%>
 </div>
-<%-- tmp fin --%> 
+ 

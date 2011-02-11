@@ -25,5 +25,7 @@ public interface IEntityTabImpl extends IEntityTab, ITabProvider
    * that a application programmer call this method directly.<br>
    */
   Object findEntity(Object [] clave) throws FinderException, RemoteException;
+
+  Number getSum(String property) throws RemoteException; 
   
 }

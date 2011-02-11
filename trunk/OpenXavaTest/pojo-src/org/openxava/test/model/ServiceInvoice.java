@@ -14,6 +14,7 @@ import org.openxava.calculators.*;
 
 @Entity
 @View( members = "year, number, amount; description" )
+@Tab( properties = "year, number, description, amount+" ) 
 public class ServiceInvoice {
 	
 	@Id @GeneratedValue(generator="system-uuid") @Hidden 

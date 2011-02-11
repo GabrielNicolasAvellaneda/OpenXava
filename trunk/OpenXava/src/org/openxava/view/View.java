@@ -864,6 +864,12 @@ public class View implements java.io.Serializable {
 		Iterator it = names.iterator();
 		while (it.hasNext()) {
 			String name = (String) it.next();
+			if (name.endsWith("+")) {
+				name = name.substring(0, name.length() - 1); 
+				if (view.isRepresentsCollection() && view.isCollectionCalculated()) {
+					log.warn(XavaResources.getString("sum_not_in_calculated_collections", view.getMemberName(), name));
+				}
+			}
 			MetaProperty metaProperty = view.getMetaModel().getMetaProperty(name);			
 			if (name.indexOf('.') >= 0) { 
 				metaProperty = metaProperty.cloneMetaProperty();
@@ -1188,8 +1194,8 @@ public class View implements java.io.Serializable {
 			collectionTab.setModelName(getModelName());
 			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());			
 			collectionTab.setMetaRowStyles(rowStyles);
-			if (propertiesListNames != null) {
-				collectionTab.setPropertiesNames(propertiesListNames);
+			if (propertiesListNames != null) {				
+				collectionTab.setDefaultPropertiesNames(propertiesListNames); 
 			}
 			MetaCollection metaCollection = getMetaCollection();
 			if (metaCollection.hasCondition()) {

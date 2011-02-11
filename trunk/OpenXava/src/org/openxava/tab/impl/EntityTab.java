@@ -196,6 +196,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			this.modelName = metaModel.getQualifiedName();			
 			table.setHeading(getHeading());
 			table.setColumnsClasses(getColumnsClasses());
+			table.setPropertiesNames(getPropertiesNames()); 
 			tabProvider.setFields(getFields());
 			tabProvider.setConditions(getConditions());			
 			tabProvider.setTable(getTableNameDB());
@@ -558,6 +559,11 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			return table.getRowCount(); 
 		}		
 		return getDataProvider(getComponentName()).getResultSize(tabProvider);
+	}
+	
+	public Number getSum(String property) throws RemoteException { 
+		String column = getMapping().getQualifiedColumn(property);		
+		return getDataProvider(getComponentName()).getSum(tabProvider, column);
 	}
 
 	public void reset() throws RemoteException {

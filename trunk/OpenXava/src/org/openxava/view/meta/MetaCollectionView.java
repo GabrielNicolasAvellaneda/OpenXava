@@ -1,11 +1,7 @@
 package org.openxava.view.meta;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import org.openxava.annotations.Tree;
 import org.openxava.tab.meta.MetaRowStyle;
@@ -106,8 +102,8 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 			propertiesListNames = new ArrayList();
 			StringTokenizer st = new StringTokenizer(listProperties, ",;");
 			while (st.hasMoreTokens()) {
-				String propiedad = st.nextToken().trim();
-				propertiesListNames.add(propiedad); 
+				String name = st.nextToken().trim();
+				propertiesListNames.add(name); 
 			}
 		} 
 	}

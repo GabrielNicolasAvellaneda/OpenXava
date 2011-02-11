@@ -16,11 +16,12 @@ import javax.ejb.*;
 
 public interface IXTableModel extends IObjectTableModel, IRefreshTableModel {
 
-  // Included in IObjectTableModel, but by CORBA whims
-  Object getObjectAt(int rowIndex) throws FinderException;
-  // Included in IRefreshTableModel, but by CORBA whims
-  void refresh() throws TabException;
+	// Included in IObjectTableModel, but by CORBA whims
+	Object getObjectAt(int rowIndex) throws FinderException;
+	// Included in IRefreshTableModel, but by CORBA whims
+	void refresh() throws TabException;
 	void removeAllRows();
+  
 	/**
 	 * Total count of objects represented by this table model. <p>
 	 * Cantidad de objetos total representados por el table model. <p>
@@ -29,5 +30,6 @@ public interface IXTableModel extends IObjectTableModel, IRefreshTableModel {
 	 * return the loaded objects count, not total.<br>
 	 */
 	int getTotalSize() throws RemoteException;
+	Number getSum(String property) throws RemoteException;  
 	
 }

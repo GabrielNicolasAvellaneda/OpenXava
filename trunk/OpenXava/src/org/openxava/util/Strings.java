@@ -260,7 +260,7 @@ public class Strings {
    * @param list  String with the list. If null return a empty string
    * @return Not null, including the case <tt>list == null</tt>.
    */
-  public final static Collection toCollection(String list) {
+  public final static Collection<String> toCollection(String list) {
   	return toCollection(list, ",");
   }
   
@@ -275,16 +275,70 @@ public class Strings {
    * @param separator  The character used as separator.
    * @return Not null, including the case <tt>list == null</tt>.
    */
-  public final static Collection toCollection(String list, String separator) {
-		Assert.arg(separator);
-		Collection rs = new ArrayList();
+  public final static Collection<String> toCollection(String list, String separator) {		
+		Collection<String> rs = new ArrayList<String>();
 		if (list == null) return rs;
+		fillCollection(rs, list, separator);
+		return rs;
+  }
+  
+  private final static void fillCollection(Collection rs, String list, String separator) {
+		Assert.arg(separator);
 		StringTokenizer st = new StringTokenizer(list, separator);
 		while (st.hasMoreTokens()) {
 		  rs.add(st.nextToken().trim());
 		}
+  }
+
+  
+  /**
+   * Converts a list of comma separated elements in a string set. <p> 
+   *
+   * For example, the list <i>Angel, Manolo, Antonia</i> is converted to
+   * a set of 3 elements with this 3 names without comman nor spaces.<br>
+   *
+   * @param list  String with the list. If null return a empty string
+   * @return Not null, including the case <tt>list == null</tt>.
+   * @since 4.1
+   */
+  public final static Set<String> toSet(String list) { 
+  	return toSet(list, ",");
+  }
+
+  /**
+   * Converts a list of comma separated elements in a string set. <p> 
+   *
+   * For example, the list <i>Angel, Manolo, Antonia</i> is converted to
+   * a set of 3 elements with this 3 names without comman nor spaces.<br>
+   *
+   * @param list  String with the list. If null return a empty string
+   * @return Null in the case <tt>list == null</tt>.
+   * @since 4.1
+   */  
+  public final static Set<String> toSetNullByPass(String list) { 
+	if (list == null) return null;
+    return toSet(list, ",");
+  }
+  
+  /**
+   * Converts a list of elements separated by a arbitrary character 
+   * in a string set. <p> 
+   *
+   * For example, the list <i>Angel : Manolo : Antonia</i> is converted to
+   * a set of 3 elements with this 3 names without colon (for example) nor spaces.<br>
+   *
+   * @param list  String with the list. If null return a empty string
+   * @param separator  The character used as separator.
+   * @return Not null, including the case <tt>list == null</tt>.
+   * @since 4.1
+   */
+  public final static Set<String> toSet(String list, String separator) {   
+		Set<String> rs = new HashSet<String>();
+		if (list == null) return rs;
+		fillCollection(rs, list, separator);
 		return rs;
   }
+    
  
   /**
    * Converts a collection of objects in a string of comma separated elements. <p> 
@@ -323,6 +377,7 @@ public class Strings {
 		}	
 		return cad.toString();
   }
+    
  
    
   /**

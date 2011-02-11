@@ -187,8 +187,27 @@
 			<section name="deliveries">deliveries</section>
 		</members>			
 				
-	</view>		
+	</view>
+	
+	<view name="NoSections">
+	
+		<reference-view reference="customer" view="Simple"/>
 		
+		<collection-view collection="details">
+			<list-properties>product.description, product.unitPrice+, quantity, amount</list-properties>
+		</collection-view>
+		
+		<members>
+			year, number, date;		
+			customer;		
+			details;			
+			amountsSum;
+			vatPercentage, vat;
+			total	
+		</members>			
+				
+	</view>		
+			
 	<view name="NestedSections">
 		<reference-view reference="customer" view="Simple"/>
 		

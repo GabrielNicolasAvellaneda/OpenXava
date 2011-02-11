@@ -1187,6 +1187,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"List.filter", 
 			"List.orderBy", 
 			"List.customize",
+			"List.sumColumn",
 			"Invoice.printPdfNewAfter"			
 		};		
 		assertActions(aggregateListActions); 
