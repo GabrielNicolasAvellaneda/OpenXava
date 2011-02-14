@@ -154,7 +154,20 @@ while (it.hasNext()) {
 <%
 	}
 %>
-	
+<%
+	if (tab.isOrderAscending2(property.getQualifiedName())) {
+%>
+<img src="<%=request.getContextPath()%>/xava/images/<%=style.getAscending2Image()%>" border="0" align="middle"/>
+<%
+	}
+%>
+<%
+	if (tab.isOrderDescending2(property.getQualifiedName())) {
+%>
+<img src="<%=request.getContextPath()%>/xava/images/<%=style.getDescending2Image()%>" border="0" align="middle"/>
+<%
+	}
+%>	
 <%
 		}
 		   

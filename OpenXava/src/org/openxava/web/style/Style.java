@@ -360,6 +360,14 @@ public class Style {
 		return "descending.gif";
 	}
 	
+	public String getAscending2Image() { 
+		return "ascending2.gif";
+	}
+	
+	public String getDescending2Image() { 
+		return "descending2.gif";
+	}	
+	
 	public String getSection() {
 		return "Jetspeed";
 	}

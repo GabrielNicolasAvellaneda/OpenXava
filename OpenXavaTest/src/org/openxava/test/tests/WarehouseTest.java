@@ -20,6 +20,57 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		super(testName, "Warehouse");		
 	}
 	
+	public void testSortByTwoColumns() throws Exception {
+		execute("List.orderBy", "property=number");
+		execute("List.orderBy", "property=zoneNumber");
+		assertValueInList(0, 0, "1"); assertValueInList(0, 1, "1");
+		assertValueInList(1, 0, "1"); assertValueInList(1, 1, "2");
+		assertValueInList(2, 0, "1"); assertValueInList(2, 1, "3");
+		assertValueInList(3, 0, "2"); assertValueInList(3, 1, "1");
+		assertValueInList(4, 0, "3"); assertValueInList(4, 1, "1");
+		assertValueInList(5, 0, "4"); assertValueInList(5, 1, "2");
+		assertValueInList(6, 0, "4"); assertValueInList(6, 1, "3");
+		assertValueInList(7, 0, "4"); assertValueInList(7, 1, "4");
+		assertValueInList(8, 0, "4"); assertValueInList(8, 1, "5");		
+		assertValueInList(9, 0, "4"); assertValueInList(9, 1, "6");
+
+		execute("List.orderBy", "property=zoneNumber");
+		assertValueInList(0, 0, "10"); assertValueInList(0, 1, "10");
+		assertValueInList(1, 0, "7"); assertValueInList(1, 1, "1");
+		assertValueInList(2, 0, "7"); assertValueInList(2, 1, "2");
+		assertValueInList(3, 0, "7"); assertValueInList(3, 1, "3");
+		assertValueInList(4, 0, "7"); assertValueInList(4, 1, "4");
+		assertValueInList(5, 0, "7"); assertValueInList(5, 1, "5");
+		assertValueInList(6, 0, "7"); assertValueInList(6, 1, "6");
+		assertValueInList(7, 0, "7"); assertValueInList(7, 1, "7");
+		assertValueInList(8, 0, "7"); assertValueInList(8, 1, "8");		
+		assertValueInList(9, 0, "7"); assertValueInList(9, 1, "9");
+
+		execute("List.orderBy", "property=number");
+		assertValueInList(0, 0, "7"); assertValueInList(0, 1, "1");
+		assertValueInList(1, 0, "6"); assertValueInList(1, 1, "1");
+		assertValueInList(2, 0, "5"); assertValueInList(2, 1, "1");
+		assertValueInList(3, 0, "3"); assertValueInList(3, 1, "1");
+		assertValueInList(4, 0, "2"); assertValueInList(4, 1, "1");
+		assertValueInList(5, 0, "1"); assertValueInList(5, 1, "1");
+		assertValueInList(6, 0, "7"); assertValueInList(6, 1, "2");
+		assertValueInList(7, 0, "6"); assertValueInList(7, 1, "2");
+		assertValueInList(8, 0, "5"); assertValueInList(8, 1, "2");		
+		assertValueInList(9, 0, "4"); assertValueInList(9, 1, "2");
+		
+		execute("List.orderBy", "property=zoneNumber");
+		assertValueInList(0, 0, "10"); assertValueInList(0, 1, "10");
+		assertValueInList(1, 0, "7"); assertValueInList(1, 1, "1");
+		assertValueInList(2, 0, "7"); assertValueInList(2, 1, "2");
+		assertValueInList(3, 0, "7"); assertValueInList(3, 1, "3");
+		assertValueInList(4, 0, "7"); assertValueInList(4, 1, "4");
+		assertValueInList(5, 0, "7"); assertValueInList(5, 1, "5");
+		assertValueInList(6, 0, "7"); assertValueInList(6, 1, "6");
+		assertValueInList(7, 0, "7"); assertValueInList(7, 1, "7");
+		assertValueInList(8, 0, "7"); assertValueInList(8, 1, "8");		
+		assertValueInList(9, 0, "7"); assertValueInList(9, 1, "9");		
+	}
+	
 	public void testChangePageRowCount() throws Exception {
 		assertChangeRowCount(10, 5);		
 		tearDown(); setUp();

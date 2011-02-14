@@ -80,7 +80,16 @@ public class Liferay51Style extends Liferay43Style {
 	
 	public String getDescendingImage() {
 		return "descending-white.gif";
-	}	
+	}
+	
+	public String getAscending2Image() { 
+		return "ascending-white2.gif";
+	}
+	
+	public String getDescending2Image() { 
+		return "descending-white2.gif";
+	}
+	
 	
 	public String getSectionBarStartDecoration() {
 		return "<td style='padding-top: 4px;'>\n" +
