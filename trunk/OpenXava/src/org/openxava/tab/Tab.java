@@ -82,7 +82,9 @@ public class Tab implements java.io.Serializable {
 	private String baseConditionForReference;
 	private MetaTab metaTab;
 	private boolean descendingOrder = false;
+	private boolean descendingOrder2 = false; 
 	private String orderBy;	
+	private String orderBy2; 
 	private String condition;
 	private String[] conditionComparators;
 	private String[] conditionValues;
@@ -405,11 +407,15 @@ public class Tab implements java.io.Serializable {
 		
 		if (!(conditionValues == null || conditionValues.length == 0)) {
 			MetaProperty pOrder = null;
+			MetaProperty pOrder2 = null;
 			for (int i = 0; i < this.conditionValues.length; i++) {
 				MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);
 				if (orderBy != null && p.getQualifiedName().equals(orderBy)) {
 					pOrder = p;
-				}	
+				}
+				if (orderBy2 != null && p.getQualifiedName().equals(orderBy2)) {
+					pOrder2 = p;
+				}					
 				if (Is.emptyString(this.conditionComparators[i])) {
 					this.conditionValues[i] = ""; 
 					valuesToWhere.add("");
@@ -504,6 +510,13 @@ public class Tab implements java.io.Serializable {
 				sb.append(getMetaTab().getMetaModel().getMapping().getQualifiedColumn(pOrder.getQualifiedName()));
 				if (descendingOrder) {
 					sb.append(" desc");
+				}
+				if (pOrder2 != null) {
+					sb.append(", "); 
+					sb.append(getMetaTab().getMetaModel().getMapping().getQualifiedColumn(pOrder2.getQualifiedName()));
+					if (descendingOrder2) {
+						sb.append(" desc");
+					}					
 				}
 			}				
 			else if (getMetaTab().hasDefaultOrder()) {
@@ -936,7 +949,16 @@ public class Tab implements java.io.Serializable {
 			descendingOrder = !descendingOrder;
 		}
 		else {
-			descendingOrder = false;
+			if (Is.equal(property, orderBy2)) {
+				boolean originalDescendingOrder = descendingOrder;
+				descendingOrder = descendingOrder2;
+				descendingOrder2 = originalDescendingOrder; 			
+			}
+			else {
+				descendingOrder2 = descendingOrder; 			
+				descendingOrder = false;
+			}
+			orderBy2 = orderBy; 
 			orderBy = property;
 		}
 		condition = null;		
@@ -954,7 +976,14 @@ public class Tab implements java.io.Serializable {
 		return descendingOrder && Is.equal(name, orderBy);
 	}
 	
+	public boolean isOrderAscending2(String name) { 
+		return !descendingOrder2 && Is.equal(name, orderBy2);
+	}
 	
+	public boolean isOrderDescending2(String name) { 
+		return descendingOrder2 && Is.equal(name, orderBy2);
+	}
+		
 	public String getModelName() {
 		return modelName;
 	}

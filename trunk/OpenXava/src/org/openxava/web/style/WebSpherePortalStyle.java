@@ -134,6 +134,15 @@ public class WebSpherePortalStyle extends Style {
 		return "descending-white.gif";
 	}
 	
+	public String getAscending2Image() { 
+		return "ascending-white2.gif";
+	}
+	
+	public String getDescending2Image() {
+		return "descending-white2.gif";
+	}
+	
+	
 	public String getSection() {
 		return "wpsPageBar";
 	}

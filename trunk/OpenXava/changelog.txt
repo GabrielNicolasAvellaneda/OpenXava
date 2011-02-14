@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- The user can sort by several columns in list and collections.
 - The user can add and remove summation for any numeric persistent property in list and collections.
 - Standard PDF reports show column summations.
 - Hibernate upgraded to 3.6.1.
