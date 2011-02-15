@@ -1,8 +1,11 @@
+<%@ include file="imports.jsp"%>
+
 <%@page import="org.openxava.controller.meta.MetaAction"%>
 <%@page import="org.openxava.web.Ids"%>
 <%@page import="org.openxava.controller.meta.MetaControllers"%>
 <%@page import="org.openxava.util.Is"%>
 <%@page import="org.openxava.web.Actions"%>
+<%@page import="org.openxava.util.XavaPreferences"%>
 
 <%
 String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
@@ -10,8 +13,8 @@ String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
-
-<%@page import="org.openxava.util.XavaPreferences"%><table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<div class="<xava:id name='collection_scroll'/>" style="overflow: auto;">
+<table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 	<%
 		if (lineAction != null) {
@@ -134,3 +137,5 @@ for (int f=0; itAggregates.hasNext(); f++) {
 %>
 </tr>
 </table>
+</div>
+ 

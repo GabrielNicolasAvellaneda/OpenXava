@@ -1,7 +1,6 @@
 package org.openxava.test.tests;
 
 import java.math.*;
-import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.*;
@@ -130,32 +129,7 @@ public class AnnotatedPOJOTest extends TestCase {
 		}
 		fail("An invalid state exception should be thrown");
 	}
-	
-
-	public void testBeanValidationJSR303() throws Exception {
-		Artist a = new Artist();
-		a.setName("TOO OLD ARTIST");
-		a.setAge(120);
 		
-		XPersistence.getManager().persist(a);
-		try {
-			XPersistence.commit();
-		}
-		catch (RollbackException ex) {
-						
-			if (ex.getCause() instanceof  javax.validation.ConstraintViolationException) {
-				javax.validation.ConstraintViolationException vex = (javax.validation.ConstraintViolationException) ex.getCause();				
-				assertEquals("1 invalid value is expected", 1, vex.getConstraintViolations().size());
-				ConstraintViolation violation = vex.getConstraintViolations().iterator().next();
-				assertEquals("Bean", "Artist", violation.getRootBeanClass().getSimpleName());				
-				assertEquals("Message text", "must be less than or equal to 99", violation.getMessage());
-				return;
-			}
-					
-		}
-		fail("An invalid state exception should be thrown");
-	}
-	
 	
 	public void testFinderThrowsNoResult() throws Exception {
 		try {

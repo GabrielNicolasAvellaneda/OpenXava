@@ -48,5 +48,10 @@
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
+	
+	<target name="updateOX">
+		<ant antfile="../OpenXava/build.xml" target="updateOX"/>
+	</target>
+	
 						
 </project>
