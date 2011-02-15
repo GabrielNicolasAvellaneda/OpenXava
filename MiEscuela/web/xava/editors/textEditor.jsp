@@ -22,6 +22,8 @@ boolean editable="true".equals(request.getParameter("editable"));
 String disabled=editable?"":"disabled";
 String script = request.getParameter("script");
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel();
+String inputType = request.getParameter("inputType");
+if (inputType == null) inputType = "text"; 
 String smaxSize = request.getParameter("maxSize");
 int maxSize = 0;
 if (!org.openxava.util.Is.emptyString(smaxSize)) {
@@ -54,7 +56,7 @@ if (editable || !label) {
 %>
 <input id="<%=propertyKey%>"
     name="<%=propertyKey%>" class="<%=style.getEditor()%> <%=numericClass%>"
-	type="text" 
+	type="<%=inputType%>" 
 	title="<%=p.getDescription(request)%>"
 	<%=align%>
 	maxlength="<%=maxLength%>" 

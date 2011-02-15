@@ -3,8 +3,7 @@ if (openxava == null) var openxava = {};
 openxava.init = function(application, module) {
 	dwr.util.useLoadingMessage(openxava.loadingMessage);
 	document.onkeydown = openxava.processKey;
-	openxava.initUI(application, module);
- 
+	openxava.initUI(application, module);	
 }
 
 openxava.ajaxRequest = function(application, module, firstRequest) {
@@ -12,14 +11,15 @@ openxava.ajaxRequest = function(application, module, firstRequest) {
 	openxava.setRequesting(application, module);
 	document.throwPropertyChange = false; 
 	openxava.getElementById(application, module, "loading").value=true;    
-	document.body.style.cursor='wait';	
+	document.body.style.cursor='wait';
 	Module.request(
 			application, module, document.additionalParameters,			
 			openxava.getFormValues(openxava.getForm(application, module)), 
 			openxava.getMultipleValues(application, module), 
 			openxava.getSelectedValues(application, module),
 			firstRequest,
-			openxava.refreshPage); 			
+			openxava.refreshPage);	
+	$(window).unbind('resize');
 }
 
 openxava.refreshPage = function(result) {	
@@ -121,12 +121,12 @@ openxava.refreshPage = function(result) {
 }
 
 openxava.initUI = function(application, module, currentRow) {
-	if (openxava.initTheme != null) openxava.initTheme(); 
+	if (openxava.initTheme != null) openxava.initTheme();
 	openxava.clearLists(application, module); 
 	openxava.initLists(application, module);	
 	openxava.initEditors(application, module);
 	openxava.initSelectedRows();
-	openxava.initCurrentRow(application, module, currentRow); 
+	openxava.initCurrentRow(application, module, currentRow);
 }
 
 openxava.showMessages = function(result) { 
@@ -237,7 +237,20 @@ openxava.initLists = function(application, module) {
 			adjust: { screen:true, resize:true }
 		},
 		show: { effect: { length: 800 } }
-	}).removeClass(openxava.decorateId(application, module, "tipable")); 		
+	}).removeClass(openxava.decorateId(application, module, "tipable"));
+	openxava.setListsSize(application, module, "list", 1);
+	openxava.setListsSize(application, module, "collection", 0.95);
+}
+
+openxava.setListsSize = function(application, module, type, percentage) { 	
+	var buttonBar = $('#' + openxava.decorateId(application, module, "button_bar"));
+	var scrollId = '.' + openxava.decorateId(application, module, type + "_scroll");
+	$(scrollId).width(50); 
+	$(scrollId).width(buttonBar.width() * percentage);
+	$(window).resize(function() {
+		$(scrollId).width(50); 
+		$(scrollId).width(buttonBar.width() * percentage);
+	});	
 }
 
 openxava.addEditorInitFunction  = function(initFunction) { 

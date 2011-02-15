@@ -51,6 +51,7 @@ private String getType(MetaProperty p) throws Exception {
 	if (java.util.Date.class.equals(p.getType())) return "java.lang.String";
 	if (java.math.BigDecimal.class.equals(p.getType())) return "java.lang.String";
 	if (java.sql.Time.class.equals(p.getType())) return "java.lang.String";
+	if (java.lang.Number.class.isAssignableFrom(Primitives.toWrapperClass(p.getType()))) return "java.lang.Number";
 	return Primitives.toWrapperClass(p.getType()).getName();
 }
 
@@ -81,7 +82,7 @@ if (!Is.emptyString(propertiesNames)) {
 	tab = tab.cloneMetaTab();
 	tab.setPropertiesNames(propertiesNames);
 }
-
+java.util.Set totalProperties = Strings.toSet(request.getParameter("totalProperties"));
 String language = request.getParameter("language");
 if (language == null) language = org.openxava.util.Locales.getCurrent().getDisplayLanguage();
 language = language == null?request.getLocale().getDisplayLanguage():language;
@@ -146,6 +147,7 @@ else {
 }
 
 %>
+
 <jasperReport
 		 name="<%=reportName%>"
 		 columnCount="1"
@@ -166,31 +168,38 @@ else {
 	String fontPath=request.getSession().getServletContext().getRealPath("/WEB-INF/fonts/").concat(System.getProperty("file.separator"));
 	String fontName="DejaVu Sans";
 	String fontNameExt="DejaVuSans.ttf";
+	String boldFontNameExt="DejaVuSans-Bold.ttf";	
 	String pdfEncoding="Identity-H";
 	%>	
 	<reportFont name="Arial_Normal" isDefault="true" fontName="<%=fontName%>" size="8" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
-	<reportFont name="Arial_Bold" isDefault="false" fontName="<%=fontName%>" size="8" isBold="true" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
+	<reportFont name="Arial_Bold" isDefault="false" fontName="<%=fontName%>" size="8" isBold="true" pdfFontName="<%=fontPath.concat(boldFontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
 	<reportFont name="Arial_Italic" isDefault="false" fontName="<%=fontName%>" size="8" isItalic="true" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
 
 	<parameter name="Title" class="java.lang.String"/>	
-	<parameter name="Organization" class="java.lang.String"/>	
-
+	<parameter name="Organization" class="java.lang.String"/>
+	<%
+	it = tab.getMetaProperties().iterator();
+	while (it.hasNext()) {
+		MetaProperty p = (MetaProperty) it.next();				
+		if (totalProperties.contains(p.getQualifiedName())) {
+			String type=getType(p);			
+	%>
+	<parameter name="<%=p.getQualifiedName()%>__TOTAL__" class="<%=type%>"/> 	
+	<%
+		}
+	}
+	%>	
+		
 	<%
 	it = tab.getMetaProperties().iterator();
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
-		String type=getType(p);
+		String type=getType(p); 
 	%>
-
-	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="<%=type%>"/> 
-	
+	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="<%=type%>"/> 	
 	<%
 	}
-	%>
-	
-	
-	<variable name="test" class="java.lang.String" resetType="None" calculation="Nothing">
-		<variableExpression><![CDATA["test"]]></variableExpression>		<initialValueExpression><![CDATA["test"		]]></initialValueExpression>	</variable>
+	%>	
 		<background>
 			<band height="0"  isSplitAllowed="true" >
 			</band>
@@ -418,10 +427,6 @@ while (it.hasNext()) {
 %>				
 			</band>
 		</detail>
-		<columnFooter>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</columnFooter>
 		<pageFooter>
 			<band height="27"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
@@ -503,7 +508,58 @@ while (it.hasNext()) {
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="0"  isSplitAllowed="true" >
+			<band height="19"  isSplitAllowed="true" >
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0" 
+						width="<%=columnWidth%>"
+						height="0"
+						forecolor="#808080"
+						backcolor="#FFFFFF"
+						positionType="Float"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="true"/>					
+					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
+				</line>
+<%
+it = tab.getMetaProperties().iterator();
+x = 0;
+i=0;
+while (it.hasNext()) {			
+	MetaProperty p = (MetaProperty) it.next();	
+	int width=widths[i++]*letterWidth + + EXTRA_WIDTH;
+	if (totalProperties.contains(p.getQualifiedName())) { 
+%>								
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="<%=x%>"
+						y="2"
+						width="<%=width%>"
+						height="<%=detailHeight%>"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
+						<font reportFont="Arial_Bold" size="<%=letterSize%>"/>
+					</textElement>
+					<%		
+					String type=getType(p);										
+					%>
+					<textFieldExpression class="<%=type%>">$P{<%=Strings.change(p.getQualifiedName(), ".", "_")%>__TOTAL__}</textFieldExpression>
+				</textField>
+<%
+	} 			
+	x+=(width+columnsSeparation);
+}
+%>					
 			</band>
 		</summary>
 </jasperReport>
