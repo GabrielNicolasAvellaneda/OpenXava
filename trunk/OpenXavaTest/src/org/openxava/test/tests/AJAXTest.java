@@ -90,7 +90,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertCollectionRowCount("defaultCarrier.fellowCarriers", 0);
 		assertCollectionRowCount("defaultCarrier.fellowCarriersCalculated", 0);
 		setValue("defaultCarrier.number", "1");
-		assertCollectionRowCount("defaultCarrier.fellowCarriers", 3);
+		assertCollectionRowCount("defaultCarrier.fellowCarriers", 3); 
 		assertCollectionRowCount("defaultCarrier.fellowCarriersCalculated", 3);		
 		assertLoadedParts("collection_defaultCarrier.fellowCarriers.," +
 				"collection_defaultCarrier.fellowCarriersCalculated.," +
@@ -422,7 +422,7 @@ public class AJAXTest extends ModuleTestBase {
 	public void testCollections() throws Exception {
 		changeModule("Carrier"); 
 		execute("Mode.detailAndFirst");
-		assertCollectionRowCount("fellowCarriers", 3);
+		assertCollectionRowCount("fellowCarriers", 3); 
 		setValue("warehouse.number", "2");
 		assertCollectionRowCount("fellowCarriers", 0);
 		setValue("warehouse.number", "1");
@@ -483,7 +483,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("dialog1"); // Since 4m2
 
 		setValue("product.number", "1");
-		assertLoadedParts("errors, " +
+		assertLoadedParts("errors, " + 
 				"editor_product.warehouseKey, " +
 				"editor_product.familyNumber, " +
 				"editor_product.photos, " +

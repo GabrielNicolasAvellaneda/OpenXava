@@ -1633,14 +1633,14 @@ public class Tab implements java.io.Serializable {
 	/**
 	 * @since 4.1
 	 */
-	public boolean hasTotal(int column) { 
+	public boolean hasTotal(int column) {		
 		MetaProperty p = getMetaProperty(column);
 		if (!getTotalPropertiesNames().contains(p.getQualifiedName())) return false;
 		if (p.isCalculated()) {
 			log.warn(XavaResources.getString("sum_not_for_calculated_properties", p.getQualifiedName(), p.getMetaModel().getName())); 
 			return false;
 		}
-		if (!p.isNumber()) {
+		if (!p.isNumber() || p.hasValidValues()) { 
 			log.warn(XavaResources.getString("sum_not_for_not_numeric_properties", p.getQualifiedName(), p.getMetaModel().getName())); 
 			return false;
 		}		
@@ -1678,7 +1678,7 @@ public class Tab implements java.io.Serializable {
 	 */
 	public boolean isTotalCapable(int column) {  
 		MetaProperty p = getMetaProperty(column);			
-		return !p.isCalculated() && p.isNumber(); 
+		return !p.isCalculated() && p.isNumber() && !p.hasValidValues();  
 	}
 	
 	/**
