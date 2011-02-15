@@ -39,10 +39,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4.1beta";
+		return "4.1";
 	}
 	final static private String getVersionDate() {
-		return "2011-1-xx"; 
+		return "2011-2-15"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	

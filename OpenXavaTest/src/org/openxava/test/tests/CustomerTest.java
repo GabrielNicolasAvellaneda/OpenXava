@@ -481,7 +481,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertValue("seller.name", "");									
 	}
 	
-	public void testLeftJoinInListModeForReference() throws Exception {
+	public void testLeftJoinInListModeForReference() throws Exception { 
 		assertActions(listActions);
 		int initialRows = getListRowCount();
 		assertTrue("This test only run with less than 10 rows", initialRows < 10);

@@ -271,7 +271,7 @@ public class DeliveryTest extends ModuleTestBase {
 
 		deleteDeliveryType(0);
 		execute("CRUD.refresh");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertValue("description", "JUNIT");
 
 		execute("CRUD.delete");
@@ -369,7 +369,7 @@ public class DeliveryTest extends ModuleTestBase {
 			execute("Navigation.next");
 		}
 		String number = getValue("number");
-		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
+		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details"); 
 		assertMessage("The action New for delivery detail executed");
 		assertValue("description", "DETAIL FOR DELIVERY " + number + "/" + number);
 		setValue("number", "66");
@@ -493,7 +493,7 @@ public class DeliveryTest extends ModuleTestBase {
 	public void testEntityValidatorWithKeyReference() throws Exception {		
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
-		assertNoErrors();
+		assertNoErrors(); 
 		setValue("advice", "Validating"); 
 		execute("CRUD.save");
 		assertNoErrors();
@@ -510,7 +510,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("description", "JUNIT");
 		setValue("remarks", "HIDDEN REMARK");
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");						
 		assertValue("type.number", "");	
@@ -619,7 +619,7 @@ public class DeliveryTest extends ModuleTestBase {
 	
 	public void testPropertyAndReferenceActions() throws Exception {
 		execute("Mode.detailAndFirst");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertNoAction("Delivery.generateNumber"); // of property
 		assertNoAction("Delivery.setDefaultType"); // of reference as descriptions-list
 		assertNoAction("Delivery.setDefaultInvoice"); // of reference 		
@@ -932,7 +932,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("date", "2/22/97");
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
-		assertNoErrors(); 
+		assertNoErrors();  
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");						
 		assertValue("type.number", "");	
@@ -1115,7 +1115,7 @@ public class DeliveryTest extends ModuleTestBase {
 	
 	public void testEditableAffectsSection() throws Exception {
 		execute("Mode.detailAndFirst");
-		assertEditable("description"); // out of section 
+		assertEditable("description"); // out of section  
 		assertEditable("advice"); // in section
 		execute("EditableOnOff.setOff");
 		assertNoEditable("description"); // out of section
@@ -1139,7 +1139,7 @@ public class DeliveryTest extends ModuleTestBase {
 			}
 			fail("Only the next values are valid: " + values);
 		}
-		assertTrue("For this test is need at least one delivery with value in 'distance' property", thereIsOne);  
+		assertTrue("For this test is need at least one delivery with value in 'distance' property", thereIsOne);   
 	}
 	 
 	public void testSetValueAgainstPropertiesOfSectionsHiddenAndShowed() throws Exception {

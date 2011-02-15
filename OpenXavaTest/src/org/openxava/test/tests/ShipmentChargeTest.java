@@ -45,7 +45,7 @@ public class ShipmentChargeTest extends ModuleTestBase {
 		assertLabelInList(3, "Slow");	// fail filter: calculated property and descriptions list
 		assertLabelInList(4, "Description of Shipment");
 		
-		// reference property: descriptionsList
+		// reference property: descriptionsList		
  		setConditionValues(new String[] { "", "", "", "[.MEDIUM.5.INTERNAL.]"} ); // For JPA entities
 		// setConditionValues(new String[] { "", "", "", "[.2.5.1.]"} ); // For XML components
 		execute("List.filter");
