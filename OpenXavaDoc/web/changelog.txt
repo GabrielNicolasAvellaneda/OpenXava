@@ -1,6 +1,23 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.1 (2011-2-15)
+------------------------
+- Bean Validation JSR-303 support.
+- The user can add and remove summation for any numeric persistent property in list and collections.
+- The user can sort by several columns in list and collections.
+- Standard PDF reports show column summations.
+- Summation available for list and collections adding a + to property names.
+- Automatic horizontal scrollbar for list and collections for not enlarging the UI.
+- Hibernate upgraded to 3.6.1.
+- New stereotype PASSWORD/CONTRASENA.
+- When the model is transient the default controller-mode for the module is DetailOnly. 
+- New methods toSet() and toSetNullByPass() in Strings to convert string lists in sets.
+- Added assertTotalInList() and assertTotalInCollection() in ModuleTestBase.
+- Removed the unused library: jboss-archive-browsing.jar.
+- Fix: Export to EXCEl in list mode does not work fine with Russian data.
+  
+
 OpenXava 4.0.1 (2011-1-11)
 --------------------------
 - New callback methods that allow to use JPA inside them:  @PreCreate, @PostCreate and @PreDelete.
