@@ -4,6 +4,7 @@
 package org.openxava.jpa.impl;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -71,6 +72,9 @@ public class EntityManagerDecorator implements EntityManager {
 		for (Method method : Classes.getMethodsAnnotatedWith(object.getClass(), annotation)) {
 			try {
 				method.invoke(object, new Object[]{});
+			} catch (InvocationTargetException e) { // In this way the XavaException doesn't swallow the real cause.
+				e.getCause().printStackTrace();
+				throw new XavaException(e.getCause().getMessage());
 			} catch (Exception e) {
 				throw new XavaException(e.getMessage());
 			}
