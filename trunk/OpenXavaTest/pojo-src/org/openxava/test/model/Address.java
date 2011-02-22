@@ -2,7 +2,6 @@ package org.openxava.test.model;
 
 import javax.persistence.*;
 import org.openxava.annotations.*;
-import org.openxava.test.actions.*;
 
 /**
  * 
@@ -38,7 +37,7 @@ public class Address implements IWithCity {
 	@LabelFormats({ 
 		@LabelFormat(forViews="Demo", value=LabelFormatType.SMALL)
 	})
-	@Action(value="Customer.prefixStreet", alwaysEnabled=true)	
+	@Action(value="Customer.prefixStreet", alwaysEnabled=true)
 	private String street;
 	
 	@Required @Column(length=5) @LabelFormat(LabelFormatType.SMALL)	
