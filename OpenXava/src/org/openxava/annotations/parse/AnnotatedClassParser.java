@@ -21,31 +21,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.persistence.metamodel.*;
 
 import org.apache.commons.logging.Log;
@@ -497,7 +473,19 @@ public class AnnotatedClassParser {
 				}
 				else if (pd.getReadMethod().isAnnotationPresent(JoinColumns.class)) {
 					column = getColumnFor(pd.getReadMethod().getAnnotation(JoinColumns.class), metaModelReferenced, referencedModelPropertyName); 
+				}				 
+				else if (field != null && field.isAnnotationPresent(PrimaryKeyJoinColumn.class)) { 
+					column = metaModelReferenced.getMapping().getColumn(referencedModelPropertyName); 
 				}
+				else if (field != null && field.isAnnotationPresent(PrimaryKeyJoinColumns.class)) {
+					column = getColumnFor(field.getAnnotation(PrimaryKeyJoinColumns.class), metaModelReferenced, referencedModelPropertyName); 
+				}
+				else if (pd.getReadMethod().isAnnotationPresent(PrimaryKeyJoinColumn.class)) { 
+					column = metaModelReferenced.getMapping().getColumn(referencedModelPropertyName); 
+				}
+				else if (pd.getReadMethod().isAnnotationPresent(PrimaryKeyJoinColumns.class)) {
+					column = getColumnFor(pd.getReadMethod().getAnnotation(PrimaryKeyJoinColumns.class), metaModelReferenced, referencedModelPropertyName); 
+				} 
 				
 				if (Is.emptyString(column)) {			
 					column = pd.getName() + "_" + metaModelReferenced.getMapping().getColumn(referencedModelPropertyName); 
@@ -521,6 +509,17 @@ public class AnnotatedClassParser {
 		}
 		return null;
 	}
+	
+	private String getColumnFor(PrimaryKeyJoinColumns joinColumns, MetaModel referencedModel, String referencedModelProperty) throws XavaException { 
+		String referencedColumn = referencedModel.getMapping().getColumn(referencedModelProperty);
+		for (PrimaryKeyJoinColumn joinColumn: joinColumns.value()) {
+			if (referencedColumn.trim().equalsIgnoreCase(joinColumn.referencedColumnName().trim())) {
+				return joinColumn.name();
+			}
+		}
+		return null;
+	}
+
 
 
 	private void parseViews(MetaComponent component, Class pojoClass) throws XavaException {
