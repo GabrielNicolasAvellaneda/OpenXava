@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Support for @PrimaryKeyJoinColumn and @PrimaryKeyJoinColumns JPA annotations in @OneToOne relationships.
 - Fix: List and collections are not shown inside dialogs.
 
 OpenXava 4.1 (2011-2-15)
