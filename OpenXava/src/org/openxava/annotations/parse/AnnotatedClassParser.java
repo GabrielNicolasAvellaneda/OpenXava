@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.math.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,12 +32,6 @@ import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.usertype.CompositeUserType;
-import org.hibernate.validator.Digits;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.Max;
-import org.hibernate.validator.Min;
-import org.hibernate.validator.Range;
-import org.hibernate.validator.Size;
 import org.openxava.annotations.Action;
 import org.openxava.annotations.Actions;
 import org.openxava.annotations.AsEmbedded;
@@ -948,17 +943,30 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(SearchKey.class)) { 
 			property.setSearchKey(true);
 		}
+
 		// size
-		if (element.isAnnotationPresent(Max.class)) {
-			Max max = element.getAnnotation(Max.class);			
+		if (element.isAnnotationPresent(javax.validation.constraints.Max.class)) {
+			javax.validation.constraints.Max max = element.getAnnotation(javax.validation.constraints.Max.class);			
 			property.setSize((int) (Math.log10(max.value()) + 1));
 		}
-		else if (element.isAnnotationPresent(Length.class)) {
-			Length length = element.getAnnotation(Length.class);			
+		else if (element.isAnnotationPresent(javax.validation.constraints.DecimalMax.class)) {
+			javax.validation.constraints.DecimalMax max = element.getAnnotation(javax.validation.constraints.DecimalMax.class);			
+			property.setSize((int) (Math.log10(new BigDecimal(max.value()).doubleValue()) + 1));
+		}		
+		else if (element.isAnnotationPresent(javax.validation.constraints.Size.class)) {
+			javax.validation.constraints.Size size = element.getAnnotation(javax.validation.constraints.Size.class);			
+			property.setSize(size.max());
+		}
+		else if (element.isAnnotationPresent(org.hibernate.validator.Max.class)) {
+			org.hibernate.validator.Max max = element.getAnnotation(org.hibernate.validator.Max.class);			
+			property.setSize((int) (Math.log10(max.value()) + 1));
+		}
+		else if (element.isAnnotationPresent(org.hibernate.validator.Length.class)) {
+			org.hibernate.validator.Length length = element.getAnnotation(org.hibernate.validator.Length.class);			
 			property.setSize(length.max());
 		}
-		else if (element.isAnnotationPresent(Size.class)) {
-			Size size = element.getAnnotation(Size.class);			
+		else if (element.isAnnotationPresent(org.hibernate.validator.Size.class)) {
+			org.hibernate.validator.Size size = element.getAnnotation(org.hibernate.validator.Size.class);			
 			property.setSize(size.max());
 		}
 		else if (element.isAnnotationPresent(Column.class)) {
@@ -984,8 +992,18 @@ public class AnnotatedClassParser {
 				}
 			}
 		}
-		else if (element.isAnnotationPresent(Digits.class)) {
-			Digits digits = element.getAnnotation(Digits.class);
+		else if (element.isAnnotationPresent(javax.validation.constraints.Digits.class)) {
+			javax.validation.constraints.Digits digits = element.getAnnotation(javax.validation.constraints.Digits.class);
+			if (digits.fraction() > 0) {
+				property.setSize(digits.integer() + 1 + digits.fraction());
+				property.setScale(digits.fraction());
+			}
+			else {
+				property.setSize(digits.integer());
+			}
+		}		
+		else if (element.isAnnotationPresent(org.hibernate.validator.Digits.class)) {
+			org.hibernate.validator.Digits digits = element.getAnnotation(org.hibernate.validator.Digits.class);
 			if (digits.fractionalDigits() > 0) {
 				property.setSize(digits.integerDigits() + 1 + digits.fractionalDigits());
 				property.setScale(digits.fractionalDigits());
@@ -999,16 +1017,20 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(Required.class)) {						
 			property.setRequired(true);
 		}
-		else if (element.isAnnotationPresent(Min.class)) {
-			Min min = element.getAnnotation(Min.class);
+		else if (element.isAnnotationPresent(javax.validation.constraints.Min.class)) {
+			javax.validation.constraints.Min min = element.getAnnotation(javax.validation.constraints.Min.class);
+			if (min.value() > 0) property.setRequired(true);			
+		}		
+		else if (element.isAnnotationPresent(org.hibernate.validator.Min.class)) {
+			org.hibernate.validator.Min min = element.getAnnotation(org.hibernate.validator.Min.class);
 			if (min.value() > 0) property.setRequired(true);			
 		}
-		else if (element.isAnnotationPresent(Range.class)) {
-			Range range = element.getAnnotation(Range.class);
+		else if (element.isAnnotationPresent(org.hibernate.validator.Range.class)) {
+			org.hibernate.validator.Range range = element.getAnnotation(org.hibernate.validator.Range.class);
 			if (range.min() > 0) property.setRequired(true);			
 		}
-		else if (element.isAnnotationPresent(Length.class)) {
-			Length length = element.getAnnotation(Length.class);
+		else if (element.isAnnotationPresent(org.hibernate.validator.Length.class)) {
+			org.hibernate.validator.Length length = element.getAnnotation(org.hibernate.validator.Length.class);
 			if (length.min() > 0) property.setRequired(true);			
 		}							
 		
@@ -1331,9 +1353,13 @@ public class AnnotatedClassParser {
 			collection.setMetaCalculator(null); 
 		}		
 		// ManyToMany collections are processed as calculated one
-		
-		if (element.isAnnotationPresent(Size.class)) {
-			Size size = element.getAnnotation(Size.class);
+		if (element.isAnnotationPresent(javax.validation.constraints.Size.class)) {
+			javax.validation.constraints.Size size = element.getAnnotation(javax.validation.constraints.Size.class);
+			collection.setMinimum(size.min());
+			collection.setMaximum(size.max());
+		}
+		else if (element.isAnnotationPresent(org.hibernate.validator.Size.class)) {
+			org.hibernate.validator.Size size = element.getAnnotation(org.hibernate.validator.Size.class);
 			collection.setMinimum(size.min());
 			collection.setMaximum(size.max());
 		}

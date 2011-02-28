@@ -14,9 +14,14 @@ class ArtistTest extends ModuleTestBase {
 	
 	void testBeanValidationJSR303() throws Exception { 
 		execute "Mode.detailAndFirst"
-		setValue "age", "120"		
+		setValue "age", "99"		
 		execute "CRUD.save"
-		assertError "120 is not a valid value for age of Artist: must be less than or equal to 99"
+		assertError "99 is not a valid value for Age of Artist: must be less than or equal to 90"
+		assertErrorImage();
+	}
+		
+	private void assertErrorImage() {
+		assertTrue "Error image not present", getHtml().contains("/OpenXavaTest/xava/images/error.gif");
 	}
 	
 }
