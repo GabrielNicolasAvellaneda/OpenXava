@@ -45,7 +45,7 @@ class AnnotatedPOGOTest extends TestCase {
 				assertEquals("1 invalid value is expected", 1, vex.getConstraintViolations().size());
 				ConstraintViolation violation = vex.getConstraintViolations().iterator().next();
 				assertEquals("Bean", "Artist", violation.getRootBeanClass().getSimpleName());				
-				assertEquals("Message text", "must be less than or equal to 99", violation.getMessage());
+				assertEquals("Message text", "must be less than or equal to 90", violation.getMessage());
 				return;
 			}
 					
