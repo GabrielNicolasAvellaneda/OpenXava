@@ -19,7 +19,6 @@ import org.openxava.component.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
-import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
@@ -39,10 +38,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4.1";
+		return "4.1.1";
 	}
 	final static private String getVersionDate() {
-		return "2011-2-15"; 
+		return "2011-2-28"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -554,9 +553,9 @@ public class ModuleManager implements java.io.Serializable {
 	}
 	
 	private void manageConstraintViolationException(MetaAction metaAction, Messages errors, Messages messages, javax.validation.ConstraintViolationException ex) { 
-		for (javax.validation.ConstraintViolation violation: ex.getConstraintViolations()) {			
+		for (javax.validation.ConstraintViolation violation: ex.getConstraintViolations()) {
 			errors.add("invalid_state", 
-				violation.getPropertyPath(),	
+				violation.getPropertyPath()==null?null:violation.getPropertyPath().toString(),	
 				violation.getRootBeanClass().getSimpleName(),	 
 				"'" + XavaResources.getString(violation.getMessage()) + "'", 
 				violation.getInvalidValue());			

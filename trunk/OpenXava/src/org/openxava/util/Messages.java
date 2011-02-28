@@ -147,6 +147,7 @@ public class Messages implements java.io.Serializable {
 	}
 	
 	public void add(String idMessage, Object [] ids) {
+				
 		if (closed) return;
 		if (ids != null) {
 			if (ids.length == 1) {
@@ -167,8 +168,8 @@ public class Messages implements java.io.Serializable {
 	private void addMember(Object member, Object model) {
 		if (member instanceof String) {
 			Object id = null;
-			if (model instanceof String) id = model + "." + member; 
-			else id = member;			
+			if (model instanceof String) id = model + "." + member; 		
+			else id = member;						
 			if (members == null) members = new ArrayList();		
 			members.add(id);
 		}

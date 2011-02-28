@@ -19,7 +19,7 @@ class Artist extends Identifiable {
 	@Column(length=40) @Required
 	String name
 	
-	@Max(99l)	
+	@Max(90l)	
 	Integer age
 
 }
