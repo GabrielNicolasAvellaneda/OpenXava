@@ -85,8 +85,7 @@ openxava.refreshPage = function(result) {
 				errors = true;
 				break;
 			}			
-		} 
-		openxava.initUI(result.application, result.module, result.currentRow); 
+		}  
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus(result.application, result.module);		
@@ -99,7 +98,7 @@ openxava.refreshPage = function(result) {
 			dialog.dialog('open');
 			dialog.dialog('option', 'width', dialog.parent().width()); // Because a bug of jQuery UI 1.7.2 + IE7
 		}
-			
+		openxava.initUI(result.application, result.module, result.currentRow); 	
 	}		
 	document.getElementById('xava_processing_layer').style.display='none';
 	var form = openxava.getForm(result.application, result.module);	
@@ -238,19 +237,19 @@ openxava.initLists = function(application, module) {
 		},
 		show: { effect: { length: 800 } }
 	}).removeClass(openxava.decorateId(application, module, "tipable"));
-	openxava.setListsSize(application, module, "list", 1);
+	openxava.setListsSize(application, module, "list", 1);	
 	openxava.setListsSize(application, module, "collection", 0.95);
 }
 
-openxava.setListsSize = function(application, module, type, percentage) { 	
-	var buttonBar = $('#' + openxava.decorateId(application, module, "button_bar"));
+openxava.setListsSize = function(application, module, type, percentage) {
+	var buttonBar = $('#' + openxava.decorateId(application, module, "bottom_buttons"));
 	var scrollId = '.' + openxava.decorateId(application, module, type + "_scroll");
-	$(scrollId).width(50); 
-	$(scrollId).width(buttonBar.width() * percentage);
+	$(scrollId).width(50); 	  
+	$(scrollId).width(buttonBar.width() * percentage);  
 	$(window).resize(function() {
 		$(scrollId).width(50); 
 		$(scrollId).width(buttonBar.width() * percentage);
-	});	
+	});		
 }
 
 openxava.addEditorInitFunction  = function(initFunction) { 
