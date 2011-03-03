@@ -1,24 +1,21 @@
 package org.openxava.invoicing.model;
 
 import javax.persistence.*;
-import org.openxava.annotations.*;
 
-@Embeddable
+@Embeddable  
 public class Address {
 
-	@Required @Column(length=30)	
+	@Column(length=30)  
 	private String street;
 	
-	@Required @Column(length=5)
+	@Column(length=5)
 	private int zipCode;
 	
-	@Required @Column(length=20) 
+	@Column(length=20) 
 	private String city;
 	
-	@Required @Column(length=30)
+	@Column(length=30)
 	private String state;
-	
-	// Getters and setters
 	
 	public String getStreet() {
 		return street;
@@ -50,7 +47,6 @@ public class Address {
 
 	public void setState(String state) {
 		this.state = state;
-	}	
-	
-}
+	}
 
+}

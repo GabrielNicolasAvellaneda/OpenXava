@@ -4,13 +4,13 @@ import javax.persistence.*;
 import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
-@MappedSuperclass
+@MappedSuperclass  
 public class Identifiable {
 	
 	@Id @GeneratedValue(generator="system-uuid") @Hidden 
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	@Column(length=32)
-	private String oid;
+	private String oid;  
 
 	public String getOid() {
 		return oid;

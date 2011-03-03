@@ -8,15 +8,27 @@
 <%@ page import="org.openxava.model.meta.MetaReference" %>
 <%@ page import="org.openxava.model.meta.MetaCollection" %>
 <%@ page import="org.openxava.web.WebEditors" %>
-
-
-<%@page import="org.openxava.web.taglib.IdTag"%>
-<%@page import="org.openxava.web.Ids"%>
-<%@page import="org.openxava.model.meta.MetaMember"%>
+<%@ page import="org.openxava.web.taglib.IdTag"%>
+<%@ page import="org.openxava.web.Ids"%>
+<%@ page import="org.openxava.model.meta.MetaMember"%>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
+<%!
+private final static String LAST_TABLE_NOT_CLOSED = "xava.layout.detail.lastTableNotClose";
+private boolean hasFrame(MetaMember m, View view) { 
+	if (m instanceof MetaProperty) {
+		return WebEditors.hasFrame((MetaProperty) m, view.getViewName());
+	}
+  	if (m instanceof MetaReference) {
+  		return !view.displayReferenceWithNoFrameEditor((MetaReference) m);  		
+  	}
+  	return true;
+}
+%>
+
 <%
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
@@ -43,14 +55,38 @@ boolean first = !"false".equals(sfirst);
 String slast = request.getParameter("last");
 boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
-boolean lastWasProperty = false; 
+boolean lastWasProperty = false;
+boolean firstNoFrameMember = true; 
+boolean firstFrameMember = false; 
 while (it.hasNext()) {
-	Object m = it.next();
-	lastWasProperty = false; 
+	MetaMember m = (MetaMember) it.next();
+	lastWasProperty = false;	
+	int frameWidth = view.isVariousMembersInSameLine(m)?0:100;	
+	if (!PropertiesSeparator.INSTANCE.equals(m)) { 
+		if (firstNoFrameMember && !hasFrame(m, view)) {			
+				firstNoFrameMember = false;
+				firstFrameMember = true;	
+				if (request.getAttribute(LAST_TABLE_NOT_CLOSED) == null) { 						
+	%>
+		</tr><tr><td><table><tr>
+	<%
+				}
+				else {
+					request.removeAttribute(LAST_TABLE_NOT_CLOSED);
+				}
+		}
+		else if (firstFrameMember && hasFrame(m, view)){
+			firstFrameMember = false;
+			firstNoFrameMember = true;
+	%>
+		</table>
+	<%	
+		}
+	}
 	if (m instanceof MetaProperty) {		
 		MetaProperty p = (MetaProperty) m;		
 		if (!PropertiesSeparator.INSTANCE.equals(m)) {			
-			boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());		
+			boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
 			lastWasEditor = !hasFrame;
 			lastWasProperty = true;
 			String propertyKey= Ids.decorate(
@@ -78,18 +114,26 @@ while (it.hasNext()) {
 					"label_" + propertyPrefix + p.getName()); 
 				String label = view.getLabelFor(p);
 	%>					 
-		<%=style.getFrameHeaderStartDecoration() %>
+		<%=style.getFrameHeaderStartDecoration(frameWidth) %>
 		<%=style.getFrameTitleStartDecoration() %>
 		<span id="<%=labelKey%>"><%=label%></span>		
-		<%@ include file="editorIcons.jsp"%>		
-		<%=style.getFrameTitleEndDecoration() %>
+		<%@ include file="editorIcons.jsp"%>
+		<%=style.getFrameTitleEndDecoration() %>	
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + p.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
+			"&closed=" + view.isFrameClosed(frameId); 
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 					
 		<%=style.getFrameHeaderEndDecoration() %>
-		<%=style.getFrameContentStartDecoration() %>						
-		<%	} // withFrame %>
-	<jsp:include page="<%=urlEditor%>" />
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId))%>
+		<%	} // withFrame %> 
+	<jsp:include page="<%=urlEditor%>" />		
 	<%
 			if (withFrame) {
-		%>			
+		%>
 		<%=style.getFrameContentEndDecoration() %>		
 		<%
 			} // withFrame		
@@ -136,7 +180,7 @@ while (it.hasNext()) {
 				String propertyInReferencePrefix = propertyPrefix + ref.getName() + ".";
 				boolean withFrame = subview.isFrame() && 
 					(!view.isSection() || view.getMetaMembers().size() > 1);
-				lastWasEditor = !withFrame; 
+				lastWasEditor = !withFrame;
 				boolean firstForSubdetail = first || withFrame;
 				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
 				
@@ -152,13 +196,21 @@ while (it.hasNext()) {
 						request.getParameter("module"),
 						"label_" + propertyPrefix + ref.getName()); 
 					String label = view.getLabelFor(ref);
-	%>					 
-		<%=style.getFrameHeaderStartDecoration() %>
+	%>				
+		<%=style.getFrameHeaderStartDecoration(frameWidth) %>
 		<%=style.getFrameTitleStartDecoration() %>
 		<span id="<%=labelKey%>"><%=label%></span>
 		<%=style.getFrameTitleEndDecoration() %>
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + ref.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
+			"&closed=" + view.isFrameClosed(frameId); 		
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 					
 		<%=style.getFrameHeaderEndDecoration() %>
-		<%=style.getFrameContentStartDecoration() %>						
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId)) %>						
 		<%		} // withFrame
 		
 				String urlReferenceEditor = null;
@@ -203,12 +255,20 @@ while (it.hasNext()) {
 		<div style="<%=styleCollectionTogether %>">
 	<%			if (withFrame) {
 		%>	
-		<%=style.getFrameHeaderStartDecoration()%>
+		<%=style.getFrameHeaderStartDecoration(frameWidth)%>
 		<%=style.getFrameTitleStartDecoration()%>
 		<%=collection.getLabel(request) %>
 		<%=style.getFrameTitleEndDecoration()%>
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + collection.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
+			"&closed=" + view.isFrameClosed(frameId);
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 					
 		<%=style.getFrameHeaderEndDecoration()%>
-		<%=style.getFrameContentStartDecoration()%>
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId))%>
 	<%			} // withFrame
 		%>	
 		<jsp:include page="collection.jsp"> 
@@ -232,12 +292,20 @@ while (it.hasNext()) {
 		%>
 		<tr><td colspan="4">
 		<% }  %>
-		<%=style.getFrameHeaderStartDecoration()%>
+		<%=style.getFrameHeaderStartDecoration(frameWidth)%>
 		<%=style.getFrameTitleStartDecoration()%>
 		<%=group.getLabel(request)%>
 		<%=style.getFrameTitleEndDecoration()%>
+		<%=style.getFrameActionsStartDecoration()%>
+		<% 
+		String frameId = Ids.decorate(request, "frame_group_" + view.getPropertyPrefix() + group.getName());
+		String frameActionsURL = "frameActions.jsp?frameId=" + frameId + 
+			"&closed=" + view.isFrameClosed(frameId); 
+		%>
+		<jsp:include page='<%=frameActionsURL%>'/>
+		<%=style.getFrameActionsEndDecoration()%> 					 			
 		<%=style.getFrameHeaderEndDecoration()%>
-		<%=style.getFrameContentStartDecoration() %>
+		<%=style.getFrameContentStartDecoration(frameId + "content", view.isFrameClosed(frameId)) %>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>
@@ -254,15 +322,30 @@ while (it.hasNext()) {
 			</td>			
 <% } %>
 
+
+<% 
+	if (firstFrameMember) {		
+		if (!(view.isSubview() && !view.isFrame())) {	
+%>
+	</table>
+<%  	}
+		else {
+			request.setAttribute(LAST_TABLE_NOT_CLOSED, new Boolean(true));
+		} 
+	}
+%>
+
 <% 	
 	if (view.isFrame() && 
-			!(last && view.getParent() != null && !view.getParent().isFrame()) && 
-			!(!lastWasProperty && view.isSection() && view.getMembersNames().size() == 1 
+			!(last && view.getParent() != null && !view.getParent().isFrame()) && 			  		
+			!(!lastWasProperty && view.isSection() && view.getMembersNamesWithoutSectionsAndCollections().size() == 1 
 					&& view.getParent() != null && view.getParent().isFrame())) {		
 %>
 </tr>
 </table>
 <% } %>
+
+
 
 <% } // if (!onlySections) %>
 

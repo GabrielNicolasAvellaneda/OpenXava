@@ -56,10 +56,16 @@ TH.list {
 	font-weight: bold;
 }
 
-
-.highlight {
+.row-highlight A.row-highlight {
 	font-weight: bold;
-	color: #3366ff;	
+	color: #3366ff;
+}
+
+.current-row  {	
+	font-weight: bold;
+	outline-color: blue;
+	outline-style: solid;
+	outline-width: thin;
 }
 
 TR.list-subheader {
@@ -71,6 +77,9 @@ TR.list-subheader {
 	font-weight: bold;
 }
 
+.list-info-detail {
+	height: 30px;
+}
 
 TABLE.frame {
 	border-collapse: collapse;
@@ -120,8 +129,6 @@ TD.frame {
 	text-decoration: underline;
 }
 
-
-
 .websphere-list-title {
 	font-weight: bold;	
 }
@@ -131,13 +138,9 @@ TD.mode {
 	font-weight: bold;	
 }
 
-TD.jetspeed2-mode {
-	font-size: x-small;
-}
-
 TD.list-title {
 	font-weight: bold;
-	text-align: center;
+	text-align: left;
 }
 
 .PTitleContent {
@@ -198,4 +201,121 @@ TD.list-title {
 .wpsTableHead {
 	border-left-width: 1px;
 	border-left-style: solid;
+}
+
+.bold-label {
+	font-weight:bold;
+}
+
+.italic-label {
+	font-style:italic; 
+}
+
+.reverse-label {
+	color: white;
+	background-color: black;
+}
+
+.page-navigation-selected {	
+	font-weight: bold;
+	border-style: solid; 
+	border-color: buttonshadow; 
+	border-width: 1px;  
+	padding: 4px 4px 4px 6px; 	
+}
+
+.ie7 .page-navigation-selected {
+	padding: 2px 4px 2px 4px; 
+	vertical-align: 3px; 	
+}
+
+.page-navigation {
+	border-style: solid; 
+	border-color: buttonshadow; 
+	border-width: 1px;  
+	padding: 2px 4px 2px 4px; 
+	background-color: #DCDCDC;	
+	text-decoration: none; 
+	font-weight: normal
+}
+
+.ie7 .page-navigation {
+	vertical-align: 3px; 
+}
+
+.ie7 .rows-per-page {
+	vertical-align: 3px;
+}
+
+.page-navigation-arrow {		
+	background-color: white;
+}
+
+.ie7 .page-navigation-arrow {	
+	padding: 1px 4px 2px 4px; 
+}
+
+.page-navigation:hover {
+	border-color: highlight;
+	background-color: white;
+}
+
+.page-navigation-arrow-disable:hover { 
+	border-color: buttonshadow;	
+}
+
+.ox-button-bar {
+	background: #F6F8FB;
+	margin-bottom: 5px;
+	overflow: hidden;
+	padding: 2px;
+}
+
+.ie6 .ox-button-bar {
+	width: 100%;
+}
+
+.ox-button-bar .ox-button-bar-button a {
+	background: url() no-repeat 5px 50%; 	
+	border: 1px solid #F6F8FB;
+	color: #9EA8AD;
+	display: block;
+	float: left; 	 
+	font-size: 12px;
+	font-weight: bold;	
+	padding: 4px 0px 4px 0px; 
+	text-decoration: none;	
+}
+
+.ox-button-bar .ox-button-bar-button a:hover {
+	border: 1px solid #A7CEDF;	
+	background-color: #DFF4FF;
+	color: #346799; 
+	padding: 4px 0px 4px 0px; 
+}
+
+.green .ox-button-bar .ox-button-bar-button a:hover {	
+	background-color: #D9F4CB;
+	border-color: #BBEAA4
+}
+
+.orange .ox-button-bar .ox-button-bar-button a:hover {
+	background-color: #F4EACB;
+	border-color: #EAD8A4;			
+}
+
+.ox-button-bar .ox-button-bar-button.active a {
+	background-color: #CFD5D7; 
+	border: 1px solid #CFD5D7;
+	color: #000;
+}
+
+.ox-button-bar .ox-button-bar-button.active a:hover {
+	background-color: #d6dcdd;
+	border-color: #B7C0C2;
+}
+
+.ox-help img {
+	border: 0;
+	padding-top: 5px;
 }

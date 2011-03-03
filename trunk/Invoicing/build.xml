@@ -6,6 +6,14 @@
 	<property name="ox3" value="true" />
 	<property file="../openxava.properties"/>
 	
+	<!-- 
+	Compile all .java and .groovy 
+	Not needed to call it if you work inside Eclipse
+	-->
+	<target name="compile"> 
+		<ant antfile="../OpenXava/build.xml" target="compile"/>
+	</target>	    	
+	
 	<!-- Build and deploy the application in war format -->	
 	<target name="deployWar">
 		<!-- In a directory -->
@@ -37,13 +45,7 @@
 	<target name="updateSchema">
 		<ant antfile="../OpenXava/build.xml" target="updateSchemaJPA">			
 			<property name="persistence.unit" value="junit"/>
-			<!-- Windows   
-			<property name="schema.path" value="/Users/javi/openxava-3.1.3/tomcat/common/lib/postgresql-8.3-604.jdbc3.jar"/>
-			-->
-						
-			<!-- Linux -->  
-			<property name="schema.path" value="/home/javi/java/openxava-3.1.4/tomcat/common/lib/postgresql-8.4-701.jdbc3.jar"/>
-						
+			<property name="schema.path" value="/home/javi/java/openxava-4.0/tomcat/lib/postgresql-8.4-701.jdbc3.jar"/>
 		</ant>
 	</target>	
 	

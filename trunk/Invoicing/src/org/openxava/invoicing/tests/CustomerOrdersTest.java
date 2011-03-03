@@ -9,18 +9,18 @@ public class CustomerOrdersTest extends ModuleTestBase {
 	}
 		
 	public void testLimitingDataVisibility() throws Exception {
-		login("lulu@invoicing.com", "lulu");
+		login("lulu@invoicing.com", "lulu");  
 		
-		assertListNotEmpty();
-		int rowCount = getListRowCount();
-		for (int row=0; row<rowCount; row++) {
-			assertValueInList(row, "customer.name", "LULU SEMUA");	
+		assertListNotEmpty();  
+		int rowCount = getListRowCount();  
+		for (int row=0; row<rowCount; row++) {  
+			assertValueInList(row, "customer.name", "LULU SEMUA");	 
 		}
 	
-		execute("CustomerOrders.new");
-		assertNoEditable("customer.number");
-		assertValue("customer.name", "LULU SEMUA");
-		
+		execute("CustomerOrders.new");  
+		assertNoEditable("customer.number");  
+		assertValue("customer.name", "LULU SEMUA");  
+													
 		logout();
 	}
 		

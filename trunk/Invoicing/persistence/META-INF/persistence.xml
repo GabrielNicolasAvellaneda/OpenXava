@@ -5,24 +5,37 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
              
-    <!-- Tomcat + PostgreSQL -->
-    <persistence-unit name="default">
-    	<non-jta-data-source>java:comp/env/jdbc/InvoicingDS</non-jta-data-source>
-    	<class>org.openxava.session.GalleryImage</class>
-        <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-        </properties>
-    </persistence-unit>    
+	<!-- Tomcat + PostgreSQL -->
+	<persistence-unit name="default">
+	<non-jta-data-source>java:comp/env/jdbc/InvoicingDS</non-jta-data-source>
+	<class>org.openxava.session.GalleryImage</class>
+		<properties>
+			<!-- PostgreSQL dialect -->
+			<property name="hibernate.dialect" 
+				value="org.hibernate.dialect.PostgreSQLDialect"/>
+		</properties>
+	</persistence-unit>    
            
-    <!-- JUnit PostgreSQL -->
-    <persistence-unit name="junit">
-        <properties>        	
-			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>			
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost/invoicing"/>
-			<property name="hibernate.connection.username" value="postgres"/>
-			<property name="hibernate.connection.password" value="openxava"/>			
+	<!-- JUnit PostgreSQL -->
+	<persistence-unit name="junit">
+		<properties>        	
+			<!-- PostgreSQL driver class -->
+			<property name="hibernate.connection.driver_class" 
+				value="org.postgresql.Driver"/>	  		
+
+			<!-- PostgreSQL dialect -->
+			<property name="hibernate.dialect" 
+				value="org.hibernate.dialect.PostgreSQLDialect"/>  
+			
+			<property name="hibernate.connection.url" 
+				value="jdbc:postgresql://localhost/invoicing"/>
+
+			<!-- The user of the database -->
+			<property name="hibernate.connection.username" value="postgres"/> 
+
+			<!-- The  password of the user of the database -->
+			<property name="hibernate.connection.password" value="openxava"/> 
         </properties>
     </persistence-unit>    
-        
+
 </persistence>
