@@ -9,14 +9,17 @@ public class AuthorTest extends ModuleTestBase {
 	}
 		
 	public void testReadAuthor() throws Exception {
-		assertValueInList(0, 0, "JAVIER CORCOBADO");
-		execute("Mode.detailAndFirst");
+		assertValueInList(0, 0, "JAVIER CORCOBADO");  														
+		execute("Mode.detailAndFirst");											
 		assertValue("name", "JAVIER CORCOBADO");
 		assertCollectionRowCount("products", 2);
-		assertValueInCollection("products", 0, "number", "2");
-		assertValueInCollection("products", 0, "description", "Arco iris de lágrimas");
+		assertValueInCollection("products", 0,   		
+				"number", "2");   
+		assertValueInCollection("products", 0, 
+				"description", "Arco iris de lágrimas");
 		assertValueInCollection("products", 1, "number", "3");
-		assertValueInCollection("products", 1, "description", "Ritmo de sangre");		
+		assertValueInCollection("products", 1, 
+				"description", "Ritmo de sangre");		
 	}
 		
 }

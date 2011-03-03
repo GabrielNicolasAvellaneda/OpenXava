@@ -1,19 +1,17 @@
 package org.openxava.invoicing.model;
 
 import java.math.*;
-
 import javax.persistence.*;
-
 import org.openxava.annotations.*;
 import org.openxava.invoicing.calculators.*;
 
 @Entity
-@View(members="product; quantity, pricePerUnit, amount")  
+@View(members="product; quantity, pricePerUnit, amount")
 public class Detail extends Identifiable {
 	
-	@ManyToOne // Lazy fetching fails on removing a detail from parent
-	private CommercialDocument parent;
-		
+	@ManyToOne
+	private CommercialDocument parent; 
+	
 	private int quantity;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=true)
@@ -21,41 +19,41 @@ public class Detail extends Identifiable {
 	@NoFrame
 	private Product product;
 	
-	@DefaultValueCalculator(value=PricePerUnitCalculator.class,
+	@DefaultValueCalculator(
+		value=PricePerUnitCalculator.class,
 		properties=@PropertyValue(
-				name="productNumber", 
-				from="product.number")
+			name="productNumber",
+			from="product.number")
 	)
 	@Stereotype("MONEY")
-	private BigDecimal pricePerUnit;	
-
-	@Stereotype("MONEY")  
-	@Depends("pricePerUnit, quantity") 
-	public BigDecimal getAmount() {
-		return new BigDecimal(quantity).multiply(getPricePerUnit());
-	}
+	private BigDecimal pricePerUnit;
 	
-	@PrePersist  
+	@PrePersist
 	private void onPersist() {
 		getParent().getDetails().add(this);
-		getParent().recalculateAmount();
+		getParent().recalculateAmount();  
 	}
-	
+		
 	@PreUpdate
 	private void onUpdate() {
 		getParent().recalculateAmount();
 	}	
-	
-	
+		
 	@PreRemove
 	private void onRemove() {
-		if (getParent().isRemoving()) return; 		
+		if (getParent().isRemoving()) return;
 		getParent().getDetails().remove(this);
 		getParent().recalculateAmount();
 	}
-	
+				
+	@Stereotype("MONEY")  
+	@Depends("pricePerUnit, quantity")
+	public BigDecimal getAmount() {
+		return new BigDecimal(quantity)
+			.multiply(getPricePerUnit());
+	}
+		
 	// Getters and setters
-	
 	public CommercialDocument getParent() {
 		return parent;
 	}
@@ -79,13 +77,14 @@ public class Detail extends Identifiable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
+
 	public BigDecimal getPricePerUnit() {
-		return pricePerUnit==null?BigDecimal.ZERO:pricePerUnit; 
+		return pricePerUnit==null?
+			BigDecimal.ZERO:pricePerUnit;
 	}
 
 	public void setPricePerUnit(BigDecimal pricePerUnit) {
 		this.pricePerUnit = pricePerUnit;
 	}
-	
+
 }

@@ -37,14 +37,15 @@ public class InvoiceTest extends CommercialDocumentTest {
 		execute("Collection.removeSelected", 
 			"viewObject=xava_view_section1_orders");
 		assertCollectionRowCount("orders", 0);
-	}	
+	}
 	
 	private void deleteDetails() throws Exception { 		
 		int c = getCollectionRowCount("details");
-		for (int i=0; i<c; i++) {
-			checkRowCollection("details", i);
+		for (int i=0; i<c; i++) {  
+			checkRowCollection("details", i);  
 		}
-		execute("Collection.removeSelected", "viewObject=xava_view_section0_details");		
-	}	
-					
+		execute("Collection.removeSelected", 		
+			"viewObject=xava_view_section0_details");		
+	}
+			
 }

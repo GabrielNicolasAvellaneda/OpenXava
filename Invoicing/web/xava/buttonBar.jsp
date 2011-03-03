@@ -1,6 +1,8 @@
 <%@ include file="imports.jsp"%>
 
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
+<%@ page import="org.openxava.util.XavaPreferences"%>
+<%@ page import="org.openxava.util.Is"%>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -9,63 +11,81 @@
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
 boolean onBottom = false;
+String mode = request.getParameter("xava_mode"); 
+if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
+boolean headerButtonBar = !manager.isSplitMode() || mode.equals("list");  
+String helpImage = style.getHelpImage().startsWith("xava/")?request.getContextPath() + "/" + style.getHelpImage():style.getHelpImage();
 
 if (manager.isButtonBarVisible()) {
 %>
- 
-	<table width="100%" <%=style.getButtonBarSpacing()%> class="<%=style.getButtonBar2()%>" style="<%=style.getButtonBarStyle()%>">
-	<tr>
-	<td class=<%=style.getButtonBarStart(onBottom)%> style="<%=style.getButtonBarStartStyle()%>" width=1>&nbsp;</td>
-	<td style='vertical-align: middle' class="<%=style.getButtonBarMiddle(onBottom)%>" style="<%=style.getButtonBarMiddleStyle()%>">
-	
+	<div class="<%=style.getButtonBar()%>">
 	<%
 	java.util.Iterator it = manager.getMetaActions().iterator();
+	boolean showLabels = XavaPreferences.getInstance().isShowLabelsForToolBarActions(); 
 	while (it.hasNext()) {
 		MetaAction action = (MetaAction) it.next();
 		if (action.isHidden()) continue;
-		if (action.hasImage()) { 
+		if (action.appliesToMode(mode) && action.hasImage()) {
 		%>
-		<xava:image action="<%=action.getQualifiedName()%>"/>
+		<jsp:include page="barButton.jsp">
+			<jsp:param name="action" value="<%=action.getQualifiedName()%>"/>
+		</jsp:include>		
 		<%
 		} 
 	}
 	%>
-	</td>
 	
-	<td align="right" style='vertical-align: middle' class="<%=style.getMode(onBottom)%>">
-	&nbsp;
+	<span style="float: right"> 
 	<%
 	java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); 
-	if (previousViews.isEmpty()) {
+	if (headerButtonBar && previousViews.isEmpty()) { 
 		java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
-		boolean firstTime = true;
 		while (itSections.hasNext()) {
 			MetaAction action = (MetaAction) itSections.next();
 			if (action.isHidden()) continue;
-			if (firstTime) firstTime=false;
-			else {
+			String modeNameAction = action.getName().startsWith("detail")?"detail":action.getName();
+			if (modeNameAction.equals(manager.getModeName())) {			
 			%>
-			-
-			<%
-			}
-			// 'modeNameAction' only run well if the only modes
-			// are list and detail, but at momment that is the case
-			String modeNameAction = action.getName().equals("list")?"list":"detail"; 
-			if (modeNameAction.equals(manager.getModeName())) {
-			%>
-			<b><%=action.getLabel(request)%></b>
+			<span class="<%=style.getButtonBarActiveModeButton()%>">
+				<a href="">
+					&nbsp;&nbsp;
+					<%=action.getLabel(request)%>
+					&nbsp;&nbsp;
+				</a>
+			</span>
 			<%
 			}
 			else {	
 			%>
-			<xava:link action="<%=action.getQualifiedName()%>"/>
+			<span class="<%=style.getButtonBarModeButton()%>">			
+				<xava:link action="<%=action.getQualifiedName()%>">
+					&nbsp;&nbsp;		 			
+					<%=action.getLabel(request)%>
+					&nbsp;&nbsp;
+				</xava:link>
+			</span>
 			<%
 			}
 		}
-	}
-		%>
-	</td>
-	<td class="<%=style.getButtonBarEnd(onBottom)%>" style="<%=style.getButtonBarEndStyle()%>" width=1>&nbsp;</td>
-	</tr>
-	</table>
+	}	
+
+	String language = request.getLocale().getLanguage();
+	String href = XavaPreferences.getInstance().getDefaultHelpPrefix() + language;
+	String target = XavaPreferences.getInstance().isHelpInNewWindow() ? "_blank" : "";
+	if (!Is.empty(XavaPreferences.getInstance().getHelpPrefix())) { 
+		href = 
+			"/" + manager.getApplicationName() + "/" + 
+			XavaPreferences.getInstance().getHelpPrefix() +
+			manager.getModuleName() +
+			"_" + language + 
+			XavaPreferences.getInstance().getHelpSuffix();
+	} 
+	%>
+		<span class="<%=style.getHelp()%>"> 
+			<a href="<%=href%>" target="<%=target%>"><img src="<%=helpImage%>"/></a> 				
+		</span>
+	</span>		
+
+	</div>
+	
 <% } // end isButtonBarVisible %>

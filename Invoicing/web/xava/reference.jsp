@@ -7,7 +7,10 @@
 
 
 <%@page import="org.openxava.web.Ids"%>
-<%@page import="org.openxava.web.WebEditors"%><jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+<%@page import="org.openxava.web.WebEditors"%>
+<%@page import="org.openxava.util.XavaPreferences"%>
+<%@page import="org.openxava.util.Is"%>
+<jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -31,12 +34,16 @@ if (!descriptionsList) descriptionsList = view.displayAsDescriptionsList(ref);
 String editableKey = referenceKey + "_EDITABLE_";
 boolean editable = view.isEditable(ref);
 int labelFormat = view.getLabelFormatForReference(ref);
+String labelStyle = view.getLabelStyleForReference(ref);
+if (Is.empty(labelStyle)) labelStyle = XavaPreferences.getInstance().getDefaultLabelStyle();
 String label = ref.getLabel(request);
 %>
 <% if (!onlyEditor) { %>
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
-<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>"><%=label%></span>
+<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>" class="<%= labelStyle%>">
+<%=label%>
+</span>
 <% } %>
 <%=postLabel%>
 <%=preIcons%>
@@ -47,7 +54,9 @@ String label = ref.getLabel(request);
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 <table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'> 
-<span id='<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>' class=<%=style.getSmallLabel()%>><%=label%></span>
+<span id='<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>' class="<%=style.getSmallLabel()%> <%=labelStyle %>">
+<%=label%>
+</span>
  
 <%@ include file="referenceEditorIcons.jsp"%>
 
@@ -64,34 +73,43 @@ String keyProperties = "";
 String propertyKey = null;
 if (keys.size() == 1) {		
 	keyProperty = keys.iterator().next().toString();
-	propertyKey = referenceKey + "." + keyProperty;
-	Map values = (Map) view.getValue(ref.getName());	
-	values = values == null?java.util.Collections.EMPTY_MAP:values;
-	Object value = values.get(keyProperty);
-	String valueKey = propertyKey + ".value";
-	request.setAttribute(valueKey, value);		
-	String fvalue = value==null?"":value.toString();
-	request.setAttribute(propertyKey + ".fvalue", fvalue);
+	propertyKey = Ids.decorate(request, referenceKey + "." + keyProperty);
+	if (!composite) { 
+		Map values = (Map) view.getValue(ref.getName());	
+		values = values == null?java.util.Collections.EMPTY_MAP:values;
+		Object value = values.get(keyProperty);
+		String valueKey = propertyKey + ".value";
+		request.setAttribute(valueKey, value);		
+		String fvalue = value==null?"":value.toString();
+		request.setAttribute(propertyKey + ".fvalue", fvalue);
+	}
 }
 else {	
-	propertyKey = referenceKey + ".KEY";
-	Map values = (Map) view.getValue(ref.getName());
-	values = values == null?java.util.Collections.EMPTY_MAP:values;
+	propertyKey = referenceKey + "__KEY__";
+	Map values = null; 
+	if (!composite) { 
+		values = (Map) view.getValue(ref.getName());
+		values = values == null?java.util.Collections.EMPTY_MAP:values;
+	}
 	java.util.Iterator it = keys.iterator();
 	StringBuffer sb = new StringBuffer();
 	while (it.hasNext()) {
-		String property = (String) it.next();		
-		Object value = values.get(property);
-		String valueKey = referenceKey + "." + property + ".value";
-		request.setAttribute(valueKey, value);
+		String property = (String) it.next();
+		if (!composite) { 
+			Object value = values.get(property);
+			String valueKey = Ids.decorate(request, referenceKey + "." + property) + ".value"; 
+			request.setAttribute(valueKey, value);
+		}
 		sb.append(property);
 		if (it.hasNext()) {
 			sb.append(',');
 		}
-	}	
-	String key = ref.getMetaModelReferenced().toString(values); 
-	String fvalue = key==null?"0":key;
-	request.setAttribute(propertyKey + ".fvalue", fvalue);
+	}
+	if (!composite) { 
+		String key = ref.getMetaModelReferenced().toString(values); 
+		String fvalue = key==null?"0":key;
+		request.setAttribute(propertyKey + ".fvalue", fvalue);
+	}
 	keyProperties = sb.toString();
 }
 

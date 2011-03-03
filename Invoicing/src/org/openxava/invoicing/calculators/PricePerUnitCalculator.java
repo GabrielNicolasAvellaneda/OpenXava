@@ -1,20 +1,20 @@
-package org.openxava.invoicing.calculators;
+package org.openxava.invoicing.calculators;  
 
 import org.openxava.calculators.*;
 import org.openxava.invoicing.model.*;
-
-import static org.openxava.jpa.XPersistence.*;
+import static org.openxava.jpa.XPersistence.*; 
 
 public class PricePerUnitCalculator implements ICalculator {
 	
-	private int productNumber;
+	private int productNumber;  
 
 	public Object calculate() throws Exception {
-		Product product = getManager().find(Product.class, productNumber);
-		return product.getPrice();		
+		Product product = getManager()  
+			.find(Product.class, productNumber);  
+		return product.getPrice();  	
 	}
 
-	public void setProductNumber(int productNumber) {
+	public void setProductNumber(int productNumber) { 
 		this.productNumber = productNumber;
 	}
 

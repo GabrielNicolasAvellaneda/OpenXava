@@ -22,6 +22,8 @@
 
 <%!
 
+private static int EXTRA_WIDTH = 5; 
+
 private void tightenWidths(int [] widths) {	
 	int max = 190;
 	int littleOnesTotal = 0;
@@ -33,7 +35,8 @@ private void tightenWidths(int [] widths) {
 		}
 	}	
 	int spaceForBigOnes = max - littleOnesTotal;
-	int widthForBig = spaceForBigOnes / (widths.length - littleOnesCount);
+	int bigOnesCount = widths.length - littleOnesCount; 
+	int widthForBig = bigOnesCount==0?20:spaceForBigOnes / bigOnesCount; 
 	if (widthForBig < 20) widthForBig = 20;
 	for (int i=0; i<widths.length; i++) {
 		if (widths[i] > 20 && widths[i] > widthForBig) widths[i] = widths[i] = widthForBig;
@@ -84,7 +87,7 @@ if (language == null) language = org.openxava.util.Locales.getCurrent().getDispl
 language = language == null?request.getLocale().getDisplayLanguage():language;
 java.util.Locale locale = new java.util.Locale(language, "");
 
-int columnsSeparation = 4;
+int columnsSeparation = 10; 
 Iterator it = tab.getMetaProperties().iterator();
 int [] widths = new int[tab.getMetaProperties().size()];
 int totalWidth = 0;
@@ -333,7 +336,7 @@ int x = 0;
 i=0;
 while (it.hasNext()) {			
 	MetaProperty p = (MetaProperty) it.next();
-	int width=widths[i++]*letterWidth;		
+	int width=widths[i++]*letterWidth + EXTRA_WIDTH; 		
 %>								
 				<staticText>
 					<reportElement
@@ -386,7 +389,7 @@ x = 0;
 i=0;
 while (it.hasNext()) {			
 	MetaProperty p = (MetaProperty) it.next();	
-	int width=widths[i++]*letterWidth;
+	int width=widths[i++]*letterWidth + + EXTRA_WIDTH; 
 %>								
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None" >					<reportElement
 						mode="Transparent"

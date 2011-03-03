@@ -3,101 +3,96 @@
 <!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
 
 <controllers>
- 
-	<env-var name="XAVA_SEARCH_ACTION" value="Invoicing.searchExcludingDeleted"/>	
-	<object name="invoicing_currentInvoiceKey" class="java.util.Map" scope="global"/>
 
-	<controller name="Invoicing">
-	
-		<extends controller="Typical"/>
-	
-		<action name="delete" mode="detail" confirm="true"
-			class="org.openxava.invoicing.actions.InvoicingDeleteAction" 
-			image="images/delete.gif"
-			keystroke="Control D">
-			<use-object name="xava_view"/>						
-		</action>		
-		 
-		<action name="searchExcludingDeleted" 
-			hidden="true"
-			class="org.openxava.invoicing.actions.SearchExcludingDeletedAction">
-			<use-object name="xava_view"/>						
-		</action>		
+	<env-var  
+		name="XAVA_SEARCH_ACTION" 
+		value="Invoicing.searchExcludingDeleted"/>
 		
+	<object name="invoicing_currentInvoiceKey"
+		class="java.util.Map"
+		scope="global"/>
+
+	<controller name="Invoicing">  	
+		<extends controller="Typical"/> 
+	
+		<action name="delete"  
+			mode="detail" confirm="true"
+			class="org.openxava.invoicing.actions.InvoicingDeleteAction"
+			image="images/delete.gif"
+			keystroke="Control D"/>
+			
+		<action name="searchExcludingDeleted" 
+			hidden="true"  
+			class="org.openxava.invoicing.actions.SearchExcludingDeletedAction"/>
+			
 		<action name="deleteSelected" mode="list" confirm="true"
 			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction"
-			keystroke="Control D">
-		</action>
-		
+			keystroke="Control D"/>
+	
+		<action name="deleteRow" mode="NONE" confirm="true"
+			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction"
+			image="images/delete.gif"
+			in-each-row="true"/>											
+				
 	</controller> 
 	
 	<controller name="Trash">
 		<action name="restore" mode="list"
 			class="org.openxava.invoicing.actions.InvoicingDeleteSelectedAction">
 			<set property="restore" value="true"/>
-		</action>
+		</action>				
 	</controller>
 	
 	<controller name="Order">
-		<extends controller="Invoicing"/>
-		
-		<action name="createInvoice" mode="detail"
-			class="org.openxava.invoicing.actions.CreateInvoiceFromOrderAction">
-			<use-object name="xava_view"/>
-		</action>
+		<extends controller="Invoicing"/> 
 			
-		<action name="createInvoiceFromSelectedOrders" mode="list"
-			class="org.openxava.invoicing.actions.CreateInvoiceFromSelectedOrdersAction">
-			<use-object name="invoicing_currentInvoiceKey"/>
-		</action>	
-				
+		<action name="createInvoice" mode="detail"
+			class="org.openxava.invoicing.actions.CreateInvoiceFromOrderAction"/>
+
+			<action name="createInvoiceFromSelectedOrders"  
+				mode="list"  
+				class=
+				"org.openxava.invoicing.actions.CreateInvoiceFromSelectedOrdersAction"
+			/>  
+			
 		<action name="searchInvoice" 
-			hidden="true"
-			image="images/search.gif"
-			class="org.openxava.invoicing.actions.SearchInvoiceFromOrderAction">
-			<use-object name="xava_view"/>
-			<use-object name="xava_referenceSubview"/>
-			<use-object name="xava_tab"/>
-			<use-object name="xava_currentReferenceLabel"/>
-		</action>		
+			class="org.openxava.invoicing.actions.SearchInvoiceFromOrderAction"
+			hidden="true" image="images/search.gif"/>
 					
 	</controller>
 	
 	<controller name="CurrentInvoiceEdition">
 	
 		<action name="load" 			 
-			class="org.openxava.invoicing.actions.LoadCurrentInvoiceAction"
-			hidden="true"			
-			on-init="true">			
-			<use-object name="xava_view"/>
-			<use-object name="invoicing_currentInvoiceKey"/>
-		</action>	
-	
+			class=
+			"org.openxava.invoicing.actions.LoadCurrentInvoiceAction"
+			hidden="true"	on-init="true"/>	
 	
 		<action name="save" 
-			class="org.openxava.invoicing.actions.SaveInvoiceAction"			
-			keystroke="Control S">			
-			<use-object name="xava_view"/>
-		</action>	
-	
+			class="org.openxava.invoicing.actions.SaveInvoiceAction"				
+			keystroke="Control S"/>			
+		
 		<action name="return" 
 			class="org.openxava.actions.ReturnPreviousModuleAction"/>
-			
+				
 	</controller>
 	
 	<controller name="Invoice">
 		<extends controller="Invoicing"/>		
-				
+					
 		<action name="addOrders" 
-			image="images/create_new.gif"
-			hidden="true"
-			class="org.openxava.invoicing.actions.GoAddOrdersToInvoiceAction">			
-			<use-object name="xava_tab"/>
-			<use-object name="xava_currentCollectionLabel"/>
-			<use-object name="xava_collectionViewObject"/>
-			<use-object name="xava_view"/>
-		</action>
-		
+			class="org.openxava.invoicing.actions.GoAddOrdersToInvoiceAction"
+			hidden="true" image="images/create_new.gif"/>
+					
+	</controller>
+	
+	<controller name="AddOrdersToInvoice">
+		<extends controller="AddToCollection"/> 
+	
+		<action 
+			name="add"  
+			class="org.openxava.invoicing.actions.AddOrdersToInvoiceAction"/>  
+	
 	</controller>
 	
 	<controller name="CustomerOrders">
@@ -105,17 +100,13 @@
 		<action  name="new" 
 			class="org.openxava.invoicing.actions.NewOrderForCurrentUserAction"
 			image="images/new.gif"
-			keystroke="Control N">
-			<use-object name="xava_view"/>			
-		</action>	
-	
+			keystroke="Control N"/> 
+			
 		<action name="save" mode="detail"
 			class="org.openxava.actions.SaveAction"
 			image="images/save.gif"
-			keystroke="Control S">			
-			<use-object name="xava_view"/>
-		</action>
-
+			keystroke="Control S"/>			
+	
 	</controller>	
 
 </controllers>

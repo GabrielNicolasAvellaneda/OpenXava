@@ -9,10 +9,9 @@ public class CategoryTest extends ModuleTestBase {
 	}
 		
 	public void testCategoriesInList() throws Exception {
-		assertValueInList(0, 0, "MUSIC");
-		assertValueInList(1, 0, "BOOKS");
-		assertValueInList(2, 0, "SOFTWARE");
+		assertValueInList(0, 0, "MUSIC");  
+		assertValueInList(1, 0, "BOOKS");  
+		assertValueInList(2, 0, "SOFTWARE"); 
 	}
 		
 }
-

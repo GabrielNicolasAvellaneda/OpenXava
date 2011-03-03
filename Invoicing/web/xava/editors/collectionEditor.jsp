@@ -46,9 +46,7 @@ if (collectionEditable || collectionMembersEditables) {
 	lineAction = subview.getEditCollectionElementAction();
 }
 else {
-	if (!subview.isDetailMemberInCollection()) {
-		lineAction = subview.getViewCollectionElementAction();
-	}
+	lineAction = subview.getViewCollectionElementAction();
 }
 String propertyPrefix = propertyPrefixAccumulated == null?collectionName + ".":propertyPrefixAccumulated + collectionName + "."; 
 %>
@@ -77,59 +75,34 @@ String propertyPrefix = propertyPrefixAccumulated == null?collectionName + ".":p
 // New
 if (view.displayDetailInCollection(collectionName)) {
 	context.put(request, viewName, collectionView);
-	if (collectionView.isCollectionDetailVisible()) {
-%>	
-<tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">
-		<%=style.getFrameHeaderStartDecoration()%>		
-		<%=style.getFrameTitleStartDecoration()%>
-		<%=ref.getLabel(request)%>
-		<%=style.getFrameTitleEndDecoration()%>
-		<%=style.getFrameHeaderEndDecoration()%>
-		<%=style.getFrameContentStartDecoration()%>
-		<jsp:include page="../detail.jsp"> 
-			<jsp:param name="viewObject" value="<%=viewName%>" />
-			<jsp:param name="propertyPrefix" value="<%=propertyPrefix%>" />
-		</jsp:include>		
-<% if (collectionEditable || collectionMembersEditables) { %>
-<xava:action action="<%=subview.getSaveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
-<% } %>
-&nbsp;<xava:action action="<%=subview.getHideCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
-<% if (collectionEditable) { %>
-&nbsp;<xava:action action="<%=subview.getRemoveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
-<% } %>
-<% 
-Iterator itDetailActions = subview.getActionsNamesDetail().iterator();
-while (itDetailActions.hasNext()) {
-%>
-&nbsp;<xava:action action="<%=itDetailActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
-<%	
-} // while detail actions
-%>
-
-		<%=style.getFrameContentEndDecoration()%>
-
-<%
-	}
-	else {// no mostrar
 %>
 <tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
-<xava:action action="<%=subview.getNewCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
-<xava:action action="<%=subview.getRemoveSelectedCollectionElementsAction()%>" argv='<%="viewObject="+viewName%>'/>
+<jsp:include page="../barButton.jsp">
+	<jsp:param name="action" value="<%=subview.getNewCollectionElementAction()%>"/>
+	<jsp:param name="argv" value='<%="viewObject="+viewName%>'/>
+</jsp:include>
+<jsp:include page="../barButton.jsp">
+	<jsp:param name="action" value="<%=subview.getRemoveSelectedCollectionElementsAction()%>"/>
+	<jsp:param name="argv" value='<%="viewObject="+viewName%>'/>
+</jsp:include>
+
 <% } %>
 <% 
 Iterator itListActions = subview.getActionsNamesList().iterator();
 while (itListActions.hasNext()) {
 %>
-&nbsp;<xava:action action="<%=itListActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
+<jsp:include page="../barButton.jsp">
+	<jsp:param name="action" value="<%=itListActions.next().toString()%>"/>
+	<jsp:param name="argv" value='<%="viewObject="+viewName%>'/>
+</jsp:include>
 <%	
 } // while list actions
 %>
 
 
 </td></tr>
-<%	
-	}
+<%		
 }
 else {
 %>

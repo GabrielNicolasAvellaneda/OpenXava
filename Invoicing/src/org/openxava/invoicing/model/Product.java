@@ -1,14 +1,12 @@
 package org.openxava.invoicing.model;
 
 import java.math.*;
-
 import javax.persistence.*;
-
 import org.openxava.annotations.*;
 import org.openxava.invoicing.annotations.*;
 
-@Entity 
-@View(name="Simple", members="number, description")
+@Entity
+@View(name="Simple", members="number, description") 
 public class Product {
 	
 	@Id @Column(length=9)
@@ -21,40 +19,28 @@ public class Product {
 	@DescriptionsList
 	private Author author;
 		
-	@ManyToOne(
-		fetch=FetchType.LAZY,
-		optional=false)
+	@ManyToOne( 
+		fetch=FetchType.LAZY,  
+		optional=true)
 	@DescriptionsList
 	private Category category;
 	
+	@Column(length=10) @ISBN
+	private String isbn;
+			
 	@Stereotype("MONEY")
 	private BigDecimal price;
-	
-	@Column(length=10) @ISBN
-	private String isbn; 	
-	
-	@Stereotype("PHOTO") 
+		
+	@Stereotype("PHOTO")
 	private byte [] photo;
-	
-	
-	@Stereotype("IMAGES_GALLERY") 
+		
+	@Stereotype("IMAGES_GALLERY")
 	@Column(length=32)
-	private String morePhotos;
-	
-	
+	private String morePhotos;		
+		
 	@Stereotype("MEMO")
-	private String remarks;
+	private String remarks;	
 	
-	// Getters and setters
-
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-
 	public Category getCategory() {
 		return category;
 	}
@@ -102,7 +88,14 @@ public class Product {
 	public void setMorePhotos(String morePhotos) {
 		this.morePhotos = morePhotos;
 	}
-	
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 	
 	public void setAuthor(Author author) {
 		this.author = author;
@@ -118,6 +111,6 @@ public class Product {
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
-	}	
+	}		
 			
 }
