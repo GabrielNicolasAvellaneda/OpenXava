@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Accepts language_COUNTRY for proper locale creation
+- Clear message in log when incorrect migration to OX4 from old versions.
+
 OpenXava 4.1.1 (2011-2-28)
 --------------------------
 - CRITICAL FIX: List and collections are not shown inside dialogs.

@@ -177,8 +177,14 @@ public class XPersistence {
 		Map properties = getPersistenceUnitProperties();
 		EntityManagerFactory entityManagerFactory = (EntityManagerFactory) 
 			entityManagerFactories.get(properties); 
-		if (entityManagerFactory == null) {			
-			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnit(), properties);
+		if (entityManagerFactory == null) {
+			try {
+				entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnit(), properties);
+			}
+			catch (NoSuchFieldError ex) {
+				log.error(XavaResources.getString("incorrect_openxava_upgrade")); 
+				throw ex;
+			}
 			entityManagerFactories.put(new HashMap(properties), entityManagerFactory);			
 		}
 		return entityManagerFactory;

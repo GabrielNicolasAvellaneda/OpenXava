@@ -171,7 +171,13 @@ public class XHibernate {
 	}	
 	
 	private static Configuration createConfiguration(String hibernateCfg) {
-		return new AnnotationConfiguration().configure(hibernateCfg);								
+		try { 
+			return new AnnotationConfiguration().configure(hibernateCfg);	
+		}
+		catch (NoSuchFieldError ex) {
+			log.error(XavaResources.getString("incorrect_openxava_upgrade")); 
+			throw ex;
+		}
 	}
 	
 	private static SessionFactory createSessionFactory(String hibernateCfg, Properties properties) throws HibernateException {
