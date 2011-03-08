@@ -140,7 +140,7 @@ public class WebEditors {
 
 	public static Object formatToStringOrArrayImpl(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException {  
 		try {
-			MetaEditor ed = getMetaEditorFor(p, viewName); 			
+			MetaEditor ed = getMetaEditorFor(p, viewName); 
 			if (fromList && !Is.empty(ed.getListFormatterClassName())){
 				return ed.getListFormatter().format(request, object);
 			}
