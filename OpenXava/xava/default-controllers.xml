@@ -375,13 +375,25 @@ here that you want to override.
 	 -->
 	<controller name="ManyToMany">		
 		<action name="new" image="images/new.gif" hidden="true"
-			class="org.openxava.actions.CreateNewElementInManyToManyCollectionAction"/>		
+			class="org.openxava.actions.CreateNewElementInManyToManyCollectionAction"/>
+	
+		<action name="edit" image="images/edit.gif" hidden="true" 
+			class="org.openxava.actions.EditElementInManyToManyCollectionAction"> 
+			<set property="editable" value="true"/> 
+			<set property="keyEditable" value="false"/> 
+		</action> 		
+	
 	</controller>			
 		
 	<controller name="ManyToManyNewElement">		
 		<action name="save" 
 			class="org.openxava.actions.SaveElementInManyToManyCollectionAction"/>			
 	</controller>		
+	
+	<controller name="ManyToManyUpdateElement"> 
+		<action name="save" 
+			class="org.openxava.actions.UpdateElementInManyToManyCollectionAction"/> 
+	</controller>
 	
 	<controller name="DefaultListActionsForCollections">
 		<extends controller="Print"/>
