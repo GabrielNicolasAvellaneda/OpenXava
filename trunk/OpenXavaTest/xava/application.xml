@@ -11,7 +11,7 @@
 		<model name="CustomerContactPerson"/>
 		<view name="CustomerAsAggregate3Levels"/>
 		<controller name="Typical"/>
-	</module>		<module name="StateHibernate">
+	</module>		<!-- tmp -->	<module name="CommunityEditableMembers">		<model name="Community"/>		<view name="EditableMembers"/>		<controller name="Typical"/>	</module>				<module name="StateHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>
 		<controller name="StateHibernate"/>

@@ -1,7 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
-- Accepts language_COUNTRY for proper locale creation
+- Photos are shown in list and collections. 
+- Fix: Shorting columns if the value contains '-' produces two lines in calculated collections.
+- New ManyToMany.edit action for updating elements from a many to many collection. 
+- UrlParameters controller accepts language_COUNTRY as argument for locale. 
 - Clear message in log when incorrect migration to OX4 from old versions.
 
 OpenXava 4.1.1 (2011-2-28)
