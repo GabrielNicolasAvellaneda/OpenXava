@@ -68,6 +68,7 @@ public class Tab implements java.io.Serializable {
 	private final static String COLUMN_WIDTH = "columnWidth."; 
 	private final static String STARTS_COMPARATOR = "starts_comparator";
 	private final static String CONTAINS_COMPARATOR = "contains_comparator";
+	private final static String NOT_CONTAINS_COMPARATOR = "not_contains_comparator";
 	private final static String YEAR_COMPARATOR = "year_comparator";
 	private final static String MONTH_COMPARATOR = "month_comparator";
 	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator"; 
@@ -591,6 +592,7 @@ public class Tab implements java.io.Serializable {
 		if (STARTS_COMPARATOR.equals(comparator)) return "like";
 		
 		if (CONTAINS_COMPARATOR.equals(comparator)) return "like";
+		if (NOT_CONTAINS_COMPARATOR.equals(comparator)) return "not like";
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
 		if (MONTH_COMPARATOR.equals(comparator)) return "=";
 		if (YEAR_MONTH_COMPARATOR.equals(comparator)) return "="; 
@@ -630,7 +632,8 @@ public class Tab implements java.io.Serializable {
 					value = convertStringArgument(value.toString()) + "%";
 					key.add(value);
 				}
-				else if (CONTAINS_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) {
+				else if (CONTAINS_COMPARATOR.equals(this.conditionComparatorsToWhere[i]) || 
+						NOT_CONTAINS_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) {
 					value = "%" + convertStringArgument(value.toString()) + "%";
 					key.add(value);
 				} 

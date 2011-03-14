@@ -1,9 +1,16 @@
 package org.openxava.test.tests;
 
-import javax.persistence.NoResultException;
+import java.io.*;
 
-import org.openxava.test.model.CharacteristicThing;
+import javax.persistence.*;
+
+import org.apache.commons.logging.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
+
+import com.lowagie.text.*;
+import com.lowagie.text.Document;
+import com.lowagie.text.pdf.*;
 
 
 
@@ -12,6 +19,7 @@ import org.openxava.tests.*;
  */
 
 public class ColorTest extends ModuleTestBase {
+	private static Log log = LogFactory.getLog(ColorTest.class);
 	
 	public ColorTest(String testName) {
 		super(testName, "Color");		
@@ -206,4 +214,24 @@ public class ColorTest extends ModuleTestBase {
 		assertMessage("Color modified successfully");
 		assertValue("mixture.KEY", "");
 	}
+	
+	public void testFilterNotContains() throws Exception{
+		assertLabelInList(1, "Name");
+		assertLabelInList(5, "Description of Characteristic thing");
+		setConditionValues("", "", "", "", "3 places");
+		execute("List.filter");
+		assertListRowCount(1);
+		assertValueInList(0, 1, "ROJO");
+		
+		setConditionComparators("=", "not_contains_comparator", "starts_comparator", "starts_comparator", "contains_comparator");
+		setConditionValues("", "ROJO", "", "", "");
+		execute("List.filter");
+		assertListNotEmpty();
+		
+		setConditionComparators("=", "not_contains_comparator", "starts_comparator", "starts_comparator", "contains_comparator");
+		setConditionValues("", "ROJO", "", "", "3 places");
+		execute("List.filter");
+		assertListRowCount(0);
+	}
+	
 }

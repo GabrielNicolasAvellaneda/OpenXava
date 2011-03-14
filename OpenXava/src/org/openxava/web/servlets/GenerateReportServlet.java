@@ -15,7 +15,6 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
 
 import org.apache.commons.logging.*;
-
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
@@ -152,8 +151,8 @@ public class GenerateReportServlet extends HttpServlet {
 				Map parameters = new HashMap();
 				synchronized (tab) {
 					tab.setRequest(request);
-					parameters.put("Title", tab.getTitle());									
-					parameters.put("Organization", getOrganization(request, tab));
+					parameters.put("Title", tab.getTitle());				
+					parameters.put("Organization", getOrganization());
 					for (String totalProperty: tab.getTotalPropertiesNames()) {
 						parameters.put(totalProperty + "__TOTAL__", getTotal(tab, totalProperty));
 					}
@@ -205,16 +204,10 @@ public class GenerateReportServlet extends HttpServlet {
 		}
 	}
 
-	protected String getOrganization(HttpServletRequest request, Tab tab) throws MissingResourceException, XavaException {
-		Locale locale = XavaResources.getLocale(request);
-		if (Labels.exists("xava.organization", locale)) {
-			return Labels.get("xava.organization", locale);
-		}		
-		else {
-			return "";
-		}
+	protected String getOrganization() throws MissingResourceException, XavaException {
+		return ReportParameterProviderFactory.getInstance().getOrganization();
 	}
-			
+	
 	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab) throws ServletException, IOException {		
 		StringBuffer suri = new StringBuffer();
 		suri.append("/xava/jasperReport");
