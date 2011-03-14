@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Filter: add comparator 'not contains'. 
+- New 'reportParameterProviderClass' property in xava.properties. It allows that you put your own code to the report parameters.
 - Photos are shown in list and collections. 
 - Fix: Shorting columns if the value contains '-' produces two lines in calculated collections.
 - New ManyToMany.edit action for updating elements from a many to many collection. 
