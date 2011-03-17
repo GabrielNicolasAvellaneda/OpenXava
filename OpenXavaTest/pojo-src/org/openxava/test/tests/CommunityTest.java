@@ -40,10 +40,10 @@ public class CommunityTest extends ModuleTestBase {
 		setValue("sex", String.valueOf(Human.Sex.FEMALE.ordinal()));
 		execute("ManyToManyNewElement.save");
 		assertCollectionRowCount("members", 4);
-		assertValueInCollection("members", 0, "name", "JUNIT");
-		assertValueInCollection("members", 0, "sex", "Female");
+		assertValueInCollection("members", 3, "name", "JUNIT");
+		assertValueInCollection("members", 3, "sex", "Female");
 		
-		checkRowCollection("members", 0);
+		checkRowCollection("members", 3);
 		execute("Collection.removeSelected", "viewObject=xava_view_members");
 		assertNoErrors();
 		

@@ -24,7 +24,7 @@ public class CreateNewElementInCollectionAction extends CollectionElementViewBas
 		}
 		getCollectionElementView().setCollectionDetailVisible(true);
 		getCollectionElementView().setCollectionEditingRow(-1);
-		showDialog(getCollectionElementView());		
+		showDialog(getCollectionElementView());				
 		if (getCollectionElementView().isCollectionEditable() || 
 			getCollectionElementView().isCollectionMembersEditables()) 
 		{ 

@@ -12,7 +12,7 @@ import org.openxava.actions.*;
  * Create on 11/03/2011 (12:42:24)
  * @author Ana Andres
  */
-public class DefaultReportParameterProvider implements IReportParameterProvider, IRequestAction{
+public class DefaultReportParametersProvider implements IReportParametersProvider, IRequestAction{
 	private transient HttpServletRequest request;
 	
 	public String getOrganization() {

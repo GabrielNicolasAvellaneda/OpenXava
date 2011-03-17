@@ -205,7 +205,7 @@ public class GenerateReportServlet extends HttpServlet {
 	}
 
 	protected String getOrganization() throws MissingResourceException, XavaException {
-		return ReportParameterProviderFactory.getInstance().getOrganization();
+		return ReportParametersProviderFactory.getInstance().getOrganization();
 	}
 	
 	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab) throws ServletException, IOException {		

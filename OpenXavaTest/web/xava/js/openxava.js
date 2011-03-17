@@ -223,20 +223,6 @@ openxava.initLists = function(application, module) {
 			Tab.setColumnWidth(event.target.id, $(event.target).width());
 		}
 	});				
-	$('.' + openxava.decorateId(application, module, "tipable")).qtip({     
-		style: { 
-			name: 'light',
-			tip: { corner: 'topMiddle' },      
-			width: { min: 0, max: 600 },
-			border: { width: 1 , radius: 5 }
-		},
-	    position: {
-			target: 'mouse',
-			corner: { target: 'topMiddle', tooltip: 'bottomMiddle' }, 
-			adjust: { screen:true, resize:true }
-		},
-		show: { effect: { length: 800 } }
-	}).removeClass(openxava.decorateId(application, module, "tipable"));
 	openxava.setListsSize(application, module, "list", 1);	
 	openxava.setListsSize(application, module, "collection", 0.95);
 }
