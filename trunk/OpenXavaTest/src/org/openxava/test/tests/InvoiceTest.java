@@ -29,6 +29,8 @@ import org.openxava.util.Is;
 import org.openxava.util.Strings;
 import org.openxava.util.XavaPreferences;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 
 /**
  * 
@@ -60,7 +62,6 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNotExists("paid");
 		assertNotExists("customerDiscount");
 		assertNotExists("customer.number");
-
 		assertValue("year", "");
 		assertValue("number", "");
 		setValue("year", "2002");
@@ -563,7 +564,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertTrue("It has to have paid invoices for run this test", paidOnes > 0);		
 		assertTrue("It has to have not paid invoices for run this test", notPaidOnes > 0);
 		assertTrue("The sum of paid and not paid invoices has to match with the total count", total == (paidOnes + notPaidOnes));
-		assertTrue("It has to have less than 10 invoices to run this test", total < 10);
+		assertTrue("It has to have less than 10 invoices to run this test", total < 10); 
 		assertListRowCount(total);
 		
 		String [] paidComparators = { "=", "=", "=", "="};

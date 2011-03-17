@@ -1303,7 +1303,7 @@ public class Tab implements java.io.Serializable {
 			totalPropertiesNames = Strings.toSetNullByPass(preferences.get(TOTAL_PROPERTIES_NAMES, null));
 			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);			
 			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);
-			pageRowCount = preferences.getInt(PAGE_ROW_COUNT, pageRowCount); 
+			pageRowCount = Math.min(preferences.getInt(PAGE_ROW_COUNT, pageRowCount), 20); 			
 			if (columnWidths != null) columnWidths.clear();
 			for (MetaProperty property: getMetaProperties()) {
 				int value = preferences.getInt(COLUMN_WIDTH + property.getQualifiedName(), -1);

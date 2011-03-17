@@ -100,9 +100,9 @@ public class XavaPreferences {
 		return getProperties().getProperty("csvSeparator", ";");
 	}
 
-	public String getReportParameterProviderClass() {
-		return getProperties().getProperty("reportParameterProviderClass",
-				"org.openxava.util.DefaultReportParameterProvider").trim();
+	public String getReportParametersProviderClass() {
+		return getProperties().getProperty("reportParametersProviderClass",
+				"org.openxava.util.DefaultReportParametersProvider").trim();
 	}
 	
 	public String getPersistenceProviderClass() {

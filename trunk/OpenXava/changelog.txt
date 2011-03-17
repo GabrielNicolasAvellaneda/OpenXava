@@ -1,8 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
-- Filter: add comparator 'not contains'. 
-- New 'reportParameterProviderClass' property in xava.properties. It allows that you put your own code to the report parameters.
+- The user only can choose 20 rows per page at most for list and collections, in order to have a good performance. 
+- jquery.qtip.js removed, this produces a 40% performance improvement in list reloading.
+- Added comparator 'not contains' to list and collections filter. 
+- New 'reportParametersProviderClass' property in xava.properties. It allows that you put your own code to generate the report parameters.  
 - Photos are shown in list and collections. 
 - Fix: Shorting columns if the value contains '-' produces two lines in calculated collections.
 - New ManyToMany.edit action for updating elements from a many to many collection. 

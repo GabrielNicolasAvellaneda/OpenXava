@@ -42,7 +42,7 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 		} else {
 			throw new XavaException("only_list_collection_for_aggregates");
 		}
-		showDialog(getCollectionElementView());
+		showDialog(getCollectionElementView());		
 		if (getCollectionElementView().isCollectionEditable() || 
 			getCollectionElementView().isCollectionMembersEditables()) 
 		{ 
