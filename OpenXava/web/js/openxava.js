@@ -407,7 +407,6 @@ openxava.executeAction = function(application, module, confirmMessage, takesLong
 	if (confirmMessage != "" && !confirm(confirmMessage)) return;
 	if (takesLong) { 
 		document.getElementById('xava_processing_layer').style.display='block';
-		setTimeout('document.images["xava_processingImage"].src = "images/processing.gif"', 1);
 	}
 	var form = openxava.getForm(application, module);
 	form[openxava.decorateId(application, module, "xava_focus_forward")].value = "false";
