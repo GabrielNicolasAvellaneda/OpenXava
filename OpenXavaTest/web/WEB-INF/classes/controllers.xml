@@ -70,7 +70,7 @@
 		<action name="saveAndStay"
 			class="org.openxava.actions.SaveAndStayElementInCollectionAction"/>								
 
-		<action name="remove" 
+		<action name="remove" confirm="true" 
 			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
 
 		<action name="edit" image="images/edit.gif" 
