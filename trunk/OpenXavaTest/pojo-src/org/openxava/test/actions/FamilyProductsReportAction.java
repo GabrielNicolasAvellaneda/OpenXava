@@ -24,7 +24,7 @@ public class FamilyProductsReportAction extends JasperReportBaseAction implement
 	private Subfamily2 subfamily;
 	private boolean goBackOnFinish = true; 
 		
-	public void execute() throws Exception { 
+	public void execute() throws Exception {
 		super.execute();		
 		if (goBackOnFinish)	closeDialog(); 				
 	}

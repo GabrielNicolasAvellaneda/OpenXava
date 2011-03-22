@@ -184,7 +184,7 @@
 	<input id="<xava:id name='view_member'/>" type="hidden" value=""/>
 		
 	<%-- Layer for progress bar --%>
-	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none'>
+	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none; z-index: 9999'>
 	<table cellspacing='0'>
 	   <tr class='<%=style.getProcessing()%>'>
 	       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
