@@ -358,7 +358,7 @@ here that you want to override.
 
 		<action name="saveAndStay"
 			class="org.openxava.actions.SaveAndStayElementInCollectionAction"/>			
-							<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
+							<action name="remove" confirm="true"			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
 						
 		<action name="edit" image="images/edit.gif"			class="org.openxava.actions.EditElementInCollectionAction"/>					
 											<action name="view" image="images/view.gif"			class="org.openxava.actions.ViewElementInCollectionAction"/>					

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Removing a collection element from detail dialog does not ask for confirmation. 
 - The user only can choose 20 rows per page at most for list and collections, in order to have a good performance. 
 - jquery.qtip.js removed, this produces a 40% performance improvement in list reloading.
 - Added comparator 'not contains' to list and collections filter. 
