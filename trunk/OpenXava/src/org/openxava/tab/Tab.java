@@ -120,9 +120,11 @@ public class Tab implements java.io.Serializable {
 	private String [] filterConditionValues = null; 
 	private boolean filtered = false;
 	private Set<String> totalPropertiesNames; 
+	private boolean propertiesChanged; 
 	
 	private static int nextOid = 0; 
 	public int oid = nextOid++;
+	
 	
 	
 	public List<MetaProperty> getMetaProperties() {
@@ -1254,7 +1256,8 @@ public class Tab implements java.io.Serializable {
 		conditionValues = null;		
 		orderBy = null;			
 		condition = null;
-		conditionComparators = null;		
+		conditionComparators = null;	
+		propertiesChanged = true;
 	}
 	
 	/** @since 4m5 */
@@ -1322,7 +1325,10 @@ public class Tab implements java.io.Serializable {
 		try { 
 			Preferences preferences = getPreferences();			
 
-			preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
+			if (propertiesChanged) { 
+				preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
+				propertiesChanged = false;
+			}
 			preferences.put(TOTAL_PROPERTIES_NAMES, Strings.toString(getTotalPropertiesNames())); 
 			preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
 			preferences.putBoolean(FILTER_VISIBLE, filterVisible);
