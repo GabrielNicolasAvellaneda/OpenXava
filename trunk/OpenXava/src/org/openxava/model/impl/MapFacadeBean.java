@@ -276,7 +276,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
 		Users.setCurrentUserInfo(userInfo);
-		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
+		containerKeyValues = Maps.recursiveClone(containerKeyValues);
 		values = Maps.recursiveClone(values); 		
 		try {		
 			beginTransaction();
@@ -570,7 +570,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{		
 		MetaModel metaModel = getMetaModel(modelName);		
 		try {					
-			Object containerKey = getPersistenceProvider().getContainer(metaModel, containerKeyValues);			
+			Object containerKey = getPersistenceProvider().getContainer(metaModel, containerKeyValues);
 			return createAggregate(metaModel, containerKey, counter, values);
 		}
 		catch (ClassCastException ex) {
@@ -697,7 +697,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			removeReadOnlyWithFormulaFields(metaModel, values); 
 			removeCalculatedFields(metaModel, values); 			
 			Messages validationErrors = new Messages(); 
-			validateExistRequired(validationErrors, metaModel, values);						
+			validateExistRequired(validationErrors, metaModel, values, metaModelContainer != null); 
 			validate(validationErrors, metaModel, values, null, containerKey, true);
 			removeViewProperties(metaModel, values); 
 			if (validationErrors.contains()) {
@@ -1429,11 +1429,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	private void validateExistRequired(Messages errors, MetaModel metaModel, Map values)
+	private void validateExistRequired(Messages errors, MetaModel metaModel, Map values, boolean excludeContainerReference) 
 		throws XavaException {		
 		Iterator it = metaModel.getRequiredMemberNames().iterator();		
 		while (it.hasNext()) {
-			String name = (String) it.next();			
+			String name = (String) it.next();
+			if (excludeContainerReference && name.equals(metaModel.getContainerReference())) continue; 
 			if (!values.containsKey(name)) {				
 				errors.add("required", name, metaModel.getName());
 			}

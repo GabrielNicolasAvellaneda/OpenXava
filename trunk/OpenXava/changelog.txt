@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @Required in the reference to the container class prevents saving collection elements.
 - Fix: Since the user changes the size of a column in a list or collection, the changes in @Tab(properties=) are ignored. 
 - Fix: Processing box for takes-long actions is shown back when called from a dialog.
 - Fix: Removing a collection element from detail dialog does not ask for confirmation. 
