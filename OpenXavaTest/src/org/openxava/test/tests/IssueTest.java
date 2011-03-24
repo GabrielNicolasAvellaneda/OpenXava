@@ -112,5 +112,21 @@ public class IssueTest extends ModuleTestBase {
 		execute("CRUD.deleteSelected");		
 		assertNoErrors();
 	}
+	
+	public void testRequiredOnReferenceToParent() throws Exception {
+		execute("CRUD.new");
+		setValue("id", "JUNIT");
+		setValue("description", "JUNIT ISSUE");
+		setValue("worker.nickName", "JAVI");
+		assertValue("worker.fullName", "FRANCISCO JAVIER PANIZA LUCAS");
+		assertCollectionRowCount("comments", 0);
+		execute("Collection.new", "viewObject=xava_view_comments");
+		setValue("comment", "Created from a JUNIT test");
+		execute("Collection.save");
+		assertNoErrors();
+		assertCollectionRowCount("comments", 1);
+		execute("CRUD.delete");
+		assertNoErrors();
+	}
 		
 }

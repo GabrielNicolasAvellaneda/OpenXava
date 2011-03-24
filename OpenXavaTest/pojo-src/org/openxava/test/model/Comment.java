@@ -13,7 +13,8 @@ import org.openxava.calculators.*;
 @Entity
 public class Comment {
 	
-	@ManyToOne
+	@ManyToOne 
+	@Required 
 	private Issue issue;
 	
 	@Id @GeneratedValue @Hidden
