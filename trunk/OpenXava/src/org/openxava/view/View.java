@@ -1,18 +1,7 @@
 package org.openxava.view;
 
-import java.lang.reflect.Field;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.prefs.*;
 
 import javax.ejb.FinderException;
@@ -208,11 +197,11 @@ public class View implements java.io.Serializable {
 	}	
 			
 	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
-		if (getModelName() == null) return Collections.EMPTY_LIST; 
+		if (getModelName() == null) return Collections.EMPTY_LIST; 		
 		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());		
 		if (isRepresentsAggregate()) { 			
 			metaMembers = extractAggregateRecursiveReference(metaMembers);					
-		}		
+		}				
 		extractRecursiveReference(metaMembers); 
 		if (!hiddenIncluded && hiddenMembers != null) {
 			removeHidden(metaMembers);
@@ -226,8 +215,7 @@ public class View implements java.io.Serializable {
 		for (Iterator it=metaMembers.iterator(); it.hasNext(); ) {
 			Object member = it.next();
 			MetaReference ref = null;
-			if (member instanceof MetaReference) ref = (MetaReference) member;
-			else if (member instanceof MetaCollection) ref = ((MetaCollection) member).getMetaReference();
+			if (member instanceof MetaReference) ref = (MetaReference) member; 
 			else continue;
 			String model = ref.getMetaModel().getName();
 			String view = getMetaView().getMetaView(ref).getName();			
@@ -643,6 +631,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public View getSubview(String name) throws XavaException {
+		createSubviews(); 
 		View subview = (View) getSubviews().get(name);		
 		if (subview == null) {			
 			subview = findSubviewInSection(name);			
@@ -891,16 +880,22 @@ public class View implements java.io.Serializable {
 	
 	private Map getSubviews() throws XavaException {
 		if (getModelName() == null) return Collections.EMPTY_MAP;		
-		if (subviews == null) {  
-			subviews = new HashMap();					
-			Iterator it = getMetaMembers().iterator();
-			while (it.hasNext()) {
-				MetaMember member = (MetaMember) it.next();
-				createAndAddSubview(member);
-			}			
-			setEditable(editable); 
+		if (subviews == null) {	
+			if (isRepresentsCollection()) return Collections.EMPTY_MAP; 
+			createSubviews(); 
 		}
 		return subviews;
+	}
+
+	private void createSubviews() {
+		if (subviews != null) return; 
+		subviews = new HashMap();					
+		Iterator it = getMetaMembers().iterator();
+		while (it.hasNext()) {
+			MetaMember member = (MetaMember) it.next();
+			createAndAddSubview(member);
+		}			
+		setEditable(editable);
 	}
 	
 	/**
@@ -1104,7 +1099,7 @@ public class View implements java.io.Serializable {
 	private Map getMembersNamesWithHiddenImpl() throws XavaException { 
 		// the private version make cache
 		if (membersNamesWithHidden == null) {
-			membersNamesWithHidden = createMembersNames(true);
+			membersNamesWithHidden = createMembersNames(true);			
 		}
 		return membersNamesWithHidden;		
 	}
@@ -1112,7 +1107,7 @@ public class View implements java.io.Serializable {
 	private Map getMembersNamesImpl() throws XavaException { 
 		// the private version make cache
 		if (membersNames == null) {
-			membersNames = createMembersNames(false);
+			membersNames = createMembersNames(false); 
 		}
 		return membersNames;		
 	}
@@ -1641,6 +1636,7 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getSubviews().values().iterator();			
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
+				if (subview.isRepresentsCollection()) continue;
 				if (subview.isRepresentsAggregate()) { 
 					subview.calculateDefaultValues();
 				}
@@ -1967,52 +1963,10 @@ public class View implements java.io.Serializable {
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));
 			setIdFocusProperty(getRequest().getParameter("xava_previous_focus")); 
 			setFocusCurrentId(getRequest().getParameter("xava_current_focus")); 
-			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
 			if (isRepresentsCollection()) fillCollectionInfo(qualifier);
 			
-			while (it.hasNext()) {
-				Object m = it.next();				
-				if (isMetaProperty(m)) {
-					MetaProperty p = (MetaProperty) m;
-					String propertyKey= qualifier + p.getName();
-					String valueKey = propertyKey + ".value";
-					String [] results = getRequest().getParameterValues(propertyKey);
-					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
-					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
-					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
-						getRequest().setAttribute(valueKey, value);
-						trySetValue(p.getName(), value);
-						if (isNeededToVerifyHasBeenFormatted(p)) {
-							String formattedValue = WebEditors.format(getRequest(), p, value, getErrors(), getViewName());
-							if (results != null && !equals(formattedValue, results[0])) {
-								if (formattedProperties == null) formattedProperties = new HashSet();
-								formattedProperties.add(p.getName()); 
-							}
-						}
-					}											
-				}
-				else if (m instanceof MetaReference) {					
-					MetaReference ref = (MetaReference) m;
-					String key = qualifier + ref.getName() + "__KEY__";
-					String value = getRequest().getParameter(key);				
-					if (value == null) {												
-						View subview = getSubview(ref.getName());						
-						subview.assignValuesToWebView(qualifier + ref.getName() + ".", false); 
-					}
-					else { // References as combo (descriptions-list) and composite key
-						assignReferenceValue(qualifier, ref, value);
-					}					
-				}
-				else if (m instanceof MetaCollection) {
-					MetaCollection collec = (MetaCollection) m;
-					View subview = getSubview(collec.getName());					 					
-					subview.assignValuesToWebView(qualifier + collec.getName() + ".", false);
-				}
-				else if (m instanceof MetaGroup) {					
-					MetaGroup group = (MetaGroup) m;
-					View subview = getGroupView(group.getName());
-					subview.assignValuesToWebView(qualifier, false);					 																									
-				}
+			if (firstLevel || !isRepresentsCollection()) { 
+				assignValuesToMembers(qualifier, isSubview()?getMetaMembersIncludingHiddenKey():getMetaMembers());
 			}
 			oldValues = values==null?null:new HashMap(values);
 			mustRefreshCollection = false;
@@ -2051,6 +2005,53 @@ public class View implements java.io.Serializable {
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			getErrors().add("system_error");
+		}
+	}
+
+	private void assignValuesToMembers(String qualifier, Collection members) { 
+		for (Object m: members) { 				
+			if (isMetaProperty(m)) {
+				MetaProperty p = (MetaProperty) m;
+				String propertyKey= qualifier + p.getName();
+				String valueKey = propertyKey + ".value";
+				String [] results = getRequest().getParameterValues(propertyKey);
+				Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
+				boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
+				if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
+					getRequest().setAttribute(valueKey, value);
+					trySetValue(p.getName(), value);
+					if (isNeededToVerifyHasBeenFormatted(p)) {
+						String formattedValue = WebEditors.format(getRequest(), p, value, getErrors(), getViewName());
+						if (results != null && !equals(formattedValue, results[0])) {
+							if (formattedProperties == null) formattedProperties = new HashSet();
+							formattedProperties.add(p.getName()); 
+						}
+					}
+				}											
+			}
+			else if (m instanceof MetaReference) {					
+				MetaReference ref = (MetaReference) m;
+				String key = qualifier + ref.getName() + "__KEY__";
+				String value = getRequest().getParameter(key);				
+				if (value == null) {												
+					View subview = getSubview(ref.getName());						
+					subview.assignValuesToWebView(qualifier + ref.getName() + ".", false); 
+				}
+				else { // References as combo (descriptions-list) and composite key
+					assignReferenceValue(qualifier, ref, value);
+				}					
+			}
+			
+			else if (m instanceof MetaCollection) {					
+				MetaCollection collec = (MetaCollection) m;
+				View subview = getSubview(collec.getName());					 					
+				subview.assignValuesToWebView(qualifier + collec.getName() + ".", false);
+			}
+			else if (m instanceof MetaGroup) {					
+				MetaGroup group = (MetaGroup) m;
+				View subview = getGroupView(group.getName());
+				subview.assignValuesToWebView(qualifier, false);					 																									
+			}
 		}
 	}
 	

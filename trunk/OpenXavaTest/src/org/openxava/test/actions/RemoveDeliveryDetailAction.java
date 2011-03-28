@@ -7,9 +7,9 @@ import org.openxava.actions.*;
  * @author Javier Paniza
  */
 
-public class RemoveDeliveryDetailAction extends	RemoveElementFromCollectionAction {
+public class RemoveDeliveryDetailAction extends RemoveElementFromCollectionAction {
 
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		super.execute();
 		addMessage("delivery_detail_action_executed", "remove");
 	}
