@@ -14,7 +14,7 @@ import org.openxava.test.actions.*;
 @Entity
 public class Composite extends Nameable {
 
-	@ManyToOne @JoinColumn(name="PARENT_OID")
+	@ManyToOne @JoinColumn(name="PARENT_ID")
 	@OnChange(OnChangeVoidAction.class) // Needed to test a case
 	private Composite composite;
 
