@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: showDialog() fails when used in a module with web-view.
 - Fix: Composite structure using collections with cascade remove does not work.
 - Fix: @Required in the reference to the container class prevents saving collection elements.
 - Fix: Since the user changes the size of a column in a list or collection, the changes in @Tab(properties=) are ignored. 
