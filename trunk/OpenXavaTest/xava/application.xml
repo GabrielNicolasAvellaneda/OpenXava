@@ -146,7 +146,7 @@
 	<module name="SellerJSP" folder="invoicing.variations">
 		<model name="Seller"/>
 		<view name="ForCustomJSP"/>		  
-		<web-view url="custom-jsp/seller.jsp"/>		<controller name="Typical"/>	</module>	
+		<web-view url="custom-jsp/seller.jsp"/>		<controller name="SellerJSP"/>	</module>	
 	
 	<module name="SellerWithDescriptionsListJSP" folder="invoicing.variations">
 		<model name="Seller"/>
@@ -211,7 +211,7 @@
 		<controller name="ChangeModule"/>
 		<mode-controller name="Void"/>
 	</module>
-		<module name="BeforeGoingToFormula">		<model name="Formula"/>		<view name="Simple"/>		<controller name="ChangeModule"/>		<mode-controller name="Void"/>	</module>	
+		<module name="BeforeGoingToFormula">		<model name="Formula"/>		<view name="Simple"/>		<controller name="ChangeModule"/>		<mode-controller name="Void"/>	</module>		<module name="GoToSellerJSP">		<model name="Seller"/>				<controller name="GoToSellerJSP"/>		<mode-controller name="DetailOnly"/>	</module>		
 	<module name="ChangeActiveYear">
 		<model name="Year"/>
 		<controller name="ChangeActiveYear"/>	

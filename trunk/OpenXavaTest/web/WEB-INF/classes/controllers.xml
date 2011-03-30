@@ -97,6 +97,15 @@
 			<use-object name="xavatest_activeYear"/>
 		</action>
 	</controller>
+		
+	<controller name="SellerJSP">
+		<extends controller="Typical"/>
+		<action name="changeName" class="org.openxava.test.actions.GoChangeName"/>
+	</controller>
+	
+	<controller name="ChangeName">
+		<action name="change" class="org.openxava.test.actions.ChangeName"/>
+	</controller>
 	
 	<controller name="Task"> 
 		<extends controller="Typical"/>
@@ -318,6 +327,12 @@
 			<set property="nextModule" value="Formula"/>
 		</action>
 	</controller>
+		
+	<controller name="GoToSellerJSP">
+		<action name="goSellerJSP" class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="SellerJSP"/>
+		</action>
+	</controller>	
 	
 	<controller name="Invoice">
 		<extends controller="Typical"/>
