@@ -132,7 +132,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	protected Map saveIfNotExists(View view) throws Exception {
 		if (getView() == view) {
 			if (view.isKeyEditable()) {				
-				Map key = MapFacade.createReturningKey(getModelName(), view.getValues());
+				Map key = MapFacade.createNotValidatingCollections(getModelName(), view.getValues());
 				addMessage("entity_created", getModelName());
 				view.addValues(key);
 				containerSaved=true;				

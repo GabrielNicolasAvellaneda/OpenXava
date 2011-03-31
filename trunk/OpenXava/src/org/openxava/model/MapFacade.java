@@ -120,7 +120,8 @@ public class MapFacade {
 			}
 		}							
 	}
-	
+		
+		
 	/**
 	 * Commit in database the changes done using MapFacade. <p>
 	 * 
@@ -284,6 +285,41 @@ public class MapFacade {
 			}
 		}		
 	}
+	
+	/**
+	 * Creates a new entity from a map with its initial values and
+	 * return a map with the key values of the created entity. <p>
+	 * 
+	 * This method does not validate collections.
+	 *
+	 * @param modelName  OpenXava model name. Not null
+	 * @param values  Initial values to create the entity. Not null. <i>By value</i> semantics.
+	 * @return A map with key value of created object
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
+	 */
+	public static Map createNotValidatingCollections(String modelName, Map values)
+		throws
+			CreateException,ValidationException,
+			XavaException, SystemException
+	{
+		Assert.arg(modelName, values);		
+		try {
+			return getImpl(modelName).createNotValidatingCollections(Users.getCurrentUserInfo(), modelName, values);
+		}
+		catch (RemoteException ex) {
+			annulImpl(modelName);
+			try {
+				return getImpl(modelName).createNotValidatingCollections(Users.getCurrentUserInfo(), modelName, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}
+		}		
+	}
+	
 				
 	/**	
 	 * Creates a new aggregate from a map with its initial values

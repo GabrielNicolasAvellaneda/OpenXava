@@ -57,6 +57,9 @@ public interface IMapFacadeImpl {
 		 
 	Map createReturningKey(UserInfo userInfo, String modelName, Map values)		 
 		throws CreateException, XavaException, ValidationException, RemoteException;
+	
+	Map createNotValidatingCollections(UserInfo userInfo, String modelName, Map values) 
+		throws CreateException, XavaException, ValidationException, RemoteException; 
 
 	void addCollectionElement(UserInfo userInfo, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValue) 
 		throws FinderException, ValidationException, XavaException,  RemoteException; 

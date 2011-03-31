@@ -88,7 +88,7 @@
 				
 		<reference model="Customer" required="true"/>
 		
-		<collection name="details" minimum="1">
+		<collection name="details">
 			<reference model="InvoiceDetail"/>
 			<order>${serviceType} desc</order>
 			<postremove-calculator class="org.openxava.test.calculators.DetailPostremoveCalculator"/>
