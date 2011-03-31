@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New method createNotValidatingCollections() in MapFacade.
+- Fix: @Size(min=) in collections is not recognized.
 - Fix: showDialog() fails when used in a module with web-view.
 - Fix: Composite structure using collections with cascade remove does not work.
 - Fix: @Required in the reference to the container class prevents saving collection elements.

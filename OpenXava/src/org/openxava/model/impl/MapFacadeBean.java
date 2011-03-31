@@ -41,7 +41,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		try {
 			MetaModel metaModel = getMetaModel(modelName);	
 			beginTransaction(); 			
-			Object result = create(metaModel, values, null, null, 0);
+			Object result = create(metaModel, values, null, null, 0, true);
 			commitTransaction();
 			return result;
 		} 
@@ -60,7 +60,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
-	}
+	}	
 	
 	public void commit(UserInfo userInfo) {
 		Users.setCurrentUserInfo(userInfo);
@@ -245,13 +245,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 	}
 	
-	public Map createReturningKey(UserInfo userInfo, String modelName, Map values) 
+	private Map createReturningKey(UserInfo userInfo, String modelName, Map values, boolean validateCollections)  
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		Users.setCurrentUserInfo(userInfo);
 		values = Maps.recursiveClone(values); 			
 		try {				
 			beginTransaction();
-			Map result = createReturningKey(modelName, values);
+			Map result = createReturningKey(modelName, values, validateCollections);
 			commitTransaction();
 			return result;
 		}	
@@ -271,6 +271,18 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new RemoteException(ex.getMessage());
 		}
 	}
+	
+	public Map createReturningKey(UserInfo userInfo, String modelName, Map values) 
+		throws CreateException, XavaException, ValidationException, RemoteException {
+		return createReturningKey(userInfo, modelName, values, true);
+	}
+
+	
+	public Map createNotValidatingCollections(UserInfo userInfo, String modelName, Map values)  
+		throws CreateException, XavaException, ValidationException, RemoteException {
+		return createReturningKey(userInfo, modelName, values, false);
+	}
+	
 	
 	public Object createAggregate(UserInfo userInfo, String modelName, Map containerKeyValues, int counter, Map values)  
 		throws CreateException,ValidationException, XavaException, RemoteException 
@@ -550,7 +562,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
 		try {								
 			Object containerKey = getPersistenceProvider().getKey(metaModelContainer, containerKeyValues);
-			Object aggregate = createAggregate(metaModel, containerKey, counter, values);						
+			Object aggregate = createAggregate(metaModel, containerKey, counter, values, false);						
 			return getValues(metaModel, aggregate, getKeyNames(metaModel));			
 		}
 		catch (ClassCastException ex) {
@@ -562,7 +574,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException,ValidationException, XavaException, RemoteException
 	{		
 		MetaModel metaModel = getMetaModel(modelName);		
-		return createAggregate(metaModel, container, counter, values);
+		return createAggregate(metaModel, container, counter, values, true);
 	}
 	
 	private Object createAggregate(String modelName, Map containerKeyValues, int counter, Map values) 
@@ -571,17 +583,17 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModel = getMetaModel(modelName);		
 		try {					
 			Object containerKey = getPersistenceProvider().getContainer(metaModel, containerKeyValues);
-			return createAggregate(metaModel, containerKey, counter, values);
+			return createAggregate(metaModel, containerKey, counter, values, true);
 		}
 		catch (ClassCastException ex) {
 			throw new XavaException("aggregate_must_be_persistent_for_create", metaModel.getMetaModelContainer().getName());					
 		}
 	}
 	
-	private Map createReturningKey(String modelName, Map values)
+	private Map createReturningKey(String modelName, Map values, boolean validateCollection) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();
-		Object entity = create(metaEntity, values, null, null, 0);
+		Object entity = create(metaEntity, values, null, null, 0, validateCollection); 
 		if (metaEntity.hasDefaultCalculatorOnCreate()) {
 			getPersistenceProvider().flush(); // to execute calculators
 		}
@@ -591,7 +603,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	private Map createReturningValues(String modelName, Map values)
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();
-		Object entity = create(metaEntity, values, null, null, 0);
+		Object entity = create(metaEntity, values, null, null, 0, true);
 		if (metaEntity.hasDefaultCalculatorOnCreate()) {
 			getPersistenceProvider().flush(); // to execute calculators
 		}
@@ -651,7 +663,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return names;
 	}
 	
-	private Object createAggregate(MetaModel metaModel, Object container, int counter, Map values) 
+	private Object createAggregate(MetaModel metaModel, Object container, int counter, Map values, boolean validateCollections) 
 		throws CreateException,ValidationException, XavaException, RemoteException 
 	{						
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();								
@@ -659,7 +671,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		// Loop with 10 attempts, because the counter can be repeated because deleted objects
 		do {				 
 			try {
-				return create(metaModel, values, metaModelContainer, container, counter);
+				return create(metaModel, values, metaModelContainer, container, counter, validateCollections);
 			}
 			catch (DuplicateKeyException ex) {
 				if (attempts > 10) throw ex;
@@ -690,15 +702,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Map values,
 		MetaModel metaModelContainer,
 		Object containerKey,
-		int number)
+		int number, boolean validateCollections) 
 		throws CreateException, ValidationException, XavaException, RemoteException {						
 		try {			
 			//removeReadOnlyFields(metaModel, values); // not remove the read only fields because it maybe needed initialized on create
 			removeReadOnlyWithFormulaFields(metaModel, values); 
 			removeCalculatedFields(metaModel, values); 			
-			Messages validationErrors = new Messages(); 
+			Messages validationErrors = new Messages();			
 			validateExistRequired(validationErrors, metaModel, values, metaModelContainer != null); 
 			validate(validationErrors, metaModel, values, null, containerKey, true);
+			if (validateCollections) validateCollections(validationErrors, metaModel); 
 			removeViewProperties(metaModel, values); 
 			if (validationErrors.contains()) {
 				throw new ValidationException(validationErrors);			
@@ -1440,6 +1453,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}
 		}
 	}
+	
+	private void validateCollections(Messages errors, MetaModel metaModel)  
+		throws XavaException {						
+		for (MetaCollection collection: metaModel.getMetaCollections()) {			 
+			if (collection.getMinimum() > 0) {				
+				errors.add("required", collection.getName(), metaModel.getName());
+			}
+		}
+	}
+
 				
 	private Object findEntity(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException { 		
 		return getPersistenceProvider().find(metaModel, keyValues);

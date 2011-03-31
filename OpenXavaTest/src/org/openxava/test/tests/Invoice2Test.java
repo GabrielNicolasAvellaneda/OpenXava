@@ -123,5 +123,14 @@ public class Invoice2Test extends ModuleTestBase {
 		assertValue("product.description", "IBM ESERVER ISERIES 270");
 		assertValue("product.family.description", "HARDWARE");		
 	}
+	
+	public void testMinSizeForCollections() throws Exception {
+		execute("CRUD.new");
+		setValue("number", "66");
+		setValue("vatPercentage", "18");
+		setValue("customer.number", "1");
+		execute("CRUD.save");
+		assertError("Value for Details in Invoice 2 is required");
+	}
 							
 }

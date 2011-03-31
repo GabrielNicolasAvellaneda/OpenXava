@@ -751,7 +751,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "1");
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		
 		// To list mode and order
 		execute("Mode.list");

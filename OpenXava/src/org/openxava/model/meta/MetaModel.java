@@ -954,14 +954,14 @@ abstract public class MetaModel extends MetaElement {
 	/**
 	 * @return Collection of <tt>MetaProperty</tt>, not null and read only
 	 */
-	public Collection getMetaProperties() {
+	public Collection<MetaProperty> getMetaProperties() {
 		return Collections.unmodifiableCollection(getMapMetaProperties().values());
 	}
 	
 	/**
 	 * @return Collection of <tt>MetaReference</tt>, not null and read only
 	 */
-	public Collection getMetaReferences() {
+	public Collection<MetaReference> getMetaReferences() {
 		return Collections.unmodifiableCollection(getMapMetaReferences().values());
 	}
 	
@@ -1067,7 +1067,7 @@ abstract public class MetaModel extends MetaElement {
 	/**
 	 * @return Collection of <tt>MetaCollection</tt>, not null and read only
 	 */
-	public Collection getMetaCollections() {
+	public Collection<MetaCollection> getMetaCollections() { 
 		return Collections.unmodifiableCollection(getMapMetaColections().values());
 	}
 	
