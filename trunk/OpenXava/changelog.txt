@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Bad behavior when ESC is pressed from a dialog with Firefox (now ESC is not allowed in Firefox).
+- Fix: radioButtonEditor does not throw change event.
 - New method createNotValidatingCollections() in MapFacade.
 - Fix: @Size(min=) in collections is not recognized.
 - Fix: showDialog() fails when used in a module with web-view.

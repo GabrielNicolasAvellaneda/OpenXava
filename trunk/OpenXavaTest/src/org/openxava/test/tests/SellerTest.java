@@ -20,7 +20,7 @@ public class SellerTest extends ModuleTestBase {
 	public SellerTest(String testName) {
 		super(testName, "Seller");		
 	}
-		
+	
 	public void testRowStyleInCollections() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertValue("number", "1");

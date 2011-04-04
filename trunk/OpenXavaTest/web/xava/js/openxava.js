@@ -270,7 +270,8 @@ openxava.getDialog = function(application, module) {
 			width: 'auto',
 			height: 'auto',
 			bgiframe: true,
-			close: openxava.onCloseDialog
+			close: openxava.onCloseDialog,
+			closeOnEscape: openxava.closeDialogOnEscape 
 		});
 		openxava.dialogs[dialogId] = dialog;		
 	}
