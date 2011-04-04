@@ -230,7 +230,8 @@
 		openxava.loadingMessage = '<xava:message key="loading"/>';
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
-		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>'; 
+		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';
+		openxava.closeDialogOnEscape = <%=browser != null && browser.indexOf("Firefox") >= 0 ? "false":"true"%>;		  
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';
 		<%String initThemeScript = style.getInitThemeScript();
