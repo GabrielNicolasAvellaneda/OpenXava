@@ -1,10 +1,7 @@
 package org.openxava.web;
 
-import javax.servlet.*;
 import javax.servlet.http.*;
-
 import org.openxava.controller.*;
-import org.openxava.util.*;
 
 /**
  * To decorate ids used for HTML elements.
@@ -23,8 +20,7 @@ public class Ids {
 	
 	public static String decorate(HttpServletRequest request, String name) { 
 		ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
-		String module = (String) context.get(request, "xava_currentModule");
-		if (Is.empty(module)) module = request.getParameter("module");
+		String module = context.getCurrentModule(request);  
 		return decorate(				
 			request.getParameter("application"), 
 			module, 
