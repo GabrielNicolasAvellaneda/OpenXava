@@ -454,13 +454,25 @@ public class ModuleTestBase extends TestCase {
 			login(getJetspeed2UserName(), getJetspeed2Password());
 		}		
 		else {	
-			if (this.module != null) {				
+			if (this.module != null) { 				
 				page = (HtmlPage) client.getPage(getModuleURL());
 				if (!getMetaModule().isDoc()) {
 					resetForm();
 				}
 			}			
 		}				
+	}
+	
+	/**
+	 * Like clicking on the reload button of the browser.
+	 * 
+	 * @since 4.1.2
+	 */
+	protected void reload() throws Exception { 
+		page = (HtmlPage) page.refresh();
+		if (!getMetaModule().isDoc()) {
+			resetForm();
+		}
 	}
 	
 	private BrowserVersion getBrowserVersion() {

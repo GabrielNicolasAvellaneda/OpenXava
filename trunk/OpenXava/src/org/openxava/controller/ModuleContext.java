@@ -150,7 +150,21 @@ public class ModuleContext implements java.io.Serializable {
 		context.remove(objectName);
 	}
 	
-		
+	/**
+	 * 
+	 * @since 4.1.2
+	 */
+	public String getCurrentModule(HttpServletRequest request) {
+		String module;
+		String currentModule = request.getParameter("module");	
+		do {
+			module = currentModule;
+			currentModule = (String) get(request.getParameter("application"), currentModule, "xava_currentModule");
+		}
+		while (!Is.empty(currentModule));
+		return module;
+	}
+			
 	private Object createObject(String objectName) throws XavaException{			
 		return MetaControllers.getMetaObject(objectName).createObject();
 	}

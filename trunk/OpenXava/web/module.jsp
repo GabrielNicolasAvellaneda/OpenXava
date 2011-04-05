@@ -52,10 +52,7 @@
 			request.getRemoteUser());
 	Users.setCurrent(request); 
 	String app = request.getParameter("application");
-	String module = (String) context.get(app, request
-			.getParameter("module"), "xava_currentModule");
-	if (Is.empty(module))
-		module = request.getParameter("module");
+	String module = context.getCurrentModule(request);
 
 	org.openxava.controller.ModuleManager managerHome = (org.openxava.controller.ModuleManager) context
 			.get(request, "manager",
@@ -85,7 +82,7 @@
 	String version = org.openxava.controller.ModuleManager.getVersion();
 	String realPath = request.getSession().getServletContext()
 			.getRealPath("/");
-	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;	
+	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;
 %>
 <jsp:include page="execute.jsp"/>
 <%
