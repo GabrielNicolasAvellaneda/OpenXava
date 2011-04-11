@@ -85,7 +85,7 @@ public class Module extends DWRBase {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}
 			result.setViewMember(getView().getMemberName());
-			result.setStrokeActions(getStrokeActions());
+			result.setStrokeActions(getStrokeActions());			
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -174,8 +174,10 @@ public class Module extends DWRBase {
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {
 		request(request, response, application, module, null, null, null, null, false);  		
-		memorizeLastMessages();				
-	}	
+		memorizeLastMessages();
+		manager.setResetFormPostNeeded(true);
+		
+	}
 
 	private InputStream getURIAsStream(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {		
 		return Servlets.getURIAsStream(request, response, getURI(jspFile, values, multipleValues, selected, additionalParameters));

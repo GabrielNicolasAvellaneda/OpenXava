@@ -21,12 +21,12 @@ public class SeveralModulesTest extends ModuleTestBase {
 		super(testName, "Carrier"); // getModuleURL() is override, so we do not go to Carrier module		
 	}
 		
-	public void testSeveralModulesInSamePage() throws Exception {		
+	public void testSeveralModulesInSamePage() throws Exception {
 		assertActions();
 		assertOnChangeEvent();				
 		assertFocusOn("relationWithSeller");		
 		assertSections();
-		assertCollections();
+		assertCollections();		
 		assertUploadFiles();				
 	}
 
@@ -38,14 +38,13 @@ public class SeveralModulesTest extends ModuleTestBase {
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
 		setFileValue("newImage", imageUrl);
-		execute("LoadImage.loadImage");
-		assertNoErrors();
+		execute("LoadImage.loadImage");		
+		assertNoErrors();	
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
 		URL url = page.getWebResponse().getRequestSettings().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
-		
-		
+				
 		HtmlImage image = (HtmlImage) page.getElementsByName(Ids.decorate("OpenXavaTest", "Customer", "photo")).get(0);
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {

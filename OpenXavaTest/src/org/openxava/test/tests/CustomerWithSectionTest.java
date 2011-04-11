@@ -614,4 +614,5 @@ public class CustomerWithSectionTest extends CustomerTest {
 		// 
 		testChangeImage();
 	}
+		
 }

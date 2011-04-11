@@ -468,7 +468,7 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * @since 4.1.2
 	 */
-	protected void reload() throws Exception { 
+	protected void reload() throws Exception {
 		page = (HtmlPage) page.refresh();
 		if (!getMetaModule().isDoc()) {
 			resetForm();
@@ -573,10 +573,9 @@ public class ModuleTestBase extends TestCase {
 		}
 		else {
 			element.click();
-		}
-		
-		resetForm(); 
-		restorePage(); 
+		}		
+		resetForm(); 		
+		restorePage(); 		
 	}
 	
 	private void throwChangeOfLastNotNotifiedProperty() throws Exception {		
@@ -680,11 +679,40 @@ public class ModuleTestBase extends TestCase {
 		restorePage();				
 	}
 	
-	private void restorePage() throws Exception {
+	private void restorePage() throws Exception {		
 		Page newPage = client.getWebWindows().get(0).getEnclosedPage();
+		
 		page = newPage instanceof HtmlPage?(HtmlPage) newPage:null;
+
+		if (pageNotLoaded()) {
+			newPage = (HtmlPage) client.getPage(getModuleURL());
+			page = newPage instanceof HtmlPage?(HtmlPage) newPage:null;
+			if (pageLoaded()) {
+				resetForm();
+			}
+		}		
 	}
 	
+	private boolean pageLoaded() throws Exception { 
+		return !pageNotLoaded();
+	}
+		
+	private boolean pageNotLoaded() throws Exception { 
+		if (page == null) return true;
+		if (isXavaPage()) return false;
+		return page.asText().contains("HTTP 404");
+	}
+	
+	private boolean isXavaPage() { 
+		try {
+			((HtmlPage) page).getHtmlElementById(Ids.decorate(application, module, "loaded_parts"));
+			return true;
+		}
+		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
+			return false;
+		}
+	}
+
 	private String refineArgumentsForReferenceActionWithObsoleteStyle(String arguments) {
 		int idx1 = arguments.indexOf("keyProperty=xava.");
 		int idx2 = arguments.indexOf(".", idx1 + 17);		
