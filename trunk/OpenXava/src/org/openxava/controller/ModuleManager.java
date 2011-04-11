@@ -38,10 +38,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4.1.2 beta";
+		return "4.1.2";
 	}
 	final static private String getVersionDate() {
-		return "2011-3-xx"; 
+		return "2011-4-11"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -81,6 +81,7 @@ public class ModuleManager implements java.io.Serializable {
 	private int dialogLevel = 0;  
 	private boolean modifiedControllers = false;
 	private String moduleDescription; 
+	private boolean resetFormPostNeeded = false; 
 	
 		
 	/**
@@ -1321,6 +1322,12 @@ public class ModuleManager implements java.io.Serializable {
 
 	public int getDialogLevel() { 
 		return dialogLevel;
+	}
+	public void setResetFormPostNeeded(boolean resetFormPostNeeded) {
+		this.resetFormPostNeeded = resetFormPostNeeded;
+	}
+	public boolean isResetFormPostNeeded() {
+		return resetFormPostNeeded;
 	}
 	
 }

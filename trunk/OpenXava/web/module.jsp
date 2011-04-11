@@ -174,7 +174,13 @@
 						.getModuleDescription())%>
 <%
 	}
-%>	
+%> 
+<% 
+if (manager.isResetFormPostNeeded()) {	
+%>		
+	<form id="xava_reset_form"></form>
+<% } else  { %>
+
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="<%=coreViaAJAX%>"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>
@@ -200,7 +206,8 @@
 			}
 		%>
 		
-	</div>	
+	</div>
+<% } %>			
 	<div id="xava_console">
 	</div>
 
@@ -213,6 +220,15 @@
 <%
 	}
 %>
+
+<% 
+if (manager.isResetFormPostNeeded()) {  
+	manager.setResetFormPostNeeded(false);		
+%>		
+	<script type="text/javascript">
+	$("#xava_reset_form").submit();
+	</script>		
+<% } else  { %>
 
 <script type="text/javascript">
 <%String prefix = Strings.change(manager.getApplicationName(), "-",
@@ -246,3 +262,5 @@ window.onload = <%=onLoadFunction%>;
 setTimeout('<%=onLoadFunction%>()', 1000);
 document.additionalParameters="<%=getAdditionalParameters(request)%>";
 </script>
+
+<% } %>

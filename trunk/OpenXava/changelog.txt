@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Downloading file fails after uploading file.
 - Fix: Reloading the page after navigating to a module locks the module.
 - New method reload() in ModuleTestBase for simulating clicking in browser reload button.
 - Fix: Bad behavior when ESC is pressed from a dialog with Firefox (now ESC is not allowed in Firefox).
