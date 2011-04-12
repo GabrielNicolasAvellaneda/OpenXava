@@ -19,17 +19,22 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.metamodel.Metamodel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.annotations.PostCreate;
 import org.openxava.annotations.PreCreate;
 import org.openxava.annotations.PreDelete;
 import org.openxava.util.Classes;
 import org.openxava.util.XavaException;
+import org.openxava.validators.ValidationException;
 
 /**
  * @author Federico Alcantara
  *
  */
 public class EntityManagerDecorator implements EntityManager {
+	private static final Log log = LogFactory.getLog(EntityManagerDecorator.class);
+	
 	private EntityManager decoratedManager;
 	
 	/**
@@ -73,9 +78,17 @@ public class EntityManagerDecorator implements EntityManager {
 			try {
 				method.invoke(object, new Object[]{});
 			} catch (InvocationTargetException e) { // In this way the XavaException doesn't swallow the real cause.
-				e.getCause().printStackTrace();
-				throw new XavaException(e.getCause().getMessage());
+				if (e.getCause() != null) {
+					log.error(e.getCause().getMessage(), e.getCause());
+					if (e.getCause() instanceof ValidationException) {
+						throw ((ValidationException) e.getCause());
+					}
+					throw new XavaException(e.getCause().getMessage());
+				}
+				log.error(e.getMessage(), e);
+				throw new XavaException(e.getMessage());
 			} catch (Exception e) {
+				log.error(e.getMessage(), e);
 				throw new XavaException(e.getMessage());
 			}
 		}		
