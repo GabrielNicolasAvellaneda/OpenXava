@@ -16,6 +16,7 @@ String gt = "gt".equals(comparator)?"selected='selected'":"";
 String lt = "lt".equals(comparator)?"selected='selected'":"";
 String startsWith = "starts_comparator".equals(comparator)?"selected='selected'":"";
 String contains = "contains_comparator".equals(comparator)?"selected='selected'":"";
+String notContains = "not_contains_comparator".equals(comparator)?"selected='selected'":"";
 String year = "year_comparator".equals(comparator)?"selected='selected'":"";
 String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":"";
@@ -27,6 +28,7 @@ int index = Integer.parseInt(request.getParameter("index"));
 	%>						
 	<option value="starts_comparator" <%=startsWith%>><xava:message key="starts_comparator"/></option>
 	<option value="contains_comparator" <%=contains%>><xava:message key="contains_comparator"/></option>
+	<option value="not_contains_comparator" <%=notContains%>><xava:message key="not_contains_comparator"/></option>
 	<%
 	}
 	%>
