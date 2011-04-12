@@ -1,4 +1,4 @@
-package org.openxava.test.actions
+package org.openxava.test.util
 
 import org.openxava.util.*;
 

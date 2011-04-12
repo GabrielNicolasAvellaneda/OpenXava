@@ -52,10 +52,7 @@
 			request.getRemoteUser());
 	Users.setCurrent(request); 
 	String app = request.getParameter("application");
-	String module = (String) context.get(app, request
-			.getParameter("module"), "xava_currentModule");
-	if (Is.empty(module))
-		module = request.getParameter("module");
+	String module = context.getCurrentModule(request);
 
 	org.openxava.controller.ModuleManager managerHome = (org.openxava.controller.ModuleManager) context
 			.get(request, "manager",
@@ -85,7 +82,7 @@
 	String version = org.openxava.controller.ModuleManager.getVersion();
 	String realPath = request.getSession().getServletContext()
 			.getRealPath("/");
-	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;	
+	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;
 %>
 <jsp:include page="execute.jsp"/>
 <%
@@ -151,7 +148,6 @@
 	</script>				
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js?ox=<%=version%>"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>	
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.qtip.js?ox=<%=version%>"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.bgiframe.min.js?ox=<%=version%>"></script>
 	<%
 		File jsEditorsFolder = new File(realPath + "/xava/editors/js");		
@@ -178,14 +174,20 @@
 						.getModuleDescription())%>
 <%
 	}
-%>	
+%> 
+<% 
+if (manager.isResetFormPostNeeded()) {	
+%>		
+	<form id="xava_reset_form"></form>
+<% } else  { %>
+
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="<%=coreViaAJAX%>"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>
 	<input id="<xava:id name='view_member'/>" type="hidden" value=""/>
 		
 	<%-- Layer for progress bar --%>
-	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none'>
+	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none; z-index: 9999'>
 	<table cellspacing='0'>
 	   <tr class='<%=style.getProcessing()%>'>
 	       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
@@ -204,7 +206,8 @@
 			}
 		%>
 		
-	</div>	
+	</div>
+<% } %>			
 	<div id="xava_console">
 	</div>
 
@@ -217,6 +220,15 @@
 <%
 	}
 %>
+
+<% 
+if (manager.isResetFormPostNeeded()) {  
+	manager.setResetFormPostNeeded(false);		
+%>		
+	<script type="text/javascript">
+	$("#xava_reset_form").submit();
+	</script>		
+<% } else  { %>
 
 <script type="text/javascript">
 <%String prefix = Strings.change(manager.getApplicationName(), "-",
@@ -231,7 +243,8 @@
 		openxava.loadingMessage = '<xava:message key="loading"/>';
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
-		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>'; 
+		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';
+		openxava.closeDialogOnEscape = <%=browser != null && browser.indexOf("Firefox") >= 0 ? "false":"true"%>;		  
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';
 		<%String initThemeScript = style.getInitThemeScript();
@@ -249,3 +262,5 @@ window.onload = <%=onLoadFunction%>;
 setTimeout('<%=onLoadFunction%>()', 1000);
 document.additionalParameters="<%=getAdditionalParameters(request)%>";
 </script>
+
+<% } %>
