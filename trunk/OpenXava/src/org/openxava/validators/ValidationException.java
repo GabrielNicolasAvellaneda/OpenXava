@@ -9,11 +9,9 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class ValidationException extends Exception {
-	
+public class ValidationException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
 	private Messages errors;
-	
-	
 	
 	public ValidationException() {		
 	}
