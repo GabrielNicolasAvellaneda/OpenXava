@@ -1,6 +1,38 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.1.2 (2011-4-11)
+--------------------------
+- Added comparator 'not contains' to list and collections filter.
+- New ManyToMany.edit action for updating elements from a many to many collection.
+- New method reload() in ModuleTestBase for simulating clicking in browser reload button.
+- New method createNotValidatingCollections() in MapFacade.
+- The user only can choose 20 rows per page at most for list and collections, in order to have a good performance.
+- New 'reportParametersProviderClass' property in xava.properties. It allows that you put your own code to generate the report parameters.  
+- Photos are shown in list and collections. 
+- jquery.qtip.js removed, this produces a 40% performance improvement in list reloading.
+- UrlParameters controller accepts language_COUNTRY as argument for locale. 
+- Clear message in log when incorrect migration to OX4 from old versions.
+- Fix: Downloading file fails after uploading file.
+- Fix: Reloading the page after navigating to a module locks the module.
+- Fix: Bad behavior when ESC is pressed from a dialog with Firefox (now ESC is not allowed in Firefox).
+- Fix: radioButtonEditor does not throw change event.
+- Fix: @Size(min=) in collections is not recognized.
+- Fix: showDialog() fails when used in a module with web-view.
+- Fix: Composite structure using collections with cascade remove does not work.
+- Fix: @Required in the reference to the container class prevents saving collection elements.
+- Fix: Since the user changes the size of a column in a list or collection, the changes in @Tab(properties=) are ignored. 
+- Fix: Processing box for takes-long actions is shown back when called from a dialog.
+- Fix: Removing a collection element from detail dialog does not ask for confirmation. 
+- Fix: Shorting columns if the value contains '-' produces two lines in calculated collections.
+
+OpenXava 4.1.1 (2011-2-28)
+--------------------------
+- CRITICAL FIX: List and collections are not shown inside dialogs.
+- Support for @PrimaryKeyJoinColumn and @PrimaryKeyJoinColumns JPA annotations in @OneToOne relationships.
+- Fix: Failed properties not marked in UI when using Bean Validation (JSR-303).
+- Fix: @Max from JSR-303 does not limit the characters that user can type in the editor.
+
 OpenXava 4.1 (2011-2-15)
 ------------------------
 - Bean Validation JSR-303 support.
