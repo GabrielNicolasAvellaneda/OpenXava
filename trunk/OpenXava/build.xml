@@ -913,7 +913,7 @@
 		<!-- Delete other unused libraries -->
 		<delete file="../${project}/web/WEB-INF/lib/jboss-archive-browsing.jar"/>
 		<!-- Delete fonts folder of JasperReport -->
-		<delete includeemptydirs="true">
+		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="../${project}/web/WEB-INF/fonts">
 				<include name="DejaVuSans.ttf"/>
 				<include name="DejaVuSans-Bold.ttf"/>
