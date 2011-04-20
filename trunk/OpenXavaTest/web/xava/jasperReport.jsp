@@ -163,18 +163,12 @@ else {
 		 bottomMargin="20"
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
-		 isSummaryNewPage="false">		 
-	<%
-	String fontPath=request.getSession().getServletContext().getRealPath("/WEB-INF/fonts/").concat(System.getProperty("file.separator"));
-	String fontName="DejaVu Sans";
-	String fontNameExt="DejaVuSans.ttf";
-	String boldFontNameExt="DejaVuSans-Bold.ttf";	
-	String pdfEncoding="Identity-H";
-	%>	
-	<reportFont name="Arial_Normal" isDefault="true" fontName="<%=fontName%>" size="8" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
-	<reportFont name="Arial_Bold" isDefault="false" fontName="<%=fontName%>" size="8" isBold="true" pdfFontName="<%=fontPath.concat(boldFontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
-	<reportFont name="Arial_Italic" isDefault="false" fontName="<%=fontName%>" size="8" isItalic="true" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
-
+		 isSummaryNewPage="false">
+		 <% 
+	String fontName = "DejaVu Sans";	 
+		 
+		 %>
+		 		 
 	<parameter name="Title" class="java.lang.String"/>	
 	<parameter name="Organization" class="java.lang.String"/>
 	<%
@@ -222,7 +216,7 @@ else {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="8"/>
+						<font fontName="<%=fontName%>" size="8"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String">$P{Organization}</textFieldExpression>					
 				</textField>
@@ -242,7 +236,7 @@ else {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="16"/>
+						<font fontName="<%=fontName%>" size="16"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String">$P{Title}</textFieldExpression>					
 				</textField>
@@ -362,7 +356,7 @@ while (it.hasNext()) {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="10"/>
+						<font fontName="<%=fontName%>" size="10"/>
 					</textElement>
 					<% String label = "<![CDATA[" + p.getLabel(locale) + "]]>"; %>
 					<text><%=label%></text>
@@ -414,7 +408,7 @@ while (it.hasNext()) {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="<%=letterSize%>"/>
+						<font fontName="<%=fontName%>" size="<%=letterSize%>"/>
 					</textElement>
 					<%		
 					String type=getType(p);
@@ -443,7 +437,7 @@ while (it.hasNext()) {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="10"/>
+						<font fontName="<%=fontName%>" size="10"/>
 					</textElement>
 				<%
 				String iniPageLabel = "<![CDATA[\"" + XavaResources.getString(request, "page") + " \"";
@@ -465,7 +459,7 @@ while (it.hasNext()) {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="10" />
+						<font fontName="<%=fontName%>" size="10" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
@@ -499,7 +493,7 @@ while (it.hasNext()) {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="10"/>
+						<font fontName="<%=fontName%>" size="10"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String">
 					<![CDATA[java.text.DateFormat.getDateInstance().format(new java.util.Date())]]>
@@ -548,7 +542,7 @@ while (it.hasNext()) {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Bold" size="<%=letterSize%>"/>
+						<font fontName="<%=fontName%>" size="<%=letterSize%>" isBold = "true"/>
 					</textElement>
 					<%		
 					String type=getType(p);										
