@@ -1,12 +1,10 @@
 package org.openxava.validators;
 
-import java.math.BigDecimal;
-import java.util.StringTokenizer;
+import java.math.*;
+import java.util.*;
 
-
-
-import org.openxava.util.Messages;
-import org.openxava.util.Strings;
+import org.apache.commons.logging.*;
+import org.openxava.util.*;
 
 /**
  * To validate the size of integer digits and fraction digits parts. <p>
@@ -14,12 +12,13 @@ import org.openxava.util.Strings;
  * @author Ana Andres
  */
 public class BigDecimalValidator implements IPropertyValidator {
+	private static Log log = LogFactory.getLog(BigDecimalValidator.class);
+	
     private int maximumIntegerDigits = 15;
     private int maximumFractionDigits = 2;
     
-    
-
     public void validate(Messages errors, Object value, String propertyName, String modelName) throws Exception {
+    	if (value == null) return;
         BigDecimal bigDecimal = (BigDecimal) value;
         
         int maximumValue = new Integer("1" + Strings.repeat(maximumIntegerDigits, "0")).intValue();

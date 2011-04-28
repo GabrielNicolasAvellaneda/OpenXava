@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: fails in display with the property (xava.properties) 'resizeColumns= false'.
+- Fix: add application name in the file name to the tab preferences properties. 
+
 OpenXava 4.1.2 (2011-4-11)
 --------------------------
 - Added comparator 'not contains' to list and collections filter.

@@ -4,15 +4,13 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-import org.openxava.actions.*;
-
 /**
  * By default it get parameters from i18n.
  * 
  * Create on 11/03/2011 (12:42:24)
  * @author Ana Andres
  */
-public class DefaultReportParametersProvider implements IReportParametersProvider, IRequestAction{
+public class DefaultReportParametersProvider implements IReportParametersProvider, IRequestReportParametersProvider{
 	private transient HttpServletRequest request;
 	
 	public String getOrganization() {
