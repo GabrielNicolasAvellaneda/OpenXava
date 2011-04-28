@@ -77,6 +77,7 @@ public class XSystem {
 				if (encoding == null) encoding = "ISO-8859-1";
 				else if ("Cp1252".equalsIgnoreCase(encoding)) encoding = "ISO-8859-1";
 				else if ("utf8".equalsIgnoreCase(encoding)) encoding = "UTF-8";
+				else if ("iso8859-1".equalsIgnoreCase(encoding)) encoding = "ISO-8859-1";
 			}
 		}		
 		return encoding;		

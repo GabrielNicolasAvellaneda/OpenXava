@@ -58,11 +58,15 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 int currentRow = ((Number) context.get(request, "xava_row")).intValue(); 
-String cssCurrentRow = style.getCurrentRow(); 
+String cssCurrentRow = style.getCurrentRow();
+String styleOverflow = "overflow: auto;";
+if (!tab.isResizeColumns()) {
+	scrollId = "";
+	styleOverflow = "";
+}
 %>
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
-
 
 <%
 	if (tab.isTitleVisible()) {
@@ -73,9 +77,9 @@ String cssCurrentRow = style.getCurrentRow();
 </td></tr>
 </table>
 <%
-	}
+	} 
 %>
-<div class="<xava:id name='<%=scrollId%>'/>" style="overflow: auto;"> 
+<div class="<xava:id name='<%=scrollId%>'/>" style="<%=styleOverflow%>"> 
   <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
@@ -120,7 +124,7 @@ while (it.hasNext()) {
 		align =property.isNumber() && !property.hasValidValues()?"vertical-align: middle;text-align: right":"vertical-align: middle";
 	}
 	int columnWidth = tab.getColumnWidth(columnIndex);
-	String width = columnWidth<0?"":"width: " + columnWidth + "px"; 
+	String width = columnWidth<0 || !tab.isResizeColumns()?"":"width: " + columnWidth + "px";
 %>
 <th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" >
 <div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="<%=((tab.isResizeColumns())?("xava_resizable"):("")) %>" style="overflow: hidden; <%=width%>" > 
@@ -130,7 +134,8 @@ while (it.hasNext()) {
 	}
 %>
 <%
-	String label = property.getQualifiedLabel(request).replaceAll(" ", "&nbsp;"); 
+	String label = property.getQualifiedLabel(request);
+	if (tab.isResizeColumns()) label = label.replaceAll(" ", "&nbsp;");
 	if (property.isCalculated()) {
 %>
 <%=label%>&nbsp;
@@ -218,7 +223,7 @@ while (it.hasNext()) {
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
 		int columnWidth = tab.getColumnWidth(columnIndex);
-		String width = columnWidth<0?"":"width: " + columnWidth + "px";
+		String width = columnWidth<0 || !tab.isResizeColumns()?"":"width: " + columnWidth + "px";
 %>
 <th class="<%=style.getListSubheaderCell()%>" align="left">
 <div class="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
@@ -311,7 +316,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 %>
 <tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
-	<nobr> 
+	<%if (tab.isResizeColumns()) {%><nobr><%}%> 
 <%
 	if (!org.openxava.util.Is.emptyString(action)) { 
 %>
@@ -330,7 +335,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction);
 %>
-	</nobr> 
+	<%if (tab.isResizeColumns()) {%></nobr><%}%> 
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
 	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> />
@@ -354,7 +359,9 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">	
 		<xava:link action='<%=action%>' argv='<%="row=" + f + actionArgv%>' cssClass='<%=cssStyle%>' cssStyle="text-decoration: none; outline: none">
 			<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-				<nobr><%=fvalue%>&nbsp;</nobr>
+				<%if (tab.isResizeColumns()) {%><nobr><%}%>
+				<%=fvalue%>&nbsp;
+				<%if (tab.isResizeColumns()) {%></nobr><%}%>
 			</div>
 		</xava:link>	
 	</td>
@@ -378,10 +385,10 @@ for (int c=0; c<model.getColumnCount(); c++) {
 	%> 	
 	<td class="<%=style.getTotalCell()%>" style="<%=style.getTotalCellStyle()%>">
 	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden;">
-	<nobr>
+	<%if (tab.isResizeColumns()) {%><nobr><%}%>
 	<xava:image action='List.removeColumnSum' argv='<%="property="+p.getQualifiedName() + collectionArgv%>' cssStyle="vertical-align: top;"/>
 	<%=ftotal%>&nbsp;
-	</nobr>	
+	<%if (tab.isResizeColumns()) {%></nobr><%}%>	
 	</div>	
 	</td>
 	<%	
