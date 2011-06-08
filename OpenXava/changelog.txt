@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- The default mode controller is defined by the style, though defaultModeController of xava.properties still exists and has preference.
 - iPad support: when an application is accessed from an iPad a style adapted to the iPad is used. 
 - ValidationException now is a RuntimeException.
 - Fix: NullPointerException validating BigDecimal null values.
