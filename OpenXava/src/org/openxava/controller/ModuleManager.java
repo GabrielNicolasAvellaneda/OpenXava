@@ -38,10 +38,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4.1.2";
+		return "4.2beta";
 	}
 	final static private String getVersionDate() {
-		return "2011-4-11"; 
+		return "2011-4-xx"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -162,8 +162,8 @@ public class ModuleManager implements java.io.Serializable {
 	
 	
 	public Collection getMetaActionsMode() {
-		try {									
-			return getMetaControllerMode().getAllMetaActions(); 
+		try {									 
+			return getMetaControllerMode().getAllNotHiddenMetaActions(); 
 		}
 		catch (Exception ex) {
 			log.error(XavaResources.getString("controllers_actions_error", getModeControllerName()),ex);

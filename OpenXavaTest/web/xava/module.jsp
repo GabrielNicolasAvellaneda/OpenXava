@@ -38,8 +38,7 @@
 
 <%
 	if (request.getAttribute("style") == null) {
-		request.setAttribute("style", org.openxava.web.style.Style
-				.getInstance());
+		request.setAttribute("style", org.openxava.web.style.Style.getInstanceForBrowser(request));
 	}
 %>
 
@@ -71,30 +70,28 @@
 	}
 	else {
 		Module.restoreLastMessages(request, app, module); 
-	}
-	String browser = request.getHeader("user-agent");
-	style.setBrowser(browser);
+	}	
 	boolean isPortlet = (session.getAttribute(Ids.decorate(app, request
 			.getParameter("module"), "xava.portlet.uploadActionURL")) != null);
 
 	Module.setPortlet(isPortlet);
-	Module.setStyle(style);
 	String version = org.openxava.controller.ModuleManager.getVersion();
 	String realPath = request.getSession().getServletContext()
 			.getRealPath("/");
-	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;
+	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;	
 %>
 <jsp:include page="execute.jsp"/>
 <%
 	if (!isPortlet) {
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" >
+ 
+<!DOCTYPE html>
 
 <head>
 	<title><%=managerHome.getModuleDescription()%></title>
-	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>?ox=<%=version%>" rel="stylesheet" type="text/css"> 
+	
+	<%=style.getMetaTags()%>
+	
 	<%
  		String[] jsFiles = style.getNoPortalModuleJsFiles();
  			if (jsFiles != null) {
@@ -102,7 +99,7 @@
  	%>
 	<script src="<%=request.getContextPath()%>/xava/style/<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
 	<%
-		}
+				}
 			}
 	%>
 
@@ -118,6 +115,7 @@
 	<%
 		}
 	%> 	
+	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>?ox=<%=version%>" rel="stylesheet" type="text/css">
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/dwr-engine.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js?ox=<%=version%>'></script>
@@ -168,7 +166,7 @@
 <%
 	if (!isPortlet) {
 %>
-</head>
+</head> 
 <body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome
 						.getModuleDescription())%>
@@ -197,7 +195,7 @@ if (manager.isResetFormPostNeeded()) {
 	   </tr>
 	</table>
 	</div>	
-	<div id="<xava:id name='core'/>" style="display: inline;">
+	<div id="<xava:id name='core'/>" style="display: inline;" class="<%=style.getModule()%>">
 		<%
 			if (!coreViaAJAX) {
 		%>
@@ -228,7 +226,9 @@ if (manager.isResetFormPostNeeded()) {
 	<script type="text/javascript">
 	$("#xava_reset_form").submit();
 	</script>		
-<% } else  { %>
+<% } else  { 
+		String browser = request.getHeader("user-agent"); 
+%>
 
 <script type="text/javascript">
 <%String prefix = Strings.change(manager.getApplicationName(), "-",
@@ -262,5 +262,4 @@ window.onload = <%=onLoadFunction%>;
 setTimeout('<%=onLoadFunction%>()', 1000);
 document.additionalParameters="<%=getAdditionalParameters(request)%>";
 </script>
-
 <% } %>

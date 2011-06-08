@@ -1,11 +1,13 @@
 package org.openxava.web.taglib;
 
+import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
+import org.openxava.web.style.*;
 
 /**
  * @author Javier Paniza
@@ -25,11 +27,25 @@ public class ActionTag extends TagSupport {
 				actionTag = null; 
 				return SKIP_BODY;
 			}
-
+			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+			Style style = (Style) request.getAttribute("style"); 
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
-			if (metaAction.hasImage()) actionTag = new ImageTag();   
-			else if(XavaPreferences.getInstance().isButtonsForNoImageActions()) actionTag = new ButtonTag();  
-			else actionTag = new LinkTag(); 
+			if (style.isUseLinkForNoButtonBarAction()) {
+				LinkTag linkTag = new LinkTag();
+				linkTag.setCssClass(style.getActionLink()); 
+				actionTag = linkTag;
+			}
+			else if (metaAction.hasImage()) {
+				ImageTag imageTag = new ImageTag();
+				imageTag.setCssClass(style.getActionImage()); 
+				actionTag = imageTag;   
+			}
+			else if (XavaPreferences.getInstance().isButtonsForNoImageActions()) actionTag = new ButtonTag();
+			else {			
+				LinkTag linkTag = new LinkTag();
+				linkTag.setCssClass(style.getActionLink()); 
+				actionTag = linkTag;
+			}
 			actionTag.setPageContext(pageContext);
 			actionTag.setAction(action);
 			actionTag.setArgv(argv);

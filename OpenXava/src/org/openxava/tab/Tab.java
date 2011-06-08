@@ -71,7 +71,8 @@ public class Tab implements java.io.Serializable {
 	private final static String NOT_CONTAINS_COMPARATOR = "not_contains_comparator";
 	private final static String YEAR_COMPARATOR = "year_comparator";
 	private final static String MONTH_COMPARATOR = "month_comparator";
-	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator"; 
+	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator";
+	private final static int MAX_PAGE_ROW_COUNT = 20; 
 	
 	private int pageRowCount = XavaPreferences.getInstance().getPageRowCount();
 	private int addColumnsPageRowCount = XavaPreferences.getInstance().getAddColumnsPageRowCount();
@@ -120,7 +121,8 @@ public class Tab implements java.io.Serializable {
 	private String [] filterConditionValues = null; 
 	private boolean filtered = false;
 	private Set<String> totalPropertiesNames; 
-	private boolean propertiesChanged; 
+	private boolean propertiesChanged;
+	private boolean ignorePageRowCount; // Tmp
 	
 	private static int nextOid = 0; 
 	public int oid = nextOid++;
@@ -1065,10 +1067,9 @@ public class Tab implements java.io.Serializable {
 	
 	
 	private Preferences getPreferences() throws BackingStoreException {
-		String application = request.getParameter("application");
-		String nodeName = "tab." + application + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".";
+		String nodeName = "tab." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".";
 		if (nodeName.length() > Preferences.MAX_NAME_LENGTH) {
-			nodeName = "tab." + (application + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".").hashCode(); 		
+			nodeName = "tab." + (getMetaTab().getMetaModel().getName() + "." + getTabName() + ".").hashCode(); 		
 		}
 		return Users.getCurrentPreferences().node(nodeName);
 	}
@@ -1273,7 +1274,7 @@ public class Tab implements java.io.Serializable {
 	
 	/** @since 4m5 */
 	public boolean isResizeColumns() { 
-		if (resizeColumns == null) return XavaPreferences.getInstance().isResizeColumns(); 
+		if (resizeColumns == null) 	return XavaPreferences.getInstance().isResizeColumns(); 
 		return resizeColumns;
 	}
 	/** @since 4m5 */
@@ -1492,10 +1493,13 @@ public class Tab implements java.io.Serializable {
 	}
 
 	public int getPageRowCount() {
+		if (ignorePageRowCount) return MAX_PAGE_ROW_COUNT; 
 		return pageRowCount;
 	}
+	
+	
 
-	public void setPageRowCount(int pageRowCount) {
+	public void setPageRowCount(int pageRowCount) {		
 		this.pageRowCount = pageRowCount;
 		saveUserPreferences(); 
 	}
@@ -1716,6 +1720,14 @@ public class Tab implements java.io.Serializable {
 	 */	
 	public String getTotalPropertiesNamesAsString() { 
 		return Strings.toString(getTotalPropertiesNames());
+	}
+
+	public void setIgnorePageRowCount(boolean ignorePageRowCount) {
+		this.ignorePageRowCount = ignorePageRowCount;
+	}
+
+	public boolean isIgnorePageRowCount() {
+		return ignorePageRowCount;
 	}
 		
 }

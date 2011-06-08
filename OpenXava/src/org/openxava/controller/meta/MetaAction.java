@@ -93,11 +93,12 @@ public class MetaAction extends MetaElement implements Cloneable {
 		return !Is.emptyString(keystroke);
 	}
 
-	public String getImage() {
+	public String getImage() {		
 		return image;
 	}
-	public void setImage(String imagen) {
-		this.image = imagen;
+	public void setImage(String image) {
+		if (image != null && image.startsWith("images/")) this.image = image.substring(7); 
+		else this.image = image;
 	}
 
 	public String getMethod() {

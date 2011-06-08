@@ -8,8 +8,9 @@ String frameShowId=frameId + "show";
 String frameHideId=frameId + "hide";
 String hideStyle=closed?"style='display: none'":"";
 String showStyle=closed?"":"style='display: none'";
-String minimizeImage=style.getMaximizeImage().startsWith("xava/")?request.getContextPath() + "/" + style.getMinimizeImage():style.getMinimizeImage();
-String restoreImage=style.getRestoreImage().startsWith("xava/")?request.getContextPath() + "/" + style.getRestoreImage():style.getRestoreImage();
+
+String minimizeImage=!style.getMinimizeImage().startsWith("/")?request.getContextPath() + "/" + style.getMinimizeImage():style.getMinimizeImage();
+String restoreImage=!style.getRestoreImage().startsWith("/")?request.getContextPath() + "/" + style.getRestoreImage():style.getRestoreImage();
 %> 		
 
 <span id="<%=frameHideId%>" <%=hideStyle%>>
