@@ -2,6 +2,8 @@ package org.openxava.web.style;
 
 import java.util.*;
 
+import javax.servlet.http.*;
+
 import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
@@ -23,10 +25,12 @@ import org.openxava.util.*;
  */ 
 
 public class Style {
-	
-	private static Collection<String> additionalCssFiles; 	
+		 	
 	private static Log log = LogFactory.getLog(Style.class);
 	private static Style instance = null;
+	private static Collection styleClasses; 
+	private static Map<String, Style> stylesByBrowser = new HashMap<String, Style>(); 
+	private Collection<String> additionalCssFiles; 
 	private String cssFile; 
 	private boolean insidePortal; 
 	private String browser; 
@@ -34,7 +38,40 @@ public class Style {
 	public Style() { 		
 	}
 	
-	public static Style getInstance() {
+	/**
+	 * @since 4.2
+	 */
+	public static Style getInstanceForBrowser(HttpServletRequest request) { 
+		String browser = request.getHeader("user-agent"); 
+		Style instance = stylesByBrowser.get(browser);
+		if (instance == null) {
+			try {
+				for (Object styleClass: getStyleClasses()) {
+					try {
+						Style style = (Style) Class.forName((String) styleClass).newInstance();
+						if (style.isForBrowse(browser)) {
+							instance = style;							
+							break;
+						}
+					}
+					catch (Exception ex) {
+						log.warn(XavaResources.getString("style_for_browser_warning", browser), ex);
+					}
+				}
+				if (instance == null) instance = getInstance();
+				instance.setBrowser(browser);
+				stylesByBrowser.put(browser, instance);				
+			}
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("style_for_browser_warning", browser), ex); 					
+				instance = getInstance();
+				instance.setBrowser(browser);
+			}			
+		}		
+		return instance; 
+	}
+	
+	public static Style getInstance() { 
 		if (instance == null) {
 			try {
 				instance = (Style) Class.forName(XavaPreferences.getInstance().getStyleClass()).newInstance();
@@ -45,8 +82,22 @@ public class Style {
 				instance = new Style();
 				instance.cssFile = "default.css";
 			}			
-		}
+		}		
 		return instance;
+	}
+
+	
+	private static Collection getStyleClasses() throws Exception {
+		if (styleClasses == null) {
+			PropertiesReader reader = new PropertiesReader(Style.class, "styles.properties");
+			styleClasses = reader.get().keySet();
+		}
+		return styleClasses;
+	}
+	
+	
+	public boolean isForBrowse(String browser) {
+		return false;
 	}
 	
 	public String [] getNoPortalModuleJsFiles() { 
@@ -75,8 +126,16 @@ public class Style {
 	final public Collection<String> getAdditionalCssFiles() {
 		if (additionalCssFiles == null) {
 			additionalCssFiles = createAdditionalCssFiles();
-		}
+		}		
 		return additionalCssFiles;
+	}
+	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public boolean allowsResizeColumns() { 
+		return true;
 	}
 	
 	public String getInitThemeScript() { 
@@ -94,17 +153,84 @@ public class Style {
 	public String getCssFile() {
 		return cssFile;
 	}
+	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public String getMetaTags() { 
+		return "";
+	}
 
 	public String getEditorWrapper() { 
 		return "";
+	}
+	
+	/** 
+	 * The folder with images used for actions. <p>
+	 *  
+	 * If it starts with / is absolute, otherwise starts from the application context path. 
+	 * 
+	 * @since 4.2
+	 */
+	public String getImagesFolder() { 
+		return "xava/images";
+	}
+	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public String getPreviousPageDisableImage() { 
+		return "previous_page_disable.gif";
+	}
+	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public String getNextPageDisableImage() { 
+		return "next_page_disable.gif";
+	}
+	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public String getPageNavigationSelectedImage() { 
+		return "page_navigation_selected.gif";
+	}
+	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public String getPageNavigationImage() { 
+		return "page_navigation.gif";
 	}
 	
 	public String getModule() {
 		return "portlet-font";		
 	}
 	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public String getModuleDescription() { 
+		return "";
+	}
+	
 	public String getModuleSpacing() {
 		return "style='padding: 4px;'";		
+	}
+	
+	public String getActionLink() {
+		return "ox-action-link";
+	}
+	
+	public String getActionImage() {
+		return "ox-image-link";
 	}
 		
 	public String getButtonBar() {
@@ -115,20 +241,72 @@ public class Style {
 		return "ox-button-bar-button";
 	}	
 	
-	public String getButtonBarModeButton() {
-		return "ox-button-bar-button";
+	public boolean isSeveralActionsPerRow() {
+		return true;
 	}
 	
-	public String getButtonBarActiveModeButton() { 
-		return "ox-button-bar-button active";
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public boolean isUseLinkForNoButtonBarAction() {  
+		return false;
 	}
-							
+	
+	/**
+	 * If it has value, an image is shown using this value as class,
+	 * otherwise the image would be shown as the background of a span 
+	 * with the getButtonBarButton() class.
+	 * 
+	 * @since 4.2
+	 */
+	public String getButtonBarImage() { 
+		return "";
+	}
+
+	
+	public String getButtonBarModeButton() {		
+		return "ox-button-bar-mode-button"; 
+	}
+		
+	/**
+	 * 
+	 * @since 4.2
+	 */		
+	public String getActive() { 
+		return "ox-active";
+	}
+
+	/**
+	 * 
+	 * @since 4.2
+	 */		
+	public String getFirst() { 
+		return "ox-first";
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */		
+	public String getLast() { 
+		return "ox-last";
+	}
+								
 	public String getDetail() {
 		return "";
 	}
 			
 	public String getList() {  
 		return "list";
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */		
+	public String getView() { 
+		return "";
 	}
 		
 	public String getListCellSpacing() {
@@ -215,6 +393,14 @@ public class Style {
 		return "list-title";
 	}
 	
+	/**
+	 * 	
+	 * @since 4.2
+	 */
+	public String getHeaderListCount() { 
+		return "";
+	}
+	
 	public String getListTitleWrapper() {
 		return "";
 	}
@@ -235,10 +421,8 @@ public class Style {
 		r.append(">");
 		r.append("<tr class='");
 		r.append(getFrameTitle());
-		r.append("'>");
-		r.append("<th class='");
-		r.append(getFrameTitleLabel());
-		r.append("'>\n");		
+		r.append("'>");		
+		r.append("<th>\n");						
 		return r.toString();
 	}	
 	public String getFrameHeaderEndDecoration() { 		
@@ -246,11 +430,26 @@ public class Style {
 	}
 	
 	public String getFrameTitleStartDecoration() { 		
-		return "<span style='float: left'>"; 		
+		StringBuffer r = new StringBuffer();
+		r.append("<span style='float: left' ");
+		r.append("class='");
+		r.append(getFrameTitleLabel());
+		r.append("'>\n");
+		return r.toString();
 	}	
+	
 	public String getFrameTitleEndDecoration() { 
 		return "</span>";
 	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public String getFrameActions() {
+		return "ox-frame-actions";
+	}
+	
 	public String getFrameActionsStartDecoration() { 
 		return "<span style='float: right'>";
 	}	
@@ -304,7 +503,7 @@ public class Style {
 	}
 	
 	public String getLabel() { 
-		return "portlet-form-field-label";
+		return "portlet-form-field-label ox-label"; 
 	}
 	
 	public String getSmallLabel() {
@@ -371,6 +570,14 @@ public class Style {
 	public String getSection() {
 		return "Jetspeed";
 	}
+
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public String getSectionTab() {
+		return "ox-section-tab";
+	}
 	
 	public String getSectionTableAttributes() {
 		return "border='0' cellpadding='0' cellspacing='0'";
@@ -416,38 +623,37 @@ public class Style {
 		return getButtonBar(); 
 	}
 	
-	/**
-	 * If it starts with 'xava/' the context path is inserted before.
+	/** 
+	 * If it starts with '/' the URI is absolute, otherwise the context path is inserted before.
 	 */
 	public String getRestoreImage() {
-		return "images/restore.gif";
+		return getImagesFolder() +  "/restore.gif"; 
 	}
 
-	/**
-	 * If it starts with 'xava/' the context path is inserted before.
-	 */
-	
+	/** 
+	 * If it starts with '/' the URI is absolute, otherwise the context path is inserted before.
+	 */	
 	public String getMaximizeImage() {
-		return "images/maximize.gif";
+		return getImagesFolder() +  "/maximize.gif";
 	}
 	
-	/**
-	 * If it starts with 'xava/' the context path is inserted before.
+	/** 
+	 * If it starts with '/' the URI is absolute, otherwise the context path is inserted before.
 	 */
-	public String getMinimizeImage() { 
-		return "images/minimize.gif";
+	public String getMinimizeImage() {  
+		return getImagesFolder() +  "/minimize.gif";
 	}	
 
-	/**
-	 * If it starts with 'xava/' the context path is inserted before.
+	/** 
+	 * If it starts with '/' the URI is absolute, otherwise the context path is inserted before.
 	 */	
 	public String getRemoveImage() {
-		return "images/remove.gif";
+		return getImagesFolder() +  "remove.gif";
 	}
 	
 	public String getLoadingModuleImage() {
 		return "images/loading-module.gif";
-	}
+	}	
 	
 	/**
 	 * If <code>true</code< the header in list is aligned as data displayed in its column. <p>
@@ -470,12 +676,69 @@ public class Style {
 		return true;
 	}
 	
+	public boolean isShowImageInButtonBarButton() {
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public boolean isShowModuleDescription() {  
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public boolean isShowPageNumber() { 
+		return true;
+	}	
+		
+	/**
+	 * 
+	 * @since 4.2
+	 */	
+	public boolean isRowLinkable() { 
+		return true;
+	}
+	
+		
 	public String getBottomButtonsStyle() {
+		return "";
+	}
+	
+	public String getBottomButtons() {
 		return "";
 	}
 	
 	public boolean isNeededToIncludeCalendar() {
 		return true;
+	}
+
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public boolean isChangingPageRowCountAllowed() { 
+		return true;
+	}
+
+	/**
+	 * 
+	 * @since 4.2
+	 */	
+	public boolean isHideRowsAllowed() { 
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */	
+	public boolean isShowRowCountOnTop() { 
+		return false;
 	}
 	
 	public boolean isInsidePortal() {
@@ -553,6 +816,14 @@ public class Style {
 	}
 	
 	/**
+	 * 
+	 * @since 4.2
+	 */		
+	public String getPageNavigationPages() { 
+		return "";
+	}
+	
+	/**
 	 * @since 4m5
 	 */
 	public String getPageNavigationArrow() { 		
@@ -565,6 +836,14 @@ public class Style {
 	public String getRowsPerPage() { 		
 		return "rows-per-page";
 	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */		
+	public boolean isHelpAvailable()  {
+		return true;
+	}
 
 	/**
 	 * @since 4m6
@@ -574,7 +853,7 @@ public class Style {
 	}
 	
 	/** @since 4m6 */
-	final public String getActiveSectionTabStartDecoration(boolean first, boolean last) {
+	public String getActiveSectionTabStartDecoration(boolean first, boolean last) {
 		if (first) {
 			return getActiveSectionFirstTabStartDecoration();
 		}
@@ -585,7 +864,7 @@ public class Style {
 	}
 	
 	/** @since 4m6 */
-	final public String getSectionTabStartDecoration(boolean first, boolean last) {
+	public String getSectionTabStartDecoration(boolean first, boolean last) {
 		if (first) {
 			return getSectionFirstTabStartDecoration();
 		}
@@ -632,6 +911,10 @@ public class Style {
 		return "";
 	}
 	
+	public String getTotalCapableCell() { 
+		return "";
+	}
+	
 	public String getTotalCellStyle() {
 		return getTotalCellAlignStyle();
 	}
@@ -646,6 +929,14 @@ public class Style {
 	
 	public String getTotalCapableCellStyle() { 
 		return getTotalEmptyCellStyle() + "vertical-align: top; text-align: right;	padding: 0px;";
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */	
+	public String getFilterCell() { 
+		return "ox-filter-cell";
 	}
 	
 	

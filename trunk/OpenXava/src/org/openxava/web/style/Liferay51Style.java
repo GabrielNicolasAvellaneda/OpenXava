@@ -104,7 +104,7 @@ public class Liferay51Style extends Liferay43Style {
 		return "<li style='position: static;'>"; // position: static needed for ie7 
 	}
 	
-	protected String getImagesFolder() { 
+	protected String getLiferayImagesFolder() { 
 		return isInsidePortal()?"/html/themes/classic/images/":"xava/style/liferay51/images/";
 	}
 	
@@ -113,7 +113,7 @@ public class Liferay51Style extends Liferay43Style {
 	}
 	
 	public String getHelpImage() {
-		return getImagesFolder() + "portlet/help.png";
+		return getLiferayImagesFolder() + "portlet/help.png";
 	}
 		
 	public String getTotalRow() { 

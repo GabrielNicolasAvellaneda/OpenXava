@@ -2522,7 +2522,7 @@ public class View implements java.io.Serializable {
 			log.warn(XavaResources.getString("value_calculate_warning", metaProperty),ex);
 		}		
 	}
-
+	
 	/**
 	 * POJO associated to the current view. <p>
 	 */
@@ -3463,7 +3463,7 @@ public class View implements java.io.Serializable {
 	
 	
 	
-	public boolean isFrame() throws XavaException {
+	public boolean isFrame() throws XavaException {		
 		return getMetaView().isFrame();
 	}
 	
@@ -3659,15 +3659,14 @@ public class View implements java.io.Serializable {
 	
 	public void setLabelId(String propertyName, String id) {
 		if (getLabels() == null) setLabels(new HashMap());
-		String old = (String) labels.put(propertyName, id); 
+		String old = (String) getLabels().put(propertyName, id);  
 		if (!Is.equal(old, id)) {
 			if (getRoot().changedLabels == null) getRoot().changedLabels = new HashMap();
 			getRoot().changedLabels.put(getPropertyPrefix() + propertyName,
 				getLabelFor(getMetaModel().getMetaMember(propertyName)));
 		}
 	}
-	
-	
+		
 	
 	private Map getLabels() {
 		View root = getRoot();

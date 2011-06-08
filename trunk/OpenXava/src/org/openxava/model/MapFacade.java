@@ -361,7 +361,7 @@ public class MapFacade {
 	 * Obtain the specified values from entity/aggregate from a map with 
 	 * primary key values. <p>
 	 * 
-	 * The <code>memberNames</tt> parameter is a map to use a treelike structure.<br>
+	 * The <code>memberNames</code> parameter is a map to use a treelike structure.<br>
 	 * The property names are in key part. If it's a simple property the value
 	 * is null, otherwise it has a map with the same structure.<br>
 	 * For example, if we have a <code>Customer</tt> that references

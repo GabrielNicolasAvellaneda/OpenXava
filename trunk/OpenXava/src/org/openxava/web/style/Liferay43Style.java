@@ -65,7 +65,7 @@ public class Liferay43Style extends Style {
 	}
 			
 	public String getList() { 
-		return "";
+		return ""; 
 	}
 	
 	public String getListCellSpacing() {
@@ -260,24 +260,24 @@ public class Liferay43Style extends Style {
 	}	
 		
 	public String getRestoreImage() { 
-		return getImagesFolder() + "portlet/restore.png";
+		return getLiferayImagesFolder() + "portlet/restore.png";
 	}
 	
 	public String getMaximizeImage() {
-		return getImagesFolder() + "portlet/maximize.png"; 
+		return getLiferayImagesFolder() + "portlet/maximize.png"; 
 	}
 	
 	public String getMinimizeImage() {
-		return getImagesFolder() + "portlet/minimize.png";
+		return getLiferayImagesFolder() + "portlet/minimize.png";
 	}	
 	
 	
 	public String getRemoveImage() {
-		return getImagesFolder() + "portlet/close.png";
+		return getLiferayImagesFolder() + "portlet/close.png";
 	}
 	
 	public String getLoadingModuleImage() { 
-		return getImagesFolder() + "progress_bar/loading_animation.gif";
+		return getLiferayImagesFolder() + "progress_bar/loading_animation.gif";
 	}
 	
 	public boolean isApplySelectedStyleToCellInList() {
@@ -288,7 +288,7 @@ public class Liferay43Style extends Style {
 		return "position: static;";
 	}
 	
-	protected String getImagesFolder() { 
+	protected String getLiferayImagesFolder() {  
 		return isInsidePortal()?"/html/themes/classic/images/":"xava/style/liferay43/images/"; 
 	}
 	
@@ -301,7 +301,7 @@ public class Liferay43Style extends Style {
 	}
 	
 	public String getHelpImage() {
-		return getImagesFolder() + "common/help.png";
+		return getLiferayImagesFolder() + "common/help.png";
 	}
 			
 	public String getTotalCellStyle() {  

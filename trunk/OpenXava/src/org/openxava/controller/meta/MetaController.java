@@ -71,21 +71,33 @@ public class MetaController extends MetaElement {
 		return -1;
 	}
 	/**
-	 * The MetaActions of this controllers and all its parents. <p>
+	 * The MetaActions of this controller and all its parents. <p>
 	 */
 	public Collection getAllMetaActions() throws XavaException { 
+		return getAllMetaActions(false);
+	}
+	
+	/**
+	 * The not hidden MetaActions of this controller and all its parents. <p>
+	 */
+	public Collection getAllNotHiddenMetaActions() throws XavaException {  
+		return getAllMetaActions(true);
+	}
+	
+	private Collection getAllMetaActions(boolean excludeHidden) throws XavaException {  
 		List result = new ArrayList();
 		// Adding parents
 		Iterator itParents = getParents().iterator();
 		while (itParents.hasNext()) {
 			MetaController parent = (MetaController) itParents.next();
-			result.addAll(parent.getAllMetaActions());
+			result.addAll(parent.getAllMetaActions(excludeHidden));
 		}
 				
 		// and now ours 
 		Iterator it = metaActions.iterator();
 		while (it.hasNext()) {
-			MetaAction metaAction = (MetaAction) it.next();						
+			MetaAction metaAction = (MetaAction) it.next();
+			if (excludeHidden && metaAction.isHidden()) continue;
 			int pos = indexOf(result, metaAction); 
 			if (pos < 0) result.add(metaAction);
 			else {
@@ -95,6 +107,7 @@ public class MetaController extends MetaElement {
 		}		
 		return result;
 	}
+	
 		
 	
 	public String getId() {
@@ -114,7 +127,7 @@ public class MetaController extends MetaElement {
 			result.addAll(parent.getMetaActionsOnInit());
 		}
 
-		// Mines
+		// Ours
 		Iterator it = metaActions.iterator();		
 		while (it.hasNext()) {
 			MetaAction metaAction = (MetaAction) it.next();			

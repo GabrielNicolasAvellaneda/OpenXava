@@ -85,7 +85,12 @@ public class XavaResources {
 	
 	public static String getString(HttpServletRequest request, String key, Object argv1, Object argv2) {
 		return impl.getString(getLocale(request), key, argv1, argv2);
+	}
+	
+	public static String getString(HttpServletRequest request, String key, Object argv1, Object argv2, Object argv3) { 
+		return impl.getString(getLocale(request), key, argv1, argv2, argv3);
 	}	
+
 	
 	public static String getString(HttpServletRequest request, String key, Object [] argv) {
 		return impl.getString(getLocale(request), key, argv);

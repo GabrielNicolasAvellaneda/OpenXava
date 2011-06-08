@@ -1,8 +1,19 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: fails in display with the property (xava.properties) 'resizeColumns= false'.
-- Fix: add application name in the file name to the tab preferences properties. 
+- iPad support: when an application is accessed from an iPad a style adapted to the iPad is used. 
+- ValidationException now is a RuntimeException.
+- Fix: NullPointerException validating BigDecimal null values.
+- Fix: Fails rendering list when the property (xava.properties) 'resizeColumns= false'. 
+
+- System encoding recognition improved.
+- Fix View.setLabelId() fails when used in subviews.
+- Styles allow define more details about the UI behavior: isRowLinkable(), isShowPageNumber(), isShowModuleDescription(), isChangingPageRowCountAllowed(), isShowRowCountOnTop(), etc.
+- Each style has its own imagesFolder, so each style can define its own icon for actions, even for custom actions.
+- Property labelAlign removed from xava.properties, now alignment is defined by CSS.
+- In action definition 'image' does not requires the folder name 'images/' as prefix.
+- Fix: NullPointerException: charsetName with Jetty. 
+- A different style can be selected by each browser type.
 
 OpenXava 4.1.2 (2011-4-11)
 --------------------------

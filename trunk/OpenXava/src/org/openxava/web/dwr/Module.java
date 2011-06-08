@@ -34,7 +34,6 @@ public class Module extends DWRBase {
 	final private static String PAGE_RELOADED_LAST_TIME = "xava_pageReloadedLastTime"; 
 	
 	private static boolean portlet;
-	private static Style style;
 	
 	transient private HttpServletRequest request; 
 	transient private HttpServletResponse response; 
@@ -59,7 +58,7 @@ public class Module extends DWRBase {
 			Users.setCurrent(request);
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
-			request.setAttribute("style", getStyle());			
+			request.setAttribute("style", Style.getInstanceForBrowser(request));  			
 			getURIAsStream("execute.jsp", values, multipleValues, selected, additionalParameters);
 			setDialogLevel(result); 
 			Map changedParts = new HashMap();
@@ -526,7 +525,11 @@ public class Module extends DWRBase {
 		if (value.toString().startsWith("[reference:")) {
 			return "true";
 		} 
-		return URLEncoder.encode(value.toString(), request.getCharacterEncoding()); 
+		String charsetName = request.getCharacterEncoding(); 
+		if (charsetName == null) { 
+			charsetName = XSystem.getEncoding();
+		} 
+		return URLEncoder.encode(value.toString(), charsetName);
 	}
 	
 	private static boolean isPortlet() {
@@ -536,15 +539,5 @@ public class Module extends DWRBase {
 	public static void setPortlet(boolean portlet) {
 		Module.portlet = portlet;
 	}
-
-	private static Style getStyle() {
-		return style;
-	}
-
-	public static void setStyle(Style style) {
-		Module.style = style;
-	}
-	
-	
 		
 }

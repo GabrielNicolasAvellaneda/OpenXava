@@ -28,14 +28,14 @@ int activeSection = view.getActiveSection();
 		MetaView section = (MetaView) itSections.next();
 		if (activeSection == i) {
 	%>        
-			<%=style.getActiveSectionTabStartDecoration(activeSection == 0, !itSections.hasNext())%>
+			<%=style.getActiveSectionTabStartDecoration(i == 0, !itSections.hasNext())%>
 			<%=section.getLabel(request)%>
 			<%=style.getActiveSectionTabEndDecoration()%>
     <%
 		}
 		else {
     %>
-    		<%=style.getSectionTabStartDecoration(activeSection == 0, !itSections.hasNext())%>
+    		<%=style.getSectionTabStartDecoration(i == 0, !itSections.hasNext())%>
 				<%
 				String viewObjectArgv = "xava_view".equals(viewObject)?"":",viewObject=" + viewObject;
 				%>

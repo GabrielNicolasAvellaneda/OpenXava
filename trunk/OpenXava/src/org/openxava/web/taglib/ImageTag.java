@@ -8,6 +8,7 @@ import org.apache.commons.logging.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 import org.openxava.web.*;
+import org.openxava.web.style.*;
 
 
 /**
@@ -32,7 +33,8 @@ public class ImageTag extends TagSupport implements IActionTag {
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
 			String application = request.getParameter("application");
-			String module = request.getParameter("module");			
+			String module = request.getParameter("module");
+			Style style = (Style) request.getAttribute("style");
 			pageContext.getOut().print("<input name='");
 			pageContext.getOut().print(Ids.decorate(application, module, "action." + getAction())); 
 			pageContext.getOut().println("' type='hidden'/>");			
@@ -75,12 +77,12 @@ public class ImageTag extends TagSupport implements IActionTag {
 			}
 			pageContext.getOut().print("')\">");
 			pageContext.getOut().print("<img src='");
-			pageContext.getOut().print(request.getContextPath() + "/xava/" + metaAction.getImage());
+			pageContext.getOut().print(request.getContextPath() + "/" + style.getImagesFolder() + "/"+ metaAction.getImage());
 			pageContext.getOut().println("'");
 			pageContext.getOut().print("\talt='");
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
-			pageContext.getOut().println("'");
-			pageContext.getOut().println("\tborder='0' align='absmiddle'/></a>"); 
+			pageContext.getOut().println("'"); 
+			pageContext.getOut().print("\tborder='0' align='absmiddle'/></a>"); 
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

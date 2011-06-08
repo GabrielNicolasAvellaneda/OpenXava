@@ -423,16 +423,12 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("resizeColumns", "true").trim());
 	}
 	
+	
 	/** @since 4m6 */
 	public boolean isSaveAndStayForCollections(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("saveAndStayForCollections", "true").trim());
 	}
 	
-	/** @since 4m6 */
-	public String getLabelAlign() {
-		return getProperties().getProperty("labelAlign", "RIGHT");
-	}
-
 	/** @since 4m6 */
 	public boolean isShowLabelsForToolBarActions(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("showLabelsForToolBarActions", "true").trim());
