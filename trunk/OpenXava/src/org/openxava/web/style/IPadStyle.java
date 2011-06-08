@@ -39,6 +39,14 @@ public class IPadStyle extends Style {
 		);
 	}
 	
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public String getDefaultModeController() {
+		return "DetailList";
+	}
+	
 	public boolean allowsResizeColumns() { 
 		return false;
 	}

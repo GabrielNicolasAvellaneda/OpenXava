@@ -404,7 +404,7 @@ public class XavaPreferences {
 
 	/** @since 4m5 */
 	public String getDefaultModeController() {
-		return getProperties().getProperty("defaultModeController", "Mode");
+		return getProperties().getProperty("defaultModeController", null);
 	}
 
 	/** @since 4m5 */

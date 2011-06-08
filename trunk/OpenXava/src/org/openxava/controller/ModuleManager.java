@@ -23,6 +23,7 @@ import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
 import org.openxava.web.*;
+import org.openxava.web.style.*;
 
 /**
  * @author Javier Paniza
@@ -59,8 +60,8 @@ public class ModuleManager implements java.io.Serializable {
 	private Collection metaActions;
 	private String applicationName;
 	private String moduleName;
-	private Set hiddenActions;		
-	private String modeControllerName = XavaPreferences.getInstance().getDefaultModeController(); 
+	private Set hiddenActions;		 
+	private String modeControllerName; 
 	private Collection metaControllers;
 	private MetaController metaControllerMode;
 	transient private HttpSession session; 
@@ -1090,7 +1091,11 @@ public class ModuleManager implements java.io.Serializable {
 			user = Users.getCurrent();
 			moduleInitiated = false;			
 		}
-		if (!moduleInitiated) {
+		if (!moduleInitiated) {			 
+			if (modeControllerName == null) {
+				modeControllerName = XavaPreferences.getInstance().getDefaultModeController();
+				if (Is.emptyString(modeControllerName)) modeControllerName = Style.getInstanceForBrowser(request).getDefaultModeController();
+			}			 
 			modeName = getMetaActionsMode().isEmpty()?IChangeModeAction.DETAIL:null;
 			moduleInitiated = true;
 			executeInitAction(request, errors, messages);

@@ -86,6 +86,13 @@ public class Style {
 		return instance;
 	}
 
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public String getDefaultModeController() {
+		return "Mode";
+	}
 	
 	private static Collection getStyleClasses() throws Exception {
 		if (styleClasses == null) {
