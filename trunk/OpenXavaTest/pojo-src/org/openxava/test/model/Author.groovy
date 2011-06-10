@@ -13,4 +13,8 @@ class Author {
 	@Stereotype("MEMO")
 	String biography;
 
+	@OneToMany(mappedBy="favoriteAuthor")
+	@CollectionView(value="WithGroup")
+	java.util.Collection<Human> humans
+	
 }
