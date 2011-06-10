@@ -1733,15 +1733,15 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertListTitle(String expectedTitle) throws Exception {
-		HtmlTable table = null;
+		HtmlElement element = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("list-title");
+			element = (HtmlElement) page.getHtmlElementById("list-title");
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString("title_not_displayed"));
 			return;
 		}				
-		assertEquals(XavaResources.getString("incorrect_title"), expectedTitle, table.getCellAt(0, 0).asText());
+		assertEquals(XavaResources.getString("incorrect_title"), expectedTitle, element.asText());
 	}
 	
 	protected void assertNoListTitle() throws Exception {		

@@ -91,7 +91,6 @@ public class XavaPortlet extends GenericPortlet {
 		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error", PortletSession.PORTLET_SCOPE)); 
 		request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.PORTLET_SCOPE); 
 		request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.PORTLET_SCOPE); 
-		
 		request.getPortletSession().setAttribute("xava.portal.locale", request.getLocale(), PortletSession.APPLICATION_SCOPE);
 		
 		request.removeAttribute("xava.portal.user");
@@ -236,22 +235,20 @@ public class XavaPortlet extends GenericPortlet {
 	/**
 	 * sets the portlet-title
 	 */
-	private void setTitle(RenderRequest request, RenderResponse response){ 
+	private void setTitle(RenderRequest request, RenderResponse response){
 		String title = null;
 		try {
 			ModuleContext context = (ModuleContext) request.getPortletSession().getAttribute("context", PortletSession.APPLICATION_SCOPE);
-			ModuleManager moduleManager = (ModuleManager)context.get(application, module, "manager");
+			ModuleManager moduleManager = (ModuleManager) context.get(application, module, "manager");
 			title = moduleManager.getModuleDescription();
 		} 
 		catch (Exception ex) {
-			log.warn(XavaResources.getString("portlet_title_warning"), ex);			
+			log.warn(XavaResources.getString("portlet_title_warning"));			
 		}
 		// title will only be set if no Exception occurs	
 		if(title != null){
 			response.setTitle(title);
 		}
 	}
-
-
 	
 }

@@ -1,12 +1,13 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: fails the display collection view when the collection has a group in its view.
+- Fix: fails the tab preferences when you have same model name in several applications. Add application name at the preferences files.
 - The default mode controller is defined by the style, though defaultModeController of xava.properties still exists and has preference.
 - iPad support: when an application is accessed from an iPad a style adapted to the iPad is used. 
 - ValidationException now is a RuntimeException.
 - Fix: NullPointerException validating BigDecimal null values.
 - Fix: Fails rendering list when the property (xava.properties) 'resizeColumns= false'. 
-
 - System encoding recognition improved.
 - Fix View.setLabelId() fails when used in subviews.
 - Styles allow define more details about the UI behavior: isRowLinkable(), isShowPageNumber(), isShowModuleDescription(), isChangingPageRowCountAllowed(), isShowRowCountOnTop(), etc.
