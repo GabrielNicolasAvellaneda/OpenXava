@@ -81,6 +81,11 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 		</div>    	
 	
 	</div>
+
+	<% if (style.isSeparatorBeforeBottomButtons()) { %>
+	<div style="clear: both; padding-top: 2px;"></div>
+	<% } %>
+
     <div id='<xava:id name="bottom_buttons"/>' class="<%=style.getBottomButtons()%>" style="<%=buttonsAlign %> <%=style.getBottomButtonsStyle()%>">
 		<jsp:include page="bottomButtons.jsp"/>
 	</div>

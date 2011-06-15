@@ -15,6 +15,6 @@ class Author {
 
 	@OneToMany(mappedBy="favoriteAuthor")
 	@CollectionView(value="WithGroup")
-	java.util.Collection<Human> humans
+	Collection<Human> humans
 	
 }
