@@ -55,7 +55,7 @@ int activeSection = view.getActiveSection();
 	
 	</td></tr>
 	
-	<tr><td class="<%=style.getSectionActive()%>">
+	<tr><td class="<%=style.getActiveSection()%>">
 		<%
 			String viewName = viewObject + "_section" + activeSection;
 			context.put(request, viewName, view.getSectionView(activeSection));

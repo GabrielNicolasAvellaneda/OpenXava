@@ -1,13 +1,20 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: fails the display collection view when the collection has a group in its view.
-- Fix: fails the tab preferences when you have same model name in several applications. Add application name at the preferences files.
+- Fix: Fails displaying collection element when the collection has a group in its view.
+- Fix: Fails the tab preferences when you have same model name in several applications. Added application name as discriminator.
+
+- Top right red 'Loading...' AJAX indicator replaced by a stylized centered 'Loading...' box.
+- Fix: NullPointerException stacktrace (without failing) when starting portlets in Liferay.
 - The default mode controller is defined by the style, though defaultModeController of xava.properties still exists and has preference.
+- Slide effect on list pagination (only for iPad).
+- Flip effect on changing mode (only for iPad).
 - iPad support: when an application is accessed from an iPad a style adapted to the iPad is used. 
 - ValidationException now is a RuntimeException.
+
 - Fix: NullPointerException validating BigDecimal null values.
 - Fix: Fails rendering list when the property (xava.properties) 'resizeColumns= false'. 
+
 - System encoding recognition improved.
 - Fix View.setLabelId() fails when used in subviews.
 - Styles allow define more details about the UI behavior: isRowLinkable(), isShowPageNumber(), isShowModuleDescription(), isChangingPageRowCountAllowed(), isShowRowCountOnTop(), etc.

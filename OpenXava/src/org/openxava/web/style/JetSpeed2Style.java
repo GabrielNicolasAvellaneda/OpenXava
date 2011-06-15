@@ -5,7 +5,7 @@ package org.openxava.web.style;
  */
 
 
-public class JetSpeed2Style extends Style {
+public class JetSpeed2Style extends PortalStyle {
 	
 	private static JetSpeed2Style instance = null;
 
@@ -115,7 +115,7 @@ public class JetSpeed2Style extends Style {
 		return "tabs";
 	}
 	
-	public String getSectionActive() {
+	public String getActiveSection() {
 		return "";
 	}	
 		

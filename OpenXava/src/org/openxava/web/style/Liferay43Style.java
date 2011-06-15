@@ -6,7 +6,7 @@ package org.openxava.web.style;
  * @author Javier Paniza
  */ 
 
-public class Liferay43Style extends Style {
+public class Liferay43Style extends PortalStyle {
 	
 	private static Liferay43Style instance = null;
 
@@ -227,7 +227,7 @@ public class Liferay43Style extends Style {
 		return "border='0' cellpadding='0' cellspacing='0' width='100%'";
 	}
 	
-	public String getSectionActive() {
+	public String getActiveSection() {
 		return "";
 	}	
 	
@@ -276,7 +276,7 @@ public class Liferay43Style extends Style {
 		return getLiferayImagesFolder() + "portlet/close.png";
 	}
 	
-	public String getLoadingModuleImage() { 
+	public String getLoadingImage() { 
 		return getLiferayImagesFolder() + "progress_bar/loading_animation.gif";
 	}
 	

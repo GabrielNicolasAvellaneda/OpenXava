@@ -28,7 +28,7 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 	}
 	
 	
-	public String getSectionActive() {
+	public String getActiveSection() {
 		return "";
 	}	
 		

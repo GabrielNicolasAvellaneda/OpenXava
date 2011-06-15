@@ -5,7 +5,7 @@ package org.openxava.web.style;
  * @author Javier Paniza
  */
 
-public class WebSpherePortalStyle extends Style {
+public class WebSpherePortalStyle extends PortalStyle {
 	
 	private static WebSpherePortalStyle instance = null;
 
@@ -147,7 +147,7 @@ public class WebSpherePortalStyle extends Style {
 		return "wpsPageBar";
 	}
 	
-	public String getSectionActive() {
+	public String getActiveSection() {
 		return "";
 	}	
 	

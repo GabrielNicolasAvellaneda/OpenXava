@@ -7,7 +7,7 @@ package org.openxava.web.style;
  * @author José Luis Santiago
  */ 
 
-public class Liferay41Style extends Style {
+public class Liferay41Style extends PortalStyle {
 	
 	private static Liferay41Style instance = null;
 
@@ -189,7 +189,7 @@ public class Liferay41Style extends Style {
 		return "border='0' cellpadding='0' cellspacing='0' width='100%'";
 	}
 	
-	public String getSectionActive() {
+	public String getActiveSection() {
 		return "";
 	}	
 	
@@ -251,7 +251,7 @@ public class Liferay41Style extends Style {
 		return false;
 	}
 		
-	public String getLoadingModuleImage() {  
+	public String getLoadingImage() {  
 		return "/html/themes/classic/images/progress_bar/loading_animation.gif";
 	}
 	
