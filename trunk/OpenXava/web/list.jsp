@@ -473,7 +473,7 @@ int last=tab.getLastPage();
 int current=tab.getPage();
 if (current > 1) {
 %>
-<span class='<%=style.getFirst()%>'><span class='<%=style.getPageNavigationArrow()%>'><xava:image action='List.goPreviousPage' argv='<%=collectionArgv%>'/></span></span>
+<span class='<%=style.getFirst()%>'><span class='<%=style.getPageNavigationArrow()%>' <%=style.getPreviousPageNavigationEvents(Ids.decorate(request, id))%>><xava:image action='List.goPreviousPage' argv='<%=collectionArgv%>'/></span></span>
 <%
 }
 else {
@@ -520,7 +520,7 @@ if (i == current) {
 if (!tab.isLastPage()) {
 %>
 <span class='<%=style.getLast()%>'>
-<span class='<%=style.getPageNavigationArrow()%>'>
+<span class='<%=style.getPageNavigationArrow()%>' <%=style.getNextPageNavigationEvents(Ids.decorate(request, id)) %>>
 <xava:image action='List.goNextPage' argv='<%=collectionArgv%>'/>
 </span>
 </span>

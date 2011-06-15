@@ -102,8 +102,21 @@ public class Style {
 		return styleClasses;
 	}
 	
-	
+
+	/**
+	 * If this style is specific for the indicated browser.
+	 * 
+	 * @since 4.2
+	 */
 	public boolean isForBrowse(String browser) {
+		return false;
+	}
+	
+	/** 
+	 * 
+	 * @since 4.2
+	 */
+	public boolean isOnlyOneButtonForModeIfTwoModes() {
 		return false;
 	}
 	
@@ -114,16 +127,16 @@ public class Style {
 	protected String getJQueryCss() { 
 		return "/xava/style/ui-lightness/jquery-ui.css";
 	}
-
+	
 	protected Collection<String> createAdditionalCssFiles() {
 		return Arrays.asList( 
 			"/xava/editors/calendar/skins/aqua/theme.css", 
-			"/xava/style/openxava.css",
 			"/xava/style/yahoo-treeview/fonts/fonts-min.css",
 			"/xava/style/yahoo-treeview/treeview.css",
 			getJQueryCss()
 		);
 	}
+
 	
 	/**
 	 * These css files will be always added, inside and outside portal. <p>
@@ -136,6 +149,15 @@ public class Style {
 		}		
 		return additionalCssFiles;
 	}
+
+	/** 
+	 * The JavaScript function that assign the HTML token to a specific a element. 
+	 * 
+	 * @since 4.2
+	 */
+	public String getSetHtmlFunction() {
+		return "function (id, content) { $('#' + id).html(content); };";
+	}
 	
 	/** 
 	 * 
@@ -145,7 +167,7 @@ public class Style {
 		return true;
 	}
 	
-	public String getInitThemeScript() { 
+	public String getInitThemeScript() {
 		return null;
 	}
 	
@@ -156,6 +178,22 @@ public class Style {
 	public String getNoPortalModuleEndDecoration() {
 		return "";
 	}
+	
+	/**
+	 *
+	 * @since 4.2
+	 */
+	public String getCoreStartDecoration() { 
+		return "";
+	}
+
+	/**
+	 *
+	 * @since 4.2
+	 */	
+	public String getCoreEndDecoration() { 
+		return "";
+	}	
 	
 	public String getCssFile() {
 		return cssFile;
@@ -217,17 +255,24 @@ public class Style {
 	}
 	
 	public String getModule() {
-		return "portlet-font";		
+		return "ox-module";		
 	}
 	
-	/** 
+	
+	
+	/**
 	 * 
 	 * @since 4.2
-	 */
-	public String getModuleDescription() { 
-		return "";
+	 */		
+	public String getView() { 
+		return "ox-view";
 	}
 	
+	public String getDetail() {
+		return "ox-detail";
+	}
+
+
 	public String getModuleSpacing() {
 		return "style='padding: 4px;'";		
 	}
@@ -259,18 +304,33 @@ public class Style {
 	public boolean isUseLinkForNoButtonBarAction() {  
 		return false;
 	}
-	
+
 	/**
-	 * If it has value, an image is shown using this value as class,
+	 * If true an image is shown using this value as class,
 	 * otherwise the image would be shown as the background of a span 
 	 * with the getButtonBarButton() class.
 	 * 
 	 * @since 4.2
+	 */	
+	public boolean isUseStandardImageActionForOnlyImageActionOnButtonBar() {
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
 	 */
-	public String getButtonBarImage() { 
-		return "";
+	public boolean isSeparatorBeforeBottomButtons() {
+		return true;
 	}
 
+	/**
+	 * 
+	 * @since 4.2
+	 */	
+	public String getButtonBarImage() { 
+		return "ox-button-bar-image";
+	}
 	
 	public String getButtonBarModeButton() {		
 		return "ox-button-bar-mode-button"; 
@@ -299,23 +359,28 @@ public class Style {
 	public String getLast() { 
 		return "ox-last";
 	}
-								
-	public String getDetail() {
-		return "";
-	}
-			
-	public String getList() {  
-		return "list";
+	
+	public String getLabel() { 
+		return "ox-label";
 	}
 	
-	/**
+	/** 
 	 * 
 	 * @since 4.2
-	 */		
-	public String getView() { 
-		return "";
+	 */
+	public String getModuleDescription() { 
+		return "ox-module-description"; 
 	}
-		
+	
+	protected String getFrameContent() { 
+		return "ox-frame-content";
+	}
+
+	
+	public String getList() {  
+		return "ox-list";
+	}
+			
 	public String getListCellSpacing() {
 		return ""; 
 	}
@@ -328,9 +393,8 @@ public class Style {
 		return ""; 
 	}
 	
-	
 	public String getListHeader() { 
-		return "list";
+		return "ox-list-header";
 	}
 	
 	public String getListHeaderCell() { 
@@ -338,9 +402,9 @@ public class Style {
 	}
 	
 	public String getListSubheader() {
-		return "list-subheader";
+		return "ox-list-subheader";
 	}	
-	
+
 	public String getListSubheaderCell() { 
 		return getListSubheader();
 	}
@@ -350,8 +414,9 @@ public class Style {
 	}
 	
 	public String getListPair() { 
-		return "list-pair";
+		return "ox-list-pair";
 	}
+
 	
 	/** 
 	 * @param  Since v4m5 it has no parameters
@@ -365,8 +430,10 @@ public class Style {
 	}
 	
 	public String getListOdd() { 
-		return "list-odd";
+		return "ox-list-odd";
 	}
+	
+	
 	
 	/** 
 	 * @param  Since v4m5 it has no parameters
@@ -386,27 +453,27 @@ public class Style {
 	public String getListOddSelected() { 
 		return "list-odd-selected";
 	}
-		
+			
 	public String getListInfo() {
-		return "list-info";
+		return "ox-list-info";
+	}	
+	
+	public String getListInfoDetail() {
+		return "ox-list-info-detail";
 	}
 	
-	public String getListInfoDetail() { 
-		return getListInfo() + " list-info-detail" + ((isIE7() || isIE6())?" ie7":""); 
-		
-	}
-		
 	public String getListTitle() {
-		return "list-title";
+		return "ox-list-title";
 	}
 	
 	/**
 	 * 	
 	 * @since 4.2
-	 */
+	 */	
 	public String getHeaderListCount() { 
-		return "";
+		return "ox-header-list-count";
 	}
+
 	
 	public String getListTitleWrapper() {
 		return "";
@@ -457,8 +524,8 @@ public class Style {
 		return "ox-frame-actions";
 	}
 	
-	public String getFrameActionsStartDecoration() { 
-		return "<span style='float: right'>";
+	public String getFrameActionsStartDecoration() {  
+		return "<span class='" + getFrameActions() + "' style='float: right'>";
 	}	
 	public String getFrameActionsEndDecoration() { 
 		return "</span>";
@@ -489,17 +556,16 @@ public class Style {
 		return "frame";
 	}
 	
-	protected String getFrameTitle() {  
-		return getFrame();
+	protected String getFrameTitle() {   
+		return "ox-frame-title";
 	}
-	
+
 	protected String getFrameTitleLabel() { 
-		return getFrameTitle();
+		return "ox-frame-title-label";
 	}
+
+		
 				
-	protected String getFrameContent() { 
-		return getFrame();
-	}
 	
 	protected String getFrameSpacing() { 
 		return "";
@@ -509,18 +575,19 @@ public class Style {
 		return "editor";
 	}
 	
-	public String getLabel() { 
-		return "portlet-form-field-label ox-label"; 
-	}
-	
 	public String getSmallLabel() {
 		return "small-label";
 	}
 		
+	
 	public String getErrors() { 
-		return "errors";
+		return "ox-errors";
 	}
 	
+	public String getMessages() { 
+		return "ox-messages";
+	}
+
 	public String getErrorStartDecoration () { 
 		return "";
 	}
@@ -529,12 +596,6 @@ public class Style {
 		return "";
 	}
 	
-		
-
-	public String getMessages() { 
-		return "messages";
-	}
-
 	/**
 	 * For messages and errors
 	 */
@@ -575,7 +636,7 @@ public class Style {
 	}	
 	
 	public String getSection() {
-		return "Jetspeed";
+		return "ox-section";
 	}
 
 	/**
@@ -589,14 +650,21 @@ public class Style {
 	public String getSectionTableAttributes() {
 		return "border='0' cellpadding='0' cellspacing='0'";
 	}
+
 	
-	public String getSectionActive() {
-		return "activeSection";
-	}	
+	/**
+	 * 
+	 * @since 4.2, renamed from getSectionActive()
+	 */
+	public String getActiveSection() { 
+		return "ox-active-section";
+	}
+	
 	
 	public String getSectionLink() {
-		return null;
+		return "ox-section-link";
 	}
+
 	
 	public String getSectionLinkStyle() {
 		return null;
@@ -609,25 +677,44 @@ public class Style {
 	public String getSectionBarEndDecoration() {
 		return "";
 	}
-			
-	public String getActiveSectionTabStartDecoration() {
-		return "<td class='TabLeft' nowrap='true'>&nbsp;</td><td class='TabMiddle' style='vertical-align: middle; text-align: center;' nowrap='true'>";
+		
+	public String getActiveSectionTabStartDecoration(boolean first, boolean last) { 
+		return getSectionTabStartDecoration(first, last, true);
 	}
 	
-	public String getActiveSectionTabEndDecoration() {
-		return "</td><td class='TabRight' nowrap='true'>&nbsp;</td>";		
+	public String getSectionTabStartDecoration(boolean first, boolean last) { 
+		return getSectionTabStartDecoration(first, last, false);
+	}	
+	
+	protected String getSectionTabStartDecoration(boolean first, boolean last, boolean active) {
+		StringBuffer r = new StringBuffer();		
+		r.append("<span class='");
+		if (active) {
+			r.append(getActive());
+			r.append(' ');
+		}
+		if (first) {
+			r.append(getFirst());
+			r.append(' ');
+		}
+		if (last) r.append(getLast());
+		r.append("'>");		
+		r.append("<span class='"); 
+		r.append(getSectionTab());
+		r.append("'>");
+		return r.toString();
 	}
 	
-	public String getSectionTabStartDecoration() {
-		return "<td class='TabLeftLow' nowrap='true'>&nbsp;</td><td class='TabMiddleLow' style='vertical-align: middle; text-align: center;' nowrap='true'>";
+	public String getActiveSectionTabEndDecoration() {		
+		return "</span></span>";
 	}
 	
 	public String getSectionTabEndDecoration() {
-		return "</td><td class='TabRightLow' nowrap='true'>&nbsp;</td>";		
-	}		
-		
+		return "</span></span>";
+	}
+	
 	public String getCollectionListActions() { 
-		return getButtonBar(); 
+		return "ox-collection-list-actions"; 
 	}
 	
 	/** 
@@ -655,11 +742,11 @@ public class Style {
 	 * If it starts with '/' the URI is absolute, otherwise the context path is inserted before.
 	 */	
 	public String getRemoveImage() {
-		return getImagesFolder() +  "remove.gif";
+		return getImagesFolder() +  "/remove.gif";
 	}
 	
-	public String getLoadingModuleImage() {
-		return "images/loading-module.gif";
+	public String getLoadingImage() {
+		return getImagesFolder() +  "/loading.gif";
 	}	
 	
 	/**
@@ -669,6 +756,10 @@ public class Style {
 	 */
 	public boolean isAlignHeaderAsData() {
 		return false;
+	}
+	
+	public boolean isFixedPositionSupported() {
+		return true;
 	}
 	
 	/**
@@ -717,8 +808,9 @@ public class Style {
 	}
 	
 	public String getBottomButtons() {
-		return "";
+		return "ox-bottom-buttons";
 	}
+
 	
 	public boolean isNeededToIncludeCalendar() {
 		return true;
@@ -801,41 +893,62 @@ public class Style {
 		return ""; 
 	}
 	
-	/**
-	 * @since 4m5
-	 */
-	public String getPageNavigationArrowDisable() { 
-		return "page-navigation page-navigation-arrow page-navigation-arrow-disable"; 
-	}
 	
 	/**
 	 * @since 4m5
 	 */
 	public String getPageNavigationSelected() { 		
-		return "page-navigation-selected";
+		return "ox-page-navigation-selected"; 
 	}
+
 	
 	/**
 	 * @since 4m5
 	 */
-	public String getPageNavigation() { 		
-		return "page-navigation";
+	public String getPageNavigation() {
+		return "ox-page-navigation"; 
 	}
-	
+
 	/**
 	 * 
 	 * @since 4.2
-	 */		
-	public String getPageNavigationPages() { 
-		return "";
+	 */			
+	public String getPageNavigationPages() {
+		return "ox-page-navigation-pages";
 	}
 	
 	/**
 	 * @since 4m5
 	 */
 	public String getPageNavigationArrow() { 		
-		return "page-navigation page-navigation-arrow";
+		return "ox-page-navigation-arrow";
 	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public String getNextPageNavigationEvents(String listId) {  		
+		return "";
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */
+	public String getPreviousPageNavigationEvents(String listId) {  		
+		return "";
+	}
+	
+
+
+	/**
+	 * @since 4m5
+	 */		
+	public String getPageNavigationArrowDisable() { 		
+		return "ox-page-navigation-arrow-disable";
+	}
+
 	
 	/**
 	 * @since 4m5
@@ -858,49 +971,7 @@ public class Style {
 	public String getHelpImage() {
 		return "images/help.png";
 	}
-	
-	/** @since 4m6 */
-	public String getActiveSectionTabStartDecoration(boolean first, boolean last) {
-		if (first) {
-			return getActiveSectionFirstTabStartDecoration();
-		}
-		else if (last){
-			return getActiveSectionLastTabStartDecoration();
-		}
-		return getActiveSectionTabStartDecoration();
-	}
-	
-	/** @since 4m6 */
-	public String getSectionTabStartDecoration(boolean first, boolean last) {
-		if (first) {
-			return getSectionFirstTabStartDecoration();
-		}
-		else if (last){
-			return getSectionLastTabStartDecoration();
-		}
-		return getSectionTabStartDecoration();
-	}
-	
-	/** @since 4m6 */
-	public String getActiveSectionFirstTabStartDecoration() { 
-		return getActiveSectionTabStartDecoration(); 
-	} 
-	
-	/** @since 4m6 */
-	public String getActiveSectionLastTabStartDecoration() { 
-		return getActiveSectionTabStartDecoration(); 
-	} 
-	
-	/** @since 4m6 */
-	public String getSectionFirstTabStartDecoration() { 
-		return getSectionTabStartDecoration(); 
-	} 
-	
-	/** @since 4m6 */
-	public String getSectionLastTabStartDecoration() { 
-		return getSectionTabStartDecoration(); 
-	}
-		
+			
 	/**
 	 * CSS class for the help icon, link or button. <p>
 	 * 
@@ -911,31 +982,28 @@ public class Style {
 	}
 	
 	public String getTotalRow() { 
-		return "";
+		return "ox-total-row";
 	}
-	
-	public String getTotalCell() { 
-		return "";
+		
+	public String getTotalCell() {
+		return "ox-total-cell"; 
 	}
-	
-	public String getTotalCapableCell() { 
-		return "";
+
+	public String getTotalCapableCell() {
+		return "ox-total-capable-cell"; 
 	}
+
 	
 	public String getTotalCellStyle() {
-		return getTotalCellAlignStyle();
+		return "";
 	}
-	
-	protected String getTotalCellAlignStyle() { 
-		return "vertical-align: middle; text-align: right;	padding-right: 0px;";
-	}
-	
+
 	public String getTotalEmptyCellStyle() { 
 		return ""; 
 	}
 	
 	public String getTotalCapableCellStyle() { 
-		return getTotalEmptyCellStyle() + "vertical-align: top; text-align: right;	padding: 0px;";
+		return "";
 	}
 	
 	/**

@@ -4,7 +4,7 @@ public class WebSpherePortal61Style extends WebSpherePortal6Style {
 	
 	private static WebSpherePortal61Style instance = null;
 		
-	public String getLoadingModuleImage() {		
+	public String getLoadingImage() {		
 		return "/wps/themes/html/Portal/images/loading-dk.gif";
 	}
 	
