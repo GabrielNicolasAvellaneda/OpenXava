@@ -194,7 +194,8 @@ if (manager.isResetFormPostNeeded()) {
 	       </td>
 	   </tr>
 	</table>
-	</div>	
+	</div>	 
+	<%=style.getCoreStartDecoration()%>
 	<div id="<xava:id name='core'/>" style="display: inline;" class="<%=style.getModule()%>">
 		<%
 			if (!coreViaAJAX) {
@@ -202,13 +203,24 @@ if (manager.isResetFormPostNeeded()) {
 		<jsp:include page="core.jsp"/>
 		<%
 			}
-		%>
-		
+		%>		
 	</div>
+	<%=style.getCoreEndDecoration()%>
+	
 <% } %>			
-	<div id="xava_console">
+	<div id="xava_console" >
 	</div>
-
+	<% String loadingImage=!style.getLoadingImage().startsWith("/")?request.getContextPath() + "/" + style.getLoadingImage():style.getLoadingImage();%>
+	<div id="xava_loading">				
+		<img src="<%=loadingImage%>" style="vertical-align: middle"/>
+		&nbsp;<xava:message key="loading"/>...		 
+	</div>
+	<% if (!style.isFixedPositionSupported()) { %>
+	<div id="xava_loading2">		
+		<img src="<%=loadingImage%>" style="vertical-align: middle"/>
+		&nbsp;<xava:message key="loading"/>...
+	</div>	
+	<% } %>	
 <%
 	if (!isPortlet) {
 %>
@@ -240,13 +252,13 @@ if (manager.isResetFormPostNeeded()) {
 	if (openxava != null && openxava.<%=initiated%> == null) {
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
-		openxava.loadingMessage = '<xava:message key="loading"/>';
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
 		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';
 		openxava.closeDialogOnEscape = <%=browser != null && browser.indexOf("Firefox") >= 0 ? "false":"true"%>;		  
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';
+		openxava.setHtml = <%=style.getSetHtmlFunction()%>;			
 		<%String initThemeScript = style.getInitThemeScript();
 			if (initThemeScript != null) {%>
 		openxava.initTheme = function () { <%=style.getInitThemeScript()%> }; 

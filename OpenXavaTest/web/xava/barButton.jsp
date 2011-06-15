@@ -17,7 +17,7 @@ if (!Is.emptyString(actionName)) {
 	String label = action.getLabel(request); 
 %>
 
-	<% if (!Is.emptyString(style.getButtonBarImage()) && action.hasImage() && Is.emptyString(label)) { %>
+	<% if (style.isUseStandardImageActionForOnlyImageActionOnButtonBar() && action.hasImage() && Is.emptyString(label)) { %>
 <xava:image action="<%=action.getQualifiedName()%>" argv='<%=argv%>' cssClass="<%=style.getButtonBarImage()%>"/>	
 	<% } else {  %>		
 <span class="<%=style.getButtonBarButton()%>">	

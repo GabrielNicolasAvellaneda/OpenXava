@@ -38,15 +38,30 @@ if (manager.isButtonBarVisible()) {
 	<%
 	java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); 
 	if (headerButtonBar && previousViews.isEmpty()) { 
-		String positionClass = null; 
-		java.util.Iterator itSections = manager.getMetaActionsMode().iterator();		
-		while (itSections.hasNext()) {
-			MetaAction action = (MetaAction) itSections.next();
-			if (action.isHidden()) continue;
+		String positionClass = null;		
+		java.util.Collection actions = manager.getMetaActionsMode();
+		java.util.Iterator itActions = actions.iterator();
+		if (style.isOnlyOneButtonForModeIfTwoModes() && actions.size() == 2) {
+			while (itActions.hasNext()) {
+				MetaAction action = (MetaAction) itActions.next();
+				String modeNameAction = action.getName().startsWith("detail")?"detail":action.getName();
+				if (!modeNameAction.equals(manager.getModeName())) {
+				%>
+		<jsp:include page="barButton.jsp">
+			<jsp:param name="action" value="<%=action.getQualifiedName()%>"/>
+		</jsp:include>
+				&nbsp;						
+				<%					
+					break;
+				}
+			}
+		}
+		else while (itActions.hasNext()) {
+			MetaAction action = (MetaAction) itActions.next();
 			if (positionClass == null) {
 				positionClass = style.getFirst();			
 			}
-			else if (!itSections.hasNext()) positionClass = style.getLast();
+			else if (!itActions.hasNext()) positionClass = style.getLast();
 			else positionClass = "";						
 			%>			
 			<span class="<%=positionClass%>">			
