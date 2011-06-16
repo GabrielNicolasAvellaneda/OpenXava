@@ -469,7 +469,7 @@ public class AJAXTest extends ModuleTestBase {
 				"messages, ");
 	}
 	
-	public void testDetailCollection() throws Exception {
+	public void testDetailCollection() throws Exception { 
 		changeModule("Invoice");
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=1");

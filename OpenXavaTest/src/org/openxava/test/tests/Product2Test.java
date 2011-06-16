@@ -113,7 +113,7 @@ public class Product2Test extends ModuleTestBase {
 		assertTrue(getHtml().indexOf("Color Frame Editor:") < 0);
 	}
 	
-	public void testImagesGallery() throws Exception {
+	public void testImagesGallery() throws Exception { 
 		// We remove oid from product 1 in order to test that images gallery works well in the first attemp.
 		Product2.findByNumber(1).setPhotos("");
 		XPersistence.commit();

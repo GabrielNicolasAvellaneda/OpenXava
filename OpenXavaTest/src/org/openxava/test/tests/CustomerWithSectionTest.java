@@ -158,7 +158,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertNoDialog();
 	}
 	
-	public void testCancelActionAfterChangeImageAction() throws Exception { 
+	public void testCancelActionAfterChangeImageAction() throws Exception {   
 		addImage();
 		assertExists("telephone");
 		assertAction("EditableOnOff.setOn");
@@ -605,7 +605,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		}
 	}
 	
-	public void testImageEditorFromAnotherModule() throws Exception { 	
+	public void testImageEditorFromAnotherModule() throws Exception {  	
 		// started from a different module because there was a bug in imageEditor when run from a module
 		//	that was not the initial
 		changeModule("BeforeGoingToCustomer");
