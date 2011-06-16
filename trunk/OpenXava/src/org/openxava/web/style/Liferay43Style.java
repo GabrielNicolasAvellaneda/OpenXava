@@ -243,7 +243,7 @@ public class Liferay43Style extends PortalStyle {
 		return "</ul></td>";
 	}
 		
-	public String getActiveSectionTabStartDecoration() {
+	protected String getActiveSectionTabStartDecoration() {
 		return "<li class='current' style='position: static;'><a href='javascript:void(0)'>"; // position: static needed for ie7 + liferay 4.3 
 	}
 	
@@ -251,7 +251,7 @@ public class Liferay43Style extends PortalStyle {
 		return "</a></li>";	  	
 	}
 	
-	public String getSectionTabStartDecoration() {
+	protected String getSectionTabStartDecoration() {
 		return "<li style='position: static;'>"; // position: static needed for ie7 + liferay 4.3
 	}
 	

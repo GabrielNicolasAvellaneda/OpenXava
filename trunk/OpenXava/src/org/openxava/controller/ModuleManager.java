@@ -39,10 +39,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4.2beta";
+		return "4.2";
 	}
 	final static private String getVersionDate() {
-		return "2011-4-xx"; 
+		return "2011-6-16"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -1094,7 +1094,7 @@ public class ModuleManager implements java.io.Serializable {
 		if (!moduleInitiated) {			 
 			if (modeControllerName == null) {
 				modeControllerName = XavaPreferences.getInstance().getDefaultModeController();
-				if (Is.emptyString(modeControllerName)) modeControllerName = Style.getInstanceForBrowser(request).getDefaultModeController();
+				if (Is.emptyString(modeControllerName)) modeControllerName = Style.getInstance(request).getDefaultModeController(); 
 			}			 
 			modeName = getMetaActionsMode().isEmpty()?IChangeModeAction.DETAIL:null;
 			moduleInitiated = true;

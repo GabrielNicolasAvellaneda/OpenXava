@@ -28,6 +28,7 @@ public class Style {
 		 	
 	private static Log log = LogFactory.getLog(Style.class);
 	private static Style instance = null;
+	private static Style portalInstance = null;
 	private static Collection styleClasses; 
 	private static Map<String, Style> stylesByBrowser = new HashMap<String, Style>(); 
 	private Collection<String> additionalCssFiles; 
@@ -37,11 +38,19 @@ public class Style {
 	
 	public Style() { 		
 	}
+
+	/**
+	 * @since 4.2
+	 */	
+	public static Style getInstance(HttpServletRequest request) {
+		if (portalInstance != null) return portalInstance;
+		return getInstanceForBrowser(request);
+	}
 	
 	/**
 	 * @since 4.2
 	 */
-	public static Style getInstanceForBrowser(HttpServletRequest request) { 
+	private static Style getInstanceForBrowser(HttpServletRequest request) { 
 		String browser = request.getHeader("user-agent"); 
 		Style instance = stylesByBrowser.get(browser);
 		if (instance == null) {
@@ -84,6 +93,14 @@ public class Style {
 			}			
 		}		
 		return instance;
+	}
+	
+	/**
+	 * 
+	 * @since 4.2
+	 */	
+	public static void setPotalInstance(Style style) { 
+		portalInstance = style;
 	}
 
 	/**

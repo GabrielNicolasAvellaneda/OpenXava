@@ -57,8 +57,8 @@ public class Module extends DWRBase {
 			setPageReloadedLastTime(false);
 			Users.setCurrent(request);
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
-			restoreLastMessages();
-			request.setAttribute("style", Style.getInstanceForBrowser(request));  			
+			restoreLastMessages();  			
+			request.setAttribute("style", Style.getInstance(request)); 
 			getURIAsStream("execute.jsp", values, multipleValues, selected, additionalParameters);
 			setDialogLevel(result); 
 			Map changedParts = new HashMap();

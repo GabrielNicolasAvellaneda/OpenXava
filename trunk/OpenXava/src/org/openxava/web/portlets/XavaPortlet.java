@@ -83,9 +83,8 @@ public class XavaPortlet extends GenericPortlet {
 	 * @throws IOException
 	 */
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-		Object style = getStyle(request);
+		Style.setPotalInstance(getStyle(request)); 
 		setTitle(request, response); 
-		request.setAttribute("style", style);
 		request.getPortletSession().setAttribute(Ids.decorate(application, module, "xava.portlet.uploadActionURL"), response.createActionURL().toString(), PortletSession.APPLICATION_SCOPE); 
 		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems", PortletSession.PORTLET_SCOPE));  
 		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error", PortletSession.PORTLET_SCOPE)); 
@@ -222,7 +221,7 @@ public class XavaPortlet extends GenericPortlet {
 				
 				if (style == null) style = (Style) Objects.execute(Class.forName(styleClass), "getInstance");
 				
-				style.setInsidePortal(true); 
+				style.setInsidePortal(true); 				
 			}			
 		}
 		catch(Exception ex){

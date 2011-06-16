@@ -43,7 +43,7 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 		return "</ul><div class='pageBarSeparator'><!--  --></div></td>";
 	}
 		
-	public String getActiveSectionTabStartDecoration() {
+	protected String getActiveSectionTabStartDecoration() {
 		return "<li class='wpsSelectedPage'>";
 	}
 	
@@ -51,7 +51,7 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 		return "</li>";		
 	}
 	
-	public String getSectionTabStartDecoration() {
+	protected String getSectionTabStartDecoration() {
 		return "<li class='wpsUnSelectedPage'>";
 	}
 	

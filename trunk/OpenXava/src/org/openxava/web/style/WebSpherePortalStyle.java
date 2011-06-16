@@ -160,7 +160,7 @@ public class WebSpherePortalStyle extends PortalStyle {
 	}
 	
 	
-	public String getActiveSectionTabStartDecoration() {
+	protected String getActiveSectionTabStartDecoration() {
 		return "<td class='wpsSelectedPage' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
@@ -168,7 +168,7 @@ public class WebSpherePortalStyle extends PortalStyle {
 		return "</td>";		
 	}
 	
-	public String getSectionTabStartDecoration() {
+	protected String getSectionTabStartDecoration() {
 		return "<td class='wpsUnSelectedPage' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	

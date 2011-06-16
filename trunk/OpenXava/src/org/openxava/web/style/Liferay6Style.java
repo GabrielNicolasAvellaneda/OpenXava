@@ -26,6 +26,10 @@ public class Liferay6Style extends Liferay51Style {
 		return "";
 	}
 	
+	public String getLoadingImage() { 
+		return getLiferayImagesFolder() + "application/loading_indicator.gif";
+	}
+	
 	public String getNoPortalModuleStartDecoration(String title) {   
 		return "<div id='wrapper' class='portlet' style='margin: 4px'><div class='portlet-topper'><span class='portlet-title'>"
 			+ title + "</span></div><div id='content' class='portlet-content'>"; 
@@ -49,15 +53,15 @@ public class Liferay6Style extends Liferay51Style {
 		return "</ul></td>"; 
 	} 
 	
-	public String getActiveSectionFirstTabStartDecoration() { 
+	protected String getActiveSectionFirstTabStartDecoration() {  	
 		return "<li class='aui-tab aui-state-default current aui-tab-active aui-state-active first aui-selected'><span class='aui-tab-content'> <span class='aui-tab-label'>"; // position: static needed for ie7 
 	} 
 	
-	public String getActiveSectionLastTabStartDecoration() { 
+	protected String getActiveSectionLastTabStartDecoration() { 
 		return "<li class='aui-tab aui-state-default current aui-tab-active aui-state-active last aui-selected'><span class='aui-tab-content'> <span class='aui-tab-label'>"; // position: static needed for ie7 
 	} 
 	
-	public String getActiveSectionTabStartDecoration() { 
+	protected String getActiveSectionTabStartDecoration() { 
 		return "<li class='aui-tab aui-state-default current aui-tab-active aui-state-active aui-selected'><span class='aui-tab-content'> <span class='aui-tab-label'>"; // position: static needed for ie7 
 	} 
 	
@@ -65,15 +69,15 @@ public class Liferay6Style extends Liferay51Style {
 		return "</span></span></li>"; 
 	} 
 	
-	public String getSectionTabStartDecoration() { 
+	protected String getSectionTabStartDecoration() { 
 		return "<li class='aui-tab aui-state-default'><span class='aui-tab-content'> <span class='aui-tab-label'>"; // position: static needed for ie7 
 	} 
 	
-	public String getSectionFirstTabStartDecoration() { 
+	protected String getSectionFirstTabStartDecoration() { 
 		return "<li class='aui-tab aui-state-default first'><span class='aui-tab-content'> <span class='aui-tab-label'>"; // position: static needed for ie7 		
 	} 
 	
-	public String getSectionLastTabStartDecoration() { 
+	protected String getSectionLastTabStartDecoration() { 
 		return "<li class='aui-tab aui-state-default last'><span class='aui-tab-content'> <span class='aui-tab-label'>"; // position: static needed for ie7 
 	} 
 	
