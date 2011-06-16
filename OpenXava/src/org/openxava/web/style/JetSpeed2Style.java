@@ -119,7 +119,7 @@ public class JetSpeed2Style extends PortalStyle {
 		return "";
 	}	
 		
-	public String getActiveSectionTabStartDecoration() {
+	protected String getActiveSectionTabStartDecoration() {
 		return "<td class='LTabLeft' nowrap='true'>&nbsp;</td><td class='LTab' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
@@ -127,7 +127,7 @@ public class JetSpeed2Style extends PortalStyle {
 		return "</td><td class='LTabRight' nowrap='true'>&nbsp;</td>";		
 	}
 	
-	public String getSectionTabStartDecoration() {
+	protected String getSectionTabStartDecoration() {
 		return "<td class='LTabLeftLow' nowrap='true'>&nbsp;</td><td class='LTabLow' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	

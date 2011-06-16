@@ -37,9 +37,7 @@
 	}%>
 
 <%
-	if (request.getAttribute("style") == null) {
-		request.setAttribute("style", org.openxava.web.style.Style.getInstanceForBrowser(request));
-	}
+	request.setAttribute("style", org.openxava.web.style.Style.getInstance(request));
 %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>

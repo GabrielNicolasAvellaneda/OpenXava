@@ -204,7 +204,7 @@ public class Liferay41Style extends PortalStyle {
 		return "</ul></td>";
 	}
 		
-	public String getActiveSectionTabStartDecoration() {
+	protected String getActiveSectionTabStartDecoration() {
 		return "<li class='current'>";
 	}
 	
@@ -212,7 +212,7 @@ public class Liferay41Style extends PortalStyle {
 		return "</li>";		
 	}
 	
-	public String getSectionTabStartDecoration() {
+	protected String getSectionTabStartDecoration() {
 		return "<li>";
 	}
 	

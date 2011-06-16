@@ -285,7 +285,7 @@ public class PortalStyle extends Style {
 	}
 	
 	/** @since 4m6 */
-	protected String getActiveSectionFirstTabStartDecoration() { 
+	protected String getActiveSectionFirstTabStartDecoration() {
 		return getActiveSectionTabStartDecoration(); 
 	} 
 	

@@ -96,11 +96,11 @@ public class Liferay51Style extends Liferay43Style {
 				"<ul class='tabs ui-tabs'>"; 
 	}
 	
-	public String getActiveSectionTabStartDecoration() {
+	protected String getActiveSectionTabStartDecoration() {
 		return "<li class='current' style='position: static;'><a href='javascript:void(0)' style='position: static;'>"; // position: static needed for ie7 
 	}
 	
-	public String getSectionTabStartDecoration() {
+	protected String getSectionTabStartDecoration() {
 		return "<li style='position: static;'>"; // position: static needed for ie7 
 	}
 	
