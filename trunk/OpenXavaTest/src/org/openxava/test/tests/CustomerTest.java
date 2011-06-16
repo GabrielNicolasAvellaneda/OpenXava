@@ -239,7 +239,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertEquals("Result is not an image", "image", response.getContentType());
 	}
 			
-	public void testDeleteImage() throws Exception {
+	public void testDeleteImage() throws Exception { 
 		addImage();
 		
 		execute("ImageEditor.deleteImage", "newImageProperty=photo");

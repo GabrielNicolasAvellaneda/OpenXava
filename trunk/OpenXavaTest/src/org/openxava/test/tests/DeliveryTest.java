@@ -831,7 +831,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNotExists("carrier.number");			
 	}
 	
-	public void testEnvironmentVariablesModule() throws Exception {  
+	public void testEnvironmentVariablesModule() throws Exception {   
 		// Verifying if works the action search special for this module 
 
 		// Creating
@@ -922,7 +922,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertMessage("Delivery deleted successfully");
 	}
 	
-	public void testMultipleMappingProperty() throws Exception {  				
+	public void testMultipleMappingProperty() throws Exception {   				
 		// Creating new
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
@@ -1194,7 +1194,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNotExists("incidents");
 	}
 	
-	public void testFilterDescriptionsListAndEnumLetterType() throws Exception {
+	public void testFilterDescriptionsListAndEnumLetterType() throws Exception { 
 		assertLabelInList(3, "Description of Type");
 		assertLabelInList(7, "Distance");
 		// setConditionValues(new String[] { "", "", "", "1", "", "", "", "1"} );	// For XML components

@@ -44,8 +44,8 @@ public class SeveralModulesTest extends ModuleTestBase {
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
 		URL url = page.getWebResponse().getRequestSettings().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
-				
-		HtmlImage image = (HtmlImage) page.getElementsByName(Ids.decorate("OpenXavaTest", "Customer", "photo")).get(0);
+		
+		HtmlImage image = (HtmlImage) page.getElementsByName(Ids.decorate("OpenXavaTest", "Customer", "photo")).get(0);		
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();
