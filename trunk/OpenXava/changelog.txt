@@ -3,7 +3,6 @@ Change Log for OpenXava project
 
 - Fix: Fails displaying collection element when the collection has a group in its view.
 - Fix: Fails the tab preferences when you have same model name in several applications. Added application name as discriminator.
-- Upgrade JasperReports to 4.0.2.
 - Top right red 'Loading...' AJAX indicator replaced by a stylized centered 'Loading...' box.
 - Fix: NullPointerException stacktrace (without failing) when starting portlets in Liferay.
 - The default mode controller is defined by the style, though defaultModeController of xava.properties still exists and has preference.
