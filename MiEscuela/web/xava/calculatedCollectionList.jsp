@@ -12,8 +12,11 @@ String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAct
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
+boolean resizeColumns = style.allowsResizeColumns() && XavaPreferences.getInstance().isResizeColumns(); 
 %>
+<% if (resizeColumns) { %> 
 <div class="<xava:id name='collection_scroll'/>" style="overflow: auto;">
+<% } %>
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 	<%
@@ -37,14 +40,15 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 Iterator it = subview.getMetaPropertiesList().iterator();
 for (int columnIndex=0; it.hasNext(); columnIndex++) {
 	MetaProperty p = (MetaProperty) it.next();
-	String label = p.getQualifiedLabel(request).replaceAll(" ", "&nbsp;");
+	String label = p.getQualifiedLabel(request);
 	int columnWidth = subview.getCollectionColumnWidth(columnIndex);
-	String width = columnWidth<0?"":"width: " + columnWidth + "px";
-	boolean resizeColumns = XavaPreferences.getInstance().isResizeColumns();
+	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
 %>
 	<th class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
 		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):(""))%>" style="overflow: hidden; <%=width%>" >
+		<%if (resizeColumns) {%><nobr><%}%>
 		<%=label%>&nbsp;
+		<%if (resizeColumns) {%></nobr><%}%>
 		</div>
 	</th>
 <%
@@ -78,6 +82,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 <nobr>
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 <% 
+	if (style.isSeveralActionsPerRow())
 	for (java.util.Iterator itRowActions = subview.getRowActionsNames().iterator(); itRowActions.hasNext(); ) { 	
 		String rowAction = (String) itRowActions.next();		
 %>
@@ -105,7 +110,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 		String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
 		String cellStyle = align + style.getListCellStyle();
 		int columnWidth = subview.getCollectionColumnWidth(columnIndex);
-		String width = columnWidth<0?"":"width: " + columnWidth + "px";
+		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px"; 
 		String fvalue = null;
 		Object value = null;
 		String propertyName = p.getName();
@@ -124,18 +129,31 @@ for (int f=0; itAggregates.hasNext(); f++) {
 		}
 		Object title = WebEditors.formatTitle(request, p, value, errors, view.getViewName(), true); 
 %>
-	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">	
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
+	<% if (style.isRowLinkable()) { %> 	
 	<xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>' cssStyle="text-decoration: none; outline: none">
 	<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
-	<nobr><%=fvalue%>&nbsp;</nobr> 
+	<%if (resizeColumns) {%><nobr><%}%>
+	<%=fvalue%>&nbsp; 
+	<%if (resizeColumns) {%></nobr><%}%>
 	</div>
 	</xava:link>
-	</td>	
+	<% } else { %>	 
+	<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
+		<%if (resizeColumns) {%><nobr><%}%>
+	 	<%=fvalue%>&nbsp;
+	 	<%if (resizeColumns) {%></nobr><%}%>	 
+	</div>
+	<% } %> 
+	</td>
+		
 <%
 	}
 }
 %>
 </tr>
 </table>
+<% if (resizeColumns) { %>
 </div>
+<% } %>
  
