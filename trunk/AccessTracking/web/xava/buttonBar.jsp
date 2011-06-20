@@ -14,7 +14,6 @@ boolean onBottom = false;
 String mode = request.getParameter("xava_mode"); 
 if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
 boolean headerButtonBar = !manager.isSplitMode() || mode.equals("list");  
-String helpImage = style.getHelpImage().startsWith("xava/")?request.getContextPath() + "/" + style.getHelpImage():style.getHelpImage();
 
 if (manager.isButtonBarVisible()) {
 %>
@@ -35,37 +34,62 @@ if (manager.isButtonBarVisible()) {
 	}
 	%>
 	
-	<span style="float: right"> 
+	<span style="float: right">	
 	<%
 	java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); 
 	if (headerButtonBar && previousViews.isEmpty()) { 
-		java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
-		while (itSections.hasNext()) {
-			MetaAction action = (MetaAction) itSections.next();
-			if (action.isHidden()) continue;
+		String positionClass = null;		
+		java.util.Collection actions = manager.getMetaActionsMode();
+		java.util.Iterator itActions = actions.iterator();
+		if (style.isOnlyOneButtonForModeIfTwoModes() && actions.size() == 2) {
+			while (itActions.hasNext()) {
+				MetaAction action = (MetaAction) itActions.next();
+				String modeNameAction = action.getName().startsWith("detail")?"detail":action.getName();
+				if (!modeNameAction.equals(manager.getModeName())) {
+				%>
+		<jsp:include page="barButton.jsp">
+			<jsp:param name="action" value="<%=action.getQualifiedName()%>"/>
+		</jsp:include>
+				&nbsp;						
+				<%					
+					break;
+				}
+			}
+		}
+		else while (itActions.hasNext()) {
+			MetaAction action = (MetaAction) itActions.next();
+			if (positionClass == null) {
+				positionClass = style.getFirst();			
+			}
+			else if (!itActions.hasNext()) positionClass = style.getLast();
+			else positionClass = "";						
+			%>			
+			<span class="<%=positionClass%>">			
+			<%
 			String modeNameAction = action.getName().startsWith("detail")?"detail":action.getName();
 			if (modeNameAction.equals(manager.getModeName())) {			
 			%>
-			<span class="<%=style.getButtonBarActiveModeButton()%>">
-				<a href="">
+			<span class="<%=style.getActive()%>">
+				<a href="" class="<%=style.getButtonBarModeButton()%>">
 					&nbsp;&nbsp;
 					<%=action.getLabel(request)%>
 					&nbsp;&nbsp;
 				</a>
-			</span>
+			</span>			
 			<%
 			}
 			else {	
-			%>
-			<span class="<%=style.getButtonBarModeButton()%>">			
-				<xava:link action="<%=action.getQualifiedName()%>">
-					&nbsp;&nbsp;		 			
-					<%=action.getLabel(request)%>
-					&nbsp;&nbsp;
-				</xava:link>
-			</span>
+			%>  							
+			<xava:link action="<%=action.getQualifiedName()%>" cssClass="<%=style.getButtonBarModeButton()%>">
+				&nbsp;&nbsp;							 			
+				<%=action.getLabel(request)%>
+				&nbsp;&nbsp;					
+			</xava:link>			
 			<%
 			}
+			%>			 
+			</span>			
+			<%
 		}
 	}	
 
@@ -80,10 +104,16 @@ if (manager.isButtonBarVisible()) {
 			"_" + language + 
 			XavaPreferences.getInstance().getHelpSuffix();
 	} 
+	if (style.isHelpAvailable()) {
+		String helpImage = !style.getHelpImage().startsWith("/")?request.getContextPath() + "/" + style.getHelpImage():style.getHelpImage();
 	%>
-		<span class="<%=style.getHelp()%>"> 
-			<a href="<%=href%>" target="<%=target%>"><img src="<%=helpImage%>"/></a> 				
+		<span class="<%=style.getHelp()%>">  
+			<a href="<%=href%>" target="<%=target%>"><img src="<%=helpImage%>"/></a>
 		</span>
+	<%
+	}
+	%>
+	&nbsp;
 	</span>		
 
 	</div>

@@ -9,18 +9,17 @@ String preIcons=null;
 String postIcons=null;
 String preEditor=null;
 String postEditor=null;
-String labelAlign=org.openxava.util.XavaPreferences.getInstance().getLabelAlign();
 
-if (first && !view.isAlignedByColumns()) { 
-	preLabel="<td style='vertical-align: middle;text-align: " + labelAlign + "' class='" + style.getLabel() + "'>"; 
+if (first && !view.isAlignedByColumns()) {  
+	preLabel="<td style='vertical-align: middle;' class='" + style.getLabel() + "'>"; 
 	postLabel="</td>";
 	preIcons="<td style='vertical-align: middle' class='" + style.getEditorWrapper()+ "'>";
 	postIcons="</td>";	
 	preEditor="<td style='vertical-align: middle;'><table border='0' cellpadding='0' cellspacing='0'><tr><td style='vertical-align: middle' class='" + style.getEditorWrapper()+ "'>";
 	postEditor="</td>";
 } 
-else {
-	preLabel="<td style='vertical-align: middle;text-align: " + labelAlign + "' class='" + style.getLabel() + "'>&nbsp;&nbsp;";
+else {	
+	preLabel="<td style='vertical-align: middle;' class='" + style.getLabel() + "'>&nbsp;&nbsp;"; 
 	postLabel="</td>";
 	preIcons="<td style='vertical-align: middle' class='" + style.getEditorWrapper()+ "'>";
 	postIcons="</td>";
