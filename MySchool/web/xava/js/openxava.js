@@ -1,7 +1,6 @@
 if (openxava == null) var openxava = {};
 
 openxava.init = function(application, module) {
-	dwr.util.useLoadingMessage(openxava.loadingMessage);
 	document.onkeydown = openxava.processKey;
 	openxava.initUI(application, module);	
 }
@@ -12,6 +11,8 @@ openxava.ajaxRequest = function(application, module, firstRequest) {
 	document.throwPropertyChange = false; 
 	openxava.getElementById(application, module, "loading").value=true;    
 	document.body.style.cursor='wait';
+	$('#xava_loading').show(); 	
+	$('#xava_loading2').show(); 
 	Module.request(
 			application, module, document.additionalParameters,			
 			openxava.getFormValues(openxava.getForm(application, module)), 
@@ -74,10 +75,10 @@ openxava.refreshPage = function(result) {
 		}
 		openxava.strokeActions = result.strokeActions;
 		var changedParts = result.changedParts;
-		for (var id in changedParts) {
+		for (var id in changedParts) {			
 			changed = changed + id + ", ";  			
 			try {
-				$("#" + id).html(changedParts[id]);
+				openxava.setHtml(id, changedParts[id]);
 			}
 			catch (ex) {
 				changed = changed + " ERROR";
@@ -115,7 +116,9 @@ openxava.refreshPage = function(result) {
 	openxava.lastModule=result.module;
 	openxava.hasOnSelectAll(result.application, result.module);
 	openxava.showMessages(result); 
-	openxava.resetRequesting(result); 
+	openxava.resetRequesting(result);
+	$('#xava_loading').hide(); 
+	$('#xava_loading2').hide();
 	document.body.style.cursor='auto';
 }
 

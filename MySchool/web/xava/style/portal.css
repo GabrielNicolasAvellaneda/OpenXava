@@ -4,17 +4,33 @@ The styles in this file are only for the aspects not included in
 JSR-168 and WSRP and needed by OpenXava.
 */
 
+#xava_loading { 
+	padding: 20px;	
+		border: none; 
+	background: lightgray;
+	opacity:.60;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;	  
+	color: white;
+	text-shadow:0px -1px 1px rgba(0,0,0,0.75); 
+	font-weight: bold; 
+	-webkit-box-shadow: 10px 10px 10px rgba(140,140,140,0.75);
+	-moz-box-shadow: 10px 10px 10px rgba(140,140,140,0.75);
+	box-shadow: 10px 10px 10px rgba(140,140,140,0.75);
+	display:none; 
+	z-index: 9999; 
+	position: fixed; 
+	top: 25%; 
+	left: 45%
+}
+
 .liferay4-selected-row td {
 	background: #BFC2E4;
 }
 
 .selected-row td {
 	background: #ffc !important;
-}
-
-.button-bar {
-	background: #dddddd;
-	padding: 0 0 0 0;
 }
 
 TABLE.list {	
@@ -275,7 +291,7 @@ TD.list-title {
 	width: 100%;
 }
 
-.ox-button-bar .ox-button-bar-button a {
+.ox-button-bar .ox-button-bar-button a, .ox-button-bar-mode-button {
 	background: url() no-repeat 5px 50%; 	
 	border: 1px solid #F6F8FB;
 	color: #9EA8AD;
@@ -283,34 +299,38 @@ TD.list-title {
 	float: left; 	 
 	font-size: 12px;
 	font-weight: bold;	
-	padding: 4px 0px 4px 0px; 
+	padding: 4px 4px 4px 0px;  
 	text-decoration: none;	
 }
 
-.ox-button-bar .ox-button-bar-button a:hover {
+.ox-button-bar .ox-button-bar-button a:hover, .ox-button-bar-mode-button:hover {
 	border: 1px solid #A7CEDF;	
 	background-color: #DFF4FF;
 	color: #346799; 
-	padding: 4px 0px 4px 0px; 
+	padding: 4px 4px 4px 0px;  
 }
 
-.green .ox-button-bar .ox-button-bar-button a:hover {	
+.ox-button-bar-mode-button, .ox-button-bar-mode-button:hover { 
+	padding-right: 0px;
+}
+
+.green .ox-button-bar .ox-button-bar-button a:hover, .green .ox-button-bar-mode-button:hover {	
 	background-color: #D9F4CB;
 	border-color: #BBEAA4
 }
 
-.orange .ox-button-bar .ox-button-bar-button a:hover {
+.orange .ox-button-bar .ox-button-bar-button a:hover, .orange .ox-button-bar-mode-button:hover {
 	background-color: #F4EACB;
 	border-color: #EAD8A4;			
 }
 
-.ox-button-bar .ox-button-bar-button.active a {
+.ox-active .ox-button-bar-mode-button {
 	background-color: #CFD5D7; 
 	border: 1px solid #CFD5D7;
 	color: #000;
 }
 
-.ox-button-bar .ox-button-bar-button.active a:hover {
+.ox-active .ox-button-bar-mode-button:hover {
 	background-color: #d6dcdd;
 	border-color: #B7C0C2;
 }
@@ -318,4 +338,13 @@ TD.list-title {
 .ox-help img {
 	border: 0;
 	padding-top: 5px;
+	padding-left: 5px;	
+}
+
+.ox-filter-cell {
+	text-align: center;
+}
+
+.ox-label { 
+	text-align: right; 
 }
