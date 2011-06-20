@@ -12,6 +12,7 @@
 <%@ page import="org.openxava.web.Actions" %>
 <%@ page import="org.openxava.util.Users" %>
 <%@ page import="java.util.prefs.Preferences" %>
+<%@ page import="org.openxava.util.XavaResources"%> 
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -34,6 +35,7 @@ if (collection != null && !collection.equals("")) {
 }
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
 tab.setRequest(request); 
+tab.setIgnorePageRowCount(!style.isChangingPageRowCountAllowed());
 String action=request.getParameter("rowAction");
 action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action;
 String viewObject = request.getParameter("viewObject");
@@ -58,25 +60,48 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 int currentRow = ((Number) context.get(request, "xava_row")).intValue(); 
-String cssCurrentRow = style.getCurrentRow(); 
+String cssCurrentRow = style.getCurrentRow();
+String styleOverflow = "overflow: auto;";
+int totalSize = -1; 
+tab.reset(); 
+boolean resizeColumns = style.allowsResizeColumns() && tab.isResizeColumns(); 
 %>
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
 
-
 <%
-	if (tab.isTitleVisible()) {
+if (collection == null || collection.equals("")) { 	
 %>
-<table width="100%" id="list-title" class=<%=style.getListTitleWrapper()%>>
+<table width="100%" class=<%=style.getListTitleWrapper()%>>
 <tr><td class=<%=style.getListTitle()%>>
-<%=tab.getTitle()%>
+<% if (style.isShowModuleDescription()) { %>
+<%=manager.getModuleDescription()%>
+<% } %>
+<% 
+if (tab.isTitleVisible()) { 
+%> 
+<% if (style.isShowModuleDescription()) { %> - <% } %>
+<span id="list-title"><%=tab.getTitle()%></span>
+<%
+}
+%>
+<% if (style.isShowRowCountOnTop()) { 
+	totalSize = tab.getTotalSize();
+	int finalIndex = Math.min(totalSize, tab.getFinalIndex());
+%>
+<span class="<%=style.getHeaderListCount()%>">
+<%=XavaResources.getString(request, "header_list_count", new Integer(tab.getInitialIndex() + 1), new Integer(finalIndex), new Integer(totalSize))%>
+</span>
+<% } %>
 </td></tr>
 </table>
 <%
-	}
+} 
 %>
-<div class="<xava:id name='<%=scrollId%>'/>" style="overflow: auto;"> 
-  <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
+<% if (resizeColumns) { %>
+<div class="<xava:id name='<%=scrollId%>'/>" style="<%=styleOverflow%>">
+<% } %> 
+<table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
 	<%
@@ -108,7 +133,6 @@ String cssCurrentRow = style.getCurrentRow();
 	%>
 </th>
 <%
-	tab.reset();
 java.util.Collection properties = tab.getMetaProperties();
 java.util.Iterator it = properties.iterator();
 int columnIndex = 0;
@@ -120,17 +144,18 @@ while (it.hasNext()) {
 		align =property.isNumber() && !property.hasValidValues()?"vertical-align: middle;text-align: right":"vertical-align: middle";
 	}
 	int columnWidth = tab.getColumnWidth(columnIndex);
-	String width = columnWidth<0?"":"width: " + columnWidth + "px"; 
+	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
 %>
 <th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" >
-<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="<%=((tab.isResizeColumns())?("xava_resizable"):("")) %>" style="overflow: hidden; <%=width%>" > 
+<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):("")) %>" style="overflow: hidden; <%=width%>" > 
 <%
 	if (tab.isCustomize()) {
 %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><%
 	}
 %>
 <%
-	String label = property.getQualifiedLabel(request).replaceAll(" ", "&nbsp;"); 
+	String label = property.getQualifiedLabel(request);
+	if (resizeColumns) label = label.replaceAll(" ", "&nbsp;");
 	if (property.isCalculated()) {
 %>
 <%=label%>&nbsp;
@@ -189,7 +214,7 @@ while (it.hasNext()) {
 	if (filter) {
 %>
 <tr id="<xava:id name='<%="tr_list_filter_" + id%>'/>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
-<th class=<%=style.getListSubheaderCell()%> style="text-align: center">
+<th class="<%=style.getFilterCell()%> <%=style.getListSubheaderCell()%>">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
 <th class=<%=style.getListSubheaderCell()%> width="5">
@@ -218,7 +243,7 @@ while (it.hasNext()) {
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
 		int columnWidth = tab.getColumnWidth(columnIndex);
-		String width = columnWidth<0?"":"width: " + columnWidth + "px";
+		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
 %>
 <th class="<%=style.getListSubheaderCell()%>" align="left">
 <div class="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>">
@@ -280,7 +305,6 @@ while (it.hasNext()) {
 	} /* if (filter) */
 %>
 <%
-	int totalSize = 0;
 if (tab.isRowsHidden()) {
 %>
 	<tr id="nodata"><td align="center">
@@ -290,7 +314,7 @@ if (tab.isRowsHidden()) {
 	}
 else {
 IXTableModel model = tab.getTableModel(); 
-totalSize = tab.getTotalSize();
+totalSize = totalSize < 0?tab.getTotalSize():totalSize; 
 if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";	
@@ -311,13 +335,14 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 %>
 <tr id="<%=prefixIdRow%><%=f%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
-	<nobr> 
+	<%if (resizeColumns) {%><nobr><%}%> 
 <%
 	if (!org.openxava.util.Is.emptyString(action)) { 
 %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <%
 	}
+	if (style.isSeveralActionsPerRow()) 
 	for (java.util.Iterator itRowActions = rowActions.iterator(); itRowActions.hasNext(); ) { 	
 		String rowAction = (String) itRowActions.next();		
 %>
@@ -330,7 +355,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction);
 %>
-	</nobr> 
+	<%if (resizeColumns) {%></nobr><%}%> 
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
 	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> />
@@ -340,8 +365,8 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		MetaProperty p = tab.getMetaProperty(c);
 		String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
 		String cellStyle = align + style.getListCellStyle();
-		int columnWidth = tab.getColumnWidth(c);
-		String width = columnWidth<0?"":"width: " + columnWidth + "px"; 		
+		int columnWidth = tab.getColumnWidth(c);		 		
+		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px"; 
 		String fvalue = null;
 		if (p.hasValidValues()) {
 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
@@ -351,12 +376,22 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		}
 		Object title = WebEditors.formatTitle(request, p, model.getValueAt(f, c), errors, view.getViewName(), true); 
 %>
-	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">	
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
+		<% if (style.isRowLinkable()) { %> 	
 		<xava:link action='<%=action%>' argv='<%="row=" + f + actionArgv%>' cssClass='<%=cssStyle%>' cssStyle="text-decoration: none; outline: none">
 			<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-				<nobr><%=fvalue%>&nbsp;</nobr>
+				<%if (resizeColumns) {%><nobr><%}%>
+				<%=fvalue%>&nbsp;
+				<%if (resizeColumns) {%></nobr><%}%>
 			</div>
-		</xava:link>	
+		</xava:link>
+		<% } else { %>		
+		<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">	
+			<%if (resizeColumns) {%><nobr><%}%>
+			<%=fvalue%>&nbsp;
+			<%if (resizeColumns) {%></nobr><%}%>
+		</div>
+		<% } %>
 	</td>
 <%
 	}
@@ -387,9 +422,9 @@ for (int c=0; c<model.getColumnCount(); c++) {
 	<%	
 	}
 	else if (tab.isTotalCapable(c)) {
-	%>	 	
-	<td style="<%=style.getTotalCapableCellStyle() %>">		
-		<xava:image action='List.sumColumn' argv='<%="property="+p.getQualifiedName() + collectionArgv%>'/>&nbsp;	
+	%>
+	<td class="<%=style.getTotalCapableCell()%>" style="<%=style.getTotalCapableCellStyle() %>">	
+		<xava:action action='List.sumColumn' argv='<%="property="+p.getQualifiedName() + collectionArgv%>'/>&nbsp;
 	</td>
 	<%	
 	}
@@ -425,10 +460,12 @@ if (lastRow != null) {
 }
 %>
 </table>
+<% if (resizeColumns) { %>
 </div> 
+<% } %>
 
 <% if (!tab.isRowsHidden()) { %>
-<table width="100%" class="<%=style.getListInfo()%>">
+<table width="100%" class="<%=style.getListInfo()%>" cellspacing=0 cellpadding=0>
 <tr class='<%=style.getListInfoDetail()%>'>
 <td class='<%=style.getListInfoDetail()%>'>
 <%
@@ -436,36 +473,71 @@ int last=tab.getLastPage();
 int current=tab.getPage();
 if (current > 1) {
 %>
-<xava:image action='List.goPreviousPage' argv='<%=collectionArgv%>' cssClass="page-navigation page-navigation-arrow"/>
+<span class='<%=style.getFirst()%>'><span class='<%=style.getPageNavigationArrow()%>' <%=style.getPreviousPageNavigationEvents(Ids.decorate(request, id))%>><xava:image action='List.goPreviousPage' argv='<%=collectionArgv%>'/></span></span>
 <%
 }
 else {
 %>
-<span class='<%=style.getPageNavigationArrowDisable()%>'><img 
-	src='<%=request.getContextPath()%>/xava/images/previous_page_disable.gif' 
-	border=0 align="absmiddle"/></span>
+<span class='<%=style.getFirst()%>'><span class='<%=style.getPageNavigationArrowDisable()%>'><img 
+	src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getPreviousPageDisableImage()%>' 
+	border=0 align="absmiddle"/></span></span>
 <%	
 } 
+%>
+<span class="<%=style.getPageNavigationPages()%>">
+<%
 for (int i=1; i<=last; i++) {
 if (i == current) {
+	if (style.isShowPageNumber()) {  
 %>
 <span class="<%=style.getPageNavigationSelected()%>"><%=i%></span>
-<% } else { %>
+	<% } else {%>
+<span class="<%=style.getPageNavigationSelected()%>">
+	<img 
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getPageNavigationSelectedImage()%>' 
+		border=0 align="absmiddle"/>
+</span>	
+	<% } %>
+<% } else { 
+		if (style.isShowPageNumber()) { 
+%>
 <xava:link action='List.goPage' argv='<%="page=" + i + collectionArgv%>' cssClass="<%=style.getPageNavigation()%>"><%=i%></xava:link>
-<% }} 
+<% 
+		} else {
+%>
+<span class="<%=style.getPageNavigation()%>">
+	<img 
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getPageNavigationImage()%>' 
+		border=0 align="absmiddle"/>
+</span>
+<%				
+		}
+	}
+} 
+%>
+</span>
+<%
 if (!tab.isLastPage()) {
 %>
-<xava:image action='List.goNextPage' argv='<%=collectionArgv%>' cssClass='<%=style.getPageNavigationArrow()%>'/>
+<span class='<%=style.getLast()%>'>
+<span class='<%=style.getPageNavigationArrow()%>' <%=style.getNextPageNavigationEvents(Ids.decorate(request, id)) %>>
+<xava:image action='List.goNextPage' argv='<%=collectionArgv%>'/>
+</span>
+</span>
 <% 
 } 
 else {
 %>
+<span class='<%=style.getLast()%>'>
 <span class='<%=style.getPageNavigationArrowDisable()%>'><img 
-	src='<%=request.getContextPath()%>/xava/images/next_page_disable.gif' 
-	border=0 align="absmiddle"/></span>
+	src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getNextPageDisableImage()%>' 
+	border=0 align="absmiddle"/>
+</span>
+</span>
 <%	
 } 
 %>
+<% if (style.isChangingPageRowCountAllowed()) { %>
 &nbsp;
 <select id="<xava:id name='<%=id + "_rowCount"%>'/>" class=<%=style.getEditor()%>
 	onchange="openxava.setPageRowCount('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=collection==null?"":collection%>', this)">
@@ -482,12 +554,13 @@ else {
 <span class="<%=style.getRowsPerPage()%>">	 
 <xava:message key="rows_per_page"/>
 </span>
+<% } // of if (style.isChangingPageRowCountAllowed()) %>
 </td>
 <td style='text-align: right; vertical-align: middle' class='<%=style.getListInfoDetail()%>'>
-<% if (XavaPreferences.getInstance().isShowCountInList()) { %>
+<% if (XavaPreferences.getInstance().isShowCountInList() && !style.isShowRowCountOnTop()) { %>
 <xava:message key="list_count" intParam="<%=totalSize%>"/>
 <% } %>
-<% if (collection == null) { %>
+<% if (collection == null && style.isHideRowsAllowed()) { %>
 (<xava:link action="List.hideRows" argv="<%=collectionArgv%>"/>)
 <% } %>
 </td>
