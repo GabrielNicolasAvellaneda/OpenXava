@@ -1,4 +1,4 @@
-﻿package org.openxava.view;
+package org.openxava.view;
 
 import java.rmi.RemoteException;
 import java.util.*;
@@ -881,7 +881,7 @@ public class View implements java.io.Serializable {
 	private Map getSubviews() throws XavaException {
 		if (getModelName() == null) return Collections.EMPTY_MAP;		
 		if (subviews == null) {	
-			if (isRepresentsCollection() && !isCollectionDetailVisible()) return Collections.EMPTY_MAP;	// tmp
+			if (isRepresentsCollection() && !isCollectionDetailVisible()) return Collections.EMPTY_MAP;
 			createSubviews(); 
 		}
 		return subviews;

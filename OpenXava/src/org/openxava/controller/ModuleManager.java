@@ -42,7 +42,7 @@ public class ModuleManager implements java.io.Serializable {
 		return "4.2";
 	}
 	final static private String getVersionDate() {
-		return "2011-6-16"; 
+		return "2011-6-17"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	

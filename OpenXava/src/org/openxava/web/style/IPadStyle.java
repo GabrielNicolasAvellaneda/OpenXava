@@ -32,10 +32,6 @@ public class IPadStyle extends Style {
 		return true;		
 	}
 	
-	/**
-	 * 
-	 * @since 4.2
-	 */
 	public boolean isSeparatorBeforeBottomButtons() {
 		return false;
 	}

@@ -1,27 +1,28 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Fails displaying collection element when the collection has a group in its view.
-- Fix: Fails the tab preferences when you have same model name in several applications. Added application name as discriminator.
+OpenXava 4.2 (2011-6-17)
+------------------------
+- iPad support: when an application is accessed from an iPad a style adapted to the iPad is used.
+- A new custom visual style can be defined writing only a CSS file.
 - Top right red 'Loading...' AJAX indicator replaced by a stylized centered 'Loading...' box.
-- Fix: NullPointerException stacktrace (without failing) when starting portlets in Liferay.
 - The default mode controller is defined by the style, though defaultModeController of xava.properties still exists and has preference.
 - Slide effect on list pagination (only for iPad).
 - Flip effect on changing mode (only for iPad).
-- iPad support: when an application is accessed from an iPad a style adapted to the iPad is used. 
-- ValidationException now is a RuntimeException.
-
-- Fix: NullPointerException validating BigDecimal null values.
-- Fix: Fails rendering list when the property (xava.properties) 'resizeColumns= false'. 
-
-- System encoding recognition improved.
-- Fix View.setLabelId() fails when used in subviews.
 - Styles allow define more details about the UI behavior: isRowLinkable(), isShowPageNumber(), isShowModuleDescription(), isChangingPageRowCountAllowed(), isShowRowCountOnTop(), etc.
 - Each style has its own imagesFolder, so each style can define its own icon for actions, even for custom actions.
+- A different style can be selected by each browser type. 
+- ValidationException now is a RuntimeException.
+- System encoding recognition improved.
 - Property labelAlign removed from xava.properties, now alignment is defined by CSS.
 - In action definition 'image' does not requires the folder name 'images/' as prefix.
-- Fix: NullPointerException: charsetName with Jetty. 
-- A different style can be selected by each browser type.
+- Fix: NullPointerException validating BigDecimal null values.
+- Fix: Fails rendering list when the property (xava.properties) 'resizeColumns= false'. 
+- Fix: NullPointerException stacktrace (without failing) when starting portlets in Liferay.
+- Fix View.setLabelId() fails when used in subviews.
+- Fix: NullPointerException: charsetName with Jetty.
+- Fix: Fails displaying collection element when the collection has a group in its view.
+- Fix: Fails the tab preferences when you have same model name in several applications. Added application name as discriminator.
 
 OpenXava 4.1.2 (2011-4-11)
 --------------------------
@@ -71,7 +72,6 @@ OpenXava 4.1 (2011-2-15)
 - Removed the unused library: jboss-archive-browsing.jar.
 - Fix: Export to EXCEl in list mode does not work fine with Russian data.
   
-
 OpenXava 4.0.1 (2011-1-11)
 --------------------------
 - New callback methods that allow to use JPA inside them:  @PreCreate, @PostCreate and @PreDelete.
@@ -1063,7 +1063,7 @@ OpenXava 2.0.2 (2006-08-01)
 - add/removeListAction and add/removeDetailAction added to view. This allow add/remove programmatically actions to a collection view.
 - hiddenDetail action of Collection controller in controllers.xml is renamed to hideDetail.
 - New stereotype ZEROS_FILLED/RELLENADO_CON_CEROS
-- Feedback to the user of standard action are improved, specially those of collection
+- Feedback to the user of standard action are improved, specially those of collection.
 - Searching a reference using radio button instead of checkbox, because only an item can be selected.
 - Allows spaces at end of persistenceProviderClass property value in xava.propeties.
 - In upload forms (multiplar) any number of actions is allowed.
