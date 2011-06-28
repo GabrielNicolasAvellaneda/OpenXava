@@ -3657,9 +3657,22 @@ public class View implements java.io.Serializable {
 		return p.getLabel(getRequest());
 	}
 	
-	public void setLabelId(String propertyName, String id) {
+	/**
+	 * 
+	 * @param propertyName  Since v4.2 can qualified
+	 * @param id  Id of the label from i18n files
+	 */
+	public void setLabelId(String propertyName, String id) {		
+		if (propertyName == null) return; 
+		int idx = propertyName.indexOf('.');
+		if (idx >= 0) {
+			String subviewName = propertyName.substring(0, idx);
+			String member = propertyName.substring(idx+1);								 				
+			getSubview(subviewName).setLabelId(member, id);
+			return;
+		}
 		if (getLabels() == null) setLabels(new HashMap());
-		String old = (String) getLabels().put(propertyName, id);  
+		String old = (String) getLabels().put(propertyName, id);		
 		if (!Is.equal(old, id)) {
 			if (getRoot().changedLabels == null) getRoot().changedLabels = new HashMap();
 			getRoot().changedLabels.put(getPropertyPrefix() + propertyName,

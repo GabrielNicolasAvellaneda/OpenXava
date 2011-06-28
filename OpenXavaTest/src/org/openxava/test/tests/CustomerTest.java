@@ -105,6 +105,10 @@ public class CustomerTest extends ModuleTestBase {
 		assertLabel("name", "Name");
 		execute("Customer.changeNameLabel");
 		assertLabel("name", "Malnom");
+		
+		assertLabel("address.state", "State");
+		execute("Customer.changeStateLabel");
+		assertLabel("address.state", "Province");
 	}
 		
 	public void testFilterByMemberOfAggregate() throws Exception { 

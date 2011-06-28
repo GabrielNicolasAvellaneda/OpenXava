@@ -26,4 +26,5 @@ public class ChangeLabelAction extends ViewBaseAction {
 	public void setProperty(String property) {
 		this.property = property;
 	}
+	
 }
