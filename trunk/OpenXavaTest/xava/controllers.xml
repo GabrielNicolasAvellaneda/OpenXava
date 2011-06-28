@@ -294,7 +294,12 @@
 		<action name="changeAlternateSellerLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
 			<set property="property" value="alternateSeller"/>
 			<set property="label" value="Secondary seller"/>
+		</action>
+		<action name="changeStateLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
+			<set property="property" value="address.state"/>
+			<set property="label" value="Provincia"/>
 		</action>				
+						
 		
 		<action name="prefixStreet" class="org.openxava.test.actions.PrefixAction" hidden="true">
 			<!-- This is an IPropertyAction hence xava_view is not injected -->
