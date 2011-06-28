@@ -42,7 +42,14 @@ String viewObject = request.getParameter("viewObject");
 String actionArgv = viewObject != null && !viewObject.equals("")?",viewObject=" + viewObject:"";
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject; 
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
-java.util.Collection rowActions = view.isRepresentsCollection()?view.getRowActionsNames():manager.getRowActionsNames(); 
+String sonlyOneActionPerRow = request.getParameter("onlyOneActionPerRow");
+java.util.Collection rowActions = null;
+if (sonlyOneActionPerRow == null || !Boolean.parseBoolean(sonlyOneActionPerRow)) {
+	rowActions = view.isRepresentsCollection()?view.getRowActionsNames():manager.getRowActionsNames();
+}
+else {
+	rowActions = java.util.Collections.EMPTY_SET;
+}
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
 String displayFilter=""; 
