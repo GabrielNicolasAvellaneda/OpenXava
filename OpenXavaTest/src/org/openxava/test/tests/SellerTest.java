@@ -21,6 +21,13 @@ public class SellerTest extends ModuleTestBase {
 		super(testName, "Seller");		
 	}
 	
+	public void testNotRemoveRowWhenAddingCollectionElements() throws Exception { 
+		execute("Mode.detailAndFirst");
+		execute("Collection.add", "viewObject=xava_view_customers");
+		assertAction("AddToCollection.add");
+		assertNoAction("Collection.removeSelected");
+	}
+	
 	public void testRowStyleInCollections() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertValue("number", "1");
