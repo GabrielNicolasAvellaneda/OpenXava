@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Commons FileUpload upgraded to 1.2.2.
+
 OpenXava 4.2 (2011-6-17)
 ------------------------
 - iPad support: when an application is accessed from an iPad a style adapted to the iPad is used.
