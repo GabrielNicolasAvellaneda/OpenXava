@@ -21,11 +21,19 @@ public class SellerTest extends ModuleTestBase {
 		super(testName, "Seller");		
 	}
 	
-	public void testNotRemoveRowWhenAddingCollectionElements() throws Exception { 
+	public void testNotRemoveRowWhenAddingCollectionElements_addingWithNoElements() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Collection.add", "viewObject=xava_view_customers");
+		
+		// NotRemoveRowWhenAddingCollectionElements
 		assertAction("AddToCollection.add");
 		assertNoAction("Collection.removeSelected");
+		
+		// AddingWithNoElements
+		execute("AddToCollection.add");
+		assertDialog();
+		assertAction("AddToCollection.add");
+		assertError("Please, choose an element before pressing 'Add'");
 	}
 	
 	public void testRowStyleInCollections() throws Exception {		
