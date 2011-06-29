@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Dialog disappears adding collection elements with no chosen rows.
 - View.setLabelId() supports qualified member name as argument.
 - Commons FileUpload upgraded to 1.2.2.
 

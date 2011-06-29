@@ -44,6 +44,10 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 					associateEntityInRow(selectedOnes[i]);
 				}
 			}		
+			else {
+				addError("choose_element_before_add");
+				return;
+			}
 		}
 		addMessage("elements_added_to_collection", new Integer(added), currentCollectionLabel);		
 		if (failed > 0) addError("elements_not_added_to_collection", new Integer(failed), currentCollectionLabel);
