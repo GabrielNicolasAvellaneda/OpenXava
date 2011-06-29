@@ -99,6 +99,13 @@ public class XavaPreferences {
 	public String getCSVSeparator() {
 		return getProperties().getProperty("csvSeparator", ";");
 	}
+	
+	/**
+	 * @since 4.2.1 
+	 */
+	public String getCSVEncoding() { 
+		return getProperties().getProperty("csvEncoding", null);
+	}
 
 	public String getReportParametersProviderClass() {
 		return getProperties().getProperty("reportParametersProviderClass",

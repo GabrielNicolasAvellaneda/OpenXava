@@ -165,7 +165,10 @@ public class GenerateReportServlet extends HttpServlet {
 				
 			}
 			else if (uri.endsWith(".csv")) {	
-				Servlets.setCharacterEncoding(request, response); 
+				String csvEncoding = XavaPreferences.getInstance().getCSVEncoding(); 
+				if (!Is.emptyString(csvEncoding)) {
+					response.setCharacterEncoding(csvEncoding);
+				}
 				response.setContentType("text/x-csv");
 				synchronized (tab) {
 					tab.setRequest(request);
