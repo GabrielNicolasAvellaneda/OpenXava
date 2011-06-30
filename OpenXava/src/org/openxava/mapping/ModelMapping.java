@@ -241,9 +241,11 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private void loadDatabaseMetadata() {
 		if (!databaseMetadataLoaded) {
 			String componentName = "UNKNOWN";
+			Connection con = null;
 			try {
 				componentName = getMetaComponent().getName();
-				Connection con = DataSourceConnectionProvider.getByComponent(componentName).getConnection();
+				
+				con = DataSourceConnectionProvider.getByComponent(componentName).getConnection();
 				DatabaseMetaData metaData = con.getMetaData();
 				supportsSchemasInDataManipulation = metaData.supportsSchemasInDataManipulation();
 				Collection timeDateFunctions = Strings.toCollection(metaData.getTimeDateFunctions().toUpperCase());
@@ -266,11 +268,19 @@ abstract public class ModelMapping implements java.io.Serializable {
 					supportsMonthFunction = timeDateFunctions.contains("MONTH");
 				}				
 				databaseMetadataLoaded = true;
-				con.close();				
 			}
 			catch (Exception ex) {				
 				log.warn(XavaResources.getString("load_database_metadata_warning"));
-			}		
+			} finally {
+				try {
+					if (con != null) {
+						con.close();
+					}
+				} catch (SQLException e) {
+					log.warn(XavaResources.getString("close_connection_warning"));
+				}
+
+			}
 		}		
 	}
 	

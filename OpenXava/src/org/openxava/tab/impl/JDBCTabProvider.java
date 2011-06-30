@@ -328,13 +328,15 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	private Number executeNumberSelect(String select, String errorId) throws RemoteException {
 		if (select == null || keyHasNulls()) return 0;						
 		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
 		try {
 			con = connectionProvider.getConnection();
-			PreparedStatement ps = con.prepareStatement(select);			
+			ps = con.prepareStatement(select);			
 			for (int i = 0; i < key.length; i++) {
 				ps.setObject(i + 1, key[i]);				
 			}			
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			rs.next();
 			Number size = (Number) rs.getObject(1);
 			rs.close();
@@ -346,6 +348,20 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			throw new RemoteException(XavaResources.getString(errorId));
 		}
 		finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ex) {
+				log.error(XavaResources.getString("close_statement_warning"), ex);
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ex) {
+				log.error(XavaResources.getString("close_resultset_warning"), ex);
+			}
 			try {
 				con.close();
 			}

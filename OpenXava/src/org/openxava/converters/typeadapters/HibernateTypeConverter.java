@@ -48,16 +48,17 @@ public class HibernateTypeConverter extends HibernateTypeBaseConverter implement
 	}
 
 	public Object toDB(Object o) throws ConversionException { 
+		ObjectPreparedStatementAdapter ps = null;
 		try {		
 			Object hibernateType = getHibernateType();
 			Object result = null;
 			if (hibernateType instanceof Type) {
-				ObjectPreparedStatementAdapter ps = new ObjectPreparedStatementAdapter();
+				ps = new ObjectPreparedStatementAdapter();
 				((Type) hibernateType).nullSafeSet(ps, o, 1, null);
 				result = ps.getObject();
 			}
 			else if (hibernateType instanceof UserType) {
-				ObjectPreparedStatementAdapter ps = new ObjectPreparedStatementAdapter();
+				ps = new ObjectPreparedStatementAdapter();
 				((UserType) hibernateType).nullSafeSet(ps, o, 1);
 				result = ps.getObject();
 			}
@@ -73,6 +74,12 @@ public class HibernateTypeConverter extends HibernateTypeBaseConverter implement
 		catch (Exception ex) {
 			log.error(XavaResources.getString("hibernate_type_conversion_error", getType()), ex);
 			throw new ConversionException(ex.getMessage()); 
+		} finally {
+			try {
+				ps.close();
+			} catch (Exception ex) {
+				log.warn(XavaResources.getString("close_statement_warning"));
+			}
 		}
 	}
 	
