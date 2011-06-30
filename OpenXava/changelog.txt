@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: References marked as @SearchKey are not modifiable when the keyEditable is false in main view.
 - New csvEncoding property available in xava.property to define the encoding of the generated CSV.
 - Fix: Dialog disappears adding collection elements with no chosen rows.
 - View.setLabelId() supports qualified member name as argument.
