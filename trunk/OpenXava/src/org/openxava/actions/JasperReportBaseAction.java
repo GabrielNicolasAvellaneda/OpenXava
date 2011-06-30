@@ -95,15 +95,19 @@ abstract public class JasperReportBaseAction extends ViewBaseAction implements I
 		JRDataSource ds = getDataSource();
 		JasperPrint jprint = null;
 		if (ds == null) {
-			Connection con = DataSourceConnectionProvider.getByComponent(modelName).getConnection();
-			// If the schema is changed through URL or XPersistence.setDefaultSchema, the connection
-			// contains the original catalog (schema) instead of the new one, thus rendering the
-			// wrong data on the report. This is a fix for such behavior.
-			if (!Is.emptyString(XPersistence.getDefaultSchema())) {
-				con.setCatalog(XPersistence.getDefaultSchema());
+			Connection con = null;
+			try {
+				con = DataSourceConnectionProvider.getByComponent(modelName).getConnection();
+				// If the schema is changed through URL or XPersistence.setDefaultSchema, the connection
+				// contains the original catalog (schema) instead of the new one, thus rendering the
+				// wrong data on the report. This is a fix for such behavior.
+				if (!Is.emptyString(XPersistence.getDefaultSchema())) {
+					con.setCatalog(XPersistence.getDefaultSchema());
+				}
+				jprint = JasperFillManager.fillReport(report, parameters, con);
+			} finally {
+				con.close();
 			}
-			jprint = JasperFillManager.fillReport(report, parameters, con);
-			con.close();
 		}
 		else {
 			jprint = JasperFillManager.fillReport(report, parameters, ds);

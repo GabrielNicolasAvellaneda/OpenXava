@@ -43,9 +43,11 @@ public class NextLongCalculator implements IJDBCCalculator {
 			return 0;
 		}
 		Connection con = provider.getConnection();
+		ResultSet rs = null;
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = con.prepareStatement(getSelect());			
-			ResultSet rs = ps.executeQuery();
+			ps = con.prepareStatement(getSelect());			
+			rs = ps.executeQuery();
 			long nr = 0;
 			if (rs.next()) {
 				nr = rs.getLong(1);
@@ -58,6 +60,20 @@ public class NextLongCalculator implements IJDBCCalculator {
 			return 1;
 		}
 		finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ex) {
+				log.error(XavaResources.getString("close_statement_warning"), ex);
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ex) {
+				log.error(XavaResources.getString("close_resultset_warning"), ex);
+			}
 			con.close();
 		}
 	}

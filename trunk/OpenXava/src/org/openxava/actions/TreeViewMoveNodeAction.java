@@ -41,7 +41,7 @@ public class TreeViewMoveNodeAction extends CollectionElementViewBaseAction {
 			node = entities.get(0);
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
 			metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
-			if (metaTreeView !=null && metaTreeView.isOrderDefined()) {
+			if (metaTreeView !=null) {
 				Collections.sort(entities, new Comparator() {
 					public int compare(Object object1, Object object2) {
 						Integer ord1 = metaTreeView.getNodeOrder(object1);
