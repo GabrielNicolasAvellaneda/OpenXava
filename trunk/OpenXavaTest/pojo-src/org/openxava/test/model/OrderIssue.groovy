@@ -17,6 +17,7 @@ class OrderIssue extends Identifiable {
 	String description
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@SearchKey 
 	Order order
 
 }

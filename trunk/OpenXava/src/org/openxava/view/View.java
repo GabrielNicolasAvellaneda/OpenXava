@@ -1742,7 +1742,8 @@ public class View implements java.io.Serializable {
 
 	public void setKeyEditable(boolean b) throws XavaException {
 		keyEditable = b;						
-		Iterator it = getMetaModel().getMetaReferencesKeyAndSearchKey().iterator(); 
+		Collection metaReferencesKey = isRepresentsEntityReference()?getMetaModel().getMetaReferencesKeyAndSearchKey():getMetaModel().getMetaReferencesKey();
+		Iterator it = metaReferencesKey.iterator();
 		while (it.hasNext()) {
 			MetaReference ref = (MetaReference) it.next();			
 			if (hasSubview(ref.getName())) {
@@ -1782,13 +1783,13 @@ public class View implements java.io.Serializable {
 	/**
 	 * If at this moment is editable.
 	 */
-	private boolean isEditableImpl(MetaProperty metaProperty) {  		
+	private boolean isEditableImpl(MetaProperty metaProperty) {		
 		try {				
 			if (metaProperty.isReadOnly()) return false;			
 			if (metaProperty.isKey() || 
 				(metaProperty.isSearchKey() && isRepresentsEntityReference())) 
 			{
-				return isKeyEditable(); 				
+				return isKeyEditable();
 			}
 			if (!isEditable()) return false;			
 			return isMarkedAsEditable(metaProperty.getName());
