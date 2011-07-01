@@ -7,6 +7,7 @@ import javax.inject.*;
 import javax.persistence.*;
 import javax.servlet.http.*;
 
+import org.apache.commons.collections.*;
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
@@ -146,8 +147,8 @@ public class ModuleManager implements java.io.Serializable {
 		if (metaActionsOnInit == null) {
 			try {			
 				Iterator it = getMetaControllers().iterator();
-				metaActionsOnInit = new ArrayList();
-				metaActionsOnInit.addAll(getMetaControllerMode().getMetaActionsOnInit()); 
+				metaActionsOnInit = new ArrayList();				
+				metaActionsOnInit.addAll(getMetaControllerMode().getMetaActionsOnInit());
 				while (it.hasNext()) {
 					MetaController contr = (MetaController) it.next();
 					metaActionsOnInit.addAll(contr.getMetaActionsOnInit());									
@@ -1114,6 +1115,26 @@ public class ModuleManager implements java.io.Serializable {
 		if (!getMetaActionsBeforeEachRequest().isEmpty()) {
 			defaultActionQualifiedName = null;
 		}	
+	}
+	
+	public boolean hasInitForwardActions() { 
+		Iterator it = IteratorUtils.chainedIterator(new Iterator[] {
+			getMetaActionsOnEachRequest().iterator(),
+			getMetaActionsBeforeEachRequest().iterator(),
+			getMetaActionsOnInit().iterator()
+		});
+		while (it.hasNext()) {
+			MetaAction action = (MetaAction) it.next();
+			try {
+				if (IForwardAction.class.isAssignableFrom(Class.forName(action.getClassName()))) {
+					return true;
+				}
+			}
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("is_forward_action_warning", action.getQualifiedName()), ex);
+			}
+		}
+		return false;
 	}
 		
 	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {

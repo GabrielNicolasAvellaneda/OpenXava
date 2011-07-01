@@ -1018,7 +1018,7 @@ public class Tab implements java.io.Serializable {
 		metaTabCloned = false; 
 	}
 	
-	public String getTabName() {
+	public String getTabName() {		
 		return tabName; 		
 	}
 

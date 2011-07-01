@@ -460,9 +460,22 @@ public class ModuleTestBase extends TestCase {
 					resetForm();
 				}
 			}			
-		}				
+		}			
+		if (isCoreViaAJAX()) {
+			restorePage();
+		}
 	}
 	
+	private boolean isCoreViaAJAX() { 
+		if (page == null) return false; // If no module is specified to start the test, maybe afterwards changeModule will be used
+		try {
+			return getElementById("core").asText().trim().equals("");
+		}
+		catch (ElementNotFoundException ex) {
+			return false;
+		}
+	}
+
 	/**
 	 * Like clicking on the reload button of the browser.
 	 * 
@@ -679,7 +692,7 @@ public class ModuleTestBase extends TestCase {
 		restorePage();				
 	}
 	
-	private void restorePage() throws Exception {		
+	private void restorePage() throws Exception {			
 		Page newPage = client.getWebWindows().get(0).getEnclosedPage();
 		
 		page = newPage instanceof HtmlPage?(HtmlPage) newPage:null;
@@ -1871,7 +1884,7 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
-	private void resetForm() throws Exception {		
+	private void resetForm() throws Exception {			
 		waitUntilPageIsLoaded();		
 		setNewModuleIfChanged(); 
 		form = null; 		
