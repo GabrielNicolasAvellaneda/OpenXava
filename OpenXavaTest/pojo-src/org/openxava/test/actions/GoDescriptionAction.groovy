@@ -8,7 +8,8 @@ import org.openxava.actions.*
  */
 class GoDescriptionAction extends BaseAction implements IForwardAction {
 	
-	void execute() {	
+	void execute() {
+		println "[GoDescriptionAction.execute()] "	
 	}
 
 	String getForwardURI() {

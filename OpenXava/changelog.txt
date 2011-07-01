@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: IForwardAction does not forward when used on module initialization (on-init, on-each-request or before-each-request).  
+- English and Spanish messages refined.
+- Fix: Impossible to add a child in Tree editor without treeOrder.
+- Fix: JDBC connection leaks in some circumstances.
 - Fix: References marked as @SearchKey are not modifiable when the keyEditable is false in main view.
 - New csvEncoding property available in xava.property to define the encoding of the generated CSV.
 - Fix: Dialog disappears adding collection elements with no chosen rows.

@@ -75,8 +75,7 @@
 	Module.setPortlet(isPortlet);
 	String version = org.openxava.controller.ModuleManager.getVersion();
 	String realPath = request.getSession().getServletContext()
-			.getRealPath("/");
-	boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0;	
+			.getRealPath("/");			
 %>
 <jsp:include page="execute.jsp"/>
 <%
@@ -172,11 +171,12 @@
 	}
 %> 
 <% 
+boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0 || manager.hasInitForwardActions(); 
+
 if (manager.isResetFormPostNeeded()) {	
 %>		
 	<form id="xava_reset_form"></form>
-<% } else  { %>
-
+<% } else  { %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="<%=coreViaAJAX%>"/>
 	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>
@@ -195,7 +195,7 @@ if (manager.isResetFormPostNeeded()) {
 	</div>	 
 	<%=style.getCoreStartDecoration()%>
 	<div id="<xava:id name='core'/>" style="display: inline;" class="<%=style.getModule()%>">
-		<%
+		<%			
 			if (!coreViaAJAX) {
 		%>
 		<jsp:include page="core.jsp"/>

@@ -63,7 +63,7 @@ public class Module extends DWRBase {
 			setDialogLevel(result); 
 			Map changedParts = new HashMap();
 			result.setChangedParts(changedParts);
-			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
+			String forwardURI = (String) request.getSession().getAttribute("xava_forward");			
 			if (!Is.emptyString(forwardURI)) {
 				memorizeLastMessages();
 				if (forwardURI.startsWith("http://") || forwardURI.startsWith("https://") || forwardURI.startsWith("javascript:")) {
