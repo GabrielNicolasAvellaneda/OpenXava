@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Performance problem on iPad using list with many columns, it was produced by Flip effect, so Flip effect has been removed. 
+- Fix: Buttons in dialogs does not respond on iPad.
+- Fix: Flip effect on close dialogs on iPad.
 - Fix: IForwardAction does not forward when used on module initialization (on-init, on-each-request or before-each-request).  
 - English and Spanish messages refined.
 - Fix: Impossible to add a child in Tree editor without treeOrder.
