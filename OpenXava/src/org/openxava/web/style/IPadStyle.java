@@ -28,20 +28,22 @@ public class IPadStyle extends Style {
 		return browser != null && browser.contains("iPad");		
 	}
 	
+	/* Because with no Flip effect, the two button alternative looks better
 	public boolean isOnlyOneButtonForModeIfTwoModes() {
 		return true;		
 	}
+	*/
 	
 	public boolean isSeparatorBeforeBottomButtons() {
 		return false;
 	}
 
 
-	
+	/* This was for Flip effect, we currently do not use it because of performance issue 
 	public String getSetHtmlFunction() {
 		return "ipad.setHtml";
 	}
-
+	*/
 	
 	public String getCssFile() {
 		return "ipad/ipad.css";
@@ -64,6 +66,7 @@ public class IPadStyle extends Style {
 		return "onclick=ipad.onClickPreviousPage('" + listId + "')";
 	}
 	
+	/* This was for Flip effect, we currently do not use it because of performance issue
 	public String getCoreStartDecoration() { 
 		return "<div id='container'><div id='sheet'><div id='front'>";
 	}
@@ -71,7 +74,8 @@ public class IPadStyle extends Style {
 	public String getCoreEndDecoration() { 
 		return "</div><div id='back'><div id='core_BACK' style='display: inline;' class='"
 			+ getModule() + "'></div></div></div></div>";
-	}	
+	}
+	*/	
 
 	public String getDefaultModeController() {
 		return "DetailList";		

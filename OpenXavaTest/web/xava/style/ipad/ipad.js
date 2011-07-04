@@ -20,6 +20,7 @@ ipad.onClickPreviousPage = function(listId) {
 	$('body').data('ipad-slide-class', 'slided-left');
 }
 
+// Currently ipad.setHtml is not used because of performance issues
 ipad.setHtml = function(id, content) { 
 	if (!id.match(/__core$/)) {
 		$("#" + id).html(content);
