@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Removed "images/" prefix of all action definitions in default-controllers.xml, it was optional since v4.2. 
 - Fix: Performance problem on iPad using list with many columns, it was produced by Flip effect, so Flip effect has been removed. 
 - Fix: Buttons in dialogs does not respond on iPad.
 - Fix: Flip effect on close dialogs on iPad.

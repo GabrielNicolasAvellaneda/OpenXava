@@ -6,7 +6,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
              
-    <!-- Tomcat + Hypersonic -->                                                
+    <!-- Tomcat + Hypersonic -->                                                 
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>    	
     	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
@@ -16,10 +16,10 @@
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
-    </persistence-unit>
+    </persistence-unit>    
     
         
-    <!-- WebSphere + AS/400                                   
+    <!-- WebSphere + AS/400                                    
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/OpenXavaTestDS</non-jta-data-source>
