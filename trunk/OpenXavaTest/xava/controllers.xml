@@ -55,10 +55,10 @@
 	is used to manage collections.
 	-->  
 	<controller name="Collection">
-		<action name="new" image="images/create_new.gif"
+		<action name="new" image="create_new.gif"
 			class="org.openxava.actions.CreateNewElementInCollectionAction"/>
 			
-		<action name="add" image="images/create_new.gif" 
+		<action name="add" image="create_new.gif" 
 			class="org.openxava.actions.GoAddElementsToCollectionAction"/>
 
 		<action name="hideDetail" 
@@ -73,14 +73,14 @@
 		<action name="remove" confirm="true" 
 			class="org.openxava.actions.RemoveElementFromCollectionAction"/>
 
-		<action name="edit" image="images/edit.gif" 
+		<action name="edit" image="edit.gif" 
 			class="org.openxava.actions.EditElementInCollectionAction"/>
 						 						
-		<action name="view" image="images/view.gif" 
+		<action name="view" image="view.gif" 
 			class="org.openxava.actions.ViewElementInCollectionAction"/>
 					 		
 		<action name="removeSelected" confirm="true" 
-			image="images/delete.gif" in-each-row="true"
+			image="delete.gif" in-each-row="true"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction"/>
 	
 	</controller>
@@ -111,7 +111,7 @@
 		<extends controller="Typical"/>
 		<action name="save" mode="detail"
 			class="org.openxava.test.actions.SaveTaskAction"
-			image="images/save.gif"
+			image="save.gif"
 			keystroke="control alt S">			
 			<set property="resetAfter" value="false"/>
 		</action>		
@@ -121,7 +121,7 @@
 		<extends controller="Typical"/>
 		<action name="saveNotReset" mode="detail"
 			class="org.openxava.actions.SaveAction"
-			image="images/save.gif"
+			image="save.gif"
 			keystroke="control alt S">			
 			<set property="resetAfter" value="false"/>
 		</action>
@@ -133,7 +133,7 @@
 		<extends controller="Typical"/>
 		<action name="save" mode="detail"
 			class="org.openxava.actions.SaveAction"
-			image="images/save.gif"
+			image="save.gif"
 			by-default="if-possible"
 			keystroke="F3">			
 			<set property="resetAfter" value="false"/>
@@ -187,7 +187,7 @@
 	</controller>
 	
 	<controller name="DeliveryDetail">		
-		<action name="new" image="images/create_new.gif" 
+		<action name="new" image="create_new.gif" 
 			class="org.openxava.test.actions.NewDeliveryDetailAction"/>			
 		<action name="hideDetail"
 			class="org.openxava.test.actions.HideDeliveryDetailAction"/>						
@@ -199,7 +199,7 @@
 		</action>			
 		<action name="remove" 
 			class="org.openxava.test.actions.RemoveDeliveryDetailAction"/>			
-		<action name="removeSelected" confirm="true" image="images/delete.gif"
+		<action name="removeSelected" confirm="true" image="delete.gif"
 			class="org.openxava.test.actions.RemoveSelectedDeliveryDetailsAction"/>
 	</controller>	
 	
@@ -255,7 +255,7 @@
 		<extends controller="EditableOnOff"/>
 		<action name="save" mode="detail"
 			class="org.openxava.actions.SaveAction"
-			image="images/save.gif"
+			image="save.gif"
 			by-default="if-possible"
 			keystroke="F3">			
 			<set property="resetAfter" value="false"/>
@@ -312,7 +312,7 @@
 	<controller name="CustomerNewOnInit">
 		<action name="new" 
 			class="org.openxava.actions.NewAction"
-			image="images/new.gif" on-init="true"
+			image="new.gif" on-init="true"
 			keystroke="F2">
 			<set property="restoreModel" value="true"/>			
 		</action>			
@@ -343,22 +343,22 @@
 		<extends controller="Typical"/>
 		<action name="printPdf" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
-			image="images/pdf.gif">
+			image="pdf.gif">
 			<set property="format" value="pdf"/>												
 		</action>
 		<action name="printExcel" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
-			image="images/excel.gif">
+			image="excel.gif">
 			<set property="format" value="excel"/>												
 		</action>		
 		<action name="printRtf" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
-			image="images/rtf.gif">
+			image="rtf.gif">
 			<set property="format" value="rtf"/>												
 		</action>
 		<action name="printOdt" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
-			image="images/odt.gif">
+			image="odt.gif">
 			<set property="format" value="odt"/>												
 		</action>						
 		<action name="searchFromDelivery" hidden="true"
@@ -366,7 +366,7 @@
 		<action name="listOfCustomer" hidden="true"
 			class="org.openxava.test.actions.ListCustomerInvoicesAction"/>
 		<action name="editDetail" hidden="true" 
-			image="images/edit.gif"
+			image="edit.gif"
 			class="org.openxava.test.actions.EditInvoiceDetailAction"/>	
 		<action name="viewDelivery" hidden="true"
 			class="org.openxava.test.actions.ViewDeliveryFromInvoiceAction"/>
@@ -397,7 +397,7 @@
 	</controller>
 		
 	<controller name="InvoiceDetail2">
-		<action name="new" image="images/create_new.gif"
+		<action name="new" image="create_new.gif"
 			class="org.openxava.test.actions.CreateNewInvoiceDetail2Action"/>							
 		<action name="showProductList"   
 			class="org.openxava.test.actions.ShowProductListAction"/>				
@@ -484,7 +484,7 @@
 		<extends controller="Typical"/>
 		<action  name="new" 
 			class="org.openxava.test.actions.NewWarehouseAction"
-			image="images/new.gif"
+			image="new.gif"
 			keystroke="Control N">
 			<set property="restoreModel" value="true"/>			
 		</action>			
@@ -494,33 +494,33 @@
 	
 		<action name="search" hidden="true"			
 			class="org.openxava.test.actions.MySearchAction"
-			image="images/search.gif"/>							
+			image="search.gif"/>							
 				
 	</controller>
 		
 	<controller name="Family">
 		<extends controller="Typical"/>		
-		<action name="new" image="images/new.gif"
+		<action name="new" image="new.gif"
 			class="org.openxava.test.actions.CreateNewFamilyAction"/>						
-	</controller>
+	</controller>	
 	
 	<controller name="FamilyHibernate"> 
-		<action name="search" image="images/search.gif" hidden="true"
+		<action name="search" image="search.gif" hidden="true"
 			class="org.openxava.test.actions.FamilyHibernateSearchAction"/>					
 				
 		<action name="save" mode="detail"
 			class="org.openxava.test.actions.FamilyHibernateSaveAction"
-			image="images/save.gif"
+			image="save.gif"
 			keystroke="F3"/>			
 		
 		<action name="delete" mode="detail"
 			class="org.openxava.test.actions.FamilyHibernateDeleteAction"
-			image="images/delete.gif"
+			image="delete.gif"
 			keystroke="F4"/>
 		
 		<action name="new" 
 			class="org.openxava.actions.NewAction"
-			image="images/new.gif"
+			image="new.gif"
 			keystroke="F2">
 			<set property="restoreModel" value="true"/>			
 		</action>
@@ -542,22 +542,22 @@
 	</controller>		
 
 	<controller name="StateHibernate"> 
-		<action name="search" image="images/search.gif" mode="detail" 
+		<action name="search" image="search.gif" mode="detail" 
 			class="org.openxava.test.actions.StateHibernateSearchAction"/>					
 				
 		<action name="save" mode="detail"
 			class="org.openxava.test.actions.StateHibernateSaveAction"
-			image="images/save.gif"
+			image="save.gif"
 			keystroke="F3"/>			
 		
 		<action name="delete" mode="detail"
 			class="org.openxava.test.actions.StateHibernateDeleteAction"
-			image="images/delete.gif"
+			image="delete.gif"
 			keystroke="F4"/>
 		
 		<action name="new" 
 			class="org.openxava.actions.NewAction"
-			image="images/new.gif"
+			image="new.gif"
 			keystroke="F2">
 			<set property="restoreModel" value="true"/>			
 		</action>
@@ -565,22 +565,22 @@
 	</controller>
 	
 	<controller name="StateJPA"> 
-		<action name="search" image="images/search.gif" mode="detail" 
+		<action name="search" image="search.gif" mode="detail" 
 			class="org.openxava.test.actions.StateJPASearchAction"/>					
 				
 		<action name="save" mode="detail"
 			class="org.openxava.test.actions.StateJPASaveAction"
-			image="images/save.gif"
+			image="save.gif"
 			keystroke="F3"/>			
 		
 		<action name="delete" mode="detail"
 			class="org.openxava.test.actions.StateJPADeleteAction"
-			image="images/delete.gif"
+			image="delete.gif"
 			keystroke="F4"/>
 		
 		<action name="new" 
 			class="org.openxava.actions.NewAction"
-			image="images/new.gif"
+			image="new.gif"
 			keystroke="F2">
 			<set property="restoreModel" value="true"/>			
 		</action>
@@ -632,7 +632,7 @@
 			<set property="model" value="Carrier" />
 		</action>
 		
-		<action name="search" image="images/search.gif" mode="detail" 
+		<action name="search" image="search.gif" mode="detail" 
 			class="org.openxava.test.actions.CarriersSearchAction"/>
     	    	
 		<action name="onSelectFellowCarriersCalulated" hidden="true" 
@@ -719,7 +719,7 @@
 	<controller name="WarehouseReference">
 		<action name="createNewNoDialog" 
 			class="org.openxava.actions.CreateNewFromReferenceAction"
-			image="images/create_new.gif">
+			image="create_new.gif">
 			<set property="keyProperty" value="warehouse.number"/>
 			<set property="model" value="Warehouse"/>
 			<set property="showDialog" value="false"/>
@@ -871,7 +871,7 @@
 	<controller name="ActionWithImage">
 		<extends controller="ReturnPreviousModule"/>
 		
-		<action name="new" image="images/new.gif"
+		<action name="new" image="new.gif"
 			class="org.openxava.actions.NewAction"/>
 	</controller>
 	
