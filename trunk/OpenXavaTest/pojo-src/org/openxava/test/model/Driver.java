@@ -10,7 +10,8 @@ import org.openxava.annotations.*;
  */
 
 @Entity
-@View(name="Simple", members="number, name") 
+@View(name="Simple", members="number, name")
+@Tab(name="OrderByName", properties="name", defaultOrder="${name}")
 public class Driver {
 	
 	@Id @Column(length=5) @Required 	
