@@ -1,7 +1,10 @@
 package org.openxava.actions;
 
 import java.util.*;
+
 import javax.inject.*;
+
+import org.openxava.tab.*;
 import org.openxava.util.*;
 
 /**
@@ -19,6 +22,13 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 	private boolean atListBegin;
 	private boolean noElementsInList;
 	private String model;
+	@Inject
+	private Tab mainTab;
+	
+	@Override
+	protected Tab getTab() throws XavaException {
+		return getMainTab() != null ? getMainTab() : super.getTab();
+	}
 	
 	public void execute() throws Exception {		
 		getView().setModelName(model); 
@@ -129,6 +139,14 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 
 	public void setModel(String modelName) { 
 		this.model = modelName;		
+	}
+
+	public Tab getMainTab() {
+		return mainTab;
+	}
+
+	public void setMainTab(Tab mainTab) {
+		this.mainTab = mainTab;
 	}
 
 }
