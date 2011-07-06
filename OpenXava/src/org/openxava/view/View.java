@@ -389,10 +389,10 @@ public class View implements java.io.Serializable {
 				Map.Entry en = (Map.Entry) it.next(); 
 				View v = (View) en.getValue();  
 				if (v.isRepresentsCollection()) continue; 
-				if (!onlyKeyFromSubviews && (all || v.isRepresentsAggregate())) { 
+				if (!onlyKeyFromSubviews && (all || v.isRepresentsAggregate())) {					
 					values.put(en.getKey(), v.getValues(all, onlyKeyFromSubviews));					
 				} 
-				else {  
+				else {  					
 					values.put(en.getKey(), v.getKeyValues());					
 				}  
 			} 
@@ -801,10 +801,13 @@ public class View implements java.io.Serializable {
 				newView.setCollectionMembersEditables(true);
 			}
 		}
-		else {
+		else {			
 			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(ref);
+			
 			if (metaReferenceView != null) {
 				newView.setReadOnly(metaReferenceView.isReadOnly());
+				
+				
 				if (newView.isRepresentsEntityReference()) {
 					newView.setRepresentsAggregate(metaReferenceView.isAsAggregate());
 				}
