@@ -63,17 +63,17 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			Map parentKey = new HashMap();
 			MetaCollection metaCollection = getMetaCollection();
 			parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
-			Map values = getValuesToSave(); 
+			Map values = getValuesToSave();			
 			values.putAll(parentKey);
 			try {
-				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), values);
-				addMessage("entity_modified", getCollectionElementView().getModelName());
-			}
-			catch (ObjectNotFoundException ex) {
 				validateMaximum();
 				MapFacade.create(getCollectionElementView().getModelName(), values);
-				addMessage("entity_created_and_associated", getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName()); 
-			}						
+				addMessage("entity_created_and_associated", getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName()); 				
+			}
+			catch (DuplicateKeyException ex) {
+				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), values);
+				addMessage("entity_modified", getCollectionElementView().getModelName());				
+			}	
 		}
 		else {
 			// Entity reference used in the standard way
@@ -82,7 +82,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}
 	}
 
-	protected void associateEntity(Map keyValues) throws ValidationException, XavaException, ObjectNotFoundException, FinderException, RemoteException {
+	protected void associateEntity(Map keyValues) throws ValidationException, XavaException, ObjectNotFoundException, FinderException, RemoteException {		
 		validateMaximum();
 		MapFacade.addCollectionElement(
 				getCollectionElementView().getParent().getMetaModel().getName(),

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: More than two levels of nested entities as embedded fails.
 - Fix: Loss of the selected rows when enter on the list to choose a reference.
 - Removed "images/" prefix of all action definitions in default-controllers.xml, it was optional since v4.2. 
 - Fix: Performance problem on iPad using list with many columns, it was produced by Flip effect, so Flip effect has been removed. 
