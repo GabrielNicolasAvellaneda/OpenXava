@@ -207,7 +207,7 @@ public class AnnotatedClassParser {
 			
 			// Other model level annotations
 			processAnnotations(entity, pojoClass);
-			
+				
 			return component;
 		}
 		finally {
@@ -300,27 +300,32 @@ public class AnnotatedClassParser {
 		parseAttributeOverrides(pojoClass, mapping);
 	}
 	
-	private void parseAttributeOverrides(Class pojoClass, ModelMapping mapping) throws XavaException { 
-		if (pojoClass.isAnnotationPresent(AttributeOverride.class)) {
-			AttributeOverride override = (AttributeOverride) pojoClass.getAnnotation(AttributeOverride.class);
-			parseAttributeOverride(override, mapping);
+	private void parseAttributeOverrides(AnnotatedElement element, ModelMapping mapping) throws XavaException {
+		parseAttributeOverrides(element, mapping, null);
+	}
+	
+	private void parseAttributeOverrides(AnnotatedElement element, ModelMapping mapping, String embedded) throws XavaException {
+		String prefix = embedded == null?"":embedded + "_"; 
+		if (element.isAnnotationPresent(AttributeOverride.class)) {
+			AttributeOverride override = (AttributeOverride) element.getAnnotation(AttributeOverride.class);
+			parseAttributeOverride(override, mapping, prefix); 
 		}
-		if (pojoClass.isAnnotationPresent(AttributeOverrides.class)) {
-			AttributeOverrides overrides = (AttributeOverrides) pojoClass.getAnnotation(AttributeOverrides.class);
+		if (element.isAnnotationPresent(AttributeOverrides.class)) {
+			AttributeOverrides overrides = (AttributeOverrides) element.getAnnotation(AttributeOverrides.class);
 			for (AttributeOverride override: overrides.value()) {
-				parseAttributeOverride(override, mapping);
+				parseAttributeOverride(override, mapping, prefix); 
 			}
 		}
-	}
+	}	
 
-	private void parseAttributeOverride(AttributeOverride override, ModelMapping mapping) throws XavaException {
-		try {			
-			PropertyMapping pMapping = mapping.getPropertyMapping(override.name());
-			pMapping.setColumn(override.column().name());
-			
+	private void parseAttributeOverride(AttributeOverride override, ModelMapping mapping, String prefix) throws XavaException {
+		try {
+			PropertyMapping pMapping = mapping.getPropertyMapping(prefix + override.name());
+			pMapping.setColumn(override.column().name());			
 		}
-		catch (ElementNotFoundException ex) {
-			throw new ElementNotFoundException("attribute_override_not_found", override.name(), mapping.getModelName());
+		catch (ElementNotFoundException ex) {					
+			throw new XavaException("attribute_override_not_found", override.name(), mapping.getModelName()); 
+			
 		}
 	}
 
@@ -389,8 +394,10 @@ public class AnnotatedClassParser {
 			metaAggregate.setPOJOClassName(pd.getPropertyType().getName());
 			model.getMetaComponent().addMetaAggregate(metaAggregate);
 			parseViews(model.getMetaComponent(), pd.getPropertyType(), modelName);
-			parseMembers(metaAggregate, pd.getPropertyType(), mapping, 
-					Is.emptyString(parentEmbedded) ? pd.getName() : parentEmbedded + "_" + pd.getName());
+			String embedded = Is.emptyString(parentEmbedded) ? pd.getName() : parentEmbedded + "_" + pd.getName();  
+			parseMembers(metaAggregate, pd.getPropertyType(), mapping, embedded);			
+			parseAttributeOverrides(pd.getReadMethod(), mapping, embedded);			 
+			parseAttributeOverrides(field, mapping, embedded);			
 		}				
 		addReference(model, mapping, pd, field, pd.getName());
 	}

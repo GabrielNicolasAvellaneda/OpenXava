@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @Tab doesn't work with @AttributeOverride.
 - Fix: More than two levels of nested entities as embedded fails.
 - Fix: Loss of the selected rows when enter on the list to choose a reference.
 - Removed "images/" prefix of all action definitions in default-controllers.xml, it was optional since v4.2. 
