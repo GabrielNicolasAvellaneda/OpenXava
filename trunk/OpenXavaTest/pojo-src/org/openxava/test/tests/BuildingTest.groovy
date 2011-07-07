@@ -13,13 +13,11 @@ class BuildingTest extends ModuleTestBase {
 		super(testName, "Building")		
 	}
 
-	void testAttributeOverridesOnEmbeddable() {
-		/* I'm working on this now
+	void testAttributeOverridesOnEmbeddable() {		
 		assertValueInList(0, "name", "MY OFFICE")
 		assertValueInList(0, "address.street", "CUBA")
 		assertValueInList(0, "address.zipCode", "49003")
-		assertValueInList(0, "address.city", "VALENCIA")
-		*/
+		assertValueInList(0, "address.city", "VALENCIA")		
 	}
 	
 }

@@ -32,7 +32,7 @@ class ComponentParser extends ParserBase {
 		parser.parse();				
 		MetaComponent r = parser.getComponent();
 		if (r == null) {
-			r = parseAnnotatedClass(name);
+			r = parseAnnotatedClass(name);			
 		}
 		else if (!r.getName().equals(name)) {
 			throw new XavaException("component_file_not_match", name, r.getName());

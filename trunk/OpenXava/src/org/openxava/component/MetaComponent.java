@@ -75,7 +75,7 @@ public class MetaComponent implements Serializable {
 			get(name);
 			return true;
 		}
-		catch (ElementNotFoundException ex) {
+		catch (ElementNotFoundException ex) {			
 			return false;
 		}		
 	}
