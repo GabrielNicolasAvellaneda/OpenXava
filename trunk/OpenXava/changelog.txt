@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: ClassCastException using a collection with cascade remove and a reference to the same entity in the same entity.
 - Fix: @Tab doesn't work with @AttributeOverride.
 - Fix: More than two levels of nested entities as embedded fails.
 - Fix: Loss of the selected rows when enter on the list to choose a reference.
