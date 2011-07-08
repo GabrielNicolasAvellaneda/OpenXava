@@ -100,14 +100,20 @@ public class MetaReference extends MetaMember implements Cloneable {
 			// Not qualified
 			if (getReferencedModelName().equals(getMetaModel().getName())) metaModelReferenced = getMetaModel(); 
 			else {
-				try {				
-					// look for local aggregate
-					metaModelReferenced = getMetaModel().getMetaComponent().getMetaAggregate(getReferencedModelName());
-				}
-				catch (ElementNotFoundException ex) {
-					// look for entity (looking for component)
+				if (explicitAggregate && !aggregate) {
 					metaModelReferenced = MetaComponent.get(getReferencedModelName()).getMetaEntity();
-					if (!Is.empty(referencedModelContainerReference)) metaModelReferenced.setContainerReference(referencedModelContainerReference); 
+					if (!Is.empty(referencedModelContainerReference)) metaModelReferenced.setContainerReference(referencedModelContainerReference); 					
+				}
+				else {
+					try {				
+						// look for local aggregate
+						metaModelReferenced = getMetaModel().getMetaComponent().getMetaAggregate(getReferencedModelName());
+					}
+					catch (ElementNotFoundException ex) {
+						// look for entity (looking for component)
+						metaModelReferenced = MetaComponent.get(getReferencedModelName()).getMetaEntity();
+						if (!Is.empty(referencedModelContainerReference)) metaModelReferenced.setContainerReference(referencedModelContainerReference); 
+					}
 				}
 			}
 		}

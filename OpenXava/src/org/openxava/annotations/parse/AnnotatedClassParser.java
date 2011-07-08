@@ -151,6 +151,8 @@ import org.openxava.view.meta.MetaReferenceView;
 import org.openxava.view.meta.MetaSearchAction;
 import org.openxava.view.meta.MetaView;
 
+import com.lowagie.text.pdf.interfaces.*;
+
 /**
  * Parse EJB3 Entities (POJOs with JPA annotations) into OpenXava components. <p>
  * 
@@ -331,7 +333,7 @@ public class AnnotatedClassParser {
 
 	private void addMember(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field f, String embedded) throws Exception {
 		if (pd.getName().equals("class") || pd.getPropertyType() == null) return;
-		if (isReference(pd, f)) addReference(model, mapping, pd, f, embedded);
+		if (isReference(pd, f)) addReference(model, mapping, pd, f, embedded, false);
 		else if (Collection.class.isAssignableFrom(pd.getPropertyType())) addCollection(model, mapping, pd, f);
 		else if (pd.getPropertyType().isAnnotationPresent(Embeddable.class)) addEmbeddable(model, mapping, pd, f, embedded);
 		else addProperty(model, mapping, pd, f, embedded);
@@ -397,9 +399,9 @@ public class AnnotatedClassParser {
 			String embedded = Is.emptyString(parentEmbedded) ? pd.getName() : parentEmbedded + "_" + pd.getName();  
 			parseMembers(metaAggregate, pd.getPropertyType(), mapping, embedded);			
 			parseAttributeOverrides(pd.getReadMethod(), mapping, embedded);			 
-			parseAttributeOverrides(field, mapping, embedded);			
+			parseAttributeOverrides(field, mapping, embedded);						
 		}				
-		addReference(model, mapping, pd, field, pd.getName());
+		addReference(model, mapping, pd, field, pd.getName(), true);
 	}
 	
 	private void addAggregateForCollection(MetaModel model, String typeName, String containerReference) throws Exception {
@@ -427,10 +429,11 @@ public class AnnotatedClassParser {
 		}						
 	}
 			
-	private void addReference(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field, String embedded) throws XavaException {
+	private void addReference(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field, String embedded, boolean aggregate) throws XavaException {
 		MetaReference ref = new MetaReference();
 		ref.setName(pd.getName());
 		ref.setReferencedModelName(pd.getPropertyType().getSimpleName());
+		ref.setAggregate(aggregate); 
 		model.addMetaReference(ref);
 		processAnnotations(ref, pd.getReadMethod());
 		processAnnotations(ref, field);

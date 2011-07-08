@@ -755,7 +755,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 
 	private void updateReferencedEntities(MetaModel metaModel, Map values) throws XavaException, RemoteException, CreateException, ValidationException {		
 		for (Iterator it = metaModel.getMetaReferencesToEntity().iterator(); it.hasNext(); ) {
-			MetaReference ref = (MetaReference) it.next();
+			MetaReference ref = (MetaReference) it.next();			
 			Map referenceValues = (Map) values.get(ref.getName());
 			if (referenceValues != null) {
 				int hiddenKeyNotPresent = getHiddenKeyNotPressent(ref, referenceValues);

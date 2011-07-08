@@ -9,8 +9,12 @@ import javax.persistence.*;
  * @author Javier Paniza 
  */
 @Entity
+@View(name="Simple", members="name")
 @Tab( properties= "name, address.street, address.zipCode, address.city" )
 class Building extends Nameable {
+	
+	@ManyToOne
+	Company company
 	
 	@AttributeOverrides([
 		@AttributeOverride(name="street",
