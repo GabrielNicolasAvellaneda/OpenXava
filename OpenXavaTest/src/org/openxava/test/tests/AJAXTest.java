@@ -84,7 +84,7 @@ public class AJAXTest extends ModuleTestBase {
 				"errors, messages,");
 	}
 	
-	public void testCollectionsInsideReferences() throws Exception {
+	public void testCollectionsInsideReferences() throws Exception { 
 		changeModule("Office");
 		execute("CRUD.new");
 		assertCollectionRowCount("defaultCarrier.fellowCarriers", 0);
@@ -419,7 +419,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, messages"); // Perfect: From now on only the needed parts are reloaded
 	}
 		
-	public void testCollections() throws Exception {
+	public void testCollections() throws Exception { 
 		changeModule("Carrier"); 
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount("fellowCarriers", 3); 
