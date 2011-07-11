@@ -17,6 +17,11 @@
 	<view name="Simple">
 		<members>number, name</members>
 	</view>
+	
+	<tab name="OrderByName">
+		<properties>name</properties>
+		<default-order>${name}</default-order>
+	</tab>
 						
 	<entity-mapping table="XAVATEST@separator@DRIVER">
 		<property-mapping
