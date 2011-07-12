@@ -1,6 +1,26 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.2.1 (2011-7-11)
+--------------------------
+- View.setLabelId() supports qualified member name as argument.
+- Commons FileUpload upgraded to 1.2.2.
+- Removed "images/" prefix of all action definitions in default-controllers.xml, it was optional since v4.2.
+- English and Spanish messages refined.
+- New csvEncoding property available in xava.property to define the encoding of the generated CSV.
+- Fix: ClassCastException using a collection with cascade remove and a reference to the same entity in the same entity.
+- Fix: @Tab doesn't work with @AttributeOverride.
+- Fix: More than two levels of nested entities as embedded fails.
+- Fix: Loss of the selected rows when enter on the list to choose a reference.
+- Fix: Performance problem on iPad using list with many columns, it was produced by Flip effect, so Flip effect has been removed. 
+- Fix: Buttons in dialogs does not respond on iPad.
+- Fix: Flip effect on close dialogs on iPad.
+- Fix: IForwardAction does not forward when used on module initialization (on-init, on-each-request or before-each-request).  
+- Fix: Impossible to add a child in Tree editor without treeOrder.
+- Fix: JDBC connection leaks in some circumstances.
+- Fix: References marked as @SearchKey are not modifiable when the keyEditable is false in main view.
+- Fix: Dialog disappears adding collection elements with no chosen rows.
+
 OpenXava 4.2 (2011-6-17)
 ------------------------
 - iPad support: when an application is accessed from an iPad a style adapted to the iPad is used.
