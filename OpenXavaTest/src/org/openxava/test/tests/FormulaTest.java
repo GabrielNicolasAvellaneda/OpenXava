@@ -168,5 +168,13 @@ public class FormulaTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=1");
 		assertTrue("Expected HTML token not found", getHtml().indexOf("Y largo</strong>,<span style=\"background-color: rgb(153, 204, 0);\"> verde </span>") >= 0);
 	}
+	
+	public void testSingleQuotationMarkAsHtmlValue() throws Exception {
+		execute("CRUD.new");
+		setValue("name", "L'AJUNTAMENT");
+		execute("CRUD.refresh");
+		execute("Sections.change", "activeSection=1");
+		assertValue("recipe", "L'Ajuntament");
+	}
 		
 }
