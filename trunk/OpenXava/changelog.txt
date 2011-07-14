@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Using apostrophe in HtmlText editor cut the content from the apostrophe. 
+
 OpenXava 4.2.1 (2011-7-11)
 --------------------------
 - View.setLabelId() supports qualified member name as argument.
