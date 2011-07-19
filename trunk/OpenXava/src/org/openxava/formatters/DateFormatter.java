@@ -52,6 +52,7 @@ public class DateFormatter implements IFormatter {
 	
 	private boolean isExtendedFormat() {
 		return "es".equals(Locales.getCurrent().getLanguage()) ||
+			"ca".equals(Locales.getCurrent().getLanguage()) || 
 			"pl".equals(Locales.getCurrent().getLanguage());
 	}
 	

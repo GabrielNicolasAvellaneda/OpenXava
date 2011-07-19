@@ -8,7 +8,6 @@ import org.openxava.actions.*;
 public class OnChangeVoidAction extends OnChangePropertyBaseAction {
 
 	public void execute() throws Exception {
-		System.out.println("[OnChangeVoidAction.execute] "); //  tmp
 		// Do nothing... if only for test a case
 		addMessage("on_change_void_executed");		
 	}

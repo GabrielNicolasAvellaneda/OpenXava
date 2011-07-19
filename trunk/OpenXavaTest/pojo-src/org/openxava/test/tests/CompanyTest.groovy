@@ -23,6 +23,15 @@ class CompanyTest extends ModuleTestBase {
 		assertNoErrors()
 		assertValue "name", "BUILDING A"
 	}
+	
+	void testCollectionElementInsideAGroup() {
+		execute "CRUD.new"
+		execute "Collection.new", "viewObject=xava_view_buildings"
+		assertNoErrors() // For verifying that really works
+		assertMessagesCount 1
+		setValue "function", "Factory" // For verifying that onchange is thrown only once
+		assertMessagesCount 1		
+	}
 		
 	
 }
