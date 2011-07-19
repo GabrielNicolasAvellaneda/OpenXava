@@ -18,11 +18,11 @@ import org.openxava.util.XavaPreferences;
 public class CreateNewElementInCollectionAction extends CollectionElementViewBaseAction {
 	
 	@SuppressWarnings("unchecked")
-	public void execute() throws Exception {
-		if (getCollectionElementView().isRepresentsAggregate()) {
-			getCollectionElementView().reset();				
+	public void execute() throws Exception {				
+		if (getCollectionElementView().isRepresentsAggregate()) {		
+			getCollectionElementView().reset();						
 		}
-		getCollectionElementView().setCollectionDetailVisible(true);
+		getCollectionElementView().setCollectionDetailVisible(true); 
 		getCollectionElementView().setCollectionEditingRow(-1);
 		showDialog(getCollectionElementView());				
 		if (getCollectionElementView().isCollectionEditable() || 

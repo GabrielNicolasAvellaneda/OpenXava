@@ -961,9 +961,9 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("year", year);
 		setValue("number", "66");
 		execute("CRUD.refresh");
-		assertNoErrors();		
-
-		assertCollectionRowCount("details", 2);
+		assertNoErrors();
+		
+		assertCollectionRowCount("details", 2); 
 		assertValueInCollection("details", 0, 0, "Urgent");
 		assertValueInCollection("details", 0, 1, getProductDescription());
 		assertValueInCollection("details", 0, 2, getProductUnitPriceInPesetas());

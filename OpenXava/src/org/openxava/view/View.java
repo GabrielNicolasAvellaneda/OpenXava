@@ -883,8 +883,10 @@ public class View implements java.io.Serializable {
 	
 	private Map getSubviews() throws XavaException {
 		if (getModelName() == null) return Collections.EMPTY_MAP;		
-		if (subviews == null) {	
-			if (isRepresentsCollection() && !isCollectionDetailVisible()) return Collections.EMPTY_MAP;
+		if (subviews == null) {
+			if (isRepresentsCollection() && !isCollectionDetailVisible()) {
+				return Collections.EMPTY_MAP;
+			}			
 			createSubviews(); 
 		}
 		return subviews;
@@ -895,7 +897,7 @@ public class View implements java.io.Serializable {
 		subviews = new HashMap();					
 		Iterator it = getMetaMembers().iterator();
 		while (it.hasNext()) {
-			MetaMember member = (MetaMember) it.next();
+			MetaMember member = (MetaMember) it.next();			
 			createAndAddSubview(member);
 		}			
 		setEditable(editable);
@@ -1533,9 +1535,10 @@ public class View implements java.io.Serializable {
 	/**
 	 * Clear all data and set the default values.
 	 */
-	public void reset() throws XavaException {		
-		clear();		
-		calculateDefaultValues();
+	public void reset() throws XavaException {
+		createSubviews(); 
+		clear();
+		calculateDefaultValues(true);
 	}
 	
 	/**
@@ -1547,8 +1550,8 @@ public class View implements java.io.Serializable {
 			rootModelName = null;
 		}
 
-		setIdFocusProperty(null);
-		setCollectionDetailVisible(false);
+		setIdFocusProperty(null);		
+		setCollectionDetailVisible(false); 
 		if (values == null) return;		
 		Iterator it = values.entrySet().iterator();				
 		while (it.hasNext()) {
@@ -1574,15 +1577,15 @@ public class View implements java.io.Serializable {
 			for (int i = 0; i < count; i++) {
 				getSectionView(i).clear();
 			}	
-		}				
+		}						
 	}
 	
 	/**
 	 * Set the defaul values in the empty fields.  
 	 */
-	private void calculateDefaultValues() throws XavaException {
+	private void calculateDefaultValues(boolean firstLevel) throws XavaException {
 		// Properties
-		if (getParent() == null) {
+		if (firstLevel) { 
 			getRoot().registeringExecutedActions = true;
 		}		
 		try {					
@@ -1641,7 +1644,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) itSubviews.next();
 				if (subview.isRepresentsCollection()) continue;
 				if (subview.isRepresentsAggregate()) { 
-					subview.calculateDefaultValues();
+					subview.calculateDefaultValues(false);
 				}
 				else { // Reference to entity
 					subview.clear();
@@ -1652,14 +1655,14 @@ public class View implements java.io.Serializable {
 			Iterator itGroups = getGroupsViews().values().iterator();			
 			while (itGroups.hasNext()) {
 				View group = (View) itGroups.next(); 
-				group.calculateDefaultValues();
+				group.calculateDefaultValues(false);
 			}			
 					
 			// Sections		
 			if (hasSections()) {
 				int count = getSections().size();
 				for (int i = 0; i < count; i++) {
-					getSectionView(i).calculateDefaultValues();
+					getSectionView(i).calculateDefaultValues(false);
 				}	
 			}			
 			
@@ -1716,7 +1719,7 @@ public class View implements java.io.Serializable {
 			}
 		}
 		finally {						
-			if (getParent() == null) {
+			if (firstLevel) { 
 				getRoot().registeringExecutedActions = false;		
 				resetExecutedActions();
 			}			
@@ -1727,16 +1730,16 @@ public class View implements java.io.Serializable {
 		if (getRoot().executedActions != null) getRoot().executedActions.clear();		
 	}
 	
-	private void registerExecutedAction(String name, Object action) {		
+	private void registerExecutedAction(String name, Object action) {
 		if (!getRoot().registeringExecutedActions) return;		
 		if (getRoot().executedActions == null) getRoot().executedActions = new HashSet();
-		getRoot().executedActions.add(getModelName() + "::" + name + "::" + action.getClass()); 		
+		getRoot().executedActions.add(getModelName() + "::" + name + "::" + action.getClass());
 	}
 	
 	private boolean actionRegisteredAsExecuted(String name, Object action) {
-		if (!getRoot().registeringExecutedActions) return false;				
-		if (getRoot().executedActions == null) return false;		
-		return getRoot().executedActions.contains(getModelName() + "::" + name + "::" + action.getClass()); 
+		if (!getRoot().registeringExecutedActions) return false;
+		if (getRoot().executedActions == null) return false;
+		return getRoot().executedActions.contains(getModelName() + "::" + name + "::" + action.getClass());
 	}
 
 	public boolean isKeyEditable() {		
@@ -1988,20 +1991,16 @@ public class View implements java.io.Serializable {
 				section.assignValuesToWebView(qualifier, false);
 			}						
 						
-			if (firstLevel) { 
+			if (firstLevel) {
 				changedProperty = Ids.undecorate(getRequest().getParameter("xava_changed_property"));
 				if (!Is.emptyString(changedProperty)) {
-					if (getParent() == null) {
-						getRoot().registeringExecutedActions = true;
-					}
+					getRoot().registeringExecutedActions = true;
 					try {					
 						propertyChanged(changedProperty);
 					}
 					finally {
-						if (getParent() == null) {
-							getRoot().registeringExecutedActions = false;		
-							resetExecutedActions();
-						}						
+						getRoot().registeringExecutedActions = false;		
+						resetExecutedActions();						
 					}						
 				}			
 			}				
@@ -2067,7 +2066,7 @@ public class View implements java.io.Serializable {
 	}
 
 	private String getQualifiedCollectionName() {
-		if (firstLevel) return "";
+		if (isFirstLevel()) return ""; 
 		if (!isRepresentsCollection() && !isRepresentsEntityReference() && !isRepresentsAggregate()) return ""; 
 		return getParent().getQualifiedCollectionName() + getMemberName() + "_"; 
 	}
@@ -2302,7 +2301,7 @@ public class View implements java.io.Serializable {
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {
+	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {		 
 		if (!isOnlyThrowsOnChange()) {					
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
@@ -2896,7 +2895,8 @@ public class View implements java.io.Serializable {
 		if (b != collectionDetailVisible) {
 			refreshCollection(); 
 		}
-		collectionDetailVisible = b;
+		collectionDetailVisible = b;	
+		firstLevel = b; 
 	}
 
 	public Messages getErrors() {		
@@ -3483,13 +3483,17 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
+	private boolean isFirstLevel() { 
+		return firstLevel || getParent() == null; 
+	}
+	
 	private String calculateFocusPropertyId() throws XavaException { 
 		String prefix = Is.emptyString(getMemberName())?"":getMemberName() + ".";							
 		if (Is.emptyString(focusPropertyId)) {			
 			return getFirsEditablePropertyId(prefix);
 		}
-		else {						
-			String focusPropertyName = focusPropertyId.substring(prefix.length());
+		else {		
+			String focusPropertyName = focusPropertyId.startsWith(prefix)?focusPropertyId.substring(prefix.length()):focusPropertyId; 
 			int idx = focusPropertyName.indexOf('.'); 
 			if (idx < 0) {							
 				String name = getNextFocusPropertyName(focusPropertyName);				
@@ -3881,7 +3885,7 @@ public class View implements java.io.Serializable {
 		return changedPropertiesActionsAndReferencesWithNotCompositeEditor;
 	}
 	
-	private void fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(Map result) {  				
+	private void fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(Map result) {
 		if (displayAsDescriptionsList() && 
 				(
 					refreshDescriptionsLists ||	

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @OnChange actions are executed twice inside collection elements with groups.
+- Fix: No focus placement inside collection elements in some cases.  
+- Date format improved for Catalan.
 - Fix: Using apostrophe in HtmlText editor cut the content from the apostrophe. 
 
 OpenXava 4.2.1 (2011-7-11)

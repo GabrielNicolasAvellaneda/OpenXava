@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Parameter;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
+import org.openxava.test.actions.*;
 import org.openxava.test.validators.*;
 
 /**
@@ -17,11 +18,12 @@ import org.openxava.test.validators.*;
  */
 
 @Entity
+
 @View(members=
 	"serviceType;" +
 	"quantity, unitPrice, amount;" +
 	"product;" +
-	"deliveryDate, soldBy;" +
+	"deliveryDate, soldBy;" +	
 	"remarks"
 )
 @EntityValidator(value=InvoiceDetailValidator.class,
@@ -71,7 +73,7 @@ public class InvoiceDetail {
 		@Column(name="MONTHDELIVERY"), 
 		@Column(name="DAYDELIVERY") 
 	})	
-	@DefaultValueCalculator(CurrentDateCalculator.class)
+	@DefaultValueCalculator(CurrentDateCalculator.class)	
 	private java.util.Date deliveryDate;
 	
 	@ManyToOne(fetch=FetchType.LAZY) 	

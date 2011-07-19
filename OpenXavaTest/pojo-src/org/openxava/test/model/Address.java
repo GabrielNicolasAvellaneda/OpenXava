@@ -28,7 +28,7 @@ public class Address implements IWithCity {
 
 	@Transient
 	private Customer customer;
-		
+	
 	@Transient @Action("Address.fillViewProperty")
 	private String viewProperty;	
 	

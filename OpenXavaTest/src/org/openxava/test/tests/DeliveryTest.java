@@ -293,7 +293,7 @@ public class DeliveryTest extends ModuleTestBase {
 		XPersistence.commit();
 	}
 	
-	public void testSearchingByAnyPropertyUsingRefresh() throws Exception {
+	public void testSearchingByAnyPropertyUsingRefresh() throws Exception { 
 		// One result
 		execute("CRUD.new");
 		assertValue("number", "");
