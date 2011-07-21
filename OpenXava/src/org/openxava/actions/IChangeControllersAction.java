@@ -3,9 +3,11 @@ package org.openxava.actions;
 /**
  * To indicate the next controllers to show. <p>
  * 
- * Given that {@link BaseAction) already implements it, you can just call to the 
- * setControllers(), returnToPreviousControllers(), setDefaultControllers(),  
- * addActions(), removeActions() and clearActions() methods from your action. 
+ * Instead of implementing this interface you can use the next methods from 
+ * {@link BaseAction}: setControllers(), returnToPreviousControllers(), setDefaultControllers(),  
+ * addActions(), removeActions() and clearActions() methods from your action.<br>
+ * If you choose to implement this interface instead, it has preference over 
+ * the <code>BaseAction</code> methods.
  * 
  * @author Javier Paniza
  */

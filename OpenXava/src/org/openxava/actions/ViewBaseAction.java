@@ -13,7 +13,7 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-abstract public class ViewBaseAction extends BaseAction {
+abstract public class ViewBaseAction extends BaseAction { 
 	
 	private static Log log = LogFactory.getLog(ViewBaseAction.class);
 		
@@ -22,6 +22,7 @@ abstract public class ViewBaseAction extends BaseAction {
 	@Inject
 	private Stack previousViews;
 	private boolean dialogShown = false; 
+	private boolean hasNextControllers = false; 
 	
 	/**
 	 * Creates a new view and shows it. <p>
@@ -50,7 +51,7 @@ abstract public class ViewBaseAction extends BaseAction {
 		setView(newView);		
 		setNextMode(DETAIL);
 	}
-
+	
 	/**
 	 * Shows the specified view inside a dialog. <p>
 	 * 
@@ -60,13 +61,22 @@ abstract public class ViewBaseAction extends BaseAction {
 	 */		
 	protected void showDialog(View viewToShowInDialog) throws Exception { 
 		showView(viewToShowInDialog);
-		if (getNextControllers() == null) {			
+		
+		if (!isControllersChanged()) {
 			clearActions();
 		}
+		
 		getManager().showDialog();
 		dialogShown = true;
 	}
 
+	private boolean isControllersChanged() throws Exception { 
+		if (hasNextControllers) return true;
+		if (!(this instanceof IChangeControllersAction)) return false;
+		return ((IChangeControllersAction) this).getNextControllers() != null;
+	}
+	
+	
 	/**
 	 * Creates a new view and shows it inside a dialog. <p>
 	 * 
@@ -145,6 +155,7 @@ abstract public class ViewBaseAction extends BaseAction {
 	protected void setControllers(String... controllers) {
 		if (dialogShown) getManager().restorePreviousControllers(); 
 		super.setControllers(controllers);
+		hasNextControllers = controllers != null; 
 	}
 	
 }

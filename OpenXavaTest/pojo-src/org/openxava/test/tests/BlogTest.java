@@ -14,6 +14,14 @@ public class BlogTest extends ModuleTestBase {
 		super(testName, "Blog");		
 	}
 	
+	public void testSetControllersAndRemoveActionsInTheSameAction() throws Exception {
+		execute("Blog.login");
+		assertDialog();
+		assertAction("Login.login");
+		assertAction("Dialog.cancel");
+		assertNoAction("BlogLogin.notWanted");
+	}
+	
 	public void testEditorForReferenceInEditorsXML() throws Exception {
 		execute("CRUD.new");
 		assertTrue(getHtml().indexOf("There are no comments") >= 0);

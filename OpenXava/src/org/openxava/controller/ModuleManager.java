@@ -40,10 +40,10 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	final static public String getVersion() {
-		return "4.2.1";
+		return "4.2.2beta";
 	}
 	final static private String getVersionDate() {
-		return "2011-7-11"; 
+		return "2011-7-xx"; 
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
@@ -408,18 +408,7 @@ public class ModuleManager implements java.io.Serializable {
 			if (action instanceof IChangeControllersAction) {
 				IChangeControllersAction changeControllersAction = (IChangeControllersAction) action;
 				String [] nextControllers = changeControllersAction.getNextControllers();
-				if (nextControllers != IChangeControllersAction.SAME_CONTROLLERS) {
-					if (nextControllers == IChangeControllersAction.DEFAULT_CONTROLLERS) {
-						setupModuleControllers();															
-					}
-					else if (nextControllers == IChangeControllersAction.PREVIOUS_CONTROLLERS) {
-						restorePreviousControllers();															
-					}													
-					else {
-						memorizeControllers();										
-						setControllersNames(nextControllers);
-					}
-				}
+				setControllers(nextControllers);
 			}			
 			if (action instanceof IHideActionAction) {
 				String actionToHide = ((IHideActionAction) action).getActionToHide();
@@ -510,6 +499,25 @@ public class ModuleManager implements java.io.Serializable {
 			dialogLevel = originalDialogLevel; 
 			manageException(metaAction, errors, messages, ex);
 		}				
+	}
+	
+	/**
+	 * 
+	 * @since 4.2.2
+	 */
+	public void setControllers(String[] nextControllers) {
+		if (nextControllers != IChangeControllersAction.SAME_CONTROLLERS) {
+			if (nextControllers == IChangeControllersAction.DEFAULT_CONTROLLERS) {
+				setupModuleControllers();															
+			}
+			else if (nextControllers == IChangeControllersAction.PREVIOUS_CONTROLLERS) {
+				restorePreviousControllers();															
+			}													
+			else {
+				memorizeControllers();										
+				setControllersNames(nextControllers);
+			}
+		}
 	}
 	
 	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {		

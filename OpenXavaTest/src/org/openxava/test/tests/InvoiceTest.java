@@ -29,8 +29,6 @@ import org.openxava.util.Is;
 import org.openxava.util.Strings;
 import org.openxava.util.XavaPreferences;
 
-import com.gargoylesoftware.htmlunit.html.*;
-
 
 /**
  * 

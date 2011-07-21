@@ -73,7 +73,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	public void testSecondLevelDialogReturningWithCancelButton() throws Exception { 
-		assertSecondLevelDialogReturning(false);
+		assertSecondLevelDialogReturning(false); 
 	}
 	
 	public void testSecondLevelDialogReturningWithCloseDialogButton() throws Exception { 
