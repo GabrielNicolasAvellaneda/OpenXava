@@ -9,7 +9,6 @@ import org.openxava.model.meta.MetaModel;
 import org.openxava.model.meta.MetaReference;
 import org.openxava.tab.Tab;
 import org.openxava.util.ElementNotFoundException;
-import org.openxava.util.Is;
 import org.openxava.util.XavaException;
 import org.openxava.view.View;
 import org.openxava.view.meta.MetaReferenceView;

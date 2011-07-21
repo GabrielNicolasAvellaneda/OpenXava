@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: After using setControllers(), removeActions() has no effect if executed in the same action.  
+- BaseAction no longer implements IChangeControllersAction, but still implements the change controllers related methods.
+- Fix: Creating a new collection element when all element components are inside groups fails.
 - Fix: @OnChange actions are executed twice inside collection elements with groups.
 - Fix: No focus placement inside collection elements in some cases.  
 - Date format improved for Catalan.
@@ -233,8 +236,8 @@ OpenXava 4m5 (2010-7-28)
 - Fix: Jasper report actions does not show correct data after changing schema.
 - Fix: Several nested tooltip for cells when executing several times actions over a collection/list.
 - Fix: JavaScript memory leak (so performance degradation) when working some time with a collection/list. 
-- Fix: checkbox 'select/deselect all' not display in choose list (rows with radio button). 
-- Fix: when you shorten columns if the value contain '-' it produces two lines.
+- Fix: Checkbox 'select/deselect all' not display in choose list (rows with radio button). 
+- Fix: When you shorten columns if the value contain '-' it produces two lines.
 
 OpenXava 4m4 (2010-5-25)
 ------------------------

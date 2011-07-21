@@ -24,6 +24,21 @@
 	
 	</controller>
 		
+	<controller name="Blog">
+		<extends controller="Typical"/>
+	
+		<action name="login" class="org.openxava.test.actions.GoLoginAction"/>
+	
+	</controller>
+	
+	<controller name="BlogLogin">
+		<extends controller="Login"/>
+		<extends controller="Dialog"/>
+	
+		<action name="notWanted" class="org.openxava.test.actions.VoidAction"/>
+	
+	</controller>		
+		
 	<controller name="HidingActions">
 	
 		<action  name="hideGeneratePdf" mode="list" 

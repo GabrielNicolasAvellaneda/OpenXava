@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.*;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -14,7 +15,9 @@ import org.openxava.web.DescriptionsLists;
  * @author Javier Paniza
  */
 
-abstract public class BaseAction implements IAction, IRequestAction, IModuleContextAction, IChangeModeAction, IChangeControllersAction {
+abstract public class BaseAction implements IAction, IRequestAction, IModuleContextAction, IChangeModeAction {
+	
+	private static Log log = LogFactory.getLog(BaseAction.class); 
 	
 	private Messages errors;
 	private Messages messages;
@@ -22,7 +25,6 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	private transient HttpServletRequest request;
 	private ModuleContext context; 
 	private String nextMode;
-	private String [] nextControllers;
 	
 	public Messages getErrors() {
 		return errors;
@@ -250,14 +252,19 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	 * @since 4m2
 	 */	
 	protected void setControllers(String ... controllers) {  
-		nextControllers = controllers;
+		if (!(this instanceof IChangeControllersAction)) {
+			getManager().setControllers(controllers); 
+		}
+		else {
+			log.warn(XavaResources.getString("change_controllers_action_over_set_contoller", getClass())); 
+		}
 	}
 
 	/**
 	 * @since 4m2
 	 */	
 	protected void returnToPreviousControllers() { 
-		setControllers(PREVIOUS_CONTROLLERS);
+		setControllers(IChangeControllersAction.PREVIOUS_CONTROLLERS); 
 	}
 	
 	/**
@@ -272,11 +279,7 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	 * @since 4m2
 	 */
 	protected void setDefaultControllers() { 
-		setControllers(DEFAULT_CONTROLLERS);
-	}
-
-	public String[] getNextControllers() throws Exception { 		
-		return nextControllers;
+		setControllers(IChangeControllersAction.DEFAULT_CONTROLLERS); 
 	}
        
 }
