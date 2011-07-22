@@ -285,11 +285,9 @@ here that you want to override.
 	
 	<controller name="LoadImageIntoGallery">
 		<action name="loadImage"
-			class="org.openxava.actions.LoadImageIntoGalleryAction"/>			
-		
+			class="org.openxava.actions.LoadImageIntoGalleryAction"/>					 
 		<action name="cancel"
-			class="org.openxava.actions.CancelAction"/>					
-		
+			class="org.openxava.actions.CancelAction"/>		
 	</controller>	
 			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction"/>										
 		<action name="cancel"
@@ -334,9 +332,9 @@ here that you want to override.
 			class="org.openxava.actions.SearchByViewKeyAction"
 			keystroke="F2"/>
 		<action name="update" by-default="almost-always"
-			class="org.openxava.actions.UpdateAction"/>			
+			class="org.openxava.actions.UpdateAction"/> 			
 		<action name="cancel"
-			class="org.openxava.actions.CancelAction"/>			
+			class="org.openxava.actions.CancelAction"/>
 	</controller>
 					<controller name="ReferenceSearch">		<action name="choose" by-default="almost-always"			class="org.openxava.actions.ChooseReferenceAction"/> 		<action name="cancel"			class="org.openxava.actions.CancelFromCustomListAction"/>
 	</controller>

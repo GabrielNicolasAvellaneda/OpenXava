@@ -916,7 +916,8 @@ public class ModuleManager implements java.io.Serializable {
 		if (viewName == null) {			
 			viewName = "xava/detail"; 
 		}		
-		else if (isShowDialog() && viewName.equals(defaultView)) return "xava/detail";  
+		else if (dialogLevel > 0 && viewName.equals(defaultView)) return "xava/detail";
+		
 		return viewName;		
 	}
 

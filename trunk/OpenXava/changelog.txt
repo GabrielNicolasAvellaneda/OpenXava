@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Closing a two level dialog in a module with web-view shows the root view in the dialog.
 - Fix: After using setControllers(), removeActions() has no effect if executed in the same action.  
 - BaseAction no longer implements IChangeControllersAction, but still implements the change controllers related methods.
 - Fix: Creating a new collection element when all element components are inside groups fails.

@@ -10,7 +10,7 @@ public class CancelAction extends ViewBaseAction implements INavigationAction {
 	private boolean editable = true;
 	private boolean restoreEditable = false;
 	
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		closeDialog(); 
 		if (restoreEditable && getView() != null) {
 			getView().setKeyEditable(keyEditable);
