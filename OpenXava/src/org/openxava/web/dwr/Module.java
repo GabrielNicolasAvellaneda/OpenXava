@@ -19,6 +19,8 @@ import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 import org.openxava.view.View; 
 
+import com.lowagie.text.pdf.interfaces.*;
+
 /**
  * For accessing to module execution from DWR. <p>
  * 
@@ -196,7 +198,7 @@ public class Module extends DWRBase {
 			if (manager.getDialogLevel() > 0) {
 				changedParts.put(decorateId("dialog" + manager.getDialogLevel()),   
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
-				);				
+				);		
 				return;
 			}			
 		}

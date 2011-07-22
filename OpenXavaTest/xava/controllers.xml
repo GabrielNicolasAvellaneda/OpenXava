@@ -18,6 +18,22 @@
 		That is to say, it is better specify the labels in resources files and not here.		
 	-->
 	
+	<controller name="ShowSeller">
+	
+		<action name="show" class="org.openxava.test.actions.ShowSellerAction"/>
+		<action name="goShowSeller" class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="ShowSeller"/>
+			<set property="reinit" value="true"/>
+		</action>
+	
+	</controller>
+	
+	<controller name="ModifySeller">
+	
+		<action name="modify" class="org.openxava.test.actions.ModifySellerAction"/>
+	
+	</controller>
+	
 	<controller name="Login">
 	
 		<action name="login" class="org.openxava.test.actions.LoginAction"/>
