@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- JetSpeed 2.2.1 supported.
+- Fix: regenerateGenerator ant task fails.
+- Fix: portletLocales of xava.propeties has no effect on portlet.xml generation.
 - Fix: Closing a two level dialog in a module with web-view shows the root view in the dialog.
 - Fix: After using setControllers(), removeActions() has no effect if executed in the same action.  
 - BaseAction no longer implements IChangeControllersAction, but still implements the change controllers related methods.

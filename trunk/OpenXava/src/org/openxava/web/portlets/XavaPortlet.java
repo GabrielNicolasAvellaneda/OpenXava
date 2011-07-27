@@ -95,6 +95,9 @@ public class XavaPortlet extends GenericPortlet {
 		
 		request.removeAttribute("xava.portal.user");
 		request.removeAttribute("xava.portal.userinfo");
+		
+		setContextPath(request);
+		
 		Map userInfo = (Map) request.getAttribute(PortletRequest.USER_INFO);			
 		if (userInfo != null) {
 			UserInfo user = new UserInfo();
@@ -149,8 +152,14 @@ public class XavaPortlet extends GenericPortlet {
 		rd.include(request, response);		
 	}
 		
-	private boolean isJetspeed20(PortletRequest request) {
-		return request.getPortalContext().getPortalInfo().indexOf("Jetspeed/2.0") >= 0;
+	private void setContextPath(RenderRequest request) {		
+		if (isJetspeed22(request)) {	
+			request.setAttribute("xava.contextPath", "/" + application);  
+		}		
+	}
+	
+	private boolean isJetspeed22(PortletRequest request) { 
+		return request.getPortalContext().getPortalInfo().toLowerCase().contains("jetspeed/2.2");
 	}
 
 	public void processAction(ActionRequest request, ActionResponse response) throws PortletException {
@@ -215,7 +224,7 @@ public class XavaPortlet extends GenericPortlet {
 				}
 				else if (portal.indexOf("websphere portal/6.1") >= 0) styleClass = preferences.getWebSpherePortal61StyleClass();  
 				else if (portal.indexOf("websphere portal/6") >= 0) styleClass = preferences.getWebSpherePortal6StyleClass();
-				else if (portal.indexOf("websphere portal/5") >= 0) styleClass = preferences.getWebSpherePortalStyleClass();			
+				else if (portal.indexOf("websphere portal/5") >= 0) styleClass = preferences.getWebSpherePortalStyleClass();				
 				else if (portal.indexOf("jetspeed") >= 0) styleClass = preferences.getJetSpeed2StyleClass();
 				else style = Style.getInstance();
 				

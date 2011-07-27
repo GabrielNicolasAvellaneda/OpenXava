@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Jul 07 20:20:19 CEST 2009
+ * @version Wed Jul 27 17:47:24 CEST 2011
  */
 public class AggregateReferencePG {
     Properties properties = new Properties();
@@ -24,22 +24,10 @@ public void setReference(MetaReference ref) {
 	this.reference = ref;
 }
 
-private boolean ejb;
-public void setEjb(boolean ejb) {
-	this.ejb = ejb;
-}
-
-public static void generateEJB(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
-	AggregateReferencePG pg = new AggregateReferencePG();
-	pg.setReference(ref);
-	pg.setEjb(true); 
-	pg.generate(context, out);
-}
 
 public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
 	AggregateReferencePG pg = new AggregateReferencePG();
-	pg.setReference(ref);
-	pg.setEjb(false); 
+	pg.setReference(ref); 
 	pg.generate(context, out);
 }
 
@@ -56,11 +44,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     
     out.print("  \t\n\t// ");
     out.print(referenceName);
-    out.print(" : Aggregate/Agregado");
-    if (ejb) { 
-    out.print(" \n\t/**\n\t * @ejb.value-object match=\"persistentCalculatedAndAggregate\"\n\t * @ejb:interface-method\n\t */");
-    } 
-    out.print(" \n\tpublic ");
+    out.print(" : Aggregate/Agregado \n\tpublic ");
     out.print(referencedModelClass);
     out.print(" get");
     out.print(referenceName);
@@ -97,21 +81,13 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(ref.getName());
     out.print("());");
     } 
-    out.print("\t\t\n\t\treturn r;\n\t}");
-    if (ejb) { 
-    out.print(" \t\n\t/**\n\t * @ejb.value-object match=\"persistentCalculatedAndAggregate\"\n\t * @ejb:interface-method\n\t */");
-    } 
-    out.print(" \t \n\tpublic void set");
+    out.print("\t\t\n\t\treturn r;\n\t}\t\n\tpublic void set");
     out.print(referenceName);
     out.print("(");
     out.print(referencedModelClass);
     out.print(" new");
     out.print(referenceName);
-    out.print(") throws java.rmi.RemoteException {");
-    if (ejb) { 
-    out.print(" \n\t\tthis.modified = true;");
-    } 
-    out.print(" \t\n\t\tif (new");
+    out.print(") throws java.rmi.RemoteException { \n\t\tif (new");
     out.print(referenceName);
     out.print(" == null) new");
     out.print(referenceName);
@@ -148,41 +124,20 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(refName);
     out.print("());");
     } 
-    out.print("\t\t\t\n\t}\n\t\n\t// For acceding to properties of this from calculators inside aggregates");
-    if (ejb) { 
-    	for (Iterator it = reference.getMetaModel().getMetaPropertiesKey().iterator(); it.hasNext();) {
-    		MetaProperty p = (MetaProperty) it.next();
-    
-    out.print(" \t\n\tprivate ");
-    out.print(p.getTypeName());
-    out.print(" get");
-    out.print(referenceName);
-    out.print("_");
-    out.print(Strings.firstLower(reference.getMetaModel().getName()));
-    out.print("_");
-    out.print(p.getName());
-    out.print("() {\n\t\treturn get");
-    out.print(Strings.firstUpper(p.getName()));
-    out.print("();\n\t}");
-    		
-    	}
-    
-    } else { 
-    out.print(" \t\n\tprivate ");
+    out.print("\t\t\t\n\t}\n\t\n\t// For acceding to properties of this from calculators inside aggregates\n\tprivate ");
     out.print(reference.getMetaModel().getName());
     out.print(" get");
     out.print(referenceName);
     out.print("_");
     out.print(Strings.firstLower(reference.getMetaModel().getName()));
     out.print("() {\n\t\treturn this;\n\t}");
-    } 
     	
     for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
     	MetaProperty originalProperty = (MetaProperty) itAggregateProperties.next();
     	originalProperty.setReadOnly(false);
     	MetaProperty property = originalProperty.cloneMetaProperty();
-    	property.setName(reference.getName() + "_" + property.getName());
-    	PropertyPG.generatePrivate(context, out, property, ejb); 
+    	property.setName(reference.getName() + "_" + property.getName()); 
+    	PropertyPG.generatePrivate(context, out, property, false); 
     } 
     
     for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itReferences.hasNext();) {	
@@ -194,12 +149,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     		AggregateReferencePG.generate(context, out, ref);
     	} 
     	else { // reference to entity or aggregate implemented as EJB
-    	    if (ejb) {
-    			EntityReferenceEJBPG.generate(context, out, ref);
-    		}	
-    		else {
-    			EntityReferencePG.generate(context, out, ref);
-    		}
+    		EntityReferencePG.generate(context, out, ref);
     	}		
     } 
     
@@ -237,7 +187,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Jul 07 20:20:19 CEST 2009", // date this file was generated
+        { "Wed Jul 27 17:47:25 CEST 2011", // date this file was generated
              "../OpenXava/generator/aggregateReference.xml", // input file
              "../OpenXava/generator/AggregateReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

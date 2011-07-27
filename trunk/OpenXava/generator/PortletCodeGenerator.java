@@ -79,7 +79,7 @@ public class PortletCodeGenerator {
 			};
 			LiferayDisplayXmlPG.main(argvLiferayDisplay);
 						
-			if (isGenerateJetspeed2Files()) {
+			if (isGenerateJetspeed2Files()) {				
 				
 				// Remove all
 				File projectFolder = new File(pagesDir + "/" + project);
