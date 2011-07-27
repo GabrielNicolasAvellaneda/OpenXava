@@ -273,10 +273,6 @@
 	     <arg value="${generator.dir}${file.separator}entityReference.xml"/> 
 	     <arg value="${generator.dir}${file.separator}EntityReferencePG.java"/>         
 	   </java>  		
-	   <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-	     <arg value="${generator.dir}${file.separator}entityReferenceEJB.xml"/> 
-	     <arg value="${generator.dir}${file.separator}EntityReferenceEJBPG.java"/>         
-	   </java>  		
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
          <arg value="${generator.dir}${file.separator}aggregateReference.xml"/> 
          <arg value="${generator.dir}${file.separator}AggregateReferencePG.java"/>         

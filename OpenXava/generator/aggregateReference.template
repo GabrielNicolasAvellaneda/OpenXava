@@ -13,22 +13,10 @@ public void setReference(MetaReference ref) {
 	this.reference = ref;
 }
 
-private boolean ejb;
-public void setEjb(boolean ejb) {
-	this.ejb = ejb;
-}
-
-public static void generateEJB(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
-	AggregateReferencePG pg = new AggregateReferencePG();
-	pg.setReference(ref);
-	pg.setEjb(true); 
-	pg.generate(context, out);
-}
 
 public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
 	AggregateReferencePG pg = new AggregateReferencePG();
-	pg.setReference(ref);
-	pg.setEjb(false); 
+	pg.setReference(ref); 
 	pg.generate(context, out);
 }
 
@@ -40,12 +28,6 @@ MetaAggregateForReference referencedModel = (MetaAggregateForReference) referenc
 String referencedModelClass = referencedModel.getBeanClass();
 #  	
 	// #(referenceName)# : Aggregate/Agregado 
-# if (ejb) { # 
-	/**
-	 * @ejb.value-object match="persistentCalculatedAndAggregate"
-	 * @ejb:interface-method
-	 */
-# } # 
 	public #(referencedModelClass)# get#(referenceName)#() {
 		#(referencedModelClass)# r = new #(referencedModelClass)#();
 		# 
@@ -65,16 +47,7 @@ for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itR
 # } #		
 		return r;
 	}	
-# if (ejb) { # 	
-	/**
-	 * @ejb.value-object match="persistentCalculatedAndAggregate"
-	 * @ejb:interface-method
-	 */
-# } # 	 
 	public void set#(referenceName)#(#(referencedModelClass)# new#(referenceName)#) throws java.rmi.RemoteException { 
-# if (ejb) { # 
-		this.modified = true;
-# } # 	
 		if (new#(referenceName)# == null) new#(referenceName)# = new #(referencedModelClass)#();
 # 	
 for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
@@ -93,29 +66,16 @@ for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itR
 	}
 	
 	// For acceding to properties of this from calculators inside aggregates
-# if (ejb) { 
-	for (Iterator it = reference.getMetaModel().getMetaPropertiesKey().iterator(); it.hasNext();) {
-		MetaProperty p = (MetaProperty) it.next();
-# 	
-	private #(p.getTypeName())# get#(referenceName)#_#(Strings.firstLower(reference.getMetaModel().getName()))#_#(p.getName())#() {
-		return get#(Strings.firstUpper(p.getName()))#();
-	}
-# 		
-	}
-# 
-
-# } else { # 	
 	private #(reference.getMetaModel().getName())# get#(referenceName)#_#(Strings.firstLower(reference.getMetaModel().getName()))#() {
 		return this;
-	}
-# } # 
+	} 
 # 	
 for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
 	MetaProperty originalProperty = (MetaProperty) itAggregateProperties.next();
 	originalProperty.setReadOnly(false);
 	MetaProperty property = originalProperty.cloneMetaProperty();
-	property.setName(reference.getName() + "_" + property.getName());
-	PropertyPG.generatePrivate(context, out, property, ejb); 
+	property.setName(reference.getName() + "_" + property.getName()); 
+	PropertyPG.generatePrivate(context, out, property, false); 
 } 
 
 for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itReferences.hasNext();) {	
@@ -127,12 +87,7 @@ for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itR
 		AggregateReferencePG.generate(context, out, ref);
 	} 
 	else { // reference to entity or aggregate implemented as EJB
-	    if (ejb) {
-			EntityReferenceEJBPG.generate(context, out, ref);
-		}	
-		else {
-			EntityReferencePG.generate(context, out, ref);
-		}
+		EntityReferencePG.generate(context, out, ref);
 	}		
 } 
 # 

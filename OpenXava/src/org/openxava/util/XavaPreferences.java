@@ -364,6 +364,10 @@ public class XavaPreferences {
 				.getProperty("portletLocales",
 						"bg, ca, de, en, es, fr, in, it, ja, ko, nl, pl, pt, ru, sv, zh");
 	}
+	
+	public boolean hasPortletLocales() { 
+		return !Is.emptyString(getProperties().getProperty("portletLocales"));
+	}
 
 	public String getDefaultPersistenceUnit() {
 		return getProperties().getProperty("defaultPersistenceUnit", "default");

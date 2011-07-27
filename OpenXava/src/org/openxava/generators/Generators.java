@@ -14,7 +14,7 @@ import org.openxava.util.*;
  */
 public class Generators {
 
-	
+	private static Collection availableLocales = null;
 	
 	public static String generateCast(String type, String sentence) throws XavaException {
 		if (type == null) {
@@ -162,16 +162,25 @@ public class Generators {
 	 * @return of Locale
 	 */
 	public static Collection getAvailableLocales(String resourcesFilesPath) {
-		File dir = new File(resourcesFilesPath);
-		String [] files = dir.list();
-		Collection result = new HashSet();
-		for (int i = 0; i < files.length; i++) {
-			int idx = files[i].lastIndexOf('_');
-			if (idx >= 0) {
-				result.add(new Locale(files[i].substring(idx + 1, idx + 3)));
+		if (availableLocales == null) { 
+			availableLocales = new HashSet();
+			if (XavaPreferences.getInstance().hasPortletLocales()) {			
+				for (String locale: XavaPreferences.getInstance().getPortletLocales().split(",")) {
+					availableLocales.add(new Locale(locale.trim()));
+				}		
+			}
+			else {
+				File dir = new File(resourcesFilesPath);
+				String [] files = dir.list();
+				for (int i = 0; i < files.length; i++) {
+					int idx = files[i].lastIndexOf('_');
+					if (idx >= 0) {
+						availableLocales.add(new Locale(files[i].substring(idx + 1, idx + 3)));
+					}
+				}
 			}
 		}
-		return result;
+		return availableLocales;		
 	}
 	
 	public static String convertPropertyNameInPropertyCall(String propertyName) {
