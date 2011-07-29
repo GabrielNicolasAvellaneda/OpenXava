@@ -792,6 +792,19 @@
 		</action>
 	</controller>
 	
+	<controller name="IssueChangeDB">
+		<extends controller="Typical"/>
+		<extends controller="PersistenceUnit"/>
+		<action name="changeToCompanyA" on-init="true"
+			class="org.openxava.actions.SetPersistenceUnitAction">
+			<set property="newPersistenceUnit" value="companyA"/>
+		</action>
+		<action name="changeToCompanyB" 
+			class="org.openxava.actions.SetPersistenceUnitAction">
+			<set property="newPersistenceUnit" value="companyB"/>
+		</action>
+	</controller>	
+	
 	<controller name="CarrierWithSections">
 		<action name="fellowCarriersSelected" mode="detail"
 			class="org.openxava.test.actions.ViewNameFellowCarriersSelectedAction"/>

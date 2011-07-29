@@ -31,8 +31,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	private static Map providers;
 	private static boolean useHibernateConnection = false;
 	private static Map jpaDataSources; 
-		
-	private transient DataSource dataSource;
+			
 	private String dataSourceJNDI;	
 	private String user;
 	private String password;
@@ -40,13 +39,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
 		MetaComponent component =MetaComponent.get(componentName); 				
 		String jndi = null;		
-		if (component.getMetaEntity().isAnnotatedEJB3()) {
-			jndi = getJPADataSource();			
-			if (Is.emptyString(jndi) && !isUseHibernateConnection()) {  
-				throw new XavaException("no_jpa_data_source_for_entity", componentName);  
-			}
-		}
-		else {
+		if (!component.getMetaEntity().isAnnotatedEJB3()) {
 			String packageName = component.getPackageNameWithSlashWithoutModel();
 			jndi = getDatasourcesJNDIByPackage().getProperty(packageName);
 			if (Is.emptyString(jndi)) {
@@ -70,7 +63,11 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 		}
 		String result = (String) jpaDataSources.get(XPersistence.getPersistenceUnit());
 		if (result != null) return result;
-		return (String) jpaDataSources.get(DEFAULT_JPA_PERSISTENCE_UNIT);
+		result = (String) jpaDataSources.get(DEFAULT_JPA_PERSISTENCE_UNIT);
+		if (Is.emptyString(result) && !isUseHibernateConnection()) {  
+			throw new XavaException("no_jpa_data_source_for_entity");  
+		}
+		return result;
 	}
 	
 	private static String getDataSourceFromElement(Element element) { 
@@ -130,11 +127,8 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	 * @throws NamingException
 	 */	
 	public DataSource getDataSource() throws NamingException {
-		if (dataSource == null) {			
-			Context ctx = new InitialContext();
-			dataSource = (DataSource) ctx.lookup(getDataSourceJNDI());			
-		}
-		return dataSource;
+		Context ctx = new InitialContext();
+		return (DataSource) ctx.lookup(dataSourceJNDI==null?getJPADataSource():dataSourceJNDI);
 	}
 		
 	/**
@@ -156,7 +150,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	public Connection getConnection() throws SQLException {
 		if (isUseHibernateConnection()) {		
 			return XHibernate.getSession().connection();
-		}		
+		}			
 		try {
 			if (Is.emptyString(getUser())) {
 				return getDataSource().getConnection();
@@ -170,7 +164,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 		}
 	}
 	
-	public Connection getConnection(String dataSourceName) throws SQLException {
+	public Connection getConnection(String dataSourceName) throws SQLException {		
 		return getConnection();
 	}
 	public void setPassword(String password) {

@@ -60,6 +60,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 		if (isCodeGenerationTime()) return table;
 		if (XavaPreferences.getInstance().isJPAPersistence() && 
 			getSchema() == null && !Is.emptyString(XPersistence.getDefaultSchema())) {
+			System.out.println("[ModelMapping.getTable] XPersistence.getPersistenceUnit()=" + XPersistence.getPersistenceUnit()); // tmp
+			System.out.println("[ModelMapping.getTable] XPersistence.getDefaultSchema()=" + XPersistence.getDefaultSchema()); // tmp
 			return  XPersistence.getDefaultSchema() + "." + table; 
 		}
 		else if (XavaPreferences.getInstance().isHibernatePersistence() && 

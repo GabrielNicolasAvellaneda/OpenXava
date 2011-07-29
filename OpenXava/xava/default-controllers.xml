@@ -22,6 +22,7 @@ here that you want to override.
 	<object name="xava_previousCustomViews" class="java.util.Stack"/>
 	<object name="xava_gallery" class="org.openxava.session.Gallery"/>
 	<object name="xava_defaultSchema" class="java.lang.String" scope="global"/>
+	<object name="xava_persistenceUnit" class="java.lang.String" scope="global"/>
 	<object name="xava_currentModule" class="java.lang.String" />
 	<object name="xava_treeViewParser" class="org.openxava.util.TreeViewParser" />
 	<object name="xava_treeViewNodeFullPath" class="java.lang.String" />
@@ -399,13 +400,24 @@ here that you want to override.
 	</controller>			
 	<!-- 
 	If you want that your module use the default schema in the object
-	'xava_defaultSchema' you module has to use this controller,
+	'xava_defaultSchema' your module has to use this controller,
 	or you controller has to extend from this one.
 	-->
 	<controller name="DefaultSchema">
 		<action name="setSchemaDefaultSchema" before-each-request="true" hidden="true"
 			class="org.openxava.actions.SetDefaultSchemaAction"/>
 	</controller>
+	
+	<!--  
+	If you want that your module use the persistence unit in the object
+	'xava_persistenceUnit' your module has to use this controller,
+	or you controller has to extend from this one.
+	-->
+	<controller name="PersistenceUnit">
+		<action name="setPersistenceUnit" before-each-request="true" hidden="true"
+			class="org.openxava.actions.SetPersistenceUnitAction"/>
+	</controller>
+	
 	
 	<controller name="WebURL">
 		<action name="go" hidden="true"

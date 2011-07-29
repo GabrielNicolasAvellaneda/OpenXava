@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New PersistenceUnit controller and SetPersistenceUnitAction class to facilitate multi-database applications. 
+- Fix: Multi persistence unit applications do not work.
 - JetSpeed 2.2.1 supported.
 - Fix: regenerateGenerator ant task fails.
 - Fix: portletLocales of xava.propeties has no effect on portlet.xml generation.
