@@ -363,6 +363,14 @@
 			<set property="nextModule" value="Formula"/>
 		</action>
 	</controller>
+	
+	<controller name="GoCustomerInvoices">
+		<action name="showDialog" 
+			class="org.openxava.test.actions.ShowGoCustomerInvoicesDialogAction"/>
+		<action name="goCustomer" class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="CustomerInvoices"/>
+		</action>			
+	</controller>	
 		
 	<controller name="GoToSellerJSP">
 		<action name="goSellerJSP" class="org.openxava.actions.ChangeModuleAction">

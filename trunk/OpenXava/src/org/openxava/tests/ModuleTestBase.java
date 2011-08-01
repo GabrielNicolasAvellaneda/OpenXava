@@ -70,7 +70,8 @@ public class ModuleTestBase extends TestCase {
 	private HtmlForm form;  
 	private String lastNotNotifiedPropertyName; 
 	private String lastNotNotifiedPropertyValue;
-	private BrowserVersion browserVersion;	
+	private BrowserVersion browserVersion;
+	private String previousModule; 
 	
 	static {		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
@@ -1893,9 +1894,10 @@ public class ModuleTestBase extends TestCase {
 	private void setNewModuleIfChanged() throws Exception {		
 		String lastModuleChange = ((HtmlInput) page.getElementById("xava_last_module_change")).getValueAttribute();
 		if (Is.emptyString(lastModuleChange)) return;
-		String [] modules = lastModuleChange.split("::");
+		String [] modules = lastModuleChange.split("::"); 
 		if (!module.equals(modules[0])) return;
-		module = modules[1];
+		previousModule = module; 
+		module = modules[1];		
 	}
 
 	private void resetLoginForm() throws Exception { 
@@ -2019,16 +2021,16 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * @since 4m1
 	 */
-	protected void assertDialog() throws Exception {
-		assertTrue(XavaResources.getString("dialog_must_be_displayed"), getTopDialog() != null); 
+	protected void assertDialog() throws Exception { 
+		assertTrue(XavaResources.getString("dialog_must_be_displayed"), getTopDialog() != null || getTopDialog(previousModule) != null); 
 	}
 
 	/**
 	 * @since 4m1
 	 */
 	
-	protected void assertNoDialog() throws Exception {	
-		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), getTopDialog() == null); 
+	protected void assertNoDialog() throws Exception { 
+		assertTrue(XavaResources.getString("dialog_must_not_be_displayed"), getTopDialog() == null && getTopDialog(previousModule) == null); 
 	}
 	
 	/**
@@ -2042,12 +2044,12 @@ public class ModuleTestBase extends TestCase {
 		resetForm();		
 	}
 	
-	private String getTopDialog() throws Exception {
+	private String getTopDialog(String module) throws Exception { 
 		int level = 0;
 		for (level = 1; ; level++) {
 			try {
-				HtmlElement el = getElementById("dialog" + level);
-				if (!el.hasChildNodes()) break;
+				HtmlElement el = page.getElementById(Ids.decorate(application, module, "dialog" + level));
+				if (el == null || !el.hasChildNodes()) break;
 			}
 			catch (ElementNotFoundException ex) {
 				break;
@@ -2055,6 +2057,11 @@ public class ModuleTestBase extends TestCase {
 		}
 		if (level == 1) return null;
 		return "dialog" + (level - 1);
+	}
+
+	
+	private String getTopDialog() throws Exception {
+		return getTopDialog(module);
 	}
 
 	/**
