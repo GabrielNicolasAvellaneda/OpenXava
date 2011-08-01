@@ -84,7 +84,7 @@ public class Module extends DWRBase {
 			}
 			else {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
-			}
+			}						
 			result.setViewMember(getView().getMemberName());
 			result.setStrokeActions(getStrokeActions());			
 			return result;
@@ -170,7 +170,7 @@ public class Module extends DWRBase {
 		
 		manager.setNextModule(null);
 		memorizeLastMessages(nextModule);	
-		result.setNextModule(nextModule); 
+		result.setNextModule(nextModule);
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {

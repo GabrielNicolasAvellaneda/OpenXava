@@ -53,7 +53,8 @@ openxava.refreshPage = function(result) {
 	}
 	else if (result.nextModule != null) {	
 		openxava.updateRootIds(result.application, result.module, result.nextModule);
-		document.getElementById("xava_last_module_change").value=result.module + "::" + result.nextModule;
+		document.getElementById("xava_last_module_change").value=result.module + "::" + result.nextModule;		
+		if (openxava.dialogLevel > 0) openxava.closeDialog(result);							
 		openxava.resetRequesting(result); 
 		openxava.ajaxRequest(result.application, result.nextModule); 
 		return;
@@ -63,10 +64,7 @@ openxava.refreshPage = function(result) {
 			openxava.disableElements(result);
 		}
 		else if (result.hideDialog) {
-			var dialog = openxava.getDialog(result.application, result.module); 
-			dialog.attr("application", ""); 
-			dialog.attr("module", ""); 
-			dialog.dialog('close');
+			openxava.closeDialog(result); 
 		}
 		openxava.dialogLevel = result.dialogLevel;
 		var dialog;
@@ -174,6 +172,13 @@ openxava.disableElements = function(result) {
 			this.name = this.name + "__DISABLED__"; 
 		}	
 	);		
+}
+
+openxava.closeDialog = function(result) { 
+	var dialog = openxava.getDialog(result.application, result.module); 
+	dialog.attr("application", ""); 
+	dialog.attr("module", ""); 
+	dialog.dialog('close');
 }
 
 openxava.onCloseDialog = function(event) {  
