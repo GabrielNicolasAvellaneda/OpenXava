@@ -19,7 +19,8 @@ public class AggregateMapping extends ModelMapping {
 
 		if (!getMetaModel().containsMetaReference(referenceMapping.getReference())) {
 			MetaReference r = new MetaReference();
-			r.setReferencedModelName(Strings.firstUpper(referenceMapping.getReference()));		
+			r.setReferencedModelName(Strings.firstUpper(referenceMapping.getReference()));
+			r.setAggregate(false); 
 			getMetaModel().addMetaReference(r);
 			getMetaModel().setContainerModelName(r.getReferencedModelName()); 
 		}
@@ -39,5 +40,4 @@ public class AggregateMapping extends ModelMapping {
 		return getMetaComponent().getMetaAggregate(getModelName());
 	}
 		
-
 }

@@ -22,6 +22,8 @@ class CompanyTest extends ModuleTestBase {
 		execute "Collection.edit", "row=0,viewObject=xava_view_buildings"
 		assertNoErrors()
 		assertValue "name", "BUILDING A"
+		execute "Collection.save"
+		assertNoErrors()
 	}
 	
 	void testCollectionElementInsideAGroup() {
@@ -31,7 +33,6 @@ class CompanyTest extends ModuleTestBase {
 		assertMessagesCount 1
 		setValue "function", "Factory" // For verifying that onchange is thrown only once
 		assertMessagesCount 1		
-	}
-		
+	}	
 	
 }
