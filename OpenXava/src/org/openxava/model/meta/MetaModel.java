@@ -1001,7 +1001,6 @@ abstract public class MetaModel extends MetaElement {
 		if (metaReferencesToEntity == null) {
 			metaReferencesToEntity = new ArrayList();
 			Iterator it = getMapMetaReferences().values().iterator();
-			
 			while (it.hasNext()) {
 				MetaReference metaReference = (MetaReference) it.next();				
 				if (!metaReference.isAggregate()) {

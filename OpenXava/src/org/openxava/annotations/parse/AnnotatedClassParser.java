@@ -433,7 +433,7 @@ public class AnnotatedClassParser {
 		MetaReference ref = new MetaReference();
 		ref.setName(pd.getName());
 		ref.setReferencedModelName(pd.getPropertyType().getSimpleName());
-		ref.setAggregate(aggregate); 
+		ref.setAggregate(aggregate);
 		model.addMetaReference(ref);
 		processAnnotations(ref, pd.getReadMethod());
 		processAnnotations(ref, field);
