@@ -31,14 +31,22 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     </java>    
+		<java>// Avoid to generate "en" locale description because the generated above (default) is English as portlet-app_1_0.xsd specifies. </java> 
+		<java>// JetSpeed 2.2.1 throws a deployment error if this description is generated twice with the same locale </java>
+		<java>if (!locale.getLanguage().equals("en") ) { </java>
 		&lt;description xml:lang="<expr>locale</expr>"&gt;<expr>Strings.toCharSet(application.getLabel(locale), encoding)</expr> - <expr>Strings.toCharSet(module.getDescription(locale), encoding)</expr>&lt;/description&gt;
+		<java>} </java>
 	<java>} </java>       
 		&lt;portlet-name&gt;<expr>Strings.toCharSet(module.getName(), encoding)</expr>&lt;/portlet-name&gt;
 		&lt;display-name&gt;<expr>Strings.toCharSet(application.getLabel(), encoding)</expr> - <expr>Strings.toCharSet(module.getLabel(), encoding)</expr>&lt;/display-name&gt;
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
-    </java>    
+    </java>   
+    	<java>// Avoid to generate "en" locale description because the generated above (default) is English as portlet-app_1_0.xsd specifies. </java>
+		<java>// JetSpeed 2.2.1 throws a deployment error if this display-name is generated twice with the same locale </java>
+		<java>if (!locale.getLanguage().equals("en") ) { </java> 
 		&lt;display-name xml:lang="<expr>locale</expr>"&gt;<expr>Strings.toCharSet(application.getLabel(locale), encoding)</expr> - <expr>Strings.toCharSet(module.getLabel(locale), encoding)</expr>&lt;/display-name&gt;
+		<java>} </java>
     <java>} </java> 
     <java>if (module.isDoc()) { </java> 
 		&lt;portlet-class&gt;org.openxava.web.portlets.HtmlPortlet&lt;/portlet-class&gt;

@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Aug 28 19:06:45 CEST 2008
+ * @version Wed Aug 03 12:24:44 CEST 2011
  */
 public class PortletXmlPG {
     Properties properties = new Properties();
@@ -49,13 +49,17 @@ public class PortletXmlPG {
     for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
         	Locale locale = (Locale) itLocales.next();
         
-    out.print("    \n\t\t<description xml:lang=\"");
+    // Avoid to generate "en" locale description because the generated above (default) is English as portlet-app_1_0.xsd specifies. 
+    // JetSpeed 2.2.1 throws a deployment error if this description is generated twice with the same locale 
+    if (!locale.getLanguage().equals("en") ) { 
+    out.print("\n\t\t<description xml:lang=\"");
     out.print(locale);
     out.print("\">");
     out.print(Strings.toCharSet(application.getLabel(locale), encoding));
     out.print(" - ");
     out.print(Strings.toCharSet(module.getDescription(locale), encoding));
     out.print("</description>");
+    } 
     } 
     out.print("       \n\t\t<portlet-name>");
     out.print(Strings.toCharSet(module.getName(), encoding));
@@ -67,13 +71,17 @@ public class PortletXmlPG {
     for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
         	Locale locale = (Locale) itLocales.next();
         
-    out.print("    \n\t\t<display-name xml:lang=\"");
+    // Avoid to generate "en" locale description because the generated above (default) is English as portlet-app_1_0.xsd specifies. 
+    // JetSpeed 2.2.1 throws a deployment error if this display-name is generated twice with the same locale 
+    if (!locale.getLanguage().equals("en") ) { 
+    out.print(" \n\t\t<display-name xml:lang=\"");
     out.print(locale);
     out.print("\">");
     out.print(Strings.toCharSet(application.getLabel(locale), encoding));
     out.print(" - ");
     out.print(Strings.toCharSet(module.getLabel(locale), encoding));
     out.print("</display-name>");
+    } 
     } 
     if (module.isDoc()) { 
     out.print(" \n\t\t<portlet-class>org.openxava.web.portlets.HtmlPortlet</portlet-class>\n\t\t<init-param>\n\t\t\t<name>Page</name>\n\t\t\t<value>");
@@ -135,7 +143,7 @@ public class PortletXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Aug 28 19:06:45 CEST 2008", // date this file was generated
+        { "Wed Aug 03 12:24:46 CEST 2011", // date this file was generated
              "../OpenXava/generator/portletxml.xml", // input file
              "../OpenXava/generator/PortletXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
