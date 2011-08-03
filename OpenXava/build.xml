@@ -34,7 +34,7 @@
 	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/deploy"/>
 	<property name="generate.jetspeed2.files" value="true"/>
 	<property name="jetspeed2.pages.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/pages"/>
-	<property name="portlets.default.locale" value="${user.language}"/>
+	<property name="portlets.default.locale" value="en"/>
 	<property name="hibernate.properties" value=""/>
 	<property name="compile.src.path" value="../${project}/src"/>
 			

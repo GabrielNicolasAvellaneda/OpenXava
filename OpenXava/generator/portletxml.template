@@ -30,14 +30,22 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     #    
+		# // Avoid to generate "en" locale description because the generated above (default) is English as portlet-app_1_0.xsd specifies. # 
+		# // JetSpeed 2.2.1 throws a deployment error if this description is generated twice with the same locale #
+		# if (!locale.getLanguage().equals("en") ) { #
 		<description xml:lang="#(locale)#">#(Strings.toCharSet(application.getLabel(locale), encoding))# - #(Strings.toCharSet(module.getDescription(locale), encoding))#</description>
+		# } #
 	# } #       
 		<portlet-name>#(Strings.toCharSet(module.getName(), encoding))#</portlet-name>
 		<display-name>#(Strings.toCharSet(application.getLabel(), encoding))# - #(Strings.toCharSet(module.getLabel(), encoding))#</display-name>
     # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
-    #    
+    #   
+    	# // Avoid to generate "en" locale description because the generated above (default) is English as portlet-app_1_0.xsd specifies. #
+		# // JetSpeed 2.2.1 throws a deployment error if this display-name is generated twice with the same locale #
+		# if (!locale.getLanguage().equals("en") ) { # 
 		<display-name xml:lang="#(locale)#">#(Strings.toCharSet(application.getLabel(locale), encoding))# - #(Strings.toCharSet(module.getLabel(locale), encoding))#</display-name>
+		# } #
     # } # 
     # if (module.isDoc()) { # 
 		<portlet-class>org.openxava.web.portlets.HtmlPortlet</portlet-class>

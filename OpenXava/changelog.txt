@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: "en" language entries are not included in portlet.xml because they are redundant with default entries. 
 - Fix: In a cascade remove collection when trying to create an element with a embedded with a reference to an entity fails. 
 - Fix: Changing module from dialog does not close the dialog.
 - New PersistenceUnit controller and SetPersistenceUnitAction class to facilitate multi-database applications. 
