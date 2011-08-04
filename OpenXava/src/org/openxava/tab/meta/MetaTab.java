@@ -356,12 +356,12 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 				name = name.substring(0, name.length() - 1);
 				if (totalPropertiesNames == null) totalPropertiesNames = new HashSet();
 				totalPropertiesNames.add(name);
-			}
+			}			
 			result.add(name);
 		}
 		return result;
 	}
-
+	
 	private List createAllPropertiesNames() throws XavaException {
 		List result = new ArrayList();
 		// First the properties from a possible @EmbeddedId
