@@ -1305,7 +1305,8 @@ public class Tab implements java.io.Serializable {
 			Preferences preferences = getPreferences();			
 
 			String propertiesNames = preferences.get(PROPERTIES_NAMES, null);
-			if (propertiesNames != null) {
+			if (propertiesNames != null) {				
+				propertiesNames = removeNonexistentProperties(propertiesNames); // To remove the properties of old versions of the entities 
 				setPropertiesNames(propertiesNames);
 			}			
 			totalPropertiesNames = Strings.toSetNullByPass(preferences.get(TOTAL_PROPERTIES_NAMES, null));
@@ -1323,6 +1324,35 @@ public class Tab implements java.io.Serializable {
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_load_preferences_tab"),ex);
+		}
+	}
+
+	private String removeNonexistentProperties(String properties) {
+		if (propertiesExists(properties)) return properties; // It is the usual case, so we save the below code most times
+		StringBuffer sb = new StringBuffer();
+		for (String property: properties.split(",")) {
+			if (propertyExists(property)) {
+				if (sb.length() > 0) sb.append(',');
+				sb.append(property);
+			}
+		}
+		return sb.toString();
+	}
+	
+	private boolean propertiesExists(String properties) { 
+		for (String property: properties.split(",")) {
+			if (!propertyExists(property)) return false; 
+		}
+		return true;
+	}
+	
+	private boolean propertyExists(String property) { 
+		try {
+			getMetaTab().getMetaModel().getMetaProperty(property);
+			return true;
+		}
+		catch (ElementNotFoundException ex) {
+			return false;
 		}
 	}
 
