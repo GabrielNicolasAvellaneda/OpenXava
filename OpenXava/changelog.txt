@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Inheritance for views does not work with transient classes.
+- Fix: Fixed URL for DTD of DWR files, it improves performance on Liferay deploying.
 - Fix: List fails when the user customize the list and afterwards the programmer removes properties from the entities. 
 - Fix: "en" language entries are not included in portlet.xml because they are redundant with default entries. 
 - Fix: In a cascade remove collection when trying to create an element with a embedded with a reference to an entity fails. 

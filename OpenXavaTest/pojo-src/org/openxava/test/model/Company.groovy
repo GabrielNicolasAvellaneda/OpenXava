@@ -9,6 +9,7 @@ import javax.persistence.*;
  * @author Javier Paniza 
  */
 @Entity
+@Tab(properties="name,mainBuilding.name") // name
 class Company extends Nameable {
 		
 	@OneToMany(mappedBy="company", cascade=CascadeType.REMOVE)		

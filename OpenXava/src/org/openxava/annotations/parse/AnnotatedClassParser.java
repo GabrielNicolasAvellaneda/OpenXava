@@ -268,9 +268,10 @@ public class AnnotatedClassParser {
 
 	
 	private void parseMembers(MetaModel model, Class pojoClass, ModelMapping mapping, String embedded) throws Exception {
-		Class superClass = pojoClass.getSuperclass(); 
-		if (superClass.isAnnotationPresent(Entity.class) || 
-			superClass.isAnnotationPresent(MappedSuperclass.class)) 
+		Class superClass = pojoClass.getSuperclass();
+		if (model.getMetaComponent().isTransient() && !superClass.equals(java.lang.Object.class) ||
+			superClass.isAnnotationPresent(Entity.class) || 
+			superClass.isAnnotationPresent(MappedSuperclass.class))
 		{
 			parseMembers(model, superClass, mapping, embedded);
 		}
