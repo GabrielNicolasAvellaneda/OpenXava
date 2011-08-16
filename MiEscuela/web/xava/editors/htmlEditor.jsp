@@ -21,5 +21,5 @@ title="<%=Labels.get("Collection.edit")%>">
 <img border="0" src="<%=request.getContextPath()%>/xava/images/edit-text.gif" 
 title="<%=Labels.get("Collection.edit")%>" align="right"></a><br>
 <%}%>
-<input type="hidden" name="<%=propertyKey%>" value='<%=fvalue%>'>	
+<input type="hidden" name="<%=propertyKey%>" value='<%=org.openxava.util.Strings.change(fvalue, "'", "&#39;")%>'>
 <div id="<%=propertyKey%>_html_editor_show_value"><%=fvalue%></div>

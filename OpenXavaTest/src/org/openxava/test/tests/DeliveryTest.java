@@ -1197,8 +1197,12 @@ public class DeliveryTest extends ModuleTestBase {
 	public void testFilterDescriptionsListAndEnumLetterType() throws Exception { 
 		assertLabelInList(3, "Description of Type");
 		assertLabelInList(7, "Distance");
-		// setConditionValues(new String[] { "", "", "", "1", "", "", "", "1"} );	// For XML components
-		setConditionValues(new String[] { "", "", "", "1", "", "", "", "0"} );	// For annotated POJOs
+		if (usesAnnotatedPOJO()) { 
+			setConditionValues(new String[] { "", "", "", "1", "", "", "", "0"} );	// For annotated POJOs
+		}
+		else {
+			setConditionValues(new String[] { "", "", "", "1", "", "", "", "1"} );	// For XML components
+		}
 		execute("List.filter");
 		assertListRowCount(1);
 	}

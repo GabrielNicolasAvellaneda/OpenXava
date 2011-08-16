@@ -1,24 +1,26 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.2.2 (2011-8-16)
+--------------------------
+- JetSpeed 2.2.1 supported.
+- New PersistenceUnit controller and SetPersistenceUnitAction class to facilitate multi-database applications.
+- BaseAction no longer implements IChangeControllersAction, but still implements the change controllers related methods.
+- Date format improved for Catalan.
 - Fix: Inheritance for views does not work with transient classes.
 - Fix: Fixed URL for DTD of DWR files, it improves performance on Liferay deploying.
 - Fix: List fails when the user customize the list and afterwards the programmer removes properties from the entities. 
 - Fix: "en" language entries are not included in portlet.xml because they are redundant with default entries. 
 - Fix: In a cascade remove collection when trying to create an element with a embedded with a reference to an entity fails. 
 - Fix: Changing module from dialog does not close the dialog.
-- New PersistenceUnit controller and SetPersistenceUnitAction class to facilitate multi-database applications. 
 - Fix: Multi persistence unit applications do not work.
-- JetSpeed 2.2.1 supported.
 - Fix: regenerateGenerator ant task fails.
 - Fix: portletLocales of xava.propeties has no effect on portlet.xml generation.
 - Fix: Closing a two level dialog in a module with web-view shows the root view in the dialog.
 - Fix: After using setControllers(), removeActions() has no effect if executed in the same action.  
-- BaseAction no longer implements IChangeControllersAction, but still implements the change controllers related methods.
 - Fix: Creating a new collection element when all element components are inside groups fails.
 - Fix: @OnChange actions are executed twice inside collection elements with groups.
 - Fix: No focus placement inside collection elements in some cases.  
-- Date format improved for Catalan.
 - Fix: Using apostrophe in HtmlText editor cut the content from the apostrophe. 
 
 OpenXava 4.2.1 (2011-7-11)

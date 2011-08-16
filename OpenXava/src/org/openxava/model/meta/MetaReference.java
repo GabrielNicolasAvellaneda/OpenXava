@@ -100,7 +100,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 			// Not qualified
 			if (getReferencedModelName().equals(getMetaModel().getName())) metaModelReferenced = getMetaModel(); 
 			else {
-				if (explicitAggregate && !aggregate) {
+				if (explicitAggregate && !aggregate && getMetaModel().isAnnotatedEJB3()) { 
 					metaModelReferenced = MetaComponent.get(getReferencedModelName()).getMetaEntity();
 					if (!Is.empty(referencedModelContainerReference)) metaModelReferenced.setContainerReference(referencedModelContainerReference); 					
 				}
