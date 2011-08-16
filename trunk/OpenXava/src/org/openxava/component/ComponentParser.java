@@ -19,7 +19,7 @@ import org.w3c.dom.*;
  */
 class ComponentParser extends ParserBase {
 	
-	private static Log log = LogFactory.getLog(ComponentParser.class);
+	private static Log log = LogFactory.getLog(ComponentParser.class); 
 	
 	private MetaComponent component;	
 
@@ -31,12 +31,13 @@ class ComponentParser extends ParserBase {
 		ComponentParser parser = new ComponentParser(name);				
 		parser.parse();				
 		MetaComponent r = parser.getComponent();
-		if (r == null) {
+		
+		if (r == null) {			
 			r = parseAnnotatedClass(name);			
-		}
+		}		 
 		else if (!r.getName().equals(name)) {
 			throw new XavaException("component_file_not_match", name, r.getName());
-		}
+		}		
 		return r;
 	}
 	

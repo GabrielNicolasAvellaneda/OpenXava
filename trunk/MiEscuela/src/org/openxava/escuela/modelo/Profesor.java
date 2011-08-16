@@ -1,5 +1,6 @@
 package org.openxava.escuela.modelo;
 
+import java.util.*;
 import javax.persistence.*;
 import org.openxava.annotations.*;
 
