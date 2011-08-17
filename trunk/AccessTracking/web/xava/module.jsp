@@ -49,7 +49,9 @@
 			request.getRemoteUser());
 	Users.setCurrent(request); 
 	String app = request.getParameter("application");
-	String module = context.getCurrentModule(request);
+	String module = context.getCurrentModule(request); 
+	String contextPath = (String) request.getAttribute("xava.contextPath");
+	if (contextPath == null) contextPath = request.getContextPath();
 
 	org.openxava.controller.ModuleManager managerHome = (org.openxava.controller.ModuleManager) context
 			.get(request, "manager",
@@ -94,7 +96,7 @@
  			if (jsFiles != null) {
  				for (int i = 0; i < jsFiles.length; i++) {
  	%>
-	<script src="<%=request.getContextPath()%>/xava/style/<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
+	<script src="<%=contextPath%>/xava/style/<%=jsFiles[i]%>?ox=<%=version%>" type="text/javascript"></script>
 	<%
 				}
 			}
@@ -108,30 +110,30 @@
 				.iterator(); it.hasNext();) {
 			String cssFile = (String) it.next();
 	%> 
-	<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%><%=cssFile%>?ox=<%=version%>"/>
+	<link rel="stylesheet" type="text/css" media="all" href="<%=contextPath%><%=cssFile%>?ox=<%=version%>"/>
 	<%
 		}
 	%> 	
-	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>?ox=<%=version%>" rel="stylesheet" type="text/css">
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/dwr-engine.js?ox=<%=version%>'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js?ox=<%=version%>'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js?ox=<%=version%>'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js?ox=<%=version%>'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/View.js?ox=<%=version%>'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js?ox=<%=version%>'></script>
+	<link href="<%=contextPath%>/xava/style/<%=style.getCssFile()%>?ox=<%=version%>" rel="stylesheet" type="text/css">
+	<script type='text/javascript' src='<%=contextPath%>/xava/js/dwr-engine.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=contextPath%>/dwr/util.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=contextPath%>/dwr/interface/Module.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=contextPath%>/dwr/interface/Tab.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=contextPath%>/dwr/interface/View.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=contextPath%>/xava/js/openxava.js?ox=<%=version%>'></script>
 	<%
 		if (style.isNeededToIncludeCalendar()) {
 	%>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js?ox=<%=version%>"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js?ox=<%=version%>"></script>	
+	<script type="text/javascript" src="<%=contextPath%>/xava/editors/calendar/calendar.js?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js?ox=<%=version%>"></script>	
 	<%
 			}
 		%>	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=contextPath%>/xava/js/calendar.js?ox=<%=version%>'></script>
 	<%
 		if (new File(realPath + "/xava/js/custom-editors.js").exists()) {
 	%>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js?ox=<%=version%>'></script>
+	<script type='text/javascript' src='<%=contextPath%>/xava/js/custom-editors.js?ox=<%=version%>'></script>
 	<%
 		log.warn(XavaResources.getString("custom_editors_deprecated"));
 		}
@@ -141,16 +143,16 @@
 			portalJQuery = jQuery;
 		}       
 	</script>				
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.js?ox=<%=version%>"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>	
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/js/jquery.bgiframe.min.js?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.js?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>	
+	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.bgiframe.min.js?ox=<%=version%>"></script>
 	<%
 		File jsEditorsFolder = new File(realPath + "/xava/editors/js");		
 		String[] jsEditors = jsEditorsFolder.list();
 		Arrays.sort(jsEditors);
 		for (int i = 0; i < jsEditors.length; i++) {
 	%>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/js/<%=jsEditors[i]%>?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/xava/editors/js/<%=jsEditors[i]%>?ox=<%=version%>"></script>
 	<%
 		}
 	%>	
@@ -188,7 +190,7 @@ if (manager.isResetFormPostNeeded()) {
 	   <tr class='<%=style.getProcessing()%>'>
 	       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
 	           <%=XavaResources.getString(request, "processing")%><br/>
-	           <img src='<%=request.getContextPath()%>/xava/images/processing.gif' name='xava_processingImage'/>
+	           <img src='<%=contextPath%>/xava/images/processing.gif' name='xava_processingImage'/>
 	       </td>
 	   </tr>
 	</table>
@@ -208,7 +210,7 @@ if (manager.isResetFormPostNeeded()) {
 <% } %>			
 	<div id="xava_console" >
 	</div>
-	<% String loadingImage=!style.getLoadingImage().startsWith("/")?request.getContextPath() + "/" + style.getLoadingImage():style.getLoadingImage();%>
+	<% String loadingImage=!style.getLoadingImage().startsWith("/")?contextPath + "/" + style.getLoadingImage():style.getLoadingImage();%>
 	<div id="xava_loading">				
 		<img src="<%=loadingImage%>" style="vertical-align: middle"/>
 		&nbsp;<xava:message key="loading"/>...		 
