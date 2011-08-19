@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: French i18n files contain single quote ', which prevent the {0} replacement to be done.  
 - Fix: Argument type mismatch on saving element in nested collection with root entity with composite key.
  
 OpenXava 4.2.2 (2011-8-16)

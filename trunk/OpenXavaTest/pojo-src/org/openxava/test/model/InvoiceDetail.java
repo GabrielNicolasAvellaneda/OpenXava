@@ -82,7 +82,7 @@ public class InvoiceDetail {
 	
 	@Stereotype("MEMO")
 	private String remarks;
-			
+	
 	@Stereotype("MONEY") @Depends("unitPrice, quantity")
 	public BigDecimal getAmount() {
 		return getUnitPrice().multiply(new BigDecimal(getQuantity()));
