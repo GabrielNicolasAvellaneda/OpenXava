@@ -3,6 +3,8 @@ package org.openxava.test.model;
 import java.util.*;
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 /**
  * 
  * @author Javier Paniza
@@ -21,7 +23,7 @@ public class QuarterSubject {
 
 	@Column(length = 50)
 	private String description;
-
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quarterSubject")
 	private Collection<SubjectGroup> groups;
 
