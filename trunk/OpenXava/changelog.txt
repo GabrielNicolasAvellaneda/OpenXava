@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Argument type mismatch on saving element in nested collection with root entity with composite key.
+ 
 OpenXava 4.2.2 (2011-8-16)
 --------------------------
 - JetSpeed 2.2.1 supported.

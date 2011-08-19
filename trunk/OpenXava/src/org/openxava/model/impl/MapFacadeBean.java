@@ -562,8 +562,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModel = getMetaModel(modelName);
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
 		try {								
-			Object containerKey = getPersistenceProvider().getKey(metaModelContainer, containerKeyValues);
-			Object aggregate = createAggregate(metaModel, containerKey, counter, values, false);						
+			Object container = metaModelContainer.toPOJO(containerKeyValues); 
+			Object aggregate = createAggregate(metaModel, container, counter, values, false);						
 			return getValues(metaModel, aggregate, getKeyNames(metaModel));			
 		}
 		catch (ClassCastException ex) {
@@ -702,7 +702,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModel,
 		Map values,
 		MetaModel metaModelContainer,
-		Object containerKey,
+		Object container,
 		int number, boolean validateCollections) 
 		throws CreateException, ValidationException, XavaException, RemoteException {						
 		try {				
@@ -711,7 +711,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			removeCalculatedFields(metaModel, values); 						
 			Messages validationErrors = new Messages();			
 			validateExistRequired(validationErrors, metaModel, values, metaModelContainer != null);			
-			validate(validationErrors, metaModel, values, null, containerKey, true);
+			validate(validationErrors, metaModel, values, null, container, true);
 			if (validateCollections) validateCollections(validationErrors, metaModel);			
 			removeViewProperties(metaModel, values); 			
 			if (validationErrors.contains()) {
@@ -727,7 +727,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						metaModel,
 						convertedValues,
 						metaModelContainer,
-						containerKey,
+						container,
 						number);
 			}						
 			// Collections are not managed			
@@ -1351,7 +1351,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return false;
 	}
 	
-	private void validate(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)	  
+	private void validate(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object container, boolean creating)	  
 		throws ObjectNotFoundException, XavaException, RemoteException {		
 		Iterator it = values.entrySet().iterator();		
 		while (it.hasNext()) {
@@ -1361,11 +1361,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			validate(errors, metaModel, name, value, creating);
 		}
 		if (metaModel.containsValidadors()) {
-			validateWithModelValidator(errors, metaModel, values, keyValues, containerKey, creating);			
+			validateWithModelValidator(errors, metaModel, values, keyValues, container, creating);			
 		}
 	}
 	
-	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) 
+	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object container, boolean creating) 
 			throws ObjectNotFoundException, XavaException {
 		try {
 			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
@@ -1389,14 +1389,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					}	
 					if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
 						if (set.getPropertyNameFrom().equals(containerReferenceName)) {
-							if (containerKey == null) {							
+							if (container == null) {							
 								Object object = findEntity(metaModel, keyValues);
 								value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
 							}
 							else {							
 								MetaModel containerReference = metaModel.getMetaModelContainer();
 								try {
-									Map containerKeyMap = getPersistenceProvider().keyToMap(containerReference, containerKey);
+									Map containerKeyMap = getPersistenceProvider().keyToMap(containerReference, container);
 									value = getPersistenceProvider().find(containerReference, containerKeyMap);
 								}
 								catch (ObjectNotFoundException ex) {								

@@ -143,7 +143,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		try {
 			object = metaModel.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
-			removeCalculatedOnCreateValues(metaModel, values);						
+			removeCalculatedOnCreateValues(metaModel, values);
 			mp.executeSets(values);					
 			persist(object);			
 			return object;
