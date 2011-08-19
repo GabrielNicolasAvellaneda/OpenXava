@@ -14,7 +14,7 @@ public class QuarterTest extends ModuleTestBase {
 		super(testName, "Quarter");		
 	}
 	
-	public void testNestedSectionWithCompositeKeyWithReference() throws Exception {		
+	public void testNestedCollectionsWithCompositeKeyWithReference() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount("subjects", 1);
 		execute("Collection.edit", "row=0,viewObject=xava_view_subjects");
