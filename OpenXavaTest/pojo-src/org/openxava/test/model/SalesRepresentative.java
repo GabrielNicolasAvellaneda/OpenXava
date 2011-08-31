@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.openxava.annotations.Tab;
-import org.openxava.annotations.View;
+import org.openxava.annotations.*;
 
 /**
  * Class person as described in bug 3047205
@@ -18,6 +17,7 @@ import org.openxava.annotations.View;
  *
  */
 @Entity
+@View(name="PersonOnlyNames")
 @Tab(properties = "repEmployeeNumber, person.personFirstName, person.personLastName, " +
 		"person.phoneNumber.phoneDigits")
 public class SalesRepresentative implements Serializable{
@@ -25,7 +25,10 @@ public class SalesRepresentative implements Serializable{
 	@Id
 	private int repEmployeeNumber;
 	private BigDecimal repCommissionRate;
+	
+	@ReferenceView(forViews="PersonOnlyNames", value="OnlyNames") 
 	private Person person; // This is different in order to provoke an early exception, related to field name equal (ignoring case) to Class.
+	
 	/**
 	 * @return the repEmployeeNumber
 	 */
