@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @Editor with forViews is ignored when used inside a reference. 
+- Properties with WebURL editor or WEBURL stereotype are shown in list as links.
 - Fix: PDF reports fail if hibernate.cfg.xml is not present. 
 - Fix: French i18n files contain single quote ', which prevent the {0} replacement to be done.  
 - Fix: Argument type mismatch on saving element in nested collection with root entity with composite key.

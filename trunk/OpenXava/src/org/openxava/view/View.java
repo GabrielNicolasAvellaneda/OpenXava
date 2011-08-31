@@ -327,9 +327,10 @@ public class View implements java.io.Serializable {
 		return metaView;
 	}
 	private void setMetaView(MetaView metaView) {
-		if (this.metaView == metaView) return;
+		if (this.metaView == metaView) return;		
 		resetMembers();
 		this.metaView = metaView;
+		this.viewName = metaView.getName(); 
 	}
 	
 	public MetaModel getMetaModel() throws XavaException {		

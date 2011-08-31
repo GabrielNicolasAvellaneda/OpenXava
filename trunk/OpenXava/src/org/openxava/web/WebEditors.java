@@ -169,7 +169,7 @@ public class WebEditors {
 	}
 	
 	public static String getUrl(MetaProperty p, String viewName) throws XavaException {
-		try {						
+		try {				
 			return PREFIX + getMetaEditorFor(p, viewName).getUrl();
 		}
 		catch (Exception ex) {

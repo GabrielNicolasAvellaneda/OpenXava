@@ -88,6 +88,7 @@
     </editor>
     
     <editor name="WebURL" url="webURLEditor.jsp">
+    	<list-formatter class="org.openxava.formatters.WebURLFormatter"/>
         <for-stereotype stereotype="WEBURL"/>
     </editor>    
     

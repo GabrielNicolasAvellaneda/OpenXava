@@ -5,17 +5,24 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
+import org.openxava.annotations.*;
+
 /**
  * Representing a first level embeddable class as detailed in bug 3047205 
  * @author Federico Alcantara
  *
  */
 @Embeddable
+@View(name="OnlyNames", members="personFirstName; personLastName") // tmp
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Editor(forViews="OnlyNames", value="PersonName") // tmp
 	private String personFirstName;
+	
+	@Editor(forViews="OnlyNames", value="PersonName") // tmp
 	private String personLastName;
+	
 	@Embedded
 	private PhoneNumber phoneNumber;
 	/**

@@ -169,6 +169,8 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 				
 	public void testTELEPHONE_EMAIL_WEBURLstereotypes() throws Exception {
+		printHtml();
+		assertTrue("website column must have a clickable link", getHtml().contains("<a href=\"http://www.openxava.org\">"));
 		execute("Mode.detailAndFirst");
 		setValue("telephone", "asf");
 		setValue("email", "pepe");
@@ -385,7 +387,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertLabel("alternateSeller", "Secondary seller");
 	}
 	
-	public void testCustomizeList() throws Exception {
+	public void testCustomizeList() throws Exception { 
 		doTestCustomizeList_moveAndRemove(); 
 		tearDown();	setUp();
 		doTestCustomizeList_generatePDF();
@@ -398,103 +400,115 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("List.customize");		
 		assertActions(listCustomizeActions);
 
-		assertListColumnCount(6);
+		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "Seller");
 		assertLabelInList(3, "City of Address");
 		assertLabelInList(4, "Seller level");
 		assertLabelInList(5, "State of Address");
+		assertLabelInList(6, "Web site");
 		assertTrue("It is needed customers for execute this test", getListRowCount() > 1);
 		String name = getValueInList(0, 0);
 		String type = getValueInList(0, 1);
 		String seller = getValueInList(0, 2);
 		String city = getValueInList(0, 3);
 		String sellerLevel = getValueInList(0, 4);
-		String state = getValueInList(0, 5); 
+		String state = getValueInList(0, 5);
+		String site = getValueInList(0, 6);
 
 		// move 2 to 3
 		execute("List.moveColumnToRight", "columnIndex=2");
 		assertNoErrors();
-		assertListColumnCount(6);
+		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "City of Address");
 		assertLabelInList(3, "Seller");
 		assertLabelInList(4, "Seller level");
 		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(6, "Web site");
 		assertValueInList(0, 0, name);
 		assertValueInList(0, 1, type);
 		assertValueInList(0, 2, city);
 		assertValueInList(0, 3, seller);
 		assertValueInList(0, 4, sellerLevel);
-		assertValueInList(0, 5, state); 
+		assertValueInList(0, 5, state);
+		assertValueInList(0, 6, site);
 		
-		// try to move 5, it is the last, do nothing
-		execute("List.moveColumnToRight", "columnIndex=5");
+		// try to move 6, it is the last, do nothing
+		execute("List.moveColumnToRight", "columnIndex=6");
 		assertNoErrors();
-		assertListColumnCount(6);
+		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "City of Address");
 		assertLabelInList(3, "Seller");
 		assertLabelInList(4, "Seller level");
 		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(6, "Web site");
 		assertValueInList(0, 0, name);
 		assertValueInList(0, 1, type);
 		assertValueInList(0, 2, city);
 		assertValueInList(0, 3, seller);
 		assertValueInList(0, 4, sellerLevel);
-		assertValueInList(0, 5, state); 
+		assertValueInList(0, 5, state);
+		assertValueInList(0, 6, site);
 		
 		// move 3 to 2
 		execute("List.moveColumnToLeft", "columnIndex=3");
 		assertNoErrors();
-		assertListColumnCount(6);
+		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "Seller");
 		assertLabelInList(3, "City of Address");
 		assertLabelInList(4, "Seller level");
 		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(6, "Web site");
 		assertValueInList(0, 0, name);
 		assertValueInList(0, 1, type);
 		assertValueInList(0, 2, seller);
 		assertValueInList(0, 3, city);
 		assertValueInList(0, 4, sellerLevel);
-		assertValueInList(0, 5, state); 
+		assertValueInList(0, 5, state);
+		assertValueInList(0, 6, site);
 		
 		// try to move 0 to left, do nothing
 		execute("List.moveColumnToLeft", "columnIndex=0");
 		assertNoErrors();
-		assertListColumnCount(6);
+		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "Seller");
 		assertLabelInList(3, "City of Address");
 		assertLabelInList(4, "Seller level");
 		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(6, "Web site");
 		assertValueInList(0, 0, name);
 		assertValueInList(0, 1, type);
 		assertValueInList(0, 2, seller);
 		assertValueInList(0, 3, city);
 		assertValueInList(0, 4, sellerLevel);
-		assertValueInList(0, 5, state); 
+		assertValueInList(0, 5, state);
+		assertValueInList(0, 6, site);
 
 		// remove column 3
 		execute("List.removeColumn", "columnIndex=3");
 		assertNoErrors();
-		assertListColumnCount(5);
+		assertListColumnCount(6);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");		
 		assertLabelInList(2, "Seller");
 		assertLabelInList(3, "Seller level");
 		assertLabelInList(4, "State of Address"); 
+		assertLabelInList(5, "Web site");
 		assertValueInList(0, 0, name);
 		assertValueInList(0, 1, type);
 		assertValueInList(0, 2, seller);
 		assertValueInList(0, 3, sellerLevel);
 		assertValueInList(0, 4, state); 
+		assertValueInList(0, 5, site);
 						
 		execute("List.customize");
 		assertActions(listActions);
@@ -503,10 +517,10 @@ public class CustomerWithSectionTest extends CustomerTest {
 	private void doTestCustomizeList_generatePDF() throws Exception {
 		// Trusts in that testCustomizeList_moveAndRemove is executed before
 		execute("List.customize");
-		assertListColumnCount(5);
+		assertListColumnCount(6);
 		execute("List.removeColumn", "columnIndex=3");
 		assertNoErrors();
-		assertListColumnCount(4);		
+		assertListColumnCount(5);		
 		execute("Print.generatePdf"); 
 		assertContentTypeForPopup("application/pdf");
 		
@@ -519,13 +533,14 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("AddColumns.restoreDefault");		
 		// End restoring
 		
-		assertListColumnCount(6);
+		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "Seller");
 		assertLabelInList(3, "City of Address");
 		assertLabelInList(4, "Seller level");
 		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(6, "Web site");
 		assertTrue("Must to have customers for run this test", getListRowCount() > 1);
 		String name = getValueInList(0, 0);
 		String type = getValueInList(0, 1);
@@ -533,55 +548,60 @@ public class CustomerWithSectionTest extends CustomerTest {
 		String city = getValueInList(0, 3);
 		String sellerLevel = getValueInList(0, 4);
 		String state = getValueInList(0, 5); 
+		String site = getValueInList(0, 6);
 		
 		execute("Customer.hideSellerInList");
 		assertNoErrors();
-		assertListColumnCount(5);
+		assertListColumnCount(6);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "City of Address");
 		assertLabelInList(3, "Seller level");
 		assertLabelInList(4, "State of Address"); 
+		assertLabelInList(5, "Web site");
 		assertValueInList(0, 0, name);
 		assertValueInList(0, 1, type);
 		assertValueInList(0, 2, city);
 		assertValueInList(0, 3, sellerLevel);
 		assertValueInList(0, 4, state); 
+		assertValueInList(0, 5, site);
 		
 		execute("Customer.showSellerInList");
 		assertNoErrors();
-		assertListColumnCount(6);
+		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
 		assertLabelInList(1, "Type");
 		assertLabelInList(2, "Seller");		
 		assertLabelInList(3, "City of Address");
 		assertLabelInList(4, "Seller level");
 		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(6, "Web site");
 		assertValueInList(0, 0, name);
 		assertValueInList(0, 1, type);
 		assertValueInList(0, 2, seller);
 		assertValueInList(0, 3, city);
 		assertValueInList(0, 4, sellerLevel);
 		assertValueInList(0, 5, state); 
+		assertValueInList(0, 6, site);
 	}
 	
-	public void testCustomizeList_addAndResetModule() throws Exception {  
-		assertListColumnCount(6);
+	public void testCustomizeList_addAndResetModule() throws Exception {   
+		assertListColumnCount(7);
 		String value = getValueInList(0, 0);
 		execute("List.customize");
 		execute("List.addColumns");		
 		checkRow("selectedProperties", "number"); 		
 		execute("AddColumns.addColumns");
-		assertListColumnCount(7);
+		assertListColumnCount(8);
 		assertValueInList(0, 0, value);
 				
 		resetModule();
-		assertListColumnCount(7);
+		assertListColumnCount(8);
 		assertValueInList(0, 0, value);
 		
 		execute("List.customize");
-		execute("List.removeColumn", "columnIndex=6");
-		assertListColumnCount(6);
+		execute("List.removeColumn", "columnIndex=7");
+		assertListColumnCount(7);
 	}
 	
 	public void testRowStyle() throws Exception {

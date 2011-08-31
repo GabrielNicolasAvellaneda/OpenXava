@@ -101,7 +101,7 @@ import org.openxava.test.actions.*;
 @Tabs ({
 	@Tab(
 		rowStyles=@RowStyle(style="row-highlight", property="type", value="steady"),
-		properties="name, type, seller.name, address.city, seller.level.description, address.state.name"
+		properties="name, type, seller.name, address.city, seller.level.description, address.state.name, website" 
 	),	
 	@Tab( name="TwoSellers",
 		properties="name, type, address.city, seller.name, seller.level.description, alternateSeller.name"

@@ -34,7 +34,7 @@ public class EditorTag extends TagSupport {
 
 			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
 									
-			String viewObject = request.getParameter("viewObject");			
+			String viewObject = request.getParameter("viewObject");				
 			viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 			View view = (View) context.get(request, viewObject);
 
