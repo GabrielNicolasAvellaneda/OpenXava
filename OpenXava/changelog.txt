@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Liferay 6 navigation bar changes its font size when there is an OpenXava portlet in the page. 
 - Fix: @Editor with forViews is ignored when used inside a reference. 
 - Properties with WebURL editor or WEBURL stereotype are shown in list as links.
 - Fix: PDF reports fail if hibernate.cfg.xml is not present. 

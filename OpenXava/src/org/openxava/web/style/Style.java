@@ -148,7 +148,6 @@ public class Style {
 	protected Collection<String> createAdditionalCssFiles() {
 		return Arrays.asList( 
 			"/xava/editors/calendar/skins/aqua/theme.css", 
-			"/xava/style/yahoo-treeview/fonts/fonts-min.css",
 			"/xava/style/yahoo-treeview/treeview.css",
 			getJQueryCss()
 		);
