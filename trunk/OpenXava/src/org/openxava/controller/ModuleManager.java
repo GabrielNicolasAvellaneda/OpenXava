@@ -1347,8 +1347,7 @@ public class ModuleManager implements java.io.Serializable {
 		if (dialogLevel > 0 && hideDialog) reloadAllUINeeded = true; 
 		this.hideDialog = dialogLevel > 0 && hideDialog;
 		dialogLevel--;
-		if (dialogLevel < 0) dialogLevel = 0;
-		this.showDialog = false; 
+		if (dialogLevel < 0) dialogLevel = 0; 
 	}
 	
 	public MetaAction getLastExecutedMetaAction() {
