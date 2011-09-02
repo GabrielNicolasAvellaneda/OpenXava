@@ -408,7 +408,9 @@ public class MetaComponent implements Serializable {
 			String packageName = getPackageName();			
 			if (packageName == null) return null;
 			packageNameWithSlashWithoutModel = Strings.change(packageName, ".", "/");
-			packageNameWithSlashWithoutModel = packageNameWithSlashWithoutModel.substring(0, packageNameWithSlashWithoutModel.lastIndexOf('/'));
+			if (packageNameWithSlashWithoutModel.contains("/")) {  
+				packageNameWithSlashWithoutModel = packageNameWithSlashWithoutModel.substring(0, packageNameWithSlashWithoutModel.lastIndexOf('/'));
+			}
 		}		
 		return packageNameWithSlashWithoutModel;
 	}

@@ -34,7 +34,7 @@
 		</formatter>
 		<for-stereotype stereotype="PERSON_NAME" />
 	</editor>
-		
+	
 	<editor url="colorEditor.jsp">
 		<for-reference model="Color"/>
 	</editor>

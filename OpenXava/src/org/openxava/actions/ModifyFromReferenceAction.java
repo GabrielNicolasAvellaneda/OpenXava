@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openxava.view.*;
 
 
 
@@ -16,8 +17,7 @@ public class ModifyFromReferenceAction extends NavigationFromReferenceBaseAction
 	
 	private boolean exists = true;
 	
-	
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		super.execute();
 		
 		Map key = getReferenceSubview().getKeyValuesWithValue();
@@ -26,11 +26,12 @@ public class ModifyFromReferenceAction extends NavigationFromReferenceBaseAction
 			exists = false;
 			addError("cannot_modify_empty_reference");
 			return;
-		}
+		}	
+			
 		getView().setKeyEditable(false);
-		getView().setValues(key);
+		getView().setValues(key);		
 	}
-	
+		
 	public String getCustomController() {	
 		return getModel() + "Modification";
 	}

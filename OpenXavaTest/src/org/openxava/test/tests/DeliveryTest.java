@@ -40,6 +40,24 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
+	public void testModifyEmptyReferenceFromADialog() throws Exception { 
+		execute("CRUD.new");
+		setValue("deliveredBy", usesAnnotatedPOJO()?"1":"2");
+		setValue("carrier.number", "1");
+		execute("Reference.modify", "model=Carrier,keyProperty=carrier.number");
+		assertDialog();
+		assertValue("drivingLicence.KEY", "");
+		assertExists("warehouse.name"); // We are in the Carrier dialog
+		assertNoAction("CRUD.new");
+		assertAction("Modification.update");
+		execute("Reference.modify", "model=DrivingLicence,keyProperty=drivingLicence__KEY__");
+		assertDialog();
+		assertExists("warehouse.name"); // We still are in the Carrier dialog
+		assertError("Impossible to modify an empty reference");
+		assertNoAction("CRUD.new");
+		assertAction("Modification.update");		
+	}
+	
 	public void testSaveElementInCollectionWithUseObjectView() throws Exception {  
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=2");
@@ -70,6 +88,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("Reference.modify", "model=DeliveryType,keyProperty=type.number");
 		assertNoDialog();
 		assertError("Impossible to modify an empty reference");
+		assertTrue(!getHtml().contains("Modify - Delivery")); 
 	}
 	
 	public void testSecondLevelDialogReturningWithCancelButton() throws Exception { 

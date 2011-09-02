@@ -60,7 +60,6 @@ import org.openxava.test.validators.*;
 })
 
 @Tab(properties = "number, description, unitPrice, unitPriceInPesetas")
-
 public class Product {
 	
 	@Id @Column(length=10) 
@@ -125,13 +124,13 @@ public class Product {
 		setUnitPrice(getUnitPrice().multiply(new BigDecimal("1.02")).setScale(2));
 	}
 	
-	public BigDecimal getPrice(String country, BigDecimal tariff) throws ProductException, PriceException {
+	public BigDecimal getPrice(String country, BigDecimal tariff) throws ProductException, PriceException {	
 		if ("España".equals(country) || "Guatemala".equals(country)) {
 			return getUnitPrice().add(tariff);   
 		}
 		else {
 			throw new PriceException("Country not register");
-		}				
+		}	
 	}
 
 	public String getDescription() {

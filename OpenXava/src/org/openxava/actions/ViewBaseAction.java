@@ -93,7 +93,7 @@ abstract public class ViewBaseAction extends BaseAction {
 	 */
 	protected void closeDialog() { 
 		returnToPreviousView();
-		returnToPreviousControllers();
+		if (!dialogShown) returnToPreviousControllers(); 
 		getManager().closeDialog();
 		dialogShown = false;
 	}	

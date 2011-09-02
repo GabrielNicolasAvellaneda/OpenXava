@@ -41,7 +41,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 		String jndi = null;		
 		if (!component.getMetaEntity().isAnnotatedEJB3()) {
 			String packageName = component.getPackageNameWithSlashWithoutModel();
-			jndi = getDatasourcesJNDIByPackage().getProperty(packageName);
+			jndi = getDatasourcesJNDIByPackage().getProperty(packageName);			
 			if (Is.emptyString(jndi)) {
 				throw new XavaException("no_data_source_for_component", componentName); 
 			}

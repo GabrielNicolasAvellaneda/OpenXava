@@ -221,7 +221,8 @@ public class Module extends DWRBase {
 	}
 
 	private void setDialogLevel(Result result) {
-		result.setDialogLevel(manager.getDialogLevel()); 
+		result.setDialogLevel(manager.getDialogLevel());		
+		if (manager.isShowDialog() && manager.isHideDialog()) return;		
 		if (manager.isShowDialog()) {
 			result.setShowDialog(manager.isShowDialog());						
 			setDialogTitle(result);

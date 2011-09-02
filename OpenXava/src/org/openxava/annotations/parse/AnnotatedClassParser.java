@@ -280,6 +280,12 @@ public class AnnotatedClassParser {
 		for (Field f: pojoClass.getDeclaredFields()) {
 			PropertyDescriptor pd = propertyDescriptors.get(f.getName());
 			if (pd == null) continue;
+			// tmp ini
+			if (pd.getReadMethod() == null) {
+				log.warn(XavaResources.getString("write_only_property_not_added", pd.getName())); // tmp i18n
+				continue;
+			}
+			// tmp fin
 			addMember(model, mapping, pd, f, embedded);
 			propertyDescriptors.remove(f.getName());
 		}
@@ -342,9 +348,9 @@ public class AnnotatedClassParser {
 	
 	private boolean isReference(PropertyDescriptor pd, Field f) {
 		return (f != null && f.isAnnotationPresent(ManyToOne.class)) || 
-			pd.getReadMethod().isAnnotationPresent(ManyToOne.class) ||
+			pd.getReadMethod().isAnnotationPresent(ManyToOne.class) ||			
 			(f != null && f.isAnnotationPresent(OneToOne.class)) || 
-			pd.getReadMethod().isAnnotationPresent(OneToOne.class);
+			pd.getReadMethod().isAnnotationPresent(OneToOne.class);			
 	}
 	
 	private void addCollection(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field) throws Exception { 		

@@ -38,12 +38,14 @@ public class ReferenceBaseAction extends ViewBaseAction {
 	
 	private ViewInfo viewInfo;	
 	private String keyProperty;
-	@Inject
-	private View referenceSubview;		
 	
-	public void execute() throws Exception {	
+	
+	@Inject
+	private View referenceSubview;
+	
+	public void execute() throws Exception {
 		this.viewInfo = createSubview(getView(), createMemberName());		
-		setReferenceSubview(viewInfo.getView());		
+		setReferenceSubview(viewInfo.getView());				
 	}
 	
 	protected ViewInfo getViewInfo() {
@@ -76,11 +78,11 @@ public class ReferenceBaseAction extends ViewBaseAction {
 		keyProperty = string;		
 	}
 
-	public View getReferenceSubview() {
+	public View getReferenceSubview() { 
 		return referenceSubview;
 	}
 
-	public void setReferenceSubview(View view) {
+	public void setReferenceSubview(View view) { 
 		referenceSubview = view;
 	}
 
