@@ -279,13 +279,11 @@ public class AnnotatedClassParser {
 		Map<String, PropertyDescriptor> propertyDescriptors = getPropertyDescriptors(pojoClass);
 		for (Field f: pojoClass.getDeclaredFields()) {
 			PropertyDescriptor pd = propertyDescriptors.get(f.getName());
-			if (pd == null) continue;
-			// tmp ini
+			if (pd == null) continue;			
 			if (pd.getReadMethod() == null) {
-				log.warn(XavaResources.getString("write_only_property_not_added", pd.getName())); // tmp i18n
+				log.warn(XavaResources.getString("write_only_property_not_added", pd.getName())); 
 				continue;
-			}
-			// tmp fin
+			}			
 			addMember(model, mapping, pd, f, embedded);
 			propertyDescriptors.remove(f.getName());
 		}
