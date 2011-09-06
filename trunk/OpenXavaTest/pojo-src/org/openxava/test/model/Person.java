@@ -13,14 +13,14 @@ import org.openxava.annotations.*;
  *
  */
 @Embeddable
-@View(name="OnlyNames", members="personFirstName; personLastName") // tmp
+@View(name="OnlyNames", members="personFirstName; personLastName") 
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Editor(forViews="OnlyNames", value="PersonName") // tmp
+	@Editor(forViews="OnlyNames", value="PersonName") 
 	private String personFirstName;
 	
-	@Editor(forViews="OnlyNames", value="PersonName") // tmp
+	@Editor(forViews="OnlyNames", value="PersonName") 
 	private String personLastName;
 	
 	@Embedded

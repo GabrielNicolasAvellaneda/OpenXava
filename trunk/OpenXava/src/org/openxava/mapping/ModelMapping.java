@@ -286,7 +286,6 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 	public String getQualifiedColumn(String modelProperty) 
 		throws XavaException {	
-		
 		PropertyMapping propertyMapping = (PropertyMapping) propertyMappings.get(modelProperty);
 		if (propertyMapping != null && propertyMapping.hasFormula()) return getColumn(modelProperty);
 		
@@ -294,11 +293,15 @@ abstract public class ModelMapping implements java.io.Serializable {
 		if (Is.emptyString(tableColumn))
 			return "'" + modelProperty + "'";
 		// for calculated fields or created by multiple converter
-		
-		if (modelProperty.indexOf('.') >= 0) {			
-			if (tableColumn.indexOf('.') < 0) return tableColumn;			
-			if (tableColumn.startsWith(getTableToQualifyColumn() + ".")) return tableColumn; 
+				
+		if (modelProperty.indexOf('.') >= 0) {
+			if (tableColumn.indexOf('.') < 0) return tableColumn;	
 			String reference = modelProperty.substring(0, modelProperty.lastIndexOf('.'));
+			if (tableColumn.startsWith(getTableToQualifyColumn() + ".")) {
+				String member = modelProperty.substring(modelProperty.lastIndexOf('.') + 1);
+				if (getMetaModel().getMetaReference(reference).getMetaModelReferenced().isKey(member)) return tableColumn;
+			}
+
 			// The next code uses the alias of the table instead of its name. In order to
 			// support multiple references to the same model
 			if (reference.indexOf('.') >= 0) {				
@@ -307,9 +310,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 				}				
 				reference = reference.substring(reference.lastIndexOf('.') + 1);
 			}
-			return "T_" + reference + tableColumn.substring(tableColumn.lastIndexOf('.')) ;
+			return "T_" + reference + tableColumn.substring(tableColumn.lastIndexOf('.'));
 		}
-		else  {			
+		else  {
 			return getTableToQualifyColumn() + "." + tableColumn; 
 		}
 	}
@@ -448,7 +451,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 */
 	public String changePropertiesByColumns(String source)
 		throws XavaException {		
-		return changePropertiesByColumns(source, true);		
+		return changePropertiesByColumns(source, true);
 	}
 	
 	/**
@@ -486,7 +489,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 				column = isModel(property)?
 					getTable(property):
 					qualified?getQualifiedColumn(property):getColumn(property);				
-			}
+			}			
 			r.replace(i, f + 1, column);
 			i = r.toString().indexOf("${");
 		}
