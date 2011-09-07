@@ -18,7 +18,6 @@ import org.openxava.test.validators.*;
  */
 
 @Entity
-
 @View(members=
 	"serviceType;" +
 	"quantity, unitPrice, amount;" +
