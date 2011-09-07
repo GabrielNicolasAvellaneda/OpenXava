@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Uploading files fails when using old URL notation for module.
 - Fix: Reference members in @Tab does not show the correct value when referenced entity and main entity map to the same table. 
 - Fix: On IE6 and IE7 columns headers are fixed when the horizontal scroll is moved. The horizontal scroll for lists has been removed for IE6 and IE7. 
 - Fix: NullPointerException when a getter method is missing or bad written.

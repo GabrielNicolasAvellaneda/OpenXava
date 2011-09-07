@@ -20,7 +20,7 @@ public class ModuleServlet extends HttpServlet {
 			return;
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(
-			"/xava/module.jsp?application=" + uri[1] + "&module=" + uri[3]);
+			"/xava/module.jsp?application=" + uri[1] + "&module=" + uri[3] + "&friendlyURL=true");
 		dispatcher.forward(request, response);
 	}
 	
