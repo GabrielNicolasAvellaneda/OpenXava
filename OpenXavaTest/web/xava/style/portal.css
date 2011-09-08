@@ -6,8 +6,8 @@ JSR-168 and WSRP and needed by OpenXava.
 
 #xava_loading { 
 	padding: 20px;	
-		border: none; 
-	background: lightgray;
+	border: none; 
+	background: #d3d3d3;
 	opacity:.60;
 	border-radius: 7px;
 	-moz-border-radius: 7px;
@@ -22,8 +22,14 @@ JSR-168 and WSRP and needed by OpenXava.
 	z-index: 9999; 
 	position: fixed; 
 	top: 25%; 
-	left: 45%
+	left: 45%	
 }
+
+.ie6 #xava_loading { 
+	position: absolute;	
+}
+
+
 
 .liferay4-selected-row td {
 	background: #BFC2E4;
