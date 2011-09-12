@@ -16,8 +16,6 @@ String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
 String align = p.isNumber()?"style='text-align:right'":"";
-String browser = request.getHeader("user-agent").toLowerCase();
-boolean bSafari = (browser != null && browser.indexOf("safari") != -1 && browser.indexOf("chrome") == -1) ? true : false;
 boolean editable="true".equals(request.getParameter("editable"));
 String disabled=editable?"":"disabled";
 String script = request.getParameter("script");
@@ -42,8 +40,9 @@ if (p.isNumber()) {
 		size += sizeIncrement;
 		maxLength += sizeIncrement;
 	}
-	String integer = p.getScale() == 0?"true":"false";	
-	numericAlt = getNumericAlt(bSafari, p.getSize(), p.getScale());  
+	String integer = p.getScale() == 0?"true":"false";
+	String browser = request.getHeader("user-agent").toLowerCase(); 
+	numericAlt = getNumericAlt(browser, p.getSize(), p.getScale());   
 	numericClass = "xava_numeric"; 
 }	
 
@@ -81,24 +80,20 @@ if (editable || !label) {
 <%!
 private static Log log = LogFactory.getLog("textEditor.jsp");
 
-private String getNumericAlt(boolean bSafari, int size, int scale) {
+private String getNumericAlt(String browser, int size, int scale) {
 	try {		
 		DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locales.getCurrent());
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
 		StringBuffer result = new StringBuffer("alt='n"); // Negatives always allowed
-		result.append(size > 9?"0":Integer.toString(size)); // Size
-		if (scale == 0 || !df.isGroupingUsed()) result.append("x"); // no grouping separator
+		result.append(size > 9?"0":Integer.toString(size)); // Size		
+		boolean browseSupportsGrouping = browser != null && browser.contains("firefox") ? true : false;
+		if (scale == 0 || !df.isGroupingUsed() || !browseSupportsGrouping) result.append("x"); // no grouping separator
 		else {
-			switch (symbols.getGroupingSeparator()) {		
-				case ',':
-					if (bSafari) {
-						result.append("x"); // none when browser is Safari
-					}					
-					else {
-						result.append("c"); // comma
-					}
+			switch (symbols.getGroupingSeparator()) {					
+				case ',':					
+					result.append("c"); // comma
 					break;
-				case '.':
+				case '.':					
 					result.append("p"); // period
 					break;
 				case ' ':
@@ -106,7 +101,8 @@ private String getNumericAlt(boolean bSafari, int size, int scale) {
 					break;
 				case '\'': 
 					result.append("a"); // apostrophe
-					break;					
+					break;
+				
 				default:
 					result.append("x"); // none					
 			}
