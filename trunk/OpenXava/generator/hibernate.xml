@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tl>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+<tl>&lt;?xml version="1.0" encoding="<expr>org.openxava.util.XSystem.getEncoding()</expr>"?&gt;
 <declare import="org.openxava.component.MetaComponent"/>
 <declare import="org.openxava.model.meta.*"/>
 <declare import="org.openxava.mapping.*"/>

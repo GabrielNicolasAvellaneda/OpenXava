@@ -12,20 +12,24 @@ import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.session.*;
 import org.openxava.util.*;
+import org.openxava.view.*;
 
 /**
  * 
  * @author Javier Paniza
  */
 
-public class EditGalleryAction extends ViewBaseAction implements INavigationAction {
+public class EditGalleryAction extends /*View*/BaseAction implements INavigationAction {
 		
 	private static Log log = LogFactory.getLog(EditGalleryAction.class);
 	
 	private String galleryProperty;
+	private String viewObject; 
+	private View view; 
 
 	@Inject
 	private Gallery gallery;	
+	
 	
 	
 	public void execute() throws Exception {
@@ -42,7 +46,7 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 		gallery.loadAllImages();		
 		gallery.setTitle(XavaResources.getString("gallery_title", 
 				Labels.get(galleryProperty, Locales.getCurrent()), 
-				Labels.get(getModelName(), Locales.getCurrent()),
+				Labels.get(getView().getModelName(), Locales.getCurrent()), 
 				getObjectDescription()));				
 		if (gallery.isEmpty()) {
 			addMessage("no_images");
@@ -87,6 +91,13 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 			return XavaResources.getString("object_description_warning");
 		}		
 	}
+	
+	private View getView() { 
+		if (view == null) {
+			view = (View) getContext().get(getRequest(), viewObject==null?"xava_view":viewObject);
+		}
+		return view;
+	}
 
 	private boolean isEditable() throws XavaException {
 		return getView().isEditable(galleryProperty);		
@@ -114,6 +125,14 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 
 	public void setGallery(Gallery gallery) {
 		this.gallery = gallery;
+	}
+
+	public String getViewObject() {
+		return viewObject;
+	}
+
+	public void setViewObject(String viewObject) {
+		this.viewObject = viewObject;
 	}
 
 }

@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Images gallery does not work from a reference.
+- Fix: Encoding of the content of the generated hbm files does not match with the declared encoding.
 - Fix: On change actions and calculated properties fail in Chrome with BigDecimal values.
 - Fix: Loading... AJAX message is not well displayed in IE6/IE7.
 - Fix: Uploading files fails when using old URL notation for module.
