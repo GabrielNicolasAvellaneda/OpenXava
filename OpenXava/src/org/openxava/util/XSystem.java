@@ -80,7 +80,7 @@ public class XSystem {
 				else if ("iso8859-1".equalsIgnoreCase(encoding)) encoding = "ISO-8859-1";
 			}
 		}		
-		return encoding;		
+		return encoding;				
 	}
 	
 }
