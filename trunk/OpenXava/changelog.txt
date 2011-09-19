@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Dialogs in Liferay 6 do not hide resizing gadgets of collections behind. 
 - Fix: Images gallery does not work from a reference.
 - Fix: Encoding of the content of the generated hbm files does not match with the declared encoding.
 - Fix: On change actions and calculated properties fail in Chrome with BigDecimal values.
