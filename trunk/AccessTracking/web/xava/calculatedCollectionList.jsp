@@ -12,9 +12,11 @@ String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAct
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
-boolean resizeColumns = style.allowsResizeColumns() && XavaPreferences.getInstance().isResizeColumns(); 
+boolean resizeColumns = style.allowsResizeColumns() && XavaPreferences.getInstance().isResizeColumns();
+String browser = request.getHeader("user-agent");
+boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
 %>
-<% if (resizeColumns) { %> 
+<% if (resizeColumns && scrollSupported) { %> 
 <div class="<xava:id name='collection_scroll'/>" style="overflow: auto;">
 <% } %>
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
@@ -153,7 +155,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 %>
 </tr>
 </table>
-<% if (resizeColumns) { %>
+<% if (resizeColumns && scrollSupported) { %>
 </div>
 <% } %>
  
