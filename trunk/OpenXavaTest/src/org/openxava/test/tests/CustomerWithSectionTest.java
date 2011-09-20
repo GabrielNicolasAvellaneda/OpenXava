@@ -169,7 +169,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 				
 	public void testTELEPHONE_EMAIL_WEBURLstereotypes() throws Exception {
-		printHtml();
 		assertTrue("website column must have a clickable link", getHtml().contains("<a href=\"http://www.openxava.org\">"));
 		execute("Mode.detailAndFirst");
 		setValue("telephone", "asf");
