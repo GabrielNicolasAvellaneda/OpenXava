@@ -402,7 +402,7 @@
 	
 	<tab>
 		<row-style style="row-highlight" property="type" value="steady"/>
-		<properties>name, type, seller.name, address.city, seller.level.description, address.state.name</properties>	
+		<properties>name, type, seller.name, address.city, seller.level.description, address.state.name, website</properties>	
 	</tab>
 	
 	<tab name="Complete"/>

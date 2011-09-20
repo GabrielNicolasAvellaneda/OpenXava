@@ -94,6 +94,7 @@ openxava.refreshPage = function(result) {
 			dialog.attr("module", result.module); 
 			dialog.dialog('option', 'title', result.dialogTitle);
 			dialog.dialog('option', 'width', "auto"); // Because a bug of jQuery UI 1.7.2 + IE7
+			dialog.dialog('option', 'zIndex', 99999 );
 			dialog.dialog('open');
 			dialog.dialog('option', 'width', dialog.parent().width()); // Because a bug of jQuery UI 1.7.2 + IE7
 		}
