@@ -71,7 +71,9 @@ String cssCurrentRow = style.getCurrentRow();
 String styleOverflow = "overflow: auto;";
 int totalSize = -1; 
 tab.reset(); 
-boolean resizeColumns = style.allowsResizeColumns() && tab.isResizeColumns(); 
+boolean resizeColumns = style.allowsResizeColumns() && tab.isResizeColumns();
+String browser = request.getHeader("user-agent");
+boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
 %>
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
@@ -105,7 +107,7 @@ if (tab.isTitleVisible()) {
 <%
 } 
 %>
-<% if (resizeColumns) { %>
+<% if (resizeColumns && scrollSupported) { %>
 <div class="<xava:id name='<%=scrollId%>'/>" style="<%=styleOverflow%>">
 <% } %> 
 <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
@@ -467,7 +469,7 @@ if (lastRow != null) {
 }
 %>
 </table>
-<% if (resizeColumns) { %>
+<% if (resizeColumns && scrollSupported) { %>
 </div> 
 <% } %>
 
