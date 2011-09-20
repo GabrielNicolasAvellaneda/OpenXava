@@ -177,7 +177,12 @@ boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDial
 
 if (manager.isResetFormPostNeeded()) {	
 %>		
-	<form id="xava_reset_form"></form>
+	<form id="xava_reset_form">
+		<% if (!"true".equals(request.getParameter("friendlyURL"))) { // To support old URL style (with xava/moduls.jsp?application=...) %>
+		<input name="application" type="hidden" value="<%=request.getParameter("application")%>"/>
+		<input name="module" type="hidden" value="<%=request.getParameter("module")%>"/>
+		<% } %>
+	</form>
 <% } else  { %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>
 	<input id="<xava:id name='loading'/>" type="hidden" value="<%=coreViaAJAX%>"/>
