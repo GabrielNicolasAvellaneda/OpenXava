@@ -1,6 +1,26 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.2.3 (2011-9-20)
+--------------------------
+- Properties with WebURL editor or WEBURL stereotype are shown in list as links.
+- Fix: Dialogs in Liferay 6 do not hide resizing gadgets of collections behind. 
+- Fix: Images gallery does not work from a reference.
+- Fix: Encoding of the content of the generated hbm files does not match with the declared encoding.
+- Fix: On change actions and calculated properties fail in Chrome with BigDecimal values.
+- Fix: Loading... AJAX message is not well displayed in IE6/IE7.
+- Fix: Uploading files fails when using old URL notation for module.
+- Fix: Reference members in @Tab does not show the correct value when referenced entity and main entity map to the same table. 
+- Fix: On IE6 and IE7 columns headers are fixed when the horizontal scroll is moved. The horizontal scroll for lists has been removed for IE6 and IE7. 
+- Fix: NullPointerException when a getter method is missing or bad written.
+- Fix: Modifying an empty reference from a dialog closes the dialog and freezes the module. 
+- Fix: Simple package name for entities (without dots) produces an exception. 
+- Fix: Liferay 6 navigation bar changes its font size when there is an OpenXava portlet in the page. 
+- Fix: @Editor with forViews is ignored when used inside a reference. 
+- Fix: PDF reports fail if hibernate.cfg.xml is not present. 
+- Fix: French i18n files contain single quote ', which prevent the {0} replacement to be done.  
+- Fix: Argument type mismatch on saving element in nested collection with root entity with composite key.
+ 
 OpenXava 4.2.2 (2011-8-16)
 --------------------------
 - JetSpeed 2.2.1 supported.
