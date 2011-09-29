@@ -2540,6 +2540,13 @@ public class View implements java.io.Serializable {
 			return pojo;			
 		}
 	}
+	
+	/**
+	 * Entity associated to the current view. <p>
+	 */
+	public Object getEntity() throws Exception {		
+		return getPOJO();		
+	}
 
 	private boolean hasDependentsProperties(MetaProperty p) {		
 		try {			
