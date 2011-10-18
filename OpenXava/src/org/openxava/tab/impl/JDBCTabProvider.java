@@ -339,8 +339,6 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			rs = ps.executeQuery();
 			rs.next();
 			Number size = (Number) rs.getObject(1);
-			rs.close();
-			ps.close();
 			return size;
 		}
 		catch (Exception ex) {
@@ -349,18 +347,18 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		}
 		finally {
 			try {
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (Exception ex) {
-				log.error(XavaResources.getString("close_statement_warning"), ex);
-			}
-			try {
 				if (rs != null) {
 					rs.close();
 				}
 			} catch (Exception ex) {
 				log.error(XavaResources.getString("close_resultset_warning"), ex);
+			}			
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ex) {
+				log.error(XavaResources.getString("close_statement_warning"), ex);
 			}
 			try {
 				con.close();

@@ -1,8 +1,10 @@
 package org.openxava.test.model;
 
 import java.math.*;
+import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.*;
 
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;

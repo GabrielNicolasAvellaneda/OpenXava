@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Closing prepared statements twice produces errors in JBoss. 
 - New getEntity() method in View class that returns the entity associated to the view.
 
 OpenXava 4.2.3 (2011-9-20)
