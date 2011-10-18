@@ -520,7 +520,7 @@ public class ModuleManager implements java.io.Serializable {
 		}
 	}
 	
-	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {		
+	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
 		if (ex instanceof ValidationException) {		
 			errors.add(((ValidationException)ex).getErrors());
 			messages.removeAll();

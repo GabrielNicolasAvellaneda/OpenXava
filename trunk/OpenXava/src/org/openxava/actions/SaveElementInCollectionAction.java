@@ -37,7 +37,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		resetDescriptionsCache();
 		if (containerSaved) getView().getRoot().refresh(); 
 		else getView().recalculateProperties();
-		closeDialog();		
+		closeDialog(); 		
 	}
 	
 	
