@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New property summationInList in xava.properties to enable or disable the summation in list and collections.
 - Fix: Closing prepared statements twice produces errors in JBoss. 
 - New getEntity() method in View class that returns the entity associated to the view.
 

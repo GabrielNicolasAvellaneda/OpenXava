@@ -1215,7 +1215,11 @@ public class ModuleTestBase extends TestCase {
 		if (table.getRowCount() > 2 && "nodata".equals(table.getRow(2).getId())) { 
 			return 0;
 		}						
-		int increment = collectionHasFilterHeader(table)?3:1; 
+		int increment = 1; // The header
+		if (collectionHasFilterHeader(table)) {
+			increment++; // The filter
+			if (XavaPreferences.getInstance().isSummationInList()) increment++; // The summation row
+		}			
 		return table.getRowCount() - increment;
 	}
 	
