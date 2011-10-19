@@ -408,6 +408,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 </tr>
 <%
 }
+if (XavaPreferences.getInstance().isSummationInList()) { 
 %>
 <tr class="<%=style.getTotalRow()%>">
 <td style="<%=style.getTotalEmptyCellStyle()%>"/>
@@ -446,6 +447,7 @@ for (int c=0; c<model.getColumnCount(); c++) {
 %>
 </tr>
 <%
+} // isSummationInList()
 }
 else {
 %>

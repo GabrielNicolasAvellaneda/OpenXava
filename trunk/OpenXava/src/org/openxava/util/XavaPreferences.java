@@ -464,6 +464,12 @@ public class XavaPreferences {
 	public String getLiferay6StyleClass() {  
 		return getProperties().getProperty("liferay6StyleClass", "org.openxava.web.style.Liferay6Style").trim(); 
 	}
+
+	/** @since 4.3 */
+	public boolean isSummationInList() {
+		return "true".equalsIgnoreCase(getProperties().getProperty(
+				"summationInList", "true").trim());
+	}
 	
 		
 }
