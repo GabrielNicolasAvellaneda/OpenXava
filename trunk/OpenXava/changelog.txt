@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- When a constraint violation of JSR-303 has no property path its message is shown as is to the user. 
 - New property summationInList in xava.properties to enable or disable the summation in list and collections.
 - Fix: Closing prepared statements twice produces errors in JBoss. 
 - New getEntity() method in View class that returns the entity associated to the view.

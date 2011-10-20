@@ -12,7 +12,7 @@ class AuthorTest extends ModuleTestBase {
 		super(testName, "Author")		
 	}
 
-	void testCollectionViewWithGroup() throws Exception{
+	void testCollectionViewWithGroup() {
 		assertLabelInList(0, "Author")
 		assertValueInList(1, 0, "MIGUEL DE CERVANTES")
 		execute("List.viewDetail", "row=1")
@@ -21,5 +21,13 @@ class AuthorTest extends ModuleTestBase {
 		assertNoErrors()
 		assertDialog()
 	}
+	
+	void testCustomMessageWithBeanValidationJSR303() {
+		execute "CRUD.new"
+		setValue "author", "PEPE"
+		execute "CRUD.save"
+		assertError "Sorry, but PEPE is not a good name for an author"
+	}
+
 
 }

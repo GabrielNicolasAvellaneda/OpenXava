@@ -6,6 +6,7 @@ import java.util.*;
 import javax.inject.*;
 import javax.persistence.*;
 import javax.servlet.http.*;
+import javax.validation.*;
 
 import org.apache.commons.collections.*;
 import org.apache.commons.fileupload.*;
@@ -22,6 +23,7 @@ import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
+import org.openxava.validators.ValidationException;
 import org.openxava.view.*;
 import org.openxava.web.*;
 import org.openxava.web.style.*;
@@ -30,11 +32,11 @@ import org.openxava.web.style.*;
  * @author Javier Paniza
  */
 
-public class ModuleManager implements java.io.Serializable {
+public class ModuleManager implements java.io.Serializable { 
 	
 	private static Log log = LogFactory.getLog(ModuleManager.class);
 	
-	static {		
+	static {		 
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
@@ -520,9 +522,9 @@ public class ModuleManager implements java.io.Serializable {
 		}
 	}
 	
-	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
+	private void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {		
 		if (ex instanceof ValidationException) {		
-			errors.add(((ValidationException)ex).getErrors());
+			errors.add(((ValidationException)ex).getErrors());		 
 			messages.removeAll();
 			doRollback();			
 		} 
@@ -535,7 +537,10 @@ public class ModuleManager implements java.io.Serializable {
 			}		 
 			else if (ex.getCause() instanceof javax.validation.ConstraintViolationException) {
 				manageConstraintViolationException(metaAction, errors, messages, (javax.validation.ConstraintViolationException) ex.getCause());
-			}			 
+			}			
+			else if (ex.getCause() != null &&	ex.getCause().getCause() instanceof javax.validation.ConstraintViolationException) {
+				manageConstraintViolationException(metaAction, errors, messages, (ConstraintViolationException) ex.getCause().getCause());
+			}						
 			else {
 				manageRegularException(metaAction, errors, messages, ex);
 			}
@@ -565,16 +570,24 @@ public class ModuleManager implements java.io.Serializable {
 	
 	private void manageConstraintViolationException(MetaAction metaAction, Messages errors, Messages messages, javax.validation.ConstraintViolationException ex) { 
 		for (javax.validation.ConstraintViolation violation: ex.getConstraintViolations()) {
-			errors.add("invalid_state", 
-				violation.getPropertyPath()==null?null:violation.getPropertyPath().toString(),	
-				violation.getRootBeanClass().getSimpleName(),	 
-				"'" + XavaResources.getString(violation.getMessage()) + "'", 
-				violation.getInvalidValue());			
+			String attrName = violation.getPropertyPath()==null?null:violation.getPropertyPath().toString();
+			String domainClass = violation.getRootBeanClass().getSimpleName();
+
+			String message = violation.getMessage();
+			if (message.startsWith("{") && message.endsWith("}")) {			
+				message = message.substring(1, message.length() - 1); 							
+			}				
+			message = XavaResources.getString(message);
+			Object invalidValue = violation.getInvalidValue(); 
+			if (Is.emptyString(attrName) || domainClass == null || invalidValue== null) { 
+				errors.add(message);
+			} 
+			else { 
+				errors.add("invalid_state", attrName, domainClass, "'" + message + "'", invalidValue);
+			} 
 		}
 		messages.removeAll();		
-	}
-
-	
+	}	
 
 	private void manageRegularException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
 		log.error(ex.getMessage(), ex);
