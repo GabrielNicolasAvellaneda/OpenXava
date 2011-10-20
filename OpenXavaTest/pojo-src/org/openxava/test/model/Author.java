@@ -1,12 +1,12 @@
 package org.openxava.test.model;
 
 import java.util.*;
-
 import javax.persistence.*;
-
 import org.openxava.annotations.*;
+import org.openxava.test.annotations.*;
 
 @Entity
+@GoodName 
 public class Author {
 	
 	@Id @Column(length=30)
