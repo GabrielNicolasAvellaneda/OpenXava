@@ -2,6 +2,14 @@
 
 <!DOCTYPE validators SYSTEM "dtds/validators.dtd">
 
+<!--
+	In your project use the name 'validators.xml' or 'validadores.xml'
+	
+	Instead of modifying this file it's better to create your own validators.xml 
+	(or validadores.xml) in your project to override this default value
+	for your application.	
+-->
+
 <validators>
 
 	<validator name="CADENA_NO_VACIA"
