@@ -10,7 +10,8 @@ import org.w3c.dom.*;
 
 
 /**
- * @author: Javier Paniza
+ * @author Javier Paniza
+ * @author Oscar Chamorro
  */
 public class ValidatorsParser extends ParserBase {
 	
@@ -26,6 +27,8 @@ public class ValidatorsParser extends ParserBase {
 	}
 	
 	public static void configureValidators() throws XavaException {
+		ValidatorsParser defaultParser = new ValidatorsParser("default-validators.xml", ENGLISH);
+		defaultParser.parse();
 		ValidatorsParser enParser = new ValidatorsParser("validators.xml", ENGLISH);
 		enParser.parse();
 		ValidatorsParser esParser = new ValidatorsParser("validadores.xml", ESPANOL);
