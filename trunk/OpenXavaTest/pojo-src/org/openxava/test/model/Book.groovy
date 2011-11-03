@@ -1,6 +1,6 @@
 package org.openxava.test.model
-import org.openxava.model.*;
 
+import org.openxava.model.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
@@ -12,8 +12,8 @@ class Book extends Identifiable {
 	
 	@ManyToOne 
 	Author author
-	
-	boolean outOfPrint 
+		 
+	boolean outOfPrint  
 	
 	@Stereotype("MEMO")
 	String synopsis

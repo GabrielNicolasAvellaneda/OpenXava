@@ -28,6 +28,18 @@
 	
 	</controller>
 	
+	<controller name="Corporation">	
+		<extends controller="Typical"/>
+        <action name="report" image="images/report.gif" mode="detail"
+				class="org.openxava.test.actions.ReportCorporationAction" />
+	</controller>
+	
+	<controller name="CorporationEmployee">
+		<extends controller="Typical"/>	
+        <action name="report" image="images/report.gif" mode="detail"
+				class="org.openxava.actions.SimpleHTMLReportAction" />
+	</controller>		
+	
 	<controller name="ModifySeller">
 	
 		<action name="modify" class="org.openxava.test.actions.ModifySellerAction"/>
