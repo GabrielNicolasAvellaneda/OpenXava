@@ -16,7 +16,7 @@ import net.sf.jasperreports.engine.*;
  * You only need to overwrite the abstract methods.<br>
  * 
  * @author Javier Paniza
- * @author Daniel García Salas  
+ * @author Daniel GarcÃ­a Salas  
  */
 
 abstract public class JasperReportBaseAction extends ViewBaseAction implements IForwardAction, IModelAction { 

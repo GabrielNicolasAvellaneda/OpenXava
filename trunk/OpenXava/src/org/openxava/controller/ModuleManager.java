@@ -22,7 +22,6 @@ import org.openxava.controller.meta.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
-import org.openxava.validators.*;
 import org.openxava.validators.ValidationException;
 import org.openxava.view.*;
 import org.openxava.web.*;
@@ -456,6 +455,13 @@ public class ModuleManager implements java.io.Serializable {
 				if (!Is.emptyString(uri)) {
 					request.getSession().setAttribute("xava_forward", uri);
 					request.getSession().setAttribute("xava_forward_inNewWindow", String.valueOf(forward.inNewWindow()));					
+				}				
+			}
+			if (action instanceof IMultipleForwardAction) {				
+				   IMultipleForwardAction forward = (IMultipleForwardAction) action;
+					   String[] uri = forward.getForwardURIs();
+				if (uri != null && uri.length>0) {
+					request.getSession().setAttribute("xava_forwards", uri);
 				}				
 			}
 			nextModule = null;			

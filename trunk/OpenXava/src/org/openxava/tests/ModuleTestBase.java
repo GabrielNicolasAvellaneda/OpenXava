@@ -814,44 +814,70 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	/**
-	 * Util for web applications, but using it make the test web dependent. 
+	 * Util for web applications, but using it makes the test web dependent. 
+	 * 
+	 * @param popup  The window number
+	 * @param type text/html, application/pdf, etc.
+	 * @since 4.3
+	 */
+	protected void assertContentTypeForPopup(int popup, String type) {
+		for (int i=0; !type.equals(getPopupResponse(popup).getContentType()) && i<20; i++) {
+			try { Thread.sleep(500); } catch (Exception ex) { }
+		}
+		assertEquals(XavaResources.getString("content_type_not_match"), type, getPopupResponse(popup).getContentType());
+	}	
+	
+	
+	/**
+	 * Util for web applications, but using it makes the test web dependent. 
 	 * 
 	 * @param type text/html, application/pdf, etc.
 	 */
 	protected void assertContentTypeForPopup(String type) {
-		for (int i=0; !type.equals(getPopupResponse().getContentType()) && i<20; i++) {
-			try { Thread.sleep(500); } catch (Exception ex) { }
-		}
-		assertEquals(XavaResources.getString("content_type_not_match"), type, getPopupResponse().getContentType());
+		assertContentTypeForPopup(-1, type); 
 	}	
 	
 	/**
-	 * Response for a second window
+	 * Response for a popup window
 	 * @return
 	 */
-	private WebResponse getPopupResponse() {
-		return getPopupPage().getWebResponse();		
+	private WebResponse getPopupResponse(int popup) { 
+		return getPopupPage(popup).getWebResponse();		
 	}
 	
 	/**
-	 * Page for a second window
+	 * Page for a popup window
+	 * 
 	 * @return
 	 */
-	private Page getPopupPage() {
+	private Page getPopupPage(int popup) { 
 		List windows = client.getWebWindows();		
 		if (windows.size() < 2) {
 			fail(XavaResources.getString("popup_window_not_found"));
 		}		
-		for (int i=windows.size() - 1; i > 0; i--) {
-			Page page = ((WebWindow) windows.get(i)).getEnclosedPage();
+		if (popup < 0) { // tmp
+			for (int i=windows.size() - 1; i > 0; i--) {
+				Page page = ((WebWindow) windows.get(i)).getEnclosedPage();
+				if (page != null) return page;
+			}
+		}
+		else {
+			Page page = ((WebWindow) windows.get(popup + 1)).getEnclosedPage();
 			if (page != null) return page;
 		}
-		
 		fail(XavaResources.getString("popup_window_not_found"));
 		return null;
 	}	
 	
-	
+	/**
+	 * 
+	 * 
+	 * @since 4.3
+	 */
+	protected void assertPopupCount(int count) throws Exception { 
+		List windows = client.getWebWindows();
+		assertEquals(XavaResources.getString("unexpected_popup_count"), count, windows.size() - 1); // tmp i18n
+	}
 	
 	protected void assertNoPopup() throws Exception {
 		List windows = client.getWebWindows();
@@ -883,7 +909,7 @@ public class ModuleTestBase extends TestCase {
 	 * The text of the response for popup window
 	 */
 	protected String getPopupText() throws IOException {
-		return getPopupPage().getWebResponse().getContentAsString();
+		return getPopupPage(-1).getWebResponse().getContentAsString();
 	}
 
 	/**

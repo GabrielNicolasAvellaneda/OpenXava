@@ -28,7 +28,16 @@ public class GenerateCustomReportServlet extends HttpServlet {
 		String format = (String) request.getSession().getAttribute("xava.report.format");
 		JasperPrint jprint = (JasperPrint) request.getSession().getAttribute("xava.report.jprint");
 		request.getSession().removeAttribute("xava.report.format"); 
-		request.getSession().removeAttribute("xava.report.jprint"); 
+		request.getSession().removeAttribute("xava.report.jprint");
+		JasperPrint[] jprints = (JasperPrint[]) request.getSession().getAttribute("xava.report.jprints");
+		int i = 0;
+		if (jprints!=null) {
+			i = Integer.parseInt(request.getParameter("index"));
+			jprint = jprints[i];
+			if (i==jprints.length-1) {
+				request.getSession().removeAttribute("xava.report.jprints");
+			}
+		}		
 		try {
 			if (format == null) {
 				format = JasperReportBaseAction.PDF;

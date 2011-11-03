@@ -51,6 +51,20 @@ openxava.refreshPage = function(result) {
 			location.href=result.forwardURL;			
 		}
 	}
+	else if (result.forwardURLs != null) {
+		for (var i=0; i<result.forwardURLs.length; i++) {
+			window.open(result.forwardURLs[i]);
+			var form = openxava.getForm(result.application, result.module);
+			if (form != null) { 
+				form[openxava.decorateId(result.application, result.module, "xava_action")].value="";	
+				form[openxava.decorateId(result.application, result.module, "xava_action_argv")].value="";
+				form[openxava.decorateId(result.application, result.module, "xava_changed_property")].value="";
+				form[openxava.decorateId(result.application, result.module, "xava_action_range")].value="";
+			}
+		}
+		window.location.reload(); 
+		return; 				
+	}	
 	else if (result.nextModule != null) {	
 		openxava.updateRootIds(result.application, result.module, result.nextModule);
 		document.getElementById("xava_last_module_change").value=result.module + "::" + result.nextModule;		
