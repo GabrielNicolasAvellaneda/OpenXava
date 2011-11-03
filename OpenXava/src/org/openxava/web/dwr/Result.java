@@ -13,6 +13,7 @@ public class Result {
 	private Map strokeActions;
 	private String forwardURL;
 	private boolean forwardInNewWindow;
+	private String[] forwardURLs; 
 	private String application;  
 	private String module;
 	private String nextModule; 
@@ -160,6 +161,14 @@ public class Result {
 
 	public int getCurrentRow() {
 		return currentRow;
+	}
+
+	public void setForwardURLs(String[] forwardURLs) {
+		this.forwardURLs = forwardURLs;
+	}
+
+	public String[] getForwardURLs() {
+		return forwardURLs;
 	}
 	
 }

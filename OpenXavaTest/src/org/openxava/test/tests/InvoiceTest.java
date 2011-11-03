@@ -116,6 +116,15 @@ public class InvoiceTest extends ModuleTestBase {
 		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/vnd.oasis.opendocument.text");				
 	}
+	
+	public void testGenerateTwoReportsAtOnce() throws Exception {  
+		execute("Mode.detailAndFirst");
+		execute("Invoice.print2Pdfs");		
+		assertNoErrors();		
+		assertPopupCount(2); 
+		assertContentTypeForPopup(0, "application/pdf");
+		assertContentTypeForPopup(1, "application/pdf");
+	}
 		
 	// Only behaves thus when mapFacadeAutocommit=false (the default)
 	public void testFailOnSaveFirstCollectionElementNotSaveMainEntity() throws Exception {
@@ -1134,6 +1143,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.search",
 			"CRUD.refresh",
 			"Invoice.printPdf",
+			"Invoice.print2Pdfs",
 			"Invoice.printExcel",
 			"Invoice.printRtf",
 			"Invoice.printOdt",
@@ -1169,6 +1179,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.search",
 			"CRUD.refresh",
 			"Invoice.printPdf",
+			"Invoice.print2Pdfs",
 			"Invoice.printExcel",
 			"Invoice.printRtf",
 			"Invoice.printOdt",

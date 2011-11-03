@@ -397,6 +397,11 @@
 			image="pdf.gif">
 			<set property="format" value="pdf"/>												
 		</action>
+		<action name="print2Pdfs" mode="detail"
+			class="org.openxava.test.actions.InvoiceTwoReportsAction"
+			image="pdf.gif">
+			<set property="format" value="pdf"/>												
+		</action>
 		<action name="printExcel" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
 			image="excel.gif">
