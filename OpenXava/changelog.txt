@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New SimpleHTMLReportAction to create reports from simple HTML templates.
+- New SimpleTemplater class to process simple HTML templates.
 - Fix: Validators defined in validators.xml of a project does not overwrite the built in ones. 
 - When a constraint violation of JSR-303 has no property path its message is shown as is to the user. 
 - New property summationInList in xava.properties to enable or disable the summation in list and collections.
