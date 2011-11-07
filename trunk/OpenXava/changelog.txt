@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Groovy upgraded to 1.8.3.
 - It's possible to generate several reports from the same action by means of JasperMultipleReportBaseAction.
 - New IMultipleForwardAction to do several forwards to several URIs from the same action.
 - New method assertPopupCount() in ModuleTestBase.
