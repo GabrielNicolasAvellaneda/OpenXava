@@ -21,6 +21,7 @@ import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.tab.impl.*;
 import org.openxava.util.*;
+import org.openxava.web.*;
 
 /**
  * To generate automatically reports from list mode. <p>
@@ -153,12 +154,12 @@ public class GenerateReportServlet extends HttpServlet {
 					tab.setRequest(request);
 					parameters.put("Title", tab.getTitle());				
 					parameters.put("Organization", getOrganization());
-					for (String totalProperty: tab.getTotalPropertiesNames()) {
-						parameters.put(totalProperty + "__TOTAL__", getTotal(tab, totalProperty));
+					for (String totalProperty: tab.getTotalPropertiesNames()) { 								
+						parameters.put(totalProperty + "__TOTAL__", getTotal(request, tab, totalProperty));
 					}
 					is  = getReport(request, response, tab);
 					ds = getDataSource(tab, selectedRows, request);
-				}
+				}				
 				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);					
 				response.setContentType("application/pdf");				
 				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
@@ -185,12 +186,9 @@ public class GenerateReportServlet extends HttpServlet {
 		}		
 	}
 	
-	private Object getTotal(Tab tab, String totalProperty) { 
-		Object result = tab.getTotal(totalProperty);
-		if (result instanceof BigDecimal) {
-			result = formatBigDecimal(result, Locales.getCurrent());
-		}
-		return result;
+	private Object getTotal(HttpServletRequest request, Tab tab, String totalProperty) {
+		Object total = tab.getTotal(totalProperty);
+		return WebEditors.format(request, tab.getMetaProperty(totalProperty), total, new Messages(), null, true);
 	}
 
 	private void setDefaultSchema(HttpServletRequest request) {
@@ -223,7 +221,7 @@ public class GenerateReportServlet extends HttpServlet {
 		suri.append("&properties=");
 		suri.append(tab.getPropertiesNamesAsString());		
 		suri.append("&totalProperties=");
-		suri.append(tab.getTotalPropertiesNamesAsString());				
+		suri.append(tab.getTotalPropertiesNamesAsString());						
 		response.setCharacterEncoding(XSystem.getEncoding()); 				
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}

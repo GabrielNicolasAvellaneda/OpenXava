@@ -13,7 +13,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		super(testName, "InvoiceNoSections");		
 	}
 	
-	public void testTotalInCollection() throws Exception { 
+	public void testSumInCollection() throws Exception { 
 		execute("CRUD.new");
 		execute("CRUD.search");
 		setValue("year", "2004");

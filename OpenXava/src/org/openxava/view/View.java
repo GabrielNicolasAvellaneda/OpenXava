@@ -18,8 +18,7 @@ import org.openxava.controller.ModuleManager;
 import org.openxava.controller.meta.MetaAction;
 import org.openxava.controller.meta.MetaController;
 import org.openxava.controller.meta.MetaControllers;
-import org.openxava.filters.CollectionInViewFilter;
-import org.openxava.filters.CollectionWithConditionInViewFilter;
+import org.openxava.filters.*;
 import org.openxava.mapping.ModelMapping;
 import org.openxava.model.MapFacade;
 import org.openxava.model.PersistenceFacade;
@@ -160,6 +159,8 @@ public class View implements java.io.Serializable {
 	private String titleId; 
 	private Object [] titleArguments;
 	private Collection fullOrderActionsNamesList;
+	private Map collectionTotals; 
+	private int collectionTotalsCount = -1;
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -474,6 +475,7 @@ public class View implements java.io.Serializable {
 		if (values == null) values = new HashMap();
 		else values.clear();
 		if (closeCollections) closeChildCollectionDetailsAndClearSelected();
+		resetCollectionTotals();
 		addValues(map);		
 	}
 
@@ -511,6 +513,35 @@ public class View implements java.io.Serializable {
 		listSelected = null;
 		if (collectionTab != null) collectionTab.clearSelected(); 		
 	}
+	
+	private void resetCollectionTotals() throws XavaException {
+		collectionTotals = null;
+		if (hasSubviews()) { 
+			Iterator it = getSubviews().values().iterator();
+
+			while (it.hasNext()) {
+				View subview = (View) it.next();
+				subview.resetCollectionTotals();										
+			}
+		}
+				
+		if (hasGroups()) {
+			Iterator it = getGroupsViews().values().iterator();
+			while (it.hasNext()) {
+				View subview = (View) it.next();
+				subview.resetCollectionTotals();
+			}
+		}
+				
+		if (hasSections()) {
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
+				View subview = getSectionView(i); 
+				subview.resetCollectionTotals();
+			}	
+		}					 	
+	}
+
 
 	/**
 	 * Set the values and execute the on-change actions associated to
@@ -856,7 +887,7 @@ public class View implements java.io.Serializable {
 		List<MetaProperty> metas = new ArrayList();
 		Iterator it = names.iterator();
 		while (it.hasNext()) {
-			String name = (String) it.next();
+			String name = (String) it.next();			
 			if (name.endsWith("+")) {
 				name = name.substring(0, name.length() - 1); 
 				if (view.isRepresentsCollection() && view.isCollectionCalculated()) {
@@ -1196,7 +1227,7 @@ public class View implements java.io.Serializable {
 			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());			
 			collectionTab.setMetaRowStyles(rowStyles);
 			if (propertiesListNames != null) {				
-				collectionTab.setDefaultPropertiesNames(propertiesListNames); 
+				collectionTab.setDefaultPropertiesNames(propertiesListNames);
 			}
 			MetaCollection metaCollection = getMetaCollection();
 			if (metaCollection.hasCondition()) {
@@ -1334,6 +1365,100 @@ public class View implements java.io.Serializable {
 		}
 	}	
 	
+	/**
+	 * @since 4.3
+	 */
+	public Object getCollectionTotal(int row, int column) { 
+		return getCollectionTotal(getMetaPropertiesList().get(column).getName(), row);
+	}	
+	
+	/**
+	 * @since 4.3
+	 */	
+	public Object getCollectionTotal(String qualifiedPropertyName, int index) {  
+		assertRepresentsCollection("getCollectionTotal()");
+		try {
+			List<String> totalProperties = getTotalProperties().get(qualifiedPropertyName); 
+			if (totalProperties != null && !totalProperties.isEmpty()) {			
+				String totalProperty = totalProperties.get(index);
+				return getCollectionTotals().get(removeTotalPropertyPrefix(totalProperty));
+			}
+			throw new XavaException("total_properties_not_found", qualifiedPropertyName, getMemberName());  			
+		}
+		catch (Throwable ex) {
+			log.warn(XavaResources.getString("total_problem"),ex); 
+			return null; 
+		} 
+	}
+	
+	private Map getCollectionTotals() throws Exception { 
+		if (collectionTotals == null) {
+			Map memberNames = new HashMap();
+			for (List<String> propertyList: getTotalProperties().values()) {
+				for (String property: propertyList) {
+					memberNames.put(removeTotalPropertyPrefix(property), null);
+				}				
+			}
+			collectionTotals =  MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), memberNames);
+		}
+		return collectionTotals;
+	}	
+	
+	private String removeTotalPropertyPrefix(String totalProperty) {
+		return getMetaCollection().removeTotalPropertyPrefix(totalProperty);
+	}
+
+	
+	/**
+	 * @since 4.3
+	 */
+	public boolean hasCollectionTotal(int row, int column) { 
+		assertRepresentsCollection("hasCollectionTotal()");
+		if (column >= getMetaPropertiesList().size()) return false; 		
+		MetaProperty p = getMetaPropertiesList().get(column);
+		if (getTotalProperties().containsKey(p.getName())) {		
+			return row < getTotalProperties().get(p.getName()).size(); 
+		}		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @since 4.3
+	 */
+	public int getCollectionTotalsCount() { 
+		assertRepresentsCollection("getCollectionTotalsCount()");
+		if (collectionTotalsCount < 0) {
+			collectionTotalsCount = 0;
+			for (List list: getTotalProperties().values()) {
+				collectionTotalsCount = Math.max(collectionTotalsCount, list.size()); 
+			}
+		}
+		return collectionTotalsCount;
+	}
+	
+	
+	public Map<String, List<String>> getTotalProperties() {		
+		MetaCollectionView metaCollectionView = getParent().getMetaView().getMetaCollectionView(getMemberName());
+		return metaCollectionView==null?Collections.EMPTY_MAP:metaCollectionView.getTotalProperties();
+	}
+	
+	/**
+	 * @since 4.3
+	 */
+	public String getCollectionTotalLabel(int row, int column) { 
+		assertRepresentsCollection("getCollectionTotalLabel()"); 
+		try {
+			String columnProperty = getMetaPropertiesList().get(column).getName();
+			String totalProperty = removeTotalPropertyPrefix(getTotalProperties().get(columnProperty).get(row));
+			return getParent().getMetaModel().getMetaProperty(totalProperty).getLabel();
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("total_label_warning"), ex);
+			return "";
+		}
+	}		
+
 		
 	/**
 	 * A list of selected collection element when each element is a map 
@@ -1551,6 +1676,7 @@ public class View implements java.io.Serializable {
 			rootModelName = null;
 		}
 
+		collectionTotals = null;
 		setIdFocusProperty(null);		
 		setCollectionDetailVisible(false); 
 		if (values == null) return;		

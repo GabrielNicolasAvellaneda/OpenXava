@@ -321,7 +321,7 @@ public class PortalStyle extends Style {
 	}
 	
 	protected String getTotalCellAlignStyle() { 
-		return "vertical-align: middle; text-align: right;	padding-right: 0px;";
+		return "vertical-align: middle; padding-right: 0px;"; 
 	}
 	
 	public String getTotalEmptyCellStyle() { 

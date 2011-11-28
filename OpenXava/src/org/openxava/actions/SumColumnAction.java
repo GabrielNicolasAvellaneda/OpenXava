@@ -10,7 +10,7 @@ public class SumColumnAction extends TabBaseAction {
 	private String property;
 
 	public void execute() throws Exception {
-		getTab().addTotalProperty(property);
+		getTab().addSumProperty(property);
 	}
 
 	public void setProperty(String property) {

@@ -3,9 +3,11 @@ package org.openxava.test.model;
 import java.math.*;
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang.*;
 import org.apache.commons.logging.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.*;
@@ -89,11 +91,18 @@ import org.openxava.util.*;
 	@View(name="CustomerAsAggregateWithDeliveryPlaces", members=
 		"year, number, date, paid;" +
 		"customer"
-	)	
+	),	
+	
+	@View(name="DetailsWithTotals", members= 
+		"year, number, date, vatPercentage;" +
+		"customer;" +
+		"details;" + 
+		"calculatedDetails"
+	)
 })
 
 @Tabs({
-	@Tab(properties="year, number, date, amountsSum, vat, detailsCount, paid, importance"), 	
+	@Tab(properties="year, number, date, amountsSum, vat, detailsCount, paid, importance"), 		
 	@Tab(name="Level4Reference", properties="year, number, customer.seller.level.description"),
 	@Tab(name="Simple", properties="year, number, date", 
 		defaultOrder="${year} desc, ${number} desc"
@@ -172,9 +181,10 @@ public class Invoice {
 		
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@ReferenceView("Simple")
-	@ReferenceViews(
-		@ReferenceView(forViews="CustomerAsAggregateWithDeliveryPlaces", value="SimpleWithDeliveryPlaces")	
-	)
+	@ReferenceViews({
+		@ReferenceView(forViews="CustomerAsAggregateWithDeliveryPlaces", value="SimpleWithDeliveryPlaces"),
+		@ReferenceView(forViews="DetailsWithTotals", value="Simplest") 
+	})
 	@AsEmbedded(forViews="CustomerAsAggregateWithDeliveryPlaces")	
 	private Customer customer;
 	
@@ -183,6 +193,7 @@ public class Invoice {
 	@ListsProperties({
 		@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free"),
 		@ListProperties(forViews="NoSections", value="product.description, product.unitPrice+, quantity, amount"),  
+		@ListProperties(forViews="DetailsWithTotals", value="deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]"), 		
 	})
 	@EditAction(forViews="DEFAULT", value="Invoice.editDetail")
 	@DetailAction(forViews="DEFAULT", value="Invoice.viewProduct")
@@ -192,7 +203,7 @@ public class Invoice {
 	@RemoveAction(forViews="NotAllActionsInDetails", value="")
 	@RemoveSelectedAction(forViews="NotAllActionsInDetails", value="")
 	private Collection<InvoiceDetail> details;
-				
+	
 	@OneToMany (mappedBy="invoice")
 	@CollectionView(forViews="DEFAULT, Deliveries", value="InInvoice")
 	@ReadOnly(forViews="DEFAULT, Deliveries")
@@ -222,6 +233,29 @@ public class Invoice {
 			result = result.add(detail.getAmount());
 		}		
 		return result;		
+	}
+	
+	public BigDecimal getProductUnitPriceSum() { 
+		BigDecimal result = BigDecimal.ZERO;		
+		for (InvoiceDetail detail: getDetails()) {			
+			result = result.add(detail.getProduct().getUnitPrice());
+		}		
+		return result;
+	}
+	
+	
+	
+	public Date getDeliveryDate() { 
+		Date result = null;		
+		for (InvoiceDetail detail: getDetails()) {
+			result = (Date) ObjectUtils.min(result, detail.getDeliveryDate());
+		}		
+		return result;
+	}
+	
+	@ListProperties("deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]")	
+	public Collection<InvoiceDetail> getCalculatedDetails() { 
+		return getDetails();
 	}
 	
 	@Stereotype("MONEY") @Depends("vatPercentage, amountsSum")

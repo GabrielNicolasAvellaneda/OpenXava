@@ -1018,6 +1018,14 @@ public class Style {
 		return ""; 
 	}
 	
+	/**
+	 * 
+	 * @since 4.3
+	 */
+	public String getTotalLabelCellStyle() {  
+		return "vertical-align: middle; text-align: right;" + getTotalEmptyCellStyle();
+	}
+	
 	public String getTotalCapableCellStyle() { 
 		return "";
 	}

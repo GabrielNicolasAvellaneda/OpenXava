@@ -24,7 +24,7 @@ public class ServiceInvoiceTest extends ModuleTestBase {
 		assertEditable("number");
 	}
 	
-	public void testTotalByDeveloperInList() throws Exception { 		
+	public void testSumByDeveloperInList() throws Exception { 		
 		assertListRowCount(3);
 		assertValueInList(0, "amount", "790.00");
 		assertValueInList(1, "amount", "1,730.00");
@@ -38,7 +38,7 @@ public class ServiceInvoiceTest extends ModuleTestBase {
 		assertTotalInList("amount", "2,520.00");
 	}
 	
-	public void testTotalByUserInList() throws Exception { 
+	public void testSumByUserInList() throws Exception { 
 		assertTotalInList("amount", "2,647.86");
 		assertTotalInList("number", "");
 		
