@@ -35,6 +35,8 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 	private Collection rowStyles; 
 	private String onSelectElementActionName;
 	private Tree path;
+	private Map<String, List<String>> totalProperties; 
+
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
@@ -100,12 +102,40 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 		if (!Is.emptyString(listProperties)) {
 			propertiesListNamesAsString = listProperties;
 			propertiesListNames = new ArrayList();
-			StringTokenizer st = new StringTokenizer(listProperties, ",;");
+			StringTokenizer st = new StringTokenizer(listProperties, ",;"); 
 			while (st.hasMoreTokens()) {
 				String name = st.nextToken().trim();
+				if (name.contains("[")) {
+					int idx = name.indexOf('[');
+					String totalProperty = name.substring(idx).trim();
+					name = name.substring(0, idx).trim();				
+					List<String> totalPropertiesForName = new ArrayList<String>();
+					totalPropertiesForName.add(removeSquareBrackets(totalProperty));
+					while (st.hasMoreTokens() && !totalProperty.endsWith("]")){
+						totalProperty = st.nextToken().trim();
+						totalPropertiesForName.add(removeSquareBrackets(totalProperty));
+					} 	
+					
+					if (totalProperties == null) totalProperties = new HashMap<String, List<String>>();
+					totalProperties.put(name, totalPropertiesForName);					
+					
+				}			
 				propertiesListNames.add(name); 
 			}
 		} 
+	}
+		
+	/**
+	 * 
+	 * @since 4.3
+	 */
+	public Map<String, List<String>> getTotalProperties() { 
+		return totalProperties == null?Collections.EMPTY_MAP:totalProperties;
+	}
+
+	
+	private String removeSquareBrackets(String name) { 
+		return name.replaceAll("[\\[\\] ]", "");
 	}
 
 	public boolean isReadOnly() {

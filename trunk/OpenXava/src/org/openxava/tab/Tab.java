@@ -61,7 +61,7 @@ public class Tab implements java.io.Serializable {
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
 	
 	private final static String PROPERTIES_NAMES = "propertiesNames";
-	private final static String TOTAL_PROPERTIES_NAMES = "totalPropertiesNames"; 
+	private final static String SUM_PROPERTIES_NAMES = "sumPropertiesNames"; 
 	private final static String ROWS_HIDDEN = "rowsHidden";
 	private final static String FILTER_VISIBLE = "filterVisible";
 	private final static String PAGE_ROW_COUNT = "pageRowCount"; 
@@ -120,9 +120,11 @@ public class Tab implements java.io.Serializable {
 	private Map<String, Integer> columnWidths;
 	private String [] filterConditionValues = null; 
 	private boolean filtered = false;
+	private Set<String> sumPropertiesNames;
 	private Set<String> totalPropertiesNames; 
 	private boolean propertiesChanged;
-	private boolean ignorePageRowCount; // Tmp
+	private boolean ignorePageRowCount;
+	private int additionalTotalsCount = -1; 
 	
 	private static int nextOid = 0; 
 	public int oid = nextOid++;
@@ -312,6 +314,17 @@ public class Tab implements java.io.Serializable {
 		
 	public MetaProperty getMetaProperty(int i) {
 		return (MetaProperty) getMetaProperties().get(i);
+	}
+	
+	/**
+	 *  
+	 * @since 4.3
+	 */
+	public MetaProperty getMetaProperty(String qualifiedName) { 
+		for (MetaProperty property: getMetaProperties()) {
+			if (property.getQualifiedName().equals(qualifiedName)) return property;
+		}
+		throw new ElementNotFoundException("property_not_found_in_tab", qualifiedName, getTabName(), getModelName()); 
 	}
 	
 	public void setMetaRowStyles(Collection styles) throws XavaException {
@@ -744,7 +757,7 @@ public class Tab implements java.io.Serializable {
 			notResetNextTime = false;
 			return;
 		}		
-		tableModel = null;
+		tableModel = null; 
 		if (!notResetPageNextTime) { 
 			notResetPageNextTime = false;
 			initialIndex = 0; 		
@@ -1068,10 +1081,12 @@ public class Tab implements java.io.Serializable {
 	private Preferences getPreferences() throws BackingStoreException {
 		String application = getRequest() == null ? "" : getRequest().getParameter("application");
 		if (Is.empty(application)) application = getCollectionView().getRequest() == null ? "" : getCollectionView().getRequest().getParameter("application");
+		String module = getRequest() == null ? "" : getRequest().getParameter("module");
+		if (Is.empty(module)) module = getCollectionView().getRequest() == null ? "" : getCollectionView().getRequest().getParameter("module");
 		
-		String nodeName = "tab." + application + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".";
+		String nodeName = "tab." + application + "." + module + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".";
 		if (nodeName.length() > Preferences.MAX_NAME_LENGTH) {
-			nodeName = "tab." + (application + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".").hashCode(); 		
+			nodeName = "tab." + (application + "." + module + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".").hashCode(); 		
 		}
 		return Users.getCurrentPreferences().node(nodeName);
 	}
@@ -1248,7 +1263,7 @@ public class Tab implements java.io.Serializable {
 		cloneMetaTab();
 		getMetaTab().restoreDefaultProperties();		
 		resetAfterChangeProperties();
-		totalPropertiesNames = null; 
+		sumPropertiesNames = null;		
 		removeUserPreferences();
 	}
 	
@@ -1263,6 +1278,8 @@ public class Tab implements java.io.Serializable {
 		condition = null;
 		conditionComparators = null;	
 		propertiesChanged = true;
+		additionalTotalsCount = -1; 
+		totalPropertiesNames = null; 
 	}
 	
 	/** @since 4m5 */
@@ -1309,7 +1326,7 @@ public class Tab implements java.io.Serializable {
 				propertiesNames = removeNonexistentProperties(propertiesNames); // To remove the properties of old versions of the entities 
 				setPropertiesNames(propertiesNames);
 			}			
-			totalPropertiesNames = Strings.toSetNullByPass(preferences.get(TOTAL_PROPERTIES_NAMES, null));
+			sumPropertiesNames = Strings.toSetNullByPass(preferences.get(SUM_PROPERTIES_NAMES, null));
 			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);			
 			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);
 			pageRowCount = Math.min(preferences.getInt(PAGE_ROW_COUNT, pageRowCount), 20); 			
@@ -1364,7 +1381,7 @@ public class Tab implements java.io.Serializable {
 				preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
 				propertiesChanged = false;
 			}
-			preferences.put(TOTAL_PROPERTIES_NAMES, Strings.toString(getTotalPropertiesNames())); 
+			preferences.put(SUM_PROPERTIES_NAMES, Strings.toString(getSumPropertiesNames()));
 			preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
 			preferences.putBoolean(FILTER_VISIBLE, filterVisible);
 			preferences.putInt(PAGE_ROW_COUNT, pageRowCount); 
@@ -1680,9 +1697,11 @@ public class Tab implements java.io.Serializable {
 	/**
 	 * @since 4.1
 	 */
-	public boolean hasTotal(int column) {		
+	public boolean hasTotal(int column) {
+		if (column >= getMetaProperties().size()) return false; 
 		MetaProperty p = getMetaProperty(column);
-		if (!getTotalPropertiesNames().contains(p.getQualifiedName())) return false;
+		if (getTotalProperties().containsKey(p.getQualifiedName())) return true;
+		if (!getSumPropertiesNames().contains(p.getQualifiedName())) return false;
 		if (p.isCalculated()) {
 			log.warn(XavaResources.getString("sum_not_for_calculated_properties", p.getQualifiedName(), p.getMetaModel().getName())); 
 			return false;
@@ -1694,30 +1713,76 @@ public class Tab implements java.io.Serializable {
 		return true;
 	}
 	
+	private Map<String, List<String>> getTotalProperties() {  
+		if (getCollectionView() == null) return Collections.EMPTY_MAP;
+		return getCollectionView().getTotalProperties();
+	}
+	
 	/**
-	 * @since 4.1
+	 * @since 4.3
 	 */
-	public void addTotalProperty(String property) { 	
-		getTotalPropertiesNames().add(property);
+	public boolean hasTotal(int row, int column) { 
+		if (row == 0) return hasTotal(column);		
+		MetaProperty p = getMetaProperty(column);
+		if (getTotalProperties().containsKey(p.getQualifiedName())) {
+			return row < getTotalProperties().get(p.getQualifiedName()).size(); 
+		}
+		return false;
+	}
+		
+	
+	/**
+	 * Add total property. <p>
+	 * 
+	 * It was created in v4.1 with the name addTotalProperty()
+	 * 
+	 * @since 4.3
+	 */
+	public void addSumProperty(String property) { 	
+		getSumPropertiesNames().add(property);
+		totalPropertiesNames = null;
 		saveUserPreferences();
 	}
 	
 	/**
+	 * Remove total property. <p>
+	 * 
+	 * It was created in v4.1 with the name removeTotalProperty()
+	 * 
 	 * @since 4.1
 	 */	
-	public void removeTotalProperty(String property) { 
-		getTotalPropertiesNames().remove(property);
+	public void removeSumProperty(String property) { 
+		getSumPropertiesNames().remove(property);
+		totalPropertiesNames = null;
 		saveUserPreferences();
 	}
 	
 	/**
-	 * @since 4.1
+	 * 
+	 * @since 4.3
 	 */
-	public Set<String> getTotalPropertiesNames() {  
+	public Set<String> getSumPropertiesNames() {   
+		if (sumPropertiesNames == null) {			
+			sumPropertiesNames = new HashSet(getMetaTab().getSumPropertiesNames());			
+		}		
+		return sumPropertiesNames;
+	}
+
+	/**
+	 * 
+	 * @since 4.1
+	 */	
+	public Collection<String> getTotalPropertiesNames() {
 		if (totalPropertiesNames == null) {
-			totalPropertiesNames = new HashSet(getMetaTab().getTotalPropertiesNames());
+			totalPropertiesNames = new HashSet<String>();
+			int count = getMetaProperties().size();
+			for (int i=0; i<count; i++) {
+				if (hasTotal(i)) {
+					totalPropertiesNames.add(getMetaProperties().get(i).getQualifiedName());
+				}
+			}
 		}
-		return totalPropertiesNames;
+		return totalPropertiesNames;		
 	}
 	
 	/**
@@ -1725,35 +1790,100 @@ public class Tab implements java.io.Serializable {
 	 */
 	public boolean isTotalCapable(int column) {  
 		MetaProperty p = getMetaProperty(column);			
-		return !p.isCalculated() && p.isNumber() && !p.hasValidValues();  
+		return !p.isCalculated() && p.isNumber() && !p.hasValidValues();
+	}
+	
+	/**
+	 * @since 4.3
+	 */
+	public boolean isFixedTotal(int column) { 
+		MetaProperty p = getMetaProperty(column);
+		return getTotalProperties().containsKey(p.getQualifiedName());
 	}
 	
 	/**
 	 * @since 4.1
 	 */
-	public Number getTotal(int column) {
+	public Object getTotal(int column) { 
 		return getTotal(getMetaProperty(column).getQualifiedName());
 	}
 	
 	/**
-	 * @since 4.1
+	 * @since 4.3
 	 */
-	public Number getTotal(String qualifiedPropertyName) {   
+	public Object getTotal(int row, int column) {  
+		return getTotal(getMetaProperty(column).getQualifiedName(), row);
+	}
+	
+	/**
+	 * @since 4.3
+	 */
+	public String getTotalLabel(int row, int column) { 
 		try {
+			String columnProperty = getMetaProperty(column).getQualifiedName();			
+			if (!getTotalProperties().containsKey(columnProperty)) return ""; // When it is a sum property
+			String totalProperty = removeTotalPropertyPrefix(getTotalProperties().get(columnProperty).get(row)); 
+			return getCollectionView().getParent().getMetaModel().getMetaProperty(totalProperty).getLabel();
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("total_label_warning"), ex);
+			return "";
+		}
+	}		
+	
+	/**
+	 * @since 4.1
+	 */	
+	public Object getTotal(String qualifiedPropertyName) {   
+		return getTotal(qualifiedPropertyName, 0);
+	}
+	
+	
+	private Object getTotal(String qualifiedPropertyName, int index) { 
+		try {
+			if (getCollectionView() != null && 					
+				getCollectionView().getTotalProperties().containsKey(qualifiedPropertyName)) 	
+			{ 
+				return getCollectionView().getCollectionTotal(qualifiedPropertyName, index); 
+			}
 			return getTableModel().getSum(qualifiedPropertyName);
 		}
 		catch (Throwable ex) {
 			log.warn(XavaResources.getString("total_problem"),ex); 
-			return -1;
+			return null;
 		} 
 	}
+	
+	
+	
+	
+	/**
+	 * @since 4.3
+	 */
+	public int getAdditionalTotalsCount() { 
+		if (additionalTotalsCount < 0) {
+			additionalTotalsCount = 0;
+			for (String property: getTotalPropertiesNames()) { 
+				Collection<String> list = getTotalProperties().get(property);
+				if (list != null) {
+					additionalTotalsCount = Math.max(additionalTotalsCount, list.size() - 1);
+				}
+			}
+		}
+		return additionalTotalsCount;
+	}
 
+	private String removeTotalPropertyPrefix(String totalProperty) {
+		return getCollectionView().getMetaCollection().removeTotalPropertyPrefix(totalProperty);
+	}
+		
 	/**
 	 * @since 4.1
-	 */	
+	 */		
 	public String getTotalPropertiesNamesAsString() { 
-		return Strings.toString(getTotalPropertiesNames());
+		return Strings.toString(getTotalPropertiesNames()); 
 	}
+	
 
 	public void setIgnorePageRowCount(boolean ignorePageRowCount) {
 		this.ignorePageRowCount = ignorePageRowCount;

@@ -64,7 +64,7 @@ public class Module extends DWRBase {
 			Map changedParts = new HashMap();
 			result.setChangedParts(changedParts);
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");
-			String[] forwardURIs = (String[]) request.getSession().getAttribute("xava_forwards"); // tmp ¿Este nombre?
+			String[] forwardURIs = (String[]) request.getSession().getAttribute("xava_forwards"); 
 			if (!Is.emptyString(forwardURI)) {
 				memorizeLastMessages();
 				if (forwardURI.startsWith("http://") || forwardURI.startsWith("https://") || forwardURI.startsWith("javascript:")) {
@@ -95,7 +95,7 @@ public class Module extends DWRBase {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}						
 			result.setViewMember(getView().getMemberName());
-			result.setStrokeActions(getStrokeActions());			
+			result.setStrokeActions(getStrokeActions());	
 			return result;
 		}
 		catch (SecurityException ex) {

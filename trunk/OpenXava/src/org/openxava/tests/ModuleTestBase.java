@@ -855,7 +855,7 @@ public class ModuleTestBase extends TestCase {
 		if (windows.size() < 2) {
 			fail(XavaResources.getString("popup_window_not_found"));
 		}		
-		if (popup < 0) { // tmp
+		if (popup < 0) { 
 			for (int i=windows.size() - 1; i > 0; i--) {
 				Page page = ((WebWindow) windows.get(i)).getEnclosedPage();
 				if (page != null) return page;
@@ -876,7 +876,7 @@ public class ModuleTestBase extends TestCase {
 	 */
 	protected void assertPopupCount(int count) throws Exception { 
 		List windows = client.getWebWindows();
-		assertEquals(XavaResources.getString("unexpected_popup_count"), count, windows.size() - 1); // tmp i18n
+		assertEquals(XavaResources.getString("unexpected_popup_count"), count, windows.size() - 1); 
 	}
 	
 	protected void assertNoPopup() throws Exception {
@@ -1235,20 +1235,7 @@ public class ModuleTestBase extends TestCase {
 	private String getDefaultRowStyle(int row) {
 		return (row % 2 == 0)?Style.getInstance().getListPair():Style.getInstance().getListOdd();
 	}
-	
-	private int getListRowCount(String tableId, String message) throws Exception {
-		HtmlTable table = getTable(tableId, message);
-		if (table.getRowCount() > 2 && "nodata".equals(table.getRow(2).getId())) { 
-			return 0;
-		}						
-		int increment = 1; // The header
-		if (collectionHasFilterHeader(table)) {
-			increment++; // The filter
-			if (XavaPreferences.getInstance().isSummationInList()) increment++; // The summation row
-		}			
-		return table.getRowCount() - increment;
-	}
-	
+
 	private boolean collectionHasFilterHeader(HtmlTable table) {
 		return table.getRowCount() > 1 && 
 			!table.getCellAt(1, 0).
@@ -1268,7 +1255,16 @@ public class ModuleTestBase extends TestCase {
 	 * Exclude heading and footing, and the not displayed data (maybe in cache).
 	 */
 	protected int getListRowCount() throws Exception {
-		return getListRowCount("list", XavaResources.getString("list_not_displayed"));
+		HtmlTable table = getTable("list", XavaResources.getString("list_not_displayed"));
+		if (table.getRowCount() > 2 && "nodata".equals(table.getRow(2).getId())) { 
+			return 0;
+		}						
+		int increment = 1; // The header
+		if (collectionHasFilterHeader(table)) {
+			increment++; // The filter
+			if (XavaPreferences.getInstance().isSummationInList()) increment++; // The summation row
+		}			
+		return table.getRowCount() - increment;
 	}
 	
 	protected int getListColumnCount() throws Exception {
@@ -1287,8 +1283,13 @@ public class ModuleTestBase extends TestCase {
 	 * Row count displayed with data. <p>
 	 * Excludes heading and footing, and not displayed data (but cached). 
 	 */
-	protected int getCollectionRowCount(String collection) throws Exception {
-		return getListRowCount(collection, XavaResources.getString("collection_not_displayed", collection)); 
+	protected int getCollectionRowCount(String collection) throws Exception {		
+		HtmlTable table = getTable(collection, XavaResources.getString("collection_not_displayed"));
+		int count = 0;
+		for (HtmlTableRow row: table.getRows()) {
+			if (!Is.emptyString(row.getId()) && !row.getId().equals("nodata") && !row.getId().contains("_list_filter_")) count++; 
+		}
+		return count;
 	}
 	
 	/**
@@ -1346,35 +1347,75 @@ public class ModuleTestBase extends TestCase {
 		assertLabelInList("list", XavaResources.getString("list_not_displayed"), column, label);
 	}
 
+	/**
+	 *
+	 * @since 4.1
+	 */	
 	protected void assertTotalInList(int column, String total) throws Exception { 
-		assertTotalInList("list", XavaResources.getString("list_not_displayed"), column, total);
+		assertTotalInList("list", XavaResources.getString("list_not_displayed"), 0, column, total);
 	}
 	
+	/**
+	 *
+	 * @since 4.1
+	 */	
 	protected void assertTotalInList(String name, String total) throws Exception { 
 		assertTotalInList(getMetaTab().getPropertiesNames().indexOf(name), total);
 	}
 	
+	/**
+	 *
+	 * @since 4.1
+	 */	
 	protected void assertTotalInCollection(String collection, int column, String total) throws Exception { 
-		assertTotalInList(collection, XavaResources.getString("collection_not_displayed", collection), column, total);
+		assertTotalInList(collection, XavaResources.getString("collection_not_displayed", collection), 0, column, total);
 	}
-	
+
+	/**
+	 *
+	 * @since 4.1
+	 */	
+	protected void assertTotalInCollection(String collection, int row, int column, String total) throws Exception {  
+		assertTotalInList(collection, XavaResources.getString("collection_not_displayed", collection), row, column, total);
+	}	
+
+	/**
+	 *
+	 * @since 4.1
+	 */
 	protected void assertTotalInCollection(String collection, String name, String total) throws Exception { 
 		int column = getPropertiesList(collection).indexOf(name);
 		assertTotalInCollection(collection, column, total);
 	}
+	
+	/**
+	 *
+	 * @since 4.3
+	 */	
+	protected void assertTotalInCollection(String collection, int row, String name, String total) throws Exception {  
+		int column = getPropertiesList(collection).indexOf(name);
+		assertTotalInCollection(collection, row, column, total);
+	}
+	
 	
 	private void assertLabelInList(String tableId, String message, int column, String label) throws Exception {
 		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, 
 				getTable(tableId, message).getCellAt(0, column+2).asText().trim());
 	}
 	
-	private void assertTotalInList(String tableId, String message, int column, String total) throws Exception { 
+	private void assertTotalInList(String tableId, String message, int row, int column, String total) throws Exception { 
 		HtmlTable table = getTable(tableId, message);
-		int row = table.getRowCount() - 1;
+		int rowInTable = table.getRowCount() - getTotalsRowCount(table) + row; 		
 		assertEquals(XavaResources.getString("total_not_match", new Integer(column)), total,   
-			table.getCellAt(row, column+2).asText().trim());
+			table.getCellAt(rowInTable, column+2).asText().trim());
 	}		
 	
+	private int getTotalsRowCount(HtmlTable table) { 
+		int count = 0;
+		for (int i=table.getRowCount() - 1; table.getRow(i).getId().equals("") && i >=0; i--) count++;		
+		return count;
+	}
+
 	protected void checkRow(int row) throws Exception {
 		checkRow("selected", row);
 	}

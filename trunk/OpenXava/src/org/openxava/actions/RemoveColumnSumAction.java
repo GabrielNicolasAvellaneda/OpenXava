@@ -10,7 +10,7 @@ public class RemoveColumnSumAction extends TabBaseAction {
 	private String property;
 
 	public void execute() throws Exception {
-		getTab().removeTotalProperty(property);
+		getTab().removeSumProperty(property);
 	}
 
 	public void setProperty(String property) {

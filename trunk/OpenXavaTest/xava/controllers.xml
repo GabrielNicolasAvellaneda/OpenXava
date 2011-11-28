@@ -296,6 +296,7 @@
 	<controller name="Customer">
 		<extends controller="Typical"/>
 		<extends controller="EditableOnOff"/>
+		
 		<action name="save" mode="detail"
 			class="org.openxava.actions.SaveAction"
 			image="save.gif"

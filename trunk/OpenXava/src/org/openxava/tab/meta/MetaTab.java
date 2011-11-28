@@ -2,6 +2,7 @@ package org.openxava.tab.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
@@ -19,6 +20,8 @@ import org.openxava.util.meta.*;
  */
 
 public class MetaTab implements java.io.Serializable, Cloneable {
+	
+	private static Log log = LogFactory.getLog(MetaTab.class); 
 
 	private String defaultOrder;
 	private String sQLDefaultOrder;
@@ -51,7 +54,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Map entityReferencesReferenceNames;
 	private String lastDefaultSchema;
 	private String id;
-	private Collection totalPropertiesNames;
+	private Collection<String> sumPropertiesNames;
 	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		String id = null;
@@ -348,18 +351,23 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	// assert(!areAllProperties());
 	private List createPropertiesNames() {
-		StringTokenizer st = new StringTokenizer(properties, ",;");
+		StringTokenizer st = new StringTokenizer(removeTotalProperties(properties), ",;");
 		List result = new ArrayList();
 		while (st.hasMoreTokens()) {
-			String name = st.nextToken().trim();
+			String name = st.nextToken().trim();			
 			if (name.endsWith("+")) {
 				name = name.substring(0, name.length() - 1);
-				if (totalPropertiesNames == null) totalPropertiesNames = new HashSet();
-				totalPropertiesNames.add(name);
-			}			
+				if (sumPropertiesNames == null) sumPropertiesNames = new HashSet();
+				sumPropertiesNames.add(name);
+			}
 			result.add(name);
-		}
+		}		
 		return result;
+	}
+
+	private String removeTotalProperties(String properties) { 
+		if (!properties.contains("[")) return properties;
+		return properties.replaceAll("\\[[^\\]]*\\]", "");
 	}
 	
 	private List createAllPropertiesNames() throws XavaException {
@@ -954,12 +962,15 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	/**
+	 * Sum properties names. <p>
 	 * 
-	 * @since 4.1
+	 * It was renamed in v4.3 from getTotalPropertiesNames() to getSumPropertiesNames() 
+	 * 
+	 * @since 4.3
 	 */
-	public Collection getTotalPropertiesNames() {
-		return totalPropertiesNames == null?Collections.EMPTY_SET:totalPropertiesNames;
+	public Collection<String> getSumPropertiesNames() {
+		return sumPropertiesNames == null?Collections.EMPTY_SET:sumPropertiesNames;
 	}
-	
+		
 }
 

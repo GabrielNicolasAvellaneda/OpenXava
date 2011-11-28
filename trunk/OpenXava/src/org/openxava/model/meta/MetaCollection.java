@@ -31,7 +31,6 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private MetaCalculator metaCalculator;
 	
 	
-	
 	public void addMetaCalculatorPostRemove(MetaCalculator metaCalculator) {
 		if (metaCalculatorsPostRemove == null) {
 			metaCalculatorsPostRemove = new ArrayList();			
@@ -50,10 +49,10 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	public int getMinimum() {
 		return minimum;
 	}
+	
 	public void setMinimum(int minimum) {
 		this.minimum = minimum;
 	}
-
 
 	public MetaReference getMetaReference() {
 		return metaReference;
@@ -97,6 +96,17 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 			errors.add("minimum_elements", new Integer(getMinimum()), idElements, getName());
 		}						
 	}
+	
+	/**
+	 * @since 4.3
+	 */
+	public String removeTotalPropertyPrefix(String totalProperty) {
+		String mappedBy = getMetaReference().getRole();
+		if (!totalProperty.startsWith(mappedBy + ".")) {
+			throw new XavaException("total_property_must_be_prefixed", getName(), totalProperty, mappedBy, totalProperty); 
+		}
+		return totalProperty.substring(mappedBy.length() + 1);
+	}
 
 	public String getOrder() {
 		return order;
@@ -113,7 +123,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	public void setCondition(String string) {
 		condition = string;
 	}
-	
+		
 	public String getSQLCondition() throws XavaException {
 		if (Is.emptyString(getCondition())) return ""; 
 		String condicion = changePropertiesThisByArguments(getCondition(), SQL); 
@@ -161,8 +171,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		}
 		return sb.toString();
 	}
-	
-	
+		
 	private String changePropertiesThisByArguments(String source, int qlType) throws XavaException {			
 		StringBuffer r = new StringBuffer(source);		
 		int i = r.toString().indexOf("${this.");

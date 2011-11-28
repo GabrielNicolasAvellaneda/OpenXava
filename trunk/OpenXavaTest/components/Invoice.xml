@@ -98,6 +98,13 @@
 			<reference model="Delivery"/>
 		</collection>
 		
+		<!-- The same that 'details' but implemented with a calculator -->
+		<collection name="calculatedDetails"> 			
+			<reference model="InvoiceDetail"/>			
+			<calculator class="org.openxava.test.calculators.InvoiceDetailsCalculator"/>
+		</collection>		
+		
+		
 		<finder name="all" arguments="" collection="true">
 			<condition>1 = 1</condition>
 		</finder>
@@ -306,6 +313,27 @@
 				amountsSum, vatPercentage, vat;
 			</group>			
 		</members>
+	</view>
+	
+	<view name="DetailsWithTotals">
+	
+		<reference-view reference="customer" view="Simplest"/>
+		
+		<collection-view collection="details">
+			<list-properties>deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]</list-properties>
+		</collection-view>
+		
+		<collection-view collection="calculatedDetails">
+			<list-properties>deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]</list-properties>
+		</collection-view>
+			
+		<members>
+			year, number, date, vatPercentage;
+			customer;
+			details;
+			calculatedDetails
+		</members>
+		
 	</view>
 	
 	<tab>

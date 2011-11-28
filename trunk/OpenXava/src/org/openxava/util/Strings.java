@@ -275,12 +275,43 @@ public class Strings {
    * @param separator  The character used as separator.
    * @return Not null, including the case <tt>list == null</tt>.
    */
-  public final static Collection<String> toCollection(String list, String separator) {		
-		Collection<String> rs = new ArrayList<String>();
-		if (list == null) return rs;
-		fillCollection(rs, list, separator);
-		return rs;
+  public final static Collection<String> toCollection(String list, String separator) {
+	  return toList(list, separator); 
   }
+  
+  /**
+   * Converts a list of comma separated elements in a string List. <p> 
+   *
+   * For example, the list <i>Angel, Manolo, Antonia</i> is converted to
+   * a List of 3 elements with this 3 names without comma nor spaces.<br>
+   *
+   * @since 4.3
+   * @param list  String with the list. If null return a empty string
+   * @return Not null, including the case <tt>list == null</tt>.
+   */
+  public final static List<String> toList(String list) { 
+	  return toList(list, ",");
+  }
+  
+  /**
+   * Converts a list of elements separated by a arbitrary character 
+   * in a string List. <p> 
+   *
+   * For example, the list <i>Angel : Manolo : Antonia</i> is converted to
+   * a List of 3 elements with this 3 names without colon (for example) nor spaces.<br>
+   *
+   * @since 4.3
+   * @param list  String with the list. If null return a empty string
+   * @param separator  The character used as separator.
+   * @return Not null, including the case <tt>list == null</tt>.
+   */
+  public final static List<String> toList(String list, String separator) { 		
+	  List<String> rs = new ArrayList<String>();
+	  if (list == null) return rs;
+	  fillCollection(rs, list, separator);
+	  return rs;
+  }
+  
   
   private final static void fillCollection(Collection rs, String list, String separator) {
 		Assert.arg(separator);

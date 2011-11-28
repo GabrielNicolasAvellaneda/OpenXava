@@ -53,8 +53,7 @@
 			<set property="firstLetterInUpperCase" value="true" />
 		</formatter>		
 	</editor>
-	
-
+	 
 	<editor url="textEditor.jsp">
 		<for-model-property model="Product" property="unitPrice" />
 	</editor>
