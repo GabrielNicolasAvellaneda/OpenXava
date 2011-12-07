@@ -778,13 +778,12 @@
 		</copy>								
 		<copy todir="${dist.portlets.dir}/xava/editors/calendar">
 			<fileset dir="web/xava/editors/calendar"/>
+		</copy>
+		<copy todir="${dist.portlets.dir}/xava/editors/ckeditor">
+			<fileset dir="web/xava/editors/ckeditor"/>
 		</copy>						
-		<copy todir="${dist.portlets.dir}/xava/editors/FCKeditor">
-			<fileset dir="web/xava/editors/FCKeditor"/>
-		</copy>								
-		<copy todir="${dist.portlets.dir}/xava/editors" file="web/xava/editors/fckEditor.jsp"/>
 		<copy todir="${dist.portlets.dir}/WEB-INF/jsp" >
-			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/js/**, xava/editors/calendar/**, xava/editors/FCKeditor/**, xava/editors/FCKEditor.jsp, xava/jasperReport.jsp public/**"/>
+			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/js/**, xava/editors/calendar/**, xava/editors/ckeditor/**, xava/jasperReport.jsp public/**"/>
 		</copy>
 		<copy todir="${dist.portlets.dir}/public" failonerror="false">
 			<fileset dir="web/public"/>
@@ -910,6 +909,9 @@
 		<delete file="../${project}/web/WEB-INF/lib/jboss-archive-browsing.jar"/>
 		<!-- Delete unused CSS -->
 		<delete file="../${project}/web/xava/style/openxava.css"/>
+		<!-- Delete old FCKeditor files -->
+		<delete file="../${project}/web/xava/editors/fckEditor.jsp"/>
+		<delete dir="../${project}/web/xava/editors/FCKeditor"/>
 	</target>
 	
 	<target name="defineHibernateTool">

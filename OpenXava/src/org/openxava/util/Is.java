@@ -197,7 +197,7 @@ public class Is {
 	}
 
 	/**
-	 * If <code>a.toString().trim()</code> is equalst to <tt>b.toString().trim()</tt> ignoring case. <p>
+	 * If <code>a.toString().trim()</code> is equal to <tt>b.toString().trim()</tt> ignoring case. <p>
 	 *
 	 * Takes in account the nulls.<br> 
 	 * 
