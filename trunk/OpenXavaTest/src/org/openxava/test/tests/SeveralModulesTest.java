@@ -39,12 +39,12 @@ public class SeveralModulesTest extends ModuleTestBase {
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
 		setFileValue("newImage", imageUrl);
 		execute("LoadImage.loadImage");		
-		assertNoErrors();	
+		assertNoErrors();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
 		URL url = page.getWebResponse().getRequestSettings().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
-		
+				
 		HtmlImage image = (HtmlImage) page.getElementsByName(Ids.decorate("OpenXavaTest", "Customer", "photo")).get(0);		
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
@@ -107,8 +107,10 @@ public class SeveralModulesTest extends ModuleTestBase {
 		
 		selectModuleInPage("Formula");
 		assertNotExists("recipe");
+		
 		execute("Sections.change", "activeSection=1");
 		assertExists("recipe");
+		execute("Sections.change", "activeSection=0"); 		
 	}
 
 	private void assertOnChangeEvent() throws Exception {

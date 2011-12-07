@@ -158,7 +158,7 @@
 
 	<!-- 
 	It shows an image localized in /xava/images of your web applications,
-	with the patter [prefix][propertyContent].[extesion].
+	with the patter [prefix][propertyContent].[extension].
 	That is, if the property value is 'RED', it will show the image:
 	/xava/images/imageLabel_RED.gif.
 	You can see an example in the 'sample' property of Color component 

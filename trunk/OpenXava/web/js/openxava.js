@@ -3,6 +3,13 @@ if (openxava == null) var openxava = {};
 openxava.init = function(application, module) {
 	document.onkeydown = openxava.processKey;
 	openxava.initUI(application, module);	
+	openxava.editorsInitFunctionsClosed = true; 
+	if (openxava.staticInit == null) {
+		openxava.staticInit = function() {			  
+			  openxava.initEditors();
+		}
+		$(openxava.staticInit);
+	}
 }
 
 openxava.ajaxRequest = function(application, module, firstRequest) {
@@ -138,8 +145,10 @@ openxava.refreshPage = function(result) {
 openxava.initUI = function(application, module, currentRow) {
 	if (openxava.initTheme != null) openxava.initTheme();
 	openxava.clearLists(application, module); 
-	openxava.initLists(application, module);	
-	openxava.initEditors(application, module);
+	openxava.initLists(application, module);
+	if (typeof currentRow != "undefined") {
+		openxava.initEditors(application, module);
+	}
 	openxava.initSelectedRows();
 	openxava.initCurrentRow(application, module, currentRow);
 }
@@ -261,9 +270,10 @@ openxava.setListsSize = function(application, module, type, percentage) {
 	});		
 }
 
-openxava.addEditorInitFunction  = function(initFunction) { 
+openxava.addEditorInitFunction = function(initFunction) {
+	if (openxava.editorsInitFunctionsClosed) return; 
 	if (openxava.editorsInitFunctions == null) {
-		openxava.editorsInitFunctions = new Array();
+		openxava.editorsInitFunctions = new Array();	
 	}
 	openxava.editorsInitFunctions.push(initFunction);	
 }
@@ -508,11 +518,7 @@ openxava.getFormValue = function(ele) { // A refinement of dwr.util.getValue
 	    return ele.value;
 	}
 
-	if (dwr.util._isHTMLElement(ele, "textarea")) {
-	    return ele.value;
-	}
-
-	return ele.innerHTML;
+	return $(ele).val(); 
 };
 
 

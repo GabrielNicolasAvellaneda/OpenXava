@@ -1,4 +1,5 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
+<%@ page import="org.openxava.util.Is" %>
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -13,10 +14,11 @@ String disabled=editable?"":"disabled";
 String script = request.getParameter("script");
 int rows = p.getSize() / 80 + 1;
 script = script + " onkeyup='return openxava.limitLength(event, " + p.getSize() + ")' ";
+boolean rich = Is.equalAsStringIgnoreCase("true", request.getParameter("rich"));
+String cssClass = rich?"ox-ckeditor":style.getEditor(); 
 %>
 
-
-<textarea id="<%=propertyKey%>" name="<%=propertyKey%>" class=<%=style.getEditor()%>
+<textarea id="<%=propertyKey%>" name="<%=propertyKey%>" class="<%=cssClass%>"
 	rows="<%=rows%>" cols="80"
 	title="<%=p.getDescription(request)%>"	
 	<%=disabled%>
