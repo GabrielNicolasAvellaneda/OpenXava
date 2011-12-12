@@ -186,15 +186,6 @@ public class Liferay43Style extends PortalStyle {
 		return "''";
 	}
 	
-	public String getErrors() { 
-		return "portlet-msg-error";
-	}
-		
-
-	public String getMessages() { 
-		return "portlet-msg-success";
-	}
-
 	/**
 	 * For messages and errors
 	 */

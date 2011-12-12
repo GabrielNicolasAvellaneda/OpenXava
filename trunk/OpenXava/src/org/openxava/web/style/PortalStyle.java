@@ -177,13 +177,26 @@ public class PortalStyle extends Style {
 	}
 		
 	public String getErrors() { 
-		return "errors";
-	}
-		
-	public String getMessages() { 
-		return "messages";
+		return "portlet-msg-error";
 	}
 
+	public String getMessages() { 
+		return "portlet-msg-success"; 
+	}
+	
+	/**
+	 * @since 4.3
+	 */
+	public String getInfos() {  
+		return "portlet-msg-info"; 
+	}
+
+	/**
+	 * @since 4.3
+	 */	
+	public String getWarnings() {   
+		return "portlet-msg-alert";
+	}	
 	
 	public String getProcessing() { 
 		return "processing";

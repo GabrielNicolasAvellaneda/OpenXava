@@ -14,6 +14,18 @@ public class BlogTest extends ModuleTestBase {
 		super(testName, "Blog");		
 	}
 	
+	public void testMessageTypes() throws Exception {
+		execute("Blog.produceMessages");
+		assertMessagesCount(1);
+		assertMessage("This is a message");
+		assertErrorsCount(1);
+		assertError("This is an error");
+		assertInfosCount(1);
+		assertInfo("This is an info");
+		assertWarningsCount(1);
+		assertWarning("This is a warning");
+	}
+	
 	public void testSetControllersAndRemoveActionsInTheSameAction() throws Exception {
 		execute("Blog.login");
 		assertDialog();

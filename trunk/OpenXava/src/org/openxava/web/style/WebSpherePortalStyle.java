@@ -114,14 +114,6 @@ public class WebSpherePortalStyle extends PortalStyle {
 		return "small-label";
 	}
 	
-	public String getErrors() { 
-		return "portlet-msg-error";
-	}
-
-	public String getMessages() { 
-		return "portlet-msg-success"; 
-	}
-	
 	public String getMessagesWrapper() { 
 		return "wpsTable";
 	}	

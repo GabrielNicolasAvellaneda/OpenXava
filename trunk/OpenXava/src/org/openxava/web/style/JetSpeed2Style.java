@@ -86,14 +86,6 @@ public class JetSpeed2Style extends PortalStyle {
 		return "small-label";
 	}
 	
-	public String getErrors() { 
-		return "portlet-msg-error";
-	}
-
-	public String getMessages() { 
-		return "portlet-msg-success"; 
-	}
-					
 	public String getAscendingImage() {
 		return "ascending-white.gif";
 	}

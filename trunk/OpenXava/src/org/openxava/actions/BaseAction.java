@@ -30,7 +30,7 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 		return errors;
 	}
 
-	public void setErrors(Messages errors) {
+	public void setErrors(Messages errors) { 
 		this.errors = errors;
 	}
 	
@@ -41,101 +41,47 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	public void setMessages(Messages messages) {
 		this.messages = messages;
 	}
-		
+	
 	protected void addErrors(Messages errors) {
 		this.errors.add(errors);
-	}
-	
-	protected void addError(String messageId) {
-		errors.add(messageId);
-	}
-	
-	protected void addError(String messageId, Object [] ids) {
-		errors.add(messageId, ids);
-	}
-	
-	protected void addError(String messageId, Object id0) {
-		errors.add(messageId, new Object [] {id0});
-	}
-	
-	protected void addError(String messageId, Object id0, Object id1) {
-		errors.add(messageId, new Object [] {id0, id1});
-	}
-	
-	protected void addError(String messageId, Object id0, Object id1, Object id2) {
-		errors.add(messageId, new Object [] {id0, id1, id2});
-	}
-	
-	protected void addError(String messageId, Object id0, Object id1, Object id2, Object id3) {
-		errors.add(messageId, new Object [] {id0, id1, id2, id3});
-	}
-	
-	protected void addError(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4) {
-		errors.add(messageId, new Object [] {id0, id1, id2, id3, id4});
-	}
-	
-	protected void addError(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
-		errors.add(messageId, new Object [] {id0, id1, id2, id3, id4, id5});
 	}
 	
 	protected void addMessages(Messages messages) {
 		this.messages.add(messages);
 	}
 	
-	protected void addMessage(String messajeId) {
-		messages.add(messajeId);
+	/**
+	 * If some id is a String between quotes (') it will be displayed literally, untranslated. 
+	 */	
+	protected void addError(String messageId, Object ... ids) {
+		errors.add(Messages.Type.ERROR, messageId, ids); 
 	}
 	
 	/**
-	 * If the id is a String between quotes (') will be displayed literally, untranslated 
-	 */
-	protected void addMessage(String messageId, Object [] ids) {
-		messages.add(messageId, ids);
+	 * If some id is a String between quotes (') it will be displayed literally, untranslated. 
+	 */	
+	protected void addMessage(String messageId, Object ... ids) {
+		messages.add(Messages.Type.MESSAGE, messageId, ids);  
 	}
 	
 	/**
-	 * If the id is a String between quotes (') will be displayed literally, untranslated 
-	 */
-	protected void addMessage(String messageId, Object id0) {
-		messages.add(messageId, new Object [] {id0});
+	 * If some id is a String between quotes (') it will be displayed literally, untranslated.
+	 * 
+	 * @since 4.3 
+	 */	
+	protected void addInfo(String messageId, Object ... ids) {
+		messages.add(Messages.Type.INFO, messageId, ids);
 	}
 	
 	/**
-	 * If the id is a String between quotes (') will be displayed literally, untranslated 
-	 */
-	protected void addMessage(String messageId, Object id0, Object id1) {
-		messages.add(messageId, new Object [] {id0, id1});
+	 * If some id is a String between quotes (') it will be displayed literally, untranslated.
+	 * 
+	 * @since 4.3
+	 */	
+	protected void addWarning(String messageId, Object ... ids) {
+		messages.add(Messages.Type.WARNING, messageId, ids);
 	}
-	
-	/**
-	 * If the id is a String between quotes (') will be displayed literally, untranslated 
-	 */
-	protected void addMessage(String messageId, Object id0, Object id1, Object id2) {
-		messages.add(messageId, new Object [] {id0, id1, id2});
-	}
-	
-	/**
-	 * If the id is a String between quotes (') will be displayed literally, untranslated 
-	 */
-	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3) {
-		messages.add(messageId, new Object [] {id0, id1, id2, id3});
-	}
-	
-	/**
-	 * If the id is a String between quotes (') will be displayed literally, untranslated 
-	 */
-	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4) {
-		messages.add(messageId, new Object [] {id0, id1, id2, id3, id4});
-	}
-	
-	/**
-	 * If the id is a String between quotes (') will be displayed literally, untranslated 
-	 */
-	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
-		messages.add(messageId, new Object [] {id0, id1, id2, id3, id4, id5});
-	}
-	
-		
+			
 	public void executeBefore() throws Exception {	
 	}
 	

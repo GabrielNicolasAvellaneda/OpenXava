@@ -29,12 +29,7 @@ class FailingMessages extends Messages {
 	public void add(Messages messages) {		
 		throw new IllegalStateException(EXCEPTION_MESSAGE);
 	}
-	
-	@Override
-	public void add(String idMessage) {		
-		throw new IllegalStateException(EXCEPTION_MESSAGE);
-	}
-	
+		
 	@Override
 	public void add(String idMessage, Object[] ids) {		
 		throw new IllegalStateException(EXCEPTION_MESSAGE);
