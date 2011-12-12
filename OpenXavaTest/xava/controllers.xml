@@ -53,10 +53,9 @@
 	</controller>
 		
 	<controller name="Blog">
-		<extends controller="Typical"/>
-	
-		<action name="login" class="org.openxava.test.actions.GoLoginAction"/>
-	
+		<extends controller="Typical"/>	
+		<action name="login" class="org.openxava.test.actions.GoLoginAction"/>		
+		<action name="produceMessages" class="org.openxava.test.actions.ProduceMessagesAction"/>	
 	</controller>
 	
 	<controller name="BlogLogin">

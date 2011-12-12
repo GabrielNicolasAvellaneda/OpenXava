@@ -26,11 +26,21 @@ public class Messages implements java.io.Serializable {
 	
 	private static Log log = LogFactory.getLog(Messages.class);
 	
-	static class Message implements java.io.Serializable {
+	public enum Type { ERROR, MESSAGE, INFO, WARNING }   
+	
+	static class Message implements java.io.Serializable { 
 		private String id;
 		private Object [] argv;
+		private Type type; 
+		
+		public Message(Type type, String id, Object [] argv) { 
+			this.type = type;
+			this.id = id;
+			this.argv = argv;
+		}
 		
 		public Message(String id, Object [] argv) {
+			this.type = Type.MESSAGE; 
 			this.id = id;
 			this.argv = argv;
 		}
@@ -42,7 +52,11 @@ public class Messages implements java.io.Serializable {
 		public String getId() {
 			return id;
 		}
-				
+		
+		public Type getType() { 
+			return type;
+		}
+		
 		public String toString() {
 			return toString(Locale.getDefault());
 		}
@@ -70,7 +84,7 @@ public class Messages implements java.io.Serializable {
 				return id;
 			}
 		}
-				
+		
 		private Object[] translate(Object[] argv, Locale locale) {
 			Object [] result = new Object[argv.length];
 			for (int i = 0; i < argv.length; i++) {
@@ -113,24 +127,21 @@ public class Messages implements java.io.Serializable {
 		
 	}
 	
-	private Collection messages = new ArrayList();
+	private Collection messages; 
 	private Collection members;
 	private boolean closed = false;	
 	
-	public void add(String idMessage) {
-		if (closed) return;
-		messages.add(new Message(idMessage));		
-	}
-	
 	public boolean contains(String idMessage) {
+		if (messages == null) return false; 
 		return messages.contains(new Message(idMessage));
 	}
 	
 	public void remove(String idMessage) {
+		if (messages == null) return; 
 		messages.remove(new Message(idMessage));		
 	}
 	public void removeAll() {
-		messages.clear();
+		if (messages != null) messages.clear(); 
 		if (members != null) members.clear();
 	}
 	
@@ -146,8 +157,11 @@ public class Messages implements java.io.Serializable {
 		closed = true;
 	}
 	
-	public void add(String idMessage, Object [] ids) {
-				
+	public void add(String idMessage, Object ... ids) { 
+		add((Type) null, idMessage, ids); 
+	}
+		
+	public void add(Type type, String idMessage, Object ... ids) { 			
 		if (closed) return;
 		if (ids != null) {
 			if (ids.length == 1) {
@@ -157,10 +171,10 @@ public class Messages implements java.io.Serializable {
 				addMember(ids[0], ids[1]);
 			} 
 		}
-		messages.add(new Message(idMessage, ids));
+		if (messages == null) messages = new ArrayList(); 
+		messages.add(new Message(type, idMessage, ids));
 	}
 	
-
 	private void addMember(Object member) {
 		addMember(member, null);
 	}
@@ -174,40 +188,17 @@ public class Messages implements java.io.Serializable {
 			members.add(id);
 		}
 	}
-
-	public void add(String idMessage, Object id0) {		
-		add(idMessage, new Object [] { id0 });
-	}
-	
-	public void add(String idMessage, Object id0, Object id1) {		
-		add(idMessage, new Object [] { id0, id1 });
-	}
-	
-	public void add(String idMessage, Object id0, Object id1, Object id2) {
-		add(idMessage, new Object [] { id0, id1, id2 });
-	}
-	
-	public void add(String idMessage, Object id0, Object id1, Object id2, Object id3) {
-		add(idMessage, new Object [] { id0, id1, id2, id3 });
-	}
-	
-	public void add(String idMessage, Object id0, Object id1, Object id2, Object id3, Object id4) {
-		add(idMessage, new Object [] { id0, id1, id2, id3, id4 });
-	}
-	
-	public void add(String idMessage, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
-		add(idMessage, new Object [] { id0, id1, id2, id3, id4, id5 });
-	}
 	
 	public boolean contains() {
-		return !messages.isEmpty();
+		return messages != null && !messages.isEmpty(); 
 	}
 	
 	public boolean isEmpty() {
-		return messages.isEmpty();
+		return messages == null || messages.isEmpty(); 
 	}
 	
 	public String toString() {
+		if (messages == null) return ""; 
 		Iterator it = messages.iterator();
 		StringBuffer r = new StringBuffer();
 		while (it.hasNext()) {			
@@ -219,7 +210,10 @@ public class Messages implements java.io.Serializable {
 	
 	public void add(Messages messages) {	
 		if (closed) return;
-		this.messages.addAll(messages.messages);		
+		if (messages.messages != null) {
+			if (this.messages == null) this.messages = new ArrayList();
+			this.messages.addAll(messages.messages);
+		}		
 		if (messages.members != null) {
 			if (this.members == null) this.members = new ArrayList();
 			this.members.addAll(messages.members);
@@ -244,6 +238,7 @@ public class Messages implements java.io.Serializable {
 	 * List of all message texts translated using the indicated locale.
 	 */	
 	public Collection getStrings(Locale locale) {
+		if (messages == null) return Collections.EMPTY_LIST; 
 		Iterator it = messages.iterator();
 		Collection r = new ArrayList();
 		while (it.hasNext()) {
@@ -252,11 +247,38 @@ public class Messages implements java.io.Serializable {
 		return r;
 	}
 	
+	public Collection getMessagesStrings(ServletRequest request) { 
+		return getStrings(Type.MESSAGE, request);
+	}
+	
+	public Collection getWarningsStrings(ServletRequest request) { 
+		return getStrings(Type.WARNING, request);
+	}	
+	
+	public Collection getInfosStrings(ServletRequest request) { 
+		return getStrings(Type.INFO, request);
+	}
+	
+	private Collection getStrings(Type type, ServletRequest request) { 
+		if (messages == null) return Collections.EMPTY_LIST;  
+		Iterator it = messages.iterator();
+		Collection r = new ArrayList();
+		while (it.hasNext()) {
+			Message message = (Message) it.next();
+			if (message.getType() == type) {
+				r.add(message.toString(XavaResources.getLocale(request)));
+			}
+		}
+		return r;
+	}
+
+		
 	/**
 	 * List of all ids of the messages
 	 * @return
 	 */
 	public Collection getIds() {
+		if (messages == null) return Collections.EMPTY_LIST; 
 		Iterator it = messages.iterator();
 		Collection r = new ArrayList();
 		while (it.hasNext()) {

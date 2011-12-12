@@ -603,6 +603,20 @@ public class Style {
 	public String getMessages() { 
 		return "ox-messages";
 	}
+	
+	/**
+	 * @since 4.3
+	 */
+	public String getInfos() { 
+		return "ox-infos"; 
+	}
+
+	/**
+	 * @since 4.3
+	 */	
+	public String getWarnings() {  
+		return "ox-warnings"; 
+	}	
 
 	public String getErrorStartDecoration () { 
 		return "";

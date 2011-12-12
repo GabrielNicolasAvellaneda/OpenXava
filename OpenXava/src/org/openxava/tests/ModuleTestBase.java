@@ -1616,25 +1616,49 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertError(String message) throws Exception {
+		assertMessage(message, "errors_table", "error_not_found", "errors_produced");
+	}
+	
+	protected void assertMessage(String message) throws Exception {
+		assertMessage(message, "messages_table", "message_not_found", "messages_produced");
+	}
+	
+	/**
+	 * @since 4.3
+	 */
+	protected void assertInfo(String message) throws Exception { 
+		assertMessage(message, "infos_table", "info_not_found", "infos_produced"); 
+	}
+	
+	/**
+	 * @since 4.3
+	 */
+	protected void assertWarning(String message) throws Exception { 
+		assertMessage(message, "warnings_table", "warning_not_found", "warnings_produced"); 
+	}	
+	
+	private void assertMessage(String message, String tableId, String notFoundMessageId, String messagesProducedMessageId) throws Exception { 
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) getElementById("errors_table"); 
+			table = (HtmlTable) getElementById(tableId); 
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
-			fail(XavaResources.getString("error_not_found", message));
+			fail(XavaResources.getString(notFoundMessageId, message));
 			return;
-		}		
-		int rc = table.getRowCount();
-		StringBuffer errors = new StringBuffer();
-		for (int i = 0; i < rc; i++) {
-			String error = table.getCellAt(i, 0).asText().trim();
-			errors.append(error);
-			errors.append('\n');			
-			if (error.equals(message)) return;
 		}
-		log.error(XavaResources.getString("errors_produced", errors));
-		fail(XavaResources.getString("error_not_found", message));
+		int rc = table.getRowCount();
+		StringBuffer messages = new StringBuffer();
+		for (int i = 0; i < rc; i++) {
+			String m = table.getCellAt(i, 0).asText().trim();
+			if (m.equals(message)) return;
+			messages.append(m);
+			messages.append('\n');												
+		}
+		log.error(XavaResources.getString(messagesProducedMessageId, messages));
+		fail(XavaResources.getString(notFoundMessageId, message));
 	}
+
+	
 	
 	protected void assertErrorsCount(int expectedCount) throws Exception {
 		HtmlTable table = null;
@@ -1663,6 +1687,42 @@ public class ModuleTestBase extends TestCase {
 		}				
 		assertEquals(XavaResources.getString("messages_count_unexpected"), expectedCount, table.getRowCount());
 	}
+	
+	/**
+	 * @since 4.3
+	 */	
+	protected void assertInfosCount(int expectedCount) throws Exception { 
+		HtmlTable table = null;
+		try {
+			table = (HtmlTable) getElementById("infos_table"); 
+		}
+		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
+			if (expectedCount > 0) {
+				fail(XavaResources.getString("no_info_and_expected", new Integer(expectedCount))); 
+			}
+			return;
+		}		
+		assertEquals(XavaResources.getString("infos_count_unexpected"), expectedCount, table.getRowCount()); 
+	}
+	
+	/**
+	 * @since 4.3
+	 */
+	protected void assertWarningsCount(int expectedCount) throws Exception { 
+		HtmlTable table = null;
+		try {
+			table = (HtmlTable) getElementById("warnings_table");  
+		}
+		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
+			if (expectedCount > 0) {
+				fail(XavaResources.getString("no_warning_and_expected", new Integer(expectedCount))); 
+			}
+			return;
+		}		
+		assertEquals(XavaResources.getString("warnings_count_unexpected"), expectedCount, table.getRowCount()); 
+	}
+	
+	
 			
 	protected void assertNoError(String message) throws Exception {
 		assertNoMessage(message, "errors_table", "error_found");
@@ -1671,6 +1731,20 @@ public class ModuleTestBase extends TestCase {
 	protected void assertNoMessage(String message) throws Exception {
 		assertNoMessage(message, "messages_table", "message_found"); 
 	}
+	
+	/**
+	 * @since 4.3
+	 */	
+	protected void assertNoInfo(String message) throws Exception { 
+		assertNoMessage(message, "infos_table", "info_found"); 
+	}
+	
+	/**
+	 * @since 4.3
+	 */	
+	protected void assertNoWarning(String message) throws Exception { 
+		assertNoMessage(message, "warnings_table", "warning_found"); 
+	}	
 		
 	private void assertNoMessage(String message, String id, String notFoundErrorId) throws Exception {
 		HtmlTable table = null;
@@ -1702,26 +1776,6 @@ public class ModuleTestBase extends TestCase {
 		return table.getCellAt(0, 0).asText().trim();
 	}	
 	
-	protected void assertMessage(String message) throws Exception {
-		HtmlTable table = null;
-		try {
-			table = (HtmlTable) getElementById("messages_table"); 
-		}
-		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
-			fail(XavaResources.getString("message_not_found", message));
-			return;
-		}
-		int rc = table.getRowCount();
-		StringBuffer messages = new StringBuffer();
-		for (int i = 0; i < rc; i++) {
-			String m = table.getCellAt(i, 0).asText().trim();
-			if (m.equals(message)) return;
-			messages.append(m);
-			messages.append('\n');												
-		}
-		log.error(XavaResources.getString("messages_produced", messages));
-		fail(XavaResources.getString("message_not_found", message));
-	}
 	
 	
 	protected void assertNoErrors() throws Exception {
