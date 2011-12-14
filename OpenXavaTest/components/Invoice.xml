@@ -85,6 +85,14 @@
 				<set property="amountsSum"/>
 			</calculator>
 		</property>
+		
+		<property name="productUnitPriceSum" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.InvoiceProductUnitPriceSumCalculator"/>
+		</property>
+		
+		<property name="deliveryDate" type="java.util.Date">
+			<calculator class="org.openxava.test.calculators.InvoiceDeliveryDateCalculator"/>
+		</property>						
 				
 		<reference model="Customer" required="true"/>
 		
