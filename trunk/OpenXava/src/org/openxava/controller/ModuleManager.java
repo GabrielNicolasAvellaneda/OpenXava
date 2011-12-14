@@ -38,14 +38,34 @@ public class ModuleManager implements java.io.Serializable {
 	static {		 
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
+		setVersionInfo();
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
+	
+	static public String version;
 	final static public String getVersion() {
-		return "4.3beta";
+		return version;
 	}
+	static public String versionDate;
 	final static private String getVersionDate() {
-		return "2011-11-xx"; 
+		return versionDate; 
 	}
+	
+	static private void setVersionInfo() {		
+		try {
+			Properties properties = new Properties();
+			properties.load(ModuleManager.class.getResourceAsStream("/version.properties"));			
+			version = properties.getProperty("version", "UNKNOW");
+			versionDate = properties.getProperty("date", "UNKNOW");
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("openxava_version_problems"), ex); 
+			version="UNKNOW";
+			versionDate="UNKNOW";
+		}
+	}
+	
+	 
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 

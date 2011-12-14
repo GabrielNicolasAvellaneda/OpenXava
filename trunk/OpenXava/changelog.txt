@@ -1,28 +1,30 @@
 Change Log for OpenXava project
 ===============================
 
-- New methods addWarning() and addInfo() in BaseAction to produce warning and info messages.
-- New methods assertPopupCount(), assertInfo(), assertWarning(), assertNoInfo(), assertNoWarning(), assertInfosCount(), assertWarningsCount() in ModuleTestBase.
-- HtmlText editor now uses an embedded rich text editor instead of using a popup windows.
-- FCKEditor upgraded to CKEditor 3.6.2.
-- Fix: Links in HtmlEditors disappear using Firefox 3.6. 
-- Fix: In pages with several modules javascript code for editors is executed several times causing incorrect behavior.
+OpenXava 4.3 (2011-12-14)
+-------------------------
 - Total properties in collections.
-- Fix: Customizing a collection in a module affects collections of the same element in all modules.
-- Fix: PDF reports fail with summation of qualified properties.
-- New method toList() in Strings.
-- Commons Lang jar added to WEB-INF/lib.
-- Groovy upgraded to 1.8.3.
+- HtmlText editor now uses an embedded rich text editor instead of using a popup windows.
+- New methods addWarning() and addInfo() in BaseAction to produce warning and info messages.
 - It's possible to generate several reports from the same action by means of JasperMultipleReportBaseAction.
 - New IMultipleForwardAction to do several forwards to several URIs from the same action.
 - New SimpleHTMLReportAction to create reports from simple HTML templates.
 - New SimpleTemplater class to process simple HTML templates.
-- Fix: Validators defined in validators.xml of a project does not overwrite the built in ones. 
+- New getEntity() method in View class that returns the entity associated to the view.
+- Groovy upgraded to 1.8.3.
+- FCKEditor upgraded to CKEditor 3.6.2.
 - When a constraint violation of JSR-303 has no property path its message is shown as is to the user. 
 - New property summationInList in xava.properties to enable or disable the custom user summation in list and collections.
+- OpenXava version info now is stored in a version.properties file.
+- New methods assertPopupCount(), assertInfo(), assertWarning(), assertNoInfo(), assertNoWarning(), assertInfosCount(), assertWarningsCount() in ModuleTestBase.
+- New method toList() in Strings.
+- Commons Lang jar added to WEB-INF/lib.
+- Fix: Links in HtmlEditors disappear using Firefox 3.6. 
+- Fix: In pages with several modules javascript code for editors is executed several times causing incorrect behavior.
+- Fix: Customizing a collection in a module affects collections of the same element in all modules.
+- Fix: PDF reports fail with summation of qualified properties.
+- Fix: Validators defined in validators.xml of a project does not overwrite the built in ones. 
 - Fix: Closing prepared statements twice produces errors in JBoss. 
-- New getEntity() method in View class that returns the entity associated to the view.
-
 
 OpenXava 4.2.3 (2011-9-20)
 --------------------------
