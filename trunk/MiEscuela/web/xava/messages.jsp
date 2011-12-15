@@ -7,12 +7,36 @@
 if (messages.contains()) {
 %>
 <div class='<%=style.getMessagesWrapper()%>'>
+<table id="<xava:id name='warnings_table'/>">
+<%
+	java.util.Iterator it = messages.getWarningsStrings(request).iterator();	
+	while (it.hasNext()) {		
+%>
+<tr><td class=<%=style.getWarnings()%>>
+<%=style.getMessageStartDecoration()%>
+<%=it.next()%>
+<%=style.getMessageEndDecoration()%>
+</td></tr>
+<% } %>
+</table>
 <table id="<xava:id name='messages_table'/>">
 <%
-	java.util.Iterator it = messages.getStrings(request).iterator();	
+	it = messages.getMessagesStrings(request).iterator();	
 	while (it.hasNext()) {		
 %>
 <tr><td class=<%=style.getMessages()%>>
+<%=style.getMessageStartDecoration()%>
+<%=it.next()%>
+<%=style.getMessageEndDecoration()%>
+</td></tr>
+<% } %>
+</table>
+<table id="<xava:id name='infos_table'/>">
+<%
+	it = messages.getInfosStrings(request).iterator();	
+	while (it.hasNext()) {		
+%>
+<tr><td class=<%=style.getInfos()%>>
 <%=style.getMessageStartDecoration()%>
 <%=it.next()%>
 <%=style.getMessageEndDecoration()%>
