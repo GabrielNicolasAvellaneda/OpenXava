@@ -353,7 +353,7 @@ input {
 	text-shadow:0px 2px 1px #E8E8E9;
 }
 
-.ox-messages {
+.ox-messages, .ox-infos, .ox-warnings {
 	color: #2160DD;	
 	font-weight: bold;
 	font-size: 140%;
