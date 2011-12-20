@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Popup for dates is not shown from dialogs. 
+
 OpenXava 4.3 (2011-12-14)
 -------------------------
 - Total properties in collections.
