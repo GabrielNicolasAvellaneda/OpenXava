@@ -15,7 +15,8 @@ import org.openxava.annotations.*;
 		"street, zipCode, Address.addFullAddress();" +		
 		"city [" +
 		"	city, state;" +
-		"]"		
+		"]" +
+		"asString"
 	),
 	@View( name="StateAsForm" ),
 	@View( name="Demo", members = 
@@ -82,7 +83,15 @@ public class Address implements IWithCity {
 	}
 				
 	public String getAsString() {
-		return getStreet() + getZipCode() + getCity() + getState().getName() + getCustomer().getNumber(); 
+		return getStreet() + getZipCode() + getCity() + getStateNameAsString() + getCustomerNumberAsString(); 
+	}
+	
+	private String getStateNameAsString() { 
+		return getState() == null?"":getState().getName();
+	}
+	
+	private String getCustomerNumberAsString() { 
+		return getCustomer() == null?"":Integer.toString(getCustomer().getNumber());
 	}
 
 	public State getState() {
