@@ -1069,6 +1069,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			Object object = Class.forName(metaAggregate.getBeanClass()).newInstance();
 			PropertiesManager man = new PropertiesManager(object);			
 			removeViewProperties(metaAggregate, values);
+			removeCalculatedFields(metaAggregate, values); 
 			values = convertSubmapsInObject(metaAggregate, values, false);
 			man.executeSets(values);
 			return object;

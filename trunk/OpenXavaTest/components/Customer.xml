@@ -375,6 +375,7 @@
 			<group name="city">
 				city, state;
 			</group>
+			asString
 		</members>
 
 	</view>

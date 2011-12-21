@@ -128,6 +128,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("editor_type, errors, " + 
 				"editor_number, " +
 				"editor_alternateSeller.number, " +
+				"editor_address.asString, " + 
 				"editor_address.city, " +
 				"editor_address.zipCode, " +
 				"editor_alternateSeller.name, " +
@@ -153,6 +154,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, editor_seller.name, " +
 				"editor_number, " +
 				"editor_alternateSeller.number, " +
+				"editor_address.asString, " + 
 				"editor_address.city, " +
 				"editor_address.zipCode, " +
 				"editor_alternateSeller.name, " +
@@ -166,6 +168,7 @@ public class AJAXTest extends ModuleTestBase {
 		setValue("number", "4");
 		execute("CRUD.refresh");
 		assertLoadedParts("errors, editor_number, " +
+				"editor_address.asString, " + 
 				"editor_address.city, " +
 				"editor_address.zipCode, " +
 				"editor_name, " +
@@ -224,6 +227,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_number, errors, " +
 				"editor_alternateSeller.number, " +
 				"property_actions_address.street, " +
+				"editor_address.asString, " +
 				"editor_address.city, " +
 				"property_actions_seller.number, " +
 				"editor_address.zipCode, " +
@@ -251,6 +255,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_number, errors, " +
 				"editor_alternateSeller.number, " +
 				"property_actions_address.street, " +
+				"editor_address.asString, " + 
 				"editor_address.city, " +
 				"property_actions_seller.number, " +
 				"editor_address.zipCode, " +

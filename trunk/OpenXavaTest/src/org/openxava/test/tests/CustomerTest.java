@@ -4,8 +4,6 @@ import java.net.URL;
 
 import javax.persistence.NoResultException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.MetaModel;
 import org.openxava.test.model.Customer;
 import org.openxava.test.model.Warehouse;
@@ -22,7 +20,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 
 public class CustomerTest extends ModuleTestBase {
-	private static Log log = LogFactory.getLog(CustomerTest.class);
 	
 	private String section;		
 
