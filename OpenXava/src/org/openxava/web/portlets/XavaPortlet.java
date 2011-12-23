@@ -252,8 +252,8 @@ public class XavaPortlet extends GenericPortlet {
 			ModuleManager moduleManager = (ModuleManager)context.get(application, module, "manager");
 			title = moduleManager.getModuleDescription();
 		} 
-		catch (Exception ex) {
-			log.warn(XavaResources.getString("portlet_title_warning"), ex);			
+		catch (Exception ex) {			
+			log.warn(XavaResources.getString("portlet_title_warning")); // We don't show the ex, because this happens always the very first time the app is executed 
 		}
 		// title will only be set if no Exception occurs	
 		if(title != null){
