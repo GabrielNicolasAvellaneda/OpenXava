@@ -13,7 +13,7 @@ public class Product3Test extends ModuleTestBase {
 		super(testName, "Product3");		
 	}
 	
-	public void testSearchingByAnyReference_genericI18nForTabNotAffectDetail() throws Exception { 
+	public void testSearchingByAnyReference_genericI18nForTabNotAffectDetail() throws Exception {	 
 		execute("CRUD.new");
 		assertLabel("family.description", "Description"); // Generic i18n for tab not affect detail
 		setValue("number", "");
