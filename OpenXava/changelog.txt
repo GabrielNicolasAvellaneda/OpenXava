@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: i18n entry not recognized if it does not exist in the default language of the server machine.
 - Fix: Exception saving entity with embeddable with read only members.
 - Fix: Popup for dates is not shown from dialogs. 
 

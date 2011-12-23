@@ -169,7 +169,7 @@ public class Labels {
 	}	
 	
 	public static boolean exists(String id) {
-		return exists(id, Locale.getDefault());
+		return exists(id, Locales.getCurrent());
 	}
 	
 	public static boolean existsExact(String id) throws XavaException { 
