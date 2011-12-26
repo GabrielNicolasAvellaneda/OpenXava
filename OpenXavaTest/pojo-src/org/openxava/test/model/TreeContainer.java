@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import org.openxava.annotations.Editor;
+import org.openxava.annotations.Editors;
 import org.openxava.annotations.Hidden;
 import org.openxava.annotations.ListProperties;
 import org.openxava.annotations.Tree;
@@ -27,6 +28,7 @@ import org.openxava.annotations.Views;
 @Views({
 	@View(members="description; treeItems; treeItemTwos"),
 	@View(name="Simple", members="description; treeItems"),
+	@View(name="Alternate", members="description;treeItems"),
 	@View(name="NoDefaultPath", members="description; treeItemTwos")
 })
 public class TreeContainer {
@@ -38,7 +40,10 @@ public class TreeContainer {
 	private String description;
 
 	@OneToMany(mappedBy="parentContainer", cascade = CascadeType.REMOVE)
-	@Editor("TreeView")
+	@Editors({
+		@Editor(notForViews="Alternate", value = "TreeView"),
+		@Editor(forViews="Alternate", value = "TreeViewAlternate")
+	})
 	@ListProperties("description")
 	@OrderBy("path, treeOrder")
 	private Collection<TreeItem> treeItems;

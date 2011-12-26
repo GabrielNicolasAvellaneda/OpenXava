@@ -152,6 +152,19 @@ public class TreeViewDefaultPathTest extends TreeViewTestBase {
 		assertEquals("It is not a child of Item 1", "[" + itemMoved.getPath() + "]", "[/" + item.getId() + "]");
 	}
 
+	public void testTreeReaderImplementation() throws Exception {
+		changeModule("TreeViewAlternateReader");
+		execute("Mode.detailAndFirst");
+		assertTreeViewRowCount("treeItems", 7);
+		assertValueInTreeViewIgnoreCase("treeItems", 0, "0. ROOT ITEM 1");
+		assertValueInTreeViewIgnoreCase("treeItems", 1, "1. CHILD ITEM 1");
+		assertValueInTreeViewIgnoreCase("treeItems", 2, "4. SUBITEM 1 OF 1");
+		assertValueInTreeViewIgnoreCase("treeItems", 3, "5. SUBITEM 2 OF 1");
+		assertValueInTreeViewIgnoreCase("treeItems", 4, "2. CHILD ITEM 2");
+		assertValueInTreeViewIgnoreCase("treeItems", 5, "3. CHILD ITEM 3");
+		assertValueInTreeViewIgnoreCase("treeItems", 6, "6. SUBITEM 1 OF 3");
+	}
+
 	private TreeItem getTreeItemByDescription(String description) throws Exception {
 		TreeItem returnValue =
 				(TreeItem)XPersistence.getManager().createQuery("select t from TreeItem t where " +
