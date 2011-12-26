@@ -1,8 +1,5 @@
 package org.openxava.actions;
 
-import javax.servlet.http.*;
-
-import org.openxava.controller.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -21,6 +18,7 @@ abstract public class TabBaseAction extends ViewBaseAction {
 	private int row = -1;
 	
 	private String collection;
+	private String viewObject;  
 	
 	/**
 	 * Returns the indexes of the selected rows. <p>
@@ -36,7 +34,7 @@ abstract public class TabBaseAction extends ViewBaseAction {
 
 	protected Tab getTab() throws XavaException {
 		if (tab == null ) {			
-			String tabObject = Is.emptyString(collection)?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
+			String tabObject = Is.emptyString(getCollection())?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(getCollection(), ".", "_"); 
 			tab = (Tab) getContext().get(getRequest(), tabObject);
 			if (tab.getCollectionView() != null) {				
 				tab.getCollectionView().refreshCollections(); 				
@@ -46,6 +44,17 @@ abstract public class TabBaseAction extends ViewBaseAction {
 	}
 
 	public String getCollection() {
+		if (collection == null && viewObject != null) {
+			this.collection = viewObject.substring("xava_view_".length());									
+			while (this.collection.startsWith("section")) {
+				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);				
+			}
+			String objectName = Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
+			while (!Is.emptyString(this.collection) && !getContext().exists(getRequest(), objectName)) {
+				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);
+				objectName = Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
+			}
+		}
 		return collection;
 	}
 
@@ -58,13 +67,8 @@ abstract public class TabBaseAction extends ViewBaseAction {
 	 * 
 	 * Useful for using Tab actions for collections. <br> 
 	 */
-	public void setViewObject(String viewObject) { 
-		if (Is.emptyString(this.collection)) {					
-			this.collection = viewObject.substring("xava_view_".length());									
-			while (this.collection.startsWith("section")) {
-				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);				
-			}
-		}
+	public void setViewObject(String viewObject) {
+		this.viewObject = viewObject; 
 	}
 
 	/**
