@@ -156,4 +156,7 @@
 
 	<editor name="UserAttribute" url="userAttributeEditor.jsp"/>
 	
+	<editor name="TreeViewAlternate" url="treeViewEditor.jsp">
+		<property name="reader" value="org.openxava.test.web.editors.impl.TreeViewReaderTestImpl" />
+	</editor>
 </editors>
