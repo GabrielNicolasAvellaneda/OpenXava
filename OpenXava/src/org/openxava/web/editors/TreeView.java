@@ -502,12 +502,12 @@ public class TreeView {
 	 * @return Object implementing the ITreeViewReader
 	 * @throws Exception
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings("rawtypes")
 	public ITreeViewReader getTreeViewReaderImpl() {
 		if (treeViewReader == null && !Is.emptyString(treeViewReaderName)) {
 			try {
 				Class clazz = Class.forName(treeViewReaderName);
-				if (clazz.isAssignableFrom(ITreeViewReader.class)) {
+				if (ITreeViewReader.class.isAssignableFrom(clazz)) {
 					treeViewReader = (ITreeViewReader)clazz.newInstance();
 				}
 			} catch (ClassNotFoundException e) {
