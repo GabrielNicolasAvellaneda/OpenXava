@@ -10,6 +10,7 @@ import javax.persistence.*;
  */
 
 @Entity
+@View(members="orphanage [ name; orphans ]") 
 class Orphanage extends Nameable {
 
 	@OneToMany(orphanRemoval=true, mappedBy="orphanage")

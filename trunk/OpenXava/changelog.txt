@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Generating a PDF report from a collection inside a group fails.
+- Fix: Custom ITreeViewReader is never selected.
 - Fix: Redeploying in Liferay generates an ugly stacktrace about portlet title. 
 - Fix: i18n entry not recognized if it does not exist in the default language of the server machine.
 - Fix: Exception saving entity with embeddable with read only members.
