@@ -943,7 +943,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	 * @throws RemoteException 
 	 */
 	private Map getAggregateValues(MetaAggregate metaAggregate, Object aggregate, Map memberNames) throws XavaException, RemoteException {		
-		if (memberNames == null) return Collections.EMPTY_MAP;
+		if (memberNames == null || aggregate == null) return Collections.EMPTY_MAP;
 		PropertiesManager man = new PropertiesManager(aggregate);
 		StringBuffer names = new StringBuffer();
 				

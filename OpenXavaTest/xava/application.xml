@@ -169,7 +169,7 @@
 		<model name="Customer"/>
 		<view name="SimpleStateAsForm"/>
 		<controller name="Typical"/>
-	</module>		<module name="CustomerDemo" folder="invoicing.variations">			<model name="Customer"/>		<view name="Demo"/>
+	</module>		<module name="CustomerMinimum" folder="invoicing.variations">			<model name="Customer"/>		<view name="Minimum"/>		<controller name="Typical"/>	</module>			<module name="CustomerDemo" folder="invoicing.variations">			<model name="Customer"/>		<view name="Demo"/>
 		<tab name="Demo"/>		<controller name="Typical"/>	</module>	
 			<module name="CustomerReadOnly" folder="invoicing.variations">	
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchReadOnly"/>		<model name="Customer"/>		<view name="WithSection"/>		<controller name="Print"/>			</module>		<module name="CustomerWithSection" folder="invoicing.variations">	
