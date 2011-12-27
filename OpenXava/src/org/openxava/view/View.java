@@ -3261,6 +3261,7 @@ public class View implements java.io.Serializable {
 			membersNamesInGroup = null;
 			metaPropertiesQualified = null; 
 			reloadNeeded = true;			
+			getRoot().reloadNeeded = true; 
 			refreshCollection();
 		}
 		
