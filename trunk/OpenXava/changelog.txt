@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: setHidden() of View does not work for elements of subviews.
 - Fix: Generating a PDF report from a collection inside a group fails.
 - Fix: Custom ITreeViewReader is never selected.
 - Fix: Redeploying in Liferay generates an ugly stacktrace about portlet title. 

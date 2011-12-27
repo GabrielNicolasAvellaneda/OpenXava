@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+import org.openxava.annotations.*;
+import org.openxava.test.actions.*;
+
 /**
  * Representing a second level embeddable class as detailed in bug 3047205 
  * @author Federico Alcantara
@@ -13,6 +16,7 @@ import javax.persistence.Embeddable;
 public class PhoneNumber implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@OnChange(OnChangePhoneAreaCodeAction.class) 
 	private int phoneAreaCode;
 	private String phoneDigits;
 	private String phoneExtension;

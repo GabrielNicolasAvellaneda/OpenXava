@@ -24,11 +24,11 @@ public class SalesRepresentativeTest extends ModuleTestBase{
 	}
 	
 	@Override
-	public void tearDown() throws Exception {
+	public void tearDown() throws Exception {		
 		super.tearDown();
 		removeData();
 	}
-	
+		
 	/**
 	 * Test if CRUD is performing okey.
 	 * @throws Exception
@@ -37,6 +37,9 @@ public class SalesRepresentativeTest extends ModuleTestBase{
 		assertNoErrors(); // This could happen
 		execute("CRUD.new");
 		assertNoErrors(); // This too
+		
+		assertViewSetHiddenFromAnEmbedded(); 
+		
 		setValue("repEmployeeNumber", "1");
 		setValue("repCommissionRate", "3");
 		setValue("person.personFirstName", "JOHN");
@@ -89,8 +92,17 @@ public class SalesRepresentativeTest extends ModuleTestBase{
 		assertErrorsCount(1);
 	}
 	
+	private void assertViewSetHiddenFromAnEmbedded() throws Exception { 
+		assertExists("person.phoneNumber.phoneExtension");
+		setValue("person.phoneNumber.phoneAreaCode", "34");
+		assertNotExists("person.phoneNumber.phoneExtension");
+		setValue("person.phoneNumber.phoneAreaCode", "");
+		assertExists("person.phoneNumber.phoneExtension");
+	}
+
 	private void removeData() throws Exception {
 		XPersistence.getManager().createQuery("delete from SalesRepresentative")
 				.executeUpdate();
 	}
+	
 }
