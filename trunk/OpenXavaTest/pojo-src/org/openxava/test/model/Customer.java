@@ -44,6 +44,8 @@ import org.openxava.test.actions.*;
 	),
 
 	@View( name="Simplest", members="number; name" ),
+	
+	@View( name="Minimum", members="number; name; type" ), 
 
 	@View( name="WithSection", members=	
 		"number;" + 
