@@ -323,6 +323,7 @@ public class Invoice {
 	}
 	
 	@Stereotype("MONEY")
+	@Depends("vat") 
 	public BigDecimal getTotal() {
 		return getVat().add(getAmountsSum());
 	}

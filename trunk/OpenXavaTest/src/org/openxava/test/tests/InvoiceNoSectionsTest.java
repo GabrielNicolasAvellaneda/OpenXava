@@ -62,4 +62,51 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		assertTotalInCollection("details", "quantity", "");
 	}
 	
+	public void testCalculatedPropertyDependingOnCollectionAndOtherProperties() throws Exception { 
+		// Initial values
+		execute("CRUD.new");
+		execute("CRUD.search");
+		setValue("year", "2004");
+		setValue("number", "12");
+		execute("Search.search");
+		assertCollectionRowCount("details", 2);
+		assertValueInCollection("details", 0, "quantity", "5");
+		assertValueInCollection("details", 0, "amount", "50.00");
+		assertValueInCollection("details", 1, "quantity", "5");
+		assertValueInCollection("details", 1, "amount", "60.00");
+		assertValue("amountsSum", "110.00");
+		assertValue("vatPercentage", "13");
+		assertValue("vat", "14.30");
+		assertValue("total", "124.30");
+		
+		// If the calculated values change correctly
+		setValue("vatPercentage", "14");
+		assertValue("vat", "15.40");
+		assertValue("total", "125.40");
+		execute("Collection.edit", "row=0,viewObject=xava_view_details");
+		setValue("quantity", "6");
+		execute("Collection.save");
+		assertValueInCollection("details", 0, "quantity", "6");
+		assertValueInCollection("details", 0, "amount", "60.00");
+		assertValueInCollection("details", 1, "quantity", "5");
+		assertValueInCollection("details", 1, "amount", "60.00");
+		assertValue("amountsSum", "120.00");
+		assertValue("vatPercentage", "14");
+		assertValue("vat", "16.80");
+		assertValue("total", "136.80");		
+		
+		// Restoring original values
+		execute("Collection.edit", "row=0,viewObject=xava_view_details");
+		setValue("quantity", "5");
+		execute("Collection.save");
+		assertValueInCollection("details", 0, "quantity", "5");
+		assertValueInCollection("details", 0, "amount", "50.00");
+		assertValueInCollection("details", 1, "quantity", "5");
+		assertValueInCollection("details", 1, "amount", "60.00");
+		assertValue("amountsSum", "110.00");
+		assertValue("vatPercentage", "14");
+		assertValue("vat", "15.40");
+		assertValue("total", "125.40");		
+	}
+	
 }

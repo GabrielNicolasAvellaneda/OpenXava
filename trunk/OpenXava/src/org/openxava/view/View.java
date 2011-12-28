@@ -161,6 +161,7 @@ public class View implements java.io.Serializable {
 	private Collection fullOrderActionsNamesList;
 	private Map collectionTotals; 
 	private int collectionTotalsCount = -1;
+	private Collection<MetaProperty> recalculatedMetaProperties; 
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -1678,7 +1679,8 @@ public class View implements java.io.Serializable {
 
 		collectionTotals = null;
 		setIdFocusProperty(null);		
-		setCollectionDetailVisible(false); 
+		setCollectionDetailVisible(false);
+		resetRecalculatedProperties(); 
 		if (values == null) return;		
 		Iterator it = values.entrySet().iterator();				
 		while (it.hasNext()) {
@@ -2647,10 +2649,28 @@ public class View implements java.io.Serializable {
 			if (!Is.equal(old, newValue)) {				
 				setValueNotifying(metaProperty.getName(), newValue);
 			}			
+			addRecalculatedProperty(metaProperty); 
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("value_calculate_warning", metaProperty),ex);
 		}		
+	}
+	
+	private void addRecalculatedProperty(MetaProperty metaProperty) { 
+		if (recalculatedMetaProperties == null) recalculatedMetaProperties = new HashSet<MetaProperty>();
+		else if (recalculatedMetaProperties.contains(metaProperty)) return;
+		recalculatedMetaProperties.add(metaProperty);
+	}
+	
+	private void resetRecalculatedProperties() { 
+		if (recalculatedMetaProperties != null) recalculatedMetaProperties.clear();
+	}
+	
+	private void recalculateRecalculatedProperties() { 
+		if (recalculatedMetaProperties == null) return;
+		for (MetaProperty pr: recalculatedMetaProperties) {
+			calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);
+		}
 	}
 	
 	/**
@@ -3764,9 +3784,11 @@ public class View implements java.io.Serializable {
 			Map names = getCalculatedPropertiesNames();
 			if (!names.isEmpty()) {				
 				addValues(MapFacade.getValues(getModelName(), getKeyValues(), names));
-			}
+				recalculateRecalculatedProperties();
+			}			
 		}
-		catch (Exception ex) {						
+		catch (Exception ex) {
+			log.error(XavaResources.getString("recalculate_view_error"), ex);
 			getErrors().add("recalculate_view_error", getModelName());	 								
 		}				
 	}
