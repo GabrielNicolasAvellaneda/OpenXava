@@ -332,9 +332,9 @@ public class ModuleManager implements java.io.Serializable {
 	}
 
 	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
-		int originalDialogLevel = dialogLevel;		
+		int originalDialogLevel = dialogLevel;
 		try {			
-			Object previousView = getContext().get(applicationName, moduleName, "xava_view");  
+			Object previousView = getContext().get(applicationName, moduleName, "xava_view");
 			action.setErrors(errors);
 			action.setMessages(messages);
 			action.setEnvironment(getEnvironment());
@@ -520,11 +520,9 @@ public class ModuleManager implements java.io.Serializable {
 			lastExecutedMetaAction = metaAction;
 			if (!(metaAction == null && executingAction)) { // For avoiding commit on OnChange actions triggered from a regular action execution
 				doCommit(); // after executing action
-			}			
+			}		
 		}
 		catch (Exception ex) {
-			setHideDialog(false);
-			dialogLevel = originalDialogLevel; 
 			manageException(metaAction, errors, messages, ex);
 		}				
 	}
@@ -1383,7 +1381,7 @@ public class ModuleManager implements java.io.Serializable {
 	}
 
 	private void setHideDialog(boolean hideDialog) { 
-		if (dialogLevel > 0 && hideDialog) reloadAllUINeeded = true; 
+		reloadAllUINeeded = dialogLevel > 0 && hideDialog;
 		this.hideDialog = dialogLevel > 0 && hideDialog;
 		dialogLevel--;
 		if (dialogLevel < 0) dialogLevel = 0; 

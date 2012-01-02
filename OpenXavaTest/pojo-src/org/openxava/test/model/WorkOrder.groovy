@@ -1,5 +1,6 @@
 package org.openxava.test.model
 
+import org.openxava.annotations.*;
 import org.openxava.provaox.model.*;
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ class WorkOrder {
 	@Id @Column(length=6)
 	Integer number
 
-	@OneToMany(cascade=CascadeType.REMOVE,mappedBy="workOrder")
+	@OneToMany(cascade=CascadeType.REMOVE,mappedBy="workOrder")	
 	Collection<WorkOrderRequisition> requisitions
 
 }

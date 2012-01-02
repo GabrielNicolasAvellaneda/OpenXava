@@ -18,5 +18,6 @@ class Orphan extends Nameable {
 	static int count() {
 		Query query = XPersistence.getManager().createQuery("select count(o) from Orphan o")
 		return query.getSingleResult()
-	}	
+	}
+	
 }
