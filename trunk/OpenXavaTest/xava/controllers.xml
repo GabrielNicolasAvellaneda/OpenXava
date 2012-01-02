@@ -34,6 +34,12 @@
 				class="org.openxava.test.actions.ReportCorporationAction" />
 	</controller>
 	
+	<controller name="Company">	
+		<extends controller="Typical"/>
+		<action name="saveBuildingFailing" hidden="true" 
+			class="org.openxava.test.actions.SaveElementInCollectionAbortingTransactionAction"/>	
+	</controller>
+	
 	<controller name="CorporationEmployee">
 		<extends controller="Typical"/>	
         <action name="report" image="images/report.gif" mode="detail"
@@ -423,7 +429,7 @@
 			class="org.openxava.test.actions.ListCustomerInvoicesAction"/>
 		<action name="editDetail" hidden="true" 
 			image="edit.gif"
-			class="org.openxava.test.actions.EditInvoiceDetailAction"/>	
+			class="org.openxava.test.actions.EditInvoiceDetailAction"/>				
 		<action name="viewDelivery" hidden="true"
 			class="org.openxava.test.actions.ViewDeliveryFromInvoiceAction"/>
 				
@@ -695,7 +701,7 @@
 			class="org.openxava.test.actions.OnSelectFellowCarriersCalculatedAction"/>
 			    	
 	</controller>
-	
+		
 	<controller name="CarrierFellows">
 		<extends controller="Typical"/>
 

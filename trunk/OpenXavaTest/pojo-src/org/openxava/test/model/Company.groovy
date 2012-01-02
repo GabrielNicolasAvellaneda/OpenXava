@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Tab(properties="name,mainBuilding.name") // name
 class Company extends Nameable {
 		
-	@OneToMany(mappedBy="company", cascade=CascadeType.REMOVE)		
+	@OneToMany(mappedBy="company", cascade=CascadeType.REMOVE)
+	@DetailAction("Company.saveBuildingFailing") 
 	Collection<Building> buildings
 	
 	@ReferenceView("Simple")

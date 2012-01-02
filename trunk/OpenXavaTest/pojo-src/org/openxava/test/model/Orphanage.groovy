@@ -14,7 +14,7 @@ import javax.persistence.*;
 class Orphanage extends Nameable {
 
 	@OneToMany(orphanRemoval=true, mappedBy="orphanage")
-	@AsEmbedded
+	@AsEmbedded 
 	Collection<Orphan> orphans;
 	
 }
