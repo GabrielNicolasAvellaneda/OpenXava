@@ -37,6 +37,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	private int chunkSize = DEFAULT_CHUNK_SIZE;
 	private int current;  
 	private boolean eof = true;
+	private PreparedStatement ps;
 	
 	
 	public void search(int index, Object key)
@@ -199,7 +200,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	}
 	
 	/**
-	 * Creates a <code>ResultSet</code> with de next block data. <p>
+	 * Creates a <code>ResultSet</code> with the next block data. <p>
 	 *
 	 * @param  con  <tt>!= null</tt>
 	 */
@@ -216,9 +217,9 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 				ResultSet.CONCUR_READ_ONLY);
 		*/
 		
-		if (keyHasNulls()) return null; // Because some databases (as Informix) have problems setting nulls
+		if (keyHasNulls()) return null; // Because some databases (like Informix) have problems setting nulls
 				
-		PreparedStatement ps = con.prepareStatement(select); 
+		ps = con.prepareStatement(select); 
 		// Fill key values
 		StringBuffer message =
 			new StringBuffer("[JDBCTabProvider.nextBlock] ");
@@ -284,6 +285,10 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		finally {
 			try {
 				if (resultSet != null) resultSet.close();
+				if (ps != null) {
+					ps.close();
+					ps = null;
+				}
 			}
 			catch (Exception ex) {
 			}
