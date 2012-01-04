@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Parent entity is not injected in EntityValidor if the reference name does not match with the model name.
 - Fix: Oracle 9 maximum open cursors exceeded.
 - Fix: Exception on commit from a dialog disables the dialog and shows the error message in a hidden layer.
 - Fix: After modifying a collection calculated values that depend on a not saved value are not correct.

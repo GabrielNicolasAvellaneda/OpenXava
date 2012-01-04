@@ -11,7 +11,7 @@ class StudioTest extends ModuleTestBase {
 	StudioTest(String testName) {
 		super(testName, "Studio")		
 	}
-	
+		
 	void testEmbeddedCollectionElementNotShowParentReference_removingCollectionElementWhenParentNameNotMatchEntityName() {
 		assertListNotEmpty()
 		execute "Mode.detailAndFirst"

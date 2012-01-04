@@ -185,7 +185,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	public void setValues(UserInfo userInfo, String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException  
-	{							
+	{					
 		Users.setCurrentUserInfo(userInfo);
 		keyValues = Maps.recursiveClone(keyValues); 
 		values = Maps.recursiveClone(values); 		
@@ -1369,7 +1369,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object container, boolean creating) 
 			throws ObjectNotFoundException, XavaException {
 		try {
-			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
 			Iterator itValidators = metaModel.getMetaValidators().iterator();
 			while (itValidators.hasNext()) {
 				MetaValidator metaValidator = (MetaValidator) itValidators.next();
@@ -1389,10 +1388,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						}											
 					}	
 					if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
-						if (set.getPropertyNameFrom().equals(containerReferenceName)) {
+						if (set.getPropertyNameFrom().equals(metaModel.getContainerReference())) {
 							if (container == null) {							
 								Object object = findEntity(metaModel, keyValues);
-								value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
+								value = Objects.execute(object, "get" + Strings.firstUpper(metaModel.getContainerReference()));
 							}
 							else {							
 								MetaModel containerReference = metaModel.getMetaModelContainer();
