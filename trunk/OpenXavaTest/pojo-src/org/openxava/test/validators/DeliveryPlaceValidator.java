@@ -14,7 +14,6 @@ public class DeliveryPlaceValidator implements IValidator {
 	private Customer customer;
 	
 	public void validate(Messages errors) throws Exception {		
-		System.out.println("[DeliveryPlaceValidator.validate] customer=" + customer); // tmp
 	}
 
 	public Customer getCustomer() {
