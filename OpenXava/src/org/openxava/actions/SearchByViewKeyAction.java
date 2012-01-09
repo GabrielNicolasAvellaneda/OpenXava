@@ -36,7 +36,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 
 	public void execute() throws Exception {				
 		try {									
-			Map keys = getKeyValuesFromView();
+			Map keys = getKeyValuesFromView();			
 			Map values = null;
 			if (Maps.isEmptyOrZero(keys)) { 
 				try {					
