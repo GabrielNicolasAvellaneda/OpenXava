@@ -75,8 +75,8 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 			addError("no_list_elements");
 			row = previous;
 		}		
-		if (key != null) {		
-			getView().setValues(key);						
+		if (key != null) {			
+			getView().setValues(key);									
 		}	
 				
 	}

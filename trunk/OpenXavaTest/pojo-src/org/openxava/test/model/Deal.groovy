@@ -3,9 +3,13 @@ package org.openxava.test.model
 import javax.persistence.*;
 import org.openxava.annotations.*;
 
-@Entity 
+@Entity
+@View(members="""
+	main { id, name }
+	assured { assured } 
+""") 
 @Tab(properties="id, name, assured.name") 
-public class Deal { 
+class Deal { 
 	
 	@Id
 	Long id

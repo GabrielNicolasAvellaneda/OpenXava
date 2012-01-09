@@ -969,34 +969,38 @@ public class View implements java.io.Serializable {
 	 * @param name Can be qualified
 	 * @return <code>true</code> if member exists and it's updated, <code>false</code> otherwise.	 
 	 */
-	public boolean trySetValue(String name, Object value) throws XavaException {
+	public boolean trySetValue(String name, Object value) throws XavaException {		
 		name = Ids.undecorate(name); 
 		int idx = name.indexOf('.');		
 		if (idx < 0) {
 			if (getMembersNamesInGroup().contains(name)) {
-				trySetValueInGroups(name, value);				
-			}																							
-			else if (!getMembersNamesWithoutSections().contains(name) && !getMetaModel().getKeyPropertiesNames().contains(name) && !getMetaModel().getKeyReferencesNames().contains(name) && !getMetaModel().isVersion(name)) {
-				if (!setValueInSections(name, value)) { 
-					return false;
-				}
+				trySetValueInGroups(name, value);		
+				return true;
 			}
-			else {								
-				if (hasSubview(name)) {					
-					View subview = getSubview(name);
-					if (!subview.isRepresentsCollection()) {
-						subview.setValues((Map)value);										
-					}
-					else {						
-						throw new XavaException("no_set_collection_value_error", name);
-					}					
+			if (!getMembersNamesWithoutSections().contains(name)) { 
+				if (setValueInSections(name, value)) {
+					return true;
 				}
-				else { 										
-					if (values == null) values = new HashMap();					
-					value = Strings.removeXSS(value); 
-					values.put(name, value);
-				}				 							 								
-			} 
+				else {
+					if (!(getMetaModel().getKeyPropertiesNames().contains(name) || getMetaModel().getKeyReferencesNames().contains(name) || getMetaModel().isVersion(name))) {
+						return false;
+					}															
+				}
+			}			
+			if (hasSubview(name)) {					
+				View subview = getSubview(name);
+				if (!subview.isRepresentsCollection()) {
+					subview.setValues((Map)value);										
+				}
+				else {						
+					throw new XavaException("no_set_collection_value_error", name);
+				}					
+			}
+			else { 										
+				if (values == null) values = new HashMap();					
+				value = Strings.removeXSS(value); 
+				values.put(name, value);
+			}				 							 								 
 		} 
 		else if (displayAsDescriptionsList()) {
 			if (values == null) values = new HashMap();					
@@ -1096,7 +1100,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public Map getKeyValues() throws XavaException {		
-		Map values = getValues(false, true); 		
+		Map values = getValues(false, true);
 		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
