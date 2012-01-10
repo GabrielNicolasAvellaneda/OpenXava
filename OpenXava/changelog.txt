@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Dialogs do not work on IE9.
 - Fix: Object not found when the id is inside a section.
 - Fix: Parent entity is not injected in EntityValidor if the reference name does not match with the model name.
 - Fix: Oracle 9 maximum open cursors exceeded.
