@@ -27,5 +27,10 @@ public class MetaAggregateForCollection extends MetaAggregate {
 		
 	}
 	
+	public String getContainerReference() {
+		if (super.getContainerReference() == null) setContainerReference(Strings.firstLower(getContainerModelName()));  
+		return super.getContainerReference();
+	}
+	
 }
 

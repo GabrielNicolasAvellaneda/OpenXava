@@ -81,7 +81,8 @@ public class Address implements IWithCity {
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
-				
+	
+	@Depends("customer.number") 
 	public String getAsString() {
 		return getStreet() + getZipCode() + getCity() + getStateNameAsString() + getCustomerNumberAsString(); 
 	}

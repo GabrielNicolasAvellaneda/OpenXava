@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.3.1 (2012-1-12)
+--------------------------
+- Fix: Reference with @AsEmbedded read the referenced object if the id has some event associated. 
 - Fix: Dialogs do not work on IE9.
 - Fix: Object not found when the id is inside a section.
 - Fix: Parent entity is not injected in EntityValidor if the reference name does not match with the model name.
