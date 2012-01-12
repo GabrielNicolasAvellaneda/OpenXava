@@ -252,7 +252,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertMessage("type=null");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02");						
+		assertValue("invoice.date", "1/1/02"); 						
 		setValue("type.number", "0");
 		assertMessage("type=0"); // Verifies zero as value for on change action
 		deleteDeliveryType(0);
@@ -264,7 +264,7 @@ public class DeliveryTest extends ModuleTestBase {
 			log.warn("testNonExistentReferenceUsedAsKey() case not supported in JPA version");
 			return;
 		}
-		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
+		createDeliveryType(0, "JUNIT DELIVERY TYPE 0"); 
 		execute("CRUD.new");
 		assertMessage("type=null");
 		setValue("invoice.year", "2002");
@@ -417,7 +417,7 @@ public class DeliveryTest extends ModuleTestBase {
 		
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02");						
+		assertValue("invoice.date", "1/1/02");					
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
@@ -523,7 +523,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02");						
+		assertValue("invoice.date", "1/1/02"); 						
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
@@ -660,7 +660,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("Delivery.setDefaultInvoice");
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02");		
+		assertValue("invoice.date", "1/1/02"); 		
 	}
 				
 	public void testActivateDeactivateSection() throws Exception {

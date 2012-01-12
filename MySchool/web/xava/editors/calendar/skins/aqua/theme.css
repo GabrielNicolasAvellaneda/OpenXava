@@ -18,7 +18,7 @@ div.calendar { position: relative; }
 
 .calendar {
   border-color: #797979;
-  z-index: 9999;
+  z-index: 999999;
 }
 
 /* Header part -- contains navigation buttons and day names. */

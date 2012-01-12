@@ -2247,13 +2247,13 @@ public class View implements java.io.Serializable {
 		subview.oldEditable = subview.editable;
 		subview.refreshDescriptionsLists = false;
 	}
-		
+	
 	public boolean throwsPropertyChanged(MetaProperty p) {			
 		try {									
-			if (hasDependentsProperties(p)) return true;			
-			if (getMetaView().hasOnChangeAction(p.getName())) return true;
-			if (isLastSearchKey(p)) return true; 
-			if (!isSubview()) return false;				
+			if (hasDependentsProperties(p)) return true;						
+			if (getMetaView().hasOnChangeAction(p.getName())) return true;			
+			if (isLastSearchKey(p)) return true; 			
+			if (!isSubview()) return false;							
 			return isRepresentsEntityReference() && getLastPropertyKeyName().equals(p.getName());
 		}
 		catch (Exception ex) {
@@ -2449,12 +2449,12 @@ public class View implements java.io.Serializable {
 				}
 			}				
 			   
-			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && !displayAsDescriptionsList() &&
+			if (hasToSearchOnChangeIfSubview && isSubview() && isRepresentsEntityReference() && !isGroup() && !displayAsDescriptionsList() && 
 					( 	
 					(getLastPropertyKeyName().equals(changedProperty.getName()) && getMetaPropertiesIncludingGroups().contains(changedProperty)) || // Visible keys
 					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden() && changedProperty.getMetaModel() == getMetaModel()) || // hidden keys
-					(isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key 
-					(isRepresentsEntityReference() && hasSearchMemberKeys() && isLastPropertyMarkedAsSearch(changedPropertyQualifiedName)) // Explicit search key 
+					(isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key 
+					(hasSearchMemberKeys() && isLastPropertyMarkedAsSearch(changedPropertyQualifiedName)) // Explicit search key 
 					)
 				) {				
 				if (!searchingObject) { // To avoid recursive infinites loops				
@@ -2705,7 +2705,7 @@ public class View implements java.io.Serializable {
 				Object element = (Object) it.next();				
 				if (isMetaProperty(element)) {
 					MetaProperty pro = (MetaProperty) element;					
-					if (WebEditors.depends(pro, p, getViewName())) {				
+					if (WebEditors.depends(pro, p, getViewName())) {
 						return true;
 					}
 				}
@@ -2721,10 +2721,10 @@ public class View implements java.io.Serializable {
 				Object element = (Object) it.next();
 				if (isMetaProperty(element)) {
 					MetaProperty pro = (MetaProperty) element;					
-					if (pro.getPropertyNamesThatIDepend().contains(p.getName())) {
+					if (pro.getPropertyNamesThatIDepend().contains(p.getName())) {						
 						return true;
 					}										
-					if (WebEditors.depends(pro, p, getViewName())) {				
+					if (WebEditors.depends(pro, p, getViewName())) {
 						return true;
 					}
 				}
