@@ -1,6 +1,24 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.3.1 (2012-1-12)
+--------------------------
+- Fix: Reference with @AsEmbedded read the referenced object if the id has some event associated. 
+- Fix: Dialogs do not work on IE9.
+- Fix: Object not found when the id is inside a section.
+- Fix: Parent entity is not injected in EntityValidor if the reference name does not match with the model name.
+- Fix: Oracle 9 maximum open cursors exceeded.
+- Fix: Exception on commit from a dialog disables the dialog and shows the error message in a hidden layer.
+- Fix: After modifying a collection calculated values that depend on a not saved value are not correct.
+- Fix: Loading in the View an embeddable with all the values null fails. 
+- Fix: setHidden() of View does not work for elements of subviews.
+- Fix: Generating a PDF report from a collection inside a group fails.
+- Fix: Custom ITreeViewReader is never selected.
+- Fix: Redeploying in Liferay generates an ugly stacktrace about portlet title. 
+- Fix: i18n entry not recognized if it does not exist in the default language of the server machine.
+- Fix: Exception saving entity with embeddable with read only members.
+- Fix: Popup for dates is not shown from dialogs. 
+
 OpenXava 4.3 (2011-12-14)
 -------------------------
 - Total properties in collections.
