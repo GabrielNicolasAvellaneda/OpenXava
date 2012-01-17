@@ -1119,11 +1119,9 @@ public class View implements java.io.Serializable {
 					while (itProperties.hasNext()) {
 						String property = (String) itProperties.next();						
 						String overlappedProperty = mapping.getOverlappingPropertyForReference(getMemberName(), property);
-						// tmp >>
 						boolean overlappedPropertyIsInView = getMembersNames().containsKey(overlappedProperty);
 						if (!overlappedPropertyIsInView) overlappedPropertyIsInView = getParent().getMembersNames().containsKey(overlappedProperty);
 						if (!overlappedPropertyIsInView) continue;
-						// tmp <<
 						Maps.putValueFromQualifiedName(result, property, getParent().getValue(overlappedProperty, false));
 					}
 					
