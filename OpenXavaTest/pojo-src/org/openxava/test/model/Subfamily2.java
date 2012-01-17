@@ -19,14 +19,17 @@ import org.openxava.jpa.*;
 
 @Entity
 @Tab(properties="number, description, remarks, family.number, family.description")
-
+@View(name="WithFamilyNoFrame", members="family") 
 public class Subfamily2 {
 	
 	@Id @Column(length=3)
 	private int number;
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="FAMILY")
-	@DescriptionsList(descriptionProperties="number, description")	
+	@DescriptionsList(notForViews="WithFamilyNoFrame",
+			descriptionProperties="number, description")	
+	@NoFrame(forViews="WithFamilyNoFrame") // For testing a case in PrettyLayout.txt
+	@ReferenceView(forViews="WithFamilyNoFrame", value="OneLine") // For testing a case in PrettyLayout.txt 
 	private Family2 family;
 	
 	@Column(length=40) @Required
