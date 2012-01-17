@@ -19,18 +19,27 @@ import org.openxava.test.validators.*;
 
 @Entity
 @Table(name="PRODUCT")
-@View( members=
-	"number;" +
-	"description;" +
-	"photos;" +
-	"color;" + 
-	"family;" +
-	"subfamily;" +
-	"warehouse, zoneOne;" +
-	"unitPrice, unitPriceInPesetas;" +
-	"unitPriceWithTax;" +
-	"productDetailsSupplierContactDetails"
-)
+@Views({
+	@View( members=
+		"number;" +
+		"description;" +
+		"photos;" +
+		"color;" + 
+		"family;" +
+		"subfamily;" +
+		"warehouse, zoneOne;" +
+		"unitPrice, unitPriceInPesetas;" +
+		"unitPriceWithTax;" +
+		"productDetailsSupplierContactDetails"
+	),
+	@View( name="FamilyFromSubfamily", members= 
+		"number;" +
+		"data [" + 
+		"	description, " +
+		"	subfamily;" +
+		"]" 		
+	)	
+})
 public class Product5 {
 	
 	@Id @Column(length=10) 
@@ -42,7 +51,7 @@ public class Product5 {
 	@Stereotype("IMAGES_GALLERY")
 	private String photos;
 	
-	@ManyToOne(fetch=FetchType.LAZY) 
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Color color; 
 
 	public enum Family { NONE, SOFTWARE, HARDWARE, SERVICIOS }
@@ -51,10 +60,12 @@ public class Product5 {
 	private Family family;	
 	
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="SUBFAMILY") 
-	@DescriptionsList(
+	@DescriptionsList(notForViews="FamilyFromSubfamily", 
 		depends="family",
 		condition="${family.number} = ?"
-	)	
+	)
+	@NoFrame(forViews="FamilyFromSubfamily") 
+	@ReferenceView(forViews="FamilyFromSubfamily", value="WithFamilyNoFrame") 
 	private Subfamily2 subfamily;
 
 	@ManyToOne(fetch=FetchType.LAZY) 

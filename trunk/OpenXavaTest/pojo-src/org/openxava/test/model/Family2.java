@@ -17,6 +17,7 @@ import org.openxava.annotations.*;
  */
 
 @Entity
+@View(name="OneLine", members="number, description") 
 public class Family2 {
 
 	@Id @Max(999)
