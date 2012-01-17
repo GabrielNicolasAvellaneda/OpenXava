@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: combo with simple key (field 'a') and combo with composed key (field 'a', field 'b') and simple property (field 'b'). Not save field 'b' value.
+
 OpenXava 4.3.1 (2012-1-12)
 --------------------------
 - Fix: Reference with @AsEmbedded read the referenced object if the id has some event associated. 
