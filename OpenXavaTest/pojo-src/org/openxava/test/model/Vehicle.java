@@ -1,8 +1,9 @@
 package org.openxava.test.model;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
 /**
@@ -11,7 +12,10 @@ import org.openxava.annotations.*;
  */
 
 @Entity
-@View(name="Simple", members="code, model, make")
+@Views({
+	@View(members="code; model; make; state, city"), 
+	@View(name="Simple", members="code, model, make")
+})
 public class Vehicle {
 	
 	@Id @GeneratedValue(generator="system-uuid") @Hidden 
@@ -27,6 +31,25 @@ public class Vehicle {
 	@Column(length=20)
 	private String make;
 
+	/**
+	 * DescriptionsList1 (key: state), DescriptionsList2 (key: state, city), Integer cityCode not in view.
+	 * It not save the city value 
+	 */
+	@ManyToOne(fetch=FetchType.LAZY) @DescriptionsList
+	@JoinColumn(name="STATE", referencedColumnName="ID")
+	private State state;
+	
+	@LabelFormat(LabelFormatType.NO_LABEL)
+	@ManyToOne(fetch=FetchType.LAZY) 
+	@DescriptionsList(depends="state.id", condition="${state.id} = ?")
+	@JoinColumns({ 
+		@JoinColumn(name="CITY", referencedColumnName="CODE", insertable=false, updatable=false),  
+		@JoinColumn(name="STATE", referencedColumnName="STATE", insertable=false, updatable=false) 
+	})	
+	private City city;
+	@Column(name="CITY")
+	private Integer cityCode;
+	
 	public String getOid() {
 		return oid;
 	}
@@ -58,5 +81,32 @@ public class Vehicle {
 	public void setMake(String make) {
 		this.make = make;
 	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+		this.cityCode = city == null ? new Integer(0) : new Integer(city.getCode());
+	}
+
+	public Integer getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(Integer cityCode) {
+		this.cityCode = cityCode;
+	}
+
+
 	
 }
