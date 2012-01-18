@@ -1391,7 +1391,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						if (set.getPropertyNameFrom().equals(metaModel.getContainerReference())) {
 							if (container == null) {							
 								Object object = findEntity(metaModel, keyValues);
-								value = Objects.execute(object, "get" + Strings.firstUpper(metaModel.getContainerReference()));
+								value = XObjects.execute(object, "get" + Strings.firstUpper(metaModel.getContainerReference()));
 							}
 							else {							
 								MetaModel containerReference = metaModel.getMetaModelContainer();

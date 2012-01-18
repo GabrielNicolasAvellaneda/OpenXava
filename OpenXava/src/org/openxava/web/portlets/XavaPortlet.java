@@ -228,7 +228,7 @@ public class XavaPortlet extends GenericPortlet {
 				else if (portal.indexOf("jetspeed") >= 0) styleClass = preferences.getJetSpeed2StyleClass();
 				else style = Style.getInstance();
 				
-				if (style == null) style = (Style) Objects.execute(Class.forName(styleClass), "getInstance");
+				if (style == null) style = (Style) XObjects.execute(Class.forName(styleClass), "getInstance");
 				
 				style.setInsidePortal(true); 				
 			}			

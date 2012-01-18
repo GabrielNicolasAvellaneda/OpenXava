@@ -8,13 +8,13 @@ import org.apache.commons.logging.*;
 /**
  * Utility class to work with objects. <p>
  * 
- * @deprecated User XObjects instead. This class will be removed in future OpenXava versions.
  * @author: Javier Paniza
+ * @since 4.4, until 4.3 it was named Objects.
  */
 
-public class Objects {
+public class XObjects {
 
-  private static Log log = LogFactory.getLog(Objects.class);
+  private static Log log = LogFactory.getLog(XObjects.class);
 	
   private static final Class [] arg0 = { };	  
 
