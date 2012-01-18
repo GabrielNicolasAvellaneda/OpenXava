@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Java 7 support.
 - Fix: Incorrect layout with nested references with no frame in one line inside a group.
 - Fix: Combo with a simple key (a) overlapped with a combo with a composed key (a, b) and a simple property (b) fails: Field b is not saved.
 
