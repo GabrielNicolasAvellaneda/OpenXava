@@ -3,7 +3,9 @@ package org.openxava.web;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.meta.MetaAction;
-import org.openxava.util.Is;
+import org.openxava.util.*;
+
+import com.steadystate.css.parser.selectors.*;
 
 /**
  * Utility class to help in action code generated for JSPs.
@@ -46,6 +48,15 @@ public class Actions {
 			"'" + prefix + "'," + 
 			"'" + selectedRowStyle + "'," +
 			"'" + rowStyle + "'" + 
+			")\"";
+	}
+	
+	public static String getActionOnChangeComparator(String id,String idConditionValue,String idConditionValueTo){
+		return "onChange=\"openxava.onChangeComparator(" +
+			"'" + id + "'," +
+			"'" + idConditionValue + "'," +
+			"'" + idConditionValueTo + "'," +
+			"'" + Labels.get("from") + "'" +
 			")\"";
 	}
 	
