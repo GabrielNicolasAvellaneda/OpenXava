@@ -13,8 +13,13 @@
 		<property name="code" type="String" size="5"/>		
 		<property name="model" type="String" size="40"/>		
 		<property name="make" type="String" size="20"/>
-	
+		<reference name="state"/>
+		<reference name="city"/>
 	</entity>
+	
+	<view>
+		<members>code; model; make; state, city</members>
+	</view>
 	
 	<view name="Simple">
 		<members>code, model, make</members>
@@ -25,6 +30,13 @@
 		<property-mapping property="code" column="CODE"/>
 		<property-mapping property="model" column="MODEL"/>
 		<property-mapping property="make" column="MAKE"/>
+		<reference-mapping reference="state">
+			<reference-mapping-detail column="STATE" referenced-model-property="id"/>
+		</reference-mapping>
+		<reference-mapping reference="city">
+			<reference-mapping-detail column="CITY" referenced-model-property="CODE"/>
+			<reference-mapping-detail column="STATE" referenced-model-property="STATE"/>
+		</reference-mapping>
 	</entity-mapping>
 										
 </component>

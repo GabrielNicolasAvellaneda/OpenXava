@@ -28,6 +28,9 @@ import org.openxava.util.Dates;
 import org.openxava.util.Is;
 import org.openxava.util.Strings;
 import org.openxava.util.XavaPreferences;
+import org.openxava.web.*;
+
+import sun.reflect.ReflectionFactory.*;
 
 
 /**
@@ -49,6 +52,36 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public InvoiceTest(String testName) {
 		super(testName, "Invoice");		
+	}
+	
+	private boolean isVisibleConditionValueTo(String name){
+		String element = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", name)).toString();
+		return element.contains("display: inline;");
+	}
+	
+	public void testFilterByRange() throws Exception{
+		assertLabelInList(0, "Year");
+		assertLabelInList(2, "Date");
+		assertLabelInList(6, "Paid");
+		// int
+		setConditionComparators("range_comparator");
+		setConditionValues("2000");
+		assertTrue(isVisibleConditionValueTo("conditionValueTo___0"));
+		assertFalse(isVisibleConditionValueTo("conditionValueTo___2"));
+		setConditionValuesTo("2004");
+		execute("List.filter");
+		assertListRowCount(6);
+		// int & Date
+		setConditionComparators("range_comparator", "eq", "range_comparator");
+		setConditionValues("2000", "", "01/01/2002");
+		setConditionValuesTo("2004", "", "05/01/2004");
+		assertTrue(isVisibleConditionValueTo("conditionValueTo___2"));
+		execute("List.filter");
+		assertListRowCount(3);
+		// int & Date & boolean
+		setConditionComparators("range_comparator", "eq", "range_comparator", "eq");
+		execute("List.filter");
+		assertListRowCount(1);
 	}
 	
 	public void testSearchUsesSimpleView() throws Exception { 
