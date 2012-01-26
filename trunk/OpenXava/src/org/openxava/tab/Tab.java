@@ -1,47 +1,24 @@
 package org.openxava.tab;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.text.MessageFormat;
+import java.math.*;
+import java.sql.*;
+import java.text.*;
 import java.util.*;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
+import java.util.prefs.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.component.MetaComponent;
-import org.openxava.converters.ConversionException;
-import org.openxava.converters.IConverter;
-import org.openxava.filters.IFilter;
-import org.openxava.filters.IRequestFilter;
-import org.openxava.mapping.CmpField;
-import org.openxava.mapping.ModelMapping;
-import org.openxava.mapping.ReferenceMapping;
-import org.openxava.mapping.ReferenceMappingDetail;
-import org.openxava.model.meta.MetaModel;
-import org.openxava.model.meta.MetaProperty;
-import org.openxava.model.meta.MetaReference;
-import org.openxava.tab.impl.EntityTabFactory;
-import org.openxava.tab.impl.IEntityTab;
-import org.openxava.tab.impl.IXTableModel;
-import org.openxava.tab.meta.MetaRowStyle;
-import org.openxava.tab.meta.MetaTab;
-import org.openxava.util.CMPFieldComparator;
-import org.openxava.util.Dates;
-import org.openxava.util.ElementNotFoundException;
-import org.openxava.util.Is;
-import org.openxava.util.Labels;
-import org.openxava.util.Strings;
-import org.openxava.util.SystemException;
-import org.openxava.util.Users;
-import org.openxava.util.XavaException;
-import org.openxava.util.XavaPreferences;
-import org.openxava.util.XavaResources;
-import org.openxava.view.View;
-import org.openxava.web.Ids;
-import org.openxava.web.WebEditors;
+import org.apache.commons.logging.*;
+import org.openxava.component.*;
+import org.openxava.converters.*;
+import org.openxava.filters.*;
+import org.openxava.mapping.*;
+import org.openxava.model.meta.*;
+import org.openxava.tab.impl.*;
+import org.openxava.tab.meta.*;
+import org.openxava.util.*;
+import org.openxava.view.*;
+import org.openxava.web.*;
 
 
 /**
@@ -72,6 +49,7 @@ public class Tab implements java.io.Serializable {
 	private final static String YEAR_COMPARATOR = "year_comparator";
 	private final static String MONTH_COMPARATOR = "month_comparator";
 	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator";
+	private final static String RANGE_COMPARATOR = "range_comparator"; 
 	private final static int MAX_PAGE_ROW_COUNT = 20; 
 	
 	private int pageRowCount = XavaPreferences.getInstance().getPageRowCount();
@@ -90,6 +68,7 @@ public class Tab implements java.io.Serializable {
 	private String condition;
 	private String[] conditionComparators;
 	private String[] conditionValues;
+	private String[] conditionValuesTo;	// to the range: conditionValues like 'from' and conditionValuesTo like 'to'
 	private String[] conditionComparatorsToWhere;
 	private Object[] conditionValuesToWhere;
 	private List metaProperties;
@@ -172,7 +151,6 @@ public class Tab implements java.io.Serializable {
 		}
 		return metaPropertiesNotCalculated;
 	}
-	
 	
 	public String getBaseCondition() throws XavaException {
 		return baseCondition;
@@ -399,7 +377,8 @@ public class Tab implements java.io.Serializable {
 		catch (Exception ex) {
 			log.error(XavaResources.getString("tab_condition_warning"),ex);
 			condition = "";
-			conditionValues = null;				
+			conditionValues = null;
+			conditionValuesTo = null;
 			conditionComparators = null;
 			return condition;
 		}
@@ -435,7 +414,7 @@ public class Tab implements java.io.Serializable {
 					pOrder2 = p;
 				}					
 				if (Is.emptyString(this.conditionComparators[i])) {
-					this.conditionValues[i] = ""; 
+					this.conditionValues[i] = "";
 					valuesToWhere.add("");
 					comparatorsToWhere.add(this.conditionComparators[i]);
 				}
@@ -483,7 +462,8 @@ public class Tab implements java.io.Serializable {
 					sb.append(" ? ");
 					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
 					if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i]) ||
-						Timestamp.class.equals(p.getType()) && "eq".equals(this.conditionComparators[i])) {  
+						RANGE_COMPARATOR.equals(this.conditionComparators[i]) ||
+						Timestamp.class.equals(p.getType()) && "eq".equals(this.conditionComparators[i])) {
 						metaPropertiesKey.add(null);
 						metaPropertiesKey.add(null);
 					}
@@ -504,6 +484,14 @@ public class Tab implements java.io.Serializable {
 						if (v instanceof Timestamp && "eq".equals(this.conditionComparators[i])) {
 							valuesToWhere.add(Dates.cloneWithoutTime((Timestamp) v));
 							valuesToWhere.add(Dates.cloneWith2359((Timestamp) v));
+							comparatorsToWhere.add(this.conditionComparators[i]);
+							comparatorsToWhere.add(this.conditionComparators[i]);
+						}
+						else if (RANGE_COMPARATOR.equals(this.conditionComparators[i])){
+							valuesToWhere.add(v);
+							String valueTo = convertStringArgument(this.conditionValuesTo[i].toString());
+							Object vTo = p.parse(valueTo.toString(), getLocale());
+							valuesToWhere.add(vTo);
 							comparatorsToWhere.add(this.conditionComparators[i]);
 							comparatorsToWhere.add(this.conditionComparators[i]);
 						}
@@ -612,7 +600,8 @@ public class Tab implements java.io.Serializable {
 		if (NOT_CONTAINS_COMPARATOR.equals(comparator)) return "not like";
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
 		if (MONTH_COMPARATOR.equals(comparator)) return "=";
-		if (YEAR_MONTH_COMPARATOR.equals(comparator)) return "="; 
+		if (YEAR_MONTH_COMPARATOR.equals(comparator)) return "=";
+		if (RANGE_COMPARATOR.equals(comparator)) return "between ? and ";
 		if ("eq".equals(comparator)) {
 			if (p.getType().equals(Timestamp.class)) {
 				return "between ? and ";
@@ -942,22 +931,34 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	private void setConditionValuesImpl(String [] values) throws XavaException {
-		if (Arrays.equals(this.conditionValues, values)) return;		
+		if (Arrays.equals(this.conditionValues, values)) return;
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
-		this.conditionValues = values;				
+		this.conditionValues = values;
 		condition = null;
+	}
+
+	private void setConditionValuesToImpl(String [] values) throws XavaException {
+		if (Arrays.equals(this.conditionValuesTo, values)) return;
+		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
+		this.conditionValuesTo = values;				
+		condition = null;
+	}
+	
+	private void setConditionComparatorsImpl(String [] comparators) throws XavaException {  
+		if (Arrays.equals(this.conditionComparators, comparators)) return;		
+		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
+		this.conditionComparators = comparators;
+		condition = null;						
 	}
 		
 	public String [] getConditionValues() {
 		setFilteredConditionValues(); 
 		return conditionValues; 
 	}
-		
-	private void setConditionComparatorsImpl(String [] comparators) throws XavaException {  
-		if (Arrays.equals(this.conditionComparators, comparators)) return;		
-		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
-		this.conditionComparators = comparators;
-		condition = null;						
+	
+	public String [] getConditionValuesTo() {
+		setFilteredConditionValues(); 
+		return conditionValuesTo; 
 	}
 		
 	public String [] getConditionComparators() {
@@ -1022,6 +1023,7 @@ public class Tab implements java.io.Serializable {
 		condition = null;		
 		conditionComparators = null;
 		conditionValues = null;
+		conditionValuesTo = null;
 		metaProperties = null;
 		metaPropertiesNotCalculated = null;		
 		notResetNextTime = false;		 	 			
@@ -1047,6 +1049,7 @@ public class Tab implements java.io.Serializable {
 		String collectionPrefix = getCollectionPrefix();
 		setConditionComparators(collectionPrefix);
 		setConditionValues(collectionPrefix);
+		setConditionValuesTo(collectionPrefix);
 	}
 
 	private String getCollectionPrefix() {
@@ -1060,18 +1063,24 @@ public class Tab implements java.io.Serializable {
 		);
 	}
 	
-	private void setConditionValues(String collectionPrefix) { 		
+	private void setConditionValues(String collectionPrefix) {
 		setConditionValuesImpl(
 			getConditionFilterParameters(collectionPrefix + "conditionValue.")
 		);
 	}
 	
+	private void setConditionValuesTo(String collectionPrefix) { 		
+		setConditionValuesToImpl(
+			getConditionFilterParameters(collectionPrefix + "conditionValueTo.")
+		);
+	}
+
 	private String[] getConditionFilterParameters(String prefix) {
-		String conditionComparator = request.getParameter(prefix + "0");		
+		String conditionComparator = request.getParameter(prefix + "0");
 		Collection conditionComparators = new ArrayList();
 		for (int i=1; conditionComparator != null; i++) {
-			conditionComparators.add(conditionComparator);			
-			conditionComparator = request.getParameter(prefix + i);			
+			conditionComparators.add(conditionComparator);
+			conditionComparator = request.getParameter(prefix + i);
 		}
 		String [] result = new String[conditionComparators.size()];
 		conditionComparators.toArray(result);
@@ -1273,7 +1282,8 @@ public class Tab implements java.io.Serializable {
 		metaProperties = null;
 		metaPropertiesNotCalculated = null;		
 		metaPropertiesKey = null;
-		conditionValues = null;		
+		conditionValues = null;
+		conditionValuesTo = null;
 		orderBy = null;			
 		condition = null;
 		conditionComparators = null;	
@@ -1649,15 +1659,14 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	/** @since 4m6 */
-	public void setConditionValue(String property, Object value) { 
+	public void setConditionValue(String property, Object value) {
 		List metaPropertiesNC = getMetaPropertiesNotCalculated();
 		int size = metaPropertiesNC.size();
 		if (size > 0) {
 			filterConditionValues = new String[size];
 			for (int i = 0; i < size; i++) {
 				filterConditionValues[i] = "";
-				if (((MetaProperty) metaPropertiesNC.get(i)).getName()
-						.equals(property)) {
+				if (((MetaProperty) metaPropertiesNC.get(i)).getName().equals(property)) {
 					filterConditionValues[i] = value==null?null:value.toString(); // A little rundimentary, maybe would be better to use a formatter
 					filtered = true;
 				}
@@ -1665,7 +1674,7 @@ public class Tab implements java.io.Serializable {
 		}	
 	}
 	
-	private void setFilteredConditionValues() { 
+	private void setFilteredConditionValues() {
 		if (filtered && filterConditionValues != null) {
 			filtered = false;
 			if (conditionValues == null) {
@@ -1673,6 +1682,9 @@ public class Tab implements java.io.Serializable {
 			}
 			if (conditionComparators == null) {
 				conditionComparators = new String[filterConditionValues.length];
+			}
+			if (conditionValuesTo == null){
+				conditionValuesTo = new String[filterConditionValues.length];
 			}
 			int size = (filterConditionValues.length < conditionValues.length)?
 					filterConditionValues.length:conditionValues.length;
@@ -1683,9 +1695,13 @@ public class Tab implements java.io.Serializable {
 				if (conditionComparators[i] == null) {
 					conditionComparators[i] = "";
 				}
-
+				if (conditionValuesTo[i] == null){
+					conditionValuesTo[i] = "";
+				}
+				
 				if (!filterConditionValues[i].equals("")) {
 					conditionValues[i] = filterConditionValues[i];
+					conditionValuesTo[i] = "";
 					conditionComparators[i] = "eq";
 				}
 			}
