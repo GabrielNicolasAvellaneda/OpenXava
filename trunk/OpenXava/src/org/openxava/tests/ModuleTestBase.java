@@ -918,6 +918,13 @@ public class ModuleTestBase extends TestCase {
 	protected void setConditionValues(String ... values) throws Exception { 
 		setCollectionCondition("conditionValue", values);
 	}
+	
+	/**
+	 * @since 4.3.2
+	 */
+	protected void setConditionValuesTo(String ... values) throws Exception { 
+		setCollectionCondition("conditionValueTo", values);
+	}
 
 	/**
 	 * To be used from Groovy, that does not work with setConditionValues(String ... values).
