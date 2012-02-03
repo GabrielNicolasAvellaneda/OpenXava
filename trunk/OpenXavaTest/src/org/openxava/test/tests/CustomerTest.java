@@ -131,12 +131,12 @@ public class CustomerTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testChangeView() throws Exception {
+	public void testChangeView() throws Exception { 
 		execute("CRUD.new");
 		assertExists("number");
 		assertExists("remarks");
 		execute("Customer.changeToSimpleView");
-		assertExists("number");
+		assertExists("number");		
 		assertNotExists("remarks");
 	}
 	

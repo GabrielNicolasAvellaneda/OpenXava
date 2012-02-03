@@ -114,10 +114,12 @@ openxava.refreshPage = function(result) {
 			dialog.attr("application", result.application); 
 			dialog.attr("module", result.module); 
 			dialog.dialog('option', 'title', result.dialogTitle);
-			dialog.dialog('option', 'width', "auto"); // Because a bug of jQuery UI 1.7.2 + IE7
+			dialog.dialog('option', 'width', 'auto');
+			dialog.dialog('option', 'width', dialog.parent().width());
+			dialog.dialog('option', 'height', 'auto');
+			dialog.dialog('option', 'position', 'center' );
 			dialog.dialog('option', 'zIndex', 99999 );
 			dialog.dialog('open');
-			dialog.dialog('option', 'width', dialog.parent().width()); // Because a bug of jQuery UI 1.7.2 + IE7
 		}
 		openxava.initUI(result.application, result.module, result.currentRow); 	
 	}		

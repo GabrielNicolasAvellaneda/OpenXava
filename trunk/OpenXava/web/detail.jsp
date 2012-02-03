@@ -58,11 +58,7 @@ if (!onlySections) {	// IF Not Only Sections
 	boolean lastWasEditor = false;
 	boolean lastWasProperty = false;
 	boolean firstNoFrameMember = true; 
-	boolean firstFrameMember = false;		
-	if (!view.isFrame()) {
-		firstNoFrameMember = false; 
-		firstFrameMember = true;
-	}
+	boolean firstFrameMember = false; 
 	while (it.hasNext()) {	// WHILE hasNext
 		MetaMember m = (MetaMember) it.next();
 		lastWasProperty = false;	

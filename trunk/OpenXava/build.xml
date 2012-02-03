@@ -912,6 +912,10 @@
 		<!-- Delete old FCKeditor files -->
 		<delete file="../${project}/web/xava/editors/fckEditor.jsp"/>
 		<delete dir="../${project}/web/xava/editors/FCKeditor"/>
+		<!-- Delete unused JS -->
+		<delete file="../${project}/web/xava/js/jquery.qtip.js"/>
+		<delete file="../${project}/web/xava/js/jquery.bgiframe.min.js"/>
+		<delete file="../${project}/web/xava/style/liferay51/js/init_liferay.js"/>
 	</target>
 	
 	<target name="defineHibernateTool">
