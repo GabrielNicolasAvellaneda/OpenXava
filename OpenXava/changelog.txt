@@ -8,6 +8,7 @@ Change Log for OpenXava project
 - Fix: List column resizing does not work with IE9.
 - Fix: Moving and resizing dialogs do not work with IE9.
 - Fix: Loading... AJAX waiting message is not visible when a dialog is shown.
+- Fix: Moving and resizing a dialog affect the next open dialog size and position.
 - New method setConditionValuesTo() in ModuleTestBase.
 - Comparator 'range' added to list and collections filter.
 - Java 7 support.
