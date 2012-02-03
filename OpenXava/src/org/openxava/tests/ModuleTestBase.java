@@ -491,15 +491,16 @@ public class ModuleTestBase extends TestCase {
 	
 	private BrowserVersion getBrowserVersion() {
 		if (browserVersion == null) {
-			String browser = getXavaJUnitProperty("browser", "firefox2"); // FF2 because FF3 in HtmlUnit 2.5 has a bug with setFocus()			
-			if ("firefox3".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_3;
-			else if ("firefox2".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_2;
+			String browser = getXavaJUnitProperty("browser", "firefox36"); 			
+			if (browser.toLowerCase().startsWith("firefox")) browserVersion = BrowserVersion.FIREFOX_3_6;
+			else if ("iexplorer8".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_8;
 			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7;
 			else if ("iexplorer6".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_6;
 			else {
-				log.warn(XavaResources.getString("unknown_browser_using_default", "Firefox 3")); 
-				browserVersion = BrowserVersion.FIREFOX_3; 
+				log.warn(XavaResources.getString("unknown_browser_using_default", "Firefox 3.6")); 
+				browserVersion = BrowserVersion.FIREFOX_3_6; 
 			}
+			
 		}
 		return browserVersion;
 	}
@@ -601,7 +602,7 @@ public class ModuleTestBase extends TestCase {
 	}
 										 	
 	private void waitUntilPageIsLoaded() throws Exception { 		
-		client.waitForBackgroundJavaScriptStartingBefore(10000);
+		client.waitForBackgroundJavaScriptStartingBefore(10000);		
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
@@ -690,7 +691,7 @@ public class ModuleTestBase extends TestCase {
 			fail(XavaResources.getString("clickable_not_found", action));
 		}			
 
-		restorePage();				
+		restorePage();		
 	}
 	
 	private void restorePage() throws Exception {			
@@ -920,7 +921,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	/**
-	 * @since 4.3.2
+	 * @since 4.4
 	 */
 	protected void setConditionValuesTo(String ... values) throws Exception { 
 		setCollectionCondition("conditionValueTo", values);

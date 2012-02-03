@@ -3,6 +3,8 @@ package org.openxava.test.tests;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 /**
  * @author Javier Paniza
  */
@@ -109,14 +111,13 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertTrue(getHtml().indexOf("we maintain a number of domains such as EXAMPLE.COM") >= 0); 		
 	}
 	
-	public void testForwardToJavaScript() throws Exception { 
-		execute("Mode.detailAndFirst");
-		assertNoMessages();
-		assertValue("name", "Javi");
-		setValue("website", "javascript:openxava.executeAction('OpenXavaTest', 'CustomerWithSection', '', false, 'CRUD.new')");
-		execute("WebURL.go", "property=website,viewObject=xava_view_section0");
-		assertMessage("OnChangeVoidAction executed");
-		assertValue("name", "");
+	public void testForwardToJavaScript() throws Exception {  
+		execute("CRUD.new");
+		HtmlElement console = getHtmlPage().getElementById("xava_console");
+		assertTrue(!console.asText().contains("[CustomerWithSection.testForwardToJavaScript()] javascript: works"));
+		setValue("website", "javascript:openxava.log('[CustomerWithSection.testForwardToJavaScript()] javascript: works');"); 
+		execute("WebURL.go", "property=website,viewObject=xava_view_section0");		
+		assertTrue(console.asText().contains("[CustomerWithSection.testForwardToJavaScript()] javascript: works"));
 	}
 	
 	// To fix a concrete bug

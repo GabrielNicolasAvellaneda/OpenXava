@@ -114,10 +114,12 @@ openxava.refreshPage = function(result) {
 			dialog.attr("application", result.application); 
 			dialog.attr("module", result.module); 
 			dialog.dialog('option', 'title', result.dialogTitle);
-			dialog.dialog('option', 'width', "auto"); // Because a bug of jQuery UI 1.7.2 + IE7
+			dialog.dialog('option', 'width', 'auto');
+			dialog.dialog('option', 'width', dialog.parent().width());
+			dialog.dialog('option', 'height', 'auto');
+			dialog.dialog('option', 'position', 'center' );
 			dialog.dialog('option', 'zIndex', 99999 );
 			dialog.dialog('open');
-			dialog.dialog('option', 'width', dialog.parent().width()); // Because a bug of jQuery UI 1.7.2 + IE7
 		}
 		openxava.initUI(result.application, result.module, result.currentRow); 	
 	}		
@@ -572,6 +574,7 @@ openxava.setFocus = function(application, module) {
 openxava.clearCondition = function(application, module, prefix) { 
 	openxava.clearConditionValues(application, module, prefix);
 	openxava.clearConditionComparators(application, module, prefix);
+	openxava.clearConditionValuesTo(application, module, prefix);
 }
 
 openxava.clearConditionValues = function(application, module, prefix) { 
@@ -581,6 +584,7 @@ openxava.clearConditionValues = function(application, module, prefix) {
 	var i=0;
 	while (typeof element != "undefined") {
 		element.value = '';
+		element.placeholder = "";
 		element = form.elements[elementName + (++i)];
 	}
 }
@@ -592,6 +596,18 @@ openxava.clearConditionComparators = function(application, module, prefix) {
 	var i=0;
 	while (typeof element != "undefined") {
 		element[0].selected = 'selected';
+		element = form.elements[elementName + (++i)];
+	}
+}
+
+openxava.clearConditionValuesTo = function(application, module, prefix) { 
+	var form = openxava.getForm(application, module);
+	var elementName = openxava.decorateId(application, module, prefix + "conditionValueTo.");
+	var element = form.elements[elementName + "0"];
+	var i=0;
+	while (typeof element != "undefined") {
+		element.value = '';
+		element.style.display='none';
 		element = form.elements[elementName + (++i)];
 	}
 }
@@ -686,4 +702,16 @@ openxava.hideFrame = function(id) {
 	$("#"+id+"hide").hide();
 	$("#"+id+"show").show();
 	View.setFrameClosed(id, true);
+}
+
+openxava.onChangeComparator = function(id,idConditionValue,idConditionValueTo,labelFrom) {
+	var comparator = openxava.getFormValue(document.getElementById(id));
+	if ("range_comparator" == comparator){
+		document.getElementById(idConditionValueTo).style.display='inline';
+		document.getElementById(idConditionValue).placeholder = labelFrom;
+	}
+	else{
+		document.getElementById(idConditionValueTo).style.display='none';
+		document.getElementById(idConditionValue).placeholder = "";
+	}
 }

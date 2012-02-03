@@ -12,8 +12,7 @@ public class Liferay51Style extends Liferay43Style {
 	private static Liferay51Style instance = null;
 	private static String [] noPortalModuleJsFiles = {  
 		"liferay51/js/theme_display.js",	
-		"liferay51/js/barebone_unpacked.js",
-		"liferay51/js/liferay_init.js"
+		"liferay51/js/barebone_unpacked.js"
 	};	
 
 	protected Liferay51Style() {

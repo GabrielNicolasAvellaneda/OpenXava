@@ -20,7 +20,6 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-validator.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/mailapi.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/htmlunit.jar"/>
-	<classpathentry kind="lib" path="lib/commons-httpclient.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io.jar"/>
 	<classpathentry kind="lib" path="lib/sac.jar"/>
 	<classpathentry kind="lib" path="lib/cssparser.jar"/>
@@ -56,5 +55,8 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jaxb-api.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-codec.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-lang.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore.jar"/>
+	<classpathentry kind="lib" path="lib/httpmime.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

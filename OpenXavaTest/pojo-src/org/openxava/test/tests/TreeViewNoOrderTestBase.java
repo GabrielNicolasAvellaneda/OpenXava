@@ -81,7 +81,7 @@ public abstract class TreeViewNoOrderTestBase extends ModuleTestBase {
 	 */
 	protected DomElement getTreeViewElementInRow(String collection, int row) throws ElementNotFoundException {
 		HtmlDivision div = (HtmlDivision) getHtmlPage().getElementById("tree_" + collection);
-		Iterator<HtmlElement> it = div.getAllHtmlChildElements().iterator();
+		Iterator<HtmlElement> it = div.getHtmlElementDescendants().iterator(); 		
 		int count = 0;
 		while (it.hasNext()) {
 			HtmlElement element = it.next();
@@ -103,7 +103,7 @@ public abstract class TreeViewNoOrderTestBase extends ModuleTestBase {
 	 */
 	protected HtmlInput getTreeViewXavaElement(String collection, int row) throws ElementNotFoundException {
 		HtmlDivision div = (HtmlDivision) getForm().getPage().getElementById("openxavaInput_" + collection);
-		Iterator<HtmlElement> elements = div.getAllHtmlChildElements().iterator();
+		Iterator<HtmlElement> elements = div.getHtmlElementDescendants().iterator(); 
 		int count = 0;
 		while (elements.hasNext()) {
 			HtmlElement element = elements.next();

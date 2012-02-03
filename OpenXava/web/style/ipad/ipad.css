@@ -14,7 +14,7 @@ body {
 	font-weight: bold; 
 	-webkit-box-shadow: 10px 10px 10px rgba(140,140,140,0.75);;
 	display:none; 
-	z-index: 9999; 
+	z-index: 9999999; 
 	position: fixed; 	 
 	left: 45%
 }
@@ -395,6 +395,10 @@ input {
 
 .ui-dialog .ui-dialog-content {		
 	padding: 5px;
+}
+
+.ui-dialog { 
+	width: auto; 
 }
 
 

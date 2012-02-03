@@ -19,7 +19,7 @@ JSR-168 and WSRP and needed by OpenXava.
 	-moz-box-shadow: 10px 10px 10px rgba(140,140,140,0.75);
 	box-shadow: 10px 10px 10px rgba(140,140,140,0.75);
 	display:none; 
-	z-index: 9999; 
+	z-index: 9999999; 
 	position: fixed; 
 	top: 25%; 
 	left: 45%	
@@ -353,4 +353,8 @@ TD.list-title {
 
 .ox-label { 
 	text-align: right; 
+}
+
+.ui-dialog { 
+	width: auto; 
 }

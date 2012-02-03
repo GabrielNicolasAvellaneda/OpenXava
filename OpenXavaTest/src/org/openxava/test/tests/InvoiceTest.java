@@ -30,8 +30,6 @@ import org.openxava.util.Strings;
 import org.openxava.util.XavaPreferences;
 import org.openxava.web.*;
 
-import sun.reflect.ReflectionFactory.*;
-
 
 /**
  * 
@@ -59,7 +57,7 @@ public class InvoiceTest extends ModuleTestBase {
 		return element.contains("display: inline;");
 	}
 	
-	public void testFilterByRange() throws Exception{
+	public void testFilterByRange() throws Exception{ 
 		assertLabelInList(0, "Year");
 		assertLabelInList(2, "Date");
 		assertLabelInList(6, "Paid");
