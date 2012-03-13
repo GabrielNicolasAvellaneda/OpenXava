@@ -1,5 +1,5 @@
 <%
-String tabObject = org.openxava.tab.Tab.COLLECTION_PREFIX + idCollection.replace('.', '_');
+String tabObject = org.openxava.web.Collections.tabObject(idCollection); 
 org.openxava.tab.Tab tab = subview.getCollectionTab();
 
 String tabPrefix = tabObject + "_";

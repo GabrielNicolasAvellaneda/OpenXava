@@ -42,10 +42,8 @@ public class Liferay51Style extends Liferay43Style {
 	}
 	
 	public String getFrameActionsStartDecoration() {   
-		return "<td align='right'>"; 				
+		return "<td align='right' width='20px'>";
 	}
-		
-
 	
 	public String getListHeader() { 
 		return "portlet-section-header results-header";		

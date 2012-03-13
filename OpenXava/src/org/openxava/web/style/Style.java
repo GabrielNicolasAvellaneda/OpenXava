@@ -494,6 +494,13 @@ public class Style {
 	public String getListTitleWrapper() {
 		return "";
 	}
+
+	/** 
+	 * @since 4.4 
+	 */
+	public String getFrameWidth() {
+		return "width='100%'";
+	}
 	
 	public String getFrameHeaderStartDecoration() {
 		return getFrameHeaderStartDecoration(0); 
@@ -540,12 +547,33 @@ public class Style {
 		return "ox-frame-actions";
 	}
 	
-	public String getFrameActionsStartDecoration() {  
-		return "<span class='" + getFrameActions() + "' style='float: right'>";
+	public String getFrameActionsStartDecoration() {		
+		return "<span class='" + getFrameActions() + "' style='float: right'>"; 
 	}	
 	public String getFrameActionsEndDecoration() { 
 		return "</span>";
 	}		
+	
+	/**
+	 * @since 4.4
+	 */
+	public String getFrameTotals() { 
+		return "ox-frame-totals";
+	}
+	
+	/**
+	 * @since 4.4
+	 */
+	public String getFrameTotalsLabel() { 
+		return "ox-frame-totals-label";
+	}
+	
+	/**
+	 * @since 4.4
+	 */
+	public String getFrameTotalsValue() { 
+		return "ox-frame-totals-value";
+	}
 	
 	public String getFrameContentStartDecoration() { 
 		return getFrameContentStartDecoration(UUID.randomUUID().toString(), false);
@@ -580,9 +608,6 @@ public class Style {
 		return "ox-frame-title-label";
 	}
 
-		
-				
-	
 	protected String getFrameSpacing() { 
 		return "";
 	}

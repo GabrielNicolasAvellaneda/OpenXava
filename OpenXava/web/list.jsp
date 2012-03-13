@@ -35,7 +35,6 @@ if (collection != null && !collection.equals("")) {
 	scrollId = "collection_scroll"; 
 }
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
-tab.setRequest(request); 
 tab.setIgnorePageRowCount(!style.isChangingPageRowCountAllowed());
 String action=request.getParameter("rowAction");
 action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action;
@@ -71,7 +70,11 @@ int currentRow = ((Number) context.get(request, "xava_row")).intValue();
 String cssCurrentRow = style.getCurrentRow();
 String styleOverflow = "overflow: auto;";
 int totalSize = -1; 
-tab.reset(); 
+if (request.getAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab) == null) {
+	tab.setRequest(request);
+	tab.reset();
+	request.setAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab, true); 
+}
 boolean resizeColumns = style.allowsResizeColumns() && tab.isResizeColumns();
 String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));

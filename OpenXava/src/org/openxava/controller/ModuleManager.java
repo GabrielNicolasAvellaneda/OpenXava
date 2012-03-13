@@ -24,7 +24,8 @@ import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.ValidationException;
 import org.openxava.view.*;
-import org.openxava.web.*;
+import org.openxava.web.Ids; 
+import org.openxava.web.DescriptionsLists; 
 import org.openxava.web.style.*;
 
 /**

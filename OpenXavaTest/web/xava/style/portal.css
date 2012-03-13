@@ -355,6 +355,17 @@ TD.list-title {
 	text-align: right; 
 }
 
+.ox-frame-totals {
+	float: right; 
+}
+.ox-frame-totals-label {
+	font-weight: normal;
+}
+
+.ox-frame-totals-value {
+	font-weight: bold;
+}
+
 .ui-dialog { 
 	width: auto; 
 }

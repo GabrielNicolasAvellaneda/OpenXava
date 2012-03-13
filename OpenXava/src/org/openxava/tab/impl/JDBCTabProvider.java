@@ -223,7 +223,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		// Fill key values
 		StringBuffer message =
 			new StringBuffer("[JDBCTabProvider.nextBlock] ");
-		message.append(XavaResources.getString("executing_select", select));
+		message.append(XavaResources.getString("executing_select", select));		
 		
 		for (int i = 0; i < key.length; i++) {
 			ps.setObject(i + 1, key[i]);
@@ -236,7 +236,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		if ((current + chunkSize) < Integer.MAX_VALUE) { 
 			ps.setMaxRows(current + chunkSize + 1); 
 		}		
-		ResultSet rs = ps.executeQuery();				
+		ResultSet rs = ps.executeQuery();						
 		position(rs);
 
 		return rs;
@@ -343,8 +343,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			}			
 			rs = ps.executeQuery();
 			rs.next();
-			Number size = (Number) rs.getObject(1);
-			return size;
+			return (Number) rs.getObject(1);
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -373,8 +372,6 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			}
 		}						
 	}
-	
-	
 	
 	private String createSizeSelect(String select) {
 		if (select == null) return null;		

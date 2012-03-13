@@ -13,7 +13,16 @@ public class WebSpherePortal61Style extends WebSpherePortal6Style {
 	}
 	public String getSectionBarEndDecoration() {	
 		return "</ul></div><div class='pageBarSeparator'><!--  --></div></td>";
-	}	
+	}
+	
+	public String getFrameTotals() { 
+		return "";
+	}
+	
+	public String getFrameWidth() { 
+		return "width='90%'";
+	}
+
 	
 	public String getFrameHeaderStartDecoration(int width) {
 		String widthAttribute = width == 0?"":"width=" + width+ "% ";
@@ -29,7 +38,7 @@ public class WebSpherePortal61Style extends WebSpherePortal6Style {
 	}
 	
 	public String getFrameActionsStartDecoration() { 
-		return "<td align='right'>";
+		return "<td align='right' width='20px'>"; 
 	}	
 	public String getFrameActionsEndDecoration() { 
 		return "</td>";

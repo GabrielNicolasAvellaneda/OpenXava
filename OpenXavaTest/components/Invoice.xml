@@ -327,7 +327,7 @@
 	
 		<reference-view reference="customer" view="Simplest"/>
 		
-		<collection-view collection="details">
+		<collection-view collection="details" edit-only="true">
 			<list-properties>deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]</list-properties>
 		</collection-view>
 		

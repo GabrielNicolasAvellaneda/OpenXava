@@ -161,7 +161,8 @@ public class View implements java.io.Serializable {
 	private Collection fullOrderActionsNamesList;
 	private Map collectionTotals; 
 	private int collectionTotalsCount = -1;
-	private Collection<MetaProperty> recalculatedMetaProperties; 
+	private Collection<MetaProperty> recalculatedMetaProperties;
+	private List collectionValues; 
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -1229,7 +1230,7 @@ public class View implements java.io.Serializable {
 	public Tab getCollectionTab() throws XavaException {		
 		assertRepresentsCollection("getCollectionTab()");
 		if (collectionTab == null) {			
-			collectionTab = new Tab();				
+			collectionTab = new Tab();
 			collectionTab.setCollectionView(this); 
 			collectionTab.setModelName(getModelName());
 			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());			
@@ -1318,40 +1319,43 @@ public class View implements java.io.Serializable {
 	 * The values only include the displayed data in the row.<br>
 	 * @return  Of type <tt>Map</tt>. Never null.
 	 */	
-	public List getCollectionValues() throws XavaException {
-		assertRepresentsCollection("getCollectionValues()");
-		if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded()) {
-			// If calculated we obtain the data directly from the model object
-			Map mapMembersNames = new HashMap();
-			mapMembersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));
-			try	{
-				Map mapReturnValues = null;
-				Map mapKeys = getParent().getKeyValues();
-				if ((null != mapKeys) && (!mapKeys.isEmpty())) {
-					mapReturnValues = MapFacade.getValues(getParent().getModelName(), mapKeys, mapMembersNames);	
+	public List getCollectionValues() throws XavaException {		
+		if (collectionValues == null) { 			
+			assertRepresentsCollection("getCollectionValues()");
+			if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded()) {
+				// If calculated we obtain the data directly from the model object
+				Map mapMembersNames = new HashMap();
+				mapMembersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));
+				try	{
+					Map mapReturnValues = null;
+					Map mapKeys = getParent().getKeyValues();					
+					if ((null != mapKeys) && (!mapKeys.isEmpty())) {
+						mapReturnValues = MapFacade.getValues(getParent().getModelName(), mapKeys, mapMembersNames);	
+					}
+					else {
+						// get transient view object model so that it might be used instead of keyValues, what is more fill
+						// it with data so that accessory methods might be used on current view members values
+						Object oParentObject =getParent().getMetaModel().getPOJOClass().newInstance();
+						getParent().getMetaModel().fillPOJO(oParentObject, getParent().getValues());
+						mapReturnValues = MapFacade.getValues(getParent().getModelName(), oParentObject, mapMembersNames);
+					}
+					collectionValues = (List) mapReturnValues.get(getMemberName()); 
 				}
-				else {
-					// get transient view object model so that it might be used instead of keyValues, what is more fill
-					// it with data so that accessory methods might be used on current view members values
-					Object oParentObject =getParent().getMetaModel().getPOJOClass().newInstance();
-					getParent().getMetaModel().fillPOJO(oParentObject, getParent().getValues());
-					mapReturnValues = MapFacade.getValues(getParent().getModelName(), oParentObject, mapMembersNames);
+				catch (ObjectNotFoundException ex) { // New one is creating
+					collectionValues = Collections.EMPTY_LIST; 
 				}
-				return (List) mapReturnValues.get(getMemberName());
+				catch (Exception ex) {
+					log.error(ex.getMessage(), ex);
+					getErrors().add("collection_error", getMemberName());
+					throw new XavaException("collection_error",	getMemberName());
+				}
 			}
-			catch (ObjectNotFoundException ex) { // New one is creating
-				return Collections.EMPTY_LIST;
-			}
-			catch (Exception ex) {
-				log.error(ex.getMessage(), ex);
-				getErrors().add("collection_error", getMemberName());
-				throw new XavaException("collection_error",	getMemberName());
+			else {
+				// If not calculated we obtain the data from the Tab			
+				collectionValues = getCollectionValues(getCollectionTab().getAllKeys()); 
 			}
 		}
-		else {
-			// If not calculated we obtain the data from the Tab			
-			return getCollectionValues(getCollectionTab().getAllKeys());
-		}
+		return collectionValues; 
 	}
 	
 	/**
@@ -1361,15 +1365,14 @@ public class View implements java.io.Serializable {
 	 * 
 	 * @since 4m5
 	 */	
-	public int getCollectionSize() throws XavaException { 
+	public int getCollectionSize() throws XavaException {
 		assertRepresentsCollection("getCollectionSize()");
 		if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded()) {
-			return getCollectionValues().size();
+			return getCollectionValues().size();			
 		}
 		else {
 			// If not calculated we obtain the data from the Tab
-			getCollectionTab().reset(); 
-			return getCollectionTab().getAllKeys().length;
+			return getCollectionTab().getTotalSize(); 
 		}
 	}	
 	
@@ -1400,18 +1403,36 @@ public class View implements java.io.Serializable {
 	}
 	
 	private Map getCollectionTotals() throws Exception { 
-		if (collectionTotals == null) {
+		if (collectionTotals == null) {			
 			Map memberNames = new HashMap();
 			for (List<String> propertyList: getTotalProperties().values()) {
 				for (String property: propertyList) {
 					memberNames.put(removeTotalPropertyPrefix(property), null);
 				}				
+			}						
+			Map key = getParent().getKeyValues();			
+			if (hasNull(key)) {
+				collectionTotals = Collections.EMPTY_MAP;
 			}
-			collectionTotals =  MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), memberNames);
+			else {
+				try	{		
+					collectionTotals = MapFacade.getValues(getParent().getModelName(), key, memberNames);
+				}
+				catch (javax.ejb.ObjectNotFoundException ex) {
+					collectionTotals = Collections.EMPTY_MAP;
+				}
+			}
 		}
 		return collectionTotals;
 	}	
 	
+	private boolean hasNull(Map key) {
+		for (Object value: key.values()) {
+			if (value == null) return true;
+		}
+		return false;
+	}
+
 	private String removeTotalPropertyPrefix(String totalProperty) {
 		return getMetaCollection().removeTotalPropertyPrefix(totalProperty);
 	}
@@ -4314,7 +4335,7 @@ public class View implements java.io.Serializable {
 					subview.mustRefreshCollection() && isShown() &&
 					!isHidden(subview.getMemberName()))  
 				{
-						result.put(getPropertyPrefix() + subview.getMemberName(), this);
+					result.put(getPropertyPrefix() + subview.getMemberName(), this);
 				}				
 				subview.fillChangedCollections(result);				
 			}
@@ -4391,8 +4412,30 @@ public class View implements java.io.Serializable {
 	 * 
 	 * This view must represents a collection in order to call this method.<br>
 	 */
-	private void refreshCollection() { 		
-		this.mustRefreshCollection = true;		
+	private void refreshCollection() {
+		this.mustRefreshCollection = true;
+	}
+	
+	public void resetCollectionsCache() { 
+		collectionValues = null; 
+		
+		if (hasSections()) { 
+			getSectionView(getActiveSection()).resetCollectionsCache();
+		}
+		if (hasSubviews()) {
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.resetCollectionsCache();				
+			}
+		}
+		if (hasGroups()) {
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.resetCollectionsCache();				
+			}
+		}
 	}
 
 	public View getChangedSectionsView() { 

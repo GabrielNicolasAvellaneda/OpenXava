@@ -92,8 +92,10 @@ public class AJAXTest extends ModuleTestBase {
 		setValue("defaultCarrier.number", "1");
 		assertCollectionRowCount("defaultCarrier.fellowCarriers", 3); 
 		assertCollectionRowCount("defaultCarrier.fellowCarriersCalculated", 3);		
-		assertLoadedParts("collection_defaultCarrier.fellowCarriers.," +
+		assertLoadedParts("collection_defaultCarrier.fellowCarriers.," + 
 				"collection_defaultCarrier.fellowCarriersCalculated.," +
+				"frame_defaultCarrier.fellowCarriersCalculatedheader," + 
+				"frame_defaultCarrier.fellowCarriersheader," + 				
 				"reference_editor_defaultCarrier.drivingLicence," +
 				"editor_defaultCarrier.calculated," +	 
 				"editor_defaultCarrier.name," +
@@ -141,6 +143,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_email, " +
 				"editor_telephone, " +
 				"collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
 				"editor_photo, messages, ");		
 		setValue("seller.number", "2");				
 		assertLoadedParts("errors, editor_seller.name, " +
@@ -164,7 +167,9 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_relationWithSeller, " +
 				"reference_editor_address.state, " +
 				"editor_seller.number, " +
-				"collection_deliveryPlaces., messages,");
+				"collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
+				"messages,");
 		setValue("number", "4");
 		execute("CRUD.refresh");
 		assertLoadedParts("errors, editor_number, " +
@@ -177,16 +182,20 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_relationWithSeller, " +				
 				"reference_editor_address.state, " +
 				"collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
 				"editor_photo, messages, ");		
 		// Collections 
 		execute("List.orderBy", "property=name,collection=deliveryPlaces");
 		assertLoadedParts("errors, collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
 				"messages");		
 		execute("List.orderBy", "property=name,collection=deliveryPlaces");
 		assertLoadedParts("errors, collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
 				"messages");
 		execute("List.filter", "collection=deliveryPlaces");
 		assertLoadedParts("errors, collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
 				"messages");
 		execute("Collection.new", "viewObject=xava_view_deliveryPlaces");
 		assertLoadedParts("dialog1");
@@ -196,9 +205,11 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("dialog1");
 		execute("List.orderBy", "property=name,collection=receptionists");
 		assertLoadedParts("errors, collection_receptionists., " +
+				"frame_receptionistsheader, " + 
 				"messages");
 		execute("List.filter", "collection=receptionists");
 		assertLoadedParts("errors, collection_receptionists., " +
+				"frame_receptionistsheader, " + 
 				"messages");
 		execute("Collection.new", "viewObject=xava_view_receptionists");
 		assertLoadedParts("dialog2");
@@ -245,6 +256,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_seller.number, " +
 				"editor_telephone, " +
 				"collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
 				"editor_photo, messages, ");		
 		
 		execute("EditableOnOff.setOn");
@@ -273,6 +285,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_seller.number, " +
 				"editor_telephone, " +
 				"collection_deliveryPlaces., " +
+				"frame_deliveryPlacesheader, " + 
 				"editor_photo, messages, ");
 		
 		// Change view programatically
@@ -432,7 +445,8 @@ public class AJAXTest extends ModuleTestBase {
 		assertCollectionRowCount("fellowCarriers", 0);
 		setValue("warehouse.number", "1");
 		assertCollectionRowCount("fellowCarriers", 3);
-		assertLoadedParts("errors, collection_fellowCarriers., " +
+		assertLoadedParts("errors, collection_fellowCarriers., " + 
+				"frame_fellowCarriersheader, " + 
 				"messages, editor_warehouse.name, ");
 		execute("Collection.view", "row=0,viewObject=xava_view_fellowCarriersCalculated");
 		assertLoadedParts("dialog1");
@@ -442,12 +456,16 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, editor_number, " +
 				"editor_remarks, collection_fellowCarriers., " +
 				"collection_fellowCarriersCalculated., " +
+				"frame_fellowCarriersheader, " + 
+				"frame_fellowCarriersCalculatedheader, " + 
 				"editor_name, messages, ");		
 		
 		execute("Carrier.translateAll"); // The first time more changes because null in some db columns
 		execute("Carrier.translateAll");
 		assertLoadedParts("errors, collection_fellowCarriers., " +
 				"collection_fellowCarriersCalculated., " +
+				"frame_fellowCarriersheader, " + 
+				"frame_fellowCarriersCalculatedheader, " + 				
 				"messages");
 	}
 	
