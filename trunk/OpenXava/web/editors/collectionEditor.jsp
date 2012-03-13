@@ -28,16 +28,7 @@ View subview = view.getSubview(collectionName);
 MetaReference ref = view.getMetaModel().getMetaCollection(collectionName).getMetaReference();
 String viewName = viewObject + "_" + collectionName;
 String propertyPrefixAccumulated = request.getParameter("propertyPrefix");
-String idCollection = null;
-if (Is.emptyString(propertyPrefixAccumulated)) {
-	idCollection = collectionName;
-}
-else {
-	// removing xava.ModelName.
-	int idx = propertyPrefixAccumulated.indexOf('.');
-	idx = propertyPrefixAccumulated.indexOf('.', idx+1) + 1;
-	idCollection = propertyPrefixAccumulated.substring(idx) + collectionName;
-}
+String idCollection = org.openxava.web.Collections.id(request, collectionName); 
 boolean collectionEditable = subview.isCollectionEditable();
 boolean collectionMembersEditables = subview.isCollectionMembersEditables();
 boolean hasListActions = subview.hasListActions();

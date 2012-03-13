@@ -18,8 +18,8 @@ import org.openxava.tab.impl.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
-import org.openxava.web.*;
-
+import org.openxava.web.WebEditors;
+import org.openxava.web.Ids;
 
 /**
  * Session object to work with tabular data. <p> 
@@ -36,6 +36,7 @@ public class Tab implements java.io.Serializable {
 	 * Prefix used for naming (in session) to the tab objects used for collections.
 	 */
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
+	public final static String TAB_RESETED_PREFIX = "xava.tab.reseted."; 
 	
 	private final static String PROPERTIES_NAMES = "propertiesNames";
 	private final static String SUM_PROPERTIES_NAMES = "sumPropertiesNames"; 
@@ -103,10 +104,11 @@ public class Tab implements java.io.Serializable {
 	private Set<String> totalPropertiesNames; 
 	private boolean propertiesChanged;
 	private boolean ignorePageRowCount;
-	private int additionalTotalsCount = -1; 
+	private int additionalTotalsCount = -1;	
 	
 	private static int nextOid = 0; 
-	public int oid = nextOid++;
+	private int oid = nextOid++; 
+	private String tabObject; 
 	
 	
 	
@@ -364,7 +366,7 @@ public class Tab implements java.io.Serializable {
 	
 	
 	public void setTableModel(IXTableModel tableModel) {
-		this.tableModel = tableModel;
+		this.tableModel = tableModel;		
 	}
 	
 	private String getCondition() {
@@ -746,7 +748,7 @@ public class Tab implements java.io.Serializable {
 			notResetNextTime = false;
 			return;
 		}		
-		tableModel = null; 
+		tableModel = null;				
 		if (!notResetPageNextTime) { 
 			notResetPageNextTime = false;
 			initialIndex = 0; 		
@@ -1027,7 +1029,7 @@ public class Tab implements java.io.Serializable {
 		metaProperties = null;
 		metaPropertiesNotCalculated = null;		
 		notResetNextTime = false;		 	 			
-		tableModel  = null;	
+		tableModel  = null;		
 		selected  = null;
 		metaTab = null;
 		metaTabCloned = false; 
@@ -1054,7 +1056,12 @@ public class Tab implements java.io.Serializable {
 
 	private String getCollectionPrefix() {
 		String tabObject = request.getParameter("tabObject");
+		if (tabObject == null) tabObject = this.tabObject; 
 		return tabObject == null?"":tabObject + "_";
+	}
+	
+	public void setTabObject(String tabObject) { 
+		this.tabObject = tabObject;
 	}
 
 	private void setConditionComparators(String collectionPrefix) { 		
@@ -1499,7 +1506,7 @@ public class Tab implements java.io.Serializable {
 		Map [] keys = new Map[selected.length];
 		for (int i = 0; i < keys.length; i++) {
 			try {
-				keys[i] = (Map) tableModel.getObjectAt(selected[i]);
+				keys[i] = (Map) getTableModel().getObjectAt(selected[i]); 
 			}
 			catch (Exception ex) {
 				keys[i] = Collections.EMPTY_MAP;

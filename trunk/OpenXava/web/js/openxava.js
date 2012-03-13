@@ -595,7 +595,9 @@ openxava.clearConditionComparators = function(application, module, prefix) {
 	var element = form.elements[elementName + "0"];
 	var i=0;
 	while (typeof element != "undefined") {
-		element[0].selected = 'selected';
+		if (element.type == "select-one") { 
+			element[0].selected = 'selected';
+		}
 		element = form.elements[elementName + (++i)];
 	}
 }
@@ -690,15 +692,16 @@ openxava.effectShow = function(application, module, id) {
 }
 
 openxava.showFrame = function(id) { 
-	$("#"+id+"content").show();
+	$("#"+id+"content").slideDown(); 
+	$("#"+id+"header").children().fadeOut(2000); 
 	$("#"+id+"hide").show();
 	$("#"+id+"show").hide();
 	View.setFrameClosed(id, false);
 }
 
-
 openxava.hideFrame = function(id) { 
-	$("#"+id+"content").hide();
+	$("#"+id+"content").slideUp(); 
+	$("#"+id+"header").children().fadeIn(2000); 
 	$("#"+id+"hide").hide();
 	$("#"+id+"show").show();
 	View.setFrameClosed(id, true);

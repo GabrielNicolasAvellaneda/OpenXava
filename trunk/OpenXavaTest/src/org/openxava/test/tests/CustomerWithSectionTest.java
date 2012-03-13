@@ -296,7 +296,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValue("address.street", "C/ DOCTOR PESSET");
 	}
 	
-	public void testAddingToManyToManyCollectionFromANewObject() throws Exception {
+	public void testAddingToManyToManyCollectionFromANewObject() throws Exception { 
 		execute("CRUD.new");
 		
 		// The minimum data to save a customer
@@ -320,7 +320,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 
 	
-	public void testManyToManyCollection() throws Exception {
+	public void testManyToManyCollection() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
 		assertCollectionRowCount("states", 0);

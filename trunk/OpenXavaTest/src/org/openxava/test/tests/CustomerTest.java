@@ -108,7 +108,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertLabel("address.state", "Province");
 	}
 		
-	public void testFilterByMemberOfAggregate() throws Exception { 
+	public void testFilterByMemberOfAggregate() throws Exception {  
 		assertListRowCount(5);
 		String [] totalCondition = { "", "", "", "V" };		
 		setConditionValues(totalCondition);		
@@ -316,7 +316,7 @@ public class CustomerTest extends ModuleTestBase {
 		
 	
 	// references to entities and aggregates
-	public void testCreateModifyAndReadWithReferencesAndOverwriteSaveAction() throws Exception {				
+	public void testCreateModifyAndReadWithReferencesAndOverwriteSaveAction() throws Exception { 				
 		// Create one new
 		execute("CRUD.new");
 		assertNoErrors();
@@ -482,7 +482,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertValue("seller.name", "");									
 	}
 	
-	public void testLeftJoinInListModeForReference() throws Exception { 
+	public void testLeftJoinInListModeForReference() throws Exception {  
 		assertActions(listActions);
 		int initialRows = getListRowCount();
 		assertTrue("This test only run with less than 10 rows", initialRows < 10);
@@ -549,7 +549,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertValueInList(0, 5, "NEW YORK"); // property of a reference inside an aggregate
 	}
 	
-	public void testNestedAggregateCollections() throws Exception {
+	public void testNestedAggregateCollections() throws Exception { 
 		// Creating
 		execute("CRUD.new");
 		setValue("number", "66");

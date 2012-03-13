@@ -4,7 +4,7 @@ body {
 
 #xava_loading, #xava_loading2 { 
 	padding: 20px;	
-		border: none; 
+	border: none; 
 	background: -webkit-gradient(linear, left bottom, left top, 
 		from(#10182C), color-stop(0.5, #121A2E), color-stop(0.51, #282F41), to(#7E838D));
 	opacity:.60;
@@ -364,6 +364,16 @@ input {
 	text-align: left;
 }
 
+.ox-frame-totals {
+	float: right; 
+}
+.ox-frame-totals-label {
+	font-weight: normal;
+}
+
+.ox-frame-totals-value {
+	font-weight: bold;
+}
 
 .ui-widget-header {	 
 	border: none; 

@@ -4,6 +4,7 @@ import org.openxava.tests.*;
 
 
 /**
+ * 
  * @author Javier Paniza
  */
 
@@ -11,6 +12,14 @@ public class CarrierWithCalculatedFellowsTest extends ModuleTestBase {
 	
 	public CarrierWithCalculatedFellowsTest(String testName) {
 		super(testName, "CarrierWithCalculatedFellows");		
+	}
+	 
+	public void testCalculatedCollectionCacheResetCorrectly() throws Exception { 
+		execute("Mode.detailAndFirst");
+		assertCollectionRowCount("fellowCarriersCalculated", 3);
+		execute("Mode.list"); // It only failed when we pass with list mode
+		execute("CRUD.new");
+		assertCollectionRowCount("fellowCarriersCalculated", 0);
 	}
 	
 	public void testDefaultListActionsForCollectionsDoesNotApplyToCalculatedCollections_emptyCollectionActionIsNotShown() throws Exception {

@@ -202,12 +202,14 @@ public class Module extends DWRBase {
 
 	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
 		Map changedParts = result.getChangedParts();
+		getView().resetCollectionsCache(); 
 
 		if (manager.isShowDialog() || manager.isHideDialog() || firstRequest) {
 			if (manager.getDialogLevel() > 0) {
 				changedParts.put(decorateId("dialog" + manager.getDialogLevel()),   
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
 				);		
+				getView().resetCollectionsCache(); 
 				return;
 			}			
 		}
@@ -226,7 +228,7 @@ public class Module extends DWRBase {
 			int row = (Integer) getContext(request).get(application, module, "xava_row");
 			result.setCurrentRow(row);
 		}
-		
+		getView().resetCollectionsCache();		
 	}
 
 	private void setDialogLevel(Result result) {
@@ -258,7 +260,7 @@ public class Module extends DWRBase {
 
 	private Map getChangedParts(Map values) { 
 		Map result = new HashMap();
-		if (values == null || manager.isReloadAllUINeeded() || manager.isFormUpload()) {   		
+		if (values == null || manager.isReloadAllUINeeded() || manager.isFormUpload()) {
 			put(result, "core", "core.jsp");
 		}
 		else {			
@@ -389,10 +391,14 @@ public class Module extends DWRBase {
 			String qualifiedName = (String) en.getKey();
 			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
 			View containerView = (View) en.getValue();
+			put(result, "frame_" + qualifiedName + "header", 
+				"collectionFrameHeader.jsp?collectionName=" + name + 
+				"&viewObject=" + containerView.getViewObject() +		
+				"&propertyPrefix=" + containerView.getPropertyPrefix()); 
 			put(result, "collection_" + qualifiedName + ".", 
 				"collection.jsp?collectionName=" + name + 
 				"&viewObject=" + containerView.getViewObject() + 
-				"&propertyPrefix=" + containerView.getPropertyPrefix());			
+				"&propertyPrefix=" + containerView.getPropertyPrefix());									
 		}
 	}
 	
@@ -464,7 +470,7 @@ public class Module extends DWRBase {
 		return isPortlet()?"/WEB-INF/jsp/xava/":"/xava/";
 	}
 	
-	private void put(Map result, String key, Object value) { 
+	private void put(Map result, String key, Object value) {
 		result.put(decorateId(key), value);
 	}
 	

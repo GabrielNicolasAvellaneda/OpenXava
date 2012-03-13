@@ -44,7 +44,7 @@ boolean onlySections = view.hasSections() && view.getMetaMembers().isEmpty();
 if (!onlySections) {	// IF Not Only Sections
 	if (view.isFrame()) {	// IF Is Frame 
 %>
-<table>
+<table <%=style.getFrameWidth()%>>
 	<tr>
 <% 
 	}	// END IF Is Frame
@@ -271,12 +271,21 @@ if (!onlySections) {	// IF Not Only Sections
 				<%=style.getFrameHeaderStartDecoration(frameWidth)%>
 				<%=style.getFrameTitleStartDecoration()%>
 				<%=collection.getLabel(request) %>
+<% 
+				String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + collection.getName());
+				String colletionHeaderId = frameId + "header";
+%>				
+				<span id="<xava:id name='<%=colletionHeaderId%>'/>">
+					<jsp:include page="collectionFrameHeader.jsp"> 
+						<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
+						<jsp:param name="viewObject" value="<%=viewObject%>"/>			
+					</jsp:include>			
+				</span>	
 				<%=style.getFrameTitleEndDecoration()%>
 				<%=style.getFrameActionsStartDecoration()%>
 <% 
-					String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + collection.getName());
-					String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
-						"&closed=" + view.isFrameClosed(frameId);
+				String frameActionsURL = "frameActions.jsp?frameId=" + frameId +
+					"&closed=" + view.isFrameClosed(frameId);
 %>
 				<jsp:include page='<%=frameActionsURL%>'/>
 				<%=style.getFrameActionsEndDecoration()%> 					 					

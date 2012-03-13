@@ -91,8 +91,7 @@ import org.openxava.util.*;
 	@View(name="CustomerAsAggregateWithDeliveryPlaces", members=
 		"year, number, date, paid;" +
 		"customer"
-	),	
-	
+	),		
 	@View(name="DetailsWithTotals", members= 
 		"year, number, date, vatPercentage;" +
 		"customer;" +
@@ -166,7 +165,7 @@ public class Invoice {
 	private int number;
 		
 	@Required
-	@DefaultValueCalculator(CurrentDateCalculator.class)
+	@DefaultValueCalculator(CurrentDateCalculator.class)	
 	private java.util.Date date;
 	
 	@Digits(integerDigits=2, fractionalDigits=1) 
@@ -193,12 +192,12 @@ public class Invoice {
 	@ListsProperties({
 		@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free"),
 		@ListProperties(forViews="NoSections", value="product.description, product.unitPrice+, quantity, amount"),  
-		@ListProperties(forViews="DetailsWithTotals", value="deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]"), 		
+		@ListProperties(forViews="DetailsWithTotals", value="deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]"), 				
 	})
 	@EditAction(forViews="DEFAULT", value="Invoice.editDetail")
 	@DetailAction(forViews="DEFAULT", value="Invoice.viewProduct")
 	@ReadOnly(forViews="OnlyReadDetails")
-	@EditOnly(forViews="OnlyEditDetails")
+	@EditOnly(forViews="OnlyEditDetails, DetailsWithTotals") 
 	@NewAction(forViews="NotAllActionsInDetails", value="")
 	@RemoveAction(forViews="NotAllActionsInDetails", value="")
 	@RemoveSelectedAction(forViews="NotAllActionsInDetails", value="")
