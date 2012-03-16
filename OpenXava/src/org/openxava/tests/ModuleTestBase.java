@@ -132,7 +132,9 @@ public class ModuleTestBase extends TestCase {
 			setFormValue(getLiferayField("login"), user, true, false);					
 			setFormValue(getLiferayField("password"), password, true, false);
 			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getElementsByAttribute("input", "type", "submit").get(0);
+			page.getWebClient().setJavaScriptEnabled(false); // Because a bug in HtmlUnit 2.9: http://sourceforge.net/tracker/index.php?func=detail&aid=3072010&group_id=47038&atid=448266
 			page = (HtmlPage) button.click();
+			page.getWebClient().setJavaScriptEnabled(true);
 			
 			try {
 				page.getFormByName("fm"); // If not liferay 4.1 then throws ElementNotFoundException

@@ -7,13 +7,15 @@
 <hibernate-mapping package="org.openxava.test.model">
 
   <class 
-  	name="Warehouse" schema="XAVATEST" 
-  	table="WAREHOUSE"> 
+  	name="City" schema="XAVATEST" 
+  	table="CITY"> 
 		<composite-id> 	
-			<key-property name="number" column="NUMBER" access="field" type='java.lang.Integer' length='3'/> 	
-			<key-property name="zoneNumber" column="ZONE" access="field" type='int' length='3'/>  	
+			<key-property name="code" column="CODE" access="field" type='int' length='9'/> 	
+			<key-many-to-one name="state" class="org.openxava.test.model.State"> 			
+				<column name="STATE"/> 						
+			</key-many-to-one>  	
 		</composite-id> 
-		<property name="name" access="field" type='java.lang.String' length='40'>  
+		<property name="name" access="field" type='java.lang.String' length='50'>  
 			<column name="NAME"  />
 		</property> 
   </class>

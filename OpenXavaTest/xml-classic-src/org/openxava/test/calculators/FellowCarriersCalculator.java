@@ -1,6 +1,7 @@
 package org.openxava.test.calculators;
 
 import java.rmi.*;
+import java.util.*;
 
 import org.openxava.calculators.*;
 import org.openxava.hibernate.XHibernate;
@@ -16,6 +17,7 @@ public class FellowCarriersCalculator implements IModelCalculator {
 	private ICarrier carrier;
 
 	public Object calculate() throws Exception {
+		if (carrier == null || carrier.getWarehouse() == null) return Collections.EMPTY_LIST; 
 		int warehouseZoneNumber = carrier.getWarehouse().getZoneNumber();
 		int warehouseNumber = carrier.getWarehouse().getNumber();
 		// In this case we use an 'if' to illustrate the use of JPA and Hibernate
