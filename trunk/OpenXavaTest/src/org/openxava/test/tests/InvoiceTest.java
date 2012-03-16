@@ -840,7 +840,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("deliveryDate", getCurrentDate()); 
 		setValue("deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate
 		execute("Collection.save");
-		assertCollectionRowCount("details", 3);
+		assertCollectionRowCount("details", 3); 
 				
 		assertValueInCollection("details", 0, 0, "Urgent");
 		assertValueInCollection("details", 0, 1, getProductDescription());
@@ -1067,7 +1067,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("deliveryDate", "03/18/04");
 		setValue("soldBy.number", getProductNumber());
 		execute("Collection.save");		
-		assertError("It is not possible to add details, the invoice is paid");
+		assertError("It is not possible to add details, the invoice is paid"); 
 		
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			execute("CRUD.delete");
@@ -1098,7 +1098,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNotExists("customer.number");
 		assertNotExists("vatPercentage");
 		
-		assertCollectionRowCount("details", 0);
+		assertCollectionRowCount("details", 0); 
 		
 		assertNoDialog(); 
 		execute("Collection.new", "viewObject=xava_view_section1_details");

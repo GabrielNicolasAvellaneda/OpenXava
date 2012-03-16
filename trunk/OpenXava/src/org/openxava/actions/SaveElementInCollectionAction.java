@@ -113,13 +113,18 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	private void createAggregate(Map containerKey) throws Exception {
 		validateMaximum();
-		int row = getMetaCollection().getMetaModel().isAnnotatedEJB3()?
-			0:getCollectionElementView().getCollectionSize(); 		
+		int row = 0;
+		if (!getMetaCollection().getMetaModel().isAnnotatedEJB3()) {
+			if (!getCollectionElementView().isCollectionCalculated()) {
+				getCollectionElementView().getCollectionTab().reset();
+			}
+			row = getCollectionElementView().getCollectionSize();
+		}
 		MapFacade.createAggregate(
 			getCollectionElementView().getModelName(),						
 			containerKey, row+1, // +1 for start in 1, because 0 is equals to no value					
 			getValuesToSave() ); 
-		addMessage("aggregate_created", getCollectionElementView().getModelName());		
+		addMessage("aggregate_created", getCollectionElementView().getModelName());
 	}
 	
 	private boolean isAutoCommit() {

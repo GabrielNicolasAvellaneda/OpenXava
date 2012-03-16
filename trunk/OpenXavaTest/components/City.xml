@@ -6,16 +6,15 @@
 
 	<entity>
 		<reference name="state" key="true" required="true"/>
-		<property name="code" type="String" key="true" size="5" required="true"/>
-		<property name="name" type="String" 
-			size="20" required="true"/>
+		<property name="code" type="int" key="true"/>
+		<property name="name" type="String"/>
 	</entity>
 	
 	<entity-mapping table="XAVATEST@separator@CITY">
 		<reference-mapping reference="state">
 			<reference-mapping-detail column="STATE" referenced-model-property="id"/>
 		</reference-mapping>
-		<property-mapping property="code" column="ID"/>
+		<property-mapping property="code" column="CODE"/>
 		<property-mapping property="name" column="NAME"/>
 	</entity-mapping> 
 				
