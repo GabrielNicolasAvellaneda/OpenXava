@@ -21,7 +21,7 @@ int index = Integer.parseInt(request.getParameter("index"));
 %>
 
 <input type="hidden" name="<xava:id name='<%=prefix  + "conditionComparator."  + index%>'/>" value="eq">
-
+<input type="hidden" name="<xava:id name='<%=prefix  + "conditionValueTo."  + index%>'/>" >
 <select name="<xava:id name='<%=prefix  + "conditionValue."  + index%>'/>" class=<%=style.getEditor()%>>
 	<option value=""></option>
 <%
