@@ -1,5 +1,8 @@
 <%@ include file="imports.jsp"%>
 
+<%@page import="org.openxava.web.Actions"%>
+<%@page import="org.openxava.web.Ids"%>
+
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
@@ -20,9 +23,14 @@ String notContains = "not_contains_comparator".equals(comparator)?"selected='sel
 String year = "year_comparator".equals(comparator)?"selected='selected'":"";
 String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":"";
+String range = "range_comparator".equals(comparator)?"selected='selected'":"";
 int index = Integer.parseInt(request.getParameter("index"));
+String idConditionValue = request.getParameter("idConditionValue");
+String idConditionValueTo = request.getParameter("idConditionValueTo");
+String name = Ids.decorate(request, prefix + "conditionComparator." + index);
+String actionOnChangeComparator = Actions.getActionOnChangeComparator(name,idConditionValue,idConditionValueTo);
 %>
-<select name="<xava:id name='<%=prefix + "conditionComparator." + index%>'/>" class=<%=style.getEditor()%>>
+<select id="<%=name%>" name="<%=name%>" class=<%=style.getEditor()%> <%=actionOnChangeComparator%>>
 	<%
 	if (isString) {
 	%>						
@@ -47,5 +55,6 @@ int index = Integer.parseInt(request.getParameter("index"));
 	<%
 	}	
 	%>
+	<option value="range_comparator" <%=range%>><xava:message key="range_comparator"/></option>
 </select>	
 	

@@ -1,5 +1,6 @@
 <%@ include file="imports.jsp"%>
 
+<%@ page import="org.openxava.util.Labels"%>
 <%@ page import="org.openxava.tab.impl.IXTableModel" %>
 <%@ page import="org.openxava.util.Strings" %>
 <%@ page import="org.openxava.util.XavaPreferences" %>
@@ -34,7 +35,6 @@ if (collection != null && !collection.equals("")) {
 	scrollId = "collection_scroll"; 
 }
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
-tab.setRequest(request); 
 tab.setIgnorePageRowCount(!style.isChangingPageRowCountAllowed());
 String action=request.getParameter("rowAction");
 action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action;
@@ -70,7 +70,11 @@ int currentRow = ((Number) context.get(request, "xava_row")).intValue();
 String cssCurrentRow = style.getCurrentRow();
 String styleOverflow = "overflow: auto;";
 int totalSize = -1; 
-tab.reset(); 
+if (request.getAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab) == null) {
+	tab.setRequest(request);
+	tab.reset();
+	request.setAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab, true); 
+}
 boolean resizeColumns = style.allowsResizeColumns() && tab.isResizeColumns();
 String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
@@ -235,6 +239,7 @@ while (it.hasNext()) {
 <%
 it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
+String [] conditionValuesTo = tab.getConditionValuesTo(); 
 String [] conditionComparators = tab.getConditionComparators();
 int iConditionValues = -1;
 columnIndex = 0; 
@@ -250,6 +255,7 @@ while (it.hasNext()) {
 		int maxLength = property.getSize();
 		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
+		String valueTo= conditionValuesTo==null?"":conditionValuesTo[iConditionValues];
 		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
 		int columnWidth = tab.getColumnWidth(columnIndex);
 		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
@@ -285,15 +291,23 @@ while (it.hasNext()) {
 </jsp:include>
 <%
 		} else { // Not boolean
+	String idConditionValue = Ids.decorate(request, prefix + "conditionValue." + iConditionValues);
+	String idConditionValueTo = Ids.decorate(request, prefix + "conditionValueTo." + iConditionValues);
+	String styleConditionValueTo = "range_comparator".equals(comparator) ? "display: inline; " : "display: none;";
+	String labelFrom = "range_comparator".equals(comparator) ? Labels.get("from") : "";
+	String labelTo = Labels.get("to");
 	String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
-	+ "?comparator=" + comparator
-	+ "&isString=" + isString
-	+ "&isDate=" + isDate
-	+ "&prefix=" + prefix  
-	+ "&index=" + iConditionValues;
+		+ "?comparator=" + comparator
+		+ "&isString=" + isString
+		+ "&isDate=" + isDate
+		+ "&prefix=" + prefix  
+		+ "&index=" + iConditionValues
+		+ "&idConditionValue=" + idConditionValue
+		+ "&idConditionValueTo=" + idConditionValueTo;
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
-<input name="<xava:id name='<%=prefix + "conditionValue." + iConditionValues%>'/>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
+<input id="<%=idConditionValue%>" name="<%=idConditionValue%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>" placeholder="<%=labelFrom%>"/>
+<input id="<%=idConditionValueTo%>" name="<%=idConditionValueTo%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=valueTo%>" placeholder="<%=labelTo%>" style="<%=styleConditionValueTo%>"/>
 	<%
 		}
 	%>
