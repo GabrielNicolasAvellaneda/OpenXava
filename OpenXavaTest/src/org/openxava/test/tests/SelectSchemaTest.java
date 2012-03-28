@@ -5,7 +5,7 @@ import org.openxava.tests.ModuleTestBase;
 
 /**
  * Create on 04/09/2009 (10:15:51)
- * @autor Ana Andr�s
+ * @autor Ana Andres
  */
 public class SelectSchemaTest extends ModuleTestBase {
 	

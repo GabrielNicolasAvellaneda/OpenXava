@@ -1,6 +1,7 @@
 package org.openxava.test.model;
 
 import javax.persistence.*;
+
 import org.openxava.annotations.*;
 
 /**
@@ -9,6 +10,7 @@ import org.openxava.annotations.*;
  */
 @IdClass(CityKey.class)
 @Entity
+@Tab(properties="code, name, state.fullNameWithFormula")
 public class City {
 	
 	@Id 

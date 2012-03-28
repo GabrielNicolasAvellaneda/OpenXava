@@ -1,5 +1,6 @@
 package org.openxava.test.tests;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
@@ -296,50 +297,51 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList",  2, 0, "customer.address.asString");
 		assertValueInCollection("xavaPropertiesList",  3, 0, "customer.address.city");
 		assertValueInCollection("xavaPropertiesList",  4, 0, "customer.address.state.fullName");
-		assertValueInCollection("xavaPropertiesList",  5, 0, "customer.address.state.id");		
-		assertValueInCollection("xavaPropertiesList",  6, 0, "customer.address.state.name");		
-		assertValueInCollection("xavaPropertiesList",  7, 0, "customer.address.street");		
-		assertValueInCollection("xavaPropertiesList",  8, 0, "customer.address.zipCode");
-		assertValueInCollection("xavaPropertiesList",  9, 0, "customer.alternateSeller.level.description");
+		assertValueInCollection("xavaPropertiesList",  5, 0, "customer.address.state.fullNameWithFormula");
+		assertValueInCollection("xavaPropertiesList",  6, 0, "customer.address.state.id");		
+		assertValueInCollection("xavaPropertiesList",  7, 0, "customer.address.state.name");		
+		assertValueInCollection("xavaPropertiesList",  8, 0, "customer.address.street");		
+		assertValueInCollection("xavaPropertiesList",  9, 0, "customer.address.zipCode");
 		
 		execute("List.goAddColumnsNextPage");
 		assertCollectionRowCount("xavaPropertiesList", 10);
-		assertValueInCollection("xavaPropertiesList", 0, 0, "customer.alternateSeller.level.id");			
-		assertValueInCollection("xavaPropertiesList", 1, 0, "customer.alternateSeller.name");				
-		assertValueInCollection("xavaPropertiesList", 2, 0, "customer.alternateSeller.number");
-		assertValueInCollection("xavaPropertiesList", 3, 0, "customer.alternateSeller.regions");		
-		assertValueInCollection("xavaPropertiesList", 4, 0, "customer.city");
-		assertValueInCollection("xavaPropertiesList", 5, 0, "customer.email");
-		assertValueInCollection("xavaPropertiesList", 6, 0, "customer.local");
-		assertValueInCollection("xavaPropertiesList", 7, 0, "customer.name");
-		assertValueInCollection("xavaPropertiesList", 8, 0, "customer.number");
-		assertValueInCollection("xavaPropertiesList", 9, 0, "customer.photo");
+		assertValueInCollection("xavaPropertiesList", 0, 0, "customer.alternateSeller.level.description");
+		assertValueInCollection("xavaPropertiesList", 1, 0, "customer.alternateSeller.level.id");			
+		assertValueInCollection("xavaPropertiesList", 2, 0, "customer.alternateSeller.name");				
+		assertValueInCollection("xavaPropertiesList", 3, 0, "customer.alternateSeller.number");
+		assertValueInCollection("xavaPropertiesList", 4, 0, "customer.alternateSeller.regions");		
+		assertValueInCollection("xavaPropertiesList", 5, 0, "customer.city");
+		assertValueInCollection("xavaPropertiesList", 6, 0, "customer.email");
+		assertValueInCollection("xavaPropertiesList", 7, 0, "customer.local");
+		assertValueInCollection("xavaPropertiesList", 8, 0, "customer.name");
+		assertValueInCollection("xavaPropertiesList", 9, 0, "customer.number");
 	
 		execute("List.goAddColumnsPage", "page=4");
 		assertAction("List.goAddColumnsPreviousPage");
 		assertNoAction("List.goAddColumnsNextPage");		
-		assertCollectionRowCount("xavaPropertiesList", 8); 
-		assertValueInCollection("xavaPropertiesList", 0, 0, "customerDiscount");
-		assertValueInCollection("xavaPropertiesList", 1, 0, "customerTypeDiscount");
-		assertValueInCollection("xavaPropertiesList", 2, 0, "deliveryDate");
-		assertValueInCollection("xavaPropertiesList", 3, 0, "productUnitPriceSum");
-		assertValueInCollection("xavaPropertiesList", 4, 0, "sellerDiscount");
-		assertValueInCollection("xavaPropertiesList", 5, 0, "total");
-		assertValueInCollection("xavaPropertiesList", 6, 0, "vatPercentage");
-		assertValueInCollection("xavaPropertiesList", 7, 0, "yearDiscount");
+		assertCollectionRowCount("xavaPropertiesList", 9); 
+		assertValueInCollection("xavaPropertiesList", 0, 0, "customer.website");
+		assertValueInCollection("xavaPropertiesList", 1, 0, "customerDiscount");
+		assertValueInCollection("xavaPropertiesList", 2, 0, "customerTypeDiscount");
+		assertValueInCollection("xavaPropertiesList", 3, 0, "deliveryDate");
+		assertValueInCollection("xavaPropertiesList", 4, 0, "productUnitPriceSum");
+		assertValueInCollection("xavaPropertiesList", 5, 0, "sellerDiscount");
+		assertValueInCollection("xavaPropertiesList", 6, 0, "total");
+		assertValueInCollection("xavaPropertiesList", 7, 0, "vatPercentage");
+		assertValueInCollection("xavaPropertiesList", 8, 0, "yearDiscount");
 		
 		execute("List.goAddColumnsPreviousPage");
 		assertCollectionRowCount("xavaPropertiesList", 10);
-		assertValueInCollection("xavaPropertiesList", 0, 0, "customer.relationWithSeller");
-		assertValueInCollection("xavaPropertiesList", 1, 0, "customer.remarks");		
-		assertValueInCollection("xavaPropertiesList", 2, 0, "customer.seller.level.description");
-		assertValueInCollection("xavaPropertiesList", 3, 0, "customer.seller.level.id");				
-		assertValueInCollection("xavaPropertiesList", 4, 0, "customer.seller.name");
-		assertValueInCollection("xavaPropertiesList", 5, 0, "customer.seller.number");
-		assertValueInCollection("xavaPropertiesList", 6, 0, "customer.seller.regions");		
-		assertValueInCollection("xavaPropertiesList", 7, 0, "customer.telephone");
-		assertValueInCollection("xavaPropertiesList", 8, 0, "customer.type");
-		assertValueInCollection("xavaPropertiesList", 9, 0, "customer.website");
+		assertValueInCollection("xavaPropertiesList", 0, 0, "customer.photo");
+		assertValueInCollection("xavaPropertiesList", 1, 0, "customer.relationWithSeller");
+		assertValueInCollection("xavaPropertiesList", 2, 0, "customer.remarks");		
+		assertValueInCollection("xavaPropertiesList", 3, 0, "customer.seller.level.description");
+		assertValueInCollection("xavaPropertiesList", 4, 0, "customer.seller.level.id");				
+		assertValueInCollection("xavaPropertiesList", 5, 0, "customer.seller.name");
+		assertValueInCollection("xavaPropertiesList", 6, 0, "customer.seller.number");
+		assertValueInCollection("xavaPropertiesList", 7, 0, "customer.seller.regions");		
+		assertValueInCollection("xavaPropertiesList", 8, 0, "customer.telephone");
+		assertValueInCollection("xavaPropertiesList", 9, 0, "customer.type");
 
 		checkRow("selectedProperties", "customer.telephone");
 		 		
@@ -381,7 +383,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("List.customize");
 		execute("List.addColumns");
 		
-		assertCollectionRowCount("xavaPropertiesList", 38); 
+		assertCollectionRowCount("xavaPropertiesList", 39); 
 		execute("AddColumns.sort");		
 		
 		assertValueInCollection("xavaPropertiesList",  0, 0, "comment");
@@ -391,6 +393,65 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList",  3, 0, "customer.address.city");
 		assertValueInCollection("xavaPropertiesList",  4, 0, "customer.address.state.fullName");
 		assertValueInCollection("xavaPropertiesList",  4, 1, "Full name of State of Address of Customer");
+		assertValueInCollection("xavaPropertiesList",  6, 0, "customer.address.state.id");		
+		assertValueInCollection("xavaPropertiesList",  7, 0, "customer.address.state.name");		
+		assertValueInCollection("xavaPropertiesList",  8, 0, "customer.address.street");		
+		assertValueInCollection("xavaPropertiesList",  9, 0, "customer.address.zipCode");
+		assertValueInCollection("xavaPropertiesList", 10, 0, "customer.alternateSeller.level.description");
+		assertValueInCollection("xavaPropertiesList", 11, 0, "customer.alternateSeller.level.id");			
+		assertValueInCollection("xavaPropertiesList", 12, 0, "customer.alternateSeller.name");				
+		assertValueInCollection("xavaPropertiesList", 13, 0, "customer.alternateSeller.number");
+		assertValueInCollection("xavaPropertiesList", 14, 0, "customer.alternateSeller.regions");		
+		assertValueInCollection("xavaPropertiesList", 15, 0, "customer.city");
+		assertValueInCollection("xavaPropertiesList", 16, 0, "customer.email");
+		assertValueInCollection("xavaPropertiesList", 17, 0, "customer.local");
+		assertValueInCollection("xavaPropertiesList", 18, 0, "customer.name");
+		assertValueInCollection("xavaPropertiesList", 19, 0, "customer.number");
+		assertValueInCollection("xavaPropertiesList", 20, 0, "customer.photo");
+		assertValueInCollection("xavaPropertiesList", 21, 0, "customer.relationWithSeller");
+		assertValueInCollection("xavaPropertiesList", 22, 0, "customer.remarks");		
+		assertValueInCollection("xavaPropertiesList", 23, 0, "customer.seller.level.description");
+		assertValueInCollection("xavaPropertiesList", 24, 0, "customer.seller.level.id");				
+		assertValueInCollection("xavaPropertiesList", 25, 0, "customer.seller.name");
+		assertValueInCollection("xavaPropertiesList", 26, 0, "customer.seller.number");
+		assertValueInCollection("xavaPropertiesList", 27, 0, "customer.seller.regions");		
+		assertValueInCollection("xavaPropertiesList", 28, 0, "customer.telephone");
+		assertValueInCollection("xavaPropertiesList", 29, 0, "customer.type");
+		assertValueInCollection("xavaPropertiesList", 30, 0, "customer.website");
+		assertValueInCollection("xavaPropertiesList", 31, 0, "customerDiscount");
+		assertValueInCollection("xavaPropertiesList", 32, 0, "customerTypeDiscount");
+		assertValueInCollection("xavaPropertiesList", 33, 0, "deliveryDate");
+		assertValueInCollection("xavaPropertiesList", 34, 0, "productUnitPriceSum");		
+		assertValueInCollection("xavaPropertiesList", 35, 0, "sellerDiscount");
+		assertValueInCollection("xavaPropertiesList", 36, 0, "total");
+		assertValueInCollection("xavaPropertiesList", 37, 0, "vatPercentage");
+		assertValueInCollection("xavaPropertiesList", 38, 0, "yearDiscount");
+		
+		checkRow("selectedProperties", "customer.address.city");
+		checkRow("selectedProperties", "yearDiscount"); 
+		 		
+		execute("AddColumns.addColumns");
+		
+		
+		assertListColumnCount(10);
+		assertLabelInList(0, "Year");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Date");
+		assertLabelInList(3, "Amounts sum");
+		assertLabelInList(4, "V.A.T.");
+		assertLabelInList(5, "Details count");
+		assertLabelInList(6, "Paid");
+		assertLabelInList(7, "Importance");
+		assertLabelInList(8, "City of Address of Customer");
+		assertLabelInList(9, "Year discount");
+		
+		
+		execute("List.addColumns");
+		assertCollectionRowCount("xavaPropertiesList", 37); 
+		assertValueInCollection("xavaPropertiesList",  0, 0, "comment");
+		assertValueInCollection("xavaPropertiesList",  1, 0, "considerable");
+		assertValueInCollection("xavaPropertiesList",  2, 0, "customer.address.asString");		
+		assertValueInCollection("xavaPropertiesList",  3, 0, "customer.address.state.fullName");
 		assertValueInCollection("xavaPropertiesList",  5, 0, "customer.address.state.id");		
 		assertValueInCollection("xavaPropertiesList",  6, 0, "customer.address.state.name");		
 		assertValueInCollection("xavaPropertiesList",  7, 0, "customer.address.street");		
@@ -412,7 +473,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 23, 0, "customer.seller.level.id");				
 		assertValueInCollection("xavaPropertiesList", 24, 0, "customer.seller.name");
 		assertValueInCollection("xavaPropertiesList", 25, 0, "customer.seller.number");
-		assertValueInCollection("xavaPropertiesList", 26, 0, "customer.seller.regions");		
+		assertValueInCollection("xavaPropertiesList", 26, 0, "customer.seller.regions");
 		assertValueInCollection("xavaPropertiesList", 27, 0, "customer.telephone");
 		assertValueInCollection("xavaPropertiesList", 28, 0, "customer.type");
 		assertValueInCollection("xavaPropertiesList", 29, 0, "customer.website");
@@ -422,66 +483,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 33, 0, "productUnitPriceSum");		
 		assertValueInCollection("xavaPropertiesList", 34, 0, "sellerDiscount");
 		assertValueInCollection("xavaPropertiesList", 35, 0, "total");
-		assertValueInCollection("xavaPropertiesList", 36, 0, "vatPercentage");
-		assertValueInCollection("xavaPropertiesList", 37, 0, "yearDiscount");
-		
-		checkRow("selectedProperties", "customer.address.city");
-		checkRow("selectedProperties", "yearDiscount"); 
-		 		
-		execute("AddColumns.addColumns");
-		
-		assertListColumnCount(10);
-		assertLabelInList(0, "Year");
-		assertLabelInList(1, "Number");
-		assertLabelInList(2, "Date");
-		assertLabelInList(3, "Amounts sum");
-		assertLabelInList(4, "V.A.T.");
-		assertLabelInList(5, "Details count");
-		assertLabelInList(6, "Paid");
-		assertLabelInList(7, "Importance");
-		assertLabelInList(8, "City of Address of Customer");
-		assertLabelInList(9, "Year discount");
-		
-		
-		execute("List.addColumns");
-
-		assertCollectionRowCount("xavaPropertiesList", 36); 
-		assertValueInCollection("xavaPropertiesList",  0, 0, "comment");
-		assertValueInCollection("xavaPropertiesList",  1, 0, "considerable");
-		assertValueInCollection("xavaPropertiesList",  2, 0, "customer.address.asString");		
-		assertValueInCollection("xavaPropertiesList",  3, 0, "customer.address.state.fullName");
-		assertValueInCollection("xavaPropertiesList",  4, 0, "customer.address.state.id");		
-		assertValueInCollection("xavaPropertiesList",  5, 0, "customer.address.state.name");		
-		assertValueInCollection("xavaPropertiesList",  6, 0, "customer.address.street");		
-		assertValueInCollection("xavaPropertiesList",  7, 0, "customer.address.zipCode");
-		assertValueInCollection("xavaPropertiesList",  8, 0, "customer.alternateSeller.level.description");
-		assertValueInCollection("xavaPropertiesList",  9, 0, "customer.alternateSeller.level.id");			
-		assertValueInCollection("xavaPropertiesList", 10, 0, "customer.alternateSeller.name");				
-		assertValueInCollection("xavaPropertiesList", 11, 0, "customer.alternateSeller.number");
-		assertValueInCollection("xavaPropertiesList", 12, 0, "customer.alternateSeller.regions");		
-		assertValueInCollection("xavaPropertiesList", 13, 0, "customer.city");
-		assertValueInCollection("xavaPropertiesList", 14, 0, "customer.email");
-		assertValueInCollection("xavaPropertiesList", 15, 0, "customer.local");
-		assertValueInCollection("xavaPropertiesList", 16, 0, "customer.name");
-		assertValueInCollection("xavaPropertiesList", 17, 0, "customer.number");
-		assertValueInCollection("xavaPropertiesList", 18, 0, "customer.photo");
-		assertValueInCollection("xavaPropertiesList", 19, 0, "customer.relationWithSeller");
-		assertValueInCollection("xavaPropertiesList", 20, 0, "customer.remarks");		
-		assertValueInCollection("xavaPropertiesList", 21, 0, "customer.seller.level.description");
-		assertValueInCollection("xavaPropertiesList", 22, 0, "customer.seller.level.id");				
-		assertValueInCollection("xavaPropertiesList", 23, 0, "customer.seller.name");
-		assertValueInCollection("xavaPropertiesList", 24, 0, "customer.seller.number");
-		assertValueInCollection("xavaPropertiesList", 25, 0, "customer.seller.regions");
-		assertValueInCollection("xavaPropertiesList", 26, 0, "customer.telephone");
-		assertValueInCollection("xavaPropertiesList", 27, 0, "customer.type");
-		assertValueInCollection("xavaPropertiesList", 28, 0, "customer.website");
-		assertValueInCollection("xavaPropertiesList", 29, 0, "customerDiscount");
-		assertValueInCollection("xavaPropertiesList", 30, 0, "customerTypeDiscount");
-		assertValueInCollection("xavaPropertiesList", 31, 0, "deliveryDate");
-		assertValueInCollection("xavaPropertiesList", 32, 0, "productUnitPriceSum");		
-		assertValueInCollection("xavaPropertiesList", 33, 0, "sellerDiscount");
-		assertValueInCollection("xavaPropertiesList", 34, 0, "total");
-		assertValueInCollection("xavaPropertiesList", 35, 0, "vatPercentage");		
+		assertValueInCollection("xavaPropertiesList", 36, 0, "vatPercentage");		
  
 		execute("AddColumns.cancel");
 		
