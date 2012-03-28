@@ -1,19 +1,12 @@
 package org.openxava.test.model;
 
-import java.util.Collection;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
-import org.openxava.annotations.Editor;
-import org.openxava.annotations.Required;
-import org.openxava.annotations.Tab;
-import org.openxava.annotations.View;
+import org.openxava.annotations.*;
+import org.openxava.jpa.*;
+import org.openxava.util.*;
 
 /**
  * For testing the default schema behaviour. <p>
@@ -37,7 +30,22 @@ public class Issue {
 	
 	@OneToMany(mappedBy="issue", cascade=CascadeType.REMOVE)
 	private Collection<Comment> comments;
-
+	
+	/*
+	 * It fails in collection with @Condition in as400 only:
+	 * 	SELECT COMPANYB.Comment.id, COMPANYB.Comment.date, COMPANYB.Comment.comment 
+	 * 	from COMPANYB.Comment 
+	 * 	WHERE COMPANYA.Comment.issue_id = ?
+	 * First it go fine, after change schema it not change schema in 'where'
+	 */ 
+	@Condition("${issue.id} = ${this.id}")
+	public Collection<Comment> getCommentsWithCondition(){
+		if (Is.empty(this.id)) return Collections.EMPTY_LIST;
+		Query query = XPersistence.getManager().createQuery("from Comment where issue.id = :id");
+		query.setParameter("id", this.id);
+		return query.getResultList();
+	}
+	
 	public String getId() {
 		return id;
 	}
