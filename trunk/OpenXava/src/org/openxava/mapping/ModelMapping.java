@@ -3,6 +3,7 @@ package org.openxava.mapping;
 import java.sql.*;
 import java.util.*;
 
+import org.apache.commons.collections.map.*;
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
@@ -32,6 +33,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private boolean supportsYearFunction = false;  
 	private boolean supportsMonthFunction = false;
 	private boolean supportsTranslateFunction = false;
+	private boolean isReferencePropertyWithFormula = false;
 
 	
 	abstract public String getModelName() throws XavaException;
@@ -129,7 +131,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * @return Not null
 	 */
 	public ReferenceMapping getReferenceMapping(String name)
-		throws XavaException, ElementNotFoundException {		
+		throws XavaException, ElementNotFoundException {
+		
 		ReferenceMapping r =
 			referenceMappings == null
 				? null
@@ -145,6 +148,20 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 */
 	public PropertyMapping getPropertyMapping(String name)
 		throws XavaException, ElementNotFoundException {
+		int i = name.indexOf('.');
+		if (i >= 0){ 
+			String rName = name.substring(0, i);
+			String pName = name.substring(i + 1);
+			
+			if (isReferenceNameInReferenceMappings(rName)){
+				return getReferenceMapping(rName).getReferencedMapping().getPropertyMapping(pName);	
+			}
+			else{
+				// by embedded references: address.city -> address_city
+				return getPropertyMapping(name.replace(".", "_"));
+			}
+		}
+		
 		PropertyMapping p =
 			propertyMappings == null
 				? null
@@ -155,6 +172,12 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return p;
 	}
 
+	private boolean isReferenceNameInReferenceMappings(String referenceName){
+		Collection<ReferenceMapping> col = getReferenceMappings();
+		for (ReferenceMapping rm : col) if (rm.getReference().equals(referenceName)) return true;
+		return false;
+	}
+	
 	/**
 	 * In the order that they was added.
 	 * @return Collection of <tt>String</tt>.
@@ -290,8 +313,11 @@ abstract public class ModelMapping implements java.io.Serializable {
 		if (propertyMapping != null && propertyMapping.hasFormula()) return getColumn(modelProperty);
 		
 		String tableColumn = getTableColumn(modelProperty, true);
-		if (Is.emptyString(tableColumn))
-			return "'" + modelProperty + "'";
+		if (Is.emptyString(tableColumn)) return "'" + modelProperty + "'";
+		if (isReferencePropertyWithFormula) {
+			isReferencePropertyWithFormula = false;
+			return tableColumn;
+		}
 		// for calculated fields or created by multiple converter
 				
 		if (modelProperty.indexOf('.') >= 0) {
@@ -330,6 +356,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		String modelProperty,
 		boolean qualifyReferenceMappingColumn)
 		throws XavaException {
+		
 		PropertyMapping propertyMapping =
 			(PropertyMapping) propertyMappings.get(modelProperty);
 		if (propertyMapping == null) {
@@ -358,10 +385,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 					}
 					return propertyMapping.getColumn();
 				}
-				ReferenceMapping referenceMapping =
-					getReferenceMapping(referenceName);
-				if (referenceMapping
-					.hasColumnForReferencedModelProperty(propertyName)) {					
+				ReferenceMapping referenceMapping = getReferenceMapping(referenceName);
+				
+				if (referenceMapping.hasColumnForReferencedModelProperty(propertyName)) {					
 					if (qualifyReferenceMappingColumn) {
 						return getTableToQualifyColumn() 
 							+ "."
@@ -378,12 +404,19 @@ abstract public class ModelMapping implements java.io.Serializable {
 				else {					
 					ModelMapping referencedMapping =
 						referenceMapping.getReferencedMapping();
+					
 					String tableName = referencedMapping.getTableToQualifyColumn();
 					boolean secondLevel = propertyName.indexOf('.') >= 0;
-					String columnName =
-						referencedMapping.getTableColumn(propertyName, secondLevel);
-					if (qualifyReferenceMappingColumn && !secondLevel) {						
+					String columnName = referencedMapping.getTableColumn(propertyName, secondLevel);
+					boolean hasFormula = referencedMapping.getPropertyMapping(propertyName).hasFormula();
+					
+					if (qualifyReferenceMappingColumn && !secondLevel && !hasFormula) {
 						return tableName + "." + columnName;
+					}
+					else if(hasFormula){
+						String formula = referencedMapping.getPropertyMapping(propertyName).getFormula();
+						isReferencePropertyWithFormula = true;
+						return qualifyFormulaWithReferenceName(formula, referencedMapping.getModelName(), modelProperty);
 					}
 					else {						
 						return columnName;
@@ -392,10 +425,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 			}
 			throw new ElementNotFoundException("property_mapping_not_found", modelProperty, getModelName());
 		}
-		if (propertyMapping.hasFormula()) return propertyMapping.getFormula(); 
+		if (propertyMapping.hasFormula()) return propertyMapping.getFormula();
 		return propertyMapping.getColumn();
 	}
-
+	
 	/**
 	 * @exception ElementNotFoundException If property does not exist.
 	 * @exception XavaException Any problem
@@ -734,5 +767,46 @@ abstract public class ModelMapping implements java.io.Serializable {
 		}	
 		return referenceMappingsWithConverter;
 	}
+
+	/**
+	 * Find the columns name in the formula and replace its by qualify columns name: 'name' -> 't_reference.name'
+	 */
+	private String qualifyFormulaWithReferenceName(String formula, String referenceName, String modelProperty){
+		EntityMapping em = MetaComponent.get(referenceName).getEntityMapping();
 		
+		Iterator<String> it = em.getColumns().iterator();
+		while (it.hasNext()){
+			String column = it.next();
+			if (formula.contains(column)){
+				formula = formula.replace(column, getQualifyColumnName(modelProperty, referenceName + "." + column));
+			}
+		}
+		
+		return formula;
+	}
+	
+	private String getQualifyColumnName(String modelProperty, String tableColumn){
+		if (modelProperty.indexOf('.') >= 0) {
+			if (tableColumn.indexOf('.') < 0) return tableColumn;	
+			String reference = modelProperty.substring(0, modelProperty.lastIndexOf('.'));
+			if (tableColumn.startsWith(getTableToQualifyColumn() + ".")) {
+				String member = modelProperty.substring(modelProperty.lastIndexOf('.') + 1);
+				if (getMetaModel().getMetaReference(reference).getMetaModelReferenced().isKey(member)) return tableColumn;
+			}
+
+			// The next code uses the alias of the table instead of its name. In order to
+			// support multiple references to the same model
+			if (reference.indexOf('.') >= 0) {				
+				if (getMetaModel().getMetaProperty(modelProperty).isKey()) {
+					reference = reference.substring(0, reference.lastIndexOf('.'));
+				}				
+				reference = reference.substring(reference.lastIndexOf('.') + 1);
+			}
+			return "T_" + reference + tableColumn.substring(tableColumn.lastIndexOf('.'));
+		}
+		else  {
+			return getTableToQualifyColumn() + "." + tableColumn; 
+		}
+	}
+
 }
