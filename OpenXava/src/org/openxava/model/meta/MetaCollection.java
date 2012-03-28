@@ -130,6 +130,11 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		return getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByColumns(condicion);
 	}
 	
+	public String getSQLConditionWithoutChangePropertiesByColumns() throws XavaException {
+		if (Is.emptyString(getCondition())) return ""; 
+		return changePropertiesThisByArguments(getCondition(), SQL);
+	}
+	
 	public String getEJBQLCondition() throws XavaException {
 		MetaModel metaModel = getMetaReference().getMetaModelReferenced(); 
 		StringBuffer sb = new StringBuffer("SELECT OBJECT(o) FROM ");

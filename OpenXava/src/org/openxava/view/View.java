@@ -1240,7 +1240,7 @@ public class View implements java.io.Serializable {
 			}
 			MetaCollection metaCollection = getMetaCollection();
 			if (metaCollection.hasCondition()) {
-				collectionTab.setBaseCondition(metaCollection.getSQLCondition());
+				collectionTab.setBaseCondition(metaCollection.getSQLConditionWithoutChangePropertiesByColumns());
 				CollectionWithConditionInViewFilter filter = new CollectionWithConditionInViewFilter(); 
 				filter.setView(getParent());
 				filter.setConditionArgumentsPropertyNames(metaCollection.getConditionArgumentsPropertyNames());
