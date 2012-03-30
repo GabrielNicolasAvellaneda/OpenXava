@@ -1,6 +1,26 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.4 (2012-3-22)
+------------------------
+- Totals and row count are shown in collection frames when they are folded.
+- Comparator 'range' added to list and collections filter.
+- Java 7 support.
+- Slide effect for hiding and showing frames.
+- Frames fill all the width of the view.
+- HtmlUnit upgraded to 2.9.
+- jQuery UI upgraded to 1.8.12.
+- jQuery upgraded to 1.5.2.  
+- Liferay 4.1 is no longer supported.
+- New method setConditionValuesTo() in ModuleTestBase.
+- Fix: Reseting filter values does not work completely when an enum or descriptions list is present.  
+- Fix: Liferay51 style (the default one) pointed to a non-existent JavaScript file.
+- Fix: List column resizing does not work with IE9.
+- Fix: Moving and resizing dialogs do not work with IE9.
+- Fix: Loading... AJAX waiting message is not visible when a dialog is shown.
+- Fix: Moving and resizing a dialog affect the next open dialog size and position.
+- Fix: Combo with a simple key (a) overlapped with a combo with a composed key (a, b) and a simple property (b) fails: Field b is not saved.
+
 OpenXava 4.3.1 (2012-1-12)
 --------------------------
 - Fix: Reference with @AsEmbedded read the referenced object if the id has some event associated. 
