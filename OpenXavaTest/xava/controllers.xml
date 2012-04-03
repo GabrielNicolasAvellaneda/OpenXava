@@ -28,6 +28,15 @@
 	
 	</controller>
 	
+	
+	<!-- tmp -->
+	<controller name="Author">	
+		<extends controller="Typical"/>
+        <action name="search" hidden="true"
+				class="org.openxava.test.actions.SearchAuthorAction" />
+	</controller>
+	
+	
 	<controller name="Corporation">	
 		<extends controller="Typical"/>
         <action name="report" image="images/report.gif" mode="detail"

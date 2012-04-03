@@ -192,7 +192,7 @@ public class Invoice {
 	@ListsProperties({
 		@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free"),
 		@ListProperties(forViews="NoSections", value="product.description, product.unitPrice+, quantity, amount"),  
-		@ListProperties(forViews="DetailsWithTotals", value="deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]"), 				
+		@ListProperties(forViews="DetailsWithTotals", value="deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]"), 						
 	})
 	@EditAction(forViews="DEFAULT", value="Invoice.editDetail")
 	@DetailAction(forViews="DEFAULT", value="Invoice.viewProduct")
@@ -252,7 +252,7 @@ public class Invoice {
 		return result;
 	}
 	
-	@ListProperties("deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]")	
+	@ListProperties("deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]")		
 	public Collection<InvoiceDetail> getCalculatedDetails() { 
 		return getDetails();
 	}
