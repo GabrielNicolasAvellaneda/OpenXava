@@ -11,6 +11,25 @@ class AuthorTest extends ModuleTestBase {
 	AuthorTest(String testName) {
 		super(testName, "Author")		
 	}
+	
+	void testOverwritingDefaultSearch() { // tmp
+		execute "Mode.detailAndFirst"
+		assertMessage "Showing author JAVIER PANIZA"
+		assertValue "author", "JAVIER PANIZA"
+		execute "Navigation.next"
+		assertMessage "Showing author MIGUEL DE CERVANTES"
+		assertValue "author", "MIGUEL DE CERVANTES"
+		execute "CRUD.search"
+		setValue "author", "JAVIER PANIZA"
+		execute "Search.search"
+		assertMessage "Showing author JAVIER PANIZA"
+		assertValue "author", "JAVIER PANIZA"
+		execute "Mode.list"
+		execute "List.viewDetail", "row=1"
+		assertMessage "Showing author MIGUEL DE CERVANTES"
+		assertValue "author", "MIGUEL DE CERVANTES"
+	}
+	
 
 	void testCollectionViewWithGroup() {
 		assertLabelInList(0, "Author")
@@ -28,6 +47,5 @@ class AuthorTest extends ModuleTestBase {
 		execute "CRUD.save"
 		assertError "Sorry, but PEPE is not a good name for an author"
 	}
-
 
 }
