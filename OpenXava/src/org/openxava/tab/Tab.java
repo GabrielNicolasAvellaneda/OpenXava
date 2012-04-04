@@ -1185,7 +1185,7 @@ public class Tab implements java.io.Serializable {
 			id.append(parentView.getValue("descripcion"));
 		}
 		
-		if (id.length() > 0) {
+		if (id.length() == 0) {
 			Map key = parentView.getKeyValuesWithValue();
 			for (Iterator it = key.values().iterator(); it.hasNext(); ) {
 				id.append(it.next());

@@ -14,12 +14,11 @@
 		
 	</tab>
 
-
 	<tab>	
 		<properties>year, number, date</properties>		
 		<default-order>${number} desc</default-order>
 		
 		<for-model model="Invoice3"/>
-	</tab>	
-		 	
+	</tab>
+	
 </tabs-default-values>

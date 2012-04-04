@@ -35,7 +35,7 @@
 	<controller name="Corporation">	
 		<extends controller="Typical"/>
         <action name="report" image="images/report.gif" mode="detail"
-				class="org.openxava.test.actions.ReportCorporationAction" />
+			class="org.openxava.test.actions.ReportCorporationAction" />
 	</controller>
 	
 	<controller name="Company">	
