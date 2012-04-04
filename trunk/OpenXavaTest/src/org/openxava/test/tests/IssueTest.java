@@ -17,7 +17,7 @@ public class IssueTest extends IssueTestBase {
 		// Company A
 		assertValueInList(0, 0, "A0001");
 		execute("List.viewDetail", "row=0");
-		assertCollectionRowCount("comments", 1);
+		assertCollectionRowCount("comments", 1); 
 		assertCollectionRowCount("commentsWithCondition", 1);
 		assertValueInCollection("comments", 0, 1, "Comment on A0001");
 		assertValueInCollection("commentsWithCondition", 0, 1, "Comment on A0001");

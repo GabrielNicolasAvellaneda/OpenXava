@@ -33,7 +33,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private boolean supportsYearFunction = false;  
 	private boolean supportsMonthFunction = false;
 	private boolean supportsTranslateFunction = false;
-	private boolean isReferencePropertyWithFormula = false;
+	private boolean referencePropertyWithFormula = false;
 
 	
 	abstract public String getModelName() throws XavaException;
@@ -314,8 +314,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 		
 		String tableColumn = getTableColumn(modelProperty, true);
 		if (Is.emptyString(tableColumn)) return "'" + modelProperty + "'";
-		if (isReferencePropertyWithFormula) {
-			isReferencePropertyWithFormula = false;
+		if (referencePropertyWithFormula) {
+			referencePropertyWithFormula = false;
 			return tableColumn;
 		}
 		// for calculated fields or created by multiple converter
@@ -415,7 +415,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 					}
 					else if(hasFormula){
 						String formula = referencedMapping.getPropertyMapping(propertyName).getFormula();
-						isReferencePropertyWithFormula = true;
+						referencePropertyWithFormula = true;
 						return qualifyFormulaWithReferenceName(formula, referencedMapping.getModelName(), modelProperty);
 					}
 					else {						

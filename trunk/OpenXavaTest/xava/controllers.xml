@@ -19,23 +19,18 @@
 	-->
 	
 	<controller name="ShowSeller">
-	
 		<action name="show" class="org.openxava.test.actions.ShowSellerAction"/>
 		<action name="goShowSeller" class="org.openxava.actions.ChangeModuleAction">
 			<set property="nextModule" value="ShowSeller"/>
 			<set property="reinit" value="true"/>
-		</action>
-	
+		</action>	
 	</controller>
-	
-	
-	<!-- tmp -->
+		
 	<controller name="Author">	
 		<extends controller="Typical"/>
         <action name="search" hidden="true"
 				class="org.openxava.test.actions.SearchAuthorAction" />
-	</controller>
-	
+	</controller>	
 	
 	<controller name="Corporation">	
 		<extends controller="Typical"/>
