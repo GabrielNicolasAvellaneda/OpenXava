@@ -12,7 +12,7 @@ class AuthorTest extends ModuleTestBase {
 		super(testName, "Author")		
 	}
 	
-	void testOverwritingDefaultSearch() { // tmp
+	void testOverwritingDefaultSearch() {
 		execute "Mode.detailAndFirst"
 		assertMessage "Showing author JAVIER PANIZA"
 		assertValue "author", "JAVIER PANIZA"

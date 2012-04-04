@@ -7,14 +7,17 @@ import java.util.*;
  * @author José Luis Dorado
  */
 
-public class SearchDialogAction extends SearchByViewKeyAction {
+public class SearchDialogAction extends ViewBaseAction implements IChainAction {
 	
 	public void execute() throws Exception {
-		Map values = getValuesFromView();
+		Map values = getView().getValues();
 		closeDialog();
 		getView().clear();		
-		getView().setValues(values);
-		super.execute();
+		getView().setValues(values);		
+	}
+
+	public String getNextAction() throws Exception {
+		return getEnvironment().getValue("XAVA_SEARCH_ACTION");
 	}
 	
 }
