@@ -1,9 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Method setFocus() of View does not work for dialogs. 
+- New method executeClicking() in ModuleTestBase.
 - Fix: Report titles too long are now shown completely.
 - Fix: Searching from detail does not execute XAVA_SEARCH_ACTION.
-- Fix: reference property with a @Formula fails in the tabs.
+- Fix: Reference property with a @Formula fails in the tabs.
 - Fix: collections with @Condition not work well in change schema.
 
 OpenXava 4.4 (2012-3-22)
