@@ -210,6 +210,7 @@ public class Module extends DWRBase {
 					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
 				);		
 				getView().resetCollectionsCache(); 
+				result.setFocusPropertyId(getView().getFocusPropertyId());
 				return;
 			}			
 		}

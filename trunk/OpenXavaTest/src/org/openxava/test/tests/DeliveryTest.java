@@ -378,19 +378,20 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("driverType", "X");
 	}
 	
-	public void testAggregateInCollectionWithNotHiddenKey() throws Exception {
+	public void testAggregateInCollectionWithNotHiddenKey_setFocusInDialog() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=2"); 
 		
-		// The bucle is for choosing a delivery with less than 3 details
+		// The bucle is for choosing a delivery with less than 3 details		
 		while (getCollectionRowCount("details") >= 3) {
 			execute("Navigation.next");
-		}
+		}		
 		String number = getValue("number");
-		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details"); 
+		executeClicking("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");  
 		assertMessage("The action New for delivery detail executed");
-		assertValue("description", "DETAIL FOR DELIVERY " + number + "/" + number);
+		assertValue("description", "DETAIL FOR DELIVERY " + number + "/" + number);		
+		assertFocusOn("description"); 
 		setValue("number", "66");
 		setValue("description", "JUNIT DELIVERY DETAIL");
 		execute("DeliveryDetail.save");

@@ -632,13 +632,33 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	protected void assertFocusOn(String name) throws Exception {
-		String expectedFocusProperty = decorateId(name); 
+		String expectedFocusProperty = decorateId(name);			
 		HtmlElement element = page.getFocusedElement(); 
 		String focusProperty = element==null?null:element.getAttribute("name");
 		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
 	}
 	
 	protected void execute(String action, String arguments) throws Exception {
+		execute(action, arguments, false);
+	}
+
+	/**
+	 * Executes an action simulating a real click in the button or link. <p>
+	 * 
+	 * In addition to execute the action this method throws the corresponding 
+	 * events of clicking the real link, like the focus lost of the current
+	 * editor, for example.<br/>
+	 * Why does not the plain execute() method work in this way by default? 
+	 * Because simulating the click does not work in all cases, because a bug of HtmlUnit.
+	 * So you have to use execute() instead of executeClicking() for most case, and use
+	 * executeClicking() when the events produced by the button click would be important
+	 * for the test.  
+	 */
+	protected void executeClicking(String action, String arguments) throws Exception {
+		execute(action, arguments, true);
+	}
+	
+	private void execute(String action, String arguments, boolean clicking) throws Exception {
 		throwChangeOfLastNotNotifiedProperty();
 		HtmlElement element = null;
 		String moduleMarkForAnchor = "executeAction('" + application + "', '" + module + "'";		
@@ -675,11 +695,12 @@ public class ModuleTestBase extends TestCase {
 			}			
 		}
 		if (element != null) {
-			if (element instanceof HtmlAnchor) {
-				// Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances
-				page.executeJavaScript(((HtmlAnchor)element).getHrefAttribute()); 
+			if (!clicking && element instanceof HtmlAnchor) { 
+				// Because input.click() fails with HtmlUnit 2.5/2.6/2.7/2.9 in some circumstances
+				page.executeJavaScript(((HtmlAnchor)element).getHrefAttribute());
+				
 			}
-			else {			
+			else {
 				element.click();
 			}
 			resetForm(); 

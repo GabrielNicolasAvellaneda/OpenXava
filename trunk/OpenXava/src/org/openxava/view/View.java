@@ -3656,8 +3656,12 @@ public class View implements java.io.Serializable {
 	
 	public String getFocusPropertyId() { 		
 		try {			
-			if (!Is.emptyString(focusCurrentId)) return focusCurrentId;
-			if (!Is.emptyString(focusPropertyId) && !focusForward) return focusPropertyId;
+			if (!Is.emptyString(focusCurrentId)) {
+				return focusCurrentId;
+			}
+			if (!Is.emptyString(focusPropertyId) && !focusForward) {
+				return focusPropertyId;
+			}
 			return calculateFocusPropertyId();
 		}
 		catch (Exception ex) { 
