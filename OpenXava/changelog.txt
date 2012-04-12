@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Keystrokes don't work until the first action is called.
 - Fix: Method setFocus() of View does not work for dialogs. 
 - New method executeClicking() in ModuleTestBase.
 - Fix: Report titles too long are now shown completely.

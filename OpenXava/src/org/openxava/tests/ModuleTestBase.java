@@ -5,6 +5,8 @@ import java.net.*;
 import java.util.*;
 import java.util.logging.*;
 
+import javax.swing.*;
+
 import org.apache.commons.logging.*;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
