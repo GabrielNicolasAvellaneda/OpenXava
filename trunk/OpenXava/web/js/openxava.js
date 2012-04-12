@@ -10,6 +10,7 @@ openxava.init = function(application, module) {
 		}
 		$(openxava.staticInit);
 	}
+	openxava.initStrokeActions(application, module);
 }
 
 openxava.ajaxRequest = function(application, module, firstRequest) {
@@ -152,7 +153,15 @@ openxava.initUI = function(application, module, currentRow) {
 		openxava.initEditors(application, module);
 	}
 	openxava.initSelectedRows();
-	openxava.initCurrentRow(application, module, currentRow);
+	openxava.initCurrentRow(application, module, currentRow);	
+}
+
+openxava.initStrokeActions = function(application, module) { 
+	Module.getStrokeActions(application, module, openxava.setStrokeActions);
+}
+
+openxava.setStrokeActions = function(strokeActions) { 
+	openxava.strokeActions = strokeActions;
 }
 
 openxava.showMessages = function(result) { 

@@ -12,7 +12,7 @@ public class CarrierTest extends CarrierTestBase {
 	public CarrierTest(String testName) {
 		super(testName, "Carrier");		
 	}	
-	
+		
 	public void testRowActions() throws Exception {
 		execute("List.orderBy", "property=number"); 		
 		assertListRowCount(5);
@@ -407,13 +407,11 @@ public class CarrierTest extends CarrierTestBase {
 		assertCollectionRowCount("fellowCarriers", 3);
 		assertValueInCollection("fellowCarriers", 0, "number", "2");
 		assertValueInCollection("fellowCarriers", 1, "number", "3");
-		assertValueInCollection("fellowCarriers", 2, "number", "4");
-		// tmp ini
+		assertValueInCollection("fellowCarriers", 2, "number", "4"); 
 		setConditionValues("fellowCarriers", new String [] { "3"});
 		execute("List.filter", "collection=fellowCarriers");
 		assertCollectionRowCount("fellowCarriers", 1);
 		assertValueInCollection("fellowCarriers", 0, "number", "3");		
-		// tmp fin
 	}
 	
 	public void testCalculatedCollection() throws Exception {

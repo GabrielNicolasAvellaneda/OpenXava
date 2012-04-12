@@ -130,6 +130,11 @@ public class Module extends DWRBase {
 		// Http session is used instead of ox context because context may not exist at this moment
 		return request.getSession().getAttribute(PAGE_RELOADED_LAST_TIME) != null;
 	}
+	
+	public Map getStrokeActions(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
+		this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
+		return getStrokeActions();
+	}
 
 	private Map getStrokeActions() {  
 		java.util.Iterator it = manager.getAllMetaActionsIterator();
