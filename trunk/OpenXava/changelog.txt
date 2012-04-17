@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: CSRF attack error in Liferay.
 - Fix: Keystrokes don't work until the first action is called.
 - Fix: Method setFocus() of View does not work for dialogs. 
 - New method executeClicking() in ModuleTestBase.
