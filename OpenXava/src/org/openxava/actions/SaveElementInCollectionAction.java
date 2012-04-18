@@ -42,7 +42,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	
 	protected Map getValuesToSave() throws Exception {
-		return getCollectionElementView().getValues();
+		return getCollectionElementView().getValues();		
 	}
 	
 	private void validateMaximum() throws ValidationException, XavaException {

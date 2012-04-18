@@ -1078,7 +1078,7 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	
-	public void testValidationOnSaveAggregateAndModelValidatorReceivesReference() throws Exception {		
+	public void testValidationOnSaveAggregateAndModelValidatorReceivesReferenceAndCalculatedProperty() throws Exception {		
 		// Create
 		execute("CRUD.new");						
 		assertExists("customer.number");
@@ -1123,9 +1123,9 @@ public class InvoiceTest extends ModuleTestBase {
 		assertDialog(); 
 		
 		setValue("unitPrice", getProductUnitPrice());
-		execute("Collection.save");
-		assertNoDialog(); 
+		execute("Collection.save");		 
 		assertNoErrors();
+		assertNoDialog(); 
 		
 		// Delete
 		execute("CRUD.delete");		
