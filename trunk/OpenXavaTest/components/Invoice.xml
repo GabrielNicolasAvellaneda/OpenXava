@@ -166,6 +166,7 @@
 			<set property="oid"/>
 			<set property="product"/>
 			<set property="unitPrice"/>
+			<set property="amount"/>
 		</validator>
 		
 	</aggregate>		

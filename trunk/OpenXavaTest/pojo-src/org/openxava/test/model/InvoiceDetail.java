@@ -32,7 +32,8 @@ import org.openxava.test.validators.*;
 		@PropertyValue(name="invoice"), 
 		@PropertyValue(name="oid"), 
 		@PropertyValue(name="product"),
-		@PropertyValue(name="unitPrice")
+		@PropertyValue(name="unitPrice"),
+		@PropertyValue(name="amount")
 	}
 )
 public class InvoiceDetail {

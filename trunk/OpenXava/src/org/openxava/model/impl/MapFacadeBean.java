@@ -10,6 +10,7 @@ import org.apache.commons.logging.*;
 import org.hibernate.Hibernate;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
+import org.openxava.jpa.*;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -1375,7 +1376,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				Iterator itSets =  metaValidator.getMetaSetsWithoutValue().iterator();
 				if (!creating && metaValidator.isOnlyOnCreate()) continue; 
 				IValidator v = metaValidator.createValidator();
-				PropertiesManager mp = new PropertiesManager(v);		
+				PropertiesManager mp = new PropertiesManager(v);
 				while (itSets.hasNext()) {
 					MetaSet set = (MetaSet) itSets.next();					
 					Object value = values.get(set.getPropertyNameFrom());
@@ -1384,9 +1385,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 							Map memberName = new HashMap();
 							memberName.put(set.getPropertyNameFrom(), null);
 							Map memberValue = getValues(metaModel, keyValues, memberName);
-							value = memberValue.get(set.getPropertyNameFrom());
-						}											
-					}	
+							value = memberValue.get(set.getPropertyNameFrom());							
+						}
+						else {
+							Object model = metaModel.toPOJO(values);
+							PropertiesManager modelPM = new PropertiesManager(model);
+							value = modelPM.executeGet(set.getPropertyNameFrom());							
+						}
+					}						
 					if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
 						if (set.getPropertyNameFrom().equals(metaModel.getContainerReference())) {
 							if (container == null) {							
@@ -1421,7 +1427,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 								}																															
 							}		
 						}
-					}										
+					}
 					mp.executeSet(set.getPropertyName(), value);									
 				}							
 				v.validate(errors);

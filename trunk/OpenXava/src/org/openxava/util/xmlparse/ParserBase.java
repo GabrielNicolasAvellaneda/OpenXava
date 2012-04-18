@@ -74,7 +74,7 @@ abstract public class ParserBase extends XmlElementsNames {
 			Enumeration resources = getClass().getClassLoader().getResources(xmlFileURL);
 			while (resources.hasMoreElements()) {
 				URL resource = (URL) resources.nextElement();
-				xmlFileCompleteURL = resource.toExternalForm();				
+				xmlFileCompleteURL = resource.toExternalForm();
 				_parse(xmlFileCompleteURL);				
 			}			
 		} 
