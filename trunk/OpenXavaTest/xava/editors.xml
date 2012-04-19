@@ -29,11 +29,21 @@
 
 	<editor name="PersonName" url="textEditor.jsp">
 		<formatter
-			class="org.openxava.test.formatters.PersonNameFormatter">
+			class="org.openxava.test.formatters.NameFormatter">
 			<set property="firstLetterInUpperCase" value="true" />
 		</formatter>
 		<for-stereotype stereotype="PERSON_NAME" />
 	</editor>
+	
+	<editor name="CityName" url="textEditor.jsp">
+		<formatter
+			class="org.openxava.test.formatters.NameFormatter">
+			<set property="firstLetterInUpperCase" value="true" />
+		</formatter>
+		<list-formatter
+			class="org.openxava.test.formatters.CityNameFormatter"/>		
+		<for-stereotype stereotype="CITY_NAME" />
+	</editor>	
 	
 	<editor url="colorEditor.jsp">
 		<for-reference model="Color"/>

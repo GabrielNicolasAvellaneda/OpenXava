@@ -35,6 +35,7 @@ public class MetaEditor {
 	private boolean composite = false; 
 	private String listFormatterClassName;
 	private Collection listFormatterMetaSet;
+	private IFormatter listFormatter; 
 
 	public void _addListFormatterMetaSet(MetaSet metaSet) {
 		if (listFormatterMetaSet == null) listFormatterMetaSet = new ArrayList();
@@ -130,7 +131,10 @@ public class MetaEditor {
 	}
 	
 	public IFormatter getListFormatter() throws XavaException {
-		return (IFormatter) getFormatterObject(listFormatterClassName, listFormatterMetaSet);
+		if (listFormatter == null) { 
+			listFormatter = (IFormatter) createFormatterObject(listFormatterClassName, listFormatterMetaSet);
+		}
+		return listFormatter;
 	}
 	
 	public IMultipleValuesFormatter getMultipleValuesFormatter() throws XavaException {  
@@ -144,28 +148,33 @@ public class MetaEditor {
 	
 	private Object getFormatterObject(String className, Collection metaSets) throws XavaException{
 		if (formatter == null) {
-			if (Is.emptyString(className)) {
-				throw new XavaException("no_formatter_class_error");
-			}
-			try {
-				formatter =  Class.forName(className).newInstance();
-				if (metaSets != null) {
-					PropertiesManager pm = new PropertiesManager(formatter);
-					for (Iterator it = metaSets.iterator(); it.hasNext(); ) {
-						MetaSet metaSet = (MetaSet) it.next();
-						pm.executeSetFromString(metaSet.getPropertyName(), metaSet.getValue());
-					}
-				}				
-				if (!(formatter instanceof IFormatter || formatter instanceof IMultipleValuesFormatter)) {
-					throw new XavaException("implements_required", className, IFormatter.class.getName() + " or " + IMultipleValuesFormatter.class.getName());
-				}
-			}
-			catch (Exception ex) {
-				log.error(ex.getMessage(), ex);
-				throw new XavaException("create_formatter_error", className);
-			}
+			formatter = createFormatterObject(className, metaSets);
 		}
 		return formatter;
+	}
+
+	private Object createFormatterObject(String className, Collection metaSets) { 
+		if (Is.emptyString(className)) {
+			throw new XavaException("no_formatter_class_error");
+		}
+		try {
+			Object formatter =  Class.forName(className).newInstance();
+			if (metaSets != null) {
+				PropertiesManager pm = new PropertiesManager(formatter);
+				for (Iterator it = metaSets.iterator(); it.hasNext(); ) {
+					MetaSet metaSet = (MetaSet) it.next();
+					pm.executeSetFromString(metaSet.getPropertyName(), metaSet.getValue());
+				}
+			}
+			if (!(formatter instanceof IFormatter || formatter instanceof IMultipleValuesFormatter)) {
+				throw new XavaException("implements_required", className, IFormatter.class.getName() + " or " + IMultipleValuesFormatter.class.getName());
+			}
+			return formatter;
+		}
+		catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new XavaException("create_formatter_error", className);
+		}
 	}
 	
 	public String getFormatterClassName() {
