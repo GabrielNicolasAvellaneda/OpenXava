@@ -22,6 +22,7 @@ public class City {
 	@Id
 	private int code;
 	
+	@Stereotype("CITY_NAME")
 	private String name;
 
 	public State getState() {

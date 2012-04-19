@@ -8,7 +8,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class JbyXNameFormatter extends PersonNameFormatter {
+public class JbyXNameFormatter extends NameFormatter {
 
 	public String format(HttpServletRequest request, Object object)	throws Exception {
 		String result = super.format(request, object);		

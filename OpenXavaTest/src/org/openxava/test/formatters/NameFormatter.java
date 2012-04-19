@@ -10,7 +10,7 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
-public class PersonNameFormatter implements IFormatter {
+public class NameFormatter implements IFormatter {
 	
 	private boolean firstLetterInUpperCase = false;
 
