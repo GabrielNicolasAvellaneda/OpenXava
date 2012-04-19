@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Tries to load .svn files as JS.
 - Fix: Calculated properties are not injected in the entity validators.
 - Fix: CSRF attack error in Liferay.
 - Fix: Keystrokes don't work until the first action is called.
