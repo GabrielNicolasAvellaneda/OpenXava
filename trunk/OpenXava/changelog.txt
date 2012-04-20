@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Tab default values are applied to collections.
 - Fix: If defined list formatter is used as formatter in detail mode too.
 - Fix: Tries to load .svn files as JS.
 - Fix: Calculated properties are not injected in the entity validators.
