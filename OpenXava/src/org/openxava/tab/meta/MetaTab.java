@@ -105,7 +105,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	public static MetaTab createDefault(MetaModel metaModel) { 
 		MetaTab tab = new MetaTab();
 		tab.setMetaModel(metaModel);	
-		// tmp tab.setDefaultValues(); 
 		return tab;
 	}
 
