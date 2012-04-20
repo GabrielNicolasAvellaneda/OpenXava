@@ -46,6 +46,7 @@ public class GenerateCustomReportServlet extends HttpServlet {
 			JRExporter exporter;
 			if (format.equals(JasperReportBaseAction.EXCEL)) {
 				response.setContentType("application/vnd.ms-excel");
+				response.setHeader("Content-Disposition", "inline; filename=\"report.xls\"");
 				exporter = new JRXlsExporter();
 			} 
 			else if (format.equalsIgnoreCase(JasperReportBaseAction.RTF)) { 				
