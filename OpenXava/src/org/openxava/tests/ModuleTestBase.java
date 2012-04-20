@@ -850,7 +850,7 @@ public class ModuleTestBase extends TestCase {
 		for (int i=0; !type.equals(getPopupResponse(popup).getContentType()) && i<20; i++) {
 			try { Thread.sleep(500); } catch (Exception ex) { }
 		}
-		assertEquals(XavaResources.getString("content_type_not_match"), type, getPopupResponse(popup).getContentType());
+		assertEquals(XavaResources.getString("content_type_not_match"), type, getPopupResponse(popup).getContentType());		
 	}	
 	
 	
