@@ -156,9 +156,11 @@
 		String[] jsEditors = jsEditorsFolder.list();
 		Arrays.sort(jsEditors);
 		for (int i = 0; i < jsEditors.length; i++) {
+			if (jsEditors[i].endsWith(".js")) {
 	%>
 	<script type="text/javascript" src="<%=contextPath%>/xava/editors/js/<%=jsEditors[i]%>?ox=<%=version%>"></script>
 	<%
+			}
 		}
 	%>	
 	<script type="text/javascript">

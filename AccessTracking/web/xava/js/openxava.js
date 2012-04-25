@@ -10,6 +10,7 @@ openxava.init = function(application, module) {
 		}
 		$(openxava.staticInit);
 	}
+	openxava.initStrokeActions(application, module);
 }
 
 openxava.ajaxRequest = function(application, module, firstRequest) {
@@ -106,10 +107,6 @@ openxava.refreshPage = function(result) {
 				break;
 			}			
 		}  
-		if (result.focusPropertyId != null) { 
-			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
-			openxava.setFocus(result.application, result.module);		
-		}
 		if (result.showDialog){	
 			dialog.attr("application", result.application); 
 			dialog.attr("module", result.module); 
@@ -121,6 +118,10 @@ openxava.refreshPage = function(result) {
 			dialog.dialog('option', 'zIndex', 99999 );
 			dialog.dialog('open');
 		}
+		if (result.focusPropertyId != null) { 
+			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
+			openxava.setFocus(result.application, result.module);		
+		}		
 		openxava.initUI(result.application, result.module, result.currentRow); 	
 	}		
 	document.getElementById('xava_processing_layer').style.display='none';
@@ -152,7 +153,15 @@ openxava.initUI = function(application, module, currentRow) {
 		openxava.initEditors(application, module);
 	}
 	openxava.initSelectedRows();
-	openxava.initCurrentRow(application, module, currentRow);
+	openxava.initCurrentRow(application, module, currentRow);	
+}
+
+openxava.initStrokeActions = function(application, module) { 
+	Module.getStrokeActions(application, module, openxava.setStrokeActions);
+}
+
+openxava.setStrokeActions = function(strokeActions) { 
+	openxava.strokeActions = strokeActions;
 }
 
 openxava.showMessages = function(result) { 
@@ -556,9 +565,9 @@ openxava.requestOnChange = function(application, module) {
 
 openxava.setFocus = function(application, module) {	
 	var form = openxava.getForm(application, module);	
-	var elementName = form.elements[openxava.decorateId(application, module, "xava_focus_property_id")].value;	
+	var elementName = form.elements[openxava.decorateId(application, module, "xava_focus_property_id")].value;
 	var elementDecoratedName =  openxava.decorateId(application, module, elementName);
-	var element = form.elements[elementDecoratedName];  
+	var element = form.elements[elementDecoratedName];
 	
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
 		if (!$(element).is(':visible')) return; 
