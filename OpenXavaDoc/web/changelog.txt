@@ -1,6 +1,23 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.4.1 (2012-4-25)
+--------------------------
+- New method executeClicking() in ModuleTestBase. 
+- Fix: Locales for portlet resource files do not match those of portlet.xml (javax.portlet.title error in liferay).
+- Fix: Reports with format excel produce a file called report.pdf instead of report.xls. 
+- Fix: Tab default values are applied to collections.
+- Fix: If defined list formatter is used as formatter in detail mode too.
+- Fix: Tries to load .svn files as JS.
+- Fix: Calculated properties are not injected in the entity validators.
+- Fix: CSRF attack error in Liferay.
+- Fix: Keystrokes don't work until the first action is called.
+- Fix: Method setFocus() of View does not work for dialogs. 
+- Fix: Report titles too long are now shown completely.
+- Fix: Searching from detail does not execute XAVA_SEARCH_ACTION.
+- Fix: Reference property with a @Formula fails in the tabs.
+- Fix: collections with @Condition not work well in change schema.
+
 OpenXava 4.4 (2012-3-22)
 ------------------------
 - Totals and row count are shown in collection frames when they are folded.
