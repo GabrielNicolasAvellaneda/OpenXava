@@ -16,11 +16,13 @@
 				<set property="string2" from="name"/>
 			</calculator>
 		</property>				  
+		<property name="fullNameWithFormula" type="String"/>
 	</entity>
 	
 	<entity-mapping table="XAVATEST@separator@STATE">
 		<property-mapping property="id" column="ID"/>
 		<property-mapping property="name" column="NAME"/>
+		<property-mapping property="fullNameWithFormula" formula="CONCAT(id,name)"/>
 	</entity-mapping> 
 				
 </component>

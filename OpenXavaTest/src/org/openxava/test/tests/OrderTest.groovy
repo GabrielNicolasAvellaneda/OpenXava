@@ -42,24 +42,38 @@ class OrderTest extends ModuleTestBase {
 		assertNoErrors()		
 	}
 	
-	void testDoubleClickOnlyInsertsACollectionElement() throws Exception { 
-		execute("CRUD.new")
-		setValue("customer.number", "1")
-		assertCollectionRowCount("details", 0)
-		execute("Collection.new", "viewObject=xava_view_details")
-		setValue("product.number", "1")
-		setValue("quantity", "10")
-		HtmlElement action = getForm().getElementById(decorateId("Collection.save"))
-				
-		action.click() // Not dblClick(), it does not reproduce the problem
-		action.click()
-		Thread.sleep(4000)
-				
-		assertNoErrors()
-		assertCollectionRowCount("details", 1)
-		
-		execute("CRUD.delete")
-		assertNoErrors();
+	void testDoubleClickOnlyInsertsACollectionElement() throws Exception {
+		boolean doubleClick = false; 
+		while (!doubleClick) { 
+			execute("CRUD.new")
+			setValue("customer.number", "1")
+			assertCollectionRowCount("details", 0)
+			execute("Collection.new", "viewObject=xava_view_details")
+			setValue("product.number", "1")
+			setValue("quantity", "10")
+			HtmlElement action = getForm().getElementById(decorateId("Collection.save"))
+					
+			action.click() // Not dblClick(), it does not reproduce the problem
+			try {
+				getForm().getElementById(decorateId("Collection.save"))
+			}
+			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
+				continue // Because sometimes the action is executed very fast and 
+					// when the second click happens the dialog is already closed
+				    // This case cannot occurs in real life (because with no dialog 
+					// there is no button to click) but it can occurs in test 
+					// (because we have a reference to the link) 
+			}
+			action.click()
+			doubleClick = true
+			Thread.sleep(4000)
+					
+			assertNoErrors()
+			assertCollectionRowCount("details", 1)
+			
+			execute("CRUD.delete")
+			assertNoErrors();
+		}
 	}
 	
 	private String getNextNumber() throws Exception {
