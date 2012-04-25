@@ -229,9 +229,9 @@ else {
 				<textField>
 					<reportElement
 						mode="Transparent"
-						x="61"
+						x="5"
 						y="5"
-						width="<%=columnWidth - 125%>"
+						width="<%=columnWidth%>"
 						height="20"
 						forecolor="#000000"
 						backcolor="#FFFFFF"
