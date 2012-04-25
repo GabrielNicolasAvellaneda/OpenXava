@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Aug 03 12:24:47 CEST 2011
+ * @version Tue Apr 24 10:19:13 CEST 2012
  */
 public class LiferayDisplayXmlPG {
     Properties properties = new Properties();
@@ -79,7 +79,7 @@ public class LiferayDisplayXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Aug 03 12:24:48 CEST 2011", // date this file was generated
+        { "Tue Apr 24 10:19:14 CEST 2012", // date this file was generated
              "../OpenXava/generator/liferayDisplayxml.xml", // input file
              "../OpenXava/generator/LiferayDisplayXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

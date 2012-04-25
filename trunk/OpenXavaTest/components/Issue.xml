@@ -18,7 +18,11 @@ default schema behaviour
 		<reference name="worker"/>	
 		<collection name="comments">
 			<reference model="Comment"/>
-		</collection>		  						
+		</collection>		  	
+		<collection name="commentsWithCondition">
+			<reference model="Comment"/>
+			<condition>${issue.id} = ${this.id}</condition>
+		</collection>
 	</entity>
 	
 	<aggregate name="Comment">

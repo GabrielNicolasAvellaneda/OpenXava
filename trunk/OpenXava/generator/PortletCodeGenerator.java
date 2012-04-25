@@ -1,4 +1,5 @@
 
+import org.openxava.generators.*;
 import org.openxava.application.meta.*;
 import org.openxava.converters.StringBlobConverter.*;
 
@@ -165,29 +166,15 @@ public class PortletCodeGenerator {
 		}
 	}	
 	
-	private Locale[] getLocales() {
-		String stringValue = XavaPreferences.getInstance().getPortletLocales();
-		if (!(stringValue == null)){
-			StringTokenizer parser = new StringTokenizer(stringValue," \t\n\r,;");
-			Locale [] result = new Locale [parser.countTokens()];
-			int i=0;
-			while (parser.hasMoreTokens()){
-				result[i] = new Locale(parser.nextToken());
-				i++;
-			}
-			return result;
-		}
-		return new Locale[] {new Locale("en"), new Locale("es")};
-	}
-	
 	private void createI18nFiles(MetaApplication app, MetaModule module) throws Exception {
-		Locale[] locales = getLocales();
-		for (int i = 0; i < locales.length; i++) {
+		Collection locales = Generators.getAvailableLocales("../" + project + "/i18n");
+		for (Object olocale: locales) {
+			Locale locale = (Locale) olocale;
 			Properties i18n = new Properties();			
-			i18n.put("category." + app.getId(), app.getLabel(locales[i]));
-			i18n.put("javax.portlet.title", app.getLabel(locales[i]) + " - " +  module.getDescription(locales[i]));
-			i18n.put("javax.portlet.short-title", module.getLabel(locales[i]));
-			i18n.store(new FileOutputStream("../" + project + "/i18n/portlets/" + module.getName() + "_" + locales[i].getLanguage() + ".properties"), null);
+			i18n.put("category." + app.getId(), app.getLabel(locale));
+			i18n.put("javax.portlet.title", app.getLabel(locale) + " - " +  module.getDescription(locale));
+			i18n.put("javax.portlet.short-title", module.getLabel(locale));
+			i18n.store(new FileOutputStream("../" + project + "/i18n/portlets/" + module.getName() + "_" + locale.getLanguage() + ".properties"), null);			
 		}
 	}
 	

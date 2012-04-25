@@ -16,6 +16,7 @@ public class InvoiceDetailValidator implements IValidator {
 	private String oid; // At moment oid is only for verify that can be set without crash
 	private IProduct product;	
 	private BigDecimal unitPrice;
+	private BigDecimal amount;
 
 	public void validate(Messages errors) throws Exception {		
 		if (invoice.isPaid()) {
@@ -28,7 +29,12 @@ public class InvoiceDetailValidator implements IValidator {
 		}
 		if (getProduct().getUnitPrice().compareTo(getUnitPrice()) < 0) {
 			errors.add("invoice_price_less_or_equal_to_product");			
-		}		
+		}	
+		if (getProduct().getUnitPrice().compareTo(BigDecimal.ZERO) > 0 && // To test that calculated properties are injected
+			(getAmount() == null || getAmount().compareTo(BigDecimal.ZERO) <= 0)) 
+		{
+			errors.add("amount_must_be_positive_if_unit_price_is_positive"); 
+		}				
 	}
 	
 	public IProduct getProduct() {
@@ -58,5 +64,13 @@ public class InvoiceDetailValidator implements IValidator {
 	public void setInvoice(IInvoice invoice) {
 		this.invoice = invoice;
 	}
+	
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}	
 	
 }
