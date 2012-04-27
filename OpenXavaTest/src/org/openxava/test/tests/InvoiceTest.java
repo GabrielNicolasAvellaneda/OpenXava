@@ -149,9 +149,23 @@ public class InvoiceTest extends ModuleTestBase {
 		assertContentTypeForPopup("application/vnd.oasis.opendocument.text");				
 	}
 	
-	public void testGenerateTwoReportsAtOnce() throws Exception {  
+	public void testGenerateTwoReportsAtOnce() throws Exception {
+		assertGenerateTwoReportsAtOnce("Invoice.print2Pdfs");
+	}
+	
+	public void testGenerateTwoReportsAtOnceWithDifferentParameters() throws Exception {
+		assertGenerateTwoReportsAtOnce("Invoice.printInvoiceAndCustomer");
+	}
+	
+	public void testGenerateTwoReportsAtOnceWithDifferentParametersUsingAddParameters() throws Exception {
+		assertGenerateTwoReportsAtOnce("Invoice.printInvoiceAndCustomer2");
+	}
+
+	
+	
+	private void assertGenerateTwoReportsAtOnce(String action) throws Exception {  
 		execute("Mode.detailAndFirst");
-		execute("Invoice.print2Pdfs");		
+		execute(action);		
 		assertNoErrors();		
 		assertPopupCount(2); 
 		assertContentTypeForPopup(0, "application/pdf");
