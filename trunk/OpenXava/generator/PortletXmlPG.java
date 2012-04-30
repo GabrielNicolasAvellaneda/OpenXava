@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Apr 24 10:19:09 CEST 2012
+ * @version Mon Apr 30 12:26:35 CEST 2012
  */
 public class PortletXmlPG {
     Properties properties = new Properties();
@@ -108,7 +108,7 @@ public class PortletXmlPG {
     
     }
     
-    out.print("   \n\n\t<user-attribute>\n\t\t<description>User eMail</description>\n\t\t<name>user.home-info.online.email</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Given Name</description>\n\t\t<name>user.name.given</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Family Name</description>\n\t\t<name>user.name.family</name>\n\t</user-attribute>\n\t\t\n</portlet-app>");
+    out.print("   \n\n\t<user-attribute>\n\t\t<description>User eMail</description>\n\t\t<name>user.home-info.online.email</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Given Name</description>\n\t\t<name>user.name.given</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Family Name</description>\n\t\t<name>user.name.family</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Job Title</description>\n\t\t<name>user.jobtitle</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Middle Name</description>\n\t\t<name>user.name.middle</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Nick Name</description>\n\t\t<name>user.name.nickName</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Birthday Year</description>\n\t\t<name>user.bdate.ymd.year</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Birthday Month</description>\n\t\t<name>user.bdate.ymd.month</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Birthday Day</description>\n\t\t<name>user.bdate.ymd.day</name>\n\t</user-attribute>\n\t\t\n</portlet-app>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -143,7 +143,7 @@ public class PortletXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Apr 24 10:19:10 CEST 2012", // date this file was generated
+        { "Mon Apr 30 12:26:38 CEST 2012", // date this file was generated
              "../OpenXava/generator/portletxml.xml", // input file
              "../OpenXava/generator/PortletXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

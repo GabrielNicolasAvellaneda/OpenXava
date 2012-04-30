@@ -36,6 +36,12 @@ public class TaskTest extends ModuleTestBase {
 		assertValue("userGivenName", "JUnit Given Name");
 		assertValue("userFamilyName", "JUnit Family Name");
 		assertValue("userEMail", "junit@openxava.org");
+		assertValue("jobTitle", "JUnit Job Title");
+		assertValue("middleName", "JUnit Middle Name");
+		assertValue("nickName", "junit");
+		assertValue("birthDateYear", "2012");
+		assertValue("birthDateMonth", "4");
+		assertValue("birthDateDay", "30");
 		setValue("summary", "JUNIT TEST");
 		execute("Task.save");
 		assertMessage("The given name is JUnit Given Name");

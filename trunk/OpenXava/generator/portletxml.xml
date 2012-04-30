@@ -95,6 +95,30 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		&lt;description&gt;User Family Name&lt;/description&gt;
 		&lt;name&gt;user.name.family&lt;/name&gt;
 	&lt;/user-attribute&gt;
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Job Title&lt;/description&gt;
+		&lt;name&gt;user.jobtitle&lt;/name&gt;
+	&lt;/user-attribute&gt;
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Middle Name&lt;/description&gt;
+		&lt;name&gt;user.name.middle&lt;/name&gt;
+	&lt;/user-attribute&gt;
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Nick Name&lt;/description&gt;
+		&lt;name&gt;user.name.nickName&lt;/name&gt;
+	&lt;/user-attribute&gt;
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Birthday Year&lt;/description&gt;
+		&lt;name&gt;user.bdate.ymd.year&lt;/name&gt;
+	&lt;/user-attribute&gt;
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Birthday Month&lt;/description&gt;
+		&lt;name&gt;user.bdate.ymd.month&lt;/name&gt;
+	&lt;/user-attribute&gt;
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Birthday Day&lt;/description&gt;
+		&lt;name&gt;user.bdate.ymd.day&lt;/name&gt;
+	&lt;/user-attribute&gt;
 		
 &lt;/portlet-app&gt;
 </tl>
