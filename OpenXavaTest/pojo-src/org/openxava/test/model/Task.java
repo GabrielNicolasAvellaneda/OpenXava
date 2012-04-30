@@ -1,6 +1,7 @@
 package org.openxava.test.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
@@ -40,6 +41,33 @@ public class Task {
 	@Required @DefaultValueCalculator(CurrentUserEmailCalculator.class)
 	@Column(length=50)
 	private String userEMail;
+	
+	@Stereotype("NO_FORMATING_STRING")
+	@DefaultValueCalculator(CurrentUserJobTitleCalculator.class)
+	@Column(length=30)
+	private String jobTitle;
+	
+	@Stereotype("NO_FORMATING_STRING")
+	@DefaultValueCalculator(CurrentUserMiddleNameCalculator.class)
+	@Column(length=30)	
+	private String middleName;
+	
+	@Stereotype("NO_FORMATING_STRING")
+	@DefaultValueCalculator(CurrentUserNickNameCalculator.class)
+	@Column(length=30)	
+	private String nickName;
+	
+	@DefaultValueCalculator(CurrentUserBirthDateYearCalculator.class)
+	@Column(length=4)
+	private int birthDateYear;
+
+	@DefaultValueCalculator(CurrentUserBirthDateMonthCalculator.class)
+	@Max(12)	
+	private int birthDateMonth;
+
+	@DefaultValueCalculator(CurrentUserBirthDateDayCalculator.class)
+	@Max(31)		
+	private int birthDateDay;
 		
 	@Required @DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
@@ -112,6 +140,54 @@ public class Task {
 
 	public void setUserEMail(String userEMail) {
 		this.userEMail = userEMail;
+	}
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public int getBirthDateYear() {
+		return birthDateYear;
+	}
+
+	public void setBirthDateYear(int birthDateYear) {
+		this.birthDateYear = birthDateYear;
+	}
+
+	public int getBirthDateMonth() {
+		return birthDateMonth;
+	}
+
+	public void setBirthDateMonth(int birthDateMonth) {
+		this.birthDateMonth = birthDateMonth;
+	}
+
+	public int getBirthDateDay() {
+		return birthDateDay;
+	}
+
+	public void setBirthDateDay(int birthDateDay) {
+		this.birthDateDay = birthDateDay;
 	}
 		
 }
