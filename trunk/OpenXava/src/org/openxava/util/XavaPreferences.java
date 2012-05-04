@@ -471,5 +471,10 @@ public class XavaPreferences {
 				"summationInList", "true").trim());
 	}
 	
+	/** @since 4.5 */
+	public boolean isMessagesOnTop() { 
+		return "true".equalsIgnoreCase(getProperties().getProperty(
+				"messagesOnTop", "true").trim());
+	}
 		
 }
