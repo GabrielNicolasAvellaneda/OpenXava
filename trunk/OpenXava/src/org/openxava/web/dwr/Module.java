@@ -95,7 +95,7 @@ public class Module extends DWRBase {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
 			}						
 			result.setViewMember(getView().getMemberName());
-			result.setStrokeActions(getStrokeActions());
+			result.setStrokeActions(getStrokeActions());			
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -316,7 +316,7 @@ public class Module extends DWRBase {
 			put(result, "label_" + en.getKey(),	"html:" + en.getValue());
 		}
 	}
-
+	
 	private void fillChangedErrorImages(Map result) {
 		if (getContext(request).exists(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST)) {
 			View view = getView();			
@@ -357,7 +357,7 @@ public class Module extends DWRBase {
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			String qualifiedName = (String) en.getKey();
-			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
+			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);			
 			View containerView = (View) en.getValue();
 			MetaModel metaModel = containerView.getMetaModel();
 			if (metaModel.containsMetaReference(name)) {		
@@ -376,7 +376,8 @@ public class Module extends DWRBase {
 					"&propertyPrefix=" + containerView.getPropertyPrefix());
 				if ((containerView.hasEditableChanged() || 
 					(containerView.hasKeyEditableChanged() && metaModel.isKeyOrSearchKey(name))) &&
-					containerView.propertyHasActions(name))					
+					containerView.propertyHasActions(name) ||
+					containerView.propertyHasChangedActions(name))					
 				{
 					put(result, "property_actions_" + qualifiedName, 
 						"propertyActions.jsp?propertyKey=" + qualifiedName +

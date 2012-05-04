@@ -1197,6 +1197,8 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.refresh",
 			"Invoice.printPdf",
 			"Invoice.print2Pdfs",
+			"Invoice.printInvoiceAndCustomer",
+			"Invoice.printInvoiceAndCustomer2",
 			"Invoice.printExcel",
 			"Invoice.printRtf",
 			"Invoice.printOdt",
@@ -1213,7 +1215,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"Mode.split",
 			"Invoice.printPdfNewAfter"
 		};		
-		assertActions(initialActions);
+		assertActions(initialActions); 
 				
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
@@ -1233,6 +1235,8 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.refresh",
 			"Invoice.printPdf",
 			"Invoice.print2Pdfs",
+			"Invoice.printInvoiceAndCustomer",
+			"Invoice.printInvoiceAndCustomer2",			
 			"Invoice.printExcel",
 			"Invoice.printRtf",
 			"Invoice.printOdt",

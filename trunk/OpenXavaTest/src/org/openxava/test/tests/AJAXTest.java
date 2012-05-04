@@ -26,6 +26,25 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
+	public void testAddRemoveActionsForProperty() throws Exception { 
+		if (!usesAnnotatedPOJO()) return;
+		changeModule("Author");
+		execute("Mode.detailAndFirst");
+		assertNoAction("Author.addSuffix");
+		execute("Author.showAddSuffix");		
+		assertAction("Author.addSuffix");
+		assertLoadedParts(
+				"property_actions_author," + // Really this is the only part that we want to load 
+				"editor_author," +	// This is not really needed, it can be improved 
+						// but complicating the code too much, and this is not a very common 
+						// case, moreover the performance improvement is not perceptible
+				"collection_humans.," +	// The collection is loaded because author is loaded,							
+				"frame_humansheader," + // and author is the key. Although in this case the performance
+				"messages," +           // degradation is more noticeable, this is a very rare case. 
+				"errors,");
+	}
+
+	
 	public void testListReloadInSplitMode() throws Exception { 
 		changeModule("DeliveryType");
 		execute("Mode.split");

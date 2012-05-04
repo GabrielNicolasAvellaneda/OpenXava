@@ -27,9 +27,24 @@
 	</controller>
 		
 	<controller name="Author">	
-		<extends controller="Typical"/>
-        <action name="search" hidden="true"
-				class="org.openxava.test.actions.SearchAuthorAction" />
+		<extends controller="Typical"/>		
+        <action name="searchAuthor" hidden="true"
+			class="org.openxava.test.actions.SearchAuthorAction" />
+		<action name="showAddSuffix" mode="detail" 
+			class="org.openxava.test.actions.AddActionToProperyAction">
+			<set property="property" value="author"/>	
+			<set property="action" value="Author.addSuffix"/>
+		</action>
+		<action name="hideAddSuffix" mode="detail" 
+			class="org.openxava.test.actions.RemoveActionToProperyAction">
+			<set property="property" value="author"/>	
+			<set property="action" value="Author.addSuffix"/>
+		</action>								
+		<action name="addSuffix" hidden="true"
+			class="org.openxava.test.actions.AddSuffixAction">
+			<set property="property" value="author"/>	
+			<set property="suffix" value=" LUCAS"/>
+		</action>				
 	</controller>	
 	
 	<controller name="Corporation">	
