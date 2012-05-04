@@ -163,11 +163,13 @@ public class View implements java.io.Serializable {
 	private int collectionTotalsCount = -1;
 	private Collection<MetaProperty> recalculatedMetaProperties;
 	private List collectionValues; 
+	private Map<String, Collection<String>> changedActionsByProperty = null; 
+	private Collection propertiesWithChangedActions; 
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
 	// you can fill a dialog using a subview from the current view
-	// In that case, inside the dialog this subview will be firstLeve, though
+	// In that case, inside the dialog this subview will be firstLevel, though
 	// it continues being a subview.
 	private boolean firstLevel;
 
@@ -2135,7 +2137,8 @@ public class View implements java.io.Serializable {
 			oldValues = values==null?null:new HashMap(values);
 			mustRefreshCollection = false;
 			reloadNeeded = false;			
-			changedPropertiesActionsAndReferencesWithNotCompositeEditor = null; 
+			changedPropertiesActionsAndReferencesWithNotCompositeEditor = null;
+			propertiesWithChangedActions = null; 
 			sectionChanged = false; 
 			oldKeyEditable = keyEditable; 
 			oldEditable = editable;
@@ -3597,7 +3600,14 @@ public class View implements java.io.Serializable {
 	} 
 			                                                                                                                                                                                                                                                                                                                                                                                                                   
 	public Collection getActionsNamesForProperty(MetaProperty p, boolean editable) throws XavaException {		
-		return getMetaView().getActionsNamesForProperty(p, editable);
+		if (getParentIfSectionOrGroup().changedActionsByProperty == null) return getMetaView().getActionsNamesForProperty(p, editable);
+		initializeActionsForProperty(p.getName());
+		if (!getChangedActionsByProperty().containsKey(p.getName())) return getMetaView().getActionsNamesForProperty(p, editable);
+		Collection addedActions = getChangedActionsByProperty().get(p.getName()); 
+		if (addedActions.isEmpty()) return getMetaView().getActionsNamesForProperty(p, editable);
+		Collection result = new ArrayList(getMetaView().getActionsNamesForProperty(p, editable));
+		result.addAll(addedActions);
+		return result;
 	}
 	
 	public Collection getActionsNamesForReference(MetaReference ref, boolean editable) throws XavaException {		
@@ -4104,7 +4114,8 @@ public class View implements java.io.Serializable {
 				!equals(en.getValue(), oldValues.get(en.getKey())) || 	
 				isKey && hasKeyEditableChanged() || 
 				hasEditableChanged() ||
-				hasEditableMemberChanged((String) en.getKey()) || 
+				hasEditableMemberChanged((String) en.getKey()) ||
+				propertyHasChangedActions((String) en.getKey()) || 
 				formattedProperties != null && formattedProperties.contains(en.getKey()) ||
 				editorMustBeReloaded((String) en.getKey())) 
 			{									
@@ -4176,7 +4187,7 @@ public class View implements java.io.Serializable {
 		boolean existsCurrent = notEditableMembersNames == null?false:notEditableMembersNames.contains(member);
 		return existsOld != existsCurrent;
 	}
-	
+			
 	private boolean editorMustBeReloaded(String memberName) {		
 		MetaProperty p = null;
 		try {
@@ -4704,5 +4715,57 @@ public class View implements java.io.Serializable {
 			return false;
 		}
 	}		
+	
+	/**
+	 * Add an action to the property. <p>
+	 * 
+	 * The action will be show even if the view or the property is not editable.<br> 
+	 * 
+	 * @since 4.5
+	 */
+	public void addActionForProperty(String property, String qualifiedActionName) throws XavaException {
+		initializeActionsForProperty(property);
+		getChangedActionsByProperty().get(property).add(qualifiedActionName);
+		addPropertyWithChangedActions(property); 
+	}
+	
+	/**
+	 * Add an action to the property. <p>
+	 * 
+	 * Only the actions added with addActionForProperty() can be removed.<br> 
+	 * 
+	 * @since 4.5
+	 */
+	public void removeActionForProperty(String property, String qualifiedActionName) throws XavaException {	
+		if(getParentIfSectionOrGroup().changedActionsByProperty != null){
+			if(getChangedActionsByProperty().containsKey(property)){
+				getChangedActionsByProperty().get(property).remove(qualifiedActionName);
+				addPropertyWithChangedActions(property); 
+			}
+		}
+	}
+	
+	private void addPropertyWithChangedActions(String property) { 		
+		if (getParentIfSectionOrGroup().propertiesWithChangedActions == null) getParentIfSectionOrGroup().propertiesWithChangedActions = new HashSet();
+		getParentIfSectionOrGroup().propertiesWithChangedActions.add(property);
+	}
+	
+	public boolean propertyHasChangedActions(String property) { 
+		if (getParentIfSectionOrGroup().propertiesWithChangedActions == null) return false;
+		return getParentIfSectionOrGroup().propertiesWithChangedActions.contains(property);
+	}
+	
+	private void initializeActionsForProperty(String property) throws XavaException {
+		if(getChangedActionsByProperty().get(property) == null){
+			getChangedActionsByProperty().put(property, new ArrayList<String>());			
+		}
+	}
+	
+	private Map<String, Collection<String>> getChangedActionsByProperty() { 
+		if (getParentIfSectionOrGroup().changedActionsByProperty == null) {
+			getParentIfSectionOrGroup().changedActionsByProperty = new HashMap<String, Collection<String>>();
+		}
+		return getParentIfSectionOrGroup().changedActionsByProperty;
+	}
 						
 }

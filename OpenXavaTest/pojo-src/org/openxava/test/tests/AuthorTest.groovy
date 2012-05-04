@@ -12,6 +12,19 @@ class AuthorTest extends ModuleTestBase {
 		super(testName, "Author")		
 	}
 	
+	void testAddRemoveActionsForProperty() { 
+		execute "Mode.detailAndFirst"
+		assertNoAction "Author.addSuffix"
+		execute "Author.showAddSuffix"
+		assertAction "Author.addSuffix"
+		assertValue "author", "JAVIER PANIZA"
+		execute "Author.addSuffix", "xava.keyProperty=author"
+		assertValue "author", "JAVIER PANIZA LUCAS"
+		assertAction "Author.addSuffix"
+		execute "Author.hideAddSuffix"
+		assertNoAction "Author.addSuffix"
+	}
+	
 	void testOverwritingDefaultSearch() {
 		execute "Mode.detailAndFirst"
 		assertMessage "Showing author JAVIER PANIZA"

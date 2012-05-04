@@ -6,7 +6,8 @@ import org.openxava.annotations.*;
 import org.openxava.test.annotations.*;
 
 @Entity
-@GoodName 
+@GoodName
+@View(members="header [ author; biography ]; humans") 
 public class Author {
 	
 	@Id @Column(length=30)
