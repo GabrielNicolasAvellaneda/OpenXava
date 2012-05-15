@@ -5,17 +5,16 @@ import java.rmi.*;
 import javax.ejb.*;
 
 /**
- * Interface to facilite a remote <b>impl</b>elmentation of
+ * Interface to facilite a remote <b>impl</b>ementation of
  * a {@link IEntityTab}. <p>
  *
  * Adds methods not intended to use with final user (a programmer)
- * of the component, but that they are utils to implement {@link IXTableModel}.<br>
+ * of the component, but that they are useful to implement {@link IXTableModel}.<br>
  *
  * @author  Javier Paniza
  */
 
-public interface IEntityTabImpl extends IEntityTab, ITabProvider
-{
+public interface IEntityTabImpl extends IEntityTab, IDataReader {
 
   /**
    * Search a concrete entity from a key. <p>

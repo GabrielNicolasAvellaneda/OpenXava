@@ -26,10 +26,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	private String componentName;
 	private IConnectionProvider connectionProvider;	
 		
-	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException {		
-		if (tabProvider instanceof JDBCTabProvider) {
-			((JDBCTabProvider) tabProvider).setConnectionProvider(getConnectionProvider());
-		}
+	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException {			
 		DataChunk tv = null;
 		try {
 			tv = tabProvider.nextChunk();
@@ -70,8 +67,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 							
 		return tv;
 	}
-
-
+	
 	public IConnectionProvider getConnectionProvider() throws RemoteException {
 		if (connectionProvider == null) {			 		
 			try {
@@ -84,9 +80,6 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		}
 		return connectionProvider;		
 	}	
-	public void setConnectionProvider(IConnectionProvider provider) {
-		this.connectionProvider = provider;
-	}
 
 	private Object[] doCalculations(String modelName, Object[] row, Collection tabCalculators, Map keyIndexes, List propertiesNames) throws XavaException {		
 		Object entity = null;
@@ -208,11 +201,8 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		return values[propertiesNames.indexOf(propertyName)];
 	}
 	
-	public int getResultSize(ITabProvider tabProvider) {
+	public int getResultSize(ITabProvider tabProvider) {	
 		try {
-			if (tabProvider instanceof JDBCTabProvider) {
-				((JDBCTabProvider) tabProvider).setConnectionProvider(getConnectionProvider());
-			}			
 			return tabProvider.getResultSize();
 		}
 		catch (Exception ex) {
@@ -221,11 +211,8 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		}
 	}	
 	
-	public Number getSum(ITabProvider tabProvider, String column) { 
+	public Number getSum(ITabProvider tabProvider, String column) { 	
 		try {
-			if (tabProvider instanceof JDBCTabProvider) {
-				((JDBCTabProvider) tabProvider).setConnectionProvider(getConnectionProvider());
-			}			
 			return tabProvider.getSum(column);
 		}
 		catch (Exception ex) {
@@ -241,5 +228,4 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		this.componentName = componentName;
 	}
 
-	
 }

@@ -781,7 +781,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		// Delete					
-		assertValueInList(0, "invoice.year", "2009");
+		assertValueInList(0, "invoice.year", "2009"); 
 		assertValueInList(0, "invoice.number", "1");
 		assertValueInList(0, "type.number", "1");
 		assertValueInList(0, "number", "1");

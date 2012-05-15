@@ -138,7 +138,7 @@ public class AJAXTest extends ModuleTestBase {
 				"messages");		
 	}
 	
-	public void testOnlyLoadModifiedParts() throws Exception {
+	public void testOnlyLoadModifiedParts() throws Exception { 
 		changeModule("Customer"); 
 		assertLoadedParts(""); 
 		execute("List.filter");

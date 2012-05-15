@@ -127,7 +127,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertListRowCount(10);
 		setConditionValues(new String [] { "1" });
 		executeDefaultAction();
-		assertListRowCount(3);
+		assertListRowCount(3); 
 		
 		execute("CRUD.new");
 		executeDefaultAction();
@@ -322,7 +322,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertListRowCount(10);
 		setConditionValues(new String [] {"1"} );
 		execute("List.filter");
-		assertListRowCount(3);
+		assertListRowCount(3); 
 		execute("Mode.detailAndFirst");
 		execute("Mode.list");
 		assertListRowCount(3);
