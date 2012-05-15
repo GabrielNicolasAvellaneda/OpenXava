@@ -528,9 +528,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 		}
 		return r.toString();
 	}
-	
+		
 	/**
-	 * @since v4_1
+	 * @since 4.1
 	 */
 	private String getTable(String name){
 		return MetaComponent.get(name).getEntityMapping().getTable();
@@ -538,7 +538,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 	/**
 	 * If 'name' starts with an upper case it is a Model else it is a property
-	 * @since v4_1
+	 * @since 4.1
 	 */
 	public static boolean isModel(String name){
 		String firstLetter = name.substring(0, 1);

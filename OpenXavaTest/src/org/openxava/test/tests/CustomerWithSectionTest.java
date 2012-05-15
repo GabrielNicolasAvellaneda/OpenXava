@@ -195,7 +195,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertNoErrors();
 	}
 	
-	public void testOrderAndFilterInNestedCollection() throws Exception {
+	public void testOrderAndFilterInNestedCollection() throws Exception { 
 		execute("CRUD.new");
 		setValue("number", "4");
 		execute("CRUD.refresh");		

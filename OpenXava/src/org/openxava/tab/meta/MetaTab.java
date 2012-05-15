@@ -26,12 +26,10 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private String defaultOrder;
 	private String sQLDefaultOrder;
 	private String sQLBaseCondition;
-	private String selectSQL;
 	private Collection metaPropertiesHiddenCalculated;
 	private Collection metaPropertiesHidden;
 	private String name;
 	private MetaComponent metaComponent;
-	private List metaConsults = new ArrayList();
 	private List propertiesNames = null;
 	private List metaProperties = null;
 	private List metaPropertiesCalculated = null;
@@ -81,23 +79,9 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.modelName = metaModel.getName();		
 	}
 
-	public void addMetaConsult(MetaConsult consult) {
-		metaConsults.add(consult);
-		consult.setMetaTab(this);
-	}
-
-	/**
-	 * @return Not null, read only and of type <tt>MetaConsult</tt>.
-	 */
-	public Collection getMetaConsults() {
-		return Collections.unmodifiableCollection(metaConsults);
-	}
-
-	public static MetaTab createDefault(MetaComponent component)
-			throws XavaException {
+	public static MetaTab createDefault(MetaComponent component) throws XavaException {
 		MetaTab tab = new MetaTab();
 		tab.setMetaComponent(component);
-		tab.addDefaultMetaConsults();
 		tab.setDefaultValues(); 
 		return tab;
 	}
@@ -285,33 +269,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	public List getHiddenPropertiesNames() throws XavaException {
 		if (hiddenPropertiesNames == null) {
 			hiddenPropertiesNames = obtainPropertiesNamesUsedToCalculate();
-			hiddenPropertiesNames
-					.addAll(obtainPropertiesNamesUsedInOrderBy());
 		}
 		return hiddenPropertiesNames;
-	}
-
-	private Collection obtainPropertiesNamesUsedInOrderBy()
-			throws XavaException {
-		List result = new ArrayList();
-		Iterator itConsults = getMetaConsults().iterator();
-		while (itConsults.hasNext()) {
-			MetaConsult consult = (MetaConsult) itConsults.next();
-			if (consult.useOrderBy()) {
-				Iterator itProperties = consult.getOrderByPropertiesNames()
-						.iterator();
-				while (itProperties.hasNext()) {
-					String property = (String) itProperties.next();
-					if (!getPropertiesNames().contains(property)
-							&& !hiddenPropertiesNames.contains(property)
-							&& !result.contains(property)
-							&& !getMetaModel().isKey(property)) {
-						result.add(property);
-					}
-				}
-			}
-		}
-		return result;
 	}
 
 	private List obtainPropertiesNamesUsedToCalculate()
@@ -408,15 +367,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.hiddenTableColumns = null;
 		this.metaPropertiesTab = null;
 		
-		this.select = null; 
-		this.selectSQL = null; 
+		this.select = null;  
 	}
 
 	ModelMapping getMapping() throws XavaException {		
 		return getMetaModel().getMapping();
 	}
 
-	public String getSelect() throws XavaException {
+	public String getSelect() throws XavaException { 
 		if (select == null || isDefaultSchemaChanged()) {  
 			select = createSelect();
 			saveDefaultSchema();
@@ -434,16 +392,9 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return false;
 	}
 
-	private void saveDefaultSchema() {
+	private void saveDefaultSchema() { // tmp Mover lo de cambio de esquema a EntityTab, ESTO ES ESTATICO
 		if (!XavaPreferences.getInstance().isJPAPersistence()) return;
 		lastDefaultSchema = XPersistence.getDefaultSchema();
-	}
-
-	public String getSelectSQL() throws XavaException {
-		if (selectSQL == null || isDefaultSchemaChanged()) {		
-			selectSQL = getMapping().changePropertiesByColumns(getSelect());			
-		}		
-		return selectSQL;
 	}
 
 	private String createSelect() throws XavaException {
@@ -614,36 +565,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}		
 	}
 		
-	public void addDefaultMetaConsults() throws XavaException {
-		if (!isExcludeByKey())
-			addPrimaryKeyMetaConsult();
-		if (!isExcludeAll())
-			addAllMetaConsult();
-	}
-
-	private void addAllMetaConsult() {
-		MetaConsult all = new MetaConsult();
-		all.setName("todos"); // in spanish because this feature is used only in spanish/swing version
-		all.setCondition("");
-		addMetaConsult(all);
-	}
-
-	private void addPrimaryKeyMetaConsult() throws XavaException {
-		Collection properties = getMetaModel().getMetaPropertiesKey();
-		if (properties.isEmpty())
-			return;
-		Iterator it = properties.iterator();
-		MetaConsult byKey = new MetaConsult();
-		byKey.setMetaTab(this);
-		while (it.hasNext()) {
-			MetaProperty property = (MetaProperty) it.next();
-			MetaParameter parameter = new MetaParameter();
-			parameter.setPropertyName(property.getName());
-			byKey.addMetaParameter(parameter);
-		}
-		metaConsults.add(0, byKey);
-	}
-
 	public MetaComponent getMetaComponent() {
 		return metaComponent;
 	}
@@ -795,7 +716,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 	
 	private void resetAfterAddRemoveProperty() {
-		selectSQL = null;
 		metaProperties = null;
 		metaPropertiesCalculated = null;
 		select = null;
@@ -878,9 +798,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			}
 			if (r.metaPropertiesHidden != null) {
 				r.metaPropertiesHidden = new ArrayList(metaPropertiesHidden);
-			}
-			if (r.metaConsults != null) {
-				r.metaConsults = new ArrayList(metaConsults);
 			}
 			if (r.propertiesNames != null) {
 				r.propertiesNames = new ArrayList(propertiesNames);

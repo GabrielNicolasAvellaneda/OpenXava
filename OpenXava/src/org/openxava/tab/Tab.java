@@ -157,7 +157,7 @@ public class Tab implements java.io.Serializable {
 	public String getBaseCondition() throws XavaException {
 		return baseCondition;
 	}
-	
+		
 	private String getSQLBaseCondition() throws XavaException { 		
 		return getMetaTab().getMetaModel().getMapping().changePropertiesByColumns(getBaseCondition());
 	}
@@ -396,11 +396,11 @@ public class Tab implements java.io.Serializable {
 		Collection<String> comparatorsToWhere = new ArrayList<String>();
 		
 		if (!Is.emptyString(getBaseConditionForReference())) {
-			sb.append(getSQLBaseConditionForReference());
+			sb.append(getSQLBaseConditionForReference()); 
 			firstCondition = false;						
 		}
 		else if (!Is.emptyString(getBaseCondition())) {
-			sb.append(getSQLBaseCondition());
+			sb.append(getSQLBaseCondition());			
 			firstCondition = false;			
 		}		
 		
@@ -434,7 +434,7 @@ public class Tab implements java.io.Serializable {
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();
 					String alias = mapping.getTableToQualifyColumn() + ".";
 					String keyValues = this.conditionValues[i].replaceAll("[\\[\\]]", "");
-					StringTokenizer st = new StringTokenizer(keyValues, ".");
+					StringTokenizer st = new StringTokenizer(keyValues, ".");					
 					for (CmpField field : fields) {
 						String property = field.getCmpPropertyName().substring(field.getCmpPropertyName().lastIndexOf('_') + 1);
 						String value = st.nextToken();
@@ -456,9 +456,8 @@ public class Tab implements java.io.Serializable {
 				else if (!Is.emptyString(this.conditionValues[i])) {
 					if (firstCondition) firstCondition = false;
 					else sb.append(" and ");
-					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();
-					String column = mapping.getQualifiedColumn(p.getQualifiedName());					
-					sb.append(decorateColumn(p, column, i));
+					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();										 
+					sb.append(decorateConditionProperty(p, i));
 					sb.append(' ');
 					sb.append(convertComparator(p, this.conditionComparators[i]));
 					sb.append(" ? ");
@@ -515,16 +514,20 @@ public class Tab implements java.io.Serializable {
 			if (pOrder != null) {				
 				if (sb.length() == 0) sb.append(" 1=1 ");
 				sb.append(" order by ");								
-				sb.append(getMetaTab().getMetaModel().getMapping().getQualifiedColumn(pOrder.getQualifiedName()));
+				sb.append("${");
+				sb.append(pOrder.getQualifiedName()); 
+				sb.append('}');
 				if (descendingOrder) {
 					sb.append(" desc");
 				}
 				if (pOrder2 != null) {
 					sb.append(", "); 
-					sb.append(getMetaTab().getMetaModel().getMapping().getQualifiedColumn(pOrder2.getQualifiedName()));
+					sb.append("${");  
+					sb.append(pOrder2.getQualifiedName());
+					sb.append('}');
 					if (descendingOrder2) {
 						sb.append(" desc");
-					}					
+					}								
 				}
 			}				
 			else if (getMetaTab().hasDefaultOrder()) {
@@ -574,24 +577,25 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 
-	private String decorateColumn(MetaProperty p, String column, int i) throws XavaException {
+	private String decorateConditionProperty(MetaProperty metaProperty, int i) throws XavaException {
+		String property = "${" + metaProperty.getQualifiedName() + "}";
 		if ("year_comparator".equals(this.conditionComparators[i])) {
-			return p.getMetaModel().getMapping().yearSQLFunction(column);
+			return metaProperty.getMetaModel().getMapping().yearSQLFunction(property);
 		}
 		if ("month_comparator".equals(this.conditionComparators[i])) {
-			return p.getMetaModel().getMapping().monthSQLFunction(column);
+			return metaProperty.getMetaModel().getMapping().monthSQLFunction(property);
 		}
 		if ("year_month_comparator".equals(this.conditionComparators[i])) {
-			ModelMapping mapping = p.getMetaModel().getMapping(); 
-			return mapping.yearSQLFunction(column) + " = ? and " + mapping.monthSQLFunction(column);
+			ModelMapping mapping = metaProperty.getMetaModel().getMapping(); 
+			return mapping.yearSQLFunction(property) + " = ? and " + mapping.monthSQLFunction(property);
 		}						
-		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isIgnoreAccentsForStringArgumentsInConditions()) { 
-			column = p.getMetaModel().getMetaComponent().getEntityMapping().translateSQLFunction(column);
+		if (java.lang.String.class.equals(metaProperty.getType()) && XavaPreferences.getInstance().isIgnoreAccentsForStringArgumentsInConditions()) { 
+			property = metaProperty.getMetaModel().getMetaComponent().getEntityMapping().translateSQLFunction(property);
 		}
-		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) { 
-			return "upper(" + column + ")"; 
+		if (java.lang.String.class.equals(metaProperty.getType()) && XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) { 
+			return "upper(" + property + ")"; 
 		}
-		return column;
+		return property;
 	}
 
 

@@ -39,7 +39,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 	private String componentName;
 	private String tabName;
 
-	private JDBCTabProvider tabProvider;
+	private ITabProvider tabProvider; 
 	private TableModelBean table;
 	private MetaTab metaTab;
 	private String modelName;
@@ -56,12 +56,6 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 	private boolean _hasPropertiesWithValidValues;
 	
 	
-	
-	public void search(int index, Object key)
-		throws FinderException, RemoteException {
-		tabProvider.search(index, key);
-	}
-	
 	public void search(String condition, Object key) throws FinderException, RemoteException {
 		try {				
 			StringBuffer select = new StringBuffer(getSelectBase());
@@ -69,7 +63,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 				if (!condition.toUpperCase().trim().startsWith("ORDER BY")) {
 					if (select.toString().toUpperCase().indexOf("WHERE") < 0) select.append(" WHERE "); 
 					else select.append(" AND "); 								
-				}				
+				}
 				select.append(condition); 
 			}																		
 			tabProvider.search(select.toString(), key);
@@ -80,9 +74,10 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 		}		
 	}
 	
-	private String getSelectBase() throws XavaException {
+	private String getSelectBase() {
 		if (selectBase == null) {
-			selectBase = insertKeyFields(metaTab.getSelectSQL());
+			String select = tabProvider.translateSelect(metaTab.getSelect());
+			selectBase = insertKeyFields(select); 
 		}
 		return selectBase;
 	}
@@ -184,7 +179,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			if (Is.emptyString(componentName)) {
 				throw new InitException("tab_component_required");
 			}
-			tabProvider = new JDBCTabProvider();
+			tabProvider = TabProviderFactory.create(); 
 			table = new TableModelBean();
 			table.setTranslateHeading(false);
 			this.mapping = null;
@@ -197,13 +192,10 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			table.setHeading(getHeading());
 			table.setColumnsClasses(getColumnsClasses());
 			table.setPropertiesNames(getPropertiesNames()); 
-			tabProvider.setFields(getFields());
-			tabProvider.setConditions(getConditions());			
-			tabProvider.setTable(getTableNameDB());
-			tabProvider.setChunkSize(getChunkSize());
+			tabProvider.setMetaModel(metaModel); 
+			tabProvider.setChunkSize(getChunkSize());			
 			table.setPKIndexes(getIndexesPK());
 			table.invariant();
-			//tabProvider.invariant(); // It is not possible because still lacks connectionProvider
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -227,35 +219,15 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 		c.toArray(result);		
 		return result;
 	}
-	
-
-	private String[] getConditions() throws RemoteException {
-		try {
-			Collection metaConsults = metaTab.getMetaConsults();
-			String[] conditions = new String[metaConsults.size()];
-			Iterator it = metaConsults.iterator();
-			int i = 0;
-			while (it.hasNext()) {
-				MetaConsult consult = (MetaConsult) it.next();
-				conditions[i++] = insertKeyFields(consult.getConditionSQL());
-			}
-			return conditions;
-		}
-		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
-			throw new RemoteException(
-					XavaResources.getString("tab_conditions_error", this.modelName));
-		}
-	}
-	
-	private String insertKeyFields(String select) throws XavaException {				
+		
+	private String insertKeyFields(String select) {				
 		String s = select.trim(); 
 		String sUpperCase = s.toUpperCase(); 
 		if (!(sUpperCase.startsWith("SELECT ") || (sUpperCase.startsWith("SELECT\t")))) return select;				
 		StringBuffer result = new StringBuffer("SELECT ");		
 		Iterator itKeyNames = getKeyNames().iterator();
 		while (itKeyNames.hasNext()) {
-			result.append(getMapping().getQualifiedColumn((String) itKeyNames.next()));
+			result.append(tabProvider.toQueryField((String) itKeyNames.next())); 
 			result.append(", ");
 		}
 		result.append(s.substring(7));						
@@ -467,8 +439,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 		return metaModel;
 	}
 
-	private Map getKeyIndexes()
-		throws FinderException, XavaException, RemoteException {
+	private Map getKeyIndexes() {
 		if (keyIndexes == null) {	
 			Iterator it = getPropertiesNames().iterator();
 			keyIndexes = new HashMap();

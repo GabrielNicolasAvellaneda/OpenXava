@@ -1,38 +1,25 @@
 package org.openxava.tab.impl;
 
-import java.rmi.*;
+import org.openxava.model.meta.*;
 
 /**
- * Data provider for a <code>TableModel</code> or similar. <p>
- *
- * Allows execute consult and then obtain the data chunk by chunk.<br>
+ * Provides data and specific behavior from the underlying query technology. <p>
  * 
  * @author  Javier Paniza
  */
 
-public interface ITabProvider extends ISearch {
+public interface ITabProvider extends ISearch, IDataReader {
 	
-  /**
-   * Obtain the next data chunk. <p> 
-   * 
-   * This method can be call from a <code>TableModel</code> to
-   * obtain data on demand.
-   */
-  DataChunk nextChunk() throws RemoteException;
+	void setMetaModel(MetaModel metaModel); 
+	
+	Number getSum(String column);  
   
-  /**
-   * Record (or object, or row) count of last consult.
-   */
-  int getResultSize() throws RemoteException; 
+	String translateSelect(String select); 
   
-  /**
-   * If you call this method the next time that you call
-   * {@link #nextChunk} you will obtain the first chunk and
-   * fresh data from db.
-   */
-  void reset() throws RemoteException;
-
-
-  Number getSum(String column) throws RemoteException;   
+	void setChunkSize(int chunkSize); 
+  
+	String toQueryField(String propertyName); 
+  
+	void setCurrent(int index); 
   
 }
