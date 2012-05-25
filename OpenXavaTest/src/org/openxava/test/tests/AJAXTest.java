@@ -198,7 +198,8 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_name, " +
 				"editor_address.street, " +
 				"editor_city, " +
-				"editor_relationWithSeller, " +				
+				"editor_relationWithSeller, " +
+				"editor_type, " + 
 				"reference_editor_address.state, " +
 				"collection_deliveryPlaces., " +
 				"frame_deliveryPlacesheader, " + 

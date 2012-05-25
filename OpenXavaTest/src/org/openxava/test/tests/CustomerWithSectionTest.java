@@ -609,6 +609,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		// the tested portal in order that this test works fine
 		int c = getListRowCount();
 		boolean found = false;
+		boolean found_red = false;
 		
 		for (int i=0; i<c; i++) {
 			String type = getValueInList(i, "type");
@@ -616,12 +617,19 @@ public class CustomerWithSectionTest extends CustomerTest {
 				assertRowStyleInList(i, "row-highlight");				
 				found = true;
 			}
+			else if ("Special".equals(type)) {
+				assertRowStyleInList(i, "row-red");				
+				found_red = true;
+			}
 			else { 
 				assertNoRowStyleInList(i);				
 			}						
 		}
 		if (!found) {
 			fail("It is required at least one Customer of 'Steady' type for run this test");
+		}
+		if (!found_red) {
+			fail("It is required at least one Customer of 'Special' type for run this test");
 		}
 	}
 	
