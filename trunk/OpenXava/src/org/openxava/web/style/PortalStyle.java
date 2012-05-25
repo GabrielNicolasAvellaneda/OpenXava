@@ -38,6 +38,7 @@ public class PortalStyle extends Style {
 	
 	protected Collection<String> createAdditionalCssFiles() {		
 		Collection<String> result = new ArrayList(super.createAdditionalCssFiles());
+		result.add("/xava/style/portal-ext.css");
 		result.add("/xava/style/portal.css");
 		return result;
 	}
