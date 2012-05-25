@@ -631,8 +631,11 @@
 					
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
 		<copy todir="../${project}/web/xava" overwrite="true">
-    		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
-  		</copy>		
+    		<fileset dir="../OpenXava/web" excludes="WEB-INF/**,style/portal-ext.css"/>
+  		</copy>
+		<copy todir="../${project}/web/xava/style" overwrite="false">
+			<fileset file="../OpenXava/web/style/portal-ext.css"/>
+		</copy>
   		<copy todir="../${project}/web/WEB-INF" overwrite="true">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
   		</copy>
@@ -892,9 +895,12 @@
 	-->
 	<target name="updateOX">
 		<antcall target="copyDTDs"/>						
-		<copy todir="../${project}/web/xava" overwrite="true">
-    		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
-  		</copy>		
+		<copy todir="../${project}/web/xava" overwrite="true" >
+			<fileset dir="../OpenXava/web" excludes="WEB-INF/**,style/portal-ext.css"/>
+		</copy>
+		<copy todir="../${project}/web/xava/style" overwrite="false">
+			<fileset file="../OpenXava/web/style/portal-ext.css"/>
+		</copy>
   		<copy todir="../${project}/web/WEB-INF" overwrite="true">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
   		</copy>
