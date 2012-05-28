@@ -29,8 +29,8 @@ import org.openxava.test.actions.*;
 		"seller [" +  
 		"	seller; " +
 		"	relationWithSeller;" +
-		"]" +		
-		"alternateSeller;" +
+		"]" +				
+		"alternateSeller;" +		
 		"deliveryPlaces;" +
 		"remarks" 	
 	),
@@ -109,7 +109,7 @@ import org.openxava.test.actions.*;
 		properties="name, type, seller.name, address.city, seller.level.description, address.state.name, website" 
 	),	
 	@Tab( name="TwoSellers",
-		properties="name, type, address.city, seller.name, seller.level.description, alternateSeller.name"
+		properties="name, type, address.city, seller.name, seller.level.description, alternateSeller.name"		
 	),	
 	@Tab( name="TwoSellersNumber",
 		properties="name, type, seller.number, alternateSeller.number"
@@ -184,7 +184,7 @@ public class Customer implements IWithName {
 	private Seller alternateSeller;
 		
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
-	@ListProperties("name, address, remarks, preferredWarehouse.name")
+	@ListProperties("name, address, remarks, preferredWarehouse.name")	
 	private Collection<DeliveryPlace> deliveryPlaces;
 	
 	@ManyToMany	

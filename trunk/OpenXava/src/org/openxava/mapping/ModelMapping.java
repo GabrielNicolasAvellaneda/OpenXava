@@ -521,7 +521,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 			if (!getMetaModel().isCalculated(property)) {
 				column = isModel(property)?
 					getTable(property):
-					qualified?getQualifiedColumn(property):getColumn(property);				
+						qualified?getQualifiedColumn(property):getColumn(property);
 			}			
 			r.replace(i, f + 1, column);
 			i = r.toString().indexOf("${");

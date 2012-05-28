@@ -1,6 +1,8 @@
 package org.openxava.tab.impl;
 
-import org.openxava.model.meta.*;
+import java.util.*;
+
+import org.openxava.tab.meta.*;
 
 /**
  * Provides data and specific behavior from the underlying query technology. <p>
@@ -9,17 +11,21 @@ import org.openxava.model.meta.*;
  */
 
 public interface ITabProvider extends ISearch, IDataReader {
-	
-	void setMetaModel(MetaModel metaModel); 
+	 
+	void setMetaTab(MetaTab metaTab);
 	
 	Number getSum(String column);  
   
-	String translateSelect(String select); 
+	String getSelectBase(); 
   
 	void setChunkSize(int chunkSize); 
   
 	String toQueryField(String propertyName); 
   
-	void setCurrent(int index); 
+	void setCurrent(int index);
+	
+	Collection<TabConverter> getConverters();
+	
+	boolean usesConverters();
   
 }

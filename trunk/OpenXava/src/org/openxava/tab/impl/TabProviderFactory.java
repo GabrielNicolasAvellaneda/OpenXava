@@ -16,8 +16,8 @@ public class TabProviderFactory {
 	public static ITabProvider create() {
 		try {
 			// tmp return (ITabProvider) Class.forName(XavaPreferences.getInstance().getTabProviderClass()).newInstance();
-			// tmp return new JPATabProvider();
-			return new JDBCTabProvider();
+			// return new JPATabProvider(); // tmp:
+			return new JDBCTabProvider(); // tmp
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

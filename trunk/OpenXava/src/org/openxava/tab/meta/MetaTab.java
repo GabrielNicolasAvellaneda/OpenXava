@@ -24,18 +24,17 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private static Log log = LogFactory.getLog(MetaTab.class); 
 
 	private String defaultOrder;
-	private String sQLDefaultOrder;
 	private String sQLBaseCondition;
 	private Collection metaPropertiesHiddenCalculated;
 	private Collection metaPropertiesHidden;
 	private String name;
 	private MetaComponent metaComponent;
 	private List propertiesNames = null;
+	private List<String> propertiesNamesWithKeyAndHidden;
 	private List metaProperties = null;
 	private List metaPropertiesCalculated = null;
-	private String properties; // separated by commas, like in xml file
-	private String select;
-	private Collection entityReferencesMappings;	
+	private String properties; // separated by commas, like in xml file	
+	private String select;	
 	private Collection tableColumns;
 	private String modelName; 
 	private MetaModel metaModel;
@@ -49,10 +48,11 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Map metaPropertiesTab;
 	private Collection rowStyles;
 	private String defaultPropertiesNames;
-	private Map entityReferencesReferenceNames;
 	private String lastDefaultSchema;
 	private String id;
 	private Collection<String> sumPropertiesNames;
+
+
 	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		String id = null;
@@ -256,6 +256,16 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}
 		return propertiesNames;
 	}
+	
+	public List<String> getPropertiesNamesWithKeyAndHidden() throws XavaException { 
+		if (propertiesNamesWithKeyAndHidden == null) {
+			propertiesNamesWithKeyAndHidden = new ArrayList<String>();
+			propertiesNamesWithKeyAndHidden.addAll(getMetaModel().getAllKeyPropertiesNames());
+			propertiesNamesWithKeyAndHidden.addAll(getPropertiesNames());
+			propertiesNamesWithKeyAndHidden.addAll(getHiddenPropertiesNames());			
+		}
+		return propertiesNamesWithKeyAndHidden;
+	}
 
 	/**
 	 * Names of properties that must to exist but is not needed show they
@@ -355,15 +365,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	public void setPropertiesNames(String properties) {
 		this.properties = properties;
 
-		this.propertiesNames = null;
+		this.propertiesNames = null;		
 		this.metaProperties = null;
 		this.metaPropertiesHiddenCalculated = null;
 		this.metaPropertiesHidden = null;
 		this.metaPropertiesCalculated = null;
-		this.entityReferencesMappings = null;
-		this.entityReferencesReferenceNames = null; 
 		this.tableColumns = null;
 		this.hiddenPropertiesNames = null;
+		this.propertiesNamesWithKeyAndHidden = null;
 		this.hiddenTableColumns = null;
 		this.metaPropertiesTab = null;
 		
@@ -423,61 +432,10 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			select.append("${");
 			select.append(itHiddenProperties.next());
 			select.append('}');
-		}
-		Iterator itCmpFieldsColumnsInMultipleProperties = getCmpFieldsColumnsInMultipleProperties()
-				.iterator();
-		while (itCmpFieldsColumnsInMultipleProperties.hasNext()) {
-			select.append(", ");
-			select.append(itCmpFieldsColumnsInMultipleProperties.next());
-		}
-		select.append(" from ");
-		select.append(getMapping().getTable());
-		// for the references		
-		if (hasReferences()) {
-			// the tables
-
-			Iterator itReferencesMappings = getEntityReferencesMappings().iterator();			
-			while (itReferencesMappings.hasNext()) {
-				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
-				select.append(" left join ");						
-				select.append(referenceMapping.getReferencedTable());
-				// select.append(" as "); // it does not work in Oracle
-				select.append(" T_");				
-				String reference = referenceMapping.getReference();				
-				int idx = reference.lastIndexOf('_'); 
-				if (idx >= 0) {
-					// In the case of reference to entity in aggregate only we will take the last reference name
-					reference = reference.substring(idx + 1);
-				}
-				select.append(reference);
-				// where of join
-				select.append(" on ");
-				Iterator itDetails = referenceMapping.getDetails().iterator();
-				while (itDetails.hasNext()) {
-					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
-					String modelThatContainsReference = detail.getContainer().getContainer().getModelName();
-					if (modelThatContainsReference.equals(getModelName())) {
-						select.append(detail.getQualifiedColumn());
-					}
-					else {
-						select.append("T_");						
-						select.append(entityReferencesReferenceNames.get(referenceMapping));
-						select.append(".");
-						select.append(detail.getColumn());												
-					}
-					select.append(" = ");
-					select.append("T_");
-					select.append(reference);
-					select.append(".");
-					select.append(detail.getReferencedTableColumn());					
-					
-					if (itDetails.hasNext()) {
-						select.append(" and ");
-					}
-				}
-			}
-		}
-
+		}		
+		select.append(" from ${");
+		select.append(getModelName()); 
+		select.append('}');
 		select.append(' ');
 		if (hasBaseCondition()) {
 			select.append(" where ");
@@ -486,7 +444,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return select.toString();
 	}
 
-	private Collection getCmpFieldsColumnsInMultipleProperties()
+	
+	public Collection getCmpFieldsColumnsInMultipleProperties() 
 			throws XavaException {
 		Collection cmpFieldsColumnsInMultipleProperties = new ArrayList();
 		Iterator it = getMetaProperties().iterator();
@@ -507,64 +466,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}
 		return cmpFieldsColumnsInMultipleProperties;
 	}
-
-	public boolean hasReferences() throws XavaException {
-		return !getEntityReferencesMappings().isEmpty();
-	}
-	
-	private Collection getEntityReferencesMappings() throws XavaException {	
-		if (entityReferencesMappings == null) {
-			entityReferencesMappings = new ArrayList(); 
-			entityReferencesReferenceNames = new HashMap(); 
-			for (Iterator itProperties = getPropertiesNames().iterator(); itProperties.hasNext();) {
-				String property = (String) itProperties.next();				
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaModel(), "", ""); 
-			}
-			for (Iterator itProperties = getHiddenPropertiesNames().iterator(); itProperties.hasNext();) {
-				String property = (String) itProperties.next();				
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaModel(), "", ""); 
-			}						
-		}
-		return entityReferencesMappings;
-	}
-	
-	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel, String parentReference, String aggregatePrefix) throws XavaException {		
-		int idx = property.indexOf('.');				
-		if (idx >= 0) {
-			String referenceName = property.substring(0, idx);	
-			MetaReference ref = metaModel.getMetaReference(referenceName);
-			String memberName = property.substring(idx + 1);
-			boolean hasMoreLevels = memberName.indexOf('.') >= 0;
-			if (!ref.isAggregate()) {												
-				if (hasMoreLevels || !ref.getMetaModelReferenced().isKey(memberName)) {
-					ReferenceMapping rm = null;
-					if (Is.emptyString(aggregatePrefix )) {
-						rm = metaModel.getMapping().getReferenceMapping(referenceName);
-					}
-					else {
-						rm = metaModel.getMetaModelContainer().getMapping().getReferenceMapping(aggregatePrefix + referenceName);						
-					}
-					if (!result.contains(rm)) {
-						entityReferencesReferenceNames.put(rm, parentReference); 
-						result.add(rm);
-					}
-				}
-			}			
-			 
-			if (hasMoreLevels) {
-				MetaModel refModel = null;
-				if (ref.isAggregate()) {
-					refModel = metaModel.getMetaComponent().getMetaAggregate(ref.getReferencedModelName());
-					fillEntityReferencesMappings(result, memberName, refModel, referenceName, referenceName + "_");
-				}
-				else {
-					refModel = MetaComponent.get(ref.getReferencedModelName()).getMetaEntity();
-					fillEntityReferencesMappings(result, memberName, refModel, referenceName, "");
-				}
-			}
-		}		
-	}
-		
+				
 	public MetaComponent getMetaComponent() {
 		return metaComponent;
 	}
@@ -719,10 +621,9 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		metaProperties = null;
 		metaPropertiesCalculated = null;
 		select = null;
-		entityReferencesMappings = null;
-		entityReferencesReferenceNames = null;
 		tableColumns = null;
 		hiddenPropertiesNames = null;
+		propertiesNamesWithKeyAndHidden = null;
 		hiddenTableColumns = null;
 	}
 
@@ -778,11 +679,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	public void setDefaultOrder(String defaultOrder) {
 		this.defaultOrder = defaultOrder;
-		this.sQLDefaultOrder = null;
-	}
-
-	public String getSQLDefaultOrder() throws XavaException {
-		return sQLDefaultOrder = getMapping().changePropertiesByColumns(getDefaultOrder());
 	}
 
 	public boolean hasDefaultOrder() {
@@ -809,19 +705,15 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 				r.metaPropertiesCalculated = new ArrayList(
 						metaPropertiesCalculated);
 			}
-			if (r.entityReferencesMappings != null) {
-				r.entityReferencesMappings = new ArrayList(entityReferencesMappings);
-			}
-			if (r.entityReferencesReferenceNames != null) { 
-				r.entityReferencesReferenceNames = new HashMap(
-						entityReferencesReferenceNames);
-			}
 			if (r.tableColumns != null) {
 				r.tableColumns = new ArrayList(tableColumns);
 			}
 			if (r.hiddenPropertiesNames != null) {
 				r.hiddenPropertiesNames = new ArrayList(hiddenPropertiesNames);
 			}
+			if (r.propertiesNamesWithKeyAndHidden != null) {
+				r.propertiesNamesWithKeyAndHidden = new ArrayList(propertiesNamesWithKeyAndHidden);
+			} 
 			if (r.hiddenTableColumns != null) {
 				r.hiddenTableColumns = new ArrayList(hiddenTableColumns);
 			}

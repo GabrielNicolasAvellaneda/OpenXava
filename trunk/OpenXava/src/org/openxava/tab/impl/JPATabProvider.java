@@ -20,27 +20,84 @@ import org.openxava.util.*;
 public class JPATabProvider extends TabProviderBase {
 	
 	private static Log log = LogFactory.getLog(JPATabProvider.class);
-
+	
 	protected String translateCondition(String condition) {
 		int i = 0;
 		while (condition.contains("?")) {		
 			condition = condition.replaceFirst("\\?", ":p" + (i++));
 		}
-		return condition; 
+		return changePropertiesByJPAProperties(condition); 
 	}
 	
 	public String toQueryField(String propertyName) {		
 		return "e." + propertyName;
 	}
 
-	public String translateSelect(String select) {
-		select = changePropertiesByJPAProperties(select);
-		select = Strings.noLastToken(select.trim());
-		select = select + " " + getMetaModel().getName() + " e";
-		return select;
+	public String getSelectBase() {
+		return changePropertiesByJPAProperties(getSelectWithEntityAndJoins());
 	}
 	
+	public Collection<TabConverter> getConverters() {	
+		return null;
+	}
+	
+	private String getSelectWithEntityAndJoins() {
+		String select = getMetaTab().getSelect();
+		int i = select.indexOf("from ${");
+		int f = select.indexOf("}", i);
+		StringBuffer entityAndJoins = new StringBuffer();
+		entityAndJoins.append("from ");
+		entityAndJoins.append(getMetaModel().getName());
+		entityAndJoins.append(" e");
+		
+		if (hasReferences()) {
+			// the tables
+			
+			Iterator itReferencesMappings = getEntityReferencesMappings().iterator();			
+			while (itReferencesMappings.hasNext()) {
+				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
+				String reference = referenceMapping.getReference();				
+				int idx = reference.lastIndexOf('_'); 
+				if (idx >= 0) {
+					// In the case of reference to entity in aggregate only we will take the last reference name
+					reference = reference.substring(idx + 1);
+				}				 				
+				entityAndJoins.append(" left join e");
+				String nestedReference = (String) getEntityReferencesReferenceNames().get(referenceMapping);
+				if (!Is.emptyString(nestedReference)) {					
+					entityAndJoins.append(isAggregate(nestedReference)?".":"_");
+					entityAndJoins.append(nestedReference);
+				}
+				entityAndJoins.append(".");
+				entityAndJoins.append(reference);				
+				entityAndJoins.append(" e_");
+				if (!Is.emptyString(nestedReference)) {					
+					entityAndJoins.append(nestedReference);
+					entityAndJoins.append("_");
+				}				
+				entityAndJoins.append(reference);
+			}
+		}
+		
+		resetEntityReferencesMappings();
+		
+		StringBuffer result = new StringBuffer(select);
+		result.replace(i, f + 2, entityAndJoins.toString());
+		return result.toString();
+	}	
+	
+	private boolean isAggregate(String reference) {
+		try {
+			MetaReference ref = getMetaModel().getMetaReference(reference);					
+			return ref.isAggregate();
+		}
+		catch (ElementNotFoundException ex) {
+			return false;
+		}
+	}
+
 	private String changePropertiesByJPAProperties(String source) { // tmp ¿Unificar con changePropertiesByColumns?
+		if (!source.contains("${")) return source; 		
 		StringBuffer r = new StringBuffer(source);		
 		int i = r.toString().indexOf("${");
 		int f = 0;
@@ -48,15 +105,33 @@ public class JPATabProvider extends TabProviderBase {
 			f = r.toString().indexOf("}", i + 2);
 			if (f < 0)
 				break;
-			String property = r.substring(i + 2, f);
-			String jpaProperty = "0"; // thus it remained if it is calculated
-			if (!getMetaModel().isCalculated(property)) {
-				jpaProperty = "e." + property;				
+			String modelElement = r.substring(i + 2, f);
+			String jpaElement = "e." + modelElement; // The more common case
+			if (getMetaModel().isCalculated(modelElement)) {
+				jpaElement = "0";
+			}
+			else if (modelElement.contains(".")) {				
+				String reference = modelElement.substring(0, modelElement.lastIndexOf('.'));
+				if (!isAggregate(reference)) {
+					if (getMetaModel().getMetaProperty(modelElement).isKey()) {
+						jpaElement = "e." + modelElement;
+					}
+					else {
+						StringBuffer qualifiedElement = new StringBuffer(modelElement.replaceAll("\\.", "_"));
+						int last = qualifiedElement.lastIndexOf("_");
+						qualifiedElement.replace(last, last + 1, ".");
+						jpaElement = "e_" + qualifiedElement;
+					}
+				}
 			}			
-			r.replace(i, f + 1, jpaProperty);
+			r.replace(i, f + 1, jpaElement);
 			i = r.toString().indexOf("${");
 		}
 		return r.toString();
+	}
+	
+	private boolean isModel(String modelElement) {
+		return Character.isUpperCase(modelElement.charAt(0));
 	}
 
 	public DataChunk nextChunk() throws RemoteException {		
@@ -113,6 +188,10 @@ public class JPATabProvider extends TabProviderBase {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException(errorId);
 		}
+	}
+
+	public boolean usesConverters() {
+		return false;
 	}
 
 }
