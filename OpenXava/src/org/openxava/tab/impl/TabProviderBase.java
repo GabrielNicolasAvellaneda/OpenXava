@@ -2,9 +2,13 @@ package org.openxava.tab.impl;
 
 import java.rmi.*;
 import java.util.*;
+
 import javax.ejb.*;
 import org.apache.commons.logging.*;
+import org.openxava.component.*;
+import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
+import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 
 /**
@@ -16,25 +20,30 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 	private static Log log = LogFactory.getLog(TabProviderBase.class);
 	private static final int DEFAULT_CHUNK_SIZE = 50;	
 
+	private Collection entityReferencesMappings;  
+	private Map entityReferencesReferenceNames; 	
 	private String select; // Select ... from ...
 	private String selectSize;
 	private Object[] key;
 	private int chunkSize = DEFAULT_CHUNK_SIZE;
 	private int current;  
 	private boolean eof = true;
-	private MetaModel metaModel;
-	
-	
+	private MetaTab metaTab;
+		
 	abstract protected String translateCondition(String condition);
-	abstract protected Number executeNumberSelect(String select, String errorId);
+	abstract protected Number executeNumberSelect(String select, String errorId);	
 	
-	public void setMetaModel(MetaModel metaModel) {
-		this.metaModel = metaModel;
+	public void setMetaTab(MetaTab metaTab) {
+		this.metaTab = metaTab;
 	}
 	
 	protected MetaModel getMetaModel() {
-		return metaModel;
+		return metaTab.getMetaModel();
 	}
+	
+	protected MetaTab getMetaTab() {
+		return metaTab;
+	}	
 		
 	public void search(String condition, Object key) throws FinderException, RemoteException {		
 		current = 0;
@@ -139,5 +148,72 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 	protected void setEOF(boolean eof) {
 		this.eof = eof;
 	}
+	
+	protected void resetEntityReferencesMappings() {
+		entityReferencesMappings = null;
+		entityReferencesReferenceNames = null; 		
+	}
+
+	protected boolean hasReferences() throws XavaException {
+		return !getEntityReferencesMappings().isEmpty();
+	}
+	
+	protected Map getEntityReferencesReferenceNames() {
+		return entityReferencesReferenceNames;
+	}
+	
+	protected Collection getEntityReferencesMappings() throws XavaException {	
+		if (entityReferencesMappings == null) {
+			entityReferencesMappings = new ArrayList(); 
+			entityReferencesReferenceNames = new HashMap(); 
+			for (Iterator itProperties = getMetaTab().getPropertiesNames().iterator(); itProperties.hasNext();) {
+				String property = (String) itProperties.next();				
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaModel(), "", ""); 
+			}
+			for (Iterator itProperties = getMetaTab().getHiddenPropertiesNames().iterator(); itProperties.hasNext();) {
+				String property = (String) itProperties.next();				
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaModel(), "", ""); 
+			}						
+		}
+		return entityReferencesMappings;
+	}
+	
+	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel, String parentReference, String aggregatePrefix) throws XavaException {		
+		int idx = property.indexOf('.');				
+		if (idx >= 0) {
+			String referenceName = property.substring(0, idx);	
+			MetaReference ref = metaModel.getMetaReference(referenceName);
+			String memberName = property.substring(idx + 1);
+			boolean hasMoreLevels = memberName.indexOf('.') >= 0;
+			if (!ref.isAggregate()) {												
+				if (hasMoreLevels || !ref.getMetaModelReferenced().isKey(memberName)) {
+					ReferenceMapping rm = null;
+					if (Is.emptyString(aggregatePrefix )) {
+						rm = metaModel.getMapping().getReferenceMapping(referenceName);
+					}
+					else {
+						rm = metaModel.getMetaModelContainer().getMapping().getReferenceMapping(aggregatePrefix + referenceName);						
+					}
+					if (!result.contains(rm)) {
+						entityReferencesReferenceNames.put(rm, parentReference); 
+						result.add(rm);
+					}
+				}
+			}			
+			 
+			if (hasMoreLevels) {
+				MetaModel refModel = null;
+				if (ref.isAggregate()) {
+					refModel = metaModel.getMetaComponent().getMetaAggregate(ref.getReferencedModelName());
+					fillEntityReferencesMappings(result, memberName, refModel, referenceName, referenceName + "_");
+				}
+				else {
+					refModel = MetaComponent.get(ref.getReferencedModelName()).getMetaEntity();
+					fillEntityReferencesMappings(result, memberName, refModel, referenceName, "");
+				}
+			}
+		}		
+	}	
+	
 
 }

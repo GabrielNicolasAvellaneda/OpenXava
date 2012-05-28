@@ -6,15 +6,12 @@ import javax.ejb.*;
 
 /**
  * Interface to facilite a remote <b>impl</b>ementation of
- * a {@link IEntityTab}. <p>
- *
- * Adds methods not intended to use with final user (a programmer)
- * of the component, but that they are useful to implement {@link IXTableModel}.<br>
+ * a {@link EntityTab}. <p>
  *
  * @author  Javier Paniza
  */
 
-public interface IEntityTabImpl extends IEntityTab, IDataReader {
+public interface IEntityTabImpl extends IWithXTableModel, ISearch, IDataReader {
 
   /**
    * Search a concrete entity from a key. <p>

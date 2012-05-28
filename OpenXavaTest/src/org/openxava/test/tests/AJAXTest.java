@@ -189,7 +189,7 @@ public class AJAXTest extends ModuleTestBase {
 				"collection_deliveryPlaces., " +
 				"frame_deliveryPlacesheader, " + 
 				"messages,");
-		setValue("number", "4");
+		setValue("number", "4"); 
 		execute("CRUD.refresh");
 		assertLoadedParts("errors, editor_number, " +
 				"editor_address.asString, " + 
@@ -198,8 +198,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_name, " +
 				"editor_address.street, " +
 				"editor_city, " +
-				"editor_relationWithSeller, " +
-				"editor_type, " + 
+				"editor_relationWithSeller, " +				
 				"reference_editor_address.state, " +
 				"collection_deliveryPlaces., " +
 				"frame_deliveryPlacesheader, " + 

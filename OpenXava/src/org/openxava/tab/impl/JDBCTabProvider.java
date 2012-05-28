@@ -5,6 +5,9 @@ import java.sql.*;
 import java.util.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.converters.*;
+import org.openxava.mapping.*;
+import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
 /**
@@ -16,6 +19,7 @@ import org.openxava.util.*;
 public class JDBCTabProvider extends TabProviderBase {
 	
 	private static Log log = LogFactory.getLog(JDBCTabProvider.class);
+	private Collection<TabConverter> converters;
 
 	protected String translateCondition(String condition) { 
 		return getMetaModel().getMapping().changePropertiesByColumns(condition); // tmp ¿Mover changePropertiesByColumns() aquí?
@@ -25,10 +29,80 @@ public class JDBCTabProvider extends TabProviderBase {
 		return getMetaModel().getMapping().getQualifiedColumn(propertyName);
 	}
 
-	public String translateSelect(String select) {
-		return getMetaModel().getMapping().changePropertiesByColumns(select); // tmp ¿Mover changePropertiesByColumns() aquí?	
+	public String getSelectBase() {
+		return getMetaModel().getMapping().changePropertiesByColumns(getSelectWithTableJoinsAndHiddenFields());	
 	}
 	
+	private String getSelectWithTableJoinsAndHiddenFields() {
+		String select = getMetaTab().getSelect();
+		int i = select.indexOf("from ${");
+		if (i < 0) return select; // It's baseCondition with the complete custom SELECT 
+		int f = select.indexOf("}", i);
+		StringBuffer tableJoinsAndHiddenFields = new StringBuffer();
+		
+		Iterator itCmpFieldsColumnsInMultipleProperties = getMetaTab().getCmpFieldsColumnsInMultipleProperties()
+				.iterator();
+		while (itCmpFieldsColumnsInMultipleProperties.hasNext()) {
+			tableJoinsAndHiddenFields.append(", ");
+			tableJoinsAndHiddenFields.append(itCmpFieldsColumnsInMultipleProperties.next());
+		}
+		
+		tableJoinsAndHiddenFields.append(" from ");
+		tableJoinsAndHiddenFields.append(getMetaModel().getMapping().getTable());
+		
+		if (hasReferences()) {
+			// the tables
+
+			Iterator itReferencesMappings = getEntityReferencesMappings().iterator();			
+			while (itReferencesMappings.hasNext()) {
+				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
+				tableJoinsAndHiddenFields.append(" left join ");						
+				tableJoinsAndHiddenFields.append(referenceMapping.getReferencedTable());
+				// select.append(" as "); // it does not work in Oracle
+				tableJoinsAndHiddenFields.append(" T_");				
+				String reference = referenceMapping.getReference();				
+				int idx = reference.lastIndexOf('_'); 
+				if (idx >= 0) {
+					// In the case of reference to entity in aggregate only we will take the last reference name
+					reference = reference.substring(idx + 1);
+				}
+				tableJoinsAndHiddenFields.append(reference);
+				// where of join
+				tableJoinsAndHiddenFields.append(" on ");
+				Iterator itDetails = referenceMapping.getDetails().iterator();
+				while (itDetails.hasNext()) {
+					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+					String modelThatContainsReference = detail.getContainer().getContainer().getModelName();
+					if (modelThatContainsReference.equals(getMetaModel().getName())) {
+						tableJoinsAndHiddenFields.append(detail.getQualifiedColumn());
+					}
+					else {
+						tableJoinsAndHiddenFields.append("T_");						
+						tableJoinsAndHiddenFields.append(getEntityReferencesReferenceNames().get(referenceMapping));
+						tableJoinsAndHiddenFields.append(".");
+						tableJoinsAndHiddenFields.append(detail.getColumn());												
+					}
+					tableJoinsAndHiddenFields.append(" = ");
+					tableJoinsAndHiddenFields.append("T_");
+					tableJoinsAndHiddenFields.append(reference);
+					tableJoinsAndHiddenFields.append(".");
+					tableJoinsAndHiddenFields.append(detail.getReferencedTableColumn());					
+					
+					if (itDetails.hasNext()) {
+						tableJoinsAndHiddenFields.append(" and ");
+					}
+				}
+			}
+		}
+		
+		resetEntityReferencesMappings();
+		
+		StringBuffer result = new StringBuffer(select);
+		result.replace(i, f + 2, tableJoinsAndHiddenFields.toString());
+		return result.toString();
+	}
+	
+
 	public DataChunk nextChunk() throws RemoteException {		
 		if (getSelect() == null || isEOF()) { // search not called yet
 			return new DataChunk(Collections.EMPTY_LIST, true, getCurrent()); // Empty
@@ -185,5 +259,70 @@ public class JDBCTabProvider extends TabProviderBase {
 	private IConnectionProvider getConnectionProvider() {
 		return DataSourceConnectionProvider.getByComponent(getMetaModel().getMetaComponent().getName()); 
 	}
+	
+	public Collection<TabConverter> getConverters() throws XavaException {
+		if (converters == null) {
+			converters = new ArrayList();			
+			int i=0;
+			String table = getMetaModel().getMapping().getTableToQualifyColumn(); 
+			for (String propertyName: getMetaTab().getPropertiesNamesWithKeyAndHidden()) {
+				try {
+					MetaProperty property = getMetaModel().getMetaProperty(propertyName);
+					PropertyMapping propertyMapping = property.getMapping();
+					if (propertyMapping != null) {
+						IConverter converter = propertyMapping.getConverter();
+						if (converter != null) {
+							converters.add(new TabConverter(propertyName, i,  converter));
+						}
+						else {							
+							IMultipleConverter multipleConverter =  propertyMapping.getMultipleConverter();
+							if (multipleConverter != null) {							
+								converters.add(new TabConverter(propertyName, i, multipleConverter, propertyMapping.getCmpFields(), getFields(), table));
+							}
+							else {
+								// This is the case of a key without converter of type int or long
+								// It's for suporting int and long as key and NUMERIC in database
+								// without to declare an explicit converter
+								if (property.isKey()) {
+									if (property.getType().equals(int.class) || property.getType().equals(Integer.class)) {
+										converters.add(new TabConverter(propertyName, i,  IntegerNumberConverter.getInstance()));
+									}
+									else if (property.getType().equals(long.class) || property.getType().equals(Long.class)) {
+										converters.add(new TabConverter(propertyName, i,  LongNumberConverter.getInstance()));
+									}
+								}
+							}	
+						}
+					}
+				}
+				catch (ElementNotFoundException ex) {
+					// Thus we exclude the property out of mapping
+				}
+				i++;
+			}
+		}
+		return converters;
+	}
+	
+	private String[] getFields() throws XavaException {
+		Collection c = new ArrayList();
+		// First the key
+		Iterator itKeyNames = getMetaModel().getAllKeyPropertiesNames().iterator();
+		while (itKeyNames.hasNext()) {
+			c.add(getMetaModel().getMapping().getQualifiedColumn((String) itKeyNames.next()));
+		}
+				
+		// Then the others
+		c.addAll(getMetaTab().getTableColumns());
+		c.addAll(getMetaTab().getHiddenTableColumns());
+				
+		String[] result = new String[c.size()];
+		c.toArray(result);		
+		return result;
+	}
 
+	public boolean usesConverters() {
+		return true;
+	}
+	
 }

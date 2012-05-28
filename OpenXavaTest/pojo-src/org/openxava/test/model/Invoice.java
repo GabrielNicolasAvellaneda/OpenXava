@@ -25,7 +25,7 @@ import org.openxava.util.*;
 
 @Entity
 @IdClass(InvoiceKey.class)
-@Views({
+@Views({	
 	@View(members=
 		"year, number, date, paid;" +		
 		"discounts [" +
@@ -36,7 +36,7 @@ import org.openxava.util.*;
 		"details { details }" +			
 		"amounts { amountsSum; vatPercentage; vat }" +
 		"deliveries { deliveries }"		
-	),
+	),	
 	@View(name="NoSections", members=
 		"year, number, date;" +		
 		"customer;" +		

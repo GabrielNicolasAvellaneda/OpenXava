@@ -26,7 +26,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	private String componentName;
 	private IConnectionProvider connectionProvider;	
 		
-	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException {			
+	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes /*, Collection tabConverters*/) throws RemoteException {			
 		DataChunk tv = null;
 		try {
 			tv = tabProvider.nextChunk();
@@ -41,6 +41,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		
 		// Conversion
 		try {
+			Collection<TabConverter> tabConverters = tabProvider.getConverters(); 
 			if (tabConverters != null) {
 				for (int i = 0; i < l; i++) {
 					data.set(i, doConversions((Object[]) data.get(i), tabConverters));
@@ -166,13 +167,11 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		return MapFacade.findEntity(modelName, key);
 	}
 		
-	private Object[] doConversions(Object[] row, Collection tabConverters) throws XavaException {
-		Iterator itConverters = tabConverters.iterator();
-		while (itConverters.hasNext()) {
-			TabConverter tabConverter = (TabConverter) itConverters.next();
+	private Object[] doConversions(Object[] row, Collection<TabConverter> tabConverters) throws XavaException {				
+		for (TabConverter tabConverter: tabConverters) {
 			try {				
-				int idx = tabConverter.getIndex();
-				if (tabConverter.hasMultipleConverter()) { 
+				int idx = tabConverter.getIndex();				
+				if (tabConverter.hasMultipleConverter()) {					
 					IMultipleConverter converter = tabConverter.getMultipleConverter();
 					PropertiesManager mp = new PropertiesManager(converter);					
 					Iterator itCmpFields = tabConverter.getCmpFields().iterator();
@@ -181,9 +180,9 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 						Object value = row[tabConverter.getIndex(field)]; 
 						mp.executeSet(field.getConverterPropertyName(), value);					
 					}										
-					row[idx] = converter.toJava();										
+					row[idx] = converter.toJava();															
 				}
-				else {
+				else {				
 					IConverter converter = tabConverter.getConverter();					
 					row[idx] = converter.toJava(row[idx]);					
 				}
@@ -193,7 +192,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 				row[tabConverter.getIndex()] = "ERROR";
 			}
 		}
-		return row;
+		return row;		
 	}
 	
 	private Object getValue(String propertyName, Object[] values, List propertiesNames)

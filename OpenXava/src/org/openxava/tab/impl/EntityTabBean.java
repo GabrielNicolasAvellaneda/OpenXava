@@ -20,8 +20,8 @@ public class EntityTabBean extends SessionBase implements IEntityTabDataProvider
 	public void ejbCreate() {		
 	}
 	
-	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexs, Collection tabConverters) throws RemoteException {	
-		return dataProvider.nextChunk(tabProvider, modelName, propertiesNames, tabCalculators, keyIndexs, tabConverters);
+	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexs) throws RemoteException {	
+		return dataProvider.nextChunk(tabProvider, modelName, propertiesNames, tabCalculators, keyIndexs);
 	}
 
 	public int getResultSize(ITabProvider tabProvider) {	

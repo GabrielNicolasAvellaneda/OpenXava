@@ -1,8 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: message 'are_you_sure_row_action={0} on row {1}: Are you sure?' It showed 'Delete record on row 0...' now it shows 'Delete record on row 1...'
-- It's possible to define more easily styles with the file portal-ext.css. Each project will have its own portal-ext.css
+- Fix: Message 'Delete record on row x...' shows the incorrect row number.
+- It's possible to define more easily styles with the file portal-ext.css.
 - Hibernate upgraded to 3.6.10.
 - New property messagesOnTop in xava.properties to show the messages in the top or in the bottom of the user interface.  
 - New methods add/removeActionForProperty() in View for adding actions to a property dynamically.
