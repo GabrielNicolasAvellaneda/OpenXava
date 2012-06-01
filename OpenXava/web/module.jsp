@@ -105,6 +105,8 @@
 <%
 	}
 %>
+	<link href="<%=contextPath%>/xava/style/<%=style.getCssFile()%>?ox=<%=version%>" rel="stylesheet" type="text/css">
+
 	<%
 		for (java.util.Iterator it = style.getAdditionalCssFiles()
 				.iterator(); it.hasNext();) {
@@ -114,7 +116,7 @@
 	<%
 		}
 	%> 	
-	<link href="<%=contextPath%>/xava/style/<%=style.getCssFile()%>?ox=<%=version%>" rel="stylesheet" type="text/css">
+	
 	<script type='text/javascript' src='<%=contextPath%>/xava/js/dwr-engine.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=contextPath%>/dwr/util.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=contextPath%>/dwr/interface/Module.js?ox=<%=version%>'></script>
