@@ -210,9 +210,9 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		}
 	}	
 	
-	public Number getSum(ITabProvider tabProvider, String column) { 	
+	public Number getSum(ITabProvider tabProvider, String property) { 	
 		try {
-			return tabProvider.getSum(column);
+			return tabProvider.getSum(property);
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

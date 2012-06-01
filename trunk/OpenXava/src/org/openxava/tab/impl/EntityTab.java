@@ -175,7 +175,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			if (Is.emptyString(componentName)) {
 				throw new InitException("tab_component_required");
 			}
-			tabProvider = TabProviderFactory.create(); 			
+			tabProvider = TabProviderFactory.create();
 			table = new TableModelBean();
 			table.setTranslateHeading(false);
 			this.mapping = null;
@@ -452,9 +452,8 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 		return getDataProvider(getComponentName()).getResultSize(tabProvider);
 	}
 	
-	public Number getSum(String property) throws RemoteException { 
-		String column = getMapping().getQualifiedColumn(property);		
-		return getDataProvider(getComponentName()).getSum(tabProvider, column);
+	public Number getSum(String property) throws RemoteException {
+		return getDataProvider(getComponentName()).getSum(tabProvider, property);  		
 	}
 
 	public void reset() throws RemoteException {

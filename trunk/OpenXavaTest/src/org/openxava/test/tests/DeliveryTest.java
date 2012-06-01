@@ -1172,7 +1172,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("remarks", "Hell in your eyes");	
 	}
 	
-	public void testGeneratePdf() throws Exception {
+	public void testGeneratePdf() throws Exception { 
 		execute("Print.generatePdf");		
 		assertContentTypeForPopup("application/pdf");
 	}

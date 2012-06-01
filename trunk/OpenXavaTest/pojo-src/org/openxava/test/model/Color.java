@@ -87,7 +87,16 @@ public class Color {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList(
-		condition="${thing.number} = (SELECT idthing FROM ${Thing} WHERE name = 'CAR')"
+		// tmp ¿Poner en el wiki en la parte de @DescriptionsList?	
+		// This is for testing the ${Thing} is well interpreted, though since v4.5 you can use just Thing
+		// because condition uses JPA query syntax
+		condition="${thing.number} = (SELECT number FROM ${Thing} WHERE name = 'CAR')"
+		
+		// It does not works because IDTHING is a column name, so JPA does not recognized it
+		// condition="${thing.number} = (SELECT IDTHING FROM ${Thing} WHERE name = 'CAR')" 
+
+		// We can use a pure JPQL query without ${propertyName}
+		// condition="e.thing.number = (SELECT t.number FROM Thing t WHERE t.name = 'CAR')" 		 
 	)
 	private CharacteristicThing anotherCT; // to test the change model name by table name: ${Thing} -> THING  
 	

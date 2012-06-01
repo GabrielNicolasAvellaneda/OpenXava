@@ -15,14 +15,16 @@ public class TabProviderFactory {
 	
 	public static ITabProvider create() {
 		try {
+			// tmp Que dependa de persistence provider
+			// tmp Si ponemos una propiedad en xava.properties, poner en migración
 			// tmp return (ITabProvider) Class.forName(XavaPreferences.getInstance().getTabProviderClass()).newInstance();
-			// return new JPATabProvider(); // tmp:
-			return new JDBCTabProvider(); // tmp
+			return new JPATabProvider(); // tmp:
+			// tmp return new JDBCTabProvider(); // tmp
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("tab_provider_creation_error"); // tmp i18n
-		}		
+		}
 	}
 
 

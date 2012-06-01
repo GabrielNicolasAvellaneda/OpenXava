@@ -68,7 +68,7 @@ class OrderTest extends ModuleTestBase {
 			doubleClick = true
 			Thread.sleep(4000)
 					
-			assertNoErrors()
+			assertNoErrors() 
 			assertCollectionRowCount("details", 1)
 			
 			execute("CRUD.delete")
