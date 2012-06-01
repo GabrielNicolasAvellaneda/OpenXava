@@ -30,6 +30,8 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 	private boolean eof = true;
 	private MetaTab metaTab;
 		
+		
+	abstract protected String translateProperty(String property);
 	abstract protected String translateCondition(String condition);
 	abstract protected Number executeNumberSelect(String select, String errorId);	
 	
@@ -49,7 +51,7 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 		current = 0;
 		eof = false;
 		this.key = toArray(key);					
-		condition = condition == null ? "" : condition.trim(); 
+		condition = condition == null ? "" : condition.trim();
 		select = translateCondition(condition);
 		selectSize = createSizeSelect(select);		
 	}
@@ -104,8 +106,8 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 		return executeNumberSelect(this.selectSize, "tab_result_size_error").intValue();
 	}
 	
-	public Number getSum(String column) { 
-		return executeNumberSelect(createSumSelect(column), "column_sum_error"); 		
+	public Number getSum(String property) {
+		return executeNumberSelect(createSumSelect(property), "column_sum_error"); 		
 	}		
 	
 	private String createSizeSelect(String select) {
@@ -119,13 +121,13 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 		return sb.toString();
 	}
 	
-	private String createSumSelect(String column) { 
+	private String createSumSelect(String property) { 
 		if (select == null) return null;		
 		String selectUpperCase = Strings.changeSeparatorsBySpaces(select.toUpperCase());
 		int iniFrom = selectUpperCase.indexOf(" FROM ");
 		int end = selectUpperCase.indexOf("ORDER BY ");
-		StringBuffer sb = new StringBuffer("SELECT SUM(");
-		sb.append(column); 
+		StringBuffer sb = new StringBuffer("SELECT SUM(");		
+		sb.append(translateProperty(property)); // tmp translateProperty 		
 		sb.append(") ");
 		if (end < 0) sb.append(select.substring(iniFrom));
 		else sb.append(select.substring(iniFrom, end - 1));
@@ -174,7 +176,7 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 				String property = (String) itProperties.next();				
 				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaModel(), "", ""); 
 			}						
-		}
+		}		
 		return entityReferencesMappings;
 	}
 	
@@ -205,14 +207,20 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 				MetaModel refModel = null;
 				if (ref.isAggregate()) {
 					refModel = metaModel.getMetaComponent().getMetaAggregate(ref.getReferencedModelName());
-					fillEntityReferencesMappings(result, memberName, refModel, referenceName, referenceName + "_");
+					// tmp fillEntityReferencesMappings(result, memberName, refModel, referenceName, referenceName + "_");
+					fillEntityReferencesMappings(result, memberName, refModel, concat(parentReference, referenceName), referenceName + "_"); // tmp
 				}
 				else {
 					refModel = MetaComponent.get(ref.getReferencedModelName()).getMetaEntity();
-					fillEntityReferencesMappings(result, memberName, refModel, referenceName, "");
+					// tmp fillEntityReferencesMappings(result, memberName, refModel, referenceName, "");
+					fillEntityReferencesMappings(result, memberName, refModel, concat(parentReference, referenceName), ""); // tmp
 				}
 			}
 		}		
+	}
+	private String concat(String parentReference, String referenceName) { // tmp
+		if (Is.emptyString(parentReference)) return referenceName; 
+		return parentReference + "_" + referenceName;
 	}	
 	
 

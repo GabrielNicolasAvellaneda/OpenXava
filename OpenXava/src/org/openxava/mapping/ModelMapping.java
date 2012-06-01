@@ -334,7 +334,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 				if (getMetaModel().getMetaProperty(modelProperty).isKey()) {
 					reference = reference.substring(0, reference.lastIndexOf('.'));
 				}				
-				reference = reference.substring(reference.lastIndexOf('.') + 1);
+				// tmp reference = reference.substring(reference.lastIndexOf('.') + 1);
+				reference = reference.replaceAll("\\.", "_"); // tmp
 			}
 			return "T_" + reference + tableColumn.substring(tableColumn.lastIndexOf('.'));
 		}

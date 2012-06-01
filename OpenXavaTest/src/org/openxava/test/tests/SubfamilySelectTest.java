@@ -12,9 +12,12 @@ public class SubfamilySelectTest extends ModuleTestBase {
 		super(testName, "SubfamilySelect");		
 	}
 	
-	public void testTabWithSelect() throws Exception {
+	public void testTabWithSelect() throws Exception { 
 		assertNoErrors();
 		assertListNotEmpty();
+		assertValueInList(0, 0, "1");
+		assertValueInList(0, 1, "DESARROLLO");
+		assertValueInList(0, 2, "SOFTWARE");
 	}
 	
 }

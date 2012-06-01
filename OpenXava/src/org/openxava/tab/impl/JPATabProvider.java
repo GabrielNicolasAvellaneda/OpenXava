@@ -44,6 +44,7 @@ public class JPATabProvider extends TabProviderBase {
 	private String getSelectWithEntityAndJoins() {
 		String select = getMetaTab().getSelect();
 		int i = select.indexOf("from ${");
+		if (i < 0) return select; // tmp
 		int f = select.indexOf("}", i);
 		StringBuffer entityAndJoins = new StringBuffer();
 		entityAndJoins.append("from ");
@@ -57,17 +58,17 @@ public class JPATabProvider extends TabProviderBase {
 			while (itReferencesMappings.hasNext()) {
 				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
 				String reference = referenceMapping.getReference();				
-				int idx = reference.lastIndexOf('_'); 
+				int idx = reference.lastIndexOf('_');				
 				if (idx >= 0) {
 					// In the case of reference to entity in aggregate only we will take the last reference name
 					reference = reference.substring(idx + 1);
-				}				 				
+				}								 			
 				entityAndJoins.append(" left join e");
 				String nestedReference = (String) getEntityReferencesReferenceNames().get(referenceMapping);
 				if (!Is.emptyString(nestedReference)) {					
 					entityAndJoins.append(isAggregate(nestedReference)?".":"_");
 					entityAndJoins.append(nestedReference);
-				}
+				}				
 				entityAndJoins.append(".");
 				entityAndJoins.append(reference);				
 				entityAndJoins.append(" e_");
@@ -97,7 +98,7 @@ public class JPATabProvider extends TabProviderBase {
 	}
 
 	private String changePropertiesByJPAProperties(String source) { // tmp ¿Unificar con changePropertiesByColumns?
-		if (!source.contains("${")) return source; 		
+		if (!source.contains("${")) return source;
 		StringBuffer r = new StringBuffer(source);		
 		int i = r.toString().indexOf("${");
 		int f = 0;
@@ -106,17 +107,14 @@ public class JPATabProvider extends TabProviderBase {
 			if (f < 0)
 				break;
 			String modelElement = r.substring(i + 2, f);
-			String jpaElement = "e." + modelElement; // The more common case
+			String jpaElement = "e." + modelElement; // The more common case			
 			if (getMetaModel().isCalculated(modelElement)) {
 				jpaElement = "0";
 			}
 			else if (modelElement.contains(".")) {				
 				String reference = modelElement.substring(0, modelElement.lastIndexOf('.'));
 				if (!isAggregate(reference)) {
-					if (getMetaModel().getMetaProperty(modelElement).isKey()) {
-						jpaElement = "e." + modelElement;
-					}
-					else {
+					if (!getMetaModel().getMetaProperty(modelElement).isKey()) {
 						StringBuffer qualifiedElement = new StringBuffer(modelElement.replaceAll("\\.", "_"));
 						int last = qualifiedElement.lastIndexOf("_");
 						qualifiedElement.replace(last, last + 1, ".");
@@ -124,6 +122,11 @@ public class JPATabProvider extends TabProviderBase {
 					}
 				}
 			}			
+			// tmp ini			
+			else if (isModel(modelElement)) { 
+				jpaElement = modelElement;
+			}			
+			// tmp fin
 			r.replace(i, f + 1, jpaElement);
 			i = r.toString().indexOf("${");
 		}
@@ -192,6 +195,10 @@ public class JPATabProvider extends TabProviderBase {
 
 	public boolean usesConverters() {
 		return false;
+	}
+
+	protected String translateProperty(String property) {
+		return "e." + property;
 	}
 
 }

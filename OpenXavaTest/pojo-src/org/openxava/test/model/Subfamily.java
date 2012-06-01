@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.*;
-import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 
 /**
@@ -23,14 +22,20 @@ import org.openxava.annotations.*;
 	"}"	
 )
 @Tab(name="CompleteSelect",
-	properties="number, description, family",
-	/* For Hypersonic */ 	
-	baseCondition = 
+	properties="number, description, family",	
+	/* For JPA */ 
+	baseCondition = // JPA query using e as alias for main entity. Since v4.5
+		"select e.number, e.description, f.description " +
+		"from Subfamily e, Family f " +
+		"where e.familyNumber = f.number"				
+	/* For Hypersonic    	
+	baseCondition = // With SQL until v4.4.x
 		"select ${number}, ${description}, FAMILY.DESCRIPTION " +
 		"from   XAVATEST.SUBFAMILY, XAVATEST.FAMILY " +
-		"where  SUBFAMILY.FAMILY = FAMILY.NUMBER"								
+		"where  SUBFAMILY.FAMILY = FAMILY.NUMBER"
+	*/									
 	/* For AS/400 	    	
-	baseCondition = 
+	baseCondition = // With SQL until v4.4.x
 		"select ${number}, ${description}, XAVATEST.FAMILY.DESCRIPTION " +
 		"from   XAVATEST.SUBFAMILY, XAVATEST.FAMILY " +
 		"where  XAVATEST.SUBFAMILY.FAMILY = XAVATEST.FAMILY.NUMBER"
@@ -55,11 +60,9 @@ public class Subfamily {
 	@org.hibernate.annotations.Type(type="org.openxava.types.NotNullStringType")
 	private String remarks;
 	
-	@Column(length=40) @Hidden
-	public String getFamily() {
-		return ""; /* Only for column description in tab */
-	}
-
+	@Transient @Column(length=40) @Hidden  
+	private String family;	// Only for column description in tab 
+	
 	public String getDescription() {
 		return description;
 	}
@@ -99,5 +102,13 @@ public class Subfamily {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	
+	public String getFamily() {
+		return family; 
+	}
+	public void setFamily(String family) { 
+		this.family = family;
+	}
+
 	
 }

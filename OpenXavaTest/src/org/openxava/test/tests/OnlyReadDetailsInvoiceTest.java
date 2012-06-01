@@ -61,7 +61,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"List.customize",
 			"List.sumColumn",
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
-			"Print.generateExcel" // are alwasy present						
+			"Print.generateExcel" // are always present						
 		};		
 		assertActions(aggregatListActions);
 		
@@ -89,7 +89,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 				break;
 			}
 		}
-		assertTrue("It's required a invoice with seller level for run this test", row >= 0);
+		assertTrue("It's required a invoice with seller level for run this test", row >= 0); 
 		String year = getValueInList(row, "year");
 		String number = getValueInList(row, "number");
 		Invoice invoice = (Invoice) Invoice.findByYearNumber(Integer.parseInt(year), Integer.parseInt(number));		

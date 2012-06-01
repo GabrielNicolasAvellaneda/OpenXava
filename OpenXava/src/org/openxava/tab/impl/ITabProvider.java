@@ -14,7 +14,7 @@ public interface ITabProvider extends ISearch, IDataReader {
 	 
 	void setMetaTab(MetaTab metaTab);
 	
-	Number getSum(String column);  
+	Number getSum(String property);  
   
 	String getSelectBase(); 
   

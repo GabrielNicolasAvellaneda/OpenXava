@@ -1,17 +1,10 @@
 package org.openxava.test.tests;
 
-import java.io.*;
-
 import javax.persistence.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
-
-import com.lowagie.text.*;
-import com.lowagie.text.Document;
-import com.lowagie.text.pdf.*;
-
 
 
 /**
@@ -179,11 +172,11 @@ public class ColorTest extends ModuleTestBase {
 		assertListRowCount(0);
 	}
 	
-	public void testChangeModelNameByTableNameInConditions() throws Exception{
+	public void testChangeModelNameInConditions() throws Exception{ 
 		execute("CRUD.new");
 		assertNoErrors();
 		assertExists("anotherCT.number");
-		assertValidValuesCount("anotherCT.number", 3);
+		assertValidValuesCount("anotherCT.number", 3); 
 		String [][] validValues = { 
 			{ "", "" },
 			{ "0", "3 PLACES" },

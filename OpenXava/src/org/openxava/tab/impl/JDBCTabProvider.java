@@ -30,7 +30,7 @@ public class JDBCTabProvider extends TabProviderBase {
 	}
 
 	public String getSelectBase() {
-		return getMetaModel().getMapping().changePropertiesByColumns(getSelectWithTableJoinsAndHiddenFields());	
+		return getMetaModel().getMapping().changePropertiesByColumns(getSelectWithTableJoinsAndHiddenFields());
 	}
 	
 	private String getSelectWithTableJoinsAndHiddenFields() {
@@ -60,11 +60,16 @@ public class JDBCTabProvider extends TabProviderBase {
 				tableJoinsAndHiddenFields.append(referenceMapping.getReferencedTable());
 				// select.append(" as "); // it does not work in Oracle
 				tableJoinsAndHiddenFields.append(" T_");				
-				String reference = referenceMapping.getReference();				
+				String reference = referenceMapping.getReference();
 				int idx = reference.lastIndexOf('_'); 
 				if (idx >= 0) {
 					// In the case of reference to entity in aggregate only we will take the last reference name
 					reference = reference.substring(idx + 1);
+				}
+				String nestedReference = (String) getEntityReferencesReferenceNames().get(referenceMapping);  
+				if (!Is.emptyString(nestedReference)) {
+					tableJoinsAndHiddenFields.append(nestedReference);
+					tableJoinsAndHiddenFields.append('_');
 				}
 				tableJoinsAndHiddenFields.append(reference);
 				// where of join
@@ -77,14 +82,18 @@ public class JDBCTabProvider extends TabProviderBase {
 						tableJoinsAndHiddenFields.append(detail.getQualifiedColumn());
 					}
 					else {
-						tableJoinsAndHiddenFields.append("T_");						
-						tableJoinsAndHiddenFields.append(getEntityReferencesReferenceNames().get(referenceMapping));
+						tableJoinsAndHiddenFields.append("T_");												
+						tableJoinsAndHiddenFields.append(nestedReference); 
 						tableJoinsAndHiddenFields.append(".");
 						tableJoinsAndHiddenFields.append(detail.getColumn());												
 					}
 					tableJoinsAndHiddenFields.append(" = ");
 					tableJoinsAndHiddenFields.append("T_");
-					tableJoinsAndHiddenFields.append(reference);
+					if (!Is.emptyString(nestedReference)) {
+						tableJoinsAndHiddenFields.append(nestedReference);
+						tableJoinsAndHiddenFields.append('_');
+					}
+					tableJoinsAndHiddenFields.append(reference); 
 					tableJoinsAndHiddenFields.append(".");
 					tableJoinsAndHiddenFields.append(detail.getReferencedTableColumn());					
 					
@@ -323,6 +332,10 @@ public class JDBCTabProvider extends TabProviderBase {
 
 	public boolean usesConverters() {
 		return true;
+	}
+
+	protected String translateProperty(String property) {
+		return getMetaModel().getMapping().getQualifiedColumn(property);
 	}
 	
 }

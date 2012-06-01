@@ -550,7 +550,7 @@ public class InvoiceTest extends ModuleTestBase {
 		String year = getValueInList(0, 0);
 		String number = getValueInList(0, 1);		
 		String date = getValueInList(0, 2);
-		String amountsSum = formatBigDecimal(getValueInList(0, 3));
+		String amountsSum = formatBigDecimal(getValueInList(0, 3));		
 		String vat = formatBigDecimal(getValueInList(0, 4));
 		String detailsCount = getValueInList(0, 5);
 		String paid = getValueInList(0, 6);
