@@ -403,6 +403,7 @@
 	
 	<tab>
 		<row-style style="row-highlight" property="type" value="steady"/>
+		<row-style style="row-red" property="type" value="special"/>
 		<properties>name, type, seller.name, address.city, seller.level.description, address.state.name, website</properties>	
 	</tab>
 	

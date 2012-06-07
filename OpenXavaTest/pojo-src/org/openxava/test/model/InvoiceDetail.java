@@ -60,7 +60,8 @@ public class InvoiceDetail {
 	private ServiceType serviceType;
 	public enum ServiceType { SPECIAL, URGENT }
 	
-	@Column(length=4) @Required
+	@Column(name="QTY", length=4) // The column name does not match the property name to test sumColum for this case 
+	@Required 
 	private int quantity;
 	
 	@Stereotype("MONEY") @Required

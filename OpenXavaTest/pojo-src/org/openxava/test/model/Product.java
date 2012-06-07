@@ -59,7 +59,7 @@ import org.openxava.test.validators.*;
 	@View( name="EditPrice", members = "number, description, unitPrice")	
 })
 
-@Tab(properties = "number, description, unitPrice, unitPriceInPesetas")
+@Tab(properties = "number, description, unitPrice, unitPriceInPesetas") 
 public class Product {
 	
 	@Id @Column(length=10) 
@@ -108,12 +108,12 @@ public class Product {
 	@OnChange(forViews="DEFAULT, WithSection",
 		value=OnChangeProductUnitPriceAction.class
 	)	
-	private BigDecimal unitPrice;
+	private BigDecimal unitPrice; 
 		
 	@Stereotype("MEMO")
 	private String remarks;
 
-	@Depends("unitPrice") 
+	@Depends("unitPrice")  
 	@Max(9999999999L) 	
 	public BigDecimal getUnitPriceInPesetas() {
 		if (unitPrice == null) return null;

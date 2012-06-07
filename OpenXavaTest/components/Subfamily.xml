@@ -16,17 +16,9 @@
 		</property>
 		<property name="number" type="int" size="3" required="true"  stereotype="ZEROS_FILLED"/>
 		<property name="familyNumber" stereotype="FAMILY" required="true"/>   			
-		<property name="family" type="String" size="40" hidden="true">
-			<!-- Only for column description in tab -->			
-			<calculator class="org.openxava.calculators.EmptyStringCalculator"/>
-		</property>
+		<property name="family" type="String" size="40" hidden="true"/> <!-- Only for column description in tab -->
 		<property name="description" type="String" size="40" required="true"/>
 		<property name="remarks" stereotype="MEMO" size="400"/>
-		<!-- tmp 
-		<property name="remarksDB" type="String">
-			<calculator class="org.openxava.test.calculators.SubfamilyPureRemarksCalculator"/>
-		</property>		
-		 -->
 	</entity>
 	
 	<view>		
@@ -59,7 +51,9 @@
 		<property-mapping
 			property="description" column="DESCRIPTION"/>
 		<property-mapping
-			property="remarks" column="REMARKS"/>			
+			property="remarks" column="REMARKS"/>
+		<property-mapping
+			property="family" column="0"/>									
 	</entity-mapping> 
 	
 </component>

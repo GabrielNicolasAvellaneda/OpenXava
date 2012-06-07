@@ -86,8 +86,7 @@ public class Color {
 	private Mixture mixture;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList(
-		// tmp ¿Poner en el wiki en la parte de @DescriptionsList?	
+	@DescriptionsList(	
 		// This is for testing the ${Thing} is well interpreted, though since v4.5 you can use just Thing
 		// because condition uses JPA query syntax
 		condition="${thing.number} = (SELECT number FROM ${Thing} WHERE name = 'CAR')"

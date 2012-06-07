@@ -29,7 +29,7 @@ public class InvoiceDetail2 {
 	@Id @Hidden 
 	private String oid;
 	
-	@Column(length=4) @Required
+	@Column(name="QTY", length=4) @Required
 	private int quantity;
 	
 	@Stereotype("MONEY") @Required

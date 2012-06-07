@@ -252,7 +252,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertValueInList(0, "table", table);
 		assertTrue("User must to have value", !Is.emptyString(getValueInList(0, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(0, "date", date);
-		assertValueInList(0, "time", time);  
+		assertValueInList(0, "time", time); 
 		assertValueInList(0, "type", "Create");
 		assertValueInList(0, "authorized", "Yes");
 		assertValueInList(0, "recordId", expectedRecordId);		

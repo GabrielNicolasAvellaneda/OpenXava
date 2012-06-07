@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Data for list and collections is obtained via JPA, before JDBC was used.
 - Fix: Message 'Delete record on row x...' shows the incorrect row number.
 - It's possible to define more easily styles with the file portal-ext.css.
 - Hibernate upgraded to 3.6.10.

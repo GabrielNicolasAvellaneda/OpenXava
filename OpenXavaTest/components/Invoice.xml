@@ -444,7 +444,7 @@
 		<property-mapping
 			property="unitPrice" column="UNITPRICE"/>
 		<property-mapping
-			property="quantity" column="QUANTITY"/>
+			property="quantity" column="QTY"/>
 		<reference-mapping reference="product">
 			<reference-mapping-detail 
 				column="PRODUCT_NUMBER" 
