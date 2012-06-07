@@ -365,7 +365,7 @@ public class Tab implements java.io.Serializable {
 	
 	private String getCondition() {
 		try {
-			if (condition == null || getMetaTab().isDefaultSchemaChanged()) { 			
+			if (condition == null /* tmp || getMetaTab().isDefaultSchemaChanged()*/) { 			
 				condition = createCondition();
 			}		
 			return condition;

@@ -127,7 +127,7 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 		int iniFrom = selectUpperCase.indexOf(" FROM ");
 		int end = selectUpperCase.indexOf("ORDER BY ");
 		StringBuffer sb = new StringBuffer("SELECT SUM(");		
-		sb.append(translateProperty(property)); // tmp translateProperty 		
+		sb.append(translateProperty(property));  		
 		sb.append(") ");
 		if (end < 0) sb.append(select.substring(iniFrom));
 		else sb.append(select.substring(iniFrom, end - 1));
@@ -207,18 +207,17 @@ abstract public class TabProviderBase implements ITabProvider, java.io.Serializa
 				MetaModel refModel = null;
 				if (ref.isAggregate()) {
 					refModel = metaModel.getMetaComponent().getMetaAggregate(ref.getReferencedModelName());
-					// tmp fillEntityReferencesMappings(result, memberName, refModel, referenceName, referenceName + "_");
-					fillEntityReferencesMappings(result, memberName, refModel, concat(parentReference, referenceName), referenceName + "_"); // tmp
+					fillEntityReferencesMappings(result, memberName, refModel, concat(parentReference, referenceName), referenceName + "_"); 
 				}
 				else {
 					refModel = MetaComponent.get(ref.getReferencedModelName()).getMetaEntity();
-					// tmp fillEntityReferencesMappings(result, memberName, refModel, referenceName, "");
-					fillEntityReferencesMappings(result, memberName, refModel, concat(parentReference, referenceName), ""); // tmp
+					fillEntityReferencesMappings(result, memberName, refModel, concat(parentReference, referenceName), ""); 
 				}
 			}
 		}		
 	}
-	private String concat(String parentReference, String referenceName) { // tmp
+	
+	private String concat(String parentReference, String referenceName) { 
 		if (Is.emptyString(parentReference)) return referenceName; 
 		return parentReference + "_" + referenceName;
 	}	

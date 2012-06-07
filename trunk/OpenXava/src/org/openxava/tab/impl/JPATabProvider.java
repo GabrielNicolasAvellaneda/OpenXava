@@ -44,7 +44,7 @@ public class JPATabProvider extends TabProviderBase {
 	private String getSelectWithEntityAndJoins() {
 		String select = getMetaTab().getSelect();
 		int i = select.indexOf("from ${");
-		if (i < 0) return select; // tmp
+		if (i < 0) return select; 
 		int f = select.indexOf("}", i);
 		StringBuffer entityAndJoins = new StringBuffer();
 		entityAndJoins.append("from ");
@@ -97,7 +97,7 @@ public class JPATabProvider extends TabProviderBase {
 		}
 	}
 
-	private String changePropertiesByJPAProperties(String source) { // tmp ¿Unificar con changePropertiesByColumns?
+	private String changePropertiesByJPAProperties(String source) { 
 		if (!source.contains("${")) return source;
 		StringBuffer r = new StringBuffer(source);		
 		int i = r.toString().indexOf("${");
@@ -121,22 +121,16 @@ public class JPATabProvider extends TabProviderBase {
 						jpaElement = "e_" + qualifiedElement;
 					}
 				}
-			}			
-			// tmp ini			
-			else if (isModel(modelElement)) { 
+			}						
+			else if (Strings.isModelName(modelElement)) { 
 				jpaElement = modelElement;
 			}			
-			// tmp fin
 			r.replace(i, f + 1, jpaElement);
 			i = r.toString().indexOf("${");
 		}
 		return r.toString();
 	}
 	
-	private boolean isModel(String modelElement) {
-		return Character.isUpperCase(modelElement.charAt(0));
-	}
-
 	public DataChunk nextChunk() throws RemoteException {		
 		if (getSelect() == null || isEOF()) { // search not called yet
 			return new DataChunk(Collections.EMPTY_LIST, true, getCurrent()); // Empty

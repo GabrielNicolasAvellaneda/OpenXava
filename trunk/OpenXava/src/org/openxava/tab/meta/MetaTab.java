@@ -6,8 +6,6 @@ import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
-import org.openxava.hibernate.*;
-import org.openxava.jpa.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
@@ -48,7 +46,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Map metaPropertiesTab;
 	private Collection rowStyles;
 	private String defaultPropertiesNames;
-	private String lastDefaultSchema;
 	private String id;
 	private Collection<String> sumPropertiesNames;
 
@@ -384,26 +381,10 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getSelect() throws XavaException { 
-		if (select == null || isDefaultSchemaChanged()) {  
+		if (select == null) {  
 			select = createSelect();
-			saveDefaultSchema();
 		}
 		return select;
-	}
-
-	public boolean isDefaultSchemaChanged() {
-		if (XavaPreferences.getInstance().isJPAPersistence()) {
-			return !Is.equal(lastDefaultSchema, XPersistence.getDefaultSchema());
-		}
-		else if (XavaPreferences.getInstance().isHibernatePersistence()) {
-			return !Is.equal(lastDefaultSchema, XHibernate.getDefaultSchema());
-		}
-		return false;
-	}
-
-	private void saveDefaultSchema() { // tmp Mover lo de cambio de esquema a EntityTab, ESTO ES ESTATICO
-		if (!XavaPreferences.getInstance().isJPAPersistence()) return;
-		lastDefaultSchema = XPersistence.getDefaultSchema();
 	}
 
 	private String createSelect() throws XavaException {
@@ -418,7 +399,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		Iterator itProperties = getPropertiesNames().iterator();
 		while (itProperties.hasNext()) {
 			String property = (String) itProperties.next();
-			if (ModelMapping.isModel(property)) select.append("0");	// the property is a table name not column name
+			if (Strings.isModelName(property)) select.append("0");	// the property is a table name not column name
 			else{
 				select.append("${");
 				select.append(property);
@@ -443,8 +424,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}					
 		return select.toString();
 	}
-
-	
+		
 	public Collection getCmpFieldsColumnsInMultipleProperties() 
 			throws XavaException {
 		Collection cmpFieldsColumnsInMultipleProperties = new ArrayList();

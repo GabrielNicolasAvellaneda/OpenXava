@@ -32,7 +32,7 @@ public class ServiceInvoice {
 	@Stereotype("MEMO")
 	private String description;
 	
-	@Stereotype("MONEY")
+	@Stereotype("MONEY") 
 	private BigDecimal amount;
 
 	public String getOid() {

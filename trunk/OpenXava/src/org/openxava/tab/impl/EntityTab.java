@@ -10,6 +10,7 @@ import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.ejbx.*;
 import org.openxava.mapping.*;
+import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
@@ -175,7 +176,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			if (Is.emptyString(componentName)) {
 				throw new InitException("tab_component_required");
 			}
-			tabProvider = TabProviderFactory.create();
+			tabProvider = PersistenceProviderFactory.getInstance().createTabProvider();
 			table = new TableModelBean();
 			table.setTranslateHeading(false);
 			this.mapping = null;

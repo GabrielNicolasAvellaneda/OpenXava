@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -22,7 +23,7 @@ public class JDBCTabProvider extends TabProviderBase {
 	private Collection<TabConverter> converters;
 
 	protected String translateCondition(String condition) { 
-		return getMetaModel().getMapping().changePropertiesByColumns(condition); // tmp ¿Mover changePropertiesByColumns() aquí?
+		return getMetaModel().getMapping().changePropertiesByColumns(condition); 
 	}
 	
 	public String toQueryField(String propertyName) {		

@@ -23,17 +23,19 @@ import org.openxava.annotations.*;
 )
 @Tab(name="CompleteSelect",
 	properties="number, description, family",	
-	/* For JPA */ 
+	/* For JPA */   
 	baseCondition = // JPA query using e as alias for main entity. Since v4.5
 		"select e.number, e.description, f.description " +
 		"from Subfamily e, Family f " +
-		"where e.familyNumber = f.number"				
-	/* For Hypersonic    	
+		"where e.familyNumber = f.number"
+								
+	/* For Hypersonic      	
 	baseCondition = // With SQL until v4.4.x
 		"select ${number}, ${description}, FAMILY.DESCRIPTION " +
 		"from   XAVATEST.SUBFAMILY, XAVATEST.FAMILY " +
 		"where  SUBFAMILY.FAMILY = FAMILY.NUMBER"
-	*/									
+	*/	
+										
 	/* For AS/400 	    	
 	baseCondition = // With SQL until v4.4.x
 		"select ${number}, ${description}, XAVATEST.FAMILY.DESCRIPTION " +
