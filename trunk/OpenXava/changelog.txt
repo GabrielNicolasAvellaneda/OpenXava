@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Support for all strategies of JPA inheritance mapping.
 - Data for list and collections is obtained via JPA, before JDBC was used.
 - Fix: Message 'Delete record on row x...' shows the incorrect row number.
 - It's possible to define more easily styles with the file custom.css.
