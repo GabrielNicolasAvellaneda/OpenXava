@@ -42,7 +42,7 @@ public class JPATabProvider extends TabProviderBase {
 	}
 	
 	private String getSelectWithEntityAndJoins() {
-		String select = getMetaTab().getSelect();
+		String select = getMetaTab().getSelect();		
 		int i = select.indexOf("from ${");
 		if (i < 0) return select; 
 		int f = select.indexOf("}", i);

@@ -10,6 +10,7 @@ import java.net.*;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.persistence.Transient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
@@ -505,31 +506,23 @@ public class AnnotatedClassParser {
 		return null;
 	}
 
-	private void parseTabs(MetaComponent component, Class pojoClass) throws Exception {
-		boolean hasDefaultTab = false; 
+	private void parseTabs(MetaComponent component, Class pojoClass) throws Exception { 
 		if (pojoClass.isAnnotationPresent(Tab.class)) {
 			Tab tab = (Tab) pojoClass.getAnnotation(Tab.class);
 			addTab(component, tab);
-			hasDefaultTab = true;
 		}
 		if (pojoClass.isAnnotationPresent(Tabs.class)) {
 			Tabs tabs = (Tabs) pojoClass.getAnnotation(Tabs.class);
 			for (Tab tab: tabs.value()) {
 				addTab(component, tab);
-				if (Is.emptyString(tab.name())) hasDefaultTab = true;
 			}
-		}
-				
-		if (!hasDefaultTab && !component.getMetaTab().hasBaseCondition()) { 
-			component.getMetaTab().setBaseCondition(createBaseCondition(component.getMetaEntity().getPOJOClass(), null));			
 		}
 	}
 
 	private void addTab(MetaComponent component, Tab tab) throws Exception {
 		MetaTab metaTab = new MetaTab();		
 		metaTab.setName(tab.name());
-		String baseCondition = createBaseCondition(component.getMetaEntity().getPOJOClass(), tab); 		
-		metaTab.setBaseCondition(baseCondition); 
+		metaTab.setBaseCondition(tab.baseCondition()); 
 		metaTab.setDefaultOrder(tab.defaultOrder());
 		if (!tab.filter().equals(VoidFilter.class)) {
 			MetaFilter metaFilter = new MetaFilter();
@@ -557,38 +550,6 @@ public class AnnotatedClassParser {
 
 	}
 
-	private String createBaseCondition(Class pojoClass, Tab tab) throws Exception { 
-		StringBuffer condition = new StringBuffer();
-		createBaseCondition(condition, pojoClass, tab);
-		return condition.toString();
-	}
-	
-	private void createBaseCondition(StringBuffer condition, Class pojoClass, Tab tab) throws Exception { 
-		if (tab != null && !Is.emptyString(tab.baseCondition())) {
-			condition.append(tab.baseCondition());
-		}
-		Class superClass = pojoClass.getSuperclass();
-		if (!superClass.isAnnotationPresent(Entity.class)) {			
-			return;
-		}				
-		if (tab != null && !Is.emptyString(tab.baseCondition())) {
-			condition.append(" AND ");
-		}
-		
-		boolean discriminatorNumeric = isDiscriminatorNumeric(pojoClass);		
-		condition.append(getDiscriminatorColumn(pojoClass));
-		condition.append("=");
-		if (!discriminatorNumeric) condition.append("'");
-		condition.append(getDiscriminatorValue(pojoClass));
-		if (!discriminatorNumeric) condition.append("'");
-		 
-		for (Class subclass: getFirstLevelEntitySubclasses(pojoClass)) {
-			condition.append(" OR ");
-			createBaseCondition(condition, subclass, null);
-		}
-		
-	}
-	
 	private Collection<Class> getFirstLevelEntitySubclasses(Class pojoClass) throws Exception { 
 		if (entityFirstLevelSubclasses == null) {
 			entityFirstLevelSubclasses = new HashMap<Class, Collection<Class>>();
