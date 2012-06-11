@@ -149,6 +149,7 @@ public class Style {
 		return Arrays.asList( 
 			"/xava/editors/calendar/skins/aqua/theme.css", 
 			"/xava/style/yahoo-treeview/treeview.css",
+			"/xava/style/custom.css", 
 			getJQueryCss()
 		);
 	}

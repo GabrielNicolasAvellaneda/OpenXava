@@ -3,7 +3,7 @@ Change Log for OpenXava project
 
 - Data for list and collections is obtained via JPA, before JDBC was used.
 - Fix: Message 'Delete record on row x...' shows the incorrect row number.
-- It's possible to define more easily styles with the file portal-ext.css.
+- It's possible to define more easily styles with the file custom.css.
 - Hibernate upgraded to 3.6.10.
 - New property messagesOnTop in xava.properties to show the messages in the top or in the bottom of the user interface.  
 - New methods add/removeActionForProperty() in View for adding actions to a property dynamically.
