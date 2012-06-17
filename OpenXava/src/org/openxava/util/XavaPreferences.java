@@ -489,7 +489,16 @@ public class XavaPreferences {
 
 	/** @since 4.5 */
 	public String getLayoutPainterLabelWidth(){
-		return getProperties().getProperty("layout.painter.label.width", "120px");
+		return getProperties().getProperty("layout.painter.label.width", "");
 	}
 
+	/** @since 4.5 */
+	public String getLayoutPainterLabelLeftSpacerWidth(){
+		return getProperties().getProperty("layout.painter.label.left.spacer.width", "4px");
+	}
+
+	/** @since 4.5 */
+	public String getLayoutPainterRowsGap(){
+		return getProperties().getProperty("layout.painter.row.gap", "4px");
+	}
 }

@@ -45,7 +45,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	private boolean endFrame = false;
 	private boolean editable = false;
 	private int groupLevel = 0;
-	private String browser;
+	private boolean columnStarted = false;
 	private LayoutElement currentRow = null;
 	private Stack<LayoutElement> containersStack = new Stack<LayoutElement>();
 	
@@ -98,7 +98,6 @@ public class DefaultLayoutParser implements ILayoutParser {
 	private void parseMetamembers(Collection metaMembers, View view, boolean descriptionsList, boolean rowStarted) {
 		boolean displayAsDescriptionsList = descriptionsList;
 		boolean rowEnded = true;
-		boolean columnStarted = false;
 		Iterator it = metaMembers.iterator();
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();
@@ -136,11 +135,17 @@ public class DefaultLayoutParser implements ILayoutParser {
 						}
 						context.put(request, subView.getViewObject(), subView);
 						if (subView.isFrame()) {
+							if (columnStarted) {
+								addLayoutElement(createEndColumn(view));
+							} 
+							addLayoutElement(createStartColumn(view));
 					  		addLayoutElement(createBeginFrame(ref, view, ""));
 						}
 						parseMetamembers(subView.getMetaMembers(), subView, view.displayAsDescriptionsList(ref), subView.isFrame());
 						if (subView.isFrame()) {
 					  		addLayoutElement(createEndFrame(ref, view));
+							addLayoutElement(createEndColumn(view));
+							columnStarted = false;
 						}
 						propertyInReferencePrefix = "";
 					} catch (Exception ex) {
@@ -249,6 +254,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @return
 	 */
 	private LayoutElement createBeginGroup(MetaGroup metaGroup, View view, String label) {
+		currentRow.setMaxRowColumnsCount(currentRow.getMaxRowColumnsCount() + 1);
 		LayoutElement returnValue = createMetaMemberElement(metaGroup, view, LayoutElementType.GROUP_START);
 		groupLevel++;
 		containersStack.push(returnValue);
@@ -579,20 +585,6 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 */
 	public void setContext(ModuleContext context) {
 		this.context = context;
-	}
-
-	/**
-	 * @param browser the browser to set
-	 */
-	public void setBrowser(String browser) {
-		this.browser = browser;
-	}
-
-	/**
-	 * @return the browser
-	 */
-	public String getBrowser() {
-		return browser;
 	}
 
 }
