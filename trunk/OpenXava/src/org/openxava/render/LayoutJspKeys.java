@@ -41,7 +41,7 @@ public class LayoutJspKeys {
 	public static final String ATTRVAL_STYLE_ICONS = "vertical-align: middle;";
 	public static final String ATTRVAL_STYLE_LABEL = "text-align:right;";
 	public static final String ATTRVAL_STYLE_NOWRAP = "white-space:nowrap;";
-	public static final String ATTRVAL_100P = "100%";
+	public static final String ATTRVAL_STYLE_WIDTH_100P = "width:100%";
 	
 	public static final String CHAR_SPACE = "&#160;";
 	
