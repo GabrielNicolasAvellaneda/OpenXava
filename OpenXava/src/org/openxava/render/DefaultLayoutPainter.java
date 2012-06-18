@@ -338,7 +338,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 						actionTag.doStartTag();
 					}
 				}
-				if (element.isEditable() && element.getActionsNameForProperty().size() > 0) {
+				if (element.getActionsNameForProperty().size() > 0) {
 					Iterator it = element.getActionsNameForProperty().iterator();
 					while(it.hasNext()) {
 						String action = (String) it.next();
