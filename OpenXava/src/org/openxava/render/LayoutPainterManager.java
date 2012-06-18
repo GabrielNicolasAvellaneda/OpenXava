@@ -10,7 +10,6 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.openxava.controller.ModuleContext;
 import org.openxava.view.View;
 
 /**
@@ -29,14 +28,13 @@ public class LayoutPainterManager {
 	public boolean renderView(View view, PageContext pageContext) {
 		boolean returnValue = false;
 		HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-		ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
 		ILayoutParser parser = 	LayoutFactory.getLayoutParserInstance(request);
 		if (parser != null) {
 			ILayoutPainter painter = LayoutFactory.getLayoutPainterInstance(
 					(HttpServletRequest) pageContext.getRequest());
 			if (painter != null) {
 				returnValue = true;
-				Collection<LayoutElement> elements = parser.parseView(view, context);
+				Collection<LayoutElement> elements = parser.parseView(view, pageContext);
 				painter.initialize(view, pageContext);
 				renderElements(painter, elements, view, pageContext);
 				painter.finalize(view, pageContext);

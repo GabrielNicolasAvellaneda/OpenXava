@@ -12,7 +12,7 @@ import org.openxava.model.meta.MetaReference;
 import org.openxava.view.View;
 
 /**
- * @author Juan Mendoza
+ * @author Juan Mendoza and Federico Alcantara
  *
  */
 public class LayoutElement implements Serializable {
@@ -54,12 +54,20 @@ public class LayoutElement implements Serializable {
 	
 	/**
 	 * Default constructor.
+	 * @param view Originating view.
+	 * @param groupLevel Group level.
 	 */
 	public LayoutElement(View view, int groupLevel) {
 		this.view = view;
 		this.groupLevel = groupLevel;
 	}
 	
+	/**
+	 * Preferred constructor.
+	 * @param view Originating view.
+	 * @param groupLevel Group level.
+	 * @param elementType Type of element that is being created.
+	 */
 	public LayoutElement(View view, int groupLevel, LayoutElementType elementType) {
 		this(view, groupLevel);
 		this.elementType = elementType;
@@ -395,7 +403,7 @@ public class LayoutElement implements Serializable {
 	}
 	
 	/**
-	 * @return the maxRowColumnsCount
+	 * @return The maximum number of columns displayed in the row.
 	 */
 	public Integer getMaxRowColumnsCount() {
 		return maxRowColumnsCount;
@@ -409,7 +417,9 @@ public class LayoutElement implements Serializable {
 	}
 
 	/**
-	 * @return the rowCurrentColumnsCount
+	 * This value only makes sense if the layout element is of
+	 * type LayoutElementType.ROW_START.
+	 * @return While rendering keeps the already processed columns.
 	 */
 	public Integer getRowCurrentColumnsCount() {
 		return rowCurrentColumnsCount;
@@ -423,6 +433,8 @@ public class LayoutElement implements Serializable {
 	}
 
 	/**
+	 * This value only makes sense if the layout element is of
+	 * type LayoutElementType.GROUP_START or LayoutElementType.FRAME_START.
 	 * @return the maxContainerColumnsCount
 	 */
 	public Integer getMaxContainerColumnsCount() {

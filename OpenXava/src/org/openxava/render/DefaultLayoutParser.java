@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -54,13 +55,14 @@ public class DefaultLayoutParser implements ILayoutParser {
 	
 	/**
 	 * Parses the layout in order to determine its size. No rendering
-	 * occurs in this phase
-	 * @param view
+	 * occurs in this phase.
+	 * @param view Originating view.
+	 * @param pageContext pageContext.
 	 * @return returnValue Integer value containing the count
 	 */
-	public Collection<LayoutElement> parseView(View view, ModuleContext context) {
-		this.request = view.getRequest();
-		this.context = context;
+	public Collection<LayoutElement> parseView(View view, PageContext pageContext) {
+		request = (HttpServletRequest)pageContext.getRequest();
+		context = (ModuleContext) request.getSession().getAttribute("context");
 		parseLayout(view);
 		if (view.hasSections()) {
 			addLayoutElement(createSectionMarker(view));
@@ -571,20 +573,6 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 */
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
-	}
-
-	/**
-	 * @return the context
-	 */
-	public ModuleContext getContext() {
-		return context;
-	}
-
-	/**
-	 * @param context the context to set
-	 */
-	public void setContext(ModuleContext context) {
-		this.context = context;
 	}
 
 }

@@ -65,6 +65,9 @@ public abstract class AbstractBasePainter implements Serializable, ILayoutPainte
 		return returnValue;
 	}
 	
+	/**
+	 * @return Current row.
+	 */
 	protected LayoutElement getRow() {
 		LayoutElement returnValue = null;
 		try {
@@ -84,12 +87,33 @@ public abstract class AbstractBasePainter implements Serializable, ILayoutPainte
 	}
 	
 	/**
+	 * Release current container and sets the previous one.
+	 */
+	protected void unsetContainer() {
+		try {
+			getContainersStack().pop();
+		} catch (EmptyStackException e) {
+			LOG.error(e.getMessage(), e);
+		}
+	}
+	/**
 	 * Sets the element as the current row and resets its column count to 0.
 	 * @param layoutElement
 	 */
 	protected void setRow(LayoutElement layoutElement) {
 		layoutElement.setRowCurrentColumnsCount(0);
 		getRowsStack().push(layoutElement);
+	}
+
+	/**
+	 * Release current row and sets the previous one.
+	 */
+	protected void unsetRow() {
+		try {
+			getRowsStack().pop();
+		} catch (EmptyStackException e) {
+			LOG.error(e.getMessage(), e);
+		}
 	}
 
 	/**

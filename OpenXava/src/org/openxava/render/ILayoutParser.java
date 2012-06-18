@@ -5,7 +5,8 @@ package org.openxava.render;
 
 import java.util.Collection;
 
-import org.openxava.controller.ModuleContext;
+import javax.servlet.jsp.PageContext;
+
 import org.openxava.view.View;
 
 /**
@@ -17,7 +18,7 @@ public interface ILayoutParser {
 	/**
 	 * Prepares the layout, so that future requests aren't processed.
 	 * @param view Originating view.
-	 * @param context OpenXava context where views and elements are handled.
+	 * @param pageContext Where page are rendered.
 	 */
-	public Collection<LayoutElement> parseView(View view, ModuleContext context);
+	public Collection<LayoutElement> parseView(View view, PageContext pageContext);
 }

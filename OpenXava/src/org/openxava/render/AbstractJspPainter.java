@@ -38,9 +38,9 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	}
 
 	/**
-	 * Include JSP page.
+	 * Include a JSP page.
 	 * 
-	 * @param page. Page to be included in context page.
+	 * @param page. URL of page to be included in context page.
 	 */
 	protected void includeJspPage(String page) {
 		try {
@@ -55,17 +55,21 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 
 	/**
 	 * 
-	 * @return the current request.
+	 * @return The current request.
 	 */
 	protected HttpServletRequest getRequest() {
 		return (HttpServletRequest) getPageContext().getRequest();
 	}
 	
+	/**
+	 * 
+	 * @return The errors messages.
+	 */
 	protected Messages getErrors() {
 		return (Messages)getRequest().getAttribute("errors");
 	}
 	/**
-	 * @return the current style
+	 * @return The current style.
 	 */
 	public Style getStyle() {
 		if (style == null) {
