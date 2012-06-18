@@ -487,18 +487,4 @@ public class XavaPreferences {
 		return getProperties().getProperty("layout.painter", null);
 	}
 
-	/** @since 4.5 */
-	public String getLayoutPainterLabelStyle(){
-		return getProperties().getProperty("layout.painter.label.style", "text-align:right;");
-	}
-
-	/** @since 4.5 */
-	public String getLayoutPainterLabelLeftSpacerStyle(){
-		return getProperties().getProperty("layout.painter.label.left.spacer.style", "width:8px;");
-	}
-
-	/** @since 4.5 */
-	public String getLayoutPainterRowsGapStyle(){
-		return getProperties().getProperty("layout.painter.row.gap.style", "height:4px;");
-	}
 }
