@@ -3,7 +3,6 @@
  */
 package org.openxava.render;
 
-import static org.openxava.render.LayoutJspKeys.*;
 import static org.openxava.render.LayoutJspKeys.ATTRVAL_STYLE_NOWRAP;
 import static org.openxava.render.LayoutJspKeys.ATTRVAL_STYLE_WIDTH_100P;
 import static org.openxava.render.LayoutJspKeys.ATTR_CLASS;
@@ -47,42 +46,22 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	private static final long serialVersionUID = 1L;
 	private static final Log LOG = LogFactory.getLog(DefaultLayoutPainter.class);
 	private boolean firstCellPainted = false;
-	private String labelsWidth;
-	private String labelsLeftSpacerWidth;
-	private String rowsGap;
+	private Integer lastColumnSpan = 0;
+	private String labelsStyle;
+	private String labelsLeftSpacerStyle;
+	private String rowsGapStyle;
 	
 	@Override
 	public void initialize(View view, PageContext pageContext) {
 		super.initialize(view, pageContext);
 		// Calculate labels width
-		StringBuffer labelsWidth = new StringBuffer(XavaPreferences.getInstance().getLayoutPainterLabelWidth());
-		if (labelsWidth.length() > 0) {
-			labelsWidth
-				.insert(0, ':')
-				.insert(0, ATTR_WIDTH)
-				.append(';');
-		}
-		this.labelsWidth = labelsWidth.toString();
+		labelsStyle = XavaPreferences.getInstance().getLayoutPainterLabelStyle();
 
 		// Calculate labels left spacer width
-		StringBuffer labelsLeftSpacerWidth = new StringBuffer(XavaPreferences.getInstance().getLayoutPainterLabelLeftSpacerWidth());
-		if (labelsLeftSpacerWidth.length() > 0) {
-			labelsLeftSpacerWidth
-				.insert(0, ':')
-				.insert(0, ATTR_WIDTH)
-				.append(';');
-		}
-		this.labelsLeftSpacerWidth = labelsLeftSpacerWidth.toString();
+		labelsLeftSpacerStyle = XavaPreferences.getInstance().getLayoutPainterLabelLeftSpacerStyle();
 
 		// Calculate rows gap.
-		StringBuffer rowsGap = new StringBuffer(XavaPreferences.getInstance().getLayoutPainterRowsGap());
-		if (rowsGap.length() > 0) {
-			rowsGap
-				.insert(0, ':')
-				.insert(0, ATTR_HEIGHT)
-				.append(';');
-		}
-		this.rowsGap = rowsGap.toString();
+		rowsGapStyle = XavaPreferences.getInstance().getLayoutPainterRowsGapStyle();
 	}
 	
 	/**
@@ -91,7 +70,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	public void startView(LayoutElement element) {
 		setContainer(element);
 		attributes.clear();
-		attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+		//attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 	}
 
@@ -158,6 +137,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
 		write(getStyle().getFrameContentEndDecoration());
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+		unsetContainer();
 	}
 
 	/**
@@ -167,7 +147,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	public void startRow(LayoutElement element) {
 		setRow(element);
 		attributes.clear();
-		attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TR, attributes));
 	}
 
@@ -175,30 +154,12 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @see org.openxava.render.ILayoutPainter#endRow(org.openxava.render.LayoutElement)
 	 */
 	public void endRow(LayoutElement element) {
-		int paintedColumns = getRow().getRowCurrentColumnsCount();
-		int maxColumnsToPaint = getContainer().getMaxContainerColumnsCount();
-		// Each cell has three TDs
-		startCellLabelAttributes();
-		for (int i = paintedColumns; i < maxColumnsToPaint; i++) {
-			// First one is the left spacer
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-			
-			// The second one is the label
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-			
-			// The third one is for the input data
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-		}
-		write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
-		
 		// Separation line
 		attributes.clear();
-		attributes.put(ATTR_STYLE, rowsGap);
+		attributes.put(ATTR_STYLE, rowsGapStyle);
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TR, attributes));
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
+		unsetRow();
 	}
 
 	/**
@@ -213,6 +174,8 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	public void startColumn(LayoutElement element) {
 		int count = getRow().getRowCurrentColumnsCount() + 1;
+		lastColumnSpan = count == getRow().getMaxRowColumnsCount() ? getContainer().getMaxContainerColumnsCount() - count + 1: 0;
+		lastColumnSpan = lastColumnSpan * 3; // Each column has 3 TD elements.
 		getRow().setRowCurrentColumnsCount(count);
 		firstCellPainted = false; // to indicate to the cell renderer that the TD pair is about to start.
 	}
@@ -233,7 +196,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		// Left spacer
 		if (!firstCellPainted) {
 			attributes.clear();
-			attributes.put(ATTR_STYLE, labelsLeftSpacerWidth);
+			attributes.put(ATTR_STYLE, labelsLeftSpacerStyle);
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 			startCellLeftSpacer(element);
 			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
@@ -255,6 +218,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (!firstCellPainted) {
 			attributes.clear();
 			attributes.put(ATTR_STYLE, ATTRVAL_STYLE_NOWRAP);
+			if (lastColumnSpan > 0) {
+				attributes.put(ATTR_COLSPAN, lastColumnSpan.toString());
+			}
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		}
 		if (element.isDisplayAsDescriptionsList()) {
@@ -273,8 +239,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	private void startCellLabelAttributes() {
 		attributes.clear();
 		attributes.put(ATTR_CLASS, getStyle().getLabel());
-		attributes.put(ATTR_STYLE, ATTRVAL_STYLE_LABEL
-				+ labelsWidth);
+		attributes.put(ATTR_STYLE, labelsStyle);
 	}
 
 	/**
@@ -580,7 +545,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 									// the current section marker.
 									
 									Collection<LayoutElement> elementsSection = 
-											LayoutFactory.getLayoutParserInstance(getRequest()).parseView(getView().getSectionView(activeSection), context);
+											LayoutFactory.getLayoutParserInstance(getRequest()).parseView(getView().getSectionView(activeSection), getPageContext());
 									getPainterManager().renderElements(this, elementsSection, getView().getSectionView(activeSection), getPageContext());
 								write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 							write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));

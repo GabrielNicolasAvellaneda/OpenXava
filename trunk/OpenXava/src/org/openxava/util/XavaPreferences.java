@@ -488,17 +488,17 @@ public class XavaPreferences {
 	}
 
 	/** @since 4.5 */
-	public String getLayoutPainterLabelWidth(){
-		return getProperties().getProperty("layout.painter.label.width", "");
+	public String getLayoutPainterLabelStyle(){
+		return getProperties().getProperty("layout.painter.label.style", "text-align:right;");
 	}
 
 	/** @since 4.5 */
-	public String getLayoutPainterLabelLeftSpacerWidth(){
-		return getProperties().getProperty("layout.painter.label.left.spacer.width", "4px");
+	public String getLayoutPainterLabelLeftSpacerStyle(){
+		return getProperties().getProperty("layout.painter.label.left.spacer.style", "width:8px;");
 	}
 
 	/** @since 4.5 */
-	public String getLayoutPainterRowsGap(){
-		return getProperties().getProperty("layout.painter.row.gap", "4px");
+	public String getLayoutPainterRowsGapStyle(){
+		return getProperties().getProperty("layout.painter.row.gap.style", "height:4px;");
 	}
 }
