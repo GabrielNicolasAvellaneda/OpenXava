@@ -39,7 +39,6 @@ import org.openxava.web.taglib.LinkTag;
  *
  */
 public class DefaultLayoutPainter extends AbstractJspPainter {
-	private static final long serialVersionUID = 1L;
 	private static final Log LOG = LogFactory.getLog(DefaultLayoutPainter.class);
 	private boolean firstCellPainted = false;
 	private Integer lastColumnSpan = 0;

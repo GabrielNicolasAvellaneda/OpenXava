@@ -3,7 +3,6 @@
  */
 package org.openxava.render;
 
-import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
@@ -18,8 +17,7 @@ import org.openxava.view.View;
  * @author Juan Mendoza and Federico Alcantara
  *
  */
-public abstract class AbstractBasePainter implements Serializable, ILayoutPainter {
-	private static final long serialVersionUID = 1L;
+public abstract class AbstractBasePainter implements ILayoutPainter {
 	private static final Log LOG = LogFactory.getLog(AbstractBasePainter.class);
 	private Stack<LayoutElement> containersStack;
 	private Stack<LayoutElement> rowsStack;
