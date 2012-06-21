@@ -12,7 +12,7 @@ import org.openxava.util.Strings;
 /**
  * Create on 14/04/2009 (18:37:04)
  * 
- * @autor Ana Andrés 
+ * @autor Ana Andrï¿½s 
  */
 public class OnSelectIngredientAction extends OnSelectElementBaseAction {
 	private static Log log = LogFactory.getLog(OnSelectIngredientAction.class);
@@ -20,7 +20,7 @@ public class OnSelectIngredientAction extends OnSelectElementBaseAction {
 	public void execute() throws Exception { 
 		// size
 		int size = getView().getValueInt("selectedIngredientSize");
-		size = isSelected() ? size + 1 : size - 1;
+		size = isSelected() ? size + 1 : size - 1;		
 		getView().setValue("selectedIngredientSize", new Integer(size));
 		// names
 		String names = getView().getValueString("selectedIngredientNames");

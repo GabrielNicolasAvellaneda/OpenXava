@@ -26,6 +26,58 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
+	public void testOnSelectElementNotReloadCollection() throws Exception { 
+		changeModule("Formula");
+		execute("Mode.detailAndFirst");
+		checkRowCollection("ingredients", 0);
+		assertLoadedParts(
+				"editor_selectedIngredientNames," +
+				"editor_selectedIngredientSize," +
+				"errors," +
+				"messages,");
+	}
+	
+	public void testChangingSelectedElementsOfACollectionTabByCodeNoReloadCollection() throws Exception { 
+		changeModule("CarrierWithCollectionsTogether");
+		execute("Mode.detailAndFirst");
+		assertAllCollectionUnchecked("fellowCarriers");
+		assertRowCollectionUnchecked("fellowCarriers", 0);
+		assertRowCollectionUnchecked("fellowCarriers", 1);
+		assertRowCollectionUnchecked("fellowCarriers", 2);
+		
+		assertAllCollectionUnchecked("fellowCarriersCalculated");
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 0);
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 1);
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 2);
+				
+		checkRowCollection("fellowCarriersCalculated", 0);
+		assertRowCollectionChecked("fellowCarriers", 0);
+		assertRowCollectionUnchecked("fellowCarriers", 1);
+		assertRowCollectionUnchecked("fellowCarriers", 2);
+		assertRowCollectionChecked("fellowCarriersCalculated", 0);
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 1);
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 2);
+		assertLoadedParts("errors, messages");
+				
+		checkRowCollection("fellowCarriersCalculated", 2);
+		assertRowCollectionChecked("fellowCarriers", 0);
+		assertRowCollectionUnchecked("fellowCarriers", 1);
+		assertRowCollectionChecked("fellowCarriers", 2);
+		assertRowCollectionChecked("fellowCarriersCalculated", 0);
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 1);
+		assertRowCollectionChecked("fellowCarriersCalculated", 2);
+		assertLoadedParts("errors, messages");
+		
+		uncheckRowCollection("fellowCarriersCalculated", 2);
+		assertRowCollectionChecked("fellowCarriers", 0);
+		assertRowCollectionUnchecked("fellowCarriers", 1);
+		assertRowCollectionUnchecked("fellowCarriers", 2);
+		assertRowCollectionChecked("fellowCarriersCalculated", 0);
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 1);
+		assertRowCollectionUnchecked("fellowCarriersCalculated", 2);
+		assertLoadedParts("errors, messages");
+	}
+	
 	public void testAddRemoveActionsForProperty() throws Exception { 
 		if (!usesAnnotatedPOJO()) return;
 		changeModule("Author");
