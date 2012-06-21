@@ -365,7 +365,7 @@ public class Tab implements java.io.Serializable {
 	
 	private String getCondition() {
 		try {
-			if (condition == null /* tmp || getMetaTab().isDefaultSchemaChanged()*/) { 			
+			if (condition == null) { 			
 				condition = createCondition();
 			}		
 			return condition;
@@ -736,7 +736,7 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 	
-	public int [] getSelected() {		
+	public int [] getSelected() {
 		return selected;
 	}
 	
@@ -1542,9 +1542,7 @@ public class Tab implements java.io.Serializable {
 	public int getPageRowCount() {
 		if (ignorePageRowCount) return MAX_PAGE_ROW_COUNT; 
 		return pageRowCount;
-	}
-	
-	
+	}	
 
 	public void setPageRowCount(int pageRowCount) {		
 		this.pageRowCount = pageRowCount;

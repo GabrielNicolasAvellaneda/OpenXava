@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- In collections when selected elements change but data remains the same, only the element selection is refreshed.
+- @OnSelectElementAction does not refresh its collection by default, it improves dramatically performance in some cases.
+- New utility class XArrays.
+- Fix: Some methods of ModuleTestBase for checking, unchecking and asserting checked rows fail with calculated collections.
 - Support for all strategies of JPA inheritance mapping.
 - Data for list and collections is obtained via JPA, before JDBC was used.
 - Fix: Message 'Delete record on row x...' shows the incorrect row number.

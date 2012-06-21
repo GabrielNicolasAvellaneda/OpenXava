@@ -96,6 +96,7 @@ public class Module extends DWRBase {
 			}						
 			result.setViewMember(getView().getMemberName());
 			result.setStrokeActions(getStrokeActions());
+			result.setSelectedRows(getSelectedRows()); 
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -118,6 +119,11 @@ public class Module extends DWRBase {
 		finally {			
 			if (manager != null) manager.commit(); // If hibernate, jpa, etc is used to render some value here is commit
 		}
+	}
+	
+	private Map getSelectedRows() { 
+		Map<String, int[]> result = getView().getChangedCollectionsSelectedRows();
+		return result.isEmpty()?null:result;
 	}
 
 	private void setPageReloadedLastTime(boolean b) { 

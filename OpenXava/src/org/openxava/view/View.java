@@ -8,6 +8,7 @@ import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.IOnChangePropertyAction;
@@ -1231,7 +1232,7 @@ public class View implements java.io.Serializable {
 	 */
 	public Tab getCollectionTab() throws XavaException {		
 		assertRepresentsCollection("getCollectionTab()");
-		if (collectionTab == null) {			
+		if (collectionTab == null) {
 			collectionTab = new Tab();
 			collectionTab.setCollectionView(this); 
 			collectionTab.setModelName(getModelName());
@@ -2232,11 +2233,16 @@ public class View implements java.io.Serializable {
 		return getParent().getQualifiedCollectionName() + getMemberName() + "_"; 
 	}
 	
-	private void fillCollectionInfo(String qualifier) throws XavaException {
-		String tabPrefix = Tab.COLLECTION_PREFIX + getQualifiedCollectionName();
-		getCollectionTab().setSelected(getRequest().getParameterValues(tabPrefix + "selected"));
+	private void fillCollectionInfo(String qualifier) throws XavaException { 
+		String id = null;
+		if (!isCollectionCalculated()) { 
+			id = Tab.COLLECTION_PREFIX + getQualifiedCollectionName() + "selected";
+			getCollectionTab().setSelected(getRequest().getParameterValues(id));
+		}
+		else {
+			id = qualifier + "__SELECTED__";
+		}		
 		// Fill selected
-		String id = qualifier + "__SELECTED__"; 		
 		String [] sel = getRequest().getParameterValues(id);
 		if (sel == null || sel.length == 0) {
 			listSelected = null;
@@ -4367,8 +4373,53 @@ public class View implements java.io.Serializable {
 			// Only the displayed data matters here
 			getSectionView(getActiveSection()).fillChangedCollections(result);	
 		}						
-	}	
+	}
 	
+	/** 
+	 * Indices of selected rows of collections that has changed their selected rows but not their content. <p>
+	 * 
+	 * This does not have a valid value until the end of the request, and it's intended
+	 * to be used from the AJAX code in order to determine what to refresh.
+	 * 
+	 * @since 4.5
+	 */	
+	public Map<String, int []> getChangedCollectionsSelectedRows() { 		
+		Map result = new HashMap();
+		fillChangedCollectionsSelectedRows(result);
+		return result;
+	}
+	
+	private void fillChangedCollectionsSelectedRows(Map<String, int []> result) {  
+		if (hasSubviews()) {
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();				
+				if (subview.isRepresentsCollection() && 
+					!subview.mustRefreshCollection() && isShown() &&
+					!isHidden(subview.getMemberName()))  
+				{
+					if (subview.collectionTab != null) {						
+						int [] selected = subview.collectionTab.getSelected();
+						if (!XArrays.haveSameElements(selected, subview.listSelected)) {
+							result.put(getPropertyPrefix() + subview.getMemberName(), selected);				
+						}
+					}
+				}				
+				subview.fillChangedCollectionsSelectedRows(result);				
+			}
+		}
+		if (hasGroups()) {
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();				
+				subview.fillChangedCollectionsSelectedRows(result);
+			}
+		}						
+		if (!sectionChanged && hasSections()) {
+			// Only the displayed data matters here
+			getSectionView(getActiveSection()).fillChangedCollectionsSelectedRows(result);	
+		}						
+	}		
 
 	private boolean isShown() { 
 		if (viewObject == null) return false;
