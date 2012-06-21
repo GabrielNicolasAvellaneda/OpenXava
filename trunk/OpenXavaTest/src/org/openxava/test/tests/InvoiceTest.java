@@ -1,6 +1,5 @@
 package org.openxava.test.tests;
 
-import java.io.*;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.DateFormat;

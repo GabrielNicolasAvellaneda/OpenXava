@@ -103,7 +103,10 @@ public class Carrier {
 	@CollectionView("Simple")
 	@RemoveSelectedAction(forViews="CalculatedFellows", value="")
 	@ListAction("Carrier.translateName")
-	@OnSelectElementAction(forViews="CalculatedFellows", value="Carrier.onSelectFellowCarriersCalulated")
+	@OnSelectElementActions({
+		@OnSelectElementAction(forViews="CalculatedFellows", value="Carrier.onSelectFellowCarriersCalculated"), 
+		@OnSelectElementAction(forViews="CollectionsTogether", value="Carrier.syncCarriersSelection")
+	})
 	public Collection<Carrier> getFellowCarriersCalculated() {
 		// This method exists for compliance with OpenXavaTest
 		return getFellowCarriers();

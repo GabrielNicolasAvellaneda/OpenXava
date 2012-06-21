@@ -2,7 +2,6 @@ package org.openxava.test.tests;
 
 import org.openxava.tests.*;
 
-
 /**
  * 
  * @author Javier Paniza
@@ -13,7 +12,7 @@ public class CarrierWithCalculatedFellowsTest extends ModuleTestBase {
 	public CarrierWithCalculatedFellowsTest(String testName) {
 		super(testName, "CarrierWithCalculatedFellows");		
 	}
-	 
+	
 	public void testCalculatedCollectionCacheResetCorrectly() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount("fellowCarriersCalculated", 3);

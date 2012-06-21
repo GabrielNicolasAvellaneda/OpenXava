@@ -726,9 +726,12 @@
 		<action name="search" image="search.gif" mode="detail" 
 			class="org.openxava.test.actions.CarriersSearchAction"/>
     	    	
-		<action name="onSelectFellowCarriersCalulated" hidden="true" 
+		<action name="onSelectFellowCarriersCalculated" hidden="true" 
 			class="org.openxava.test.actions.OnSelectFellowCarriersCalculatedAction"/>
-			    	
+			
+		<action name="syncCarriersSelection" hidden="true" 
+			class="org.openxava.test.actions.SyncCarriersSelectionAction"/>
+			
 	</controller>
 		
 	<controller name="CarrierFellows">
