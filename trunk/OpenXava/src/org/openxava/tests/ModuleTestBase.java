@@ -5,8 +5,6 @@ import java.net.*;
 import java.util.*;
 import java.util.logging.*;
 
-import javax.swing.*;
-
 import org.apache.commons.logging.*;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
@@ -1501,7 +1499,7 @@ public class ModuleTestBase extends TestCase {
 			checkAll(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
 		else {		
-			checkAll(collection + ".__SELECTED__");
+			checkAll(collection + ".selected_all"); 
 		}
 	}
 	
@@ -1510,7 +1508,7 @@ public class ModuleTestBase extends TestCase {
 			uncheckAll(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
 		else {		
-			uncheckAll(collection + ".__SELECTED__");
+			uncheckAll(collection + ".selected_all"); 
 		}
 	}
 	
@@ -1538,8 +1536,8 @@ public class ModuleTestBase extends TestCase {
 		}
 		else{
 			input.click();			
-			waitUntilPageIsLoaded();			
-			if (!input.isChecked()) input.setChecked(true); // Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances
+			waitUntilPageIsLoaded();
+			if (!input.isChecked()) input.setChecked(true); // Because input.click() fails with HtmlUnit 2.5/2.6/2.7 in some circumstances						
 		}
 	}
 	
@@ -1580,7 +1578,7 @@ public class ModuleTestBase extends TestCase {
 			assertRowChecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {			
-			assertRowChecked(decorateId(collection + "." + "__SELECTED__"), row);
+			assertRowChecked(collection + ".__SELECTED__", row); 
 		}
 	}	
 
@@ -1588,10 +1586,11 @@ public class ModuleTestBase extends TestCase {
 		if (collectionHasFilterHeader(collection)) {
 			assertAllChecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
-		else {			
-			assertAllChecked(decorateId(collection + "." + "__SELECTED__"));
+		else {			 
+			assertAllChecked(collection + ".selected_all"); 			
 		}
 	}	
+	
 	private void assertRowChecked(String id, int row) { 
 		assertTrue(XavaResources.getString("selected_rows_not_match"), 
 				getCheckable(id, row).isChecked()); 		
@@ -1625,7 +1624,7 @@ public class ModuleTestBase extends TestCase {
 			assertRowUnchecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {			
-			assertRowUnchecked(decorateId(collection + "." + "__SELECTED__"), row);
+			assertRowUnchecked(collection + ".__SELECTED__", row); 
 		}
 	}	
 	
@@ -1634,7 +1633,7 @@ public class ModuleTestBase extends TestCase {
 			assertAllUnchecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
 		else {			
-			assertAllUnchecked(decorateId(collection + "." + "__SELECTED__"));
+			assertAllUnchecked(collection + ".selected_all"); 
 		}
 	}	
 	
