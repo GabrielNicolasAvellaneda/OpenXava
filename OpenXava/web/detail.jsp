@@ -15,7 +15,7 @@
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
-<jsp:useBean id="layoutPainterManager" class="org.openxava.render.LayoutPainterManager" scope="session"/>
+<jsp:useBean id="layoutPainterManager" class="org.openxava.web.layout.LayoutPainterManager" scope="session"/>
 
 <%!
 private final static String LAST_TABLE_NOT_CLOSED = "xava.layout.detail.lastTableNotClose";

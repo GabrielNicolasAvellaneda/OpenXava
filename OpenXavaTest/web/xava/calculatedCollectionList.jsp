@@ -103,7 +103,6 @@ for (int f=0; itAggregates.hasNext(); f++) {
 		onSelectCollectionElementMetaAction);
 %>
 <td class="<%=cssCellClass%>" width="5" style="<%=style.getListCellStyle()%>">
- 
 <input type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="<%=propertyPrefix%>__SELECTED__:<%=f%>" <%=actionOnClick%>/>
 </td>
 <%

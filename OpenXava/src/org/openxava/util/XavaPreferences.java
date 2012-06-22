@@ -479,7 +479,7 @@ public class XavaPreferences {
 
 	/** @since 4.5 */
 	public String getLayoutParser() {
-		return getProperties().getProperty("layout.parser", "org.openxava.render.DefaultLayoutParser");
+		return getProperties().getProperty("layout.parser", "org.openxava.web.layout.DefaultLayoutParser"); 
 	}
 
 	/** @since 4.5 */
