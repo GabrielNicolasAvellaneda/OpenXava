@@ -18,7 +18,6 @@ import org.openxava.annotations.CollectionViews;
 import org.openxava.annotations.DescriptionsList;
 import org.openxava.annotations.ListProperties;
 import org.openxava.annotations.NoCreate;
-import org.openxava.annotations.NoModify;
 import org.openxava.annotations.OnChange;
 import org.openxava.annotations.Required;
 import org.openxava.annotations.RowStyle;
@@ -37,7 +36,7 @@ import org.openxava.annotations.Views;
 
 @Entity
 @Views ({	
-	@View(members="number; name"),			
+	@View(members="number; name"),				
 	@View(name="Complete",	members="number; name; level; regions; customers"),	
 	@View(name="DecorateName", members="number; name"),	
 	@View(name="ForCustomJSP", members="number; name; level"),

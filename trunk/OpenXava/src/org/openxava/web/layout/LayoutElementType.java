@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.openxava.render;
+package org.openxava.web.layout;
 
 /**
  * Defines the element types used in layouts.

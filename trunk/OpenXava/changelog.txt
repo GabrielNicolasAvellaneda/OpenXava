@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- All new layout architecture (the code that paints the UI). It still in BETA but can be activated with layout.painter in xava.properties. 
 - In collections when selected elements change but data remains the same, only the element selection is refreshed.
 - @OnSelectElementAction does not refresh its collection by default, it improves dramatically performance in some cases.
 - New utility class XArrays.

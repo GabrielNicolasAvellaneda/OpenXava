@@ -5,7 +5,7 @@
 
 <%@page import="org.openxava.view.View"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
-<jsp:useBean id="layoutPainterManager" class="org.openxava.render.LayoutPainterManager" scope="session"/>
+<jsp:useBean id="layoutPainterManager" class="org.openxava.web.layout.LayoutPainterManager" scope="session"/>
 
 <%
 String viewObject = request.getParameter("viewObject");

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.openxava.render;
+package org.openxava.web.layout;
 
 import java.util.EmptyStackException;
 import java.util.Stack;
@@ -26,7 +26,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	private LayoutPainterManager painterManager;
 
 	/**
-	 * @see org.openxava.render.ILayoutPainter#initialize(org.openxava.view.View, javax.servlet.jsp.PageContext)
+	 * @see org.openxava.web.layout.ILayoutPainter#initialize(org.openxava.view.View, javax.servlet.jsp.PageContext)
 	 */
 	public void initialize(View view, PageContext pageContext) {
 		this.view = view;
@@ -39,7 +39,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	}
 
 	/**
-	 * @see org.openxava.render.ILayoutPainter#setPainterManager(org.openxava.render.LayoutPainterManager)
+	 * @see org.openxava.web.layout.ILayoutPainter#setPainterManager(org.openxava.web.layout.LayoutPainterManager)
 	 */
 	public void setPainterManager(LayoutPainterManager painterManager) {
 		this.painterManager = painterManager;

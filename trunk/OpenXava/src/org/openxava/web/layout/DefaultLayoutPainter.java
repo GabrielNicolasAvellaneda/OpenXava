@@ -1,21 +1,21 @@
 /**
  * 
  */
-package org.openxava.render;
+package org.openxava.web.layout;
 
-import static org.openxava.render.LayoutJspKeys.ATTRVAL_STYLE_WIDTH_100P;
-import static org.openxava.render.LayoutJspKeys.ATTR_CLASS;
-import static org.openxava.render.LayoutJspKeys.ATTR_COLSPAN;
-import static org.openxava.render.LayoutJspKeys.ATTR_ID;
-import static org.openxava.render.LayoutJspKeys.ATTR_LIST;
-import static org.openxava.render.LayoutJspKeys.ATTR_SRC;
-import static org.openxava.render.LayoutJspKeys.ATTR_STYLE;
-import static org.openxava.render.LayoutJspKeys.TAG_DIV;
-import static org.openxava.render.LayoutJspKeys.TAG_IMG;
-import static org.openxava.render.LayoutJspKeys.TAG_SPAN;
-import static org.openxava.render.LayoutJspKeys.TAG_TABLE;
-import static org.openxava.render.LayoutJspKeys.TAG_TD;
-import static org.openxava.render.LayoutJspKeys.TAG_TR;
+import static org.openxava.web.layout.LayoutJspKeys.ATTRVAL_STYLE_WIDTH_100P;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_CLASS;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_COLSPAN;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_ID;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_LIST;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_SRC;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_STYLE;
+import static org.openxava.web.layout.LayoutJspKeys.TAG_DIV;
+import static org.openxava.web.layout.LayoutJspKeys.TAG_IMG;
+import static org.openxava.web.layout.LayoutJspKeys.TAG_SPAN;
+import static org.openxava.web.layout.LayoutJspKeys.TAG_TABLE;
+import static org.openxava.web.layout.LayoutJspKeys.TAG_TD;
+import static org.openxava.web.layout.LayoutJspKeys.TAG_TR;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -45,7 +45,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	private int tdPerColumn = 2; // One TD for the label and another for Data and other cells.
 	
 	/**
-	 * @see org.openxava.render.ILayoutPainter#startView(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startView(org.openxava.web.layout.LayoutElement)
 	 */
 	public void startView(LayoutElement element) {
 		setContainer(element);
@@ -54,7 +54,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	}
 
 	/**
-	 * @see org.openxava.render.ILayoutPainter#endView(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endView(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endView(LayoutElement element) {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
@@ -62,7 +62,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 	/**
 	 * This has the same behavior as the startFrame method.
-	 * @see org.openxava.render.ILayoutPainter#startGroup(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startGroup(org.openxava.web.layout.LayoutElement)
 	 */
 	public void startGroup(LayoutElement element) {
 		startFrame(element);
@@ -70,7 +70,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 	/**
 	 * This has the same behavior as the endFrame method.
-	 * @see org.openxava.render.ILayoutPainter#endGroup(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endGroup(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endGroup(LayoutElement element) {
 		endFrame(element);
@@ -78,7 +78,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 	/**
 	 * Creates the frame. This implementation uses the same style as the original OX design.
-	 * @see org.openxava.render.ILayoutPainter#startFrame(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startFrame(org.openxava.web.layout.LayoutElement)
 	 */
 	public void startFrame(LayoutElement element) {
 		attributes.clear();
@@ -110,7 +110,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	}
 
 	/**
-	 * @see org.openxava.render.ILayoutPainter#endFrame(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endFrame(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endFrame(LayoutElement element) {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
@@ -121,7 +121,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 	/**
 	 * Actually starts a row where all the columns are painted.
-	 * @see org.openxava.render.ILayoutPainter#startRow(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startRow(org.openxava.web.layout.LayoutElement)
 	 */
 	public void startRow(LayoutElement element) {
 		setRow(element);
@@ -130,7 +130,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	}
 
 	/**
-	 * @see org.openxava.render.ILayoutPainter#endRow(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endRow(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endRow(LayoutElement element) {
 		// Separation line
@@ -149,7 +149,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * a final TD for the data and any other remaining cell of the column.
 	 * By parsing contiguous cells without labels are considered as part of the column.<br />
 	 * In this implementation columns are composed of three TD.
-	 * @see org.openxava.render.ILayoutPainter#startColumn(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startColumn(org.openxava.web.layout.LayoutElement)
 	 */
 	public void startColumn(LayoutElement element) {
 		int count = getRow().getRowCurrentColumnsCount() + 1;
@@ -162,14 +162,14 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	/**
 	 * In this painter implementation the column does end the last TD. So the cell
 	 * implementation must start the first TD but NOT close the last one
-	 * @see org.openxava.render.ILayoutPainter#endColumn(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endColumn(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endColumn(LayoutElement element) {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 	}
 
 	/**
-	 * @see org.openxava.render.ILayoutPainter#startCell(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startCell(org.openxava.web.layout.LayoutElement)
 	 */
 	public void startCell(LayoutElement element) {
 		if (!firstCellPainted) {
@@ -374,7 +374,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	
 	/**
 	 * In this implementation nothing is done at cell end.
-	 * @see org.openxava.render.ILayoutPainter#endCell(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endCell(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endCell(LayoutElement element) {
 
@@ -382,7 +382,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 	/**
 	 * Besides the frame handling, it lets the collection.jsp to take care of the collection rendering.
-	 * @see org.openxava.render.ILayoutPainter#startCollection(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startCollection(org.openxava.web.layout.LayoutElement)
 	 */
 	public void startCollection(LayoutElement element) {
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_DIV));
@@ -414,7 +414,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * However for future implementations this might be useful for adding
 	 * features to the collection that might be painted at end of the collection
 	 * renderization.
-	 * @see org.openxava.render.ILayoutPainter#endCollection(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endCollection(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endCollection(LayoutElement element) {
 
@@ -422,7 +422,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 	/**
 	 * Each section behave as a marker. This is called upon section change or page reload. 
-	 * @see org.openxava.render.ILayoutPainter#startSections(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#startSections(org.openxava.web.layout.LayoutElement)
 	 */
 	@SuppressWarnings("rawtypes")
 	public void startSections(LayoutElement element) {
@@ -528,7 +528,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	}
 
 	/**
-	 * @see org.openxava.render.ILayoutPainter#endSections(org.openxava.render.LayoutElement)
+	 * @see org.openxava.web.layout.ILayoutPainter#endSections(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endSections(LayoutElement element) {
 		
