@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Link to CSS null when running inside portal.
 - Improvements in Italian i18n files. 
 - All new layout architecture (the code that paints the UI). It still in BETA but can be activated with layout.painter in xava.properties. 
 - In collections when selected elements change but data remains the same, only the element selection is refreshed.
