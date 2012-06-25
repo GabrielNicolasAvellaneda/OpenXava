@@ -145,6 +145,9 @@ public class GenerateReportServlet extends HttpServlet {
 			int [] selectedRows = (int []) request.getSession().getAttribute("xava_selectedRowsReportTab"); 
 			request.getSession().removeAttribute("xava_selectedRowsReportTab");
 			setDefaultSchema(request);
+			String user = (String) request.getSession().getAttribute("xava_user");
+			request.getSession().removeAttribute("xava_user");
+			Users.setCurrent(user);
 			String uri = request.getRequestURI();				
 			if (uri.endsWith(".pdf")) {
 				InputStream is;
