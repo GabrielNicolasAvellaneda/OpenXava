@@ -11,9 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
+import org.openxava.annotations.*;
 import org.openxava.jpa.XPersistence;
 
 /**
@@ -22,6 +20,7 @@ import org.openxava.jpa.XPersistence;
  */
 
 @Entity
+@View(name="Sections", members="section1{ name; section2 { partOf, favouriteFormula } }")
 public class Ingredient {
 	
 	@Id @Hidden
