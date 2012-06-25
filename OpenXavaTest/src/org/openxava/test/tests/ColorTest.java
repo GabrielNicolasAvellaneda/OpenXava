@@ -18,6 +18,22 @@ public class ColorTest extends ModuleTestBase {
 		super(testName, "Color");		
 	}
 	
+	public void testNavigationByKeyZero() throws Exception {
+		assertLabelInList(0, "Number");
+		assertValueInList(0, 0, "0");
+		assertValueInList(1, 0, "1");
+		execute("List.viewDetail", "row=1");
+		assertValue("number", "1");
+		assertValue("name", "NEGRO");
+		execute("Navigation.previous");
+		assertValue("number", "0");
+		assertValue("name", "ROJO");
+		execute("Navigation.previous");
+		assertError("We already are at the beginning of the list");
+		assertValue("number", "0");
+		assertValue("name", "ROJO");
+	}
+	
 	public void testKeysWithZeroValue() throws Exception {
 		assertValueInList(0, "number", "0");
 		assertValueInList(0, "name", "ROJO");
