@@ -165,5 +165,25 @@
 	<target name="updateAccessTracking">
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 	</target>
+	
+	<!-- tmp -->
+	<target name="runTestSuite">
+		<junit>
+			<formatter type="plain" usefile="false" />
+			<classpath>
+				<pathelement location="../OpenXava/lib/junit.jar"/>
+				<pathelement path="../OpenXava/bin"/>
+				<pathelement path="web/WEB-INF/classes"/>				
+				<fileset dir="../OpenXava/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset>				
+				<fileset dir="web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 
+				<pathelement path="${j2ee.lib}"/> 				
+			</classpath>
+			<test name="org.openxava.test.tests.CarrierTest" todir="/home/javi/temporal/junit"/>
+		</junit>
+	</target>	
 						
 </project>

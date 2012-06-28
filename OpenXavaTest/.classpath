@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="i18n"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="reports"/>
+	<classpathentry kind="src" path="java6-src"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/jbossall-client.jar"/>
 	<classpathentry exported="true" kind="src" path="/OpenXava"/>

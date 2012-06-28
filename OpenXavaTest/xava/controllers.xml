@@ -196,17 +196,6 @@
 			class="org.openxava.test.actions.AssertComboDeliveriesAction"/>			
 	</controller>
 	
-	<controller name="TypicalNotResetOnSave">
-		<extends controller="Typical"/>
-		<action name="save" mode="detail"
-			class="org.openxava.actions.SaveAction"
-			image="save.gif"
-			by-default="if-possible"
-			keystroke="F3">			
-			<set property="resetAfter" value="false"/>
-		</action>				
-	</controller>	
-			
 	<controller name="EditableOnOff">
 		<action name="setOn" mode="detail"
 			class="org.openxava.test.actions.SetEditableOnAction"/>

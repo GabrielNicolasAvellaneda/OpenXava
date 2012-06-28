@@ -15,6 +15,10 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.default_schema" value="XAVATEST"/>
+            <!-- Only when using Java 6 or better  
+            <property name="hibernate.current_session_context_class" 
+                    value="com.autobizlogic.abl.session.LogicThreadLocalSessionContext"/>
+             -->                   
         </properties>
     </persistence-unit>      
     
