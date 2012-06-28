@@ -1066,7 +1066,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("deliveredBy", usesAnnotatedPOJO()?"1":"2");
 		assertNoMessages();
 		setValue("carrier.number", "3"); 
-		assertMessagesCount(1);
+		assertMessagesCount(1); 
 		assertMessage("Carrier changed");		
 		assertValue("remarks", "The carrier is 3");				
 		setValue("carrier.number", "2");		

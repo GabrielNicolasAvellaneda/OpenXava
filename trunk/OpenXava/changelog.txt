@@ -1,11 +1,13 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: navigation with key value 0
-- Fix: navigation with hidden key and view with sections
-- Fix: default pdf and excel when the filter list needs the user name  
+- Fix: Navigation with key value 0.
+- Fix: Navigation with hidden key and view with nested sections.
+- Fix: Default pdf and excel when the filter list needs the user name.  
+- Automated Business Logic (ABL) library added.
+- New TypicalNotResetOnSave controller available.
 - Fix: Link to CSS null when running inside portal.
-- Improvements in Italian i18n files.
+- Improvements in Italian i18n files. 
 - All new layout architecture (the code that paints the UI). It still in BETA but can be activated with layout.painter in xava.properties. 
 - In collections when selected elements change but data remains the same, only the element selection is refreshed.
 - @OnSelectElementAction does not refresh its collection by default, it improves dramatically performance in some cases.
