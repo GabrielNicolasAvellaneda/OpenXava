@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Views([
-	@View(members="building [name, function; address]"), // All data in a group for a test
+	@View(members="building [name, function; address]"), // All data in a group for a test	
 	@View(name="Simple", members="name")
 ])
 @Tab( properties= "name, address.street, address.zipCode, address.city" )
