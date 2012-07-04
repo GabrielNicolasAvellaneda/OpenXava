@@ -168,7 +168,8 @@
 	
 	<!-- tmp -->
 	<target name="runTestSuite">
-		<junit>
+		<junit fork="true"  printsummary="true">
+			<jvmarg value="-Xmx800m"/>
 			<formatter type="plain" usefile="false" />
 			<classpath>
 				<pathelement location="../OpenXava/lib/junit.jar"/>
@@ -179,10 +180,21 @@
 				</fileset>				
 				<fileset dir="web/WEB-INF/lib"> 
 					<include name="**/*.jar"/> 
-				</fileset> 
+				</fileset>
+				<fileset dir="lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 				
 				<pathelement path="${j2ee.lib}"/> 				
 			</classpath>
-			<test name="org.openxava.test.tests.CarrierTest" todir="/home/javi/temporal/junit"/>
+			 
+			<test name="org.openxava.test.tests.CarrierTest"/>
+			<!-- tmp
+			<batchtest>
+			    <fileset dir="web/WEB-INF/classes">
+			      <include name="**/*Test.class"/>
+			    </fileset>
+			</batchtest>
+			-->
 		</junit>
 	</target>	
 						
