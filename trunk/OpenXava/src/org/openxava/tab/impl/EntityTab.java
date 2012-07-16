@@ -176,7 +176,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			if (Is.emptyString(componentName)) {
 				throw new InitException("tab_component_required");
 			}
-			tabProvider = PersistenceProviderFactory.getInstance().createTabProvider();
+			tabProvider = PersistenceProviderFactory.getInstance().createTabProvider();			
 			table = new TableModelBean();
 			table.setTranslateHeading(false);
 			this.mapping = null;

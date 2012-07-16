@@ -23,6 +23,7 @@ Change Log for OpenXava project
 - New calculators: CurrentUserJobTitleCalculator, CurrentUserMiddleNameCalculator, CurrentUserNickNameCalculator, CurrentUserBirthDateYearCalculator, CurrentUserBirthDateMonthCalculator and CurrentUserBirthDateDayCalculator.
 - New properties in UserInfo: jobTitle, middleName, nickName, birthDateYear, birthDateMonth and birthDateDay.
 - It's possible to define different parameters for each report in JasperMultipleReportBaseAction.
+- Fix: on-select-element-action missed in component.dtd.
 
 OpenXava 4.4.1 (2012-4-25)
 --------------------------

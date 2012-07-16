@@ -92,7 +92,7 @@
  	 	
 		<collection-view collection="fellowCarriersCalculated">
 			<remove-selected-action action=""/>
-			<on-select-element-action action="Carrier.onSelectFellowCarriersCalulated"/>
+			<on-select-element-action action="Carrier.onSelectFellowCarriersCalculated"/>
 		</collection-view>
 		
 		<members>			
@@ -152,6 +152,10 @@
 		<reference-view reference="warehouse">
 			<descriptions-list description-property="name"/>
 		</reference-view>
+		
+		<collection-view collection="fellowCarriersCalculated">
+			<on-select-element-action action="Carrier.syncCarriersSelection"/>
+		</collection-view>
 		
 		<members>
 			warehouse; 

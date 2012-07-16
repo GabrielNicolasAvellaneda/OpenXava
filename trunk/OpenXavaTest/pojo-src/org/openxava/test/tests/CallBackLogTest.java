@@ -19,6 +19,7 @@ public class CallBackLogTest extends ModuleTestBase {
 	public void setUp() throws Exception {
 		super.setUp();
 		XPersistence.getManager().createQuery("delete from CallBackLog").executeUpdate();
+		XPersistence.commit();
 	}
 	
 	public void testCRUDWithCallBacks() throws Exception {

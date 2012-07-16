@@ -18,21 +18,21 @@ public class CommunityEditableMembersTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertValue("name", "PROGRAMMERS");
 		assertCollectionRowCount("members", 3);
-		execute("ManyToMany.edit", "row=0,viewObject=xava_view_members");
+		execute("ManyToMany.edit", "row=1,viewObject=xava_view_members");
 		assertValue("name", "JAVI");
 		assertValue("favouriteFramework", "OPENXAVA");
 		setValue("name", "JAVI MODIFIED");
 		execute("ManyToManyUpdateElement.save");
 		assertCollectionRowCount("members", 3);
-		assertValueInCollection("members", 0, "name", "JAVI MODIFIED");
+		assertValueInCollection("members", 1, "name", "JAVI MODIFIED");
 
 		// Restoring
-		execute("ManyToMany.edit", "row=0,viewObject=xava_view_members");
+		execute("ManyToMany.edit", "row=1,viewObject=xava_view_members");
 		assertValue("name", "JAVI MODIFIED");
 		setValue("name", "JAVI");
 		execute("ManyToManyUpdateElement.save");
 		assertCollectionRowCount("members", 3);
-		assertValueInCollection("members", 0, "name", "JAVI");
+		assertValueInCollection("members", 1, "name", "JAVI");
 	}
 	
 }

@@ -14,26 +14,28 @@ public class IngredientTest extends ModuleTestBase {
 		super(testName, "IngredientWithSections");		
 	}
 	
+	// This test fails with XML components 
 	public void testNavigationWithHiddenKeyAndSections() throws Exception {
 		assertLabelInList(0, "Name");
-		assertValueInList(0, 0, "CAFE");
-		assertValueInList(1, 0, "AZUCAR");
-		assertValueInList(2, 0, "LECHE");
+		execute("List.orderBy", "property=name");
+		assertValueInList(0, 0, "AZUCAR");
+		assertValueInList(1, 0, "CAFE");
+		assertValueInList(2, 0, "CAFE CON LECHE");
 		execute("List.viewDetail", "row=0");
 		assertNoErrors();
-		assertValue("name", "CAFE");
-		execute("Navigation.next");
-		assertNoErrors();
 		assertValue("name", "AZUCAR");
 		execute("Navigation.next");
 		assertNoErrors();
-		assertValue("name", "LECHE");
-		execute("Navigation.previous");
+		assertValue("name", "CAFE");
+		execute("Navigation.next");
 		assertNoErrors();
-		assertValue("name", "AZUCAR");
+		assertValue("name", "CAFE CON LECHE");
 		execute("Navigation.previous");
 		assertNoErrors();
 		assertValue("name", "CAFE");
+		execute("Navigation.previous");
+		assertNoErrors();
+		assertValue("name", "AZUCAR");
 	}
 
 }
