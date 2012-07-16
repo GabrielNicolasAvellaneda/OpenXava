@@ -18,7 +18,7 @@ public class Community extends Nameable {
 	@ManyToMany
 	@ListAction("ManyToMany.new")
 	@EditAction(forViews="EditableMembers", value="ManyToMany.edit") 
-	@OrderBy("id asc") 	
+	@OrderBy("name asc") 	
 	private Collection<Human> members;
 
 	public void setMembers(Collection<Human> members) {

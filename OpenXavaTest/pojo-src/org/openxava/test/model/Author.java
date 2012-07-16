@@ -7,7 +7,8 @@ import org.openxava.test.annotations.*;
 
 @Entity
 @GoodName
-@View(members="header [ author; biography ]; humans") 
+@View(members="header [ author; biography ]; humans")
+@Tab(defaultOrder="${author} asc")
 public class Author {
 	
 	@Id @Column(length=30)

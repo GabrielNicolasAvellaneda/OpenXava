@@ -53,7 +53,7 @@
 		<property-mapping
 			property="remarks" column="REMARKS"/>
 		<property-mapping
-			property="family" column="0"/>									
+			property="family" formula="0"/>									
 	</entity-mapping> 
 	
 </component>

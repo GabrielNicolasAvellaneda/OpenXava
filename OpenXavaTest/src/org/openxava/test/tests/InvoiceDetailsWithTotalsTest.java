@@ -97,6 +97,7 @@ public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
 		header = getHtmlPage().getElementById("ox_OpenXavaTest_InvoiceDetailsWithTotals__frame_detailsheader");
 		assertTrue("Unexpected end: " + header.asText(), !header.asText().endsWith("1,403.02"));
 		showCollection("details");
+		Thread.sleep(1000); // Needed in order the above showCollection() works in all computers
 	}	
 	
 	private void assertTotalsInFrameOfCollection(String collection, String totals, boolean addAction) throws Exception { 

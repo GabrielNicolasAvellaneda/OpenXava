@@ -51,7 +51,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertRowCollectionUnchecked("fellowCarriersCalculated", 2);
 				
 		checkRowCollection("fellowCarriersCalculated", 0);
-		assertRowCollectionChecked("fellowCarriers", 0);
+		assertRowCollectionChecked("fellowCarriers", 0); 
 		assertRowCollectionUnchecked("fellowCarriers", 1);
 		assertRowCollectionUnchecked("fellowCarriers", 2);
 		assertRowCollectionChecked("fellowCarriersCalculated", 0);
@@ -511,7 +511,7 @@ public class AJAXTest extends ModuleTestBase {
 	public void testCollections() throws Exception { 
 		changeModule("Carrier"); 
 		execute("Mode.detailAndFirst");
-		assertCollectionRowCount("fellowCarriers", 3); 
+		assertCollectionRowCount("fellowCarriers", 3);  
 		setValue("warehouse.number", "2");
 		assertCollectionRowCount("fellowCarriers", 0);
 		setValue("warehouse.number", "1");

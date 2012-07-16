@@ -13,3 +13,4 @@ at least the next cases:
 - A section with only a property (enmarcable and not enmarcable) inside Liferay
  		with more portlets below. The frame of the OX porltet mustn't wrap all other portlets.
 - Product5FamilyFromSubfamily: The properties in the group must be in the same line
+	(Not solved yet: https://sourceforge.net/tracker/index.php?func=detail&aid=3216321&group_id=123187&atid=695743)

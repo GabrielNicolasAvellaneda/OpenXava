@@ -22,7 +22,21 @@
 			<descriptions-list/>
 		</reference-view>
 	</view>
-		
+	
+	<view name="Sections">
+		<reference-view reference="partOf">
+			<descriptions-list/>
+		</reference-view>
+		<members>
+			<section name="section1">
+				name;
+				<section name="section2">
+					partOf, favouriteFormula
+				</section>
+			</section>
+		</members>
+	</view>
+	
 	<entity-mapping table="XAVATEST@separator@INGREDIENT">
 		<property-mapping
 			property="oid" column="ID"/>

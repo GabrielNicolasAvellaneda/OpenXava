@@ -20,12 +20,12 @@ public class CommunityTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertValue("name", "PROGRAMMERS");
 		assertCollectionRowCount("members", 3);
-		execute("Collection.view", "row=0,viewObject=xava_view_members");		
+		execute("Collection.view", "row=1,viewObject=xava_view_members");		
 		assertValue("name", "JAVI");
 		assertValue("favouriteFramework", "OPENXAVA");
 		closeDialog();
 
-		execute("Collection.view", "row=1,viewObject=xava_view_members");		
+		execute("Collection.view", "row=2,viewObject=xava_view_members");		
 		assertValue("name", "JUANJO");
 		assertNotExists("favouriteFramework");
 		assertValue("mainLanguage", "RPG");
