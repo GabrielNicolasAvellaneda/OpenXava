@@ -1,21 +1,17 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Navigation with key value 0.
-- Fix: Navigation with hidden key and view with nested sections.
-- Fix: Default pdf and excel when the filter list needs the user name.  
-- Automated Business Logic (ABL) library added.
-- New TypicalNotResetOnSave controller available.
-- Fix: Link to CSS null when running inside portal.
-- Improvements in Italian i18n files. 
-- All new layout architecture (the code that paints the UI). It still in BETA but can be activated with layout.painter in xava.properties. 
-- In collections when selected elements change but data remains the same, only the element selection is refreshed.
-- @OnSelectElementAction does not refresh its collection by default, it improves dramatically performance in some cases.
-- New utility class XArrays.
-- Fix: Some methods of ModuleTestBase for checking, unchecking and asserting checked rows fail with calculated collections.
+OpenXava 4.5 (2012-7-18)
+------------------------
 - Support for all strategies of JPA inheritance mapping.
 - Data for list and collections is obtained via JPA, before JDBC was used.
-- Fix: Message 'Delete record on row x...' shows the incorrect row number.
+- Automated Business Logic (ABL) library added.
+- All new layout architecture (the code that paints the UI). It still in BETA but can be activated with layout.painter in xava.properties.
+- New TypicalNotResetOnSave controller available.
+- AJAX performance improvement in collections: when selected elements change but data remains the same, only the selection is refreshed.
+- @OnSelectElementAction does not refresh its collection by default, it improves dramatically performance in some cases.
+- Improvements in Italian i18n files. 
+- New utility class XArrays.
 - It's possible to define more easily styles with the file custom.css.
 - Hibernate upgraded to 3.6.10.
 - New property messagesOnTop in xava.properties to show the messages in the top or in the bottom of the user interface.  
@@ -23,7 +19,14 @@ Change Log for OpenXava project
 - New calculators: CurrentUserJobTitleCalculator, CurrentUserMiddleNameCalculator, CurrentUserNickNameCalculator, CurrentUserBirthDateYearCalculator, CurrentUserBirthDateMonthCalculator and CurrentUserBirthDateDayCalculator.
 - New properties in UserInfo: jobTitle, middleName, nickName, birthDateYear, birthDateMonth and birthDateDay.
 - It's possible to define different parameters for each report in JasperMultipleReportBaseAction.
+- Fix: Link to CSS null when running inside portal.
+- Fix: Fails in WebSphere 6.1.
+- Fix: Message 'Delete record on row x...' shows the incorrect row number.
+- Fix: Navigation with key value 0.
+- Fix: Navigation with hidden key and view with nested sections.
+- Fix: Default pdf and excel when the filter list needs the user name.  
 - Fix: on-select-element-action missed in component.dtd.
+- Fix: Some methods of ModuleTestBase for checking, unchecking and asserting checked rows fail with calculated collections.
 
 OpenXava 4.4.1 (2012-4-25)
 --------------------------
