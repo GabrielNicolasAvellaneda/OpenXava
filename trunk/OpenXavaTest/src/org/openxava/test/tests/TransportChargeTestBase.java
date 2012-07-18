@@ -45,7 +45,9 @@ abstract public class TransportChargeTestBase extends ModuleTestBase {
 		charge2.setDelivery(delivery2);
 		charge2.setAmount(new BigDecimal("200.00"));			
 		XPersistence.getManager().persist(charge2);
-		XPersistence.getManager().flush();
+		XPersistence.commit(); 
+		charge1 = XPersistence.getManager().merge(charge1); 
+		charge2 = XPersistence.getManager().merge(charge2);
 	}
 	
 	protected TransportCharge getCharge1() {
