@@ -297,10 +297,15 @@ if (!layoutPainterManager.renderView(view, pageContext)) {
 <%
 				} // END IF MetaCollection With Frame
 %>	
-				<jsp:include page="collection.jsp"> 
-					<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
-					<jsp:param name="viewObject" value="<%=viewObject%>"/>			
-				</jsp:include>
+				<%
+				String collectionPrefix = propertyPrefix == null?collection.getName() + ".":propertyPrefix + collection.getName() + ".";
+				%>
+				<div id="<xava:id name='<%="collection_" + collectionPrefix%>'/>">				
+					<jsp:include page="collection.jsp"> 
+						<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
+						<jsp:param name="viewObject" value="<%=viewObject%>"/>			
+					</jsp:include>
+				</div>				
 <%			
 				if (withFrame) { // IF MetaCollection With Frame
 %>
