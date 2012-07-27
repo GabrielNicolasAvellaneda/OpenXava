@@ -21,11 +21,7 @@
 <%
 String collectionName = request.getParameter("collectionName");
 String viewObject = request.getParameter("viewObject");
-String propertyPrefixAccumulated = request.getParameter("propertyPrefix");
-String propertyPrefix = propertyPrefixAccumulated == null?collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 View view = (View) context.get(request, viewObject);
 MetaCollection collection = view.getMetaModel().getMetaCollection(collectionName);
 %>
-<div id="<xava:id name='<%="collection_" + propertyPrefix%>'/>">
 <jsp:include page='<%="editors/" + WebEditors.getMetaEditorFor(collection, view.getViewName()).getUrl()%>'/>
-</div>

@@ -19,5 +19,5 @@ class JournalTest extends ModuleTestBase {
 		execute "Collection.save"
 		assertNoErrors()
 	}
-	
+		
 }

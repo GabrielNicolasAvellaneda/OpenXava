@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.web.*;
@@ -24,6 +25,14 @@ public class AJAXTest extends ModuleTestBase {
 	
 	public AJAXTest(String nameTest) {
 		super(nameTest, null);
+	}
+	
+	public void testNotDuplicateDivOnLoadCollection() throws Exception { 
+		changeModule("Seller");
+		execute("Mode.detailAndFirst");
+		assertEquals(1, StringUtils.countMatches(getHtml(), "ox_OpenXavaTest_Seller__collection_customers___"));
+		execute("List.filter", "collection=customers");
+		assertEquals(2, StringUtils.countMatches(getHtml(), "ox_OpenXavaTest_Seller__collection_customers___"));
 	}
 	
 	public void testOnSelectElementNotReloadCollection() throws Exception { 
