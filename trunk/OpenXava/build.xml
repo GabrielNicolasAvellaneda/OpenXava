@@ -628,6 +628,18 @@
     		</filterset>
   		</copy>				
 	</target>
+	
+	<target name="createEditorsJS">
+		<fileset id="editorsjs.dir" dir="web/xava/editors/js">
+		    <include name="*.js" />
+		</fileset>
+	
+		<pathconvert pathsep="&#xA;" property="editorsjs.files" refid="editorsjs.dir">
+		    <mapper type="flatten" />
+		</pathconvert>
+	
+		<echo file="../${project}/web/WEB-INF/classes/editors-js.properties">${editorsjs.files}</echo>
+	</target>
 					
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
 		<copy todir="../${project}/web/xava" overwrite="true">
@@ -641,6 +653,7 @@
   		</copy>
 		<antcall target="createWebXml"/>
 		<antcall target="filter"/>
+		<antcall target="createEditorsJS"/>
 		<copy file="../OpenXava/bin/Messages_${default.language}.properties" 
 			tofile="../OpenXava/bin/Messages.properties"/>
 		<copy file="../OpenXava/bin/Labels_${default.language}.properties" 
