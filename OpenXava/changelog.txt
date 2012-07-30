@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Popup calendar for dates fails in Chinese.
 - Fix: Fails on Tomcat with unpackWARs="false".
 - Fix: Duplicate div on load collections via AJAX.
 
