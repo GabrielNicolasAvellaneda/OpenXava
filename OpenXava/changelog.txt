@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Fails on Tomcat with unpackWARs="false".
 - Fix: Duplicate div on load collections via AJAX.
 
 OpenXava 4.5 (2012-7-18)
