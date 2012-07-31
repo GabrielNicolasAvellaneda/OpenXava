@@ -2,7 +2,6 @@
 
 <%@page import="java.io.File"%>
 <%@page import="java.util.Arrays"%>
-<%@page import="java.util.Iterator"%>
 <%@page import="org.openxava.util.XavaResources"%>
 <%@page import="org.openxava.util.Locales"%>
 <%@page import="org.openxava.util.Users"%>
@@ -12,7 +11,6 @@
 <%@page import="org.openxava.web.dwr.Module"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.web.Ids"%>
-<%@page import="org.openxava.web.EditorsJS"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.apache.commons.logging.LogFactory" %>
@@ -159,11 +157,15 @@
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>	
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.bgiframe.js?ox=<%=version%>"></script>
 	<%
-		for (Iterator itEditorsJS = EditorsJS.listJSFiles(realPath).iterator(); itEditorsJS.hasNext();) {			
-			String jsEditor = (String) itEditorsJS.next();
+		File jsEditorsFolder = new File(realPath + "/xava/editors/js");		
+		String[] jsEditors = jsEditorsFolder.list();
+		Arrays.sort(jsEditors);
+		for (int i = 0; i < jsEditors.length; i++) {
+			if (jsEditors[i].endsWith(".js")) {
 	%>
-	<script type="text/javascript" src="<%=contextPath%>/xava/editors/js/<%=jsEditor%>?ox=<%=version%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/xava/editors/js/<%=jsEditors[i]%>?ox=<%=version%>"></script>
 	<%
+			}
 		}
 	%>	
 	<script type="text/javascript">
@@ -267,9 +269,10 @@ if (manager.isResetFormPostNeeded()) {
 	if (openxava != null && openxava.<%=initiated%> == null) {
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
+		openxava.imageFilterPrefix = '<%=org.openxava.web.Lists.getImageFilterPrefix(request)%>'; 
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
-		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';
+		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';		
 		openxava.closeDialogOnEscape = <%=browser != null && browser.indexOf("Firefox") >= 0 ? "false":"true"%>;		  
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';

@@ -12,7 +12,7 @@ else {
 	String propertyKey = request.getParameter("propertyKey");
 	String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
 %>
-<input type="hidden" name="<%=propertyKey%>" value='<%=org.openxava.util.Strings.change(fvalue, "'", "&#39;")%>'>
+<input type="hidden" name="<%=propertyKey%>" tabindex="1" value='<%=org.openxava.util.Strings.change(fvalue, "'", "&#39;")%>'>
 <%=fvalue%>
 <%
 }

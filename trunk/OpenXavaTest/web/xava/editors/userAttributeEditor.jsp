@@ -37,6 +37,7 @@ if (editable || !label) {
 %>
 <input id="<%=propertyKey%>"
     name="<%=propertyKey%>" class="<%=style.getEditor()%> <%=numericClass%>"
+    tabindex="1" 
 	type="text" 
 	title="<%=p.getDescription(request)%>"
 	<%=align%>

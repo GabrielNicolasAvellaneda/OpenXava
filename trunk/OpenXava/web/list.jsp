@@ -73,7 +73,7 @@ int totalSize = -1;
 if (request.getAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab) == null) {
 	tab.setRequest(request);
 	tab.reset();
-	request.setAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab, Boolean.TRUE); 
+	request.setAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab, true); 
 }
 boolean resizeColumns = style.allowsResizeColumns() && tab.isResizeColumns();
 String browser = request.getHeader("user-agent");
@@ -118,9 +118,8 @@ if (tab.isTitleVisible()) {
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
 	<%
-		String imageFilterPrefix = request.getContextPath() + "/xava/images/";
+		String imageFilterPrefix = org.openxava.web.Lists.getImageFilterPrefix(request);  
 	%>
-	<input name="xava_image_filter_prefix" type="hidden" value="<%=imageFilterPrefix%>"/>     
 	<a id="<xava:id name='<%="filter_link_" + id%>'/>" href="javascript:openxava.manageFilterRow('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
 		src='<%=imageFilterPrefix%><%=imageFilter%>.gif' border='0'/></a>
 	<% if (tab.isCustomizeAllowed()) { %> 

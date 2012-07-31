@@ -26,12 +26,12 @@ import org.openxava.util.*;
 @Entity
 @IdClass(InvoiceKey.class)
 @Views({	
-	@View(members=
+	@View(members=			
 		"year, number, date, paid;" +		
 		"discounts [" +
 		"	customerDiscount, customerTypeDiscount, yearDiscount;" +
 		"];" +
-		"comment;" +			
+		"comment;" +					
 		"customer { customer }" +		
 		"details { details }" +			
 		"amounts { amountsSum; vatPercentage; vat }" +
