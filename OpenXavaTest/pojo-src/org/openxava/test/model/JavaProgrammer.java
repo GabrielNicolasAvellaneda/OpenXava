@@ -20,7 +20,7 @@ import org.openxava.annotations.*;
 		members = 
 			"favouriteFramework;" +
 			"frameworks { frameworks }"
-	),
+	), 
 	@View(name="Complete", extendsView="DEFAULT", 
 		members = "frameworks"
 	),
@@ -34,7 +34,7 @@ import org.openxava.annotations.*;
 })
 public class JavaProgrammer extends Programmer {
 
-	@Column(length=20)
+	@Column(length=20)	
 	private String favouriteFramework;
 	
 	@OneToMany(mappedBy="javaProgrammer")

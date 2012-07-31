@@ -51,11 +51,12 @@ if (fillWithZeros && fvalue.length() > 0) {
 	fvalue = Strings.fix(fvalue, size, Align.RIGHT, '0');
 }
 
-if (editable || !label) {
+if (editable || !label) { 
 %>
 <input id="<%=propertyKey%>"
     name="<%=propertyKey%>" class="<%=style.getEditor()%> <%=numericClass%>"
 	type="<%=inputType%>" 
+	tabindex="1"
 	title="<%=p.getDescription(request)%>"
 	<%=align%>
 	maxlength="<%=maxLength%>" 
@@ -63,7 +64,7 @@ if (editable || !label) {
 	<%=numericAlt%> 
 	value="<%=Strings.change(fvalue, "\"", "&quot;")%>"	
 	<%=disabled%>
-	<%=script%>
+	<%=script%>	
 	/>
 <%
 } else {

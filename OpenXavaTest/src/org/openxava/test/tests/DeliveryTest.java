@@ -40,6 +40,27 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
+	public void testFocusOnlyInEditors() throws Exception {
+		execute("CRUD.new");
+		assertFocusOn("invoice.year");
+		getHtmlPage().tabToNextElement();
+		assertFocusOn("invoice.number");
+		getHtmlPage().tabToNextElement();
+		assertFocusOn("type.number");
+		execute("Reference.createNew", "model=Invoice,keyProperty=invoice.number");
+		assertFocusOn("year");
+		getHtmlPage().tabToNextElement();
+		assertFocusOn("number");
+		getHtmlPage().tabToNextElement();
+		assertFocusOn("date");
+		getHtmlPage().tabToNextElement();
+		assertFocusOn("paid");
+		getHtmlPage().tabToNextElement();
+		assertFocusOn("comment");
+		getHtmlPage().tabToNextElement();
+		assertFocusOn("customer.number");
+	}
+	
 	public void testModifyEmptyReferenceFromADialog() throws Exception { 
 		execute("CRUD.new");
 		setValue("deliveredBy", usesAnnotatedPOJO()?"1":"2");

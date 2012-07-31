@@ -11,7 +11,7 @@ String selected = value == i ?"checked":"";
  
 %> 
  
-<input type="radio" name="<%=propertyKey%>" value="<%=i%>" <%=script%> <%=selected%>> <%=it.next()%>
+<input type="radio" name="<%=propertyKey%>" tabindex="1" value="<%=i%>" <%=script%> <%=selected%>> <%=it.next()%>
 
 <%
 String horizontal = request.getParameter("horizontal");

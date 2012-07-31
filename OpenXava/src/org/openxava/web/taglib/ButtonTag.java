@@ -40,7 +40,8 @@ public class ButtonTag extends TagSupport implements IActionTag{
 				pageContext.getOut().print("id='"); 
 				pageContext.getOut().print(Ids.decorate(application, module, getAction()));
 				pageContext.getOut().print("'");
-			}				
+			}
+			pageContext.getOut().print(" tabindex='1'"); 
 			pageContext.getOut().print(" title='"); 
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " + metaAction.getDescription(request));
 			pageContext.getOut().print("'");

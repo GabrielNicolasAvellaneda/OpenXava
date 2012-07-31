@@ -17,7 +17,7 @@ if (editable || !label) {
 	int regionsCount = sregionsCount == null?5:Integer.parseInt(sregionsCount);
 	Collection regions = fvalues==null?Collections.EMPTY_LIST:Arrays.asList(fvalues);
 %>
-<select name="<%=propertyKey%>" multiple="multiple" 	
+<select name="<%=propertyKey%>" tabindex="1" multiple="multiple" 	
 	class=<%=style.getEditor()%> 
 	<%=disabled%>
 	<%=script%>>

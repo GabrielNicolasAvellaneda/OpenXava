@@ -14,6 +14,7 @@ boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabe
 if (editable || !label) {
 %>
 <input type="text" name="<%=propertyKey%>" id="<%=propertyKey%>" class=<%=style.getEditor()%> title="<%=p.getDescription(request)%>"
+	tabindex="1" 
 	align='<%=align%>'
 	maxlength="<%=p.getSize()%>" 
 	size="<%=p.getSize()%>" 	 
