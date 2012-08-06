@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Changing list row count in a page other than the first one shows the incorrect page.
 - Focus order only include editors. Actions, links, tabs, etc. are excluded.
 - Fix: Image for showing/hiding filter in list in collection is broken with 2 collections in a dialog.
 - Fix: Popup calendar for dates fails in Chinese.

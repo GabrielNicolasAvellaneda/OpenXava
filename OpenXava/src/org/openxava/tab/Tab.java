@@ -1545,7 +1545,10 @@ public class Tab implements java.io.Serializable {
 	}	
 
 	public void setPageRowCount(int pageRowCount) {		
-		this.pageRowCount = pageRowCount;
+		this.pageRowCount = pageRowCount;				
+		int lastPage = getLastPage(); 
+		if (page > lastPage) page = lastPage;
+		recalculateIndices(); 
 		saveUserPreferences(); 
 	}
 
