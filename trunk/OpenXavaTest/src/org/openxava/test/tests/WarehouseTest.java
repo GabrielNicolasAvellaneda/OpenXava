@@ -75,16 +75,45 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertChangeRowCount(10, 5);		
 		tearDown(); setUp();
 		assertChangeRowCount(5, 10);
+		
+		String value5 = getValueInList(5, 2);
+		String value9 = getValueInList(9, 2);
+		execute("List.goNextPage");
+				
+		assertChangeRowCount(10, 5);
+		assertValueInList(0, 2, value5);
+		assertValueInList(4, 2, value9);
+		
+		assertChangeRowCount(5, 10);
+		
+		execute("List.goPage", "page=6");
+		execute("List.goPage", "page=7");
+		assertListRowCount(3);
+		String value60 = getValueInList(0, 2);
+		String value62 = getValueInList(2, 2);
+		execute("List.goPage", "page=6");
+		
+		assertChangeRowCount(10, 5);
+		execute("List.goPage", "page=11");
+		
+		assertChangeRowCount(5, 10, 3);
+		assertValueInList(0, 2, value60);
+		assertValueInList(2, 2, value62);		
+	}
+	
+	private void assertChangeRowCount(int initialRowCount, int finalRowCount) throws Exception, InterruptedException {
+		assertChangeRowCount(initialRowCount, finalRowCount, -1);
 	}
 
-	private void assertChangeRowCount(int initialRowCount, int finalRowCount) throws Exception, InterruptedException {
+	private void assertChangeRowCount(int initialRowCount, int finalRowCount, int finalRowCountWithData) throws Exception, InterruptedException {
+		if (finalRowCountWithData < 0) finalRowCountWithData = finalRowCount;
 		HtmlSelect combo = (HtmlSelect) getHtmlPage().getElementById(decorateId("list_rowCount"));
 		assertListRowCount(initialRowCount);
 		String comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
 		assertEquals(String.valueOf(initialRowCount), comboRowCount);
 		combo.setSelectedAttribute(String.valueOf(finalRowCount), true);
 		Thread.sleep(3000);
-		assertListRowCount(finalRowCount);
+		assertListRowCount(finalRowCountWithData);
 		comboRowCount = combo.getSelectedOptions().get(0).getAttribute("value");
 		assertEquals(String.valueOf(finalRowCount), comboRowCount);
 	}
