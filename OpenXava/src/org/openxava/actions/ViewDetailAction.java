@@ -30,7 +30,7 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		return getMainTab() != null ? getMainTab() : super.getTab();
 	}
 	
-	public void execute() throws Exception {		
+	public void execute() throws Exception {			
 		getView().setModelName(model); 
 		setAtListBegin(false);
 		setNoElementsInList(false);				
@@ -141,7 +141,7 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		this.model = modelName;		
 	}
 
-	public Tab getMainTab() {
+	public Tab getMainTab() {		
 		return mainTab;
 	}
 

@@ -808,7 +808,7 @@ public class ModuleManager implements java.io.Serializable {
 			if (value != null) {  
 				// The nulls are not assigned and thus we allow to have trasient attributes
 				// that it can lost on go and return from server without danger of alter
-				// the session value 				
+				// the session value 
 				setObjectInContext(objectName, value);				
 			}			
 		}
@@ -862,7 +862,8 @@ public class ModuleManager implements java.io.Serializable {
 			
 			try {
 				f.setAccessible(true);
-				f.set(action, value);								
+				f.set(action, value);
+				
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
@@ -1256,7 +1257,7 @@ public class ModuleManager implements java.io.Serializable {
 		if (metaActionsAfterEachRequest == null) {
 			try {			
 				Iterator it = getMetaControllers().iterator();
-				metaActionsAfterEachRequest = new ArrayList();
+				metaActionsAfterEachRequest = new ArrayList(); 
 				while (it.hasNext()) {
 					MetaController contr = (MetaController) it.next();		
 					metaActionsAfterEachRequest.addAll(contr.getMetaActionsAfterEachRequest());

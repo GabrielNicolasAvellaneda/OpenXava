@@ -5,6 +5,7 @@ import java.util.*;
 import javax.inject.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 
@@ -23,7 +24,7 @@ abstract public class ViewBaseAction extends BaseAction {
 	private Stack previousViews;
 	private boolean dialogShown = false; 
 	private boolean hasNextControllers = false; 
-	
+		
 	/**
 	 * Creates a new view and shows it. <p>
 	 * 
@@ -102,14 +103,19 @@ abstract public class ViewBaseAction extends BaseAction {
 	 * @since 4m1
 	 */	
 	protected void returnToPreviousView() {		
-		if (getPreviousViews() != null && !getPreviousViews().empty()) {				
-			View previousView = (View) getPreviousViews().pop();
-			previousView.setRequest(getRequest());
-			setView(previousView);
-			setNextMode((String) getView().getObject("xava.mode"));
+		if (getPreviousViews() != null) {
+			if (!getPreviousViews().empty()) {			
+				View previousView = (View) getPreviousViews().pop();
+				previousView.setRequest(getRequest());
+				setView(previousView);
+				setNextMode((String) getView().getObject("xava.mode"));				
+			}
+			else {
+				log.warn(XavaResources.getString("no_more_previous_views")); 
+			}
 		}
 		else {
-			log.warn(XavaResources.getString(getRequest(), 
+			log.warn(XavaResources.getString( 
 				"use_object_previousViews_required", "returnToPreviousView()", getClass().getName())); 
 		}
 	}
