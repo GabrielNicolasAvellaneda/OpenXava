@@ -36,7 +36,7 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 		if (getMainTab() != null && getTab() != null) {
 			getMainTab().setRequest(getTab().getRequest());
 		}
-		setTab(getMainTab());
+		setTab(getMainTab()); 
 		if (getTab() != null) getTab().deselectAll();
 	}
 	

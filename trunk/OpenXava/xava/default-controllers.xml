@@ -35,7 +35,9 @@ here that you want to override.
 	</controller>
 	
 	<controller name="Void"/>	
-	<controller name="CRUD">					 		<action  name="new" 			class="org.openxava.actions.NewAction"			image="new.gif"			keystroke="Control N">
+	<controller name="CRUD">
+	
+		<action  name="new" 			class="org.openxava.actions.NewAction"			image="new.gif"			keystroke="Control N">
 			<set property="restoreModel" value="true"/>					</action>
 
 		<action name="save" mode="detail"
@@ -91,7 +93,7 @@ here that you want to override.
 	<controller name="Mode">
 		<action name="initList" on-init="true"
 			class="org.openxava.actions.InitListAction"
-			hidden="true"/>		
+			hidden="true"/>
 		<action name="detailAndFirst"
 			class="org.openxava.actions.GoDetailAction"
 			keystroke="F8">
@@ -126,7 +128,7 @@ here that you want to override.
 	<controller name="SplitOnly">
 		<action name="initList" on-init="true"
 			class="org.openxava.actions.InitListAction"
-			hidden="true"/>		
+			hidden="true"/>
 		<action name="initMode"
 			class="org.openxava.actions.GoSplitAction"
 			hidden="true" on-init="true"/>

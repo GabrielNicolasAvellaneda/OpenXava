@@ -21,6 +21,24 @@ public class SellerTest extends ModuleTestBase {
 		super(testName, "Seller");		
 	}
 	
+	public void testCollectionNotCorruptListInSplitMode() throws Exception { 
+		execute("Mode.split");
+		assertListColumnCount(3);
+		assertValueInList(0, 0, "1");
+		assertValueInList(0, 1, "MANUEL CHAVARRI");
+		execute("List.viewDetail", "row=2");
+		execute("Collection.add", "viewObject=xava_view_customers");
+		execute("AddToCollection.add", "row=2");
+		assertNoErrors();
+		assertCollectionRowCount("customers", 1);
+		execute("Collection.removeSelected", "row=0,viewObject=xava_view_customers");
+		assertNoErrors();
+		assertCollectionRowCount("customers", 0);
+		assertListColumnCount(3);
+		assertValueInList(0, 0, "1");
+		assertValueInList(0, 1, "MANUEL CHAVARRI");
+	}
+	
 	public void testNotRemoveRowWhenAddingCollectionElements_addingWithNoElements() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Collection.add", "viewObject=xava_view_customers");
