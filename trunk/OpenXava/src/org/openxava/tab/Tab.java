@@ -549,6 +549,10 @@ public class Tab implements java.io.Serializable {
 				this.conditionValuesToWhere[i] = itValues.next();
 			}
 		}
+		else {
+			this.conditionValuesToWhere = null;
+			this.conditionComparatorsToWhere = null;			
+		}
 
 		return sb.toString();
 	}
@@ -912,7 +916,7 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 	
-	private void setConditionValuesImpl(String [] values) throws XavaException {
+	private void setConditionValuesImpl(String [] values) throws XavaException { 
 		if (Arrays.equals(this.conditionValues, values)) return;
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
 		this.conditionValues = values;
@@ -926,7 +930,7 @@ public class Tab implements java.io.Serializable {
 		condition = null;
 	}
 	
-	private void setConditionComparatorsImpl(String [] comparators) throws XavaException {  
+	private void setConditionComparatorsImpl(String [] comparators) throws XavaException {
 		if (Arrays.equals(this.conditionComparators, comparators)) return;		
 		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
 		this.conditionComparators = comparators;
@@ -1028,10 +1032,10 @@ public class Tab implements java.io.Serializable {
 
 	public synchronized void setRequest(HttpServletRequest request) {		
 		this.request = request;
-		String collectionPrefix = getCollectionPrefix();
+		String collectionPrefix = getCollectionPrefix();		
 		setConditionComparators(collectionPrefix);
 		setConditionValues(collectionPrefix);
-		setConditionValuesTo(collectionPrefix);
+		setConditionValuesTo(collectionPrefix);		
 	}
 
 	private String getCollectionPrefix() {
@@ -1070,7 +1074,7 @@ public class Tab implements java.io.Serializable {
 			conditionComparator = request.getParameter(prefix + i);
 		}
 		String [] result = new String[conditionComparators.size()];
-		conditionComparators.toArray(result);
+		conditionComparators.toArray(result);		
 		return result;
 	}
 	
@@ -1271,9 +1275,7 @@ public class Tab implements java.io.Serializable {
 		metaPropertiesKey = null;
 		conditionValues = null;
 		conditionValuesTo = null;
-		orderBy = null;			
-		condition = null;
-		conditionComparators = null;	
+		conditionComparators = null;
 		propertiesChanged = true;
 		additionalTotalsCount = -1; 
 		totalPropertiesNames = null; 

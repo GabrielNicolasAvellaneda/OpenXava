@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Removing a column from the list after filtering produces "Errors trying to obtain data list".
 - Fix: Adding an element in a collection in split mode changes the main module list by the collection list.
 - Fix: Changing list row count in a page other than the first one shows the incorrect page.
 - Focus order only include editors. Actions, links, tabs, etc. are excluded.

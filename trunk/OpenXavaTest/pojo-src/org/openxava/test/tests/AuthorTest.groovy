@@ -12,6 +12,24 @@ class AuthorTest extends ModuleTestBase {
 		super(testName, "Author")		
 	}
 	
+	void testRemoveColumnAfterFiltering() {
+		assertListRowCount 2
+		assertListColumnCount 2
+		setConditionValues (["J"])
+		execute "List.filter"
+		assertListRowCount 1
+		execute "List.customize"
+		execute "List.removeColumn", "columnIndex=1"
+		assertListRowCount 1
+		assertListColumnCount 1
+		execute "List.addColumns"
+		execute "AddColumns.restoreDefault"
+		assertListColumnCount 2
+		assertListRowCount 2 // It would be better 1, but it's difficult for implementing
+							// and to lose the filter after clicking a "Restore.." button
+							// is not so counter-intuitive  		
+	}
+	
 	void testAddRemoveActionsForProperty() { 
 		execute "Mode.detailAndFirst"
 		assertNoAction "Author.addSuffix"
