@@ -12,7 +12,12 @@
 			<default-value-calculator class="org.openxava.calculators.CurrentYearCalculator"/>	
 		</property>		
 		<property name="number" type="int" search-key="true" size="6"/>		
-		<property name="description" stereotype="MEMO"/>		
+		<property name="description" stereotype="MEMO">
+			<default-value-calculator class="org.openxava.calculators.ConcatCalculator">
+				<set property="string1" value="Service invoice of "/>
+				<set property="string2" from="year"/>
+			</default-value-calculator>
+		</property>		
 		<property name="amount" stereotype="MONEY"/>
 	</entity>
 	

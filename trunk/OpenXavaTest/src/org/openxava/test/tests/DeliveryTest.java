@@ -832,8 +832,7 @@ public class DeliveryTest extends ModuleTestBase {
 	
 	public void testReferencesIfKeyNotExists() throws Exception { 
 		execute("CRUD.new");		
-		setValue("invoice.year", "2004"); // We supose that not exists
-		assertValue("invoice.yearDiscount", "400.00"); 		
+		setValue("invoice.year", "2004"); // We supose that not exists 		
 		setValue("invoice.number", "907"); // We supose that not exists		
 		assertError("Invoice with key {year=2004, number=907} not found");
 				

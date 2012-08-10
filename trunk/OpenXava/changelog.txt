@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Searching a reference with several @SearchKey does not work if some key field has an event associated.
 - Fix: Removing a column from the list after filtering produces "Errors trying to obtain data list".
 - Fix: Adding an element in a collection in split mode changes the main module list by the collection list.
 - Fix: Changing list row count in a page other than the first one shows the incorrect page.

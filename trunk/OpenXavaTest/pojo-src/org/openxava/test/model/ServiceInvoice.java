@@ -29,7 +29,14 @@ public class ServiceInvoice {
 	@Column(length=6)
 	private int number;
 
-	@Stereotype("MEMO")
+	@Stereotype("MEMO")	
+	@DefaultValueCalculator( // This is needed to test ServiceTest.testSearchKey() with the search key with a dependent property 
+		value=ConcatCalculator.class, 
+		properties={
+			@PropertyValue(name="string1", value="Service invoice of "),
+			@PropertyValue(name="string2", from="year")
+		}	
+	)	
 	private String description;
 	
 	@Stereotype("MONEY") 

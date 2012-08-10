@@ -2283,7 +2283,11 @@ public class View implements java.io.Serializable {
 	
 	public boolean throwsPropertyChanged(MetaProperty p) {			
 		try {									
-			if (hasDependentsProperties(p)) return true;						
+			if (hasDependentsProperties(p) && 
+				!(isSubview() && isRepresentsEntityReference() && !displayAsDescriptionsList())) 
+			{
+				return true; 						
+			}
 			if (getMetaView().hasOnChangeAction(p.getName())) return true;			
 			if (isLastSearchKey(p)) return true; 			
 			if (!isSubview()) return false;							
@@ -2468,7 +2472,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {		 
-		if (!isOnlyThrowsOnChange()) {					
+		if (!isOnlyThrowsOnChange()) {			
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();				
@@ -2480,7 +2484,7 @@ public class View implements java.io.Serializable {
 						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.createDefaultValueCalculator(), errors, messages);					
 					}					
 				}
-			}				
+			}						
 			   
 			if (hasToSearchOnChangeIfSubview && isSubview() && isRepresentsEntityReference() && !isGroup() && !displayAsDescriptionsList() && 
 					( 	
