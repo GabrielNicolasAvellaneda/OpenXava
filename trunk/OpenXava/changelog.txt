@@ -37,6 +37,7 @@ OpenXava 4.5 (2012-7-18)
 - Fix: Default pdf and excel when the filter list needs the user name.  
 - Fix: on-select-element-action missed in component.dtd.
 - Fix: Some methods of ModuleTestBase for checking, unchecking and asserting checked rows fail with calculated collections.
+- Fix: Adding the second detail in an embedded collection when creating the second main object fails.
 
 OpenXava 4.4.1 (2012-4-25)
 --------------------------
