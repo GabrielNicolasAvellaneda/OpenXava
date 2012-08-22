@@ -18,7 +18,7 @@ public class InvoiceFromDeliveriesTest extends ModuleTestBase {
 	public void testEditEntityDifferentFromOneFromTheModule() throws Exception {
 		// Verifying the objects in list are deliveries, and there is one
 		assertTrue("It must to have at least 1 delivery for run this test", getListRowCount() > 0);		
-		assertLabelInList(0, "Year of Invoice");
+		assertLabelInList(0, "Year of Invoice"); // It also tests the qualified label for references in list
 		assertLabelInList(1, "Number of Invoice");
 		assertLabelInList(2, "Number of Type");
 		assertLabelInList(3, "Description of Type");

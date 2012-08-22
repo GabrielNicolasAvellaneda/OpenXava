@@ -98,10 +98,10 @@ abstract public class MetaElement implements java.io.Serializable {
 		else {
 			if (has18nLabel()) result = getLabel(locale);
 			else result = Is.emptyString(description)?getLabel(locale):description;
-		}		
+		}				
 		/* The next lines fail in some charsets
-		result = Strings.change(result, "''", "´");
-		result = Strings.change(result, "'", "´");
+		result = Strings.change(result, "''", "ï¿½");
+		result = Strings.change(result, "'", "ï¿½");
 		*/
 		result = Strings.change(result, "'", ""); 
 		return result;

@@ -107,25 +107,24 @@ public class Labels {
 		try {			
 			return getResource(id, locale);
 		}
-		catch (MissingResourceException ex) {			
+		catch (MissingResourceException ex) {						
 			int idxDot = id.indexOf(".");
-			if (idxDot < 0) throw ex;
-			String idWitoutQualifier = removeViewOrTab(id);
-			if (idWitoutQualifier != null) return get(idWitoutQualifier, locale);			
+			if (idxDot < 0) throw ex;			
+			String idWithoutQualifier = removeViewOrTab(id);
+			if (idWithoutQualifier != null) 	return get(idWithoutQualifier, locale);									
 			String parent = id.substring(0, idxDot);
 			if (!qualified || idxDot > 0 && Character.isUpperCase(id.charAt(0))) {
-				return get(id.substring(idxDot + 1), locale);
+				// tmp return get(id.substring(idxDot + 1), locale);
+				return get(id.substring(idxDot + 1), locale, qualified); // tmp
 			}
 			else {
 				return get(id.substring(idxDot + 1), locale, qualified) + " " + 
 					XavaResources.getString("of", locale) + " " +
 					get(parent, locale, false);
-			}
+			}			
 		}
 	} 
-	
-	
-	
+		
 	/**
 	 * @return null if not contains view or tab
 	 */
@@ -168,7 +167,7 @@ public class Labels {
 		}
 	}	
 	
-	public static boolean exists(String id) {
+	public static boolean exists(String id) {				
 		return exists(id, Locales.getCurrent());
 	}
 	
@@ -183,6 +182,10 @@ public class Labels {
 			return true;
 		}
 		catch (MissingResourceException ex) {
+			// tmp ini
+			String idWithoutQualifier = removeViewOrTab(id);
+			if (idWithoutQualifier != null) return exists(idWithoutQualifier, locale);
+			// tmp fin
 			int idx = id.indexOf(".");
 			if (idx < 0) return false;
 			return exists(id.substring(idx + 1));
@@ -190,7 +193,8 @@ public class Labels {
 		catch (Exception ex) {
 			log.warn(ex.getMessage());
 			return false;
-		}				
+		}
+						
 	}
 	
 	public static boolean existsExact(String id, Locale locale) throws XavaException {
