@@ -20,6 +20,20 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		super(testName, "Warehouse");		
 	}
 	
+	public void testToolTip_defaultListLabels() throws Exception { // tmp
+		assertLabelInList(0, "Zone");
+		assertLabelInList(1, "Warehouse number");
+		assertLabelInList(2, "Name");
+		execute("CRUD.new");	
+		assertToolTip("number", "Id number of the warehouse");
+		assertToolTip("zoneNumber", "Zone");
+	}
+
+	private void assertToolTip(String property, String value) {
+		HtmlElement number = getHtmlPage().getElementById("ox_OpenXavaTest_Warehouse__" + property);		
+		assertEquals(value, number.getAttribute("title"));
+	}
+	
 	public void testSortByTwoColumns() throws Exception {
 		execute("List.orderBy", "property=number");
 		execute("List.orderBy", "property=zoneNumber");
@@ -551,5 +565,6 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		
 		assertError("Value for Name in Warehouse is required");		
 	}	
+	
 		
 }

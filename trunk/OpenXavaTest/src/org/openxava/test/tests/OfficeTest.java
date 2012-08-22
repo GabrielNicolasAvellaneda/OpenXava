@@ -184,7 +184,7 @@ public class OfficeTest extends ModuleTestBase {
 		int c = getListRowCount();
 		assertTrue("It must to have at least one warehouse in zone " + zone + " and number " + number + " for run test", c > 0);
 		assertLabelInList(0, "Zone");
-		assertLabelInList(1, "Number");
+		assertLabelInList(1, "Warehouse number");
 		for (int i = 0; i < c; i++) {
 			assertValueInList(i, 0, zone);
 			assertValueInList(i, 1, number);
