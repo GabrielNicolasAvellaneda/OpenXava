@@ -20,7 +20,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		super(testName, "Warehouse");		
 	}
 	
-	public void testToolTip_defaultListLabels() throws Exception { // tmp
+	public void testToolTip_defaultListLabels() throws Exception { 
 		assertLabelInList(0, "Zone");
 		assertLabelInList(1, "Warehouse number");
 		assertLabelInList(2, "Name");

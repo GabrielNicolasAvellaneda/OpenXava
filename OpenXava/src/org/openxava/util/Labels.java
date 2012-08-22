@@ -114,8 +114,7 @@ public class Labels {
 			if (idWithoutQualifier != null) 	return get(idWithoutQualifier, locale);									
 			String parent = id.substring(0, idxDot);
 			if (!qualified || idxDot > 0 && Character.isUpperCase(id.charAt(0))) {
-				// tmp return get(id.substring(idxDot + 1), locale);
-				return get(id.substring(idxDot + 1), locale, qualified); // tmp
+				return get(id.substring(idxDot + 1), locale, qualified); 
 			}
 			else {
 				return get(id.substring(idxDot + 1), locale, qualified) + " " + 
@@ -182,10 +181,8 @@ public class Labels {
 			return true;
 		}
 		catch (MissingResourceException ex) {
-			// tmp ini
 			String idWithoutQualifier = removeViewOrTab(id);
 			if (idWithoutQualifier != null) return exists(idWithoutQualifier, locale);
-			// tmp fin
 			int idx = id.indexOf(".");
 			if (idx < 0) return false;
 			return exists(id.substring(idx + 1));

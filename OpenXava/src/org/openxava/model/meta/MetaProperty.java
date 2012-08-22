@@ -158,7 +158,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (Labels.existsExact(genericIdForTab, locale)) {
 				return getLabel(locale, genericIdForTab);
 			}
-			return Labels.getQualified(getMetaModel().getName() + "." + getQualifiedName(), locale); // tmp
+			return Labels.getQualified(getMetaModel().getName() + "." + getQualifiedName(), locale);
 		}
 		return Labels.getQualified(getQualifiedName(), locale);
 	}
