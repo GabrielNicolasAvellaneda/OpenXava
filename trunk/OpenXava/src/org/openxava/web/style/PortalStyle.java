@@ -344,5 +344,15 @@ public class PortalStyle extends Style {
 	public String getTotalCapableCellStyle() { 
 		return getTotalEmptyCellStyle() + "vertical-align: top; text-align: right;	padding: 0px;";
 	}
+	
+	public String getSectionBarStartDecoration() {
+		return "";
+	}
+	
+	public String getSectionBarEndDecoration() {
+		return "";
+	}
+	
+
 		
 }
