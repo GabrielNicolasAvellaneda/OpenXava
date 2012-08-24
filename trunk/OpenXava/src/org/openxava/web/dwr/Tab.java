@@ -18,8 +18,7 @@ public class Tab extends DWRBase {
 	public static void setFilterVisible(HttpServletRequest request, String application, String module, boolean filterVisible, String tabObject) {
 		checkSecurity(request, application, module);
 		Users.setCurrent(request);
-		org.openxava.tab.Tab tab = (org.openxava.tab.Tab) 
-			getContext(request).get(application, module, tabObject);
+		org.openxava.tab.Tab tab = getTab(request, application, module, tabObject); 
 		tab.setFilterVisible(filterVisible);
 	}
 	
@@ -40,8 +39,7 @@ public class Tab extends DWRBase {
 			Users.setCurrent(request);
 			String tabObject = "list".equals(collection)?"xava_tab":"xava_collectionTab_" + collection;
 			try {
-				org.openxava.tab.Tab tab = (org.openxava.tab.Tab)		
-				  getContext(request).get(application, module, tabObject);
+				org.openxava.tab.Tab tab = getTab(request, application, module, tabObject); // tmp
 				tab.setColumnWidth(columnIndex, width);
 			}
 			catch (ElementNotFoundException ex) { 
@@ -53,6 +51,15 @@ public class Tab extends DWRBase {
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("impossible_store_column_width"), ex);
 		}
+	}
+ 
+	private static org.openxava.tab.Tab getTab(HttpServletRequest request, String application, String module, String tabObject) {
+		org.openxava.tab.Tab tab = (org.openxava.tab.Tab)		
+		  getContext(request).get(application, module, tabObject);
+		request.setAttribute("xava.application", application);
+		request.setAttribute("xava.module", module);
+		tab.setRequest(request);
+		return tab;
 	}
 
 	

@@ -1079,10 +1079,19 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	private Preferences getPreferences() throws BackingStoreException {
-		String application = getRequest() == null ? "" : getRequest().getParameter("application");
-		if (Is.empty(application)) application = getCollectionView().getRequest() == null ? "" : getCollectionView().getRequest().getParameter("application");
-		String module = getRequest() == null ? "" : getRequest().getParameter("module");
-		if (Is.empty(module)) module = getCollectionView().getRequest() == null ? "" : getCollectionView().getRequest().getParameter("module");
+		String application = "";
+		String module = "";
+		HttpServletRequest request = getRequest() == null && getCollectionView() != null? getCollectionView().getRequest(): getRequest();
+		if (request != null) {
+			application = request.getParameter("application");
+			if (application == null) {
+				application = (String) request.getAttribute("xava.application");				
+			}
+			module = request.getParameter("module");			
+			if (module == null) {
+				module = (String) request.getAttribute("xava.module");				
+			}
+		}
 		
 		String nodeName = "tab." + application + "." + module + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".";
 		if (nodeName.length() > Preferences.MAX_NAME_LENGTH) {
