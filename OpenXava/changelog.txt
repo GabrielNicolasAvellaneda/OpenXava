@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Liferay column resize not stored permanently.
 - Fix: Fails on save the second object when id is inside a group.
 - Fix: Labels qualified with entity name (MyEntity.myProperty in i18n file) are not used in list mode.
 - Fix: Tooltip not recognized when defined qualified in i18n file, that is using: MyEntity.myProperty[description].
