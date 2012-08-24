@@ -107,22 +107,17 @@ public class TreeView {
 	 * @throws Exception
 	 */
 	private void parseNodeProperty() throws Exception {
-		if (Is.empty(treeAnnotation.idProperties())) {
-			idProperties = "";
-			for (Field field : nodeClass.getDeclaredFields()) {
-				if (field.isAnnotationPresent(Id.class)) {
-					if (!Is.empty(idProperties)) {
-						idProperties = idProperties + ",";
-					}
-					idProperties = idProperties + field.getName();
-				}
-			}
+		if (treeAnnotation == null || Is.empty(treeAnnotation.idProperties())) {
+			StringBuffer idPropertiesBuffer = new StringBuffer("");
+			addIdProperties(nodeClass, idPropertiesBuffer);
+			idProperties = idPropertiesBuffer.toString();
 		} else {
 			idProperties = treeAnnotation.idProperties();
 		}
 		if (Is.empty(idProperties)) {
 			throw new Exception(XavaResources.getString("error.nodePropertiesUndefined"));
 		}
+		// Clean the properties.
 		String[] properties = idProperties.split(",");
 		idPropertiesList = new ArrayList<String>();
 		for (String property : properties) {
@@ -132,6 +127,59 @@ public class TreeView {
 		}
 	}
 	
+	/**
+	 * Gather all field/properties annotated with id.
+	 * @param nodeItemClass Class of the node item.
+	 * @param idPropertiesBuffer stores the list of properties.
+	 */
+	@SuppressWarnings("rawtypes")
+	private void addIdProperties(Class nodeItemClass, StringBuffer idPropertiesBuffer){
+		addFieldProperties(nodeItemClass, idPropertiesBuffer);
+		addMethodProperties(nodeItemClass, idPropertiesBuffer);
+		if (nodeItemClass.getSuperclass() != null) {
+			addIdProperties(nodeItemClass.getSuperclass(), idPropertiesBuffer);
+		}
+	}
+	
+	/**
+	 * Finds the fields annotated with @Id.
+	 * @param nodeItemClass Class of the node item.
+	 * @param idPropertiesBuffer stores the list of properties.
+	 */
+	@SuppressWarnings("rawtypes")
+	private void addFieldProperties(Class nodeItemClass, StringBuffer idPropertiesBuffer) {
+		for (Field field : nodeItemClass.getDeclaredFields()) {
+			if (field.isAnnotationPresent(Id.class)) {
+				if (idPropertiesBuffer.length() > 0) {
+					idPropertiesBuffer.append(",");
+				}
+				idPropertiesBuffer.append(field.getName());
+			}
+		}
+	}
+	
+	/**
+	 * Finds the methods annotated with @Id.
+	 * @param nodeItemClass Class of the node item.
+	 * @param idPropertiesBuffer stores the list of properties.
+	 */
+	@SuppressWarnings("rawtypes")
+	private void addMethodProperties(Class nodeItemClass, StringBuffer idPropertiesBuffer) {
+		for (Method method : nodeItemClass.getDeclaredMethods()) {
+			if (method.isAnnotationPresent(Id.class)) {
+				if (idPropertiesBuffer.length() > 0) {
+					idPropertiesBuffer.append(",");
+				}
+				String fieldName = method.getName();
+				if (fieldName.startsWith("get") && fieldName.length() > 3) {
+					fieldName = fieldName.substring(3, 4).toLowerCase()
+							+ fieldName.substring(4);
+					idPropertiesBuffer.append(fieldName);
+				}
+			}
+		}
+	}
+
 	/**
 	 * Determines if the property orderProperty was defined for the object.
 	 */
