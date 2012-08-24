@@ -735,12 +735,12 @@ public class Style {
 		return null;
 	}
 		
-	public String getSectionBarStartDecoration() {
-		return "";
+	public String getSectionBarStartDecoration() { 
+		return "<td>";
 	}
-	
-	public String getSectionBarEndDecoration() {
-		return "";
+
+	public String getSectionBarEndDecoration() { 
+		return "</td>";
 	}
 		
 	public String getActiveSectionTabStartDecoration(boolean first, boolean last) { 

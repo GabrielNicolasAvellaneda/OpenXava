@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Base Style generates a tr with no td in sections, so it fails with IE.
 - Fix: Bad layout for + and X icons in frame of images gallery.
 - Fix: Liferay column resize not stored permanently.
 - Fix: Fails on save the second object when id is inside a group.
