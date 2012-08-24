@@ -170,7 +170,7 @@ public class Liferay43Style extends PortalStyle {
 	}
 
 	public String getFrameActionsStartDecoration() {  				
-		return "<td align='right' valign='bottom' width='20px'>";
+		return "<td align='right' valign='bottom' width='40px'>";
 	}	
 
 
