@@ -16,7 +16,7 @@ import org.openxava.test.actions.*;
 
 @Entity
 @Views({
-	
+
 	@View( members= 	
 		"number;" +
 		"type;" +

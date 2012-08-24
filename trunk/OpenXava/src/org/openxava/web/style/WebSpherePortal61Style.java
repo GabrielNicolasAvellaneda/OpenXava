@@ -38,7 +38,7 @@ public class WebSpherePortal61Style extends WebSpherePortal6Style {
 	}
 	
 	public String getFrameActionsStartDecoration() { 
-		return "<td align='right' width='20px'>"; 
+		return "<td align='right' width='40px'>"; 
 	}	
 	public String getFrameActionsEndDecoration() { 
 		return "</td>";
