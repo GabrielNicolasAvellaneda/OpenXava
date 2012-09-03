@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.actions.*;
 
 /**
  * To process simple HTML templates.
@@ -209,7 +210,9 @@ public class SimpleTemplater {
 					blockManagerIsDefined = true;
 					if (blockManager instanceof Collection<?>) {
 						if (((Collection<?>)blockManager).size() == 0) blockManagerIsDefined = false; 
-					} else if (blockManager.toString().equals("")) blockManagerIsDefined = false; 
+					} else if (blockManager.toString().equals("") || blockManager.toString().equals(SimpleHTMLReportAction.COLLECTION)) {
+						blockManagerIsDefined = false; 
+					}
 				}
 				// process the block according to the directive
 				if (blockManagerIsDefined && blockManagerType.equals("I")) {
@@ -277,7 +280,9 @@ public class SimpleTemplater {
 				if (templateIsHTML) {
 					if (parameterStringValue.indexOf("<br>") == -1 && 
 							parameterStringValue.indexOf("<br/>") == -1 && 
-							parameterStringValue.indexOf("</table>") == -1)
+							parameterStringValue.indexOf("</table>") == -1 &&
+							parameterStringValue.indexOf("<p>") == -1 &&
+							parameterStringValue.indexOf("</svg>") == -1)
 						parameterStringValue = parameterStringValue.replaceAll("\n", "\n<br/>");
 				}
 				output += parameterStringValue;
