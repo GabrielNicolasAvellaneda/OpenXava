@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- SimpleHTMLReportAction extends SimpleTemplaterAction to be able to use SimpleTemplater in mails.
+- Fix: SimplerTemplaterAction does not return booleans.
+- Fix: SimpleTemplater does not work for empty collections.
+- Fix: SimpleTemplater better detect in which cases not to insert <br/> instead of new lines.
 - Documentation for @Tree improved.
 - Fix: The editor for @Tree failed to look up properties in property-based entities.
 - Fix: Base Style generates a tr with no td in sections, so it fails with IE.
