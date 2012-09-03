@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Documentation for @Tree improved.
+- Fix: The editor for @Tree failed to look up properties in property-based entities.
 - Fix: Base Style generates a tr with no td in sections, so it fails with IE.
 - Fix: Bad layout for + and X icons in frame of images gallery.
 - Fix: Liferay column resize not stored permanently.
