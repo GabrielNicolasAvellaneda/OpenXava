@@ -5,7 +5,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.model.MapFacade;
-import org.openxava.web.editors.*;
+import org.openxava.web.editors.TreeView;
+import org.openxava.web.editors.TreeViewParser;
 
 
 
@@ -39,8 +40,6 @@ public class SaveElementInTreeViewAction extends SaveElementInCollectionAction {
 				}
 			}
 		}
-		// reset path for future cases
-		getContext().put(getRequest(), TreeViewParser.XAVA_TREE_VIEW_NODE_FULL_PATH, null);
 		return returnValue;
 	}
 }
