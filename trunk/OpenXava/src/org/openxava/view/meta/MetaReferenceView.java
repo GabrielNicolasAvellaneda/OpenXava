@@ -32,7 +32,7 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 			if (!(o instanceof IOnChangePropertyAction)) {
 				throw new XavaException("on_change_action_implements_error", IOnChangePropertyAction.class.getName(), getOnChangeSearchActionClassName());
 			}
-			IOnChangePropertyAction action = (IOnChangePropertyAction) o;
+			IOnChangePropertyAction action = (IOnChangePropertyAction) o;			
 			return action;
 		}
 		catch (XavaException ex) {

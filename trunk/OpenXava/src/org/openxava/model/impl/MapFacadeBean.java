@@ -892,7 +892,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						result.put(
 							memberName,
 							getCollectionValues(metaModel, modelObject, memberName, submemberNames));
-					} 
+					} 					
 					else {
 						throw new XavaException("member_not_found", memberName, metaModel.getName());
 					}

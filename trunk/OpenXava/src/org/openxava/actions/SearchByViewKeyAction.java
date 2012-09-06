@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.ejb.ObjectNotFoundException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,7 +25,7 @@ import org.openxava.web.WebEditors;
  * its protected methods.<p>
  * 
  * @author Javier Paniza
- * @author Ana Andr�s
+ * @author Ana Andrés
  */
 
 public class SearchByViewKeyAction extends ViewBaseAction {
@@ -35,20 +34,26 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	private static Log log = LogFactory.getLog(SearchByViewKeyAction.class);
 
 	public void execute() throws Exception {	
+		Map keys = null;  
+		Map valuesForSearchByAnyProperty = null;
 		try {									
-			Map keys = getKeyValuesFromView();			
-			Map values = null;
+			keys = getKeyValuesFromView();			
+			Map values = null;			
 			if (Maps.isEmpty(keys)) {
 				try {					
-					values = MapFacade.getValuesByAnyProperty(getModelName(), getValuesForSearchByAnyProperty(), getMemberNames());					
+					valuesForSearchByAnyProperty = getValuesForSearchByAnyProperty();
+					getView().clear();
+					values = MapFacade.getValuesByAnyProperty(getModelName(), valuesForSearchByAnyProperty, getMemberNames());
 				}
 				catch (ObjectNotFoundException ex) {
 					// This is for the case of key with 0 as valid value
-					values = MapFacade.getValues(getModelName(), keys, getMemberNames());
+					getView().clear(); 
+					values = MapFacade.getValues(getModelName(), keys, getMemberNames());					
 				}
 			}
-			else {
-				values = MapFacade.getValues(getModelName(), keys, getMemberNames());
+			else {				
+				getView().clear(); 
+				values = MapFacade.getValues(getModelName(), keys, getMemberNames());				
 			}
 			
 			getView().setEditable(true);	
@@ -56,8 +61,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			setValuesToView(values); 		
 		}
 		catch (ObjectNotFoundException ex) {
-			String searchPropertiesAndValues = getSearchPropertiesAndValues();
-			getView().clear();			
+			String searchPropertiesAndValues = getSearchPropertiesAndValues(valuesForSearchByAnyProperty==null?keys:valuesForSearchByAnyProperty);	
 			addError("object_not_found", getModelName(), searchPropertiesAndValues);			
 		}						
 		catch (Exception ex) {
@@ -102,7 +106,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	private Map filter(Map values) { 				
 		for (Iterator it = values.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
-			if (en.getValue() instanceof String) {
+			if (en.getValue() instanceof String && !Is.empty(en.getValue())) { 
 				values.put(en.getKey(), en.getValue() + "%");
 			}
 			else if (en.getValue() instanceof Map){
@@ -121,11 +125,9 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		return getView().getKeyValues();
 	}
 
-	private String getSearchPropertiesAndValues() throws Exception{
+	private String getSearchPropertiesAndValues(Map keys) throws Exception{ 
 		StringBuffer sb = new StringBuffer("");
-		Map mapToSearch = Maps.treeToPlain(
-				Maps.isEmptyOrZero(getKeyValuesFromView()) ? getValuesFromView() : getKeyValuesFromView());
-
+		Map mapToSearch = Maps.treeToPlain(keys);
 		MetaEntity metaEntity = MetaComponent.get(getModelName()).getMetaEntity();
 		String separator = "";		
 		Iterator it = mapToSearch.entrySet().iterator();		

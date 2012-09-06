@@ -1700,10 +1700,22 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
+	 * If this view represent a polymorphic model, this method return the base class
+	 * of the hierarchy. <p>
+	 * 
+	 * It can return just modelName.
+	 * 
+	 * @since 4.5.1
+	 */
+	public String getBaseModelName() {
+		return rootModelName==null?getModelName():rootModelName; 
+	}
+	
+	/**
 	 * Clear all displayed data.  
 	 */
 	public void clear() throws XavaException {
-		if (rootModelName != null) {			
+		if (rootModelName != null) {	
 			setModelName(rootModelName); 
 			rootModelName = null;
 		}
@@ -2085,11 +2097,13 @@ public class View implements java.io.Serializable {
 	public String getModelName() {		
 		return modelName;
 	}
+	
+	
 
 	public void setModelName(String newModel) { 				
 		if (Is.equal(modelName, newModel)) return;		
 		modelName = newModel;
-		reloadNeeded = true;		
+		getRoot().reloadNeeded = true; // If the model of the view of a reference changes, the main view must be reloaded.
 		resetMembers();		
 	}
 	
@@ -2471,7 +2485,7 @@ public class View implements java.io.Serializable {
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {		 
+	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {
 		if (!isOnlyThrowsOnChange()) {			
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
@@ -2493,10 +2507,10 @@ public class View implements java.io.Serializable {
 					(isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key 
 					(hasSearchMemberKeys() && isLastPropertyMarkedAsSearch(changedPropertyQualifiedName)) // Explicit search key 
 					)
-				) {				
+				) {								
 				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
-						searchingObject = true;
+						searchingObject = true;						
 						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());						
 						executeOnChangeAction(changedPropertyQualifiedName, action);
 						// If the changed property is not the key, for example, if we have a hidden
@@ -2584,37 +2598,42 @@ public class View implements java.io.Serializable {
 	 * @param changedProperty  Property which change produces the search. 
 	 */	
 	public void findObject(MetaProperty changedProperty) throws Exception {
-		Map key = getKeyValues();		
+		Map key = getKeyValues();
 		try {			
-			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {				
+			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {
 				// Searching by the first visible property: Useful for searching from a reference with hidden key		
 				Map alternateKey = new HashMap();
 				alternateKey.put(changedProperty.getName(), getValue(changedProperty.getName()));
-				if (Maps.isEmptyOrZero(alternateKey)) clear();
-				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));			
+				clear();
+				if (!Maps.isEmptyOrZero(alternateKey)) {
+					setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));
+				}
 			}
-			else if (isRepresentsEntityReference() && changedProperty != null && changedProperty.isHidden() && changedProperty.isKey()) { 
+			else if (isRepresentsEntityReference() && changedProperty != null && changedProperty.isHidden() && changedProperty.isKey()) {
 				// If changed property is hidden key, although there are search member we search by key
-				if (Maps.isEmptyOrZero(key)) clear();				
-				else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));												
+				clear();
+				if (!Maps.isEmptyOrZero(key)) {				
+					setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));
+				}
 			}
-			else if (isRepresentsEntityReference() && hasSearchMemberKeys()) {				
-				Map alternateKey = getSearchKeyValues();				
-				if (Maps.isEmptyOrZero(alternateKey)) clear();
-				else {
+			else if (isRepresentsEntityReference() && hasSearchMemberKeys()) {
+				Map alternateKey = getSearchKeyValues();
+				clear();
+				if (!Maps.isEmptyOrZero(alternateKey)) {				
 					setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));				
 				}				
 			}						
 			else {							
-				// Searching by key, the normal case				
-				if (Maps.isEmptyOrZero(key)) clear();				
-				else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));				
+				// Searching by key, the normal case
+				clear();
+				if (!Maps.isEmptyOrZero(key)) {				
+					setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));
+				}
 			}			
 		}
-		catch (ObjectNotFoundException ex) {						
-			getErrors().add("object_with_key_not_found", getModelName(), key);
-			clear(); 								
-		}					
+		catch (ObjectNotFoundException ex) {
+			getErrors().add("object_with_key_not_found", getModelName(), key);				
+		}				
 	}		
 	
 	/**
@@ -4128,7 +4147,7 @@ public class View implements java.io.Serializable {
 				propertyHasChangedActions((String) en.getKey()) || 
 				formattedProperties != null && formattedProperties.contains(en.getKey()) ||
 				editorMustBeReloaded((String) en.getKey())) 
-			{									
+			{				
 				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
 			oldValues.remove(en.getKey());			
@@ -4138,7 +4157,7 @@ public class View implements java.io.Serializable {
 			if (!equals(en.getValue(), values.get(en.getKey())) ||
 				editorMustBeReloaded((String) en.getKey()) ||
 				hasKeyEditableChanged())  
-			{				
+			{					
 				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
 		}	
