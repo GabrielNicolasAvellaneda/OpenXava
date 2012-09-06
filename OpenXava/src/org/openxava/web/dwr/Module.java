@@ -93,7 +93,7 @@ public class Module extends DWRBase {
 			}
 			else {
 				fillResult(result, values, multipleValues, selected, additionalParameters);
-			}						
+			}					
 			result.setViewMember(getView().getMemberName());
 			result.setStrokeActions(getStrokeActions());
 			result.setSelectedRows(getSelectedRows()); 

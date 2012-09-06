@@ -34,7 +34,7 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 				
 		View subview = getViewInfo().getView();
 		MetaModel metaRootModel = getViewInfo().getParent().getMetaModel();		
-		getTab().setModelName(subview.getModelName());
+		getTab().setModelName(subview.getBaseModelName());
 		MetaReference ref = getMetaReference(metaRootModel, getViewInfo().getMemberName());
 		tab.setTabName(tabName);
 		

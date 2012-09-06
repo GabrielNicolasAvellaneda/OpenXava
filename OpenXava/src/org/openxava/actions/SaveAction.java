@@ -30,6 +30,7 @@ public class SaveAction extends ViewBaseAction {
 				else {								
 					Map keyValues = MapFacade.createReturningKey(getModelName(), getValuesToSave());					
 					addMessage("entity_created", getModelName());
+					getView().clear(); 
 					values = MapFacade.getValues(getModelName(), keyValues, getView().getMembersNamesWithHidden());
 				}
 			}
@@ -38,7 +39,8 @@ public class SaveAction extends ViewBaseAction {
 				Map keyValues = getView().getKeyValues();				
 				MapFacade.setValues(getModelName(), keyValues, getValuesToSave());
 				addMessage("entity_modified", getModelName());
-				if (!isResetAfter()) {					
+				if (!isResetAfter()) {	
+					getView().clear(); 
 					values = MapFacade.getValues(getModelName(), keyValues, getView().getMembersNamesWithHidden());
 				}
 			}
