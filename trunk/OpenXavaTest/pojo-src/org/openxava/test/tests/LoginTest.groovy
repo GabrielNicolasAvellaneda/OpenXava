@@ -24,6 +24,8 @@ class LoginTest extends ModuleTestBase {
 			log.warn("Login tests are not executed against portal, because the portlet is not generated")
 			return;
 		}
+		assertFocusOn "user" 
+		
 		assertNoAction "Mode.list"
 		assertNoAction "Mode.detailAndFirst"
 		assertNoAction "Mode.split"
