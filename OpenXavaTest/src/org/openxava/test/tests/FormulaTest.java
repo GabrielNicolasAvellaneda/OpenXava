@@ -115,7 +115,7 @@ public class FormulaTest extends ModuleTestBase {
 		
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
-		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("image")).get(0); 
+		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("image")).get(0);  
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();

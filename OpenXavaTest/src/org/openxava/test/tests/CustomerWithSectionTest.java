@@ -640,7 +640,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("ChangeModule.goCustomer");
 		
 		// 
-		testChangeImage();
+		testChangeImage(); 
 	}
 		
 }

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Focus is not set in the first load of detail only modules.
 - Fix: Navigating among objects with references with inheritance produces system error.
 - Fix: New in a model with a reference with inheritance does not reset the reference view to the base model.
 - Fix: Searching from a reference with inheritance does not always show all the objects of the hierarchy.

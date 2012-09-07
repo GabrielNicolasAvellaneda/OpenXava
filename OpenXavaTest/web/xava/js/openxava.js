@@ -580,21 +580,21 @@ openxava.requestOnChange = function(application, module) {
 	}			
 }
 
-openxava.setFocus = function(application, module) {	
+openxava.setFocus = function(application, module) {		
 	var form = openxava.getForm(application, module);	
 	var elementName = form.elements[openxava.decorateId(application, module, "xava_focus_property_id")].value;
-	var elementDecoratedName =  openxava.decorateId(application, module, elementName);
+	var elementDecoratedName =  openxava.decorateId(application, module, elementName);	
 	var element = form.elements[elementDecoratedName];
 	
-	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
-		if (!$(element).is(':visible')) return; 
-		if (element.type != "hidden") {
+	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {		
+		if (!$(element).is(':visible')) return; 		
+		if (element.type != "hidden") {			
 			element.focus();
 		}
-		if (typeof element.select != "undefined") {
+		if (typeof element.select != "undefined") {			
 			element.select();
 		}
-	}	
+	}		
 }
 
 openxava.clearCondition = function(application, module, prefix) { 

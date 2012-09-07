@@ -255,7 +255,7 @@ if (manager.isResetFormPostNeeded()) {
 	<script type="text/javascript">
 	$("#xava_reset_form").submit();
 	</script>		
-<% } else  { 
+<% } else  { 		
 		String browser = request.getHeader("user-agent"); 
 %>
 
@@ -284,6 +284,8 @@ if (manager.isResetFormPostNeeded()) {
 		openxava.init("<%=manager.getApplicationName()%>", "<%=manager.getModuleName()%>");
 		<%if (coreViaAJAX) {%>
 		openxava.ajaxRequest("<%=manager.getApplicationName()%>", "<%=manager.getModuleName()%>", true);	
+		<%} else {%>
+		openxava.setFocus("<%=manager.getApplicationName()%>", "<%=manager.getModuleName()%>"); 
 		<%}%>
 		openxava.<%=initiated%> = true;
 	}	
