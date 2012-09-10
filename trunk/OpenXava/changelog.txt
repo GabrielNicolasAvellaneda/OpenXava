@@ -1,17 +1,20 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.5.1 (2012-9-11)
+--------------------------
+- Focus order only include editors. Actions, links, tabs, etc. are excluded.
+- SimpleHTMLReportAction extends SimpleTemplaterAction to be able to use SimpleTemplater in mails.
+- Documentation for @Tree improved.
 - Fix: Focus is not set in the first load of detail only modules.
 - Fix: Navigating among objects with references with inheritance produces system error.
 - Fix: New in a model with a reference with inheritance does not reset the reference view to the base model.
 - Fix: Searching from a reference with inheritance does not always show all the objects of the hierarchy.
 - Fix: resetAfter=false for saving fails when inheritance is used in references. 
 - Fix: Tree editor cannot add child node without @GeneratedValue.
-- SimpleHTMLReportAction extends SimpleTemplaterAction to be able to use SimpleTemplater in mails.
 - Fix: SimplerTemplaterAction does not return booleans.
 - Fix: SimpleTemplater does not work for empty collections.
 - Fix: SimpleTemplater better detect in which cases not to insert <br/> instead of new lines.
-- Documentation for @Tree improved.
 - Fix: Tree editor failed to look up properties in property-based entities.
 - Fix: Base Style generates a tr with no td in sections, so it fails with IE.
 - Fix: Bad layout for + and X icons in frame of images gallery.
@@ -23,7 +26,6 @@ Change Log for OpenXava project
 - Fix: Removing a column from the list after filtering produces "Errors trying to obtain data list".
 - Fix: Adding an element in a collection in split mode changes the main module list by the collection list.
 - Fix: Changing list row count in a page other than the first one shows the incorrect page.
-- Focus order only include editors. Actions, links, tabs, etc. are excluded.
 - Fix: Image for showing/hiding filter in list in collection is broken with 2 collections in a dialog.
 - Fix: Popup calendar for dates fails in Chinese.
 - Fix: Fails on Tomcat with unpackWARs="false".
