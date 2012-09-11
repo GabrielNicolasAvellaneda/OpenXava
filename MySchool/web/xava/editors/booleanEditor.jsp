@@ -18,6 +18,7 @@ if (null != agent && agent.indexOf("MSIE")>=0) {
 %>
 
 <INPUT id="<%=propertyKey%>" type="checkbox" name="<%=propertyKey%>" class=<%=style.getEditor()%>
+	tabindex="1" 
 	value="true" 
 	title="<%=p.getDescription(request)%>"	
 	<%=checked%>

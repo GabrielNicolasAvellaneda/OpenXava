@@ -57,7 +57,7 @@ for (Iterator it = previousViews.iterator(); it.hasNext(); ) {
 }
 
 tab.setRequest(request);
-if (manager.isListMode()) {  
+if (manager.isListMode() || manager.isSplitMode() && manager.getDialogLevel() == 0) {   
 	tab.setModelName(manager.getModelName());
 	if (tab.getTabName() == null) { 
 		tab.setTabName(manager.getTabName());
@@ -74,7 +74,7 @@ manager.initModule(request, errors, messages);
 manager.executeOnEachRequestActions(request, errors, messages); 
 if (hasProcessRequest) {
 	manager.execute(request, errors, messages);	
-	if (manager.isListMode()) { // here and before execute the action
+	if (manager.isListMode() || manager.isSplitMode() && manager.getDialogLevel() == 0) { // here and before execute the action
 		tab.setModelName(manager.getModelName());	
 		if (tab.getTabName() == null) { 
 			tab.setTabName(manager.getTabName());

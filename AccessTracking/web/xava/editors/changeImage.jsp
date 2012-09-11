@@ -7,7 +7,7 @@
 <xava:message key="enter_new_image"/>
 </th>
 <td>
-<input name = "newImage" class=<%=style.getEditor()%> type="file" size='60'/>
+<input name = "newImage" class=<%=style.getEditor()%> type="file" size='60' tabindex="1"/>
 </td>
 </table>
  

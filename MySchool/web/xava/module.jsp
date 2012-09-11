@@ -255,7 +255,7 @@ if (manager.isResetFormPostNeeded()) {
 	<script type="text/javascript">
 	$("#xava_reset_form").submit();
 	</script>		
-<% } else  { 
+<% } else  { 		
 		String browser = request.getHeader("user-agent"); 
 %>
 
@@ -269,9 +269,10 @@ if (manager.isResetFormPostNeeded()) {
 	if (openxava != null && openxava.<%=initiated%> == null) {
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
+		openxava.imageFilterPrefix = '<%=org.openxava.web.Lists.getImageFilterPrefix(request)%>'; 
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
-		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';
+		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';		
 		openxava.closeDialogOnEscape = <%=browser != null && browser.indexOf("Firefox") >= 0 ? "false":"true"%>;		  
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';
@@ -283,6 +284,8 @@ if (manager.isResetFormPostNeeded()) {
 		openxava.init("<%=manager.getApplicationName()%>", "<%=manager.getModuleName()%>");
 		<%if (coreViaAJAX) {%>
 		openxava.ajaxRequest("<%=manager.getApplicationName()%>", "<%=manager.getModuleName()%>", true);	
+		<%} else {%>
+		openxava.setFocus("<%=manager.getApplicationName()%>", "<%=manager.getModuleName()%>"); 
 		<%}%>
 		openxava.<%=initiated%> = true;
 	}	

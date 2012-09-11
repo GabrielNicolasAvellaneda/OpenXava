@@ -11,6 +11,7 @@ org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xav
 boolean messagesOnTop = org.openxava.util.XavaPreferences.getInstance().isMessagesOnTop(); 
 boolean buttonBar = !"false".equalsIgnoreCase(request.getParameter("buttonBar")); 
 String buttonsAlign = buttonBar?"":"text-align: right;";
+String focusPropertyId = manager.isListMode()?"":view.getFocusPropertyId(); 
 %>
 <form id="<xava:id name='form'/>" name="<xava:id name='form'/>"
 	method='POST' <%=manager.getEnctype()%> 
@@ -35,7 +36,7 @@ with Firefox 3 and Liferay 5.1.1, 5.1.2 and 5.2.2 produces a JavaScript error.
 	name="<xava:id name='xava_previous_focus'/>"/>
 <INPUT type="hidden" name="<xava:id name='xava_focus_forward'/>"/> 
 <INPUT type="hidden" id="<xava:id name='xava_focus_property_id'/>" 
-	name="<xava:id name='xava_focus_property_id'/>"/>
+	name="<xava:id name='xava_focus_property_id'/>" value="<%=focusPropertyId%>"/>
 
 <div <%=style.getModuleSpacing()%>>
 
