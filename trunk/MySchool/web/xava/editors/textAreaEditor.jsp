@@ -19,6 +19,7 @@ String cssClass = rich?"ox-ckeditor":style.getEditor();
 %>
 
 <textarea id="<%=propertyKey%>" name="<%=propertyKey%>" class="<%=cssClass%>"
+	tabindex="1" 
 	rows="<%=rows%>" cols="80"
 	title="<%=p.getDescription(request)%>"	
 	<%=disabled%>

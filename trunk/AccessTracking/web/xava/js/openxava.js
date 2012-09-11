@@ -447,16 +447,15 @@ openxava.manageFilterRow = function(application, module, id, tabObject) {
     var img = openxava.getElementById(application, module, "filter_image_" + id);
     var elem = openxava.getElementById(application, module, "tr_list_filter_" + id);
     var link = openxava.getElementById(application, module, "filter_link_" + id);
-    var prefix = openxava.getForm(application, module)["xava_image_filter_prefix"].value;
 	if (elem.style.display == ''){
 		elem.style.display = 'none';
-		img.src=prefix + 'show-filter.gif';
+		img.src=openxava.imageFilterPrefix + 'show-filter.gif'; 
 		link.title=openxava.showFiltersMessage;		
 		Tab.setFilterVisible(application, module, false, tabObject);
 	}
 	else {
-		elem.style.display = '';
-		img.src=prefix + 'hide-filter.gif';
+		elem.style.display = '';		
+		img.src=openxava.imageFilterPrefix + 'hide-filter.gif'; 
 		link.title=this.hideFiltersMessage;
 		Tab.setFilterVisible(application, module, true, tabObject);
 	}    
@@ -581,21 +580,21 @@ openxava.requestOnChange = function(application, module) {
 	}			
 }
 
-openxava.setFocus = function(application, module) {	
+openxava.setFocus = function(application, module) {		
 	var form = openxava.getForm(application, module);	
 	var elementName = form.elements[openxava.decorateId(application, module, "xava_focus_property_id")].value;
-	var elementDecoratedName =  openxava.decorateId(application, module, elementName);
+	var elementDecoratedName =  openxava.decorateId(application, module, elementName);	
 	var element = form.elements[elementDecoratedName];
 	
-	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
-		if (!$(element).is(':visible')) return; 
-		if (element.type != "hidden") {
+	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {		
+		if (!$(element).is(':visible')) return; 		
+		if (element.type != "hidden") {			
 			element.focus();
 		}
-		if (typeof element.select != "undefined") {
+		if (typeof element.select != "undefined") {			
 			element.select();
 		}
-	}	
+	}		
 }
 
 openxava.clearCondition = function(application, module, prefix) { 

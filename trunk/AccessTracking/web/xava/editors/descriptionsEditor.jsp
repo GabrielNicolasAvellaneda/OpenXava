@@ -161,7 +161,7 @@ boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel() || "true".equalsIgnoreCase(request.getParameter("readOnlyAsLabel"));
 if (editable) { 
 %>
-<select id="<%=propertyKey%>" name="<%=propertyKey%>" class=<%=style.getEditor()%> <%=script%> title="<%=title%>">
+<select id="<%=propertyKey%>" name="<%=propertyKey%>" tabindex="1" class=<%=style.getEditor()%> <%=script%> title="<%=title%>">
 	<option value=""></option>
 <%
 	java.util.Iterator it = descriptions.iterator();
