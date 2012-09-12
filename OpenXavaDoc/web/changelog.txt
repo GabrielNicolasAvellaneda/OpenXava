@@ -1,6 +1,36 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.5.1 (2012-9-11)
+--------------------------
+- Focus order only include editors. Actions, links, tabs, etc. are excluded.
+- SimpleHTMLReportAction extends SimpleTemplaterAction to be able to use SimpleTemplater in mails.
+- Documentation for @Tree improved.
+- Fix: Focus is not set in the first load of detail only modules.
+- Fix: Navigating among objects with references with inheritance produces system error.
+- Fix: New in a model with a reference with inheritance does not reset the reference view to the base model.
+- Fix: Searching from a reference with inheritance does not always show all the objects of the hierarchy.
+- Fix: resetAfter=false for saving fails when inheritance is used in references. 
+- Fix: Tree editor cannot add child node without @GeneratedValue.
+- Fix: SimplerTemplaterAction does not return booleans.
+- Fix: SimpleTemplater does not work for empty collections.
+- Fix: SimpleTemplater better detect in which cases not to insert <br/> instead of new lines.
+- Fix: Tree editor failed to look up properties in property-based entities.
+- Fix: Base Style generates a tr with no td in sections, so it fails with IE.
+- Fix: Bad layout for + and X icons in frame of images gallery.
+- Fix: Liferay column resize not stored permanently.
+- Fix: Fails on save the second object when id is inside a group.
+- Fix: Labels qualified with entity name (MyEntity.myProperty in i18n file) are not used in list mode.
+- Fix: Tooltip not recognized when defined qualified in i18n file, that is using: MyEntity.myProperty[description].
+- Fix: Searching a reference with several @SearchKey does not work if some key field has an event associated.
+- Fix: Removing a column from the list after filtering produces "Errors trying to obtain data list".
+- Fix: Adding an element in a collection in split mode changes the main module list by the collection list.
+- Fix: Changing list row count in a page other than the first one shows the incorrect page.
+- Fix: Image for showing/hiding filter in list in collection is broken with 2 collections in a dialog.
+- Fix: Popup calendar for dates fails in Chinese.
+- Fix: Fails on Tomcat with unpackWARs="false".
+- Fix: Duplicate div on load collections via AJAX.
+
 OpenXava 4.5 (2012-7-18)
 ------------------------
 - Support for all strategies of JPA inheritance mapping.
@@ -27,6 +57,7 @@ OpenXava 4.5 (2012-7-18)
 - Fix: Default pdf and excel when the filter list needs the user name.  
 - Fix: on-select-element-action missed in component.dtd.
 - Fix: Some methods of ModuleTestBase for checking, unchecking and asserting checked rows fail with calculated collections.
+- Fix: Adding the second detail in an embedded collection when creating the second main object fails.
 
 OpenXava 4.4.1 (2012-4-25)
 --------------------------
