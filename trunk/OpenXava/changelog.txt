@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- It's possible to add custom portlets by means of portlet-ext.xml and liferay-display-ext.xml.
+- Fields version and versionDate of ModuleManager now are private.
+- Fix: OpenXava 4.5.1 fails in WebSphere 6.1.
+
 OpenXava 4.5.1 (2012-9-11)
 --------------------------
 - Focus order only include editors. Actions, links, tabs, etc. are excluded.

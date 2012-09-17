@@ -43,11 +43,11 @@ public class ModuleManager implements java.io.Serializable {
 		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");		
 	}
 	
-	static public String version;
+	static private String version; 
 	final static public String getVersion() {
 		return version;
 	}
-	static public String versionDate;
+	static private String versionDate; 
 	final static private String getVersionDate() {
 		return versionDate; 
 	}
@@ -65,8 +65,6 @@ public class ModuleManager implements java.io.Serializable {
 			versionDate="UNKNOW";
 		}
 	}
-	
-	 
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 

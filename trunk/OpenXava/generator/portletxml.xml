@@ -83,6 +83,8 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 }
 </java>   
 
+@custom.portlets@
+
 	&lt;user-attribute&gt;
 		&lt;description&gt;User eMail&lt;/description&gt;
 		&lt;name&gt;user.home-info.online.email&lt;/name&gt;
