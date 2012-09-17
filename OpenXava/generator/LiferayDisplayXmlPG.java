@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Apr 30 12:26:42 CEST 2012
+ * @version Thu Sep 13 12:24:36 CEST 2012
  */
 public class LiferayDisplayXmlPG {
     Properties properties = new Properties();
@@ -44,7 +44,7 @@ public class LiferayDisplayXmlPG {
     
     }
     
-    out.print("   \n\t</category>\n</display>");
+    out.print("\n@custom.portlets@   \n\t</category>\n</display>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -79,7 +79,7 @@ public class LiferayDisplayXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Apr 30 12:26:45 CEST 2012", // date this file was generated
+        { "Thu Sep 13 12:24:37 CEST 2012", // date this file was generated
              "../OpenXava/generator/liferayDisplayxml.xml", // input file
              "../OpenXava/generator/LiferayDisplayXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

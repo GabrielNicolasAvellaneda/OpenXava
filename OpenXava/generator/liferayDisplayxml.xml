@@ -25,7 +25,8 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		&lt;portlet id="<expr>Strings.toCharSet(module.getName(), encoding)</expr>" /&gt;	
 <java>
 }
-</java>   
+</java>
+@custom.portlets@   
 	&lt;/category&gt;
 &lt;/display&gt;
 </tl>

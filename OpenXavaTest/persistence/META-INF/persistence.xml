@@ -18,7 +18,7 @@
             <property name="hibernate.current_session_context_class" 
                     value="com.autobizlogic.abl.session.LogicThreadLocalSessionContext"/>                                                                               
         </properties>
-    </persistence-unit>      
+    </persistence-unit>          
     
       
     <persistence-unit name="companyA">
@@ -41,7 +41,7 @@
         </properties>
     </persistence-unit>    
             
-    <!-- WebSphere + AS/400                                          
+    <!-- WebSphere + AS/400                                           
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/OpenXavaTestDS</non-jta-data-source>
@@ -55,6 +55,7 @@
         </properties>
     </persistence-unit>
     -->
+    
             
     <!-- Tomcat + AS/400         
     <persistence-unit name="default">
