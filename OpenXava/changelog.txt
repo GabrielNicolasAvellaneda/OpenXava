@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- In list mode focus is placed in the first filter text box.
 - It's possible to add custom portlets by means of portlet-ext.xml and liferay-display-ext.xml.
 - Fields version and versionDate of ModuleManager now are private.
 - Fix: OpenXava 4.5.1 fails in WebSphere 6.1.

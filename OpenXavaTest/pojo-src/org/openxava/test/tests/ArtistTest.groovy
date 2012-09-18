@@ -12,7 +12,10 @@ class ArtistTest extends ModuleTestBase {
 		super(testName, "Artist")		
 	}
 	
-	void testBeanValidationJSR303() { 
+	void testBeanValidationJSR303_focusOnList() { 
+		assertFocusOn "conditionValue___0"
+		execute "List.filter" 
+		assertFocusOn "conditionValue___0" 
 		execute "Mode.detailAndFirst"
 		setValue "age", "99"		
 		execute "CRUD.save"
