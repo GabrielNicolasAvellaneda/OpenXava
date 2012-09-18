@@ -234,6 +234,9 @@ public class Module extends DWRBase {
 		}	
 		if (!manager.isListMode()) {			
 			result.setFocusPropertyId(getView().getFocusPropertyId());
+		}		
+		else {
+			result.setFocusPropertyId(Lists.FOCUS_PROPERTY_ID);
 		}
 		
 		if (manager.isSplitMode()) {

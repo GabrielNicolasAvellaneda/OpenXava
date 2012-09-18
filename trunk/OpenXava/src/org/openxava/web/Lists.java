@@ -10,6 +10,8 @@ import javax.servlet.http.*;
  */
 public class Lists {
 	
+	public final static String FOCUS_PROPERTY_ID="conditionValue___0";
+	
 	public static String getImageFilterPrefix(HttpServletRequest request) {
 		return request.getContextPath() + "/xava/images/";
 	}

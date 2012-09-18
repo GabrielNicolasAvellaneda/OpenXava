@@ -717,7 +717,7 @@ public class ModuleTestBase extends TestCase {
 		restorePage();		
 	}
 	
-	private void restorePage() throws Exception {			
+	private void restorePage() throws Exception { 			
 		Page newPage = client.getWebWindows().get(0).getEnclosedPage();
 		
 		page = newPage instanceof HtmlPage?(HtmlPage) newPage:null;
