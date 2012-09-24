@@ -233,6 +233,7 @@ public class ViewParser extends XmlElementsNames {
 		fillRowStyles(el, a, lang);
 		fillDetailActions(el, a, lang); 		
 		fillListActions(el, a, lang);
+		fillRowActions(el, a, lang);
 		return a;
 	}	
 	
@@ -337,6 +338,16 @@ public class ViewParser extends XmlElementsNames {
 		for (int i=0; i<c; i++) {
 			String action = ((Element) l.item(i)).getAttribute(xaction[lang]);		
 			container.addActionListName(action);
+		}
+	}
+
+	private static void fillRowActions(Element el, MetaCollectionView container, int lang)
+		throws XavaException {
+		NodeList l = el.getElementsByTagName(xrow_action[lang]);
+		int c = l.getLength();
+		for (int i=0; i<c; i++) {
+			String action = ((Element) l.item(i)).getAttribute(xaction[lang]);		
+			container.addActionRowName(action);
 		}
 	}
 		

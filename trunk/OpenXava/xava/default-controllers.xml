@@ -408,7 +408,10 @@ here that you want to override.
 	
 	<controller name="DefaultListActionsForCollections">
 		<extends controller="Print"/>
-	</controller>		<controller name="Sections">		<action name="change" 			class="org.openxava.actions.ChangeSectionAction"
+	</controller>
+	
+	<controller name="DefaultRowActionsForCollections">
+	</controller>			<controller name="Sections">		<action name="change" 			class="org.openxava.actions.ChangeSectionAction"
 			keystroke="Control 1..9"/>
 	</controller>			
 	<!-- 

@@ -41,6 +41,7 @@ class Order extends Identifiable {
 	
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)	
 	@ListProperties("product.number, product.description, quantity, product.unitPrice, amount")
+	@RowAction("OrderDetail.reduceQuantity") 
 	Collection<OrderDetail> details = new ArrayList<OrderDetail>()  
 	
 	@Stereotype("MEMO") 

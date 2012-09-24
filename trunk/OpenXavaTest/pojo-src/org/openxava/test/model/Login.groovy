@@ -16,5 +16,5 @@ class Login {
 	
 	@Column(length=15) @Stereotype("PASSWORD")
 	String password
-
+	
 }

@@ -22,5 +22,5 @@ class OrderDetail extends Identifiable {
 	BigDecimal getAmount() {
 		return new BigDecimal(quantity).multiply(getProduct().getUnitPrice());
 	}
-
+	
 }

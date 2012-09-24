@@ -20,7 +20,7 @@ class OrderTest extends ModuleTestBase {
 		super(testName, "Order");		
 	}
 	
-	void testCalculatedPropertiesFromCollection_generatedValueOnPersistRefreshedInView() throws Exception {
+	void testCalculatedPropertiesFromCollection_generatedValueOnPersistRefreshedInView_rowAction() throws Exception {
 		String nextNumber = getNextNumber()
 		execute("CRUD.new")
 		assertValue("number", "")
@@ -38,6 +38,12 @@ class OrderTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 1)
 		assertValue("amount", "110.00")
 		assertValue("number", nextNumber)
+		assertValueInCollection("details", 0, "quantity", "10")
+		assertValueInCollection("details", 0, "amount", "110.00")
+		execute("OrderDetail.reduceQuantity", "row=0,viewObject=xava_view_details")
+		assertValueInCollection("details", 0, "quantity", "9")
+		assertValueInCollection("details", 0, "amount", "99.00")
+		assertNoAction("OrderDetail.reduceQuantity", "viewObject=xava_view_details")
 		execute("CRUD.delete")
 		assertNoErrors()		
 	}

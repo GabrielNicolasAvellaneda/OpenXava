@@ -658,9 +658,7 @@ public class ModuleTestBase extends TestCase {
 		execute(action, arguments, true);
 	}
 	
-	private void execute(String action, String arguments, boolean clicking) throws Exception {
-		throwChangeOfLastNotNotifiedProperty();
-		HtmlElement element = null;
+	private HtmlAnchor getAnchorForAction(String action, String arguments) {
 		String moduleMarkForAnchor = "executeAction('" + application + "', '" + module + "'";		
 		for (Iterator it = page.getAnchors().iterator(); it.hasNext(); ) {			
 			HtmlAnchor anchor = (HtmlAnchor) it.next();			
@@ -672,15 +670,24 @@ public class ModuleTestBase extends TestCase {
 					)
 					&& anchor.getHrefAttribute().indexOf(moduleMarkForAnchor) >= 0)  			
 				{				
-					element = anchor;				
+					return anchor;				
 				}
 			}
 			else { // 'ReferenceSearch.choose'				
 				if (anchor.getHrefAttribute().endsWith("'" + action + "')")) {				
-					element = anchor;				
+					return anchor;				
 				}				
 			}
 		}		
+		return null;
+	}
+	
+	
+	
+	private void execute(String action, String arguments, boolean clicking) throws Exception {
+		throwChangeOfLastNotNotifiedProperty();
+		HtmlElement element = null;
+		element = getAnchorForAction(action, arguments);  
 		if (arguments == null && element == null) { // We try if it is a button
 			String moduleMarkForButton = "executeAction(\"" + application + "\", \"" + module + "\"";
 			HtmlElement inputElement = page.getElementById(decorateId(action));
@@ -1107,8 +1114,16 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(XavaResources.getString("action_not_found_in_ui", action), getActions().contains(action));
 	}
 	
+	protected void assertAction(String action, String arguments) throws Exception { 		
+		assertTrue(XavaResources.getString("action_with_arguments_not_found_in_ui", action, arguments), getAnchorForAction(action, arguments) != null); 
+	}
+	
 	protected void assertNoAction(String action) throws Exception {
 		assertTrue(XavaResources.getString("action_found_in_ui", action), !getActions().contains(action));
+	}
+	
+	protected void assertNoAction(String action, String arguments) throws Exception { 		
+		assertTrue(XavaResources.getString("action_with_arguments_found_in_ui", action, arguments), getAnchorForAction(action, arguments) == null); 
 	}
 	
 	private Collection getActions() throws Exception { 

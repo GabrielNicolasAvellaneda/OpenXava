@@ -8,7 +8,6 @@ import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.IOnChangePropertyAction;
@@ -62,6 +61,7 @@ public class View implements java.io.Serializable {
 	private static Log log = LogFactory.getLog(View.class);
 	private static final long serialVersionUID = -7582669617830655121L;
 	private static Collection defaultListActionsForCollections;
+	private static Collection defaultRowActionsForCollections; 
 	
 	private String viewObject;  
 	private String propertyPrefix; 
@@ -130,6 +130,7 @@ public class View implements java.io.Serializable {
 	private boolean collectionEditableFixed;
 	private Collection actionsNamesDetail;
 	private Collection actionsNamesList;
+	private Collection actionsNamesRow; 
 	private int [] listSelected;
 	private boolean readOnly; // Always not editable, marked from xml
 	private boolean onlyThrowsOnChange; 
@@ -156,10 +157,12 @@ public class View implements java.io.Serializable {
 	private boolean refreshDescriptionsLists;
 	private Collection oldNotEditableMembersNames;
 	private boolean defaultListActionsForCollectionsIncluded = true;
+	private boolean defaultRowActionsForCollectionsIncluded = true; 
 	private String title; 
 	private String titleId; 
 	private Object [] titleArguments;
 	private Collection fullOrderActionsNamesList;
+	private Collection fullOrderActionsNamesRow; 
 	private Map collectionTotals; 
 	private int collectionTotalsCount = -1;
 	private Collection<MetaProperty> recalculatedMetaProperties;
@@ -832,6 +835,12 @@ public class View implements java.io.Serializable {
 					actions.addAll(newView.getDefaultListActionsForCollections());
 					newView.setActionsNamesList(actions);
 				}
+				Collection actionsRowNames = metaCollectionView.getActionsRowNames();
+				if (!actionsRowNames.isEmpty()) {					
+					Collection actions = new ArrayList(actionsRowNames);
+					actions.addAll(newView.getDefaultRowActionsForCollections());
+					newView.setActionsNamesRow(actions);
+				}				
 			}
 			else {
 				newView.setCollectionEditable(isEditable()); 				
@@ -875,6 +884,29 @@ public class View implements java.io.Serializable {
 			return Collections.EMPTY_LIST;
 		}
 	}
+	
+	private Collection getDefaultRowActionsForCollections() { 
+		try {
+			if (isCollectionCalculated() || !isDefaultRowActionsForCollectionsIncluded()) return Collections.EMPTY_LIST; 
+			if (defaultRowActionsForCollections == null) {			
+					MetaController controller = MetaControllers.getMetaController("DefaultRowActionsForCollections"); // Si no existe: Advertencia?
+					Collection result = new ArrayList();
+					for (Iterator it = controller.getAllMetaActions().iterator(); it.hasNext();) {
+						MetaAction action = (MetaAction) it.next();
+						if (!action.isHidden()) {
+							result.add(action.getQualifiedName());
+						}
+					}				
+					defaultRowActionsForCollections = Collections.unmodifiableCollection(result); 
+			}
+			return defaultRowActionsForCollections;
+		}
+		catch (XavaException ex) {
+			log.warn(XavaResources.getString("default_row_action_controllers_warning"), ex);
+			return Collections.EMPTY_LIST;
+		}
+	}
+	
 
 	private void setPropertiesListNames(String propertiesListNames) {
 		this.propertiesListNames = propertiesListNames; 		
@@ -1323,8 +1355,8 @@ public class View implements java.io.Serializable {
 	 */	
 	public List getCollectionValues() throws XavaException {		
 		if (collectionValues == null) { 			
-			assertRepresentsCollection("getCollectionValues()");
-			if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded()) {
+			assertRepresentsCollection("getCollectionValues()");			
+			if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) {
 				// If calculated we obtain the data directly from the model object
 				Map mapMembersNames = new HashMap();
 				mapMembersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));
@@ -1369,7 +1401,7 @@ public class View implements java.io.Serializable {
 	 */	
 	public int getCollectionSize() throws XavaException {
 		assertRepresentsCollection("getCollectionSize()");
-		if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded()) {
+		if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) { 
 			return getCollectionValues().size();			
 		}
 		else {
@@ -3582,6 +3614,36 @@ public class View implements java.io.Serializable {
 			getFullOrderActionsNamesList().add(qualifiedActionName);
 		}		
 	}
+	
+	public void addRowAction(String qualifiedActionName) {	
+		if (actionsNamesRow == null) actionsNamesRow = new ArrayList(getDefaultRowActionsForCollections()); 
+		if (actionsNamesRow.contains(qualifiedActionName))	return;
+		refreshCollection(); 
+		if (getFullOrderActionsNamesRow().contains(qualifiedActionName)) {
+			// If already in order we insert it in the correct position
+			ArrayList row = (ArrayList) actionsNamesRow;	// no se si row seria el nombre apropiado, para que se usa row?
+			int position = 0;
+			for (Object o : getFullOrderActionsNamesRow()) {
+				if (actionsNamesRow.contains(o))
+					position++;
+				else if (o.equals(qualifiedActionName)) {
+					((ArrayList) actionsNamesRow).add(position, o);
+					return;
+				}
+			}
+		} else {
+			// If it does not exist, we add it at the end of both list 
+			actionsNamesRow.add(qualifiedActionName);
+			getFullOrderActionsNamesRow().add(qualifiedActionName);
+		}		
+	}	
+	
+	public void removeRowAction(String qualifiedActionName) { 		
+		if (actionsNamesRow == null) actionsNamesRow = new ArrayList(getDefaultRowActionsForCollections()); 
+		actionsNamesRow.remove(qualifiedActionName);
+		refreshCollection(); 
+	}	
+
 
 	/**
 	 * Has sense if the subview represents a collection, although always works.
@@ -3599,6 +3661,7 @@ public class View implements java.io.Serializable {
 		if (isCollectionEditable() && isRowAction(getRemoveSelectedCollectionElementsAction())) {
 			rowActionsNames.add(getRemoveSelectedCollectionElementsAction());
 		}		
+		rowActionsNames.addAll(getActionsNamesRow());
 		for (Object action: getActionsNamesList()) {
 			if (isRowAction(action)) {
 				rowActionsNames.add(action);
@@ -3626,7 +3689,19 @@ public class View implements java.io.Serializable {
 			fullOrderActionsNamesList = new ArrayList(collection);
 		}
 		refreshCollection();
-	} 
+	}
+	
+	public void setActionsNamesRow(Collection collection) { 		
+		actionsNamesRow = collection;
+		if (fullOrderActionsNamesRow == null) {
+			fullOrderActionsNamesRow = new ArrayList(collection);
+		}
+		refreshCollection();
+	}	
+	
+	public Collection getActionsNamesRow() { 
+		return actionsNamesRow==null?getDefaultRowActionsForCollections():actionsNamesRow;
+	}
 			                                                                                                                                                                                                                                                                                                                                                                                                                   
 	public Collection getActionsNamesForProperty(MetaProperty p, boolean editable) throws XavaException {		
 		if (getParentIfSectionOrGroup().changedActionsByProperty == null) return getMetaView().getActionsNamesForProperty(p, editable);
@@ -4708,6 +4783,14 @@ public class View implements java.io.Serializable {
 		this.defaultListActionsForCollectionsIncluded = defaultListActionsForCollectionsIncluded;
 	}
 	
+	public boolean isDefaultRowActionsForCollectionsIncluded() {
+		return defaultRowActionsForCollectionsIncluded;
+	}
+
+	public void setDefaultRowActionsForCollectionsIncluded(boolean defaultRowActionsForCollectionsIncluded) {		
+		this.defaultRowActionsForCollectionsIncluded = defaultRowActionsForCollectionsIncluded;
+	}
+	
 	/**
 	 * @since 4m1
 	 */
@@ -4756,6 +4839,17 @@ public class View implements java.io.Serializable {
 	private void setFullOrderActionsNamesList(Collection collection) { 
 		fullOrderActionsNamesList = collection; 
 	}
+	
+	private Collection getFullOrderActionsNamesRow() {
+		if (fullOrderActionsNamesRow==null) {
+			fullOrderActionsNamesRow = new ArrayList();
+		}
+		return fullOrderActionsNamesRow; 
+	}
+	
+	private void setFullOrderActionsNamesRow(Collection collection) { 
+		fullOrderActionsNamesRow = collection; 
+	}	
 	
 	public String getLabelStyleForProperty(MetaProperty p) throws XavaException {		
 		return getMetaView().getLabelStyleForProperty(p);
