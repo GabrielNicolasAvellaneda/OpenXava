@@ -22,6 +22,7 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 	private String removeSelectedActionName;
 	private Collection actionsDetailNames;
 	private Collection actionsListNames;
+	private Collection actionsRowNames;  
 	private List propertiesListNames;
 	private String collectionName;
 	private String mediatorClassName;
@@ -46,6 +47,11 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 	public void addActionListName(String actionName) {
 		if (actionsListNames == null) actionsListNames = new ArrayList();
 		actionsListNames.add(actionName);		
+	}
+	
+	public void addActionRowName(String actionName) { 
+		if (actionsRowNames == null) actionsRowNames = new ArrayList();
+		actionsRowNames.add(actionName);		
 	}
 	
 	public void addMetaRowStyle(MetaRowStyle style) {
@@ -160,6 +166,10 @@ public class MetaCollectionView extends MetaMemberView implements Serializable {
 	
 	public Collection getActionsListNames() {		
 		return actionsListNames==null?Collections.EMPTY_LIST:actionsListNames;
+	}
+	
+	public Collection getActionsRowNames() { 		
+		return actionsRowNames==null?Collections.EMPTY_LIST:actionsRowNames;
 	}
 	
 	public String getEditActionName() {

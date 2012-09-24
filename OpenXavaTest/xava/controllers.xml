@@ -25,7 +25,7 @@
 			<set property="reinit" value="true"/>
 		</action>	
 	</controller>
-		
+	
 	<controller name="Author">	
 		<extends controller="Typical"/>		
         <action name="searchAuthor" hidden="true"
@@ -45,6 +45,11 @@
 			<set property="property" value="author"/>	
 			<set property="suffix" value=" LUCAS"/>
 		</action>				
+	</controller>	
+		
+	<controller name="OrderDetail">				
+        <action name="reduceQuantity" 
+			class="org.openxava.test.actions.ReduceOrderDetailQuantityAction" />
 	</controller>	
 	
 	<controller name="Corporation">	

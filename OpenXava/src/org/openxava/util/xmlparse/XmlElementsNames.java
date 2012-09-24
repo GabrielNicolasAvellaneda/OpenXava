@@ -123,6 +123,7 @@ public class XmlElementsNames {
 	protected final static String [] xedit_action = { "edit-action", "accion-editar" };
 	protected final static String [] xdetail_action = { "detail-action", "accion-detalle" };
 	protected final static String [] xlist_action = { "list-action", "accion-lista" };
+	protected final static String [] xrow_action = { "row-action", "accion-fila" };
 	protected final static String [] xdescriptions_list = { "descriptions-list", "lista-descripciones" };
 	protected final static String [] xdescription_property = { "description-property", "propiedad-descripcion" };
 	protected final static String [] xdescription_properties = { "description-properties", "propiedades-descripcion" };

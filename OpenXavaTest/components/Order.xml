@@ -57,6 +57,7 @@
 		<reference-view reference="customer" view="Simplest"/>
 		<collection-view collection="details">
 			<list-properties>product.number, product.description, quantity, product.unitPrice, amount</list-properties>
+			<row-action action="OrderDetail.reduceQuantity"/>
 		</collection-view>
 		<members>
 			year, number, date;

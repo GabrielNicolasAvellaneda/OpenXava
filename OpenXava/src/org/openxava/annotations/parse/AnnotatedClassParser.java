@@ -1077,6 +1077,12 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(ListActions.class)) {
 			notApply(property.getName(), ListActions.class, "collections");
 		}				
+		if (element.isAnnotationPresent(RowAction.class)) {
+			notApply(property.getName(), RowAction.class, "collections");
+		}
+		if (element.isAnnotationPresent(RowActions.class)) {
+			notApply(property.getName(), RowActions.class, "collections");
+		}
 		if (element.isAnnotationPresent(EditOnly.class)) {
 			notApply(property.getName(), EditOnly.class, "collections");
 		}
@@ -1321,6 +1327,24 @@ public class AnnotatedClassParser {
 					}
 				}				
 			}
+			
+			// RowAction
+			if (element.isAnnotationPresent(RowAction.class)) {
+				RowAction action = element.getAnnotation(RowAction.class);
+				if (isForView(metaView, action.forViews(), action.notForViews())) {
+					collectionView.addActionRowName(action.value());
+					mustAddMetaView = true;				
+				}
+			}
+			if (element.isAnnotationPresent(RowActions.class)) {
+				RowAction [] actions = element.getAnnotation(RowActions.class).value();
+				for (RowAction action: actions) {				
+					if (isForView(metaView, action.forViews(), action.notForViews())) {
+						collectionView.addActionRowName(action.value());
+						mustAddMetaView = true;
+					}
+				}				
+			}						
 			
 			// DetailAction
 			if (element.isAnnotationPresent(DetailAction.class)) {
@@ -2062,6 +2086,12 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(ListActions.class)) {
 			notApply(ref.getName(), ListActions.class, "collections");
+		}		
+		if (element.isAnnotationPresent(RowAction.class)) {
+			notApply(ref.getName(), RowAction.class, "collections");
+		}
+		if (element.isAnnotationPresent(RowActions.class)) {
+			notApply(ref.getName(), RowActions.class, "collections");
 		}		
 		if (element.isAnnotationPresent(EditOnly.class)) {
 			notApply(ref.getName(), EditOnly.class, "collections");

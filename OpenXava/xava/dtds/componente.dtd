@@ -105,7 +105,7 @@
   clase CDATA #REQUIRED
 >
 
-<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, condicion-lista-busqueda?, estilo-fila*, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-quitar-seleccionados?, accion-lista*, accion-detalle*, accion-al-seleccionar-elemento?)>
+<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, condicion-lista-busqueda?, estilo-fila*, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-quitar-seleccionados?, accion-lista*, accion-fila*, accion-detalle*, accion-al-seleccionar-elemento?)>
 <!ATTLIST vista-coleccion
   coleccion CDATA #REQUIRED
   vista CDATA #IMPLIED
@@ -175,6 +175,10 @@
   accion CDATA #IMPLIED
 >
 
+<!ELEMENT accion-fila EMPTY>
+<!ATTLIST accion-fila
+  accion CDATA #IMPLIED
+>
 
 <!ELEMENT accion EMPTY>
 <!ATTLIST accion

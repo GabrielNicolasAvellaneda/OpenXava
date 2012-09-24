@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New @RowAction annotation for collections (also available as row-action in XML components).
+- New methods assertAction/assertNoAction(String action, String arguments) in ModuleTestBase. 
 - In list mode focus is placed in the first filter text box.
 - It's possible to add custom portlets by means of portlet-ext.xml and liferay-display-ext.xml.
 - Fields version and versionDate of ModuleManager now are private.
