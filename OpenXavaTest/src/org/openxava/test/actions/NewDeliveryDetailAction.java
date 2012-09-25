@@ -8,7 +8,7 @@ import org.openxava.actions.*;
  */
 
 public class NewDeliveryDetailAction extends CreateNewElementInCollectionAction {
-
+	
 	public void execute() throws Exception {
 		super.execute();
 		Object numberView = getView().getValue("number");

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- The report names include model name and time, for automatic and custom reports in PDF, CSV, RTF, ODT and Excel.   
 - New @RowAction annotation for collections (also available as row-action in XML components).
 - New methods assertAction/assertNoAction(String action, String arguments) in ModuleTestBase. 
 - In list mode focus is placed in the first filter text box.

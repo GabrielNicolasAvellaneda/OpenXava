@@ -8,8 +8,8 @@ import org.openxava.actions.*;
  */
 
 public class OnChangeSubfamilySearchAction extends OnChangeSearchAction {
-
-	public void execute() throws Exception {		
+	
+	public void execute() throws Exception {
 		if (getView().getValueInt("number") == 0) {
 			getView().setValue("number", new Integer("1"));
 		}
