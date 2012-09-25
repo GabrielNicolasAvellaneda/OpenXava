@@ -5,6 +5,7 @@ import java.math.*;
 import java.sql.*;
 import java.text.*;
 import java.util.*;
+import java.util.Date;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -164,7 +165,8 @@ public class GenerateReportServlet extends HttpServlet {
 					ds = getDataSource(tab, selectedRows, request);
 				}				
 				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);					
-				response.setContentType("application/pdf");				
+				response.setContentType("application/pdf");	
+				response.setHeader("Content-Disposition", "inline; filename=\"" + getFileName(tab) + ".pdf\""); 
 				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
 				
 			}
@@ -174,6 +176,7 @@ public class GenerateReportServlet extends HttpServlet {
 					response.setCharacterEncoding(csvEncoding);
 				}
 				response.setContentType("text/x-csv");
+				response.setHeader("Content-Disposition", "inline; filename=\"" + getFileName(tab) + ".csv\""); 
 				synchronized (tab) {
 					tab.setRequest(request);
 					response.getWriter().print(TableModels.toCSV(getTableModel(tab, selectedRows, request, true)));
@@ -189,6 +192,11 @@ public class GenerateReportServlet extends HttpServlet {
 		}		
 	}
 	
+	private String getFileName(Tab tab) { 
+		String now = new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date());
+		return tab.getModelName() + "-list_" + now;
+	}
+
 	private Object getTotal(HttpServletRequest request, Tab tab, String totalProperty) {
 		Object total = tab.getTotal(totalProperty);
 		return WebEditors.format(request, tab.getMetaProperty(totalProperty), total, new Messages(), null, true);

@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.*;
-import net.sf.jasperreports.engine.export.oasis.JROdtExporter;
+import net.sf.jasperreports.engine.export.oasis.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.actions.*;
@@ -25,8 +25,10 @@ public class GenerateCustomReportServlet extends HttpServlet {
 	private static Log log = LogFactory.getLog(GenerateCustomReportServlet.class);
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String fileName = (String) request.getSession().getAttribute("xava.report.filename"); 
 		String format = (String) request.getSession().getAttribute("xava.report.format");
 		JasperPrint jprint = (JasperPrint) request.getSession().getAttribute("xava.report.jprint");
+		request.getSession().removeAttribute("xava.report.filename");
 		request.getSession().removeAttribute("xava.report.format"); 
 		request.getSession().removeAttribute("xava.report.jprint");
 		JasperPrint[] jprints = (JasperPrint[]) request.getSession().getAttribute("xava.report.jprints");
@@ -42,25 +44,26 @@ public class GenerateCustomReportServlet extends HttpServlet {
 			if (format == null) {
 				format = JasperReportBaseAction.PDF;
 			}
-				
+			
 			JRExporter exporter;
 			if (format.equals(JasperReportBaseAction.EXCEL)) {
 				response.setContentType("application/vnd.ms-excel");
-				response.setHeader("Content-Disposition", "inline; filename=\"report.xls\"");
+				response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + ".xls\""); 
 				exporter = new JRXlsExporter();
 			} 
 			else if (format.equalsIgnoreCase(JasperReportBaseAction.RTF)) { 				
-				response.setContentType("application/rtf"); 
-				response.setHeader("Content-Disposition", "inline; filename=\"report.rtf\""); 
+				response.setContentType("application/rtf");  
+				response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + ".rtf\""); 
 				exporter = new JRRtfExporter() ;//
 			} 			
 			else if (format.equalsIgnoreCase(JasperReportBaseAction.ODT)) {  				
-				response.setContentType("application/vnd.oasis.opendocument.text");
-				response.setHeader("Content-Disposition", "inline; filename=\"report.odt\""); 
+				response.setContentType("application/vnd.oasis.opendocument.text"); 
+				response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + ".odt\""); 
 				exporter = new JROdtExporter();
 			}
 			else {
 				response.setContentType("application/pdf");
+				response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + ".pdf\""); 
 				exporter = new JRPdfExporter();				
 			}
 			

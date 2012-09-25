@@ -10,9 +10,8 @@ org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleM
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xava_view");
 boolean messagesOnTop = org.openxava.util.XavaPreferences.getInstance().isMessagesOnTop(); 
 boolean buttonBar = !"false".equalsIgnoreCase(request.getParameter("buttonBar")); 
-String buttonsAlign = buttonBar?"":"text-align: right;";
-// tmp String focusPropertyId = manager.isListMode()?"":view.getFocusPropertyId(); 
-String focusPropertyId = manager.isListMode()?org.openxava.web.Lists.FOCUS_PROPERTY_ID:view.getFocusPropertyId(); // tmp
+String buttonsAlign = buttonBar?"":"text-align: right;"; 
+String focusPropertyId = manager.isListMode()?org.openxava.web.Lists.FOCUS_PROPERTY_ID:view.getFocusPropertyId();
 %>
 <form id="<xava:id name='form'/>" name="<xava:id name='form'/>"
 	method='POST' <%=manager.getEnctype()%> 

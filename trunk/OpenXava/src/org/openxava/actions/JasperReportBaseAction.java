@@ -2,13 +2,16 @@ package org.openxava.actions;
 
 import java.io.*;
 import java.sql.*;
+import java.text.*;
 import java.util.*;
+import java.util.Date;
 
 import javax.servlet.*;
 
-import org.openxava.jpa.XPersistence;
-import org.openxava.util.*;
 import net.sf.jasperreports.engine.*;
+
+import org.openxava.jpa.*;
+import org.openxava.util.*;
 
 /**
  * To generate your custom Jasper Report. <p>
@@ -27,6 +30,7 @@ abstract public class JasperReportBaseAction extends ViewBaseAction implements I
 	public static String ODT = "odt"; 
 		
 	private String modelName;
+	private String fileName; 
 	private String format = PDF;
 	
 	/**
@@ -114,6 +118,7 @@ abstract public class JasperReportBaseAction extends ViewBaseAction implements I
 		}		
 		getRequest().getSession().setAttribute("xava.report.jprint", jprint);
 		getRequest().getSession().setAttribute("xava.report.format", getFormat());
+		getRequest().getSession().setAttribute("xava.report.filename", getFileName()); 
 	}
 	
 	private boolean isAbsolutePath(String design) { 
@@ -136,6 +141,18 @@ abstract public class JasperReportBaseAction extends ViewBaseAction implements I
 				
 	public void setModel(String modelName) { //  to obtain a JDCB connection, if required
 		this.modelName = modelName;
+	}
+
+	public String getFileName() {
+		if (fileName==null) {
+			String now = new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date());
+			return getModelName() + "-report_" + now;
+		} else
+			return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	
 }
