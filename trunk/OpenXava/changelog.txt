@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New property 'showIconForViewReadOnly' in xava.properties: to view or not the icons key and required 
+- Fix: @Size(max=x) fails with Save and Stay
 - The report names include model name and time, for automatic and custom reports in PDF, CSV, RTF, ODT and Excel.   
 - New @RowAction annotation for collections (also available as row-action in XML components).
 - New methods assertAction/assertNoAction(String action, String arguments) in ModuleTestBase. 
