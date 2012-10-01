@@ -487,4 +487,8 @@ public class XavaPreferences {
 		return getProperties().getProperty("layout.painter", null);
 	}
 
+	/** @since 4.6 */
+	public boolean isShowIconForViewReadOnly(){
+		return "true".equalsIgnoreCase(getProperties().getProperty("showIconForViewReadOnly", "true").trim());
+	}
 }
