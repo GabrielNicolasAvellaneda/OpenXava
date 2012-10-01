@@ -257,6 +257,25 @@ public class DeliveryTest extends ModuleTestBase {
 		*/
 	}
 	
+	public void testMaxInCollectionWithSaveAndStay() throws Exception{
+		assertListNotEmpty();
+		execute("List.viewDetail", "row=0");
+		execute("Sections.change", "activeSection=2");
+		assertCollectionRowCount("details", 0);
+		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
+		for(int x = 1; x < 5; x++){
+			setValue("number", String.valueOf(x));
+			setValue("description", String.valueOf(x));
+			execute("Collection.saveAndStay");
+		}
+		assertError("More than 3 items in Details of Delivery are not allowed");
+		execute("DeliveryDetail.hideDetail");
+		assertCollectionRowCount("details", 3);
+		checkAllCollection("details");
+		execute("DeliveryDetail.removeSelected", "viewObject=xava_view_section2_details_details");
+		assertCollectionRowCount("details", 0);
+	}
+	
 	public void testFocusWhenSectionsAndGroupsInHeader() throws Exception {
 		execute("CRUD.new");
 		assertFocusOn("invoice.year");
