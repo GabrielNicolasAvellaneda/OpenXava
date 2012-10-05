@@ -524,6 +524,7 @@ public class AnnotatedClassParser {
 		metaTab.setName(tab.name());
 		metaTab.setBaseCondition(tab.baseCondition()); 
 		metaTab.setDefaultOrder(tab.defaultOrder());
+		metaTab.setEditor(tab.editor()); 
 		if (!tab.filter().equals(VoidFilter.class)) {
 			MetaFilter metaFilter = new MetaFilter();
 			metaFilter.setClassName(tab.filter().getName());

@@ -114,9 +114,13 @@ import org.openxava.test.actions.*;
 	@Tab( name="TwoSellersNumber",
 		properties="name, type, seller.number, alternateSeller.number"
 	),
+	@Tab ( name ="Cards", editor="CustomerCardList", 
+		properties="number, name, type, address.city, address.state.name"
+	),
 	@Tab( name="Demo", 
 		properties="name, type, seller.name"
 	)
+	
 })
 
 public class Customer implements IWithName {

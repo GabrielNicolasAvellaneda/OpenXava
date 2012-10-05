@@ -952,6 +952,12 @@
 		<delete file="../${project}/web/xava/js/jquery.qtip.js"/>
 		<delete file="../${project}/web/xava/js/jquery.bgiframe.min.js"/>
 		<delete file="../${project}/web/xava/style/liferay51/js/init_liferay.js"/>
+		<!-- Delete JSPs moved to editors folder -->
+		<delete file="../${project}/web/xava/comparatorsBooleanCombo.jsp"/>
+		<delete file="../${project}/web/xava/comparatorsCombo.jsp"/>
+		<delete file="../${project}/web/xava/comparatorsDescriptionsList.jsp"/>
+		<delete file="../${project}/web/xava/comparatorsValidValuesCombo.jsp"/>
+		
 	</target>
 
 	<target name="defineHibernateTool">

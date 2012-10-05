@@ -201,4 +201,5 @@ public class XmlElementsNames {
 	protected final static String [] xfor_tabs = { "for-tabs", "para-tabs" };
 	protected final static String [] xnot_for_tabs = { "not-for-tabs", "no-para-tabs" };
 	protected final static String [] xin_each_row = { "in-each-row", "en-cada-fila" };
+	protected final static String [] xfor_tab = { "for-tab", "para-tab" }; 
 }

@@ -65,4 +65,6 @@ public @interface Tab {
 	 */
 	String defaultOrder() default "";
 	
+	String editor() default "";
+	
 }

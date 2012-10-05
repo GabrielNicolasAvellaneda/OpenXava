@@ -5,6 +5,7 @@ import java.util.*;
 
 
 import org.openxava.model.meta.*;
+import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.web.meta.xmlparse.*;
 
@@ -21,8 +22,10 @@ public class MetaWebEditors {
 	private static Map editorsByModelProperty;
 	private static Map editorsByReferenceModel;
 	private static Map editorsByCollectionModel; 
+	private static Map editorsByTabModel; 
 	private static MetaEditor editorForReferences;
-	private static MetaEditor editorForCollections; 
+	private static MetaEditor editorForCollections;
+	private static MetaEditor editorForTabs; 
 	
 	
 
@@ -46,6 +49,14 @@ public class MetaWebEditors {
 		}
 		editorsByCollectionModel.put(model, editor);		
 	}
+	
+	public static void addMetaEditorForTabModel(String model, MetaEditor editor) throws XavaException { 
+		if (editorsByTabModel == null) {
+			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditorForTabModel");
+		}
+		editorsByTabModel.put(model, editor);		
+	}
+	
 	
 		
 	public static void addMetaEditorForStereotype(String stereotype, MetaEditor editor) throws XavaException {		
@@ -90,12 +101,13 @@ public class MetaWebEditors {
 		return (MetaEditor) getEditorsByReferenceModel().get(model);
 	}
 	
-	private static MetaEditor getMetaEditorForCollectionModel(String model)	throws XavaException { 
+	private static MetaEditor getMetaEditorForCollectionModel(String model) throws XavaException { 
 		return (MetaEditor) getEditorsByCollectionModel().get(model);
 	}
 
-	
-	
+	private static MetaEditor getMetaEditorForTabModel(String model) throws XavaException {  
+		return (MetaEditor) getEditorsByTabModel().get(model);
+	}	
 	
 	/**
 	 * It's like getMetaEditorForType but extract the type of property. <p>
@@ -160,7 +172,16 @@ public class MetaWebEditors {
 			EditorsParser.setupEditors();
 		}
 		return editorsByCollectionModel;
+	}
+	
+	private static Map getEditorsByTabModel() throws XavaException {   
+		if (editorsByTabModel == null) {
+			initMaps();
+			EditorsParser.setupEditors();
+		}
+		return editorsByTabModel;
 	}	
+	
 	
 	private static Map getEditorsByStereotype() throws XavaException {
 		if (editorsByStereotype == null) {
@@ -192,7 +213,8 @@ public class MetaWebEditors {
 		editorsByModelProperty = new HashMap();
 		editorsByName = new HashMap();
 		editorsByReferenceModel = new HashMap(); 
-		editorsByCollectionModel = new HashMap(); 
+		editorsByCollectionModel = new HashMap();
+		editorsByTabModel = new HashMap(); 
 	}
 
 	
@@ -241,6 +263,18 @@ public class MetaWebEditors {
 		}		
 		return r;
 	}
+	
+	public static MetaEditor getMetaEditorFor(MetaTab tab) throws ElementNotFoundException, XavaException {  							
+		MetaEditor r = (MetaEditor) getMetaEditorForTabModel(tab.getModelName()); 		
+		if (r == null) {	
+			if (editorForTabs == null) {
+				throw new ElementNotFoundException("editor_for_tabs_required");  
+			}
+			return editorForTabs;
+		}		
+		return r;
+	}
+	
 		
 	public static MetaEditor getMetaEditorFor(MetaMember member) throws ElementNotFoundException, XavaException { 
 		if (member instanceof MetaProperty) return getMetaEditorFor((MetaProperty) member);
@@ -257,5 +291,8 @@ public class MetaWebEditors {
 		editorForCollections = editor; 		
 	}
 	
-	
+	public static void addMetaEditorForTabs(MetaEditor editor) {   
+		editorForTabs = editor; 		
+	}
+		
 }

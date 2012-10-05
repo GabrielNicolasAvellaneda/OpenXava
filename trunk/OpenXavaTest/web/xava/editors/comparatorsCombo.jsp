@@ -1,4 +1,4 @@
-<%@ include file="imports.jsp"%>
+<%@ include file="../imports.jsp"%>
 
 <%@page import="org.openxava.web.Actions"%>
 <%@page import="org.openxava.web.Ids"%>

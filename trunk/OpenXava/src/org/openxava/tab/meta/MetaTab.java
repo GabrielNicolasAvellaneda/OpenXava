@@ -48,6 +48,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private String defaultPropertiesNames;
 	private String id;
 	private Collection<String> sumPropertiesNames;
+	private String editor; 
 
 
 	
@@ -758,6 +759,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	 */
 	public Collection<String> getSumPropertiesNames() {
 		return sumPropertiesNames == null?Collections.EMPTY_SET:sumPropertiesNames;
+	}
+
+	public String getEditor() {
+		return editor;
+	}
+
+	public void setEditor(String editor) {
+		this.editor = editor;
 	}
 		
 }

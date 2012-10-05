@@ -301,6 +301,7 @@
 >
 <!ATTLIST tab
  nombre CDATA #IMPLIED
+ editor CDATA #IMPLIED
  excluir-por-clave CDATA #IMPLIED
  excluir-todos CDATA #IMPLIED
 >
