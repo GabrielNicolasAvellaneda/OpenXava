@@ -1,7 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- New property 'showIconForViewReadOnly' in xava.properties: to view or not the icons key and required 
+- New attribute editor in @Tab to define an editor for a tab. Also available for XML version with <tab editor=/>.
+- In editors.xml it's possible to associate an editor by default for all tabs or for tabs of certain models.
+- New property 'showIconForViewReadOnly' in xava.properties to view or not the key and required icons in read only views. 
 - Fix: @Size(max=x) fails with Save and Stay
 - The report names include model name and time, for automatic and custom reports in PDF, CSV, RTF, ODT and Excel.   
 - New @RowAction annotation for collections (also available as row-action in XML components).

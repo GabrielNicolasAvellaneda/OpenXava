@@ -1,4 +1,4 @@
-<%@ include file="imports.jsp"%>
+<%@ include file="../imports.jsp"%>
 
 <%@ page import="java.util.StringTokenizer" %>
 

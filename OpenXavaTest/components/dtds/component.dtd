@@ -298,6 +298,7 @@
 >
 <!ATTLIST tab
  name CDATA #IMPLIED
+ editor CDATA #IMPLIED
 >
 
 <!ELEMENT row-style EMPTY>

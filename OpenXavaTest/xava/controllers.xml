@@ -67,7 +67,9 @@
 	<controller name="CorporationEmployee">
 		<extends controller="Typical"/>	
         <action name="report" image="images/report.gif" mode="detail"
-				class="org.openxava.actions.SimpleHTMLReportAction" />
+				class="org.openxava.actions.SimpleHTMLReportAction" />		
+        <action name="filter" hidden="true"
+				class="org.openxava.test.actions.CorporationEmployeeListFilterAction" />				
 	</controller>		
 	
 	<controller name="ModifySeller">

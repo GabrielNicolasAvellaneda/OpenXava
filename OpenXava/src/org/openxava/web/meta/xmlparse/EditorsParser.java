@@ -73,7 +73,8 @@ public class EditorsParser extends ParserBase {
 		addEditorsForReferenceModel(editor, el);
 		addEditorsForCollections(editor, el); 
 		addEditorsForCollectionModel(editor, el);
-		
+		addEditorsForTabs(editor, el); 
+		addEditorsForTabModel(editor, el);
 	}	
 	
 	private MetaSet createSet(Node n) throws XavaException {
@@ -88,7 +89,7 @@ public class EditorsParser extends ParserBase {
 		NodeList l = n.getElementsByTagName(xlist_formatter[lang]);
 		int c = l.getLength();
 		if (c > 1) {
-			throw new XavaException("no_more_1_list_formatter");	// tmp internacionalizar
+			throw new XavaException("no_more_1_list_formatter");	
 		}
 		if (c < 1) return null;
 		Element el = (Element) l.item(0);
@@ -172,7 +173,16 @@ public class EditorsParser extends ParserBase {
 			Element el = (Element) l.item(i);		
 			MetaWebEditors.addMetaEditorForCollectionModel(el.getAttribute(xmodel[lang]), editor);
 		}		
-	}		
+	}
+	
+	private void addEditorsForTabModel(MetaEditor editor, Element n) throws XavaException {  		
+		NodeList l = n.getElementsByTagName(xfor_tab[lang]);
+		int c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			Element el = (Element) l.item(i);		
+			MetaWebEditors.addMetaEditorForTabModel(el.getAttribute(xmodel[lang]), editor);
+		}		
+	}			
 	
 	private void addEditorsForValidValues(MetaEditor editor, Element n) throws XavaException {		
 		NodeList l = n.getElementsByTagName(xfor_valid_values[lang]);
@@ -194,8 +204,14 @@ public class EditorsParser extends ParserBase {
 		if (l.getLength() > 0) { 
 			MetaWebEditors.addMetaEditorForCollections(editor);
 		}		
-	}		
-
+	}
+	
+	private void addEditorsForTabs(MetaEditor editor, Element n) throws XavaException {   		
+		NodeList l = n.getElementsByTagName(xfor_tabs[lang]);
+		if (l.getLength() > 0) { 
+			MetaWebEditors.addMetaEditorForTabs(editor);
+		}		
+	}			
 	
 	private void addEditorsForStereotype(MetaEditor editor, Element n) throws XavaException {		
 		NodeList l = n.getElementsByTagName(xfor_stereotype[lang]);

@@ -19,4 +19,14 @@ class CorporationEmployeeTest extends ModuleTestBase {
 		assertTrue getPopupText().contains("<tr><td>Corporation:</td><td>RANONE</td></tr>")
 	}
 	
+	void testTabEditorForModel() {
+		assertListRowCount 2
+		setValue "chooseSegment", "low"
+		assertListRowCount 1
+		assertValueInList 0, 0, "MIGUEL"
+		setValue "chooseSegment", "high"
+		assertListRowCount 1
+		assertValueInList 0, 0, "ANA"
+	}
+	
 }

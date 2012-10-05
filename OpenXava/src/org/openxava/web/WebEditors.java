@@ -12,6 +12,8 @@ import org.openxava.model.meta.MetaMember;
 import org.openxava.model.meta.MetaModel;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.model.meta.MetaReference;
+import org.openxava.tab.*;
+import org.openxava.tab.meta.*;
 import org.openxava.util.ElementNotFoundException;
 import org.openxava.util.Is;
 import org.openxava.util.Locales;
@@ -177,6 +179,25 @@ public class WebEditors {
 			return PREFIX + "notAvailableEditor.jsp";
 		}		
 	}	
+	
+	public static String getUrl(MetaTab metaTab) throws ElementNotFoundException, XavaException {
+		try {		
+			String editor = metaTab.getEditor();
+			if (!Is.emptyString(editor)) {
+				try {
+					return PREFIX + MetaWebEditors.getMetaEditorByName(editor).getUrl();
+				}
+				catch (Exception ex) {
+					log.warn(XavaResources.getString("tab_editor_problem_using_default", editor), ex);
+				}
+			}
+			return PREFIX + MetaWebEditors.getMetaEditorFor(metaTab).getUrl();
+		}
+		catch (Exception ex) {
+			log.warn(ex.getMessage(), ex);
+			return PREFIX + "notAvailableEditor.jsp";
+		}		
+	}
 	
 	public static MetaEditor getMetaEditorFor(MetaMember m, String viewName) throws ElementNotFoundException, XavaException {
 		if (m.getMetaModel() != null) {

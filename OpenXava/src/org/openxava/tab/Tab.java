@@ -207,7 +207,7 @@ public class Tab implements java.io.Serializable {
 		metaTabCloned = true;
 	}
 		
-	private MetaTab getMetaTab() throws XavaException  {
+	public MetaTab getMetaTab() throws XavaException  { 
 		if (metaTab == null) {				
 			try {				
 				metaTab = MetaComponent.get(getModelName()).getMetaTab(getTabName());

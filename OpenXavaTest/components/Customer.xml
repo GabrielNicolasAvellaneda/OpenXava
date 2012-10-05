@@ -416,6 +416,10 @@
 	<tab name="TwoSellersNumber">
 		<properties>name, type, seller.number, alternateSeller.number</properties>	
 	</tab>
+	
+	<tab name="Cards" editor="CustomerCardList">
+		<properties>number, name, type, address.city, address.state.name</properties>	
+	</tab>	
 			
 	<entity-mapping table="XAVATEST@separator@CUSTOMER">
 		<property-mapping

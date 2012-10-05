@@ -45,6 +45,12 @@
 		<for-stereotype stereotype="CITY_NAME" />
 	</editor>	
 	
+	<editor url="corporationEmployeeListEditor.jsp">
+		<for-tab model="CorporationEmployee"/>
+	</editor>
+		
+	<editor name="CustomerCardList" url="customerCardListEditor.jsp"/>
+		
 	<editor url="colorEditor.jsp">
 		<for-reference model="Color"/>
 	</editor>
