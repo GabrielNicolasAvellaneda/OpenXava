@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Labels and messages available in Russian.
 - New attribute editor in @Tab to define an editor for a tab. Also available for XML version with <tab editor=/>.
 - In editors.xml it's possible to associate an editor by default for all tabs or for tabs of certain models.
 - New property 'showIconForViewReadOnly' in xava.properties to view or not the key and required icons in read only views. 
