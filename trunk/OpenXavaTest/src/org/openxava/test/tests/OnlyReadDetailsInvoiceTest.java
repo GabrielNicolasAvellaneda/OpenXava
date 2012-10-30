@@ -36,7 +36,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are alwasy present						
 		};		
-		assertActions(initActions);
+		assertActions(initActions); 
 		
 		Invoice invoice = getInvoice();	
 		setValue("year", String.valueOf(invoice.getYear()));

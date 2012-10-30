@@ -18,7 +18,7 @@ public class CarrierFellowsTest extends ModuleTestBase {
 		assertAction("Carrier.translateName");
 		execute("CarrierFellows.removeTranslateName");
 		assertNoAction("Carrier.translateName");
-		assertMessage("Original fellows actions=[Carrier.translateName, Carrier.allToEnglish, Print.generatePdf, Print.generateExcel]");
+		assertMessage("Original fellows actions=[Carrier.translateName, Carrier.allToEnglish, Print.generatePdf, Print.generateExcel]"); 
 		
 		execute("CarrierFellows.addTranslateName");
 		assertAction("Carrier.translateName");

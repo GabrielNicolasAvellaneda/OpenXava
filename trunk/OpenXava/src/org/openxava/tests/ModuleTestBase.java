@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.logging.*;
 
 import org.apache.commons.logging.*;
+import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.util.*;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
@@ -71,7 +73,9 @@ public class ModuleTestBase extends TestCase {
 	private String lastNotNotifiedPropertyName; 
 	private String lastNotNotifiedPropertyValue;
 	private BrowserVersion browserVersion;
-	private String previousModule; 
+	private String previousModule;
+	private String popupPDFAsText; // tmp
+	private String [] popupPDFLines; // tmp
 	
 	static {		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
@@ -736,6 +740,9 @@ public class ModuleTestBase extends TestCase {
 				resetForm();
 			}
 		}		
+		
+		popupPDFAsText = null; // tmp
+		popupPDFLines = null; // tmp
 	}
 	
 	private boolean pageLoaded() throws Exception { 
@@ -930,19 +937,86 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	/**
-	 * The text of the response
+	 * The text of the response.
 	 */
 	protected String getText() throws IOException {
 		return page.asText();
 	}
 
 	/**
-	 * The text of the response for popup window
+	 * The text of the response for popup window.
 	 */
 	protected String getPopupText() throws IOException {
 		return getPopupPage(-1).getWebResponse().getContentAsString();
 	}
+	
+	/**
+	 * The content of the PDF in the popup window as text.
+	 * 
+	 * @since 4.6
+	 */
+	// tmp poner en changelog
+	protected String getPopupPDFAsText() throws IOException { // tmp Quitar pdfbox.jar si al final esto no se usa
+		if (popupPDFAsText == null) {
+			InputStream is = getPopupPage(-1).getWebResponse().getContentAsStream();
+			PDDocument doc = PDDocument.load(is); 
+			popupPDFAsText = new PDFTextStripper().getText(doc);
+		}
+		return popupPDFAsText;
+	}
+	
+	/**
+	 * Only for debug.
+	 * 
+	 * @since 4.6
+	 */
+	protected void printPopupPDFAsText() throws Exception { // tmp changelog
+		log.debug(getPopupPDFAsText());		
+	}
 
+	
+	/**
+	 * The specified line as text of PDF in the popup window.
+	 * 
+	 * @since 4.6
+	 */
+	protected String getPopupPDFLine(int lineNumber) throws IOException { // tmp poner en changelog		  	
+		return getPopupPDFLines()[lineNumber];
+	}
+
+	/**
+	 * Assert the value for the specified line as text of PDF in the popup window.
+	 * 
+	 * @since 4.6
+	 */	
+	protected void assertPopupPDFLine(int lineNumber, String expectedContent) throws IOException { // tmp poner en changelog		  		
+		assertEquals(XavaResources.getString("pdf_line_not_match"), expectedContent, getPopupPDFLine(lineNumber)); // tmp i18n
+	}
+	
+	/**
+	 * Assert the count of lines of the PDF in the popup window.
+	 * 
+	 * @since 4.6
+	 */	
+	protected void assertPopupPDFLinesCount(int expectedCount) throws IOException { // tmp poner en changelog		  		
+		assertEquals(XavaResources.getString("pdf_lines_count_not_match"), expectedCount, getPopupPDFLinesCount()); // tmp i18n
+	}
+	
+	/**
+	 * The count of lines of the PDF in the popup window.
+	 * 
+	 * @since 4.6
+	 */	
+	protected int getPopupPDFLinesCount() throws IOException { // tmp poner en changelog		  				  		
+		return getPopupPDFLines().length;
+	}
+	
+	private String [] getPopupPDFLines() throws IOException { // tmp poner en changelog		  		
+		if (popupPDFLines == null) popupPDFLines = getPopupPDFAsText().split("\\r?\\n");  		
+		return popupPDFLines;
+	}	
+	
+	
 	/**
 	 * @param Varargs since 4m5.
 	 */

@@ -15,7 +15,7 @@ class OrphanageTest extends ModuleTestBase {
 	
 	void testGeneratePDFForACollectionInsideAGroup() {
 		execute "Mode.detailAndFirst"
-		execute "Print.generatePdf", "viewObject=xava_view_orphanage_orphans";
+		execute "Print.generatePdf", "viewObject=xava_view_orphanage_orphans"; 
 		assertNoErrors()
 		assertContentTypeForPopup "application/pdf"
 	}

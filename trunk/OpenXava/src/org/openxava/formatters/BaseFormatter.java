@@ -24,28 +24,28 @@ abstract public class BaseFormatter implements IFormatter {
 	}	
 	
 	/** Put a object in the context of the current module. */
-	protected void put(HttpServletRequest request, String nombre, Object valor) throws XavaException {
-		getContext(request).put(request, nombre, valor);
+	protected void put(HttpServletRequest request, String name, Object value) throws XavaException {
+		getContext(request).put(request, name, value);
 	}
 	
 	/** Get a object from the context of the current module. */
-	protected Object get(HttpServletRequest request, String nombre) throws XavaException {
-		return getContext(request).get(request, nombre);
+	protected Object get(HttpServletRequest request, String name) throws XavaException {
+		return getContext(request).get(request, name);
 	}
 	
 	/** Get a object from the context of the current module. */
-	protected Object get(HttpServletRequest request, String nombre, String clase) throws XavaException {
-		return getContext(request).get(request, nombre, clase);
+	protected Object get(HttpServletRequest request, String name, String className) throws XavaException {
+		return getContext(request).get(request, name, className);
 	}
 		
 	/** Get a String object from the context of the current module. */
-	protected String getString(HttpServletRequest request, String nombre) throws XavaException {
-		return (String) get(request, nombre);
+	protected String getString(HttpServletRequest request, String name) throws XavaException {
+		return (String) get(request, name);
 	}
 	
 	/** Get a Integer object from the context of the current module. */
-	protected Integer getInteger(HttpServletRequest request, String nombre) throws XavaException {
-		return (Integer) get(request, nombre);
+	protected Integer getInteger(HttpServletRequest request, String name) throws XavaException {
+		return (Integer) get(request, name);
 	}
 	
 }

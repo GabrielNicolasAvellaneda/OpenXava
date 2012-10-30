@@ -218,7 +218,7 @@ public class InvoiceTest extends ModuleTestBase {
 	public void testGeneratePdfAggregateCollection() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
-		execute("Print.generatePdf", "viewObject=xava_view_section1_details");
+		execute("Print.generatePdf", "viewObject=xava_view_section1_details"); 
 		assertContentTypeForPopup("application/pdf");
 	}
 	

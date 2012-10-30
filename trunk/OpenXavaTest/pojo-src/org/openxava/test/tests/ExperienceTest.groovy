@@ -29,7 +29,7 @@ class ExperienceTest extends ModuleTestBase {
 		assertNotExists "programmer.favouriteFramework" 
 		execute "Navigation.first"
 		assertValue "name", "SICAL"
-		assertValue "programmer.name", "JAVI"
+		assertValue "programmer.name", "JAVI" 
 		execute "Reference.search", "keyProperty=programmer.name"
 		assertListRowCount 3
 		execute "List.orderBy", "property=name"
@@ -55,7 +55,7 @@ class ExperienceTest extends ModuleTestBase {
 		assertListRowCount 2
 		execute "Mode.detailAndFirst"
 		assertValue "name", "SICAL"
-		assertValue "programmer.name", "JUANJO"
+		assertValue "programmer.name", "JUANJO" 
 		assertNotExists "programmer.favouriteFramework"
 		execute "Navigation.next"
 		assertNoErrors()

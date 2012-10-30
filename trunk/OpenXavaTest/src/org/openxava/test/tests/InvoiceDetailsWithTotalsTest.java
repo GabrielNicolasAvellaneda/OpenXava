@@ -46,7 +46,7 @@ public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
 		assertTotalInCollection("details", 1, 3,   "400.00");
 		assertTotalInCollection("details", 2, 3, "2,900.00");		
 		
-		execute("Print.generatePdf", "viewObject=xava_view_details");
+		execute("Print.generatePdf", "viewObject=xava_view_details"); 
 		assertContentTypeForPopup("application/pdf");
 		
 		execute("List.removeColumn", "columnIndex=3,collection=details");

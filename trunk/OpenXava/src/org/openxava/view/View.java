@@ -168,7 +168,8 @@ public class View implements java.io.Serializable {
 	private Collection<MetaProperty> recalculatedMetaProperties;
 	private List collectionValues; 
 	private Map<String, Collection<String>> changedActionsByProperty = null; 
-	private Collection propertiesWithChangedActions; 
+	private Collection propertiesWithChangedActions;
+	private Object pojo; // tmp
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -1356,27 +1357,34 @@ public class View implements java.io.Serializable {
 	public List getCollectionValues() throws XavaException {		
 		if (collectionValues == null) { 			
 			assertRepresentsCollection("getCollectionValues()");			
-			if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) {
+			if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) {				
 				// If calculated we obtain the data directly from the model object
 				Map mapMembersNames = new HashMap();
 				mapMembersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));
 				try	{
 					Map mapReturnValues = null;
 					Map mapKeys = getParent().getKeyValues();					
-					if ((null != mapKeys) && (!mapKeys.isEmpty())) {
+					// tmp if ((null != mapKeys) && (!mapKeys.isEmpty())) {
+					if (null != mapKeys && !mapKeys.isEmpty() && pojo == null) { // tmp
 						mapReturnValues = MapFacade.getValues(getParent().getModelName(), mapKeys, mapMembersNames);	
 					}
 					else {
 						// get transient view object model so that it might be used instead of keyValues, what is more fill
 						// it with data so that accessory methods might be used on current view members values
-						Object oParentObject =getParent().getMetaModel().getPOJOClass().newInstance();
+						// tmp Object oParentObject =getParent().getMetaModel().getPOJOClass().newInstance();
+						// tmp ini
+						Object oParentObject = getParent().pojo;
+						if (oParentObject == null) {
+							oParentObject = getParent().getMetaModel().getPOJOClass().newInstance();
+						}
+						// tmp fin
 						getParent().getMetaModel().fillPOJO(oParentObject, getParent().getValues());
 						mapReturnValues = MapFacade.getValues(getParent().getModelName(), oParentObject, mapMembersNames);
 					}
-					collectionValues = (List) mapReturnValues.get(getMemberName()); 
+					collectionValues = (List) mapReturnValues.get(getMemberName());
 				}
 				catch (ObjectNotFoundException ex) { // New one is creating
-					collectionValues = Collections.EMPTY_LIST; 
+					collectionValues = Collections.EMPTY_LIST;
 				}
 				catch (Exception ex) {
 					log.error(ex.getMessage(), ex);
@@ -2777,6 +2785,16 @@ public class View implements java.io.Serializable {
 			getMetaModel().fillPOJO(pojo, getParentIfSectionOrGroup().getAllValues());			
 			return pojo;			
 		}
+	}
+	
+	public void setPOJO(Object pojo) { // tmp ¿Este nombre?
+		this.pojo = pojo;
+		if (pojo == null) {
+			clear();
+			return;
+		}
+		setModelName(pojo.getClass().getSimpleName());
+		setValues(MapFacade.getValues(getModelName(), pojo, getMembersNamesWithHidden()));		
 	}
 	
 	/**

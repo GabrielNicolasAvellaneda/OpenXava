@@ -59,5 +59,7 @@
 	<classpathentry kind="lib" path="lib/httpcore.jar"/>
 	<classpathentry kind="lib" path="lib/httpmime.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/autobizlogic.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox.jar"/>
+	<classpathentry kind="lib" path="lib/fontbox.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

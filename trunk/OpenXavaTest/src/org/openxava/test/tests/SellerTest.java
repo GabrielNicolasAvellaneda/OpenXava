@@ -156,7 +156,7 @@ public class SellerTest extends ModuleTestBase {
 		execute("Collection.hideDetail");
 		assertMessage("Detail is hidden");
 		
-		execute("Print.generatePdf", "viewObject=xava_view_customers");
+		execute("Print.generatePdf", "viewObject=xava_view_customers"); // tmp
 		assertContentTypeForPopup("application/pdf");
 		
 		execute("Print.generateExcel", "viewObject=xava_view_customers");				

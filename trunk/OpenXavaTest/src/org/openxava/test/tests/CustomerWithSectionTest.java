@@ -14,6 +14,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
+		"ExtendedPrint.customReport",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow", 
@@ -31,6 +32,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	private String [] listCustomizeActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
+		"ExtendedPrint.customReport",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",

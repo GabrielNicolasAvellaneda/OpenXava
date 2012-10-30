@@ -12,6 +12,115 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 	public CarrierWithSectionsTest(String testName) {
 		super(testName, "CarrierWithSections");
 	}
+	
+	public void testCustomReport() throws Exception { // tmp
+		execute("ExtendedPrint.customReport");
+		assertValue("reportName", "Carrier report");
+		assertCollectionRowCount("columns", 3);
+		assertValueInCollection("columns", 0, 0, "calculated");
+		assertValueInCollection("columns", 1, 0, "number");
+		assertValueInCollection("columns", 2, 0, "name");
+
+		execute("CustomReport.columnUp", "row=2,viewObject=xava_view_columns");
+		assertValueInCollection("columns", 0, 0, "calculated");
+		assertValueInCollection("columns", 1, 0, "name");
+		assertValueInCollection("columns", 2, 0, "number");
+		
+		execute("CustomReport.columnDown", "row=0,viewObject=xava_view_columns");
+		assertValueInCollection("columns", 0, 0, "name");
+		assertValueInCollection("columns", 1, 0, "calculated");
+		assertValueInCollection("columns", 2, 0, "number");
+		
+		execute("CustomReport.removeColumn", "row=1,viewObject=xava_view_columns");
+		assertValueInCollection("columns", 0, 0, "name");
+		assertValueInCollection("columns", 1, 0, "number");
+		
+		execute("Collection.new", "viewObject=xava_view_columns");
+		String [][] validColumnNames = {
+			{ "", "" },	
+			{ "number", "number" },
+			{ "name", "name" },
+			{ "drivingLicence.type", "drivingLicence.type" },	
+			{ "drivingLicence.level", "drivingLicence.level" },	
+			{ "drivingLicence.description", "drivingLicence.description" },	
+			{ "warehouse.zoneNumber", "warehouse.zoneNumber" },	
+			{ "warehouse.number", "warehouse.number" },	
+			{ "warehouse.name", "warehouse.name" },	
+			{ "remarks", "remarks" },	
+			{ "calculated", "calculated" }
+		};
+		assertValidValues("columnName", validColumnNames);
+		assertValue("columnName", "");
+		String [][] emptyComparators = {
+			{ "", "" }
+		};
+		assertValidValues("comparator", emptyComparators);
+		setValue("columnName", "name");
+		String [][] stringComparators = {
+			{ "", "" },	
+			{ "starts_comparator", "starts" },
+			{ "contains_comparator", "contains" },
+			{ "not_contains_comparator", "not contains" },
+			{ "eq", "=" },
+			{ "ne", "<>" },  
+			{ "ge", ">=" }, 
+			{ "le", "<=" }, 
+			{ "gt", ">" }, 
+			{ "lt", "<" } 
+		};
+		assertValidValues("comparator", stringComparators);
+		setValue("columnName", "warehouse.zoneNumber");
+		String [][] numberComparators = {
+			{ "", "" },	
+			{ "eq", "=" },
+			{ "ne", "<>" },  
+			{ "ge", ">=" }, 
+			{ "le", "<=" }, 
+			{ "gt", ">" }, 
+			{ "lt", "<" } 
+		};
+		assertValidValues("comparator", numberComparators);		
+		setValue("comparator", "eq"); 
+		setValue("value", "1");
+		execute("CustomReport.saveColumn");
+		assertCollectionRowCount("columns", 3);
+		assertValueInCollection("columns", 0, 0, "name");
+		assertValueInCollection("columns", 0, 1, "");
+		assertValueInCollection("columns", 0, 2, "");
+		assertValueInCollection("columns", 1, 0, "number");
+		assertValueInCollection("columns", 1, 1, "");
+		assertValueInCollection("columns", 1, 2, "");		
+		assertValueInCollection("columns", 2, 0, "warehouse.zoneNumber");
+		assertValueInCollection("columns", 2, 1, "=");
+		assertValueInCollection("columns", 2, 2, "1");
+		
+		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
+		assertValue("columnName", "name");
+		setValue("comparator", "starts_comparator"); 
+		setValue("value", "C");
+		execute("CustomReport.saveColumn");
+		assertCollectionRowCount("columns", 3);
+		assertValueInCollection("columns", 0, 0, "name");
+		assertValueInCollection("columns", 0, 1, "starts with");
+		assertValueInCollection("columns", 0, 2, "C");
+		assertValueInCollection("columns", 1, 0, "number");
+		assertValueInCollection("columns", 1, 1, "");
+		assertValueInCollection("columns", 1, 2, "");		
+		assertValueInCollection("columns", 2, 0, "warehouse.zoneNumber");
+		assertValueInCollection("columns", 2, 1, "=");
+		assertValueInCollection("columns", 2, 2, "1");
+		
+						
+		setValue("reportName", "jUnit Carrier report");
+		execute("CustomReport.generatePdf");		
+		
+		printPopupPDFAsText(); // tmp
+		assertPopupPDFLinesCount(5); // Instead of 9, because of warehouse.zoneNumber = 1 and name like 'C%' condition 
+		assertPopupPDFLine(1, "jUnit Carrier report");
+		assertPopupPDFLine(2, "Name Number Zone");
+		assertPopupPDFLine(3, "CUATRO 4 1");
+	}
+
 		
 	public void testCarrierSelected() throws Exception{
 		assertListNotEmpty();
@@ -42,6 +151,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"Mode.split",
 			"Print.generatePdf",
 			"Print.generateExcel",
+			"ExtendedPrint.customReport",
 			"CRUD.new",
 			"CRUD.deleteSelected",
 			"CRUD.deleteRow", 
@@ -62,7 +172,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"Mode.detailAndFirst",							
 			"Mode.split",
 			"Print.generatePdf",
-			"Print.generateExcel",
+			"Print.generateExcel",			
 			"CarrierWithSections.setTypicalController",
 			"CarrierWithSections.setPrintController",
 			"CarrierWithSections.setDefaultControllers",
@@ -79,6 +189,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"Mode.split",
 			"Print.generatePdf",
 			"Print.generateExcel",
+			"ExtendedPrint.customReport",
 			"CRUD.new",
 			"CRUD.deleteSelected",
 			"CRUD.deleteRow", 

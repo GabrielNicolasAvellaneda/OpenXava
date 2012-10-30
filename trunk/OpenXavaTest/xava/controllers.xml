@@ -26,6 +26,55 @@
 		</action>	
 	</controller>
 	
+	<!--  tmp Mover a default-controllers.xml -->	
+	<controller name="ExtendedPrint">
+		<extends controller="Print"/>
+		<action name="customReport" mode="list"
+			class="org.openxava.actions.CustomReportAction"
+			image="report.gif">	
+		</action>							
+	</controller>
+	
+	
+	<!-- tmp Mover a default-controllers.xml -->
+	<controller name="CustomReport">
+		<action name="generatePdf" 
+			class="org.openxava.actions.GenerateCustomReportAction"
+			keystroke="Control Alt P">
+			<set property="type" value="pdf"/>
+		</action>
+		<action name="cancel" 
+			class="org.openxava.actions.CancelDialogAction"/>
+		<action name="columnUp" hidden="true" 
+			class="org.openxava.actions.CustomReportColumnUpAction"
+			image="descending.gif"/>
+		<action name="columnDown" hidden="true"
+			class="org.openxava.actions.CustomReportColumnDownAction"
+			image="ascending.gif"/>
+		<!-- 
+		¿Confirmación en removeColumn? Puede que no porque:
+		- Más velocidad de edición, como borrar una línea en un texto
+		- No borramos información de ninguna base de datos
+		- Es fácil volver a añadir, no es como perder un documento o un registro con muchos datos.
+		- Precedentes:
+				- Borrar en textos o código fuente.
+				- Eliminar columnas en personalización de lista OX.
+		- Me gusta sensación de eliminación inmediata
+		- No me da miedo la eliminación sin preguntar	
+		-->	
+		<action name="removeColumn" hidden="true" in-each-row="true"
+			class="org.openxava.actions.RemoveCustomReportColumnAction"
+			image="delete.gif"/>
+			
+		<action name="saveColumn" hidden="true" 
+			class="org.openxava.actions.SaveCustomReportColumnAction"/>
+			
+		<action name="editColumn" hidden="true" 
+			class="org.openxava.actions.EditCustomReportColumnAction"
+			image="edit.gif"/>																	
+																				
+	</controller>
+	
 	<controller name="Author">	
 		<extends controller="Typical"/>		
         <action name="searchAuthor" hidden="true"

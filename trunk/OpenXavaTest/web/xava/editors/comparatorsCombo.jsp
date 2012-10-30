@@ -2,6 +2,7 @@
 
 <%@page import="org.openxava.web.Actions"%>
 <%@page import="org.openxava.web.Ids"%>
+<%@page import="org.openxava.model.meta.MetaProperty"%>
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -11,6 +12,7 @@ String prefix = request.getParameter("prefix");
 if (prefix == null) prefix = "";
 boolean isString = "true".equals(request.getParameter("isString"));
 boolean isDate = "true".equals(request.getParameter("isDate"));
+boolean isEmpty = "true".equals(request.getParameter("isEmpty"));
 String eq = "eq".equals(comparator)?"selected='selected'":"";
 String ne = "ne".equals(comparator)?"selected='selected'":"";
 String ge = "ge".equals(comparator)?"selected='selected'":"";
@@ -24,13 +26,42 @@ String year = "year_comparator".equals(comparator)?"selected='selected'":"";
 String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":"";
 String range = "range_comparator".equals(comparator)?"selected='selected'":"";
-int index = Integer.parseInt(request.getParameter("index"));
+// tmp int index = Integer.parseInt(request.getParameter("index"));
 String idConditionValue = request.getParameter("idConditionValue");
 String idConditionValueTo = request.getParameter("idConditionValueTo");
-String name = Ids.decorate(request, prefix + "conditionComparator." + index);
-String actionOnChangeComparator = Actions.getActionOnChangeComparator(name,idConditionValue,idConditionValueTo);
+// tmp String name = Ids.decorate(request, prefix + "conditionComparator." + index);
+// tmp String actionOnChangeComparator = Actions.getActionOnChangeComparator(name,idConditionValue,idConditionValueTo);
+// tmp ini
+String propertyKey = request.getParameter("comparatorPropertyKey"); 
+String name = null;
+String script = null;
+if (propertyKey == null) {
+	int index = Integer.parseInt(request.getParameter("index"));
+	name = Ids.decorate(request, prefix + "conditionComparator." + index);
+	script = Actions.getActionOnChangeComparator(name,idConditionValue,idConditionValueTo);
+}
+else {
+	name = propertyKey;
+	script = request.getParameter("script");
+}
+// tmp fin
 %>
+<%-- tmp 
 <select id="<%=name%>" name="<%=name%>" class=<%=style.getEditor()%> <%=actionOnChangeComparator%>>
+--%>
+<%-- tmp ini--%>
+<select id="<%=name%>" name="<%=name%>" class=<%=style.getEditor()%> <%=script%>>
+	<% 
+	if (propertyKey != null) {
+	%>
+	<option value=""></option>	
+	<% 
+	}
+	%>
+<%-- tmp fin --%>
+	<% 
+	if (!isEmpty) { 
+	%>
 	<%
 	if (isString) {
 	%>						
@@ -55,6 +86,15 @@ String actionOnChangeComparator = Actions.getActionOnChangeComparator(name,idCon
 	<%
 	}	
 	%>
+	<% 
+	if (propertyKey == null) { // tmp
+	%>	
 	<option value="range_comparator" <%=range%>><xava:message key="range_comparator"/></option>
+	<%
+	}
+	%>
+	<%
+	} // tmp isEmpty
+	%>
 </select>	
 	

@@ -26,6 +26,7 @@ public class CustomerTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
+		"ExtendedPrint.customReport",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
@@ -51,7 +52,7 @@ public class CustomerTest extends ModuleTestBase {
 		this.section = section?"_section0":"";		
 	}
 	
-	public void testPdfReportInNestedCollection() throws Exception {
+	public void testPdfReportInNestedCollection() throws Exception { 
 		execute("CRUD.new");
 		setValue("number", "4");
 		execute("CRUD.refresh");

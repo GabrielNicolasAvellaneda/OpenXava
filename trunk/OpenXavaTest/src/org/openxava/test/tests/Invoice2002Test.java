@@ -12,6 +12,7 @@ public class Invoice2002Test extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
+		"ExtendedPrint.customReport",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",

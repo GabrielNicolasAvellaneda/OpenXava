@@ -109,7 +109,8 @@ public class Tab implements java.io.Serializable {
 	private static int nextOid = 0; 
 	private int oid = nextOid++; 
 	private String tabObject;
-	private boolean usesConverters; 
+	private boolean usesConverters;
+	private String title; // tmp 
 	
 	
 	
@@ -1130,6 +1131,7 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	public String getTitle() throws XavaException {
+		if (title != null) 	return title; 		
 		if (getCollectionView() != null) return getCollectionTitle(); 
 		String modelName = getModelName();
 		String tabName = getTabName();
@@ -1138,6 +1140,10 @@ public class Tab implements java.io.Serializable {
 		if (title != null) return putTitleArguments(locale, title);		
 		String modelLabel = MetaModel.get(modelName).getLabel(locale); 
 		return XavaResources.getString(request, "report_title", modelLabel);					
+	}
+	
+	public void setTitle(String title) { // tmp En changelog
+		this.title = title;		
 	}
 	
 	private String getCollectionTitle() throws XavaException {		

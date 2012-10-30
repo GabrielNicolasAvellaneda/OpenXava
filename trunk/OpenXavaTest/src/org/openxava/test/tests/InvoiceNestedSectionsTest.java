@@ -18,7 +18,7 @@ public class InvoiceNestedSectionsTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");		
 		assertCollectionNotEmpty("details");
-		execute("Print.generatePdf", "viewObject=xava_view_section1_section0_details");
+		execute("Print.generatePdf", "viewObject=xava_view_section1_section0_details"); 
 		assertNoErrors();
 		assertContentTypeForPopup("application/pdf");		
 	}

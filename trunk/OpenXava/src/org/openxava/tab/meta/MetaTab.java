@@ -134,7 +134,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 				if (Labels.exists(labelId)) {
 					metaProperty.setLabelId(labelId);
 				} else if (metaPropertiesTab != null) {
-					// By now only the label overwrited from the property of tab 
+					// By now only the label overwritten from the property of tab 
 					metaPropertyTab = (MetaProperty) metaPropertiesTab
 							.get(name);
 					if (metaPropertyTab != null) {

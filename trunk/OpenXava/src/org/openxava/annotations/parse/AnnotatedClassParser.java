@@ -2352,13 +2352,26 @@ public class AnnotatedClassParser {
 		String className = null;
 		for (String packageName: getManagedClassPackages()) {
 			className = packageName + name;			
-			try {				
+			try {			
 				Class.forName(className);
 				return className;
 			}
 			catch (ClassNotFoundException ex) {				
 			}
 		}
+		// tmp ini
+		// Mover esto a una propiedad de xava.properties donde obtener getTransientClassPackages()
+		//   de esta manera los desarrolladores también tendrán la posibilidad de poner las clases
+		//   transitoria donde les plazca, lo cual ha pedido a veces
+		// ¿Usar Package? Puede que tenga sentido cuando se usa setModel() (o setPOJO() o setEntity())
+		className = "org.openxava.model.inner." + name;			
+		try {				
+			Class.forName(className);
+			return className;
+		}
+		catch (ClassNotFoundException ex) {				
+		}
+		// tmp fin
 		throw new XavaException("not_ejb3_entity_nor_transient_model", name);
 	}
 		

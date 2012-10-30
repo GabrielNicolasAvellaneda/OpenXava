@@ -20,7 +20,7 @@ public class InvoiceCustomerAsAggregateTest extends ModuleTestBase {
 		setValue("name", "JUNIT DELIVERY PLACE NAME");
 		setValue("address", "JUNIT DELIVERY PLACE ADDRESS");
 		execute("Collection.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertCollectionRowCount("customer.deliveryPlaces", 1);		
 		checkRowCollection("customer.deliveryPlaces", 0);
 		execute("Collection.removeSelected", "viewObject=xava_view_customer_deliveryPlaces");
