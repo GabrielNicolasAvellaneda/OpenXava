@@ -191,11 +191,11 @@ public class MetaWebEditors {
 		return editorsByStereotype;
 	}
 	
-	private static Map getEditorsByModelProperty() throws XavaException {
+	private static Map getEditorsByModelProperty() throws XavaException {		
 		if (editorsByModelProperty == null) {
 			initMaps();
-			EditorsParser.setupEditors();
-		}
+			EditorsParser.setupEditors();			
+		}		
 		return editorsByModelProperty;
 	}
 	

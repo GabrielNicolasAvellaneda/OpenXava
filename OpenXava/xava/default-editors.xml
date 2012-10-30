@@ -186,6 +186,23 @@
 		<property name="alsoDeleteFile" value="true"/>
 		<for-stereotype stereotype="DOCUMENT_LIBRARY" />
 		<for-stereotype stereotype="LIBRERIA_DOCUMENTOS" />
-	</editor>		
+	</editor>
 	
+	<!-- tmp -->
+	<editor url="textEditor.jsp">
+		<for-model-property model="CustomReport" property="reportName"/>
+		<for-model-property model="CustomReportColumn" property="value" />
+	</editor>
+	
+	<!-- tmp -->
+	<editor url="customReportColumnEditor.jsp">
+		<for-model-property model="CustomReportColumn" property="columnName" />
+	</editor>
+	
+	<!-- tmp -->
+	<editor url="customReportComparatorEditor.jsp">
+		<list-formatter class="org.openxava.formatters.CustomReportComparatorListFormatter"/>
+		<for-model-property model="CustomReportColumn" property="comparator" />
+	</editor>
+									
 </editors>

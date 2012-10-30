@@ -20,7 +20,7 @@ public class TreeContainerNoOrderTest extends TreeViewNoOrderTestBase {
 		assertNoErrors();
 		assertAction("TreeView.new");
 		assertAction("TreeView.removeSelected");
-		assertAction("Print.generatePdf");
+		assertAction("Print.generatePdf"); 
 		assertAction("Print.generateExcel");
 		assertNoAction("TreeView.up");
 		assertNoAction("TreeView.down");

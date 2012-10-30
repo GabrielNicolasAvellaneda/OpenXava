@@ -203,10 +203,10 @@ public class WebEditors {
 		if (m.getMetaModel() != null) {
 			try {				
 				MetaView metaView = m.getMetaModel().getMetaView(viewName);				
-				String editorName = metaView.getEditorFor(m);				
+				String editorName = metaView.getEditorFor(m);
 				if (!Is.emptyString(editorName)) {
 					MetaEditor metaEditor = MetaWebEditors.getMetaEditorByName(editorName);
-					if (metaEditor != null) {
+					if (metaEditor != null) {						
 						return metaEditor;
 					}
 					else {

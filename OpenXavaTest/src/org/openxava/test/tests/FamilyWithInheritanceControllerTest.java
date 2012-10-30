@@ -33,6 +33,7 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
+		"ExtendedPrint.customReport",
 		"Family.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",

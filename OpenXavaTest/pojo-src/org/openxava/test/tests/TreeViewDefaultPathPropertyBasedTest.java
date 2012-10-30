@@ -20,7 +20,7 @@ public class TreeViewDefaultPathPropertyBasedTest extends TreeViewTestBase {
 		assertNoErrors();
 		assertAction("TreeView.new");
 		assertAction("TreeView.removeSelected");
-		assertAction("Print.generatePdf");
+		assertAction("Print.generatePdf"); 
 		assertAction("Print.generateExcel");
 		assertAction("TreeView.up");
 		assertAction("TreeView.down");

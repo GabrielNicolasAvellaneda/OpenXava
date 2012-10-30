@@ -5,20 +5,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.*;
+
 import org.openxava.model.MapFacade;
+import org.openxava.model.inner.*;
 import org.openxava.util.XavaException;
 
 
 /**
- * @author Javier Paniza
- * Modified by Federico Alcantara. Fix bug 2976466.
+ * tmp ¿Hacerlo genérico para cualquier entidad transitoria?
+ * 
+ * @author Javier Paniza 
  */
 
-public class EditElementInCollectionAction extends CollectionElementViewBaseAction  {
+public class EditCustomReportColumnAction extends CollectionElementViewBaseAction  {
+	
+	@Inject
+	private CustomReport customReport; 
 	
 	private int row;
-	
-	
+		
 	@SuppressWarnings("unchecked")
 	public void execute() throws Exception {
 		getCollectionElementView().clear(); 
@@ -26,22 +32,31 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 		Collection elements;
 		Map keys = null;
 		Map	values = null;
-		if (getCollectionElementView().isCollectionCalculated()) {		
+		/* tmp original
+		if (getCollectionElementView().isCollectionCalculated()) {				
 			elements = getCollectionElementView().getCollectionValues();
 			if (elements == null) return;
 			if (elements instanceof List) {
 				keys = (Map) ((List) elements).get(getRow());			
-			}
+			}	
 		} else {
 			keys = (Map) getCollectionElementView().getCollectionTab().getTableModel().getObjectAt(row);
 		}
 		if (keys != null) {
 			values = MapFacade.getValues(getCollectionElementView().getModelName(), keys, getCollectionElementView().getMembersNames());
-			getCollectionElementView().setValues(values);						
+			getCollectionElementView().setValues(values);
+		 */									
 			getCollectionElementView().setCollectionEditingRow(getRow());
+			// tmp ini
+			CustomReportColumn column = customReport.getColumns().get(row); 
+			getCollectionElementView().setPOJO(column); 
+			getCollectionElementView().setValueNotifying("columnName", column.getColumnName()); // To throw the change event  
+			// tmp fin			
+		 /*	
 		} else {
 			throw new XavaException("only_list_collection_for_aggregates");
 		}
+		 */
 		showDialog(getCollectionElementView());		
 		if (getCollectionElementView().isCollectionEditable() || 
 			getCollectionElementView().isCollectionMembersEditables()) 

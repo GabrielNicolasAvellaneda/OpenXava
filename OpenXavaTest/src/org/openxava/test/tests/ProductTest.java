@@ -32,6 +32,7 @@ public class ProductTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
+		"ExtendedPrint.customReport",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
