@@ -6,6 +6,7 @@
 <%@ page import="org.openxava.filters.IFilter"%>
 <%@ page import="org.openxava.filters.IRequestFilter"%>
 <%@ page import="org.openxava.component.MetaComponent"%>
+<%@ page import="org.openxava.tab.Tab"%>
 <%@ page import="org.openxava.tab.meta.MetaTab"%>
 <%@ page import="org.openxava.util.KeyAndDescription" %>
 <%@ page import="org.openxava.util.Is" %>
@@ -82,7 +83,7 @@ calculator.setOrderByKey(orderByKey);
 java.util.Collection descriptions = calculator.getDescriptions();
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 %>
-<input type="hidden" name="<xava:id name='<%=prefix  + "conditionComparator."  + index%>'/>" value="eq">
+<input type="hidden" name="<xava:id name='<%=prefix  + "conditionComparator."  + index%>'/>" value="<%=Tab.EQ_COMPARATOR%>">
 <input type="hidden" name="<xava:id name='<%=prefix  + "conditionValueTo."  + index%>'/>" >
 
 <select name="<xava:id name='<%=prefix + "conditionValue." + index%>'/>" class=<%=style.getEditor()%>>

@@ -1,13 +1,13 @@
 package org.openxava.actions;
 
+import java.util.*;
+
 import javax.inject.*;
 
-import org.openxava.model.inner.*;
+import org.openxava.session.*;
 import org.openxava.tab.*;
-import org.openxava.util.*;
 
 /**
- * tmp
  * 
  * @author Javier Paniza
  */
@@ -22,28 +22,36 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 		Tab tab = new Tab();
 		tab.setModelName(getTab().getModelName());
 		tab.setTabName(getTab().getTabName());
-		tab.setTitle(getView().getValueString("reportName"));		
-		tab.clearProperties();
-		StringBuffer condition = new StringBuffer(getTab().getBaseCondition()==null?"":getTab().getBaseCondition()); 
+		tab.setTitle(getView().getValueString("name"));		
+		tab.clearProperties();		
+		Collection<String> comparators = new ArrayList<String>();
+		Collection<String> values = new ArrayList<String>();
+		StringBuffer order = new StringBuffer();
 		for (CustomReportColumn column: customReport.getColumns()) {
-			tab.addProperty(column.getColumnName());
+			tab.addProperty(column.getName());
+			if (column.isCalculated()) continue;
 			if (column.getComparator() != null) {
-				if (condition.length() > 0) {
-					condition.append(" AND ");
-				}
-				condition.append("${");
-				condition.append(column.getColumnName());
-				condition.append("} ");
-				condition.append(column.getComparatorSign());
-				condition.append(' ');
-				condition.append(column.getDecoratedValue());
+				comparators.add(column.getComparator());
+				values.add(column.getValueForCondition());				
 			}
-		}
-		tab.setBaseCondition(condition.toString());
+			else {
+				comparators.add(null);
+				values.add(null);				
+			}
+			if (column.getOrder() != null) {
+				order.append(order.length() == 0?"":", ");
+				order.append("${");
+				order.append(column.getName());
+				order.append("} ");
+				order.append(column.getOrder() == CustomReportColumn.Order.ASCENDING?"ASC":"DESC");				
+			}
+		}		
+		tab.setConditionComparators(comparators);
+		tab.setConditionValues(values);
 		
+		if (order.length() > 0) tab.setDefaultOrder(order.toString());
 		
-		getRequest().getSession().setAttribute("xava_reportTab", tab);
-		// tmp ¿Qué hacemos con esto? getRequest().getSession().setAttribute("xava_selectedRowsReportTab", getTab().getSelected());		
+		getRequest().getSession().setAttribute("xava_reportTab", tab);		
 		closeDialog();
 	}
 	

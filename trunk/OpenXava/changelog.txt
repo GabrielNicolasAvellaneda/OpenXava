@@ -1,6 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- Custom reports in list mode that allow user define its own reports using a dialog.
+- New property model (setModel()/getModel() in View for populating a View directly from a model object (an entity or transient class). 
+- BooleanFormatter parses null as null and not as false, so Boolean values can be true, false or null.
+- It's possible to assert PDF content in jUnit tests with new 6 methods of ModuleTestBase, such as assertPopupPDFLine(). 
+- New setTitle(), setConditionValues() and setConditionComparators() methods in Tab.
+- New BooleanYesNoCombo editor to show booleans with a YES/NO combo.
 - Many new common use labels to be used in applications.
 - Labels and messages available in Russian.
 - New attribute editor in @Tab to define an editor for a tab. Also available for XML version with <tab editor=/>.

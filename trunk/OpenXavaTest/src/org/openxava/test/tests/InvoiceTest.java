@@ -57,10 +57,81 @@ public class InvoiceTest extends ModuleTestBase {
 		return element.contains("display: inline;");
 	}
 	
+	public void testCustomReportFilteringByDateAndBooleanWithConverter() throws Exception { 
+		// Date
+		execute("ExtendedPrint.customReport");
+		assertValueInCollection("columns", 2, 0, "date");
+		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		String [][] dateComparators = {
+			{ "", "" },	
+			{ "eq_comparator", "=" },
+			{ "ne_comparator", "<>" },
+			{ "ge_comparator", ">=" },
+			{ "le_comparator", "<=" }, 
+			{ "gt_comparator", ">" },
+			{ "lt_comparator", "<" },
+			{ "year_comparator", "year =" },
+			{ "month_comparator", "month =" },
+			{ "year_month_comparator", "year/month =" }
+		};
+		assertValidValues("comparator", dateComparators);		
+		setValue("comparator", "year_comparator");
+		setValue("value", "2004");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 2, 0, "date");
+		assertValueInCollection("columns", 2, 1, "year =");
+		assertValueInCollection("columns", 2, 2, "2004");
+		
+		execute("CustomReport.generatePdf");		
+		assertPopupPDFLinesCount(6);  
+		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));
+		assertTrue(getPopupPDFLine(4).startsWith("2004 9"));
+
+		// Boolean
+		execute("ExtendedPrint.customReport");
+		assertValueInCollection("columns", 6, 0, "paid");
+		execute("CustomReport.editColumn", "row=6,viewObject=xava_view_columns");
+		String [][] booleanValues = {
+			{ "", "" },	
+			{ "true", "Yes" },
+			{ "false", "No" }
+		};
+		assertValidValues("booleanValue", booleanValues);
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 6, 0, "paid");
+		assertValueInCollection("columns", 6, 1, "");
+		assertValueInCollection("columns", 6, 2, ""); // BTW, this tests BooleanFormatter for supporting nulls 
+		
+		execute("CustomReport.editColumn", "row=6,viewObject=xava_view_columns");
+		assertExists("booleanValue");
+		assertNotExists("comparator");
+		assertNotExists("value");
+		assertExists("order");
+		setValue("name", "year");
+		assertNotExists("booleanValue");
+		assertExists("comparator");
+		assertExists("value");
+		assertExists("order");
+		setValue("name", "paid");
+		assertExists("booleanValue");
+		assertNotExists("comparator");
+		assertNotExists("value");
+		assertExists("order");
+		setValue("booleanValue", "true");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 6, 0, "paid");
+		assertValueInCollection("columns", 6, 1, "=");
+		assertValueInCollection("columns", 6, 2, "Yes");
+		
+		execute("CustomReport.generatePdf");		
+		assertPopupPDFLinesCount(5);  
+		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));		
+	}
+	
 	public void testFilterByRange() throws Exception{ 
 		assertLabelInList(0, "Year");
 		assertLabelInList(2, "Date");
-		assertLabelInList(6, "Paid");
+		assertLabelInList(6, "Paid");		
 		// int
 		setConditionComparators("range_comparator");
 		setConditionValues("2000");

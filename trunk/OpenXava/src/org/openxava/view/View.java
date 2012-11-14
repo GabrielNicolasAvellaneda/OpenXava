@@ -169,7 +169,7 @@ public class View implements java.io.Serializable {
 	private List collectionValues; 
 	private Map<String, Collection<String>> changedActionsByProperty = null; 
 	private Collection propertiesWithChangedActions;
-	private Object pojo; // tmp
+	private Object model; 
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -1364,20 +1364,16 @@ public class View implements java.io.Serializable {
 				try	{
 					Map mapReturnValues = null;
 					Map mapKeys = getParent().getKeyValues();					
-					// tmp if ((null != mapKeys) && (!mapKeys.isEmpty())) {
-					if (null != mapKeys && !mapKeys.isEmpty() && pojo == null) { // tmp
+					if (null != mapKeys && !mapKeys.isEmpty() && model == null) { 
 						mapReturnValues = MapFacade.getValues(getParent().getModelName(), mapKeys, mapMembersNames);	
 					}
 					else {
 						// get transient view object model so that it might be used instead of keyValues, what is more fill
 						// it with data so that accessory methods might be used on current view members values
-						// tmp Object oParentObject =getParent().getMetaModel().getPOJOClass().newInstance();
-						// tmp ini
-						Object oParentObject = getParent().pojo;
+						Object oParentObject = getParent().model;
 						if (oParentObject == null) {
 							oParentObject = getParent().getMetaModel().getPOJOClass().newInstance();
 						}
-						// tmp fin
 						getParent().getMetaModel().fillPOJO(oParentObject, getParent().getValues());
 						mapReturnValues = MapFacade.getValues(getParent().getModelName(), oParentObject, mapMembersNames);
 					}
@@ -2227,12 +2223,12 @@ public class View implements java.io.Serializable {
 	}
 
 	private void assignValuesToMembers(String qualifier, Collection members) { 
-		for (Object m: members) { 				
+		for (Object m: members) { 					
 			if (isMetaProperty(m)) {
 				MetaProperty p = (MetaProperty) m;
 				String propertyKey= qualifier + p.getName();
 				String valueKey = propertyKey + ".value";
-				String [] results = getRequest().getParameterValues(propertyKey);
+				String [] results = getRequest().getParameterValues(propertyKey);				
 				Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
 				boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
 				if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
@@ -2787,14 +2783,34 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	public void setPOJO(Object pojo) { // tmp ¿Este nombre?
-		this.pojo = pojo;
-		if (pojo == null) {
+	/** 
+	 * The model object attached to this view using {@link #setModel(Object model)}. <p>
+	 * 
+	 * If there is no model attached, that is the setModel() method has not been called on this View,
+	 * it returns null. If you want to get the view data as an entity even if you have not attached
+	 * a model to it before, use the {@link getEntity()} method instead.
+	 * 
+	 *  @since 4.6
+	 */
+	public Object getModel() { 
+		return model; 
+	}
+	
+	/**
+	 * The view will be populate with data from the model object, and the model object is attached to the view. <p>
+	 * 
+	 * You can even assign a model of different type of the current one and the view will change its shape.<br>
+	 * 
+	 * @since 4.6
+	 */
+	public void setModel(Object model) { 
+		this.model = model;
+		if (model == null) {
 			clear();
 			return;
 		}
-		setModelName(pojo.getClass().getSimpleName());
-		setValues(MapFacade.getValues(getModelName(), pojo, getMembersNamesWithHidden()));		
+		setModelName(model.getClass().getSimpleName());
+		setValues(MapFacade.getValues(getModelName(), model, getMembersNamesWithHidden()));		
 	}
 	
 	/**

@@ -659,7 +659,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		try {
 			MetaProperty clon = (MetaProperty) super.clone();
 			// The next is to force calculate its properties and thus
-			// the cloned metaproperty can be desconected from model 
+			// the cloned metaproperty can be disconnected from model 
 			clon.isReadOnly(); 
 			clon.getType();
 			

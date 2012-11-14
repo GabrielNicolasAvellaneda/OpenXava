@@ -34,14 +34,14 @@ public class BooleanFormatter implements IFormatter {
 	}
 	
 	public Object parse(HttpServletRequest request, String string) {
-		if (Is.emptyString(string)) return Boolean.FALSE;
+		if (Is.emptyString(string)) return null; 
 		if (
 			"yes".equalsIgnoreCase(string) ||
 			"SÍ".equalsIgnoreCase(string) ||
 			"Sí".equalsIgnoreCase(string) ||
 			"Si".equalsIgnoreCase(string) ||
 			"true".equalsIgnoreCase(string) ||
-			"verdadero".equalsIgnoreCase(string)) return Boolean.TRUE;	 				
+			"verdadero".equalsIgnoreCase(string)) return Boolean.TRUE;
 		return Boolean.FALSE;
 	}
 	

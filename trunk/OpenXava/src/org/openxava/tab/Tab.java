@@ -36,21 +36,27 @@ public class Tab implements java.io.Serializable {
 	 * Prefix used for naming (in session) to the tab objects used for collections.
 	 */
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
-	public final static String TAB_RESETED_PREFIX = "xava.tab.reseted."; 
+	public final static String TAB_RESETED_PREFIX = "xava.tab.reseted.";
 	
+	public final static String STARTS_COMPARATOR = "starts_comparator";
+	public final static String CONTAINS_COMPARATOR = "contains_comparator";
+	public final static String NOT_CONTAINS_COMPARATOR = "not_contains_comparator";
+	public final static String YEAR_COMPARATOR = "year_comparator";
+	public final static String MONTH_COMPARATOR = "month_comparator";
+	public final static String YEAR_MONTH_COMPARATOR = "year_month_comparator";
+	public final static String RANGE_COMPARATOR = "range_comparator";	
+	public final static String EQ_COMPARATOR = "eq_comparator";
+	public final static String NE_COMPARATOR = "ne_comparator";
+	public final static String GE_COMPARATOR = "ge_comparator";
+	public final static String LE_COMPARATOR = "le_comparator";
+	public final static String GT_COMPARATOR = "gt_comparator";
+	public final static String LT_COMPARATOR = "lt_comparator";	
 	private final static String PROPERTIES_NAMES = "propertiesNames";
 	private final static String SUM_PROPERTIES_NAMES = "sumPropertiesNames"; 
 	private final static String ROWS_HIDDEN = "rowsHidden";
 	private final static String FILTER_VISIBLE = "filterVisible";
 	private final static String PAGE_ROW_COUNT = "pageRowCount"; 
 	private final static String COLUMN_WIDTH = "columnWidth."; 
-	private final static String STARTS_COMPARATOR = "starts_comparator";
-	private final static String CONTAINS_COMPARATOR = "contains_comparator";
-	private final static String NOT_CONTAINS_COMPARATOR = "not_contains_comparator";
-	private final static String YEAR_COMPARATOR = "year_comparator";
-	private final static String MONTH_COMPARATOR = "month_comparator";
-	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator";
-	private final static String RANGE_COMPARATOR = "range_comparator"; 
 	private final static int MAX_PAGE_ROW_COUNT = 20; 
 	
 	private int pageRowCount = XavaPreferences.getInstance().getPageRowCount();
@@ -110,9 +116,7 @@ public class Tab implements java.io.Serializable {
 	private int oid = nextOid++; 
 	private String tabObject;
 	private boolean usesConverters;
-	private String title; // tmp 
-	
-	
+	private String title;  
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
@@ -461,7 +465,7 @@ public class Tab implements java.io.Serializable {
 					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
 					if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i]) ||
 						RANGE_COMPARATOR.equals(this.conditionComparators[i]) ||
-						Timestamp.class.equals(p.getType()) && "eq".equals(this.conditionComparators[i])) {
+						Timestamp.class.equals(p.getType()) && EQ_COMPARATOR.equals(this.conditionComparators[i])) {
 						metaPropertiesKey.add(null);
 						metaPropertiesKey.add(null);
 					}
@@ -479,7 +483,7 @@ public class Tab implements java.io.Serializable {
 							continue;
 						}
 						Object v = p.parse(value.toString(), getLocale());
-						if (v instanceof Timestamp && "eq".equals(this.conditionComparators[i])) {
+						if (v instanceof Timestamp && EQ_COMPARATOR.equals(this.conditionComparators[i])) {
 							valuesToWhere.add(Dates.cloneWithoutTime((Timestamp) v));
 							valuesToWhere.add(Dates.cloneWith2359((Timestamp) v));
 							comparatorsToWhere.add(this.conditionComparators[i]);
@@ -589,7 +593,7 @@ public class Tab implements java.io.Serializable {
 		if (MONTH_COMPARATOR.equals(comparator)) return "=";
 		if (YEAR_MONTH_COMPARATOR.equals(comparator)) return "=";
 		if (RANGE_COMPARATOR.equals(comparator)) return "between ? and ";
-		if ("eq".equals(comparator)) {
+		if (EQ_COMPARATOR.equals(comparator)) {
 			if (p.getType().equals(Timestamp.class)) {
 				return "between ? and ";
 			}
@@ -597,11 +601,11 @@ public class Tab implements java.io.Serializable {
 				return "=";
 			}
 		}
-		if ("ne".equals(comparator)) return "<>";
-		if ("ge".equals(comparator)) return ">=";
-		if ("le".equals(comparator)) return "<=";
-		if ("gt".equals(comparator)) return ">";
-		if ("lt".equals(comparator)) return "<";
+		if (NE_COMPARATOR.equals(comparator)) return "<>";
+		if (GE_COMPARATOR.equals(comparator)) return ">=";
+		if (LE_COMPARATOR.equals(comparator)) return "<=";
+		if (GT_COMPARATOR.equals(comparator)) return ">";
+		if (LT_COMPARATOR.equals(comparator)) return "<";
 		return comparator;
 	}
 	
@@ -923,21 +927,39 @@ public class Tab implements java.io.Serializable {
 		this.conditionValues = values;
 		condition = null;
 	}
+	
+	/**
+	 * 
+	 * @since 4.6
+	 */
+	public void setConditionValues(Collection<String> values) throws XavaException {  
+		this.conditionValues = XCollections.toStringArray(values);
+		condition = null;
+	}	
 
-	private void setConditionValuesToImpl(String [] values) throws XavaException {
+	private void setConditionValuesToImpl(String [] values) throws XavaException { 
 		if (Arrays.equals(this.conditionValuesTo, values)) return;
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
 		this.conditionValuesTo = values;				
 		condition = null;
 	}
 	
-	private void setConditionComparatorsImpl(String [] comparators) throws XavaException {
-		if (Arrays.equals(this.conditionComparators, comparators)) return;		
-		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
+	private void setConditionComparatorsImpl(String [] comparators) throws XavaException { 
+		if (Arrays.equals(this.conditionComparators, comparators)) return;
+		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;
 		this.conditionComparators = comparators;
 		condition = null;						
 	}
-		
+
+	/**
+	 * 
+	 * @since 4.6
+	 */	
+	public void setConditionComparators(Collection<String> comparators) throws XavaException {  
+		this.conditionComparators = XCollections.toStringArray(comparators);
+		condition = null;						
+	}	
+	
 	public String [] getConditionValues() {
 		setFilteredConditionValues(); 
 		return conditionValues; 
@@ -1142,7 +1164,16 @@ public class Tab implements java.io.Serializable {
 		return XavaResources.getString(request, "report_title", modelLabel);					
 	}
 	
-	public void setTitle(String title) { // tmp En changelog
+	/**
+	 * Set the specific title as is. 
+	 * <p>
+	 * This title is used in list mode if the title is visible and as title for reports. <br/>
+	 * If you want to use an i18n title use {@link #setTitleId(String titleId)} instead. <br/>
+	 * </p>
+	 * 
+	 * @since 4.6
+	 */
+	public void setTitle(String title) { 
 		this.title = title;		
 	}
 	
@@ -1327,6 +1358,13 @@ public class Tab implements java.io.Serializable {
 	public String getTitleId() {
 		return titleId;
 	}
+	
+	/**
+	 * Set the title from an i18n id. 
+	 * <p>
+	 * This title is used in list mode if the title is visible and as title for reports. <br/>
+	 * </p>
+	 */	
 	public void setTitleId(String titleId) {
 		this.titleId = titleId;
 	}
@@ -1707,7 +1745,7 @@ public class Tab implements java.io.Serializable {
 				if (!filterConditionValues[i].equals("")) {
 					conditionValues[i] = filterConditionValues[i];
 					conditionValuesTo[i] = "";
-					conditionComparators[i] = "eq";
+					conditionComparators[i] = EQ_COMPARATOR;
 				}
 			}
 			

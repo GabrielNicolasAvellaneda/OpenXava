@@ -74,8 +74,8 @@ public class ModuleTestBase extends TestCase {
 	private String lastNotNotifiedPropertyValue;
 	private BrowserVersion browserVersion;
 	private String previousModule;
-	private String popupPDFAsText; // tmp
-	private String [] popupPDFLines; // tmp
+	private String popupPDFAsText; 
+	private String [] popupPDFLines; 
 	
 	static {		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
@@ -741,8 +741,8 @@ public class ModuleTestBase extends TestCase {
 			}
 		}		
 		
-		popupPDFAsText = null; // tmp
-		popupPDFLines = null; // tmp
+		popupPDFAsText = null; 
+		popupPDFLines = null; 
 	}
 	
 	private boolean pageLoaded() throws Exception { 
@@ -946,7 +946,7 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * The text of the response for popup window.
 	 */
-	protected String getPopupText() throws IOException {
+	protected String getPopupText() throws Exception {
 		return getPopupPage(-1).getWebResponse().getContentAsString();
 	}
 	
@@ -955,8 +955,7 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * @since 4.6
 	 */
-	// tmp poner en changelog
-	protected String getPopupPDFAsText() throws IOException { // tmp Quitar pdfbox.jar si al final esto no se usa
+	protected String getPopupPDFAsText() throws Exception { 
 		if (popupPDFAsText == null) {
 			InputStream is = getPopupPage(-1).getWebResponse().getContentAsStream();
 			PDDocument doc = PDDocument.load(is); 
@@ -970,7 +969,7 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * @since 4.6
 	 */
-	protected void printPopupPDFAsText() throws Exception { // tmp changelog
+	protected void printPopupPDFAsText() throws Exception { 
 		log.debug(getPopupPDFAsText());		
 	}
 
@@ -980,7 +979,7 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * @since 4.6
 	 */
-	protected String getPopupPDFLine(int lineNumber) throws IOException { // tmp poner en changelog		  	
+	protected String getPopupPDFLine(int lineNumber) throws Exception { 		  	
 		return getPopupPDFLines()[lineNumber];
 	}
 
@@ -989,8 +988,8 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * @since 4.6
 	 */	
-	protected void assertPopupPDFLine(int lineNumber, String expectedContent) throws IOException { // tmp poner en changelog		  		
-		assertEquals(XavaResources.getString("pdf_line_not_match"), expectedContent, getPopupPDFLine(lineNumber)); // tmp i18n
+	protected void assertPopupPDFLine(int lineNumber, String expectedContent) throws Exception { 		  		
+		assertEquals(XavaResources.getString("pdf_line_not_match"), expectedContent, getPopupPDFLine(lineNumber)); 
 	}
 	
 	/**
@@ -998,8 +997,8 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * @since 4.6
 	 */	
-	protected void assertPopupPDFLinesCount(int expectedCount) throws IOException { // tmp poner en changelog		  		
-		assertEquals(XavaResources.getString("pdf_lines_count_not_match"), expectedCount, getPopupPDFLinesCount()); // tmp i18n
+	protected void assertPopupPDFLinesCount(int expectedCount) throws Exception { 		  		
+		assertEquals(XavaResources.getString("pdf_lines_count_not_match"), expectedCount, getPopupPDFLinesCount()); 
 	}
 	
 	/**
@@ -1007,11 +1006,11 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * @since 4.6
 	 */	
-	protected int getPopupPDFLinesCount() throws IOException { // tmp poner en changelog		  				  		
+	protected int getPopupPDFLinesCount() throws Exception { 		  				  		
 		return getPopupPDFLines().length;
 	}
 	
-	private String [] getPopupPDFLines() throws IOException { // tmp poner en changelog		  		
+	private String [] getPopupPDFLines() throws Exception { 		  		
 		if (popupPDFLines == null) popupPDFLines = getPopupPDFAsText().split("\\r?\\n");  		
 		return popupPDFLines;
 	}	
@@ -1102,12 +1101,12 @@ public class ModuleTestBase extends TestCase {
 	
 	private void filterConditionComparators(String[] values) {
 		for (int i = 0; i < values.length; i++) {
-			if ("=".equals(values[i])) values[i] = "eq";
-			if ("<>".equals(values[i])) values[i] = "ne";
-			if (">=".equals(values[i])) values[i] = "ge";
-			if ("<=".equals(values[i])) values[i] = "le";
-			if (">".equals(values[i])) values[i] = "gt";
-			if ("<".equals(values[i])) values[i] = "lt";
+			if ("=".equals(values[i]) || "eq".equals(values[i])) values[i] = Tab.EQ_COMPARATOR;
+			if ("<>".equals(values[i]) || "ne".equals(values[i])) values[i] = Tab.NE_COMPARATOR;
+			if (">=".equals(values[i]) || "ge".equals(values[i])) values[i] = Tab.GE_COMPARATOR;
+			if ("<=".equals(values[i]) || "le".equals(values[i])) values[i] = Tab.LE_COMPARATOR;
+			if (">".equals(values[i]) || "gt".equals(values[i])) values[i] = Tab.GT_COMPARATOR;
+			if ("<".equals(values[i]) || "lt".equals(values[i])) values[i] = Tab.LT_COMPARATOR;
 		}		
 	}
 
