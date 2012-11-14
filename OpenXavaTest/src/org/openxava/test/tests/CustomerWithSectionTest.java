@@ -56,6 +56,52 @@ public class CustomerWithSectionTest extends CustomerTest {
 		super(testName, "CustomerWithSection", true);		
 	}
 	
+	public void testCustomReportFilteringByValidValues() throws Exception { 
+		execute("ExtendedPrint.customReport");
+		assertValueInCollection("columns", 1, 0, "type");
+		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		String [][] validValuesValues = {
+			{ "0", "" },	
+			{ "1", "Normal" },
+			{ "2", "Steady" },
+			{ "3", "Special" }
+		};
+		assertValidValues("validValuesValue", validValuesValues);
+		assertExists("validValuesValue");
+		assertNotExists("booleanValue");
+		assertNotExists("comparator");
+		assertNotExists("value");
+		setValue("name", "number");
+		setValue("comparator", "eq"); // It's important to fill it, in order to see if afterwards is ignored
+		setValue("value", "2");	// It's important to fill it, in order to see if afterwards is ignored			
+		assertNotExists("validValuesValue");
+		assertNotExists("booleanValue");
+		assertExists("comparator");
+		assertExists("value");
+		assertExists("order");
+		setValue("name", "type");
+		assertExists("validValuesValue");
+		assertNotExists("booleanValue");
+		assertNotExists("comparator");
+		assertNotExists("value");
+		assertExists("order");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 1, 0, "type");
+		assertValueInCollection("columns", 1, 1, "");
+		assertValueInCollection("columns", 1, 2, "");  
+		
+		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");		
+		setValue("validValuesValue", "2");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 1, 0, "type");
+		assertValueInCollection("columns", 1, 1, "=");
+		assertValueInCollection("columns", 1, 2, "Steady");
+		
+		execute("CustomReport.generatePdf");
+		assertPopupPDFLinesCount(5);
+		assertTrue(getPopupPDFLine(3).startsWith("Javi Steady"));
+	}
+	
 	public void testDialogsInNestedCollections() throws Exception { 
 		assertDialogsInNestedCollections(false);
 		assertDialogsInNestedCollections(true);

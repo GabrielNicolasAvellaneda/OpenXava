@@ -16,8 +16,7 @@ here that you want to override.
 	<object name="xava_tab" class="org.openxava.tab.Tab"/>		
 	<object name="xava_mainTab" class="org.openxava.tab.Tab"/>		
 	<object name="xava_customizingTab" class="org.openxava.tab.Tab"/>
-	<!-- tmp -->	
-	<object name="xava_customReport" class="org.openxava.model.inner.CustomReport"/>	<object name="xava_row" class="java.lang.Integer" value="-1"/>		<object name="xava_newImageProperty" class="java.lang.String"/>
+	<object name="xava_customReport" class="org.openxava.session.CustomReport"/>	<object name="xava_row" class="java.lang.Integer" value="-1"/>		<object name="xava_newImageProperty" class="java.lang.String"/>
 	<object name="xava_currentCollectionLabel" class="java.lang.String"/>
 	<object name="xava_collectionViewObject" class="java.lang.String"/>		<object name="xava_previousControllers" class="java.util.Stack"/>
 	<object name="xava_previousViews" class="java.util.Stack"/>
@@ -33,10 +32,6 @@ here that you want to override.
 	<controller name="Typical">
 		<extends controller="Navigation"/>
 		<extends controller="CRUD"/>
-		<!-- tmp 
-		<extends controller="Print"/>
-		-->		
-		<!-- tmp ¿Modificar wiki sobre application.xml módulo solo lectura?-->		
 		<extends controller="ExtendedPrint"/>
 	</controller>
 	
@@ -69,6 +64,42 @@ here that you want to override.
 		
 	</controller>	
 	
+	<controller name="ExtendedPrint">
+		<extends controller="Print"/>
+		<action name="customReport" mode="list"
+			class="org.openxava.actions.CustomReportAction"
+			image="report.gif">	
+		</action>							
+	</controller>
+	
+	<controller name="CustomReport">
+		<action name="generatePdf" 
+			class="org.openxava.actions.GenerateCustomReportAction"
+			keystroke="Control Alt P">
+			<set property="type" value="pdf"/>
+		</action>
+		<action name="cancel" 
+			class="org.openxava.actions.CancelDialogAction"/>
+		<action name="columnUp" hidden="true" 
+			class="org.openxava.actions.MoveCustomReportColumnAction"
+			image="descending.gif">
+			<set property="increment" value="-1"/>
+		</action>
+		<action name="columnDown" hidden="true"
+			class="org.openxava.actions.MoveCustomReportColumnAction"
+			image="ascending.gif">
+			<set property="increment" value="1"/>
+		</action>
+		<action name="removeColumn" hidden="true" in-each-row="true"
+			class="org.openxava.actions.RemoveCustomReportColumnAction"
+			image="delete.gif"/>			
+		<action name="saveColumn" hidden="true" 
+			class="org.openxava.actions.SaveCustomReportColumnAction"/>			
+		<action name="editColumn" hidden="true" 
+			class="org.openxava.actions.EditCustomReportColumnAction"
+			image="edit.gif"/>																																				
+	</controller>
+		
 	<controller name="TypicalNotResetOnSave">
 		<extends controller="Typical"/>
 		<action name="save" mode="detail"

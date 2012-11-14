@@ -2,6 +2,7 @@
 
 <%@ page import="org.openxava.util.Labels"%>
 <%@ page import="org.openxava.tab.impl.IXTableModel" %>
+<%@ page import="org.openxava.tab.Tab"%>
 <%@ page import="org.openxava.util.Strings" %>
 <%@ page import="org.openxava.util.XavaPreferences" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
@@ -255,7 +256,7 @@ while (it.hasNext()) {
 		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String valueTo= conditionValuesTo==null?"":conditionValuesTo[iConditionValues];
-		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
+		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", Tab.EQ_COMPARATOR);
 		int columnWidth = tab.getColumnWidth(columnIndex);
 		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
 %>

@@ -1,6 +1,7 @@
 <%@ include file="../imports.jsp"%>
 
 <%@ page import="java.util.StringTokenizer" %>
+<%@ page import="org.openxava.tab.Tab"%>
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -20,7 +21,7 @@ catch (Exception ex) {
 int index = Integer.parseInt(request.getParameter("index"));
 %>
 
-<input type="hidden" name="<xava:id name='<%=prefix  + "conditionComparator."  + index%>'/>" value="eq">
+<input type="hidden" name="<xava:id name='<%=prefix  + "conditionComparator."  + index%>'/>" value="<%=Tab.EQ_COMPARATOR%>">
 <input type="hidden" name="<xava:id name='<%=prefix  + "conditionValueTo."  + index%>'/>" >
 <select name="<xava:id name='<%=prefix  + "conditionValue."  + index%>'/>" class=<%=style.getEditor()%>>
 	<option value=""></option>

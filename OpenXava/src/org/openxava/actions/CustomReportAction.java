@@ -1,11 +1,9 @@
 package org.openxava.actions;
 
 import javax.inject.*;
-
-import org.openxava.model.inner.*;
+import org.openxava.session.*;
 
 /**
- * tmp
  * 
  * @author Javier Paniza 
  */
@@ -18,7 +16,7 @@ public class CustomReportAction extends TabBaseAction {
 		setNextMode(DETAIL);
 		showDialog();			
 		customReport = CustomReport.create(getTab());
-		getView().setPOJO(customReport);		
+		getView().setModel(customReport);		
 		setControllers("CustomReport");
 	}
 

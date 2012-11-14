@@ -1,4 +1,4 @@
-package org.openxava.model.inner;
+package org.openxava.session;
 
 import java.util.*;
 
@@ -7,7 +7,6 @@ import org.openxava.annotations.*;
 import org.openxava.model.meta.*;
 
 /**
- * tmp ¿Mover a paquete session? Ahora es un objeto de sesión 
  * 
  * @author Javier Paniza 
  */
@@ -15,7 +14,10 @@ import org.openxava.model.meta.*;
 public class CustomReport implements java.io.Serializable {
 	
 	@Required @Column(length=80)
-	private String reportName;
+	private String name;
+	
+	@Hidden
+	private MetaModel metaModel;
 	
 	@RowActions({
 		@RowAction("CustomReport.columnUp"),
@@ -25,32 +27,35 @@ public class CustomReport implements java.io.Serializable {
 	@AsEmbedded 
 	@SaveAction("CustomReport.saveColumn")
 	@EditAction("CustomReport.editColumn")
+	@ListProperties("name, comparator, value, order")
 	private List<CustomReportColumn> columns;
 	
-	public static CustomReport create(org.openxava.tab.Tab tab) { // tmp ¿Mover esto a la acción? tab es un objeto de sesión 
+	public static CustomReport create(org.openxava.tab.Tab tab) {  
 		CustomReport report = new CustomReport();
-		report.setReportName(tab.getTitle()); // tmp
-		report.setColumns(createColumns(tab));
+		report.setName(tab.getTitle()); 
+		report.setColumns(createColumns(report, tab));
+		report.setMetaModel(tab.getMetaTab().getMetaModel());
 		return report;
 	}
 	
-	private static List<CustomReportColumn> createColumns(org.openxava.tab.Tab tab) {
+	private static List<CustomReportColumn> createColumns(CustomReport report, org.openxava.tab.Tab tab) {
 		List<CustomReportColumn> columns = new ArrayList<CustomReportColumn>();
 		for (MetaProperty property: tab.getMetaProperties()) {		
-			CustomReportColumn column = new CustomReportColumn();					
-			column.setColumnName(property.getQualifiedName());
+			CustomReportColumn column = new CustomReportColumn();
+			column.setReport(report);
+			column.setName(property.getQualifiedName());
+			column.setCalculated(property.isCalculated());
 			columns.add(column);
 		}		
 		return columns;		
 	}
-
 	
-	public String getReportName() {
-		return reportName;
+	public String getName() {
+		return name;
 	}
 
-	public void setReportName(String reportName) {
-		this.reportName = reportName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<CustomReportColumn> getColumns() {
@@ -59,6 +64,14 @@ public class CustomReport implements java.io.Serializable {
 
 	public void setColumns(List<CustomReportColumn> columns) {
 		this.columns = columns;
+	}
+
+	public MetaModel getMetaModel() {
+		return metaModel;
+	}
+
+	public void setMetaModel(MetaModel metaModel) {
+		this.metaModel = metaModel;
 	}
 		
 }

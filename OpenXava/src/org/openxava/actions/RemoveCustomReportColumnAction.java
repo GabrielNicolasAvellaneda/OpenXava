@@ -1,10 +1,9 @@
 package org.openxava.actions;
 
 import javax.inject.*;
-import org.openxava.model.inner.*;
+import org.openxava.session.*;
 
 /**
- * tmp ¿Hacer genérico para cualquier modelo transitorio?
  * 
  * @author Javier Paniza
  */

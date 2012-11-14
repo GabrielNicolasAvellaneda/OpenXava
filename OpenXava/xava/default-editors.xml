@@ -42,6 +42,11 @@
  
 	<editor name="BooleanCheckBox" url="booleanEditor.jsp">
 		<formatter class="org.openxava.formatters.BooleanFormatter" />		<for-type type="boolean" />		<for-type type="java.lang.Boolean" />	</editor>
+	
+	<editor name="BooleanYesNoCombo" url="booleanYesNoEditor.jsp">
+		<formatter class="org.openxava.formatters.BooleanFormatter" />
+		<for-model-property model="CustomReportColumn" property="booleanValue" />	
+	</editor>	
 	<editor name="DateCalendar" url="dateCalendarEditor.jsp">
 		<formatter class="org.openxava.formatters.DateFormatter" />		<for-type type="java.util.Date" />	</editor>
 
@@ -188,21 +193,22 @@
 		<for-stereotype stereotype="LIBRERIA_DOCUMENTOS" />
 	</editor>
 	
-	<!-- tmp -->
 	<editor url="textEditor.jsp">
-		<for-model-property model="CustomReport" property="reportName"/>
+		<for-model-property model="CustomReport" property="name"/>
 		<for-model-property model="CustomReportColumn" property="value" />
 	</editor>
-	
-	<!-- tmp -->
-	<editor url="customReportColumnEditor.jsp">
-		<for-model-property model="CustomReportColumn" property="columnName" />
+		
+	<editor url="customReportColumnNameEditor.jsp">
+		<for-model-property model="CustomReportColumn" property="name" />
 	</editor>
-	
-	<!-- tmp -->
-	<editor url="customReportComparatorEditor.jsp">
+		
+	<editor url="customReportColumnComparatorEditor.jsp">
 		<list-formatter class="org.openxava.formatters.CustomReportComparatorListFormatter"/>
 		<for-model-property model="CustomReportColumn" property="comparator" />
 	</editor>
-									
+			
+	<editor url="customReportColumnValidValuesValueEditor.jsp">
+		<for-model-property model="CustomReportColumn" property="validValuesValue" />	
+	</editor>
+										
 </editors>

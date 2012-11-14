@@ -29,6 +29,9 @@ import java.lang.annotation.*;
  * entities to add to (or remove from) the collection. If you put <code>@{@link AsEmbedded}</code>
  * then the collection behaves always as a collection with CascadeType.REMOVE, 
  * allowing to the user to add objects and editing them directly.<br>
+ * <b>Warning!</b> If you remove an entity from an <code>@AsEmbedded</code> collection 
+ * (so with no CascadeType.REMOVE), the relationship with the parent is removed but the entity 
+ * itself still exists, unless you use <code>orphanRemoval=true</code>.<br> 
  * <b><i>Note:</i></b> JPA 1.0 does not support collections of embedded objects, therefore we
  * assume a collection of entities with CascadeType.REMOVE as a collection
  * of <i>embedded objects</i>.<br>
