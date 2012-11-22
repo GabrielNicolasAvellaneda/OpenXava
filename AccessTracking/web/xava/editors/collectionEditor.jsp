@@ -23,6 +23,7 @@ View view = (View) context.get(request, viewObject);
 View collectionView = view.getSubview(collectionName);
 if (!Is.emptyString(listEditor)) {
 	collectionView.setDefaultListActionsForCollectionsIncluded(false);
+	collectionView.setDefaultRowActionsForCollectionsIncluded(false); 
 }
 View subview = view.getSubview(collectionName);
 MetaReference ref = view.getMetaModel().getMetaCollection(collectionName).getMetaReference();
