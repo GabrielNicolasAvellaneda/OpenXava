@@ -1,6 +1,28 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.6 (2012-11-21)
+-------------------------
+- Custom reports in list mode that allow user define its own reports using a dialog.
+- New attribute editor in @Tab to define an editor for a tab. Also available for XML version with <tab editor=/>.
+- In editors.xml it's possible to associate an editor by default for all tabs or for tabs of certain models.
+- New @RowAction annotation for collections (also available as row-action in XML components).
+- Labels and messages available in Russian.
+- The report names include model name and time, for automatic and custom reports in PDF, CSV, RTF, ODT and Excel.   
+- New property model (setModel()/getModel() in View for populating a View directly from a model object (an entity or transient class). 
+- BooleanFormatter parses null as null and not as false, so Boolean values can be true, false or null.
+- It's possible to assert PDF content in jUnit tests with new 6 methods of ModuleTestBase, such as assertPopupPDFLine(). 
+- New setTitle(), setConditionValues() and setConditionComparators() methods in Tab.
+- New BooleanYesNoCombo editor to show booleans with a YES/NO combo.
+- In list mode focus is placed in the first filter text box.
+- Many new common use labels to be used in applications.
+- New property 'showIconForViewReadOnly' in xava.properties to view or not the key and required icons in read only views. 
+- New methods assertAction/assertNoAction(String action, String arguments) in ModuleTestBase. 
+- It's possible to add custom portlets by means of portlet-ext.xml and liferay-display-ext.xml.
+- Fields version and versionDate of ModuleManager now are private.
+- Fix: @Size(max=x) fails with Save and Stay
+- Fix: OpenXava 4.5.1 fails in WebSphere 6.1.
+
 OpenXava 4.5.1 (2012-9-11)
 --------------------------
 - Focus order only include editors. Actions, links, tabs, etc. are excluded.
