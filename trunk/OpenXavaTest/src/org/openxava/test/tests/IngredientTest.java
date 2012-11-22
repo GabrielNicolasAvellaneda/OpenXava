@@ -8,7 +8,7 @@ import org.openxava.tests.*;
  * @author Ana Andres
  */
 public class IngredientTest extends ModuleTestBase {
-	private static Log log = LogFactory.getLog(ColorTest.class);
+	private static Log log = LogFactory.getLog(IngredientTest.class);
 	
 	public IngredientTest(String testName) {
 		super(testName, "IngredientWithSections");		
