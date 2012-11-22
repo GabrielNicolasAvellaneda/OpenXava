@@ -36,7 +36,7 @@ public class TabParser extends XmlElementsNames {
 		fillRowStyles(el, e, lang);
 		e.setBaseCondition(ParserUtil.getString(el, xbase_condition[lang]));		
 		e.setDefaultOrder(ParserUtil.getString(el, xdefault_order[lang]));
-		e.setEditor(ParserUtil.getString(el, xeditor[lang])); 
+		e.setEditor(el.getAttribute(xeditor[lang]));
 		fillProperties(el, e, lang);
 		return e;
 	}
