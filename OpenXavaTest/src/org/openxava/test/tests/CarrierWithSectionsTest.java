@@ -164,6 +164,13 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 0, "name");
 		assertValueInCollection("columns", 2, 1, "=");
 		assertValueInCollection("columns", 2, 2, "UNO");
+		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		assertValue("comparator", "eq_comparator"); 
+		assertValue("value", "UNO");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 2, 0, "name");
+		assertValueInCollection("columns", 2, 1, "=");
+		assertValueInCollection("columns", 2, 2, "UNO");		
 		execute("CustomReport.generatePdf");		
 		
 		assertPopupPDFLinesCount(5); // Instead of 9, because of name = 'UNO' 

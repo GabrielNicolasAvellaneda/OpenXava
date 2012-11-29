@@ -6,8 +6,12 @@ Object description = null;
 int baseIndex = 1; 
 int value = 0; 
 Object ovalue = request.getAttribute(propertyKey + ".value");
-if (p.hasValidValues()){
-	if (p.isNumber()) value = ovalue==null?0:((Integer) ovalue).intValue();
+MetaProperty validValuesProperty = (MetaProperty) request.getAttribute(propertyKey + ".validValuesProperty"); 
+if (validValuesProperty == null) validValuesProperty = p;
+if (validValuesProperty.hasValidValues()) {  	
+	if (p.isNumber()) {
+		value = ovalue==null?0:((Integer) ovalue).intValue();	
+	}
 	else {
 		// We assume that if it isn't Number then it's an Enum of Java 5, we use instropection
 		// to allow this code run in a Java 1.4 servlet container.
@@ -22,6 +26,7 @@ if (p.hasValidValues()){
 			value = ((Integer) org.openxava.util.Objects.execute(ovalue, "ordinal")).intValue();
 		}
 	}
-	description = value == -1?"":p.getValidValueLabel(request, value);
+	int labelIndex = p.isNumber() && p != validValuesProperty?value - 1:value;
+	description = labelIndex == -1?"":validValuesProperty.getValidValueLabel(request, labelIndex);
 }
 %>

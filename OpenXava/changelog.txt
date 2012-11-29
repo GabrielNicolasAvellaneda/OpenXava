@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Valid-values values are not kept when a column is editing in custom report dialog.
+- Fix: Comparator values are not kept when a column is editing in custom report dialog.
+
 OpenXava 4.6 (2012-11-21)
 -------------------------
 - Custom reports in list mode that allow user define its own reports using a dialog.
