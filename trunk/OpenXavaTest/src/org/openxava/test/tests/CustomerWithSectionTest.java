@@ -89,8 +89,14 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInCollection("columns", 1, 0, "type");
 		assertValueInCollection("columns", 1, 1, "");
 		assertValueInCollection("columns", 1, 2, "");  
-		
 		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");		
+		setValue("validValuesValue", "3");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 1, 0, "type");
+		assertValueInCollection("columns", 1, 1, "=");
+		assertValueInCollection("columns", 1, 2, "Special");
+		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		assertValue("validValuesValue", "3");
 		setValue("validValuesValue", "2");
 		execute("CustomReport.saveColumn");
 		assertValueInCollection("columns", 1, 0, "type");
