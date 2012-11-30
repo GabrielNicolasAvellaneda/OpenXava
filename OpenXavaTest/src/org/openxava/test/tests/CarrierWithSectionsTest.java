@@ -17,6 +17,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 	
 	public void testCustomReport() throws Exception { 
 		execute("ExtendedPrint.customReport");
+		assertDialogTitle("Custom report"); 
 		assertValue("name", "Carrier report");
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "calculated");
@@ -27,6 +28,9 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 0, 0, "calculated");
 		assertValueInCollection("columns", 1, 0, "name");
 		assertValueInCollection("columns", 2, 0, "number");
+		 
+		reload();
+		assertDialogTitle("Custom report");  
 		
 		execute("CustomReport.columnDown", "row=0,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "name");

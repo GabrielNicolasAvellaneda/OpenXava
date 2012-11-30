@@ -14,7 +14,8 @@ public class CustomReportAction extends TabBaseAction {
 
 	public void execute() throws Exception {
 		setNextMode(DETAIL);
-		showDialog();			
+		showDialog();	
+		getView().setTitleId("customReport");
 		customReport = CustomReport.create(getTab());
 		getView().setModel(customReport);		
 		setControllers("CustomReport");
