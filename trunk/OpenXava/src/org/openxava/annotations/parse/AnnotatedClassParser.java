@@ -2343,6 +2343,14 @@ public class AnnotatedClassParser {
 	}
 	
 	private String getClassNameFor(String name) throws XavaException {
+		try {
+			// This first in order that it work fine with XML components without persistence.xml
+			String className = "org.openxava.session." + name;
+			Class.forName(className);
+			return className;
+		}
+		catch (ClassNotFoundException ex) {				
+		}		
 		String suffix = "." + name;
 		// If it's a managed entity
 		for (String className: getManagedClassNames()) {
@@ -2358,13 +2366,6 @@ public class AnnotatedClassParser {
 			}
 			catch (ClassNotFoundException ex) {				
 			}
-		}
-		className = "org.openxava.session." + name;			
-		try {				
-			Class.forName(className);
-			return className;
-		}
-		catch (ClassNotFoundException ex) {				
 		}
 		throw new XavaException("not_ejb3_entity_nor_transient_model", name);
 	}
