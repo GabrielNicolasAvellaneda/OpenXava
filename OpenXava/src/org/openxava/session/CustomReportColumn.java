@@ -60,8 +60,8 @@ public class CustomReportColumn implements java.io.Serializable {
 		if (booleanValue != null) {
 			return booleanValue?Labels.get("yes", Locales.getCurrent()):Labels.get("no", Locales.getCurrent()); 			
 		}
-		if (validValuesValue > 0) {
-			return getReport().getMetaModel().getMetaProperty(getName()).getValidValueLabel(validValuesValue - 1);  
+		if (validValuesValue > 0) {  
+			return getReport().getMetaModel().getMetaProperty(getName()).getValidValueLabel(getValidValuesIndex()); 
 		}
 		return value;
 	}
@@ -71,10 +71,14 @@ public class CustomReportColumn implements java.io.Serializable {
 		if (booleanValue != null) {
 			return booleanValue.toString();
 		}		
-		if (validValuesValue > 0) {
-			return Integer.toString(validValuesValue - 1); 
+		if (validValuesValue > 0) {			
+			return Integer.toString(getValidValuesIndex()); 
 		}
 		return value;
+	}
+	
+	private int getValidValuesIndex() { 
+		return getReport().getMetaModel().isAnnotatedEJB3()?validValuesValue - 1:validValuesValue;
 	}
 	
 
