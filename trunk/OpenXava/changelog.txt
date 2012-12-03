@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Thai MS874 encoding fails with IE.
 - Fix: Custom reports fail with XML components if persistence.xml is not defined.
 - Fix: Valid values do not work in custom reports With XML components. 
 - Fix: Duplicate dialog title in custom report.
