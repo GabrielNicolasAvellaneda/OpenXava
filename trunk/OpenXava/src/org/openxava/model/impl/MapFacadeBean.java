@@ -710,8 +710,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			//removeReadOnlyFields(metaModel, values); // not remove the read only fields because it maybe needed initialized on create
 			removeReadOnlyWithFormulaFields(metaModel, values); 			
 			removeCalculatedFields(metaModel, values); 						
-			Messages validationErrors = new Messages();			
-			validateExistRequired(validationErrors, metaModel, values, metaModelContainer != null);			
+			Messages validationErrors = new Messages();	
+			validateExistRequired(validationErrors, metaModel, values, metaModelContainer != null);
 			validate(validationErrors, metaModel, values, null, container, true);
 			if (validateCollections) validateCollections(validationErrors, metaModel);			
 			removeViewProperties(metaModel, values); 			

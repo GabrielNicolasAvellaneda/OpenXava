@@ -21,6 +21,6 @@ public interface IPropertyValidator extends java.io.Serializable {
 	 * @param modelName  Object id in the resources file.	 
 	 * @exception Exception  Any unexpected problem.
 	 */
-	void validate(Messages errors, Object value,	String propertyName, String modelName) throws Exception;
+	void validate(Messages errors, Object value, String propertyName, String modelName) throws Exception;
 
 }

@@ -45,9 +45,9 @@ public class AnnotatedPOJOTest extends TestCase {
 		catch (RollbackException ex) {
 			if (ex.getCause() instanceof InvalidStateException) {
 				InvalidStateException iex = (InvalidStateException) ex.getCause();
-				assertEquals("1 invalid value is expected", 1, iex.getInvalidValues().length);
+				assertEquals("1 invalid value is expected", 1, iex.getInvalidValues().length);				
 				assertEquals("Property", "description", iex.getInvalidValues()[0].getPropertyName());
-				assertEquals("Message text", "required", iex.getInvalidValues()[0].getMessage());
+				assertEquals("Message text", "{required}", iex.getInvalidValues()[0].getMessage());
 				return;
 			}		
 		}
@@ -72,7 +72,7 @@ public class AnnotatedPOJOTest extends TestCase {
 				InvalidStateException iex = (InvalidStateException) ex.getCause();
 				assertEquals("1 invalid value is expected", 1, iex.getInvalidValues().length);
 				assertEquals("Property", "unitPrice", iex.getInvalidValues()[0].getPropertyName());
-				assertEquals("Message text", "openxava.propertyValidator", iex.getInvalidValues()[0].getMessage());
+				assertEquals("Message text", "", iex.getInvalidValues()[0].getMessage());
 				return;
 			}		
 		}
@@ -97,7 +97,7 @@ public class AnnotatedPOJOTest extends TestCase {
 				InvalidStateException iex = (InvalidStateException) ex.getCause();
 				assertEquals("1 invalid value is expected", 1, iex.getInvalidValues().length);
 				assertEquals("Property", "description", iex.getInvalidValues()[0].getPropertyName());
-				assertEquals("Message text", "openxava.propertyValidator", iex.getInvalidValues()[0].getMessage());
+				assertEquals("Message text", "", iex.getInvalidValues()[0].getMessage());
 				return;
 			}		
 		}
@@ -122,7 +122,7 @@ public class AnnotatedPOJOTest extends TestCase {
 				InvalidStateException iex = (InvalidStateException) ex.getCause();
 				assertEquals("1 invalid value is expected", 1, iex.getInvalidValues().length);
 				assertEquals("Bean", "Product", iex.getInvalidValues()[0].getBeanClass().getSimpleName());
-				assertEquals("Message text", "openxava.entityValidator", iex.getInvalidValues()[0].getMessage());
+				assertEquals("Message text", "", iex.getInvalidValues()[0].getMessage());
 
 				return;
 			}		

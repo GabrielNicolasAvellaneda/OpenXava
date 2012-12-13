@@ -16,7 +16,7 @@ import org.openxava.validators.hibernate.*;
  * Example:
  * <pre>
  * &nbsp;@Entity
- * &nbsp;@EntityValidator(InvoiceDetailValidator.class,
+ * &nbsp;@EntityValidator(value=InvoiceDetailValidator.class,
  * &nbsp;&nbsp;&nbsp;properties= { 
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@PropertyValue(name="invoice"), 
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@PropertyValue(name="oid"), 
@@ -59,5 +59,21 @@ public @interface EntityValidator {
 	 */
 	boolean onlyOnCreate() default false;
 	
-	String message() default "openxava.entityValidator";
+	/**
+	 * The message to be shown if validation fails. <p>
+	 * 
+	 * The validator class have to implement {@link org.openxava.validators.IWithMessage} 
+	 * to receive this message. <br/>
+	 * If not specified the message is not injected in the validator, in this case the validator
+	 * should produce an appropriate default message.<br>
+	 * You can specify an id of the messages i18n file using braces:
+	 * <pre>
+	 * message="{color_not_available}"
+	 * </pre> 
+	 * Or directly the message:
+	 * <pre>
+	 * message="That color is not available. This car can be only red or yellow"
+	 * </pre>
+	 */
+	String message() default "";
 }

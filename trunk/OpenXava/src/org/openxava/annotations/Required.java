@@ -40,6 +40,18 @@ import org.openxava.validators.hibernate.*;
 @Target({ ElementType.FIELD, ElementType.METHOD })
 public @interface Required {
 	
-	String message() default "required"; 
+	/**
+	 * The message to be shown if the element is not present. <p>
+	 * 
+	 * You can specify an id of the messages i18n file using braces:
+	 * <pre>
+	 * message="{car_color_required}"
+	 * </pre> 
+	 * Or directly the message:
+	 * <pre>
+	 * message="You have to specify the car color"
+	 * </pre>
+	 */
+	String message() default "{required}"; 
 	
 }

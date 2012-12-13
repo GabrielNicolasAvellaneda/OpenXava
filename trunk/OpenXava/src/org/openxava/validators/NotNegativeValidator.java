@@ -11,13 +11,13 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public class NotNegativeValidator implements IPropertyValidator {
+public class NotNegativeValidator implements IPropertyValidator, IWithMessage {
 
 	private static BigDecimal ZERO_BIGDECIMAL = new BigDecimal("0");
 	private static Double ZERO_DOUBLE = new Double("0");
 	private static Float ZERO_FLOAT = new Float("0");
 	
-	
+	private String message = "not_negative"; 
 
 	public void validate(
 		Messages errors,
@@ -47,23 +47,28 @@ public class NotNegativeValidator implements IPropertyValidator {
 		if (n instanceof BigDecimal) {
 			BigDecimal bd = (BigDecimal) n;
 			if (bd.compareTo(ZERO_BIGDECIMAL) < 0) {
-				errors.add("not_negative", propertyName, modelName);
+				errors.add(message, propertyName, modelName); 
 			}
 		}
 		else if (n instanceof Double) {
 			Double db = (Double) n;
 			if (db.compareTo(ZERO_DOUBLE) < 0) {
-				errors.add("not_negative", propertyName, modelName);
+				errors.add(message, propertyName, modelName); 
 			}
 		}
 		else if (n instanceof Float) {
 			Float fl = (Float) n;
 			if (fl.compareTo(ZERO_FLOAT) < 0) {
-				errors.add("not_negative", propertyName, modelName);
+				errors.add(message, propertyName, modelName); 
 			}
 		}		
 		else if (n.intValue() < 0) {
-			errors.add("not_negative", propertyName, modelName);
+			errors.add(message, propertyName, modelName); 
 		}
 	}
+	
+	public void setMessage(String message) { 
+		this.message = message;
+	}
+	
 }

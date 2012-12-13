@@ -1,17 +1,14 @@
 package org.openxava.test.model;
 
 import java.math.*;
-import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.*;
 
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Parameter;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
-import org.openxava.test.actions.*;
 import org.openxava.test.validators.*;
 
 /**

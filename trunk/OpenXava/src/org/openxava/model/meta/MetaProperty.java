@@ -43,8 +43,7 @@ import org.openxava.util.XavaException;
 import org.openxava.util.XavaResources;
 import org.openxava.util.meta.MetaSet;
 import org.openxava.util.meta.MetaSetsContainer;
-import org.openxava.validators.IPropertyValidator;
-import org.openxava.validators.TolerantValidator;
+import org.openxava.validators.*;
 import org.openxava.validators.meta.MetaValidator;
 import org.openxava.validators.meta.MetaValidatorFor;
 import org.openxava.validators.meta.MetaValidators;
@@ -83,6 +82,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private PropertyMapping mapping;
 	private DateFormat timeFormat = new SimpleDateFormat("HH:mm"); // 24 hours for all locales
 	private boolean _transient;
+	private String requiredMessage = "required"; 
 		
 	public void addValidValue(Object validValue) {
 		getValidValues().add(validValue);
@@ -217,7 +217,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return new TolerantValidator();
 			}
 			validatorClass = vr.getValidatorClass();
-			return (IPropertyValidator) Class.forName(validatorClass).newInstance();
+			IPropertyValidator validator = (IPropertyValidator) Class.forName(validatorClass).newInstance();
+			if (validator instanceof IWithMessage) {
+				((IWithMessage) validator).setMessage(requiredMessage); 
+			}
+			return validator;
 		} catch (ClassCastException ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("property_validator_invalid_class", validatorClass); 
@@ -600,7 +604,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		if (validators == null) return;
 		Iterator it = validators.iterator();			
 		while (it.hasNext()) {
-			IPropertyValidator v = (IPropertyValidator) it.next();								
+			IPropertyValidator v = (IPropertyValidator) it.next();
 			v.validate(errors, object, getName(), getMetaModel().getName());
 		}
 	}
@@ -1098,6 +1102,12 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	}
 	public void setSearchKey(boolean searchKey) {
 		this.searchKey = searchKey;
+	}
+	public String getRequiredMessage() {
+		return requiredMessage;
+	}
+	public void setRequiredMessage(String requiredMessage) {
+		this.requiredMessage = requiredMessage;
 	}
 	
 }

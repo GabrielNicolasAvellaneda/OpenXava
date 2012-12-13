@@ -74,26 +74,27 @@ public class Messages implements java.io.Serializable {
 		public String toString(Locale locale) {
 			try {
 				String m = getMessage(id, locale);
-				if (argv == null || argv.length == 0) return m;
 				return format(m, translate(argv, locale), locale);
 			}
 			catch (Exception ex) {
 				if (XavaPreferences.getInstance().isI18nWarnings()) {
 					log.warn(XavaResources.getString("label_i18n_warning", id),ex);
-				}
+				}				
 				return id;
 			}
 		}
 		
 		private Object[] translate(Object[] argv, Locale locale) {
+			if (argv == null || argv.length == 0) return argv; 
 			Object [] result = new Object[argv.length];
 			for (int i = 0; i < argv.length; i++) {
 				Object v = argv[i];
-				if (v instanceof String) {
+				if (v instanceof String) {					
 					if (v.toString().startsWith("'") && v.toString().endsWith("'")) {
+					
 						result[i] = v.toString().substring(1, v.toString().length() - 1);
 					}
-					else{
+					else{					
 						try {
 							try {		
 								result[i] = Labels.removeUnderlined(Labels.get((String)v, locale));
