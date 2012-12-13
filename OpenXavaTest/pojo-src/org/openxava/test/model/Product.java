@@ -103,7 +103,7 @@ public class Product {
 											// we overwrite the overwriting only for Simple view
 	@DefaultValueCalculator(value=DefaultProductPriceCalculator.class, properties=
 		@PropertyValue(name="familyNumber")
-	)
+	)	
 	@PropertyValidator(UnitPriceValidator.class)
 	@OnChange(forViews="DEFAULT, WithSection",
 		value=OnChangeProductUnitPriceAction.class

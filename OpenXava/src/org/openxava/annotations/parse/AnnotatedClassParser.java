@@ -10,7 +10,6 @@ import java.net.*;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.persistence.Transient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
@@ -878,22 +877,35 @@ public class AnnotatedClassParser {
 		// required
 		if (element.isAnnotationPresent(Required.class)) {						
 			property.setRequired(true);
+			property.setRequiredMessage(filterMessage(element.getAnnotation(Required.class).message()));
 		}
 		else if (element.isAnnotationPresent(javax.validation.constraints.Min.class)) {
 			javax.validation.constraints.Min min = element.getAnnotation(javax.validation.constraints.Min.class);
-			if (min.value() > 0) property.setRequired(true);			
+			if (min.value() > 0) { 
+				property.setRequired(true);
+				property.setRequiredMessage(filterMessage(element.getAnnotation(javax.validation.constraints.Min.class).message()));
+			}
 		}		
 		else if (element.isAnnotationPresent(org.hibernate.validator.Min.class)) {
 			org.hibernate.validator.Min min = element.getAnnotation(org.hibernate.validator.Min.class);
-			if (min.value() > 0) property.setRequired(true);			
+			if (min.value() > 0) {
+				property.setRequired(true);
+				property.setRequiredMessage(filterMessage(element.getAnnotation(org.hibernate.validator.Min.class).message()));
+			}
 		}
 		else if (element.isAnnotationPresent(org.hibernate.validator.Range.class)) {
 			org.hibernate.validator.Range range = element.getAnnotation(org.hibernate.validator.Range.class);
-			if (range.min() > 0) property.setRequired(true);			
+			if (range.min() > 0) {
+				property.setRequired(true);
+				property.setRequiredMessage(filterMessage(element.getAnnotation(org.hibernate.validator.Range.class).message()));
+			}
 		}
 		else if (element.isAnnotationPresent(org.hibernate.validator.Length.class)) {
 			org.hibernate.validator.Length length = element.getAnnotation(org.hibernate.validator.Length.class);
-			if (length.min() > 0) property.setRequired(true);			
+			if (length.min() > 0) {
+				property.setRequired(true);
+				property.setRequiredMessage(filterMessage(element.getAnnotation(org.hibernate.validator.Length.class).message()));
+			}
 		}							
 		
 		// hidden
@@ -1199,6 +1211,15 @@ public class AnnotatedClassParser {
 			notApply(property.getName(), Trees.class, "collections");
 		}
 	}
+
+	private static String filterMessage(String message) {
+		if (Is.emptyString(message)) return null;
+		if (message.startsWith("{") && message.endsWith("}")) {			
+			return message.substring(1, message.length() - 1);
+		}		
+		return	"'" + message + "'";
+	}
+
 
 	private void processAnnotations(MetaCollection collection, AnnotatedElement element) throws Exception {
 		if (element == null) return;	
@@ -2284,6 +2305,7 @@ public class AnnotatedClassParser {
 	public static MetaValidator createEntityValidator(EntityValidator validator) { 
 		MetaValidator metaValidator = new MetaValidator();
 		metaValidator.setClassName(validator.value().getName());
+		metaValidator.setMessage(filterMessage(validator.message())); 
 		for (PropertyValue put: validator.properties()) {
 			metaValidator.addMetaSet(toMetaSet(put));
 		}
@@ -2318,6 +2340,7 @@ public class AnnotatedClassParser {
 	private static MetaValidator createPropertyValidator(PropertyValidator validator, String property, String model) { 
 		MetaValidator metaValidator = new MetaValidator();
 		metaValidator.setClassName(validator.value().getName());
+		metaValidator.setMessage(filterMessage(validator.message())); 
 		for (PropertyValue put: validator.properties()) {
 			if (property != null && (Is.emptyString(put.value()) || !Is.emptyString(put.from()))) {				
 				if (XavaPreferences.getInstance().isFailOnAnnotationMisuse()) {			

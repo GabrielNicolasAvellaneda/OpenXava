@@ -12,6 +12,22 @@ class BookTest extends ModuleTestBase {
 		super(testName, "Book")		
 	}
 	
+	void testValidatorAnnotationMessage() { 
+		execute "CRUD.new"
+		execute "CRUD.save"
+		assertError "Sorry, but you need to enter the book title"
+		assertError "Please, enter a synopsis for the book"
+		
+		setValue "title", "EL QUIJOTE"
+		setValue "synopsis", "JAVA PROGRAMMING GUIDE"
+		execute "CRUD.save"
+		assertError "The synopsis does not match with the title"
+		
+		setValue "title", "RPG: THE MOST INNOVATIVE IBM LANGUAGE"
+		execute "CRUD.save"
+		assertError "Books about RPG are not allowed"
+	}
+	
 	void testReferenceNameMatchesIdOfReferencedEntityName() {
 		execute "CRUD.new"
 		execute "Reference.search", "keyProperty=author.author"		

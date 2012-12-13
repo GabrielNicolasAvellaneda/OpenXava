@@ -51,7 +51,7 @@ public class SellerTest extends ModuleTestBase {
 		execute("AddToCollection.add");
 		assertDialog();
 		assertAction("AddToCollection.add");
-		assertError("Please, choose an element before pressing 'Add'");
+		assertError("Please, choose an element before pressing 'Add'"); 
 	}
 	
 	public void testRowStyleInCollections() throws Exception {		

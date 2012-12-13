@@ -18,9 +18,10 @@ public class MetaValidator extends MetaSetsContainer {
 	private transient IRemoveValidator removeValidator;
 	private transient IPropertyValidator propertyValidator;
 	private transient IValidator validator;
-	private java.lang.String name;
+	private String name;
 	private boolean onlyOnCreate;	
-	private java.lang.String className;
+	private String className;
+	private String message;  
 	
 
 	public MetaValidator() {
@@ -57,6 +58,9 @@ public class MetaValidator extends MetaSetsContainer {
 				throw new XavaException("validator_invalid_class", getClassName());
 			}
 			IValidator validator = (IValidator) o;
+			if (validator instanceof IWithMessage && message != null) {
+				((IWithMessage) validator).setMessage(message);
+			}
 			if (containsMetaSets()) {
 				assignPropertiesValues(validator);
 			}						
@@ -92,9 +96,12 @@ public class MetaValidator extends MetaSetsContainer {
 				throw new XavaException("property_validator_invalid_class", getClassName());
 			}
 			IPropertyValidator validator = (IPropertyValidator) o;
+			if (validator instanceof IWithMessage && message != null) { 
+				((IWithMessage) validator).setMessage(message);
+			}
 			if (containsMetaSets()) {
 				assignPropertiesValues(validator);
-			}						
+			}			
 			return validator;
 		}
 		catch (XavaException ex) {
@@ -157,6 +164,14 @@ public class MetaValidator extends MetaSetsContainer {
 
 	public void setOnlyOnCreate(boolean onlyOnCreate) {
 		this.onlyOnCreate = onlyOnCreate;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}		
 			
 	

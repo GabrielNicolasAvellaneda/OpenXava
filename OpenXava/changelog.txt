@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Attribute message of @Required is ignored.
+- Fix: Incorrect validation message from PositiveValidator.
+- New IWithMessage to be implemented by validators to get the messages from @Required, @PropertyValidator and @EntityValidator.
+- Fix: Messages in i18n files with no arguments are not formatting in the standard way.
 - Fix: Thai MS874 encoding fails with IE.
 - Fix: Custom reports fail with XML components if persistence.xml is not defined.
 - Fix: Valid values do not work in custom reports With XML components. 

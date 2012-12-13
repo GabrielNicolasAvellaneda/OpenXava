@@ -55,7 +55,7 @@ public class SaveAction extends ViewBaseAction {
 			}			
 			resetDescriptionsCache();
 		}
-		catch (ValidationException ex) {					
+		catch (ValidationException ex) {			
 			addErrors(ex.getErrors());
 		}
 		catch (ObjectNotFoundException ex) {			
