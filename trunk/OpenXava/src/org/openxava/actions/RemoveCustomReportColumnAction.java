@@ -13,9 +13,9 @@ public class RemoveCustomReportColumnAction extends CollectionBaseAction {
 	private CustomReport customReport; 
 	
 	public void execute() throws Exception {
-		if (getRow() == 0) return;
-		if (getMapValues().size() == 1) return;
-		customReport.getColumns().remove(getRow());		
+		for (Object o: getSelectedObjects()) {
+			customReport.getColumns().remove(o);
+		}
 	}
 
 }

@@ -258,7 +258,7 @@ public class Invoice {
 	}
 	
 	@Stereotype("MONEY") @Depends("vatPercentage, amountsSum")
-	public BigDecimal getVat() {
+	public BigDecimal getVat() {		
 		return getAmountsSum().multiply(getVatPercentage()).divide(HUNDRED, 2, BigDecimal.ROUND_HALF_UP);
 	}
 	

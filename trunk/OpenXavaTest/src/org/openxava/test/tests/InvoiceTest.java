@@ -1447,7 +1447,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("deliveryDate", getCurrentDate()); 
 	}
 				
-	public void testCalculatedPropertiesInSection() throws Exception {
+	public void testCalculatedPropertiesInSection() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=2");		
 		String samountsSum = getValue("amountsSum");		
