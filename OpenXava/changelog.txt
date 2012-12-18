@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Removing first column in custom reports fails.
+- Fix: Removing selected columns in custom reports fails.
+- Fix: Obtaining selected object from a calculated collection fails with transient elements.
 - Fix: Attribute message of @Required is ignored.
 - Fix: Incorrect validation message from PositiveValidator.
 - New IWithMessage to be implemented by validators to get the messages from @Required, @PropertyValidator and @EntityValidator.

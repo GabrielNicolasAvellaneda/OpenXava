@@ -23,7 +23,7 @@ public class InvoiceNestedSectionsTest extends ModuleTestBase {
 		assertContentTypeForPopup("application/pdf");		
 	}
 	
-	public void testCalculatedPropertiesDependingFromPropertiesInOtherSections() throws Exception {
+	public void testCalculatedPropertiesDependingFromPropertiesInOtherSections() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");		
 		execute("Sections.change", "activeSection=1,viewObject=xava_view_section1");

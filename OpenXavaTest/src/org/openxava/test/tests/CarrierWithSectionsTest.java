@@ -199,6 +199,25 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertPopupPDFLine(3, "TR 5 Cinco");
 		assertPopupPDFLine(7, "TR 1 UNO");						
 	}
+	
+	public void testRemoveColumnsInCustomReport() throws Exception  { 
+		execute("ExtendedPrint.customReport");
+		assertCollectionRowCount("columns", 3);
+		assertValueInCollection("columns", 0, 0, "calculated");
+		assertValueInCollection("columns", 1, 0, "number");
+		assertValueInCollection("columns", 2, 0, "name");
+		checkRowCollection("columns", 1);
+		execute("CustomReport.removeColumn", "viewObject=xava_view_columns");
+		assertNoErrors();
+		assertCollectionRowCount("columns", 2);
+		assertValueInCollection("columns", 0, 0, "calculated");
+		assertValueInCollection("columns", 1, 0, "name");
+				
+		execute("CustomReport.removeColumn", "row=0,viewObject=xava_view_columns");
+		assertNoErrors();
+		assertCollectionRowCount("columns", 1);
+		assertValueInCollection("columns", 0, 0, "name");
+	}
 
 		
 	public void testCarrierSelected() throws Exception{

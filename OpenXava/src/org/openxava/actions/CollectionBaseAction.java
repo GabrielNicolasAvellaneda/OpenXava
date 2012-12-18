@@ -109,13 +109,15 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 	protected List getSelectedObjects() throws RemoteException, FinderException, XavaException {
 		if (selectedObjects == null) {
 			if (row >= 0) {
-				Map key;
 				try {
 					if (getCollectionElementView().isCollectionCalculated()) {
-						key = (Map) getCollectionElementView().getCollectionValues().get(row);
+						Object collectionElement = getCollectionElementView().getCollectionObjects().get(getRow());
+						selectedObjects = Collections.singletonList(collectionElement);						  
 					}
 					else {
-						key = (Map) getCollectionElementView().getCollectionTab().getTableModel().getObjectAt(row);
+						Map key = (Map) getCollectionElementView().getCollectionTab().getTableModel().getObjectAt(row);
+						Object collectionElement = MapFacade.findEntity(getCollectionElementView().getModelName(), key);
+						selectedObjects = Collections.singletonList(collectionElement);												
 					}
 									 
 				} 
@@ -123,8 +125,6 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 					log.error(XavaResources.getString("get_row_object_error", row), ex);
 					throw new XavaException("get_row_object_error", row); 
 				}
-				Object entity = MapFacade.findEntity(getCollectionElementView().getModelName(), key);
-				selectedObjects = Collections.singletonList(entity);
 			}			
 			else {
 				selectedObjects = getCollectionElementView().getCollectionSelectedObjects();							

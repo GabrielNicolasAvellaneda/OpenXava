@@ -19,6 +19,7 @@ import org.openxava.controller.meta.MetaAction;
 import org.openxava.controller.meta.MetaController;
 import org.openxava.controller.meta.MetaControllers;
 import org.openxava.filters.*;
+import org.openxava.jpa.*;
 import org.openxava.mapping.ModelMapping;
 import org.openxava.model.MapFacade;
 import org.openxava.model.PersistenceFacade;
@@ -384,8 +385,8 @@ public class View implements java.io.Serializable {
 
 	private Map getValues(boolean all) throws XavaException {  
 		return getValues(all, false); 
-	} 
-		 
+	}
+	
 	private Map getValues(boolean all, boolean onlyKeyFromSubviews) throws XavaException {		
 		Map hiddenKeyAndVersion = null;  
 		if (values == null) {
@@ -398,7 +399,7 @@ public class View implements java.io.Serializable {
 			Iterator it = getSubviews().entrySet().iterator(); 
 			while (it.hasNext()) { 
 				Map.Entry en = (Map.Entry) it.next(); 
-				View v = (View) en.getValue();  
+				View v = (View) en.getValue();
 				if (v.isRepresentsCollection()) continue; 
 				if (!onlyKeyFromSubviews && (all || v.isRepresentsAggregate())) {					
 					values.put(en.getKey(), v.getValues(all, onlyKeyFromSubviews));					
@@ -413,14 +414,14 @@ public class View implements java.io.Serializable {
 			Iterator it = getGroupsViews().values().iterator(); 
 			while (it.hasNext()) { 
 				View v = (View) it.next(); 
-				values.putAll(v.getValues(all, onlyKeyFromSubviews)); 
+				values.putAll(v.getValues(all, onlyKeyFromSubviews)); 				
 			}  
 		} 
 		 
 		if (hasSections()) { 
 			int count = getSections().size(); 
 			for (int i=0; i<count; i++) {  
-				values.putAll(getSectionView(i).getValues(all, onlyKeyFromSubviews));  
+				values.putAll(getSectionView(i).getValues(all, onlyKeyFromSubviews));  				
 			} 
 		}  
 		
@@ -1584,10 +1585,20 @@ public class View implements java.io.Serializable {
 	public List getCollectionObjects() throws XavaException {  		
 		assertRepresentsCollection("getCollectionObjects()");		
 		Map [] keys = null;
-		if (isCollectionCalculated()) {
-			Collection values = getCollectionValues();
-			keys = new Map[values.size()];
-			values.toArray(keys);
+		if (isCollectionCalculated()) { 
+			try {
+				Object model = getParent().getModel();
+				if (model == null) {
+					model = getParent().getEntity();
+					PersistenceFacade.refreshIfManaged(model);
+				}
+				PropertiesManager modelProperties = new PropertiesManager(model);
+				return new ArrayList((Collection) modelProperties.executeGet(getMemberName()));
+			}
+			catch (Exception ex) {
+				log.error(XavaResources.getString("collection_error", getMemberName()), ex);				
+				throw new XavaException("collection_error", getMemberName());
+			}				
 		}
 		else {				
 			keys = getCollectionTab().getAllKeys(); 
@@ -1609,9 +1620,13 @@ public class View implements java.io.Serializable {
 		assertRepresentsCollection("getCollectionSelectedObjects()");		
 		Map [] selectedKeys = null;
 		if (isCollectionCalculated()) {
-			Collection selectedValues = getCollectionSelectedValues();
-			selectedKeys = new Map[selectedValues.size()];
-			selectedValues.toArray(selectedKeys);
+			if (listSelected == null) return Collections.EMPTY_LIST;
+			List selectedObjects = new ArrayList();
+			List objects = getCollectionObjects();
+			for (int i=0; i<listSelected.length; i++) {
+				selectedObjects.add(objects.get(listSelected[i]));
+			}
+			return selectedObjects;
 		}
 		else {				
 			selectedKeys = getCollectionTab().getSelectedKeys();
@@ -2778,11 +2793,11 @@ public class View implements java.io.Serializable {
 		}
 		else {
 			Object pojo = MapFacade.findEntity(getModelName(), getParentIfSectionOrGroup().getKeyValues());
-			getMetaModel().fillPOJO(pojo, getParentIfSectionOrGroup().getAllValues());			
+			getMetaModel().fillPOJO(pojo, getParentIfSectionOrGroup().getAllValues()); // fillPOJO does not get the references from DB, if we change that maybe we can remove the refreshIfManaged from getCollectionObjects()   
 			return pojo;			
 		}
 	}
-	
+		
 	/** 
 	 * The model object attached to this view using {@link #setModel(Object model)}. <p>
 	 * 
@@ -2815,6 +2830,7 @@ public class View implements java.io.Serializable {
 	
 	/**
 	 * Entity associated to the current view. <p>
+	 * 
 	 */
 	public Object getEntity() throws Exception {		
 		return getPOJO();		

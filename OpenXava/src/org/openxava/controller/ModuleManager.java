@@ -668,7 +668,7 @@ public class ModuleManager implements java.io.Serializable {
 		}
 	}
 	
-	private void doCommit() {
+	private void doCommit() {		
 		XPersistence.commit();
 		XHibernate.commit();		
 	}
