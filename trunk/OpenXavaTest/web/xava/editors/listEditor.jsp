@@ -69,7 +69,6 @@ String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
 int currentRow = ((Number) context.get(request, "xava_row")).intValue(); 
 String cssCurrentRow = style.getCurrentRow();
-String styleOverflow = "overflow: auto;";
 int totalSize = -1; 
 if (request.getAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab) == null) {
 	tab.setRequest(request);
@@ -79,6 +78,7 @@ if (request.getAttribute(org.openxava.tab.Tab.TAB_RESETED_PREFIX + tab) == null)
 boolean resizeColumns = style.allowsResizeColumns() && tab.isResizeColumns();
 String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
+String styleOverflow = org.openxava.web.Lists.getOverflow(browser, tab.getMetaProperties());
 %>
 
 <input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
