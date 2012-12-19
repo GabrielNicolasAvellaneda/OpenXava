@@ -1,6 +1,11 @@
 package org.openxava.web;
 
+import java.util.*;
+
 import javax.servlet.http.*;
+
+import org.openxava.model.meta.*;
+import org.openxava.tab.*;
 
 /**
  * Utilities used from JSP files for lists. 
@@ -14,6 +19,20 @@ public class Lists {
 	
 	public static String getImageFilterPrefix(HttpServletRequest request) {
 		return request.getContextPath() + "/xava/images/";
+	}
+	
+	public static String getOverflow(String browser, Collection<MetaProperty> metaProperties) {
+		boolean ie9 = browser != null && browser.indexOf("MSIE 9") >= 0;
+		if (!ie9) return "overflow: auto;";
+		int size = 0;
+		for (MetaProperty m: metaProperties) {
+			int increment;
+			if (m.isNumber()) increment=Math.min(5, m.getSize());
+			else if (java.util.Date.class.isAssignableFrom(m.getType())) increment=Math.min(8, m.getSize());
+			else increment=Math.min(20, m.getSize());
+			size+=increment;
+		}
+		return size>75?"overflow-x: scroll;":"";
 	}
 
 }

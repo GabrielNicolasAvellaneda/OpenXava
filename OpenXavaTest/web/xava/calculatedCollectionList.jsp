@@ -15,9 +15,10 @@ MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElem
 boolean resizeColumns = style.allowsResizeColumns() && XavaPreferences.getInstance().isResizeColumns();
 String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
+String styleOverflow = org.openxava.web.Lists.getOverflow(browser, subview.getMetaPropertiesList());
 %>
 <% if (resizeColumns && scrollSupported) { %> 
-<div class="<xava:id name='collection_scroll'/>" style="overflow: auto;">
+<div class="<xava:id name='collection_scroll'/>" style="<%=styleOverflow%>">
 <% } %>
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Mouse over list rows in IE9 moves the bottom button bar.
 - Fix: Removing first column in custom reports fails.
 - Fix: Removing selected columns in custom reports fails.
 - Fix: Obtaining selected object from a calculated collection fails with transient elements.
