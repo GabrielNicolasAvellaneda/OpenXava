@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: HTML_TEXT fields don't preserve content after recalculation. 
+- Fix: Second level dialogs are shown very narrow with IE9.
 - Fix: Mouse over list rows in IE9 moves the bottom button bar.
 - Fix: Removing first column in custom reports fails.
 - Fix: Removing selected columns in custom reports fails.

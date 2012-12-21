@@ -46,7 +46,7 @@ public class Formula {
 	
 	@Stereotype("HTML_TEXT")	
 	private String recipe;
-
+	
 	public static Formula findByName(java.lang.String name) throws NoResultException {
 		javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("from Formula as o where o.name = :name"); 
 		query.setParameter("name", name); 			
