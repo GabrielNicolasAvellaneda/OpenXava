@@ -96,7 +96,7 @@ public class Module extends DWRBase {
 			}					
 			result.setViewMember(getView().getMemberName());
 			result.setStrokeActions(getStrokeActions());
-			result.setSelectedRows(getSelectedRows()); 
+			result.setSelectedRows(getSelectedRows()); 			
 			return result;
 		}
 		catch (SecurityException ex) {
