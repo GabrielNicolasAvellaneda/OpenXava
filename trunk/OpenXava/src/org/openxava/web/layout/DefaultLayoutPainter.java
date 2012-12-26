@@ -24,6 +24,7 @@ import javax.servlet.jsp.JspException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openxava.annotations.LabelFormatType;
 import org.openxava.controller.ModuleContext;
 import org.openxava.util.Is;
 import org.openxava.view.meta.MetaView;
@@ -126,6 +127,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	public void startRow(LayoutElement element) {
 		setRow(element);
 		attributes.clear();
+		attributes.put("valign", "center");
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TR, attributes));
 	}
 
@@ -230,27 +232,28 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		attributes.clear();
 		attributes.put(ATTR_CLASS, getStyle().getLayoutLabel());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN));
-			String label = element.getLabelFormat() != 2 ? element.getLabel() + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
-			label = label.replaceAll(" ", LayoutJspKeys.CHAR_SPACE);
-			write(label);
-			String img = "";
-			if (!element.isDisplayAsDescriptionsList()) {
-				if (element.getMetaProperty().isKey()) {
-					img = "key.gif";
-				} else if (element.getMetaProperty().isRequired()) {
-					if (element.isEditable()) { // No need to mark it as required, since the user can not change it anyway
-						img = "required.gif";
-					}
-				}
+		String label = element.getLabelFormat() != LabelFormatType.NO_LABEL.ordinal() &&
+				element.getLabel() != null ? element.getLabel() + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
+		label = label.replaceAll(" ", LayoutJspKeys.CHAR_SPACE);
+		write(label);
+		String img = "";
+		if (!element.isDisplayAsDescriptionsList()) {
+			if (element.getMetaProperty().isKey()) {
+				img = "key.gif";
 			} else if (element.getMetaProperty().isRequired()) {
-				img = "required.gif";
+				if (element.isEditable()) { // No need to mark it as required, since the user can not change it anyway
+					img = "required.gif";
+				}
 			}
-			if (!Is.emptyString(img)) {
-				attributes.clear();
-				attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
-				write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
-				write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
-			}
+		} else if (element.getMetaProperty().isRequired()) {
+			img = "required.gif";
+		}
+		if (!Is.emptyString(img)) {
+			attributes.clear();
+			attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
+		}
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 		attributes.clear();
 		attributes.put(ATTR_ID, Ids.decorate(getRequest(), "error_image_" + element.getMetaProperty().getQualifiedName()));
@@ -335,6 +338,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 						actionTag.setAction(action);
 						actionTag.setPageContext(getPageContext());
 						actionTag.doStartTag();
+						actionTag.doEndTag();
 					}
 				}
 				if (element.getActionsNameForProperty().size() > 0) {
@@ -346,6 +350,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 						actionTag.setArgv("xava.keyProperty=" + Ids.undecorate(element.getPropertyKey()));
 						actionTag.setPageContext(getPageContext());
 						actionTag.doStartTag();
+						actionTag.doEndTag();
 					}
 				}
 				write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));

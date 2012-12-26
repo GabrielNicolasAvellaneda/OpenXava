@@ -24,6 +24,7 @@ import org.openxava.view.View;
 import org.openxava.view.meta.MetaGroup;
 import org.openxava.view.meta.PropertiesSeparator;
 import org.openxava.web.Ids;
+import org.openxava.web.WebEditors;
 
 /**
  * Layout manager, class to prepare view presentation
@@ -103,6 +104,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 		Iterator it = metaMembers.iterator();
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();
+			LayoutElement element = null;
 			if (rowStarted && rowEnded) {
 				currentRow = createMarker(view, LayoutElementType.ROW_START);
 				groupLevel++;
@@ -113,17 +115,25 @@ public class DefaultLayoutParser implements ILayoutParser {
 				if (m instanceof MetaProperty) {
 					MetaProperty p = (MetaProperty) m;
 					setEditable(view.isEditable(p));
-					boolean hasLabel = getCount(p, view) > 0;
-					if (hasLabel) {
-						if (columnStarted) {
-							addLayoutElement(createEndColumn(view));
-						} 
-						addLayoutElement(createStartColumn(view));
-						columnStarted = true;
+					if (columnStarted) {
+						addLayoutElement(createEndColumn(view));
 					}
-					addLayoutElement(createProperty(p, displayAsDescriptionsList, view));
+					addLayoutElement(createStartColumn(view));
+					columnStarted = true;
+					boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
+					if (hasFrame) {
+				  		addLayoutElement(createBeginFrame(p, view, ""));
+					}
+					
+					element = createProperty(p, displayAsDescriptionsList, hasFrame, view); // hasFrame:true = suppress label
+					addLayoutElement(element);
 					addLayoutElement(createMarker(view, LayoutElementType.CELL_END));
 					this.groupLabel = "";
+					
+					if (hasFrame) {
+				  		addLayoutElement(createEndFrame(p, view));
+					}
+
 				}
 			  	if (m instanceof MetaReference) {
 					MetaReference ref = (MetaReference) m;
@@ -131,20 +141,22 @@ public class DefaultLayoutParser implements ILayoutParser {
 						String viewObject = getViewObject(view) + "_" + ref.getName();
 						View subView = view.getSubview(ref.getName());
 						propertyInReferencePrefix = view.getPropertyPrefix() + ref.getName() + ".";
-						if (subView != null) {
-							subView.setPropertyPrefix(propertyInReferencePrefix);
-							subView.setViewObject(viewObject);
-						}
+						subView.setPropertyPrefix(propertyInReferencePrefix);
+						subView.setViewObject(viewObject);
+						boolean isDescriptionList = view.displayAsDescriptionsList(ref);
+						boolean isFrame = isDescriptionList ? false : subView.isFrame(); 
+
 						context.put(request, subView.getViewObject(), subView);
-						if (subView.isFrame()) {
+						if (isFrame) {
 							if (columnStarted) {
 								addLayoutElement(createEndColumn(view));
 							} 
 							addLayoutElement(createStartColumn(view));
 					  		addLayoutElement(createBeginFrame(ref, view, ""));
 						}
-						parseMetamembers(subView.getMetaMembers(), subView, view.displayAsDescriptionsList(ref), subView.isFrame());
-						if (subView.isFrame()) {
+						groupLabel = ref.getLabel();
+						parseMetamembers(subView.getMetaMembers(), subView, isDescriptionList, isFrame);
+						if (isFrame) {
 					  		addLayoutElement(createEndFrame(ref, view));
 							addLayoutElement(createEndColumn(view));
 							columnStarted = false;
@@ -172,6 +184,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 					addLayoutElement(createCollection(m, view));
 					addLayoutElement(createMarker(view, LayoutElementType.COLLECTION_END));
 				}
+				
 			} else {
 				if (columnStarted) {
 					addLayoutElement(createEndColumn(view));
@@ -270,14 +283,14 @@ public class DefaultLayoutParser implements ILayoutParser {
 		return returnValue;
 	}
 	
-	private LayoutElement createBeginFrame(MetaReference reference, View view, String label) {
+	private LayoutElement createBeginFrame(MetaMember reference, View view, String label) {
 		LayoutElement returnValue = createMetaMemberElement(reference, view, LayoutElementType.FRAME_START);
 		groupLevel++;
 		containersStack.push(returnValue);
 		return returnValue;
 	}
 	
-	private LayoutElement createEndFrame(MetaReference metaReference, View view) {
+	private LayoutElement createEndFrame(MetaMember metaReference, View view) {
 		containersStack.pop();
 		groupLevel--;
 		LayoutElement returnValue = createMetaMemberElement(metaReference, view, LayoutElementType.FRAME_END);;
@@ -362,21 +375,21 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @param view. View with special meaning.
 	 * @return returnValue. Layout element.
 	 */
-	private LayoutElement createProperty(MetaMember m, boolean descriptionsList, View view) {
+	private LayoutElement createProperty(MetaMember m, boolean descriptionsList, boolean suppressLabel, View view) {
 		LayoutElement returnValue = new LayoutElement(view, groupLevel);
 		returnValue.setFrame(false);
 		returnValue.setSections(false);
-		returnValue.setView(view);
-		returnValue.setElementType(LayoutElementType.ROW_START);
+		returnValue.setElementType(LayoutElementType.CELL_START);
 		String referenceForDescriptionsList = view.getPropertyPrefix();
 		MetaProperty p = (MetaProperty) m;
 		String propertyPrefix = propertyInReferencePrefix;
-		String propertyLabel = view.getLabelFor(p);
-		if (propertyLabel == null) {
-			propertyLabel = p.getLabel();
+		String propertyLabel = null;
+		if (!suppressLabel) {
+			propertyLabel = descriptionsList ? groupLabel : view.getLabelFor(p);
+			if (propertyLabel == null) {
+				propertyLabel = p.getLabel();
+			}
 		}
-		returnValue.setElementType(LayoutElementType.CELL_START);
-		returnValue.setLabel(groupLabel);
 		if (Is.empty(propertyPrefix)) {
 			propertyPrefix = referenceForDescriptionsList;
 		}
@@ -451,20 +464,20 @@ public class DefaultLayoutParser implements ILayoutParser {
 	}
 	
 
-	@SuppressWarnings("rawtypes")
-	private Collection getActionsNameForProperty(View view, MetaProperty p,
+	@SuppressWarnings("unchecked")
+	private Collection<String> getActionsNameForProperty(View view, MetaProperty p,
 			boolean editable) {
 		Collection<String> returnValues = new ArrayList<String>();
-		for (java.util.Iterator itActions = view.getActionsNamesForProperty(p, editable).iterator(); itActions.hasNext();) {
+		for (java.util.Iterator<String> itActions = view.getActionsNamesForProperty(p, editable).iterator(); itActions.hasNext();) {
 			returnValues.add((String) itActions.next());
 		}
 		return returnValues;
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	private Collection<String> getActionsNameForReference(View view, boolean lastSearchKey) {
 		Collection<String> returnValues = new ArrayList<String>();
-		for (java.util.Iterator itActions = view.getActionsNamesForReference(lastSearchKey).iterator(); itActions.hasNext();) {
+		for (java.util.Iterator<String> itActions = view.getActionsNamesForReference(lastSearchKey).iterator(); itActions.hasNext();) {
 			returnValues.add((String) itActions.next());
 		}
 		return returnValues;

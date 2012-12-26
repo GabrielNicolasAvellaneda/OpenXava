@@ -21,10 +21,8 @@ public class LayoutElement implements Serializable {
 	private MetaProperty metaProperty;
 	private MetaReference metaReference;
 	private MetaCollection metaCollection;
-	@SuppressWarnings("rawtypes")
-	private Collection actionsNameForReference;
-	@SuppressWarnings("rawtypes")
-	private Collection actionsNameForProperty;
+	private Collection<String> actionsNameForReference;
+	private Collection<String> actionsNameForProperty;
 	private View view = null;
 	
 	private LayoutElementType elementType = LayoutElementType.ROW_START;
@@ -124,29 +122,25 @@ public class LayoutElement implements Serializable {
 	/**
 	 * @param actionsNameForReference the actionsNameForReference to set
 	 */
-	@SuppressWarnings("rawtypes")
-	public void setActionsNameForReference(Collection actionsNameForReference) {
+	public void setActionsNameForReference(Collection<String> actionsNameForReference) {
 		this.actionsNameForReference = actionsNameForReference;
 	}
 	/**
 	 * @return the actionsNameForReference
 	 */
-	@SuppressWarnings("rawtypes")
-	public Collection getActionsNameForReference() {
+	public Collection<String> getActionsNameForReference() {
 		return actionsNameForReference;
 	}
 	/**
 	 * @param actionsNameForProperty the actionsNameForProperty to set
 	 */
-	@SuppressWarnings("rawtypes")
-	public void setActionsNameForProperty(Collection actionsNameForProperty) {
+	public void setActionsNameForProperty(Collection<String> actionsNameForProperty) {
 		this.actionsNameForProperty = actionsNameForProperty;
 	}
 	/**
 	 * @return the actionsNameForProperty
 	 */
-	@SuppressWarnings("rawtypes")
-	public Collection getActionsNameForProperty() {
+	public Collection<String> getActionsNameForProperty() {
 		return actionsNameForProperty;
 	}
 	/**
