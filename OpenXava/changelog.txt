@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New layout engine improved, though it is still in BETA and deactivated by default.
 - Fix: Named reference view for reference with inheritance switches to DEFAULT.
 - Fix: HTML_TEXT fields don't preserve content after recalculation. 
 - Fix: Second level dialogs are shown very narrow with IE9.
