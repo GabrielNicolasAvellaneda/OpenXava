@@ -473,7 +473,9 @@ public class View implements java.io.Serializable {
 			String modelName = (String) values.get(MapFacade.MODEL_NAME);
 			if (modelName != null && !modelName.equals(getModelName()) && !getModelName().contains(".")) {			
 				rootModelName = getModelName();
+				String viewName = getViewName(); 
 				setModelName(modelName);
+				setViewName(viewName); 
 				modelChanged = true;
 			}
 		}	
@@ -1766,8 +1768,10 @@ public class View implements java.io.Serializable {
 	 * Clear all displayed data.  
 	 */
 	public void clear() throws XavaException {
-		if (rootModelName != null) {	
+		if (rootModelName != null) {
+			String viewName = getViewName(); 
 			setModelName(rootModelName); 
+			setViewName(viewName);  
 			rootModelName = null;
 		}
 
