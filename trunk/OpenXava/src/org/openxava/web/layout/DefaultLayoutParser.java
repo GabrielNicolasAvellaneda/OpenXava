@@ -155,7 +155,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 					  		addLayoutElement(createBeginFrame(ref, view, ""));
 						}
 						groupLabel = ref.getLabel();
-						parseMetamembers(subView.getMetaMembers(), subView, isDescriptionList, isFrame);
+						parseMetamembers(subView.getMetaMembers(), subView, isDescriptionList, rowStarted);
 						if (isFrame) {
 					  		addLayoutElement(createEndFrame(ref, view));
 							addLayoutElement(createEndColumn(view));
@@ -190,7 +190,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 					addLayoutElement(createEndColumn(view));
 					columnStarted = false;
 				}
-				if (rowStarted & !rowEnded) {
+				if (rowStarted && !rowEnded) {
 					addLayoutElement(createEndRowMarker(view));
 					rowEnded = true;
 				}

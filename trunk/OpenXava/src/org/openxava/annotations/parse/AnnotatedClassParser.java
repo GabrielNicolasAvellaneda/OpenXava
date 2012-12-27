@@ -35,6 +35,7 @@ import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.meta.*;
 import org.openxava.view.meta.*;
+import org.openxava.web.layout.LayoutFactory;
 
 
 
@@ -51,7 +52,12 @@ public class AnnotatedClassParser {
 	private static Collection<String> managedClassNames; 
 	private static Collection<String> managedClassPackages;
 	private static Map<Class, Collection<Class>> entityFirstLevelSubclasses;
-	private static Map<String, MetaComponent> parsingComponents; 
+	private static Map<String, MetaComponent> parsingComponents;
+	private static boolean rendererDefined = false;
+	
+	static {
+		LayoutFactory.rendererDefined();
+	}
 		
 	public MetaComponent parse(String name) throws Exception {
 		if (name.contains("_")) { 
@@ -477,7 +483,15 @@ public class AnnotatedClassParser {
 				String nestedGroup = token;
 				members.append("__GROUP__" + nestedGroup); 
 				nextToken = addMembersToView(null, nestedGroup, metaView, st); 
-				if (",;".indexOf(nextToken) < 0) members.append(',');
+				if (rendererDefined) {
+					if (",".indexOf(nextToken) >= 0) {
+						members.append(',');
+					} else {
+						members.append(';');
+					}
+				} else {
+					if (",;".indexOf(nextToken) < 0) members.append(',');
+				}
 			}
 			else {
 				if (token.endsWith("()")) { // An action
