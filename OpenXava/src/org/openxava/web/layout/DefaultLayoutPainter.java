@@ -51,6 +51,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	public void startView(LayoutElement element) {
 		setContainer(element);
 		attributes.clear();
+		attributes.put("width", "100%");
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 	}
 
@@ -392,7 +393,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	public void startCollection(LayoutElement element) {
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_DIV));
 		if (element.hasFrame()) {
-			write(getStyle().getFrameHeaderStartDecoration(5));
+			write(getStyle().getFrameHeaderStartDecoration(100));
 			write(getStyle().getFrameTitleStartDecoration());
 			write(getStyle().getFrameTitleEndDecoration());
 			write(getStyle().getFrameActionsStartDecoration());
