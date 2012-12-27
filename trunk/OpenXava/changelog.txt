@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Named reference view for reference with inheritance switches to DEFAULT.
 - Fix: HTML_TEXT fields don't preserve content after recalculation. 
 - Fix: Second level dialogs are shown very narrow with IE9.
 - Fix: Mouse over list rows in IE9 moves the bottom button bar.

@@ -24,6 +24,7 @@ import org.openxava.annotations.*;
 	@View(name="Complete", extendsView="DEFAULT", 
 		members = "frameworks"
 	),
+	@View(name="Simplest", extendsView="super.Simplest", members="favouriteFramework"),
 	@View(name="VerySimple", members="name, sex"),
 	@View(name="Simple", extendsView="VerySimple",
 		members="mainLanguage"),

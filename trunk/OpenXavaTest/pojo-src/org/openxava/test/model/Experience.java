@@ -10,9 +10,11 @@ import org.openxava.annotations.*;
  */
 
 @Entity
+@View(name="SimplestProgrammer") 
 public class Experience extends Nameable {
 	
 	@ManyToOne
+	@ReferenceView(forViews="SimplestProgrammer", value="Simplest")
 	private Programmer programmer;
 
 	@Stereotype("MEMO")

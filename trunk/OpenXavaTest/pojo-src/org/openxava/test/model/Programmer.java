@@ -14,7 +14,8 @@ import org.openxava.annotations.*;
 @Entity
 @DiscriminatorValue("PRO")
 @Views({
-	@View(members="name, sex; mainLanguage; experiences"),	// tmp by bug -> https://sourceforge.net/tracker/?func=detail&aid=3314594&group_id=123187&atid=695743 
+	@View(members="name, sex; mainLanguage; experiences"),	// tmp by bug -> https://sourceforge.net/tracker/?func=detail&aid=3314594&group_id=123187&atid=695743
+	@View(name="Simplest", members="name"),
 	@View(name="WithSections",
 		members = 
 			"name, sex;" +
