@@ -53,11 +53,6 @@ public class AnnotatedClassParser {
 	private static Collection<String> managedClassPackages;
 	private static Map<Class, Collection<Class>> entityFirstLevelSubclasses;
 	private static Map<String, MetaComponent> parsingComponents;
-	private static boolean rendererDefined = false; // tmp
-	
-	static {
-		LayoutFactory.rendererDefined(); // tmp
-	}
 		
 	public MetaComponent parse(String name) throws Exception {
 		if (name.contains("_")) { 
@@ -483,17 +478,17 @@ public class AnnotatedClassParser {
 				String nestedGroup = token;
 				members.append("__GROUP__" + nestedGroup); 
 				nextToken = addMembersToView(null, nestedGroup, metaView, st);
-				// tmp ini
-				if (rendererDefined) {
+				if (LayoutFactory.rendererDefined()) {
 					if (",".indexOf(nextToken) >= 0) {
 						members.append(',');
-					} else {
+					} 
+					else {
 						members.append(';');
 					}
-				} else {
+				} 
+				else {
 					if (",;".indexOf(nextToken) < 0) members.append(',');
 				}
-				// tmp fin
 			}
 			else {
 				if (token.endsWith("()")) { // An action
