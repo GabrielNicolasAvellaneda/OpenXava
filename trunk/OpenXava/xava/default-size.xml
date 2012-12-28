@@ -15,7 +15,7 @@
 	<for-stereotype name="TIME" size="5"/>  
 	<for-stereotype name="EMAIL" size="50"/>
 	<for-stereotype name="TELEPHONE" size="15"/>
-	<for-stereotype name="TELEFONE" size="15"/>
+	<for-stereotype name="TELEFONO" size="15"/>
 	<for-stereotype name="WEBURL" size="50"/>
 	<for-stereotype name="IP" size="15"/>
 	<for-stereotype name="ISBN" size="13"/>
