@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Default size not correct for TELEFONE stereotype.
 - Fix: Clicking in the current mode with IE8 goes to a nonexistent page.
 - New layout engine improved, though it is still in BETA and deactivated by default.
 - Fix: Named reference view for reference with inheritance switches to DEFAULT.
