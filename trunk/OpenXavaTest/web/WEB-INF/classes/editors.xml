@@ -5,7 +5,7 @@
 <!-- OpenXavaTest -->
 
 <editors>
-	
+
 	<editor url="regionsEditor.jsp">
 		<property name="regionsCount" value="3" />
 		<formatter
@@ -29,11 +29,27 @@
 
 	<editor name="PersonName" url="textEditor.jsp">
 		<formatter
-			class="org.openxava.test.formatters.PersonNameFormatter">
+			class="org.openxava.test.formatters.NameFormatter">
 			<set property="firstLetterInUpperCase" value="true" />
 		</formatter>
 		<for-stereotype stereotype="PERSON_NAME" />
 	</editor>
+	
+	<editor name="CityName" url="textEditor.jsp">
+		<formatter
+			class="org.openxava.test.formatters.NameFormatter">
+			<set property="firstLetterInUpperCase" value="true" />
+		</formatter>
+		<list-formatter
+			class="org.openxava.test.formatters.CityNameFormatter"/>		
+		<for-stereotype stereotype="CITY_NAME" />
+	</editor>	
+	
+	<editor url="corporationEmployeeListEditor.jsp">
+		<for-tab model="CorporationEmployee"/>
+	</editor>
+		
+	<editor name="CustomerCardList" url="customerCardListEditor.jsp"/>
 		
 	<editor url="colorEditor.jsp">
 		<for-reference model="Color"/>
@@ -53,8 +69,7 @@
 			<set property="firstLetterInUpperCase" value="true" />
 		</formatter>		
 	</editor>
-	
-
+	 
 	<editor url="textEditor.jsp">
 		<for-model-property model="Product" property="unitPrice" />
 	</editor>
@@ -156,5 +171,9 @@
 	</editor>
 
 	<editor name="UserAttribute" url="userAttributeEditor.jsp"/>
+
+	<editor name="TreeViewAlternate" url="treeViewEditor.jsp">
+		<property name="reader" value="org.openxava.test.web.editors.impl.TreeViewReaderTestImpl" />
+	</editor>	
 	
 </editors>

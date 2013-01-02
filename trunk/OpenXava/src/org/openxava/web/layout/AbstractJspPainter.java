@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.openxava.util.Messages;
 import org.openxava.web.style.Style;
 
@@ -21,6 +22,7 @@ import org.openxava.web.style.Style;
 public abstract class AbstractJspPainter extends AbstractBasePainter {
 	private Style style;
 	protected Map<String, String> attributes = new HashMap<String, String>();
+	protected int level = 0;
 
 	/**
 	 * Writes to the page context output.
@@ -29,7 +31,24 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	protected void write(String value) {
 		try {
 			getPageContext().getOut().print(value);
-			System.out.println(value);
+			
+			String[] values = value.split(">");
+			for (String aValue : values) {
+				String cValue = aValue + ">";
+				int closeBrackets = StringUtils.countMatches(cValue, "</") * 2;
+				int totalBrackets = StringUtils.countMatches(cValue, "<");
+				int difBrackets = totalBrackets - closeBrackets;
+				if (difBrackets < 0) {
+					level += difBrackets;
+				}
+				if (level < 0) level = 0;
+				System.out.print(StringUtils.repeat("  ", level));
+				System.out.println(cValue);
+				if (difBrackets > 0) {
+					level += difBrackets;
+				}
+				if (level < 0) level = 0;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -66,10 +85,11 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	protected Messages getErrors() {
 		return (Messages)getRequest().getAttribute("errors");
 	}
+	
 	/**
 	 * @return The current style.
 	 */
-	public Style getStyle() {
+	protected Style getStyle() {
 		if (style == null) {
 			style = (Style)getRequest().getAttribute("style");
 		}

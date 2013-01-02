@@ -16,12 +16,11 @@
 		<for-stereotype stereotype="FAMILY"/>		
 		<for-stereotype stereotype="SUBFAMILY"/>
 	</required-validator>
-	
-	 	
+		 	
 	<default-validator>
 		<validator-class class="org.openxava.test.validators.PersonNameValidator"/>
 		<for-stereotype stereotype="PERSON_NAME"/>
-	</default-validator>	
+	</default-validator>			
 	
 </validators>
   

@@ -22,6 +22,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	private Stack<LayoutElement> containersStack;
 	private Stack<LayoutElement> rowsStack;
 	private View view;
+	private LayoutElement viewElement;
 	private PageContext pageContext;
 	private LayoutPainterManager painterManager;
 
@@ -82,6 +83,9 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 */
 	protected void setContainer(LayoutElement layoutElement) {
 		getContainersStack().push(layoutElement);
+		if (layoutElement.getElementType().equals(LayoutElementType.VIEW_START)) {
+			viewElement = layoutElement;
+		}
 	}
 	
 	/**
@@ -152,6 +156,14 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 */
 	protected void setRowsStack(Stack<LayoutElement> rowsStack) {
 		this.rowsStack = rowsStack;
+	}
+	
+	/**
+	 * 
+	 * @return The maximun number of columns in the view.
+	 */
+	protected int getMaxColumnsOnView() {
+		return viewElement.getMaxViewColumnsCount();
 	}
 	
 	/**
