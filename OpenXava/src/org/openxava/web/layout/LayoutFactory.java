@@ -97,10 +97,19 @@ public class LayoutFactory {
 	 * @return true if a layout parser / painter is defined.
 	 */
 	public static boolean rendererDefined() {
-		if (getLayoutParserInstance() != null 
-				&& getLayoutPainterInstance() != null) {
-			return true;
+		boolean returnValue = false;
+		String layoutParserName = XavaPreferences.getInstance().getLayoutParser();
+		String layoutPainterName = XavaPreferences.getInstance().getLayoutPainter();
+		if (!Is.emptyString(layoutParserName) 
+				&& !Is.emptyString(layoutPainterName)) {
+			try {
+				Class.forName(layoutParserName);
+				Class.forName(layoutPainterName);
+				returnValue = true;
+			} catch (ClassNotFoundException e) {
+				LOG.debug(e.getMessage());
+			}
 		}
-		return false;
+		return returnValue;
 	}
 }

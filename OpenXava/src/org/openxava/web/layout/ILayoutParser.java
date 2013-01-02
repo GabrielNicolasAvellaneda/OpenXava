@@ -3,7 +3,7 @@
  */
 package org.openxava.web.layout;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.jsp.PageContext;
 
@@ -20,5 +20,5 @@ public interface ILayoutParser {
 	 * @param view Originating view.
 	 * @param pageContext Where page are rendered.
 	 */
-	public Collection<LayoutElement> parseView(View view, PageContext pageContext);
+	public List<LayoutElement> parseView(View view, PageContext pageContext);
 }

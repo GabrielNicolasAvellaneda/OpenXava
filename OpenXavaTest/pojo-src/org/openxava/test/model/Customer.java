@@ -35,6 +35,60 @@ import org.openxava.test.actions.*;
 		"remarks" 	
 	),
 	
+	@View(name = "FramesOnSameRow", members= 	
+		"number;" +
+		"type;" +
+		"name, Customer.changeNameLabel();" +		
+		"photo;" +
+		"telephone, email;" +
+		"website;" +
+		"address;" +
+		"city;" +
+		"seller [" +  
+		"	seller; " +
+		"	relationWithSeller;" +
+		"]," + //<--- comma makes frames/groups to be on the same row				
+		"alternateSeller;" +		
+		"deliveryPlaces;" +
+		"remarks" 	
+	),
+	
+	@View(name = "ThreeFramesOnSameRow", members= 	
+		"number;" +
+		"type;" +
+		"name, Customer.changeNameLabel();" +		
+		"photo;" +
+		"telephone, email;" +
+		"website;" +
+		"city;" +
+		"address," + //<--- comma makes frames/groups to be on the same row
+		"seller [" +  
+		"	seller; " +
+		"	relationWithSeller;" +
+		"]," + //<--- comma makes frames/groups to be on the same row				
+		"alternateSeller;" +		
+		"deliveryPlaces;" +
+		"remarks" 	
+	),
+	
+	@View(name = "FramesAndPropertyOnSameRow", members= 	
+		"number;" +
+		"type;" +
+		"name, Customer.changeNameLabel();" +		
+		"photo;" +
+		"telephone, email;" +
+		"website;" +
+		"address;" +
+		"seller [" +  
+		"	seller; " +
+		"	relationWithSeller;" +
+		"]," + //<--- comma makes frames/groups to be on the same row
+		"city," + //<--- comma makes frames/groups to be on the same row				
+		"alternateSeller;" +		
+		"deliveryPlaces;" +
+		"remarks" 	
+	),
+
 	@View( name="Simple", members= 	
 		"number;" +
 		"type;" +

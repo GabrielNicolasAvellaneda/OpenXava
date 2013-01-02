@@ -6,6 +6,7 @@ package org.openxava.web.layout;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.openxava.model.meta.MetaReference;
 import org.openxava.util.Is;
 import org.openxava.view.View;
 import org.openxava.view.meta.MetaGroup;
+import org.openxava.view.meta.MetaViewAction;
 import org.openxava.view.meta.PropertiesSeparator;
 import org.openxava.web.Ids;
 import org.openxava.web.WebEditors;
@@ -38,19 +40,18 @@ public class DefaultLayoutParser implements ILayoutParser {
 
 	private String propertyInReferencePrefix = "";
 	private String groupLabel;
-	private Collection<LayoutElement> elements;
+	private List<LayoutElement> elements;
 	private HttpServletRequest request;
 	private ModuleContext context;
-	private boolean beginGroup = false;
-	private boolean endGroup = false;
-	private boolean beginFrame = false;
-	private boolean endFrame = false;
-	private boolean editable = false;
-	private int groupLevel = 0;
-	private boolean columnStarted = false;
-	private LayoutElement currentRow = null;
-	private Stack<LayoutElement> containersStack = new Stack<LayoutElement>();
-	
+	private boolean editable;
+	private int groupLevel;
+	private LayoutElement currentRow;
+	private LayoutElement currentView;
+	private Stack<LayoutElement> containersStack;
+	private Stack<LayoutElement> rowsStack;
+	private int rowIndex;
+	private List<Integer> columnsPerRow;
+
 	public DefaultLayoutParser() {
 	}
 	
@@ -61,7 +62,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @param pageContext pageContext.
 	 * @return returnValue Integer value containing the count
 	 */
-	public Collection<LayoutElement> parseView(View view, PageContext pageContext) {
+	public List<LayoutElement> parseView(View view, PageContext pageContext) {
 		request = (HttpServletRequest)pageContext.getRequest();
 		context = (ModuleContext) request.getSession().getAttribute("context");
 		parseLayout(view);
@@ -69,6 +70,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 			addLayoutElement(createSectionMarker(view));
 			addLayoutElement(createMarker(view, LayoutElementType.SECTIONS_END));
 		}
+		System.out.println("");
 		for (LayoutElement readElement : elements) {
 			System.out.println(StringUtils.repeat("    ", readElement.getGroupLevel()) 
 					+ readElement.toString());
@@ -84,7 +86,15 @@ public class DefaultLayoutParser implements ILayoutParser {
 	private void parseLayout(View view) {
 		groupLevel = 0;
 		elements = new ArrayList<LayoutElement>();
-		addLayoutElement(createBeginViewMarker(view));
+		containersStack = new Stack<LayoutElement>();
+		rowsStack = new Stack<LayoutElement>();
+		rowIndex = -1;
+		groupLevel = 0;
+		columnsPerRow = new ArrayList<Integer>();
+		currentRow = null;
+		editable = false;
+		currentView = createBeginViewMarker(view);
+		addLayoutElement(currentView);
 		parseMetamembers(view.getMetaMembers(), view, false, true);
 		addLayoutElement(createEndViewMarker(view));
 	}
@@ -95,47 +105,79 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @param metaMembers. Metamembers to processed.
 	 * @param view. View to be processed.
 	 * @param descriptionsList. True if the meta property is a descriptionsList
+	 * @param isGrouped. True if this parsing should be treated as a group.
 	 * 
 	 */
 	@SuppressWarnings("rawtypes")
-	private void parseMetamembers(Collection metaMembers, View view, boolean descriptionsList, boolean rowStarted) {
-		boolean displayAsDescriptionsList = descriptionsList;
-		boolean rowEnded = true;
+	private void parseMetamembers(Collection metaMembers, View view, boolean isDescriptionsList, boolean isGrouped) {
+		boolean displayAsDescriptionsList = isDescriptionsList;
+		boolean mustStartRow = isGrouped;
+		boolean rowStarted = false;
+		boolean frameOnSameColumn = false;
+		int frameStartingRowIndex = -1;
+		int frameMaxEndingRowIndex = -1;
 		Iterator it = metaMembers.iterator();
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();
 			LayoutElement element = null;
-			if (rowStarted && rowEnded) {
-				currentRow = createMarker(view, LayoutElementType.ROW_START);
-				groupLevel++;
-				addLayoutElement(currentRow);
-				rowEnded = false;
-			}
 			if (!PropertiesSeparator.INSTANCE.equals(m)) {
-				if (m instanceof MetaProperty) {
+
+		  		if (frameOnSameColumn) {
+		  			rowIndex = frameStartingRowIndex;
+		  		}
+
+				if (m instanceof MetaProperty) {					
 					MetaProperty p = (MetaProperty) m;
-					setEditable(view.isEditable(p));
-					if (columnStarted) {
-						addLayoutElement(createEndColumn(view));
-					}
-					addLayoutElement(createStartColumn(view));
-					columnStarted = true;
-					boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
-					if (hasFrame) {
-				  		addLayoutElement(createBeginFrame(p, view, ""));
-					}
-					
-					element = createProperty(p, displayAsDescriptionsList, hasFrame, view); // hasFrame:true = suppress label
-					addLayoutElement(element);
-					addLayoutElement(createMarker(view, LayoutElementType.CELL_END));
-					this.groupLabel = "";
-					
-					if (hasFrame) {
-				  		addLayoutElement(createEndFrame(p, view));
+					LayoutElement last = elements.size() > 0 ? elements.get(elements.size() - 1) : null;
+					LayoutElement beforeLast = elements.size() > 1 ? elements.get(elements.size() - 2) : null;
+					LayoutElement propertyElement = elements.size() > 2 ? elements.get(elements.size() - 3) : null;
+					MetaViewAction action = (p instanceof MetaViewAction) ? (MetaViewAction) p : null;
+					boolean createProperty = true;
+					if (action != null
+							&& propertyElement != null
+							&& propertyElement.getElementType().equals(LayoutElementType.CELL_START)
+							&& beforeLast.getElementType().equals(LayoutElementType.CELL_END)
+							&& last.getElementType().equals(LayoutElementType.COLUMN_END)
+							&& !Is.emptyString(action.getAction())) {
+						if (action.isAlwaysEnabled() || beforeLast.isEditable()) {
+							propertyElement.getActionsNameForProperty().add(action.getAction());
+							propertyElement.setActions(true);
+						}
+						createProperty = false;
 					}
 
-				}
-			  	if (m instanceof MetaReference) {
+					if (createProperty) {
+						if (!rowStarted	&& mustStartRow) {
+							createBeginRowMarker(view);
+							rowStarted = true;
+						}
+						setEditable(view.isEditable(p));
+						addLayoutElement(createStartColumn(view));
+						int rowIndexBeforeFrame = rowIndex;
+						boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
+						if (hasFrame) {
+					  		addLayoutElement(createBeginFrame(p, view, ""));
+						}
+						
+						element = createProperty(p, displayAsDescriptionsList, hasFrame, view); // hasFrame:true = suppress label
+						addLayoutElement(element);
+						addLayoutElement(createMarker(view, LayoutElementType.CELL_END));
+						if (hasFrame) {
+					  		addLayoutElement(createEndFrame(p, view));
+					  		rowIndex = rowIndexBeforeFrame;
+						}
+						addLayoutElement(createEndColumn(view));
+
+					}
+					
+					this.groupLabel = "";
+
+
+				} else if (m instanceof MetaReference) {
+					if (!rowStarted	&& mustStartRow) {
+						createBeginRowMarker(view);
+						rowStarted = true;
+					}
 					MetaReference ref = (MetaReference) m;
 					try {
 						String viewObject = getViewObject(view) + "_" + ref.getName();
@@ -144,29 +186,35 @@ public class DefaultLayoutParser implements ILayoutParser {
 						subView.setPropertyPrefix(propertyInReferencePrefix);
 						subView.setViewObject(viewObject);
 						boolean isDescriptionList = view.displayAsDescriptionsList(ref);
-						boolean isFrame = isDescriptionList ? false : subView.isFrame(); 
+						boolean isFramed = isDescriptionList ? false : subView.isFrame(); 
 
 						context.put(request, subView.getViewObject(), subView);
-						if (isFrame) {
-							if (columnStarted) {
-								addLayoutElement(createEndColumn(view));
-							} 
+						if (isFramed) {
 							addLayoutElement(createStartColumn(view));
 					  		addLayoutElement(createBeginFrame(ref, view, ""));
+					  		frameOnSameColumn = true;
 						}
+						
+						frameStartingRowIndex = rowIndex;
+						
 						groupLabel = ref.getLabel();
-						parseMetamembers(subView.getMetaMembers(), subView, isDescriptionList, rowStarted);
-						if (isFrame) {
+						parseMetamembers(subView.getMetaMembers(), subView, isDescriptionList, isFramed || (rowStarted && !isDescriptionList));
+						if (isFramed) {
 					  		addLayoutElement(createEndFrame(ref, view));
 							addLayoutElement(createEndColumn(view));
-							columnStarted = false;
+							if (rowIndex > frameMaxEndingRowIndex) {
+								frameMaxEndingRowIndex = rowIndex;
+							}
 						}
 						propertyInReferencePrefix = "";
 					} catch (Exception ex) {
 						LOG.info("Sub-view not found: " + ref.getName());
 					}
-			  	}
-				if (m instanceof MetaGroup) {
+			  	} else if (m instanceof MetaGroup) {
+					if (!rowStarted	&& mustStartRow) {
+						createBeginRowMarker(view);
+						rowStarted = true;
+					}
 					MetaGroup group = (MetaGroup) m;
 					View subView = view.getGroupView(group.getName());
 					String viewObject = getViewObject(view) + "_" + group.getName();
@@ -175,53 +223,42 @@ public class DefaultLayoutParser implements ILayoutParser {
 						subView.setPropertyPrefix(view.getPropertyPrefix());
 						subView.setViewObject(viewObject);
 					}
+
+					frameOnSameColumn = true;
+					frameStartingRowIndex = rowIndex;
+					
 					context.put(request, subView.getViewObject(), subView);
+					addLayoutElement(createStartColumn(view));
 			  		addLayoutElement(createBeginGroup(group, subView, groupLabel));
 					parseMetamembers(group.getMetaView().getMetaMembers(), subView, false, true);
+					if (rowIndex > frameMaxEndingRowIndex) {
+						frameMaxEndingRowIndex = rowIndex;
+					}
 			  		addLayoutElement(createEndGroup(group, subView));
-				}
-				if (m instanceof MetaCollection) {
+					addLayoutElement(createEndColumn(view));
+				} else if (m instanceof MetaCollection) {
 					addLayoutElement(createCollection(m, view));
 					addLayoutElement(createMarker(view, LayoutElementType.COLLECTION_END));
-				}
-				
+				}				
 			} else {
-				if (columnStarted) {
-					addLayoutElement(createEndColumn(view));
-					columnStarted = false;
+				if (rowStarted) {
+					createEndRowMarker(view);
+					rowStarted = false;
 				}
-				if (rowStarted && !rowEnded) {
-					addLayoutElement(createEndRowMarker(view));
-					rowEnded = true;
+				mustStartRow = true;
+				if (frameOnSameColumn) {
+					rowIndex = frameMaxEndingRowIndex;
 				}
+				frameOnSameColumn = false;
 			}
 		}
-		if (columnStarted) {
-			addLayoutElement(createEndColumn(view));
-			columnStarted = false;
+		if (rowStarted) {
+			createEndRowMarker(view);
+			rowStarted = false;
 		}
-  		if (rowStarted & !rowEnded) {
-			addLayoutElement(createEndRowMarker(view));
-			rowEnded = true;
-  		}
-	}
-
-	/**
-	 * Method to count special attributes
-	 * 
-	 * @param p. Metaproperty to process
-	 * @param view. View to get special values.
-	 * @return returnValue Integer value containing the count
-	 */
-	private int getCount(MetaProperty p, View view) {
-		int returnValue = 0;
-		int labelFormat = view.getLabelFormatForProperty(p);
-		if (labelFormat != 2) { // No label required
-			if (p.getLabel(view.getRequest()).length() > 0) {
-				returnValue += 1;
-			}
+		if (frameOnSameColumn) {
+			rowIndex = frameMaxEndingRowIndex;
 		}
-		return returnValue;
 	}
 
 	/**
@@ -269,31 +306,36 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @return
 	 */
 	private LayoutElement createBeginGroup(MetaGroup metaGroup, View view, String label) {
-		currentRow.setMaxRowColumnsCount(currentRow.getMaxRowColumnsCount() + 1);
-		LayoutElement returnValue = createMetaMemberElement(metaGroup, view, LayoutElementType.GROUP_START);
-		groupLevel++;
-		containersStack.push(returnValue);
-		return returnValue;
+		return createBeginFrame(metaGroup, view, label, LayoutElementType.GROUP_START);
 	}
 	
 	private LayoutElement createEndGroup(MetaGroup metaGroup, View view) {
-		containersStack.pop();
-		groupLevel--;
-		LayoutElement returnValue = createMetaMemberElement(metaGroup, view, LayoutElementType.GROUP_END);
-		return returnValue;
+		return createEndFrame(metaGroup, view, LayoutElementType.GROUP_END);
 	}
 	
-	private LayoutElement createBeginFrame(MetaMember reference, View view, String label) {
-		LayoutElement returnValue = createMetaMemberElement(reference, view, LayoutElementType.FRAME_START);
+	private LayoutElement createBeginFrame(MetaMember metaMember, View view, String label) {
+		return createBeginFrame(metaMember, view, label, LayoutElementType.FRAME_START);
+	}
+	
+	private LayoutElement createEndFrame(MetaMember metaMember, View view) {
+		return createEndFrame(metaMember, view, LayoutElementType.FRAME_END);
+	}
+
+	private LayoutElement createBeginFrame(MetaMember metaMember, View view, String label, LayoutElementType elementType) {
+		LayoutElement returnValue = createMetaMemberElement(metaMember, view, elementType);
 		groupLevel++;
+		if (currentRow != null) {
+			int framesCount = currentRow.getMaxFramesCount() + 1;
+			currentRow.setMaxFramesCount(framesCount);
+		}
 		containersStack.push(returnValue);
 		return returnValue;
 	}
 	
-	private LayoutElement createEndFrame(MetaMember metaReference, View view) {
+	private LayoutElement createEndFrame(MetaMember metaMember, View view, LayoutElementType elementType) {
 		containersStack.pop();
 		groupLevel--;
-		LayoutElement returnValue = createMetaMemberElement(metaReference, view, LayoutElementType.FRAME_END);;
+		LayoutElement returnValue = createMetaMemberElement(metaMember, view, elementType);;
 		return returnValue;
 	}
 
@@ -313,18 +355,38 @@ public class DefaultLayoutParser implements ILayoutParser {
 	}
 	
 	/**
+	 * Creates the start of row.
+	 * @param view Current view;
+	 */
+	private void createBeginRowMarker(View view) {
+		if ((columnsPerRow.size() - 1) <= rowIndex) {
+			columnsPerRow.add(0);
+		}
+		rowIndex++;
+		rowsStack.push(currentRow);
+		currentRow = createMarker(view, LayoutElementType.ROW_START);
+		currentRow.setRowIndex(rowIndex);
+		groupLevel++;
+		addLayoutElement(currentRow);
+	}
+	
+	/**
 	 * Creates the end of row.
 	 * @param view
 	 * @param cellsCount
 	 */
-	private LayoutElement createEndRowMarker(View view) {
+	private void createEndRowMarker(View view) {
 		groupLevel--;
-		LayoutElement currentContainer = containersStack.peek();
-		int maxRowCellsCount = currentRow.getMaxRowColumnsCount();
-		if (maxRowCellsCount > currentContainer.getMaxContainerColumnsCount()) {
-			currentContainer.setMaxContainerColumnsCount(maxRowCellsCount);
+		LayoutElement last = null;
+		if (elements.size() > 0) {
+			last = elements.get(elements.size() - 1);
 		}
-		return createMarker(view, LayoutElementType.ROW_END);
+		if (last != null && last.getElementType().equals(LayoutElementType.ROW_START)) { // empty row
+			elements.remove(elements.size() - 1);
+		} else {
+			addLayoutElement(createMarker(view, LayoutElementType.ROW_END));
+		}
+		currentRow = rowsStack.pop();
 	}
 
 	/**
@@ -343,7 +405,27 @@ public class DefaultLayoutParser implements ILayoutParser {
 	
 	private LayoutElement createStartColumn(View view) {
 		LayoutElement returnValue = createMarker(view, LayoutElementType.COLUMN_START);
-		currentRow.setMaxRowColumnsCount(currentRow.getMaxRowColumnsCount() + 1);
+		// Add to column
+		int maxRowColumnsCount = currentRow.getMaxRowColumnsCount() + 1;
+		currentRow.setMaxRowColumnsCount(maxRowColumnsCount);
+		
+		// Add to indexedRow
+		int rowIndex = currentRow.getRowIndex();
+		int columnsPerIndexedRow = columnsPerRow.get(rowIndex) + 1;
+		columnsPerRow.set(rowIndex, columnsPerIndexedRow);
+		
+		// Add to container
+		int maxContainerColumnsCount = containersStack.peek().getMaxContainerColumnsCount();
+		if (columnsPerIndexedRow > maxContainerColumnsCount) {
+			containersStack.peek().setMaxContainerColumnsCount(columnsPerIndexedRow);
+		}
+		
+		// Add to view
+		int maxViewColumnsCount = currentView.getMaxViewColumnsCount();
+		if (columnsPerIndexedRow > maxViewColumnsCount) {
+			currentView.setMaxViewColumnsCount(columnsPerIndexedRow);
+		}
+		
 		groupLevel++;
 		return returnValue;
 	}
@@ -488,76 +570,23 @@ public class DefaultLayoutParser implements ILayoutParser {
 			elements = new ArrayList<LayoutElement>();
 		}
 		elements.add(e);
+		System.out.println(StringUtils.repeat("    ", e.getGroupLevel()) 
+				+ e.toString());
+
 	}
 
 	/**
 	 * @return the elements
 	 */
-	public Collection<LayoutElement> getElements() {
+	public List<LayoutElement> getElements() {
 		return elements;
 	}
 
 	/**
 	 * @param elements the elements to set
 	 */
-	public void setElements(Collection<LayoutElement> elements) {
+	public void setElements(List<LayoutElement> elements) {
 		this.elements = elements;
-	}
-
-	/**
-	 * @param beginGroup the beginGroup to set
-	 */
-	public void setBeginGroup(boolean beginGroup) {
-		this.beginGroup = beginGroup;
-	}
-
-	/**
-	 * @return the beginGroup
-	 */
-	public boolean isBeginGroup() {
-		return beginGroup;
-	}
-
-	/**
-	 * @param endGroup the endGroup to set
-	 */
-	public void setEndGroup(boolean endGroup) {
-		this.endGroup = endGroup;
-	}
-
-	/**
-	 * @return the endGroup
-	 */
-	public boolean isEndGroup() {
-		return endGroup;
-	}
-
-	/**
-	 * @param beginFrame the beginFrame to set
-	 */
-	public void setBeginFrame(boolean beginFrame) {
-		this.beginFrame = beginFrame;
-	}
-
-	/**
-	 * @return the beginFrame
-	 */
-	public boolean isBeginFrame() {
-		return beginFrame;
-	}
-
-	/**
-	 * @param endFrame the endFrame to set
-	 */
-	public void setEndFrame(boolean endFrame) {
-		this.endFrame = endFrame;
-	}
-
-	/**
-	 * @return the endFrame
-	 */
-	public boolean isEndFrame() {
-		return endFrame;
 	}
 
 	/**

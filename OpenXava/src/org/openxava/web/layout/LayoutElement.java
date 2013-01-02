@@ -23,9 +23,9 @@ public class LayoutElement implements Serializable {
 	private MetaCollection metaCollection;
 	private Collection<String> actionsNameForReference;
 	private Collection<String> actionsNameForProperty;
-	private View view = null;
+	private View view;
 	
-	private LayoutElementType elementType = LayoutElementType.ROW_START;
+	private LayoutElementType elementType;
 	private boolean actions = false;
 	private boolean sections = false;
 	private boolean frame = false;
@@ -44,11 +44,14 @@ public class LayoutElement implements Serializable {
 	private String propertyPrefix = "";
 	private String referenceForDescriptionsList;
 	private String name;
-	
-	private int groupLevel = 0;
-	private Integer maxRowColumnsCount = 0;
-	private Integer rowCurrentColumnsCount = 0;
-	private Integer maxContainerColumnsCount = 0;
+	private int groupLevel;
+	private Integer maxRowColumnsCount;
+	private Integer rowCurrentColumnsCount;
+	private Integer maxContainerColumnsCount;
+	private Integer maxViewColumnsCount;
+	private Integer maxFramesCount;
+	private Integer rowIndex;
+	private boolean rowClosed;
 	
 	/**
 	 * Default constructor.
@@ -58,6 +61,13 @@ public class LayoutElement implements Serializable {
 	public LayoutElement(View view, int groupLevel) {
 		this.view = view;
 		this.groupLevel = groupLevel;
+		elementType = LayoutElementType.ROW_START;
+		maxRowColumnsCount = 0;
+		rowCurrentColumnsCount = 0;
+		maxContainerColumnsCount = 0;
+		maxFramesCount = 0;
+		maxViewColumnsCount = 0;
+		rowIndex = -1;
 	}
 	
 	/**
@@ -442,6 +452,62 @@ public class LayoutElement implements Serializable {
 		this.maxContainerColumnsCount = maxContainerCellsCount;
 	}
 
+	/**
+	 * @return the maxViewColumnsCount
+	 */
+	public Integer getMaxViewColumnsCount() {
+		return maxViewColumnsCount;
+	}
+
+	/**
+	 * @param maxViewColumnsCount the maxViewColumnsCount to set
+	 */
+	public void setMaxViewColumnsCount(Integer maxViewColumnsCount) {
+		this.maxViewColumnsCount = maxViewColumnsCount;
+	}
+
+	/**
+	 * @return the maxFramesCount
+	 */
+	public Integer getMaxFramesCount() {
+		return maxFramesCount;
+	}
+
+	/**
+	 * @param maxFramesCount the maxFramesCount to set
+	 */
+	public void setMaxFramesCount(Integer maxFramesCount) {
+		this.maxFramesCount = maxFramesCount;
+	}
+
+	/**
+	 * @return the rowIndex
+	 */
+	public Integer getRowIndex() {
+		return rowIndex;
+	}
+
+	/**
+	 * @param rowIndex the rowIndex to set
+	 */
+	public void setRowIndex(Integer rowIndex) {
+		this.rowIndex = rowIndex;
+	}
+
+	/**
+	 * @return the rowClosed
+	 */
+	public boolean isRowClosed() {
+		return rowClosed;
+	}
+
+	/**
+	 * @param rowClosed the rowClosed to set
+	 */
+	public void setRowClosed(boolean rowClosed) {
+		this.rowClosed = rowClosed;
+	}
+
 	/*
 	 * @see java.lang.Object#toString()
 	 */
@@ -449,8 +515,10 @@ public class LayoutElement implements Serializable {
 	public String toString() {
 		return "[" + elementType 
 				+ (label != null ? ", " + label : "")
-				+ (maxContainerColumnsCount > 0 ? ", Container:" + maxContainerColumnsCount : "")
-				+ (maxRowColumnsCount > 0 ? ", Row:" + maxRowColumnsCount : "")
+				+ (maxViewColumnsCount > 0 ? ", View cols:" + maxViewColumnsCount : "")
+				+ (maxContainerColumnsCount > 0 ? ", Container cols:" + maxContainerColumnsCount : "")
+				+ (maxRowColumnsCount > 0 ? ", Row cols:" + maxRowColumnsCount : "")
+				+ (maxFramesCount > 0 ? ", Frames:" + maxFramesCount : "")
 				+ "]" ;
 	}
 
