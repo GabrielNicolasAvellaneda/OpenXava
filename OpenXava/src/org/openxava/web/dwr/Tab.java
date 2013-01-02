@@ -24,7 +24,7 @@ public class Tab extends DWRBase {
 	
 	public static void setColumnWidth(HttpServletRequest request, String columnId, int width) { 
 		try {
-			String [] id = columnId.split("_");
+			String [] id = columnId.split("_+");
 			if (!"ox".equals(id[0])) {
 				// Bad format. This method relies in the id format by Ids class
 				log.warn(XavaResources.getString("impossible_store_column_width")); 
@@ -32,14 +32,19 @@ public class Tab extends DWRBase {
 			}
 			String application = id[1];
 			String module = id[2];
-			String collection = id[4];
-			String column = id[5];
+			StringBuffer collectionSB = new StringBuffer();
+			for (int i=3; i<id.length-1; i++) { // To work with collections inside @AsEmbedded references 
+				if (i>3) collectionSB.append("_");
+				collectionSB.append(id[i]);				 
+			}
+			String collection = collectionSB.toString();
+			String column=id[id.length-1];
 			int columnIndex = Integer.parseInt(column.substring(3));
 			checkSecurity(request, application, module);
 			Users.setCurrent(request);
 			String tabObject = "list".equals(collection)?"xava_tab":"xava_collectionTab_" + collection;
 			try {
-				org.openxava.tab.Tab tab = getTab(request, application, module, tabObject); // tmp
+				org.openxava.tab.Tab tab = getTab(request, application, module, tabObject); 
 				tab.setColumnWidth(columnIndex, width);
 			}
 			catch (ElementNotFoundException ex) { 
