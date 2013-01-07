@@ -17,7 +17,7 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 		
 	private Object newValue;
 	
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		String propertyName = (String) newValue;
 		if (Is.emptyString(propertyName)) {
 			getView().setValue("comparator", EMPTY_COMPARATOR); 

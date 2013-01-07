@@ -13,6 +13,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
+import org.openxava.test.actions.*;
 import org.openxava.test.filters.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
@@ -45,6 +46,7 @@ import org.openxava.util.*;
 		"vatPercentage, vat;" +
 		"total"	
 	),	
+	@View(name="ActiveYear", extendsView="NoSections"),
 	@View(name="Simple", members="year, number, date, yearDiscount;"),
 	@View(name="NestedSections", members=
 		"year, number, date;" +
@@ -159,6 +161,7 @@ public class Invoice {
 	
 	@Id @Column(length=4) @Max(9999) @Required
 	@DefaultValueCalculator(CurrentYearCalculator.class)
+	@OnChange(forViews="ActiveYear", value=OnChangeInvoiceYearAction.class) 
 	private int year;
 	
 	@Id @Column(length=6) @Required

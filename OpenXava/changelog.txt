@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @Inject does not work in "on change" actions.
 - Fix: Impossible to store column width in collections inside @AsEmbedded references.
 - Fix: Default size not correct for TELEFONO stereotype.
 - Fix: Clicking in the current mode with IE8 goes to a nonexistent page.

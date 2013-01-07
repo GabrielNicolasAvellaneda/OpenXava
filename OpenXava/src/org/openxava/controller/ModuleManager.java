@@ -326,7 +326,7 @@ public class ModuleManager implements java.io.Serializable {
 		}
 	}
 	
-	public void executeAction(IAction action, Messages errors, Messages messages, HttpServletRequest request) {
+	public void executeAction(IAction action, Messages errors, Messages messages, HttpServletRequest request) {		
 		executeAction(action, null, errors, messages, null, request);
 	}
 
@@ -337,10 +337,8 @@ public class ModuleManager implements java.io.Serializable {
 			action.setErrors(errors);
 			action.setMessages(messages);
 			action.setEnvironment(getEnvironment());
-			String previousDefaultActionQualifiedName = getDefaultActionQualifiedName();  
-			if (metaAction != null) {
-				setObjectsInAction(action, metaAction);
-			}
+			String previousDefaultActionQualifiedName = getDefaultActionQualifiedName();			
+			setObjectsInAction(action, metaAction);
 			Map xavaValues = setPropertyValues(action, propertyValues);
 			if (action instanceof IModuleContextAction) {
 				((IModuleContextAction) action).setContext(getContext());
@@ -465,9 +463,7 @@ public class ModuleManager implements java.io.Serializable {
 			if (action instanceof ILoadFileAction) {					
 				setFormUpload(((ILoadFileAction) action).isLoadFile());
 			}
-			if (metaAction != null) {
-				getObjectsFromAction(action, metaAction);
-			}
+			getObjectsFromAction(action, metaAction);
 			if (action instanceof IForwardAction) {				
 				IForwardAction forward = (IForwardAction) action;
 				String uri = forward.getForwardURI();
@@ -788,20 +784,22 @@ public class ModuleManager implements java.io.Serializable {
 		getObjectsFromActionInjectFields(action, metaAction); 
 	}
 
-	private void getObjectsFromActionInjectFields(IAction action,
-			MetaAction metaAction) {
+	private void getObjectsFromActionInjectFields(IAction action, MetaAction metaAction) {
 		for (Field f: Classes.getFieldsAnnotatedWith(action.getClass(), Inject.class)) {
 			String objectName = getObjectNameFromActionField(f);
-			String property = f.getName();			
-			Object value = null;			
-			
+			String property = f.getName();
+			if (action instanceof IOnChangePropertyAction && "view".equals(property)) { // In on change actions view is injected from View 
+				continue;
+			}
+			Object value = null;						
 			try {
 				f.setAccessible(true);
 				value = f.get(action);								
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
-				throw new XavaException("get_property_action_value_error", property, metaAction.getName());
+				String actionName = metaAction==null?action.getClass().getSimpleName():metaAction.getName(); 
+				throw new XavaException("get_property_action_value_error", property, actionName);
 			}
 			if (value != null) {  
 				// The nulls are not assigned and thus we allow to have trasient attributes
@@ -812,8 +810,8 @@ public class ModuleManager implements java.io.Serializable {
 		}
 	}
 
-	private void getObjectsFromActionUseObjects(IAction action,
-			MetaAction metaAction) {
+	private void getObjectsFromActionUseObjects(IAction action, MetaAction metaAction) {
+		if (metaAction == null) return; 
 		PropertiesManager mp = new PropertiesManager(action);
 		Iterator it = metaAction.getMetaUseObjects().iterator();
 		while (it.hasNext()) {
@@ -855,7 +853,10 @@ public class ModuleManager implements java.io.Serializable {
 	private void setObjectsToActionInjectFields(IAction action, MetaAction metaAction) {
 		for (Field f: Classes.getFieldsAnnotatedWith(action.getClass(), Inject.class)) {
 			String objectName = getObjectNameFromActionField(f);
-			String property = f.getName();			
+			String property = f.getName();
+			if (action instanceof IOnChangePropertyAction && "view".equals(property)) { // In on change actions view is injected from View
+				continue;
+			}
 			Object value = getObjectFromContext(objectName);			
 			
 			try {
@@ -865,13 +866,15 @@ public class ModuleManager implements java.io.Serializable {
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
-				throw new XavaException("set_property_action_value_error", property, metaAction.getName());
+				String actionName = metaAction==null?action.getClass().getSimpleName():metaAction.getName();  
+				throw new XavaException("set_property_action_value_error", property, actionName); 
 			}
 			getSession().setAttribute(objectName, value);			
 		}
 	}
 
 	private void setObjectsToActionUseObjects(IAction action, MetaAction metaAction) {
+		if (metaAction == null) return; 
 		PropertiesManager mp = new PropertiesManager(action);
 		Iterator it = metaAction.getMetaUseObjects().iterator();
 		while (it.hasNext()) {
