@@ -290,6 +290,12 @@
 		</members>	
 	</view>	
 		
+	<view name="ActiveYear" extends="NoSections">
+		<property-view property="year">
+			<on-change class="org.openxava.test.actions.OnChangeInvoiceYearAction"/>
+		</property-view>	
+	</view>
+		
 	<view model="InvoiceDetail">
 		<reference-view reference="soldBy">
 			<descriptions-list/>

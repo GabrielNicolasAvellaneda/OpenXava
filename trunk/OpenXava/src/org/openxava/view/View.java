@@ -2610,7 +2610,7 @@ public class View implements java.io.Serializable {
 		}
 	}
 
-	private void executeOnChangeAction(String changedPropertyQualifiedName,	IOnChangePropertyAction action) 
+	private void executeOnChangeAction(String changedPropertyQualifiedName, IOnChangePropertyAction action) 
 		throws XavaException 
 	{
 		if (!actionRegisteredAsExecuted(changedPropertyQualifiedName, action)) {

@@ -31,4 +31,10 @@ public class InvoiceActiveYearTest extends ModuleTestBase {
 		}				
 	}
 	
+	public void testInjectInOnChangeAction() throws Exception {
+		execute("CRUD.new");
+		setValue("year", "2012");
+		assertError("Active year is 2004, so 2012 is not allowed");
+	}
+	
 }
