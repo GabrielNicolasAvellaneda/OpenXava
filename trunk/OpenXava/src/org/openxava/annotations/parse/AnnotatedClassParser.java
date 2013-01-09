@@ -930,7 +930,7 @@ public class AnnotatedClassParser {
 		}
 		
 		// transient
-		if (element.isAnnotationPresent(Transient.class)) {  						
+		if (element.isAnnotationPresent(javax.persistence.Transient.class)) {  						
 			property.setTransient(true);
 		}
 		
