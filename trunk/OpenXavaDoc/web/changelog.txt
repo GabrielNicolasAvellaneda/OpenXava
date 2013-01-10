@@ -1,6 +1,32 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.6.1 (2013-1-9)
+-------------------------
+- New IWithMessage to be implemented by validators to get the messages from @Required, @PropertyValidator and @EntityValidator.
+- New layout engine improved, though it is still in BETA and deactivated by default.
+- Fix: @Inject does not work in "on change" actions.
+- Fix: Impossible to store column width in collections inside @AsEmbedded references.
+- Fix: Default size not correct for TELEFONO stereotype.
+- Fix: Clicking in the current mode with IE8 goes to a nonexistent page.
+- Fix: Named reference view for reference with inheritance switches to DEFAULT.
+- Fix: HTML_TEXT fields don't preserve content after recalculation. 
+- Fix: Second level dialogs are shown very narrow with IE9.
+- Fix: Mouse over list rows in IE9 moves the bottom button bar.
+- Fix: Removing first column in custom reports fails.
+- Fix: Removing selected columns in custom reports fails.
+- Fix: Obtaining selected object from a calculated collection fails with transient elements.
+- Fix: Attribute message of @Required is ignored.
+- Fix: Incorrect validation message from PositiveValidator.
+- Fix: Messages in i18n files with no arguments are not formatting in the standard way.
+- Fix: Thai MS874 encoding fails with IE.
+- Fix: Custom reports fail with XML components if persistence.xml is not defined.
+- Fix: Valid values do not work in custom reports With XML components. 
+- Fix: Duplicate dialog title in custom report.
+- Fix: Incorrect title on reloading custom report dialog.
+- Fix: Valid-values values are not kept when a column is editing in custom report dialog.
+- Fix: Comparator values are not kept when a column is editing in custom report dialog.
+
 OpenXava 4.6 (2012-11-21)
 -------------------------
 - Custom reports in list mode that allow user define its own reports using a dialog.
