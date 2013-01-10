@@ -214,7 +214,7 @@
 		<mode-controller name="Void"/>	
 	</module>						
 	<module name="InvoiceActiveYear" folder="invoicing.variations">
-		<model name="Invoice"/>
+		<model name="Invoice"/>				<view name="ActiveYear"/> 
 		<tab name="ActiveYear"/>
 		<controller name="Typical"/>	
 	</module>		

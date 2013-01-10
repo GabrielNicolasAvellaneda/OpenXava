@@ -28,7 +28,7 @@ public class LayoutFactory {
 		if (instance == null) {
 			instance = getLayoutParserInstance();
 			if (instance != null) {
-				request.getSession().setAttribute(LayoutKeys.LAYOUT_MANAGER_INSTANCE, instance);
+				request.setAttribute(LayoutKeys.LAYOUT_MANAGER_INSTANCE, instance);
 			}
 		}
 		return instance;
@@ -43,7 +43,7 @@ public class LayoutFactory {
 		if (instance == null) {
 			instance = getLayoutPainterInstance();
 			if (instance != null) {
-				request.getSession().setAttribute(LayoutKeys.LAYOUT_PAINTER_INSTANCE, instance);
+				request.setAttribute(LayoutKeys.LAYOUT_PAINTER_INSTANCE, instance);
 			}
 		}
 		return instance;
@@ -54,7 +54,7 @@ public class LayoutFactory {
 	 * 
 	 * @return An instance of the layout parser. Might return null.
 	 */
-	private static ILayoutParser getLayoutParserInstance() {
+	public static ILayoutParser getLayoutParserInstance() {
 		ILayoutParser instance = null;
 		String layoutParserName = XavaPreferences.getInstance().getLayoutParser();
 		if (!Is.emptyString(layoutParserName)) {
@@ -75,7 +75,7 @@ public class LayoutFactory {
 	 * 
 	 * @return An instance of a layout painter. Might return null.
 	 */
-	private static ILayoutPainter getLayoutPainterInstance() {
+	public static ILayoutPainter getLayoutPainterInstance() {
 		ILayoutPainter instance = null;
 		String layoutPainterName = XavaPreferences.getInstance().getLayoutPainter();
 		if (!Is.emptyString(layoutPainterName)) {

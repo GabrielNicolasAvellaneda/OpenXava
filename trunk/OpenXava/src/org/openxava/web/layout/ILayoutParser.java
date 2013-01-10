@@ -21,4 +21,12 @@ public interface ILayoutParser {
 	 * @param pageContext Where page are rendered.
 	 */
 	public List<LayoutElement> parseView(View view, PageContext pageContext);
+
+	/**
+	 * Prepares the layout, so that future requests aren't processed.
+	 * @param view Originating view.
+	 * @param pageContext Where page are rendered.
+	 * @param representsSection If true the view is representing a section.
+	 */
+	public List<LayoutElement> parseView(View view, PageContext pageContext, boolean representsSection);
 }

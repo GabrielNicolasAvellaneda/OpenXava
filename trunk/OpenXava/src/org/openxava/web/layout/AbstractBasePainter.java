@@ -32,6 +32,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	public void initialize(View view, PageContext pageContext) {
 		this.view = view;
 		this.pageContext = pageContext;
+		pageContext.getResponse().setContentType("text/html");
 		setContainersStack(null);
 		setRowsStack(null);
 	}
@@ -83,7 +84,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 */
 	protected void setContainer(LayoutElement layoutElement) {
 		getContainersStack().push(layoutElement);
-		if (layoutElement.getElementType().equals(LayoutElementType.VIEW_START)) {
+		if (layoutElement.getElementType().equals(LayoutElementType.VIEW_BEGIN)) {
 			viewElement = layoutElement;
 		}
 	}
