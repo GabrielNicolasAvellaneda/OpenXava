@@ -30,28 +30,28 @@ public interface ILayoutPainter {
 	
 	public void setPainterManager(LayoutPainterManager painterManager);
 	
-	public void startView(LayoutElement element);
+	public void beginView(LayoutElement element);
 	public void endView(LayoutElement element);
 	
-	public void startGroup(LayoutElement element);
+	public void beginGroup(LayoutElement element);
 	public void endGroup(LayoutElement element);
 
-	public void startFrame(LayoutElement element);
+	public void beginFrame(LayoutElement element);
 	public void endFrame(LayoutElement element);
 	
-	public void startRow(LayoutElement element);
+	public void beginRow(LayoutElement element);
 	public void endRow(LayoutElement element);
 	
-	public void startColumn(LayoutElement element);
+	public void beginColumn(LayoutElement element);
 	public void endColumn(LayoutElement element);
 	
-	public void startCell(LayoutElement element);
-	public void endCell(LayoutElement element);
+	public void beginProperty(LayoutElement element);
+	public void endProperty(LayoutElement element);
 	
-	public void startCollection(LayoutElement element);
+	public void beginCollection(LayoutElement element);
 	public void endCollection(LayoutElement element);
 	
-	public void startSections(LayoutElement element);
+	public void beginSections(LayoutElement element);
 	public void endSections(LayoutElement element);
 
 }

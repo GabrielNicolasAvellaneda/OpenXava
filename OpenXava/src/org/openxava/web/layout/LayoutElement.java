@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.openxava.model.meta.MetaCollection;
+import org.openxava.model.meta.MetaMember;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.model.meta.MetaReference;
 import org.openxava.view.View;
@@ -18,12 +19,14 @@ import org.openxava.view.View;
 public class LayoutElement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private View view;
+	private boolean representsSection;
+
 	private MetaProperty metaProperty;
 	private MetaReference metaReference;
 	private MetaCollection metaCollection;
 	private Collection<String> actionsNameForReference;
 	private Collection<String> actionsNameForProperty;
-	private View view;
 	
 	private LayoutElementType elementType;
 	private boolean actions = false;
@@ -61,7 +64,7 @@ public class LayoutElement implements Serializable {
 	public LayoutElement(View view, int groupLevel) {
 		this.view = view;
 		this.groupLevel = groupLevel;
-		elementType = LayoutElementType.ROW_START;
+		elementType = LayoutElementType.ROW_BEGIN;
 		maxRowColumnsCount = 0;
 		rowCurrentColumnsCount = 0;
 		maxContainerColumnsCount = 0;
@@ -81,6 +84,40 @@ public class LayoutElement implements Serializable {
 		this.elementType = elementType;
 	}
 	
+	/**
+	 * @param view the view to set
+	 */
+	public void setView(View view) {
+		if (view.getPropertyPrefix() == null) {
+			view.setPropertyPrefix("");
+		}
+		if (view.getMemberName() == null) {
+			view.setMemberName("");
+		}
+		this.view = view;
+	}
+	/**
+	 * @return the view
+	 */
+	public View getView() {
+		return view;
+	}
+
+
+	/**
+	 * @return the representsSection
+	 */
+	public boolean isRepresentsSection() {
+		return representsSection;
+	}
+
+	/**
+	 * @param representsSection the representsSection to set
+	 */
+	public void setRepresentsSection(boolean representsSection) {
+		this.representsSection = representsSection;
+	}
+
 	/**
 	 * @return the hasSection
 	 */
@@ -376,24 +413,6 @@ public class LayoutElement implements Serializable {
 		return groupLevel;
 	}
 	/**
-	 * @param view the view to set
-	 */
-	public void setView(View view) {
-		if (view.getPropertyPrefix() == null) {
-			view.setPropertyPrefix("");
-		}
-		if (view.getMemberName() == null) {
-			view.setMemberName("");
-		}
-		this.view = view;
-	}
-	/**
-	 * @return the view
-	 */
-	public View getView() {
-		return view;
-	}
-	/**
 	 * @return the elementType
 	 */
 	public LayoutElementType getElementType() {
@@ -422,7 +441,7 @@ public class LayoutElement implements Serializable {
 
 	/**
 	 * This value only makes sense if the layout element is of
-	 * type LayoutElementType.ROW_START.
+	 * type LayoutElementType.ROW_BEGIN.
 	 * @return While rendering keeps the already processed columns.
 	 */
 	public Integer getRowCurrentColumnsCount() {
@@ -438,7 +457,7 @@ public class LayoutElement implements Serializable {
 
 	/**
 	 * This value only makes sense if the layout element is of
-	 * type LayoutElementType.GROUP_START or LayoutElementType.FRAME_START.
+	 * type LayoutElementType.GROUP_BEGIN or LayoutElementType.FRAME_BEGIN.
 	 * @return the maxContainerColumnsCount
 	 */
 	public Integer getMaxContainerColumnsCount() {
@@ -508,13 +527,58 @@ public class LayoutElement implements Serializable {
 		this.rowClosed = rowClosed;
 	}
 
+	/**
+	 * 
+	 * @return True if element represents a key
+	 */
+	public boolean isKey() {
+		boolean returnValue = false;
+		if (metaProperty != null) {
+			returnValue = metaProperty.isKey();
+		} else if (metaReference != null) {
+			returnValue = metaReference.isKey();
+		}
+		return returnValue;
+	}
+	
+	public boolean isRequired() {
+		boolean returnValue = false;
+		if (metaProperty != null) {
+			returnValue = metaProperty.isRequired();
+		} else if (metaReference != null) {
+			returnValue = metaReference.isRequired();
+		}
+		return returnValue;
+	}
+	
+	public String getQualifiedName() {
+		String returnValue = "";
+		if (metaProperty != null) {
+			returnValue = metaProperty.getQualifiedName();
+		} else if (metaReference != null) {
+			returnValue = metaReference.getQualifiedName();
+		}
+		return returnValue;
+	}
+
+	public MetaMember getMetaMember() {
+		MetaMember returnValue = null;
+		if (metaProperty != null) {
+			returnValue = metaProperty;
+		} else if (metaReference != null) {
+			returnValue = metaReference;
+		}
+		return returnValue;
+	}
+	
 	/*
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "[" + elementType 
-				+ (label != null ? ", " + label : "")
+				+ (name != null ? " " + name : "")
+				+ (label != null ? ", Label:" + label : "")
 				+ (maxViewColumnsCount > 0 ? ", View cols:" + maxViewColumnsCount : "")
 				+ (maxContainerColumnsCount > 0 ? ", Container cols:" + maxContainerColumnsCount : "")
 				+ (maxRowColumnsCount > 0 ? ", Row cols:" + maxRowColumnsCount : "")

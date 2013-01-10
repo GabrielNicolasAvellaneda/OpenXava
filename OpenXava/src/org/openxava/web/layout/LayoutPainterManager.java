@@ -57,7 +57,7 @@ public class LayoutPainterManager {
 			returnValue = true;
 			painter.initialize(view, pageContext);
 			LayoutElement element = new LayoutElement(view, 0);
-			element.setElementType(LayoutElementType.SECTIONS_START);
+			element.setElementType(LayoutElementType.SECTIONS_BEGIN);
 			element.setSections(true);
 			element.setView(view);
 			Collection<LayoutElement> elements = new ArrayList<LayoutElement>();
@@ -79,22 +79,22 @@ public class LayoutPainterManager {
 		while(it.hasNext()) {
 			LayoutElement element = (LayoutElement) it.next();
 			switch(element.getElementType()) {
-				case VIEW_START: painter.startView(element); break;
+				case VIEW_BEGIN: painter.beginView(element); break;
 				case VIEW_END: painter.endView(element); break;
-				case GROUP_START: painter.startGroup(element); break;
+				case GROUP_BEGIN: painter.beginGroup(element); break;
 				case GROUP_END: painter.endGroup(element); break;
-				case FRAME_START: painter.startFrame(element); break;
+				case FRAME_BEGIN: painter.beginFrame(element); break;
 				case FRAME_END: painter.endFrame(element); break;
-				case COLLECTION_START: painter.startCollection(element); break;
+				case COLLECTION_BEGIN: painter.beginCollection(element); break;
 				case COLLECTION_END: painter.endCollection(element); break;
-				case SECTIONS_START: painter.startSections(element); break;
+				case SECTIONS_BEGIN: painter.beginSections(element); break;
 				case SECTIONS_END: painter.endSections(element); break;
-				case ROW_START: painter.startRow(element); break;
+				case ROW_BEGIN: painter.beginRow(element); break;
 				case ROW_END: painter.endRow(element); break;
-				case COLUMN_START: painter.startColumn(element); break;
+				case COLUMN_BEGIN: painter.beginColumn(element); break;
 				case COLUMN_END: painter.endColumn(element); break;
-				case CELL_START: painter.startCell(element); break;
-				case CELL_END: painter.endCell(element); break;
+				case PROPERTY_BEGIN: painter.beginProperty(element); break;
+				case PROPERTY_END: painter.endProperty(element); break;
 			}
 		}
 	}
