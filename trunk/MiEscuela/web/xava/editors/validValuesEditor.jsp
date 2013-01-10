@@ -7,8 +7,6 @@ if (editable) {
 <select id="<%=propertyKey%>" name="<%=propertyKey%>" tabindex="1" class=<%=style.getEditor()%> <%=script%> title="<%=p.getDescription(request)%>">
 	<option value="<%=baseIndex==0?"":"0"%>"></option>
 <%
-	MetaProperty validValuesProperty = (MetaProperty) request.getAttribute(propertyKey + ".validValuesProperty"); 
-	if (validValuesProperty == null) validValuesProperty = p;
 	java.util.Iterator it = validValuesProperty.validValuesLabels(request);
 	for (int i = baseIndex; it.hasNext(); i++) {
 		String selected = value == i ?"selected":"";

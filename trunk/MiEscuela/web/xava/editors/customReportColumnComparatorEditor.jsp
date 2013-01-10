@@ -14,12 +14,15 @@ if (!editable) {
 <% } else {
 	String propertyKey = request.getParameter("propertyKey");
 	String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
-	boolean isString = OnChangeCustomReportColumnNameAction.STRING_COMPARATOR.equals(fvalue); 	
-	boolean isDate = OnChangeCustomReportColumnNameAction.DATE_COMPARATOR.equals(fvalue);
-	boolean isEmpty = OnChangeCustomReportColumnNameAction.EMPTY_COMPARATOR.equals(fvalue);
+	boolean isString = fvalue.startsWith(OnChangeCustomReportColumnNameAction.STRING_COMPARATOR); 	
+	boolean isDate = fvalue.startsWith(OnChangeCustomReportColumnNameAction.DATE_COMPARATOR);
+	boolean isEmpty = fvalue.startsWith(OnChangeCustomReportColumnNameAction.EMPTY_COMPARATOR);
+	String [] tokens = fvalue.split(":");
+	String comparator = tokens.length>1?tokens[1]:"";
 %>
 
 <jsp:include page="comparatorsCombo.jsp">
+	<jsp:param name="comparator" value="<%=comparator%>"/>
 	<jsp:param name="comparatorPropertyKey" value="<%=propertyKey%>"/>
 	<jsp:param name="isString" value="<%=isString%>"/>
 	<jsp:param name="isDate" value="<%=isDate%>"/>
