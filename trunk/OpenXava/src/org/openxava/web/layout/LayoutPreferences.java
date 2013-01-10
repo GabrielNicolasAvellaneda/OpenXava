@@ -53,7 +53,7 @@ public class LayoutPreferences {
 	public boolean areViewFramesMaximized() {
 		boolean returnValue = true;
 		if ("false".equalsIgnoreCase(getProperties().getProperty("viewFramesMaximized"))) {
-			returnValue = true;
+			returnValue = false;
 		}
 		return returnValue;
 	}
@@ -65,7 +65,7 @@ public class LayoutPreferences {
 	public boolean areSectionFramesMaximized() {
 		boolean returnValue = true;
 		if ("false".equalsIgnoreCase(getProperties().getProperty("sectionFramesMaximized"))) {
-			returnValue = true;
+			returnValue = false;
 		}
 		return returnValue;
 	}
