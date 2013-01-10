@@ -341,6 +341,10 @@ TD.list-title {
 	border-color: #B7C0C2;
 }
 
+.ox-button-bar a:focus {
+	outline: none;
+}
+
 .ox-help img {
 	border: 0;
 	padding-top: 5px;
