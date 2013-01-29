@@ -65,6 +65,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 			}
 		}
+		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutContentTable());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 	}
 
@@ -210,12 +211,13 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		for (int count = 0; count < paintedProperties; count++) {
 			// Label content
 			attributes.clear();
-			attributes.put(ATTR_CLASS, Style.getInstance().getLayoutLabelCell());
+			attributes.put(ATTR_CLASS, Style.getInstance().getLayoutLabelCell() + " " + Style.getInstance().getLayoutRowSpacerLabelCell());
+			
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 			// Data content
 			attributes.clear();
-			attributes.put(ATTR_CLASS, Style.getInstance().getLayoutDataCell());
+			attributes.put(ATTR_CLASS, Style.getInstance().getLayoutDataCell() + " " + Style.getInstance().getLayoutRowSpacerDataCell());
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 		}
