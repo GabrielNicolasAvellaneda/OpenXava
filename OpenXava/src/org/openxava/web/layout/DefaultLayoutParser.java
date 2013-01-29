@@ -417,6 +417,10 @@ public class DefaultLayoutParser implements ILayoutParser {
 			elements.remove(elements.size() - 1);
 		} else {
 			returnValue = createMarker(view, LayoutElementType.ROW_END);
+			if (groupLevel <= 2
+					&& currentRow.getMaxFramesCount() > currentView.getMaxFramesCount()) {
+				 currentView.setMaxFramesCount(currentRow.getMaxFramesCount());
+			}
 		}
 		currentRow = rowsStack.pop();
 		return returnValue;

@@ -65,7 +65,6 @@ public class MetaView extends MetaElement implements Cloneable {
 	private String extendsView; 
 	private boolean extendedFromExtendsView = false;
 	
-	
 	private void addMemberName(String memberName) {
 		_membersNames.add(memberName);
 	}
@@ -688,7 +687,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	public void setFrame(boolean frame) {
 		this.frame = frame;
 	}
-		
+
 	public String getId() {
 		if (!Is.emptyString(parentName)) return modelName + ".views." + parentName; // in section case		
 		return getIdIfNotSection();

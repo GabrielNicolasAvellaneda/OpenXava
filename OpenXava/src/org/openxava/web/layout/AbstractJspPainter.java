@@ -28,7 +28,7 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	private Style style;
 	private StringBuffer logMessage;
 	protected Map<String, String> attributes = new HashMap<String, String>();
-	protected int level = 0;
+	private int level = 0;
 	private JspWriter writer = null;
 
 	/**

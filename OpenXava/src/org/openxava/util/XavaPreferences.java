@@ -479,7 +479,7 @@ public class XavaPreferences {
 
 	/** @since 4.5 */
 	public String getLayoutParser() {
-		return getProperties().getProperty("layout.parser", "org.openxava.web.layout.DefaultLayoutParser"); 
+		return getProperties().getProperty("layout.parser", null); 
 	}
 
 	/** @since 4.5 */
@@ -491,4 +491,23 @@ public class XavaPreferences {
 	public boolean isShowIconForViewReadOnly(){
 		return "true".equalsIgnoreCase(getProperties().getProperty("showIconForViewReadOnly", "true").trim());
 	}
+	
+	/**
+	 * @since 4.7
+	 * If false, topmost frames in views are not maximized.
+	 * @return True or false. Default value is true.
+	 */
+	public boolean isViewFramesMaximized() {
+		return "true".equalsIgnoreCase(getProperties().getProperty("viewFramesMaximized", "true"));
+	}
+
+	/**
+	 * @since 4.7
+	 * If false, topmost in sections are not maximized.
+	 * @return True or false. Default value is true.
+	 */
+	public boolean isSectionFramesMaximized() {
+		return "true".equalsIgnoreCase(getProperties().getProperty("sectionFramesMaximized", "true"));
+	}
+	
 }
