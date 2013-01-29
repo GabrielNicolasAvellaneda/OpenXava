@@ -170,7 +170,8 @@ public class View implements java.io.Serializable {
 	private List collectionValues; 
 	private Map<String, Collection<String>> changedActionsByProperty = null; 
 	private Collection propertiesWithChangedActions;
-	private Object model; 
+	private Object model;
+	private boolean framesMaximized;
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -341,7 +342,12 @@ public class View implements java.io.Serializable {
 		if (this.metaView == metaView) return;		
 		resetMembers();
 		this.metaView = metaView;
-		this.viewName = metaView.getName(); 
+		this.viewName = metaView.getName();
+		if (this.isSection()) {
+			this.setFramesMaximized(XavaPreferences.getInstance().isSectionFramesMaximized());
+		} else {
+			this.setFramesMaximized(XavaPreferences.getInstance().isViewFramesMaximized());
+		}
 	}
 	
 	public MetaModel getMetaModel() throws XavaException {		
@@ -2170,8 +2176,6 @@ public class View implements java.io.Serializable {
 		return modelName;
 	}
 	
-	
-
 	public void setModelName(String newModel) { 				
 		if (Is.equal(modelName, newModel)) return;		
 		modelName = newModel;
@@ -2202,7 +2206,12 @@ public class View implements java.io.Serializable {
 		depends = null;
 		subviews = null;
 		sectionsViews = null;
-		groupsViews = null; 
+		groupsViews = null;
+		if (section) {
+			framesMaximized = XavaPreferences.getInstance().isSectionFramesMaximized();
+		} else {
+			framesMaximized = XavaPreferences.getInstance().isViewFramesMaximized();
+		}
 	}
 	
 	public void assignValuesToWebView() {		
@@ -3539,7 +3548,6 @@ public class View implements java.io.Serializable {
 		}		
 	}
 
-
 	public List getSections() throws XavaException {		
 		return getMetaView().getSections();
 	}
@@ -3832,8 +3840,6 @@ public class View implements java.io.Serializable {
 			return getSubview(subview).getDisplaySizeForProperty(member);
 		}				
 	}
-	
-	
 	
 	public boolean isFrame() throws XavaException {		
 		return getMetaView().isFrame();
@@ -4955,6 +4961,20 @@ public class View implements java.io.Serializable {
 		}
 	}		
 	
+	/**
+	 * @return the framesMaximized
+	 */
+	public boolean isFramesMaximized() {
+		return framesMaximized;
+	}
+
+	/**
+	 * @param framesMaximized the framesMaximized to set
+	 */
+	public void setFramesMaximized(boolean framesMaximized) {
+		this.framesMaximized = framesMaximized;
+	}
+
 	/**
 	 * Add an action to the property. <p>
 	 * 

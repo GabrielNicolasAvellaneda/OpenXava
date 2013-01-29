@@ -1,7 +1,5 @@
 package org.openxava.view.meta.xmlparse;
 
-
-
 import org.openxava.model.meta.xmlparse.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
@@ -9,13 +7,10 @@ import org.openxava.util.xmlparse.*;
 import org.openxava.view.meta.*;
 import org.w3c.dom.*;
 
-
 /**
  * @author: Javier Paniza
  */
 public class ViewParser extends XmlElementsNames {
-	
-	
 	
 	public static MetaView parseView(Node n, int lang) throws XavaException {
 		Element el = (Element) n;
