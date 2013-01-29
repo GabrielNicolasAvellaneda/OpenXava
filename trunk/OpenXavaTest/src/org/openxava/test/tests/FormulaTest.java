@@ -1,5 +1,6 @@
 package org.openxava.test.tests;
 
+import java.io.*;
 import java.net.URL;
 
 import javax.persistence.Query;
@@ -25,6 +26,44 @@ public class FormulaTest extends ModuleTestBase {
 	
 	public FormulaTest(String testName) {
 		super(testName, "Formula");		
+	}
+	
+	public void testSelectDeselectAndOrderInACollection() throws Exception {
+		assertValueInList(0, 0, "HTML TEST");
+		execute("List.viewDetail", "row=0");
+
+		assertCollectionRowCount("ingredients", 2);
+		assertValueInCollection("ingredients", 0, 1, "AZUCAR");
+		assertValueInCollection("ingredients", 1, 1, "CAFE");
+		checkRowCollection("ingredients", 0);
+		
+		execute("List.orderBy", "property=ingredient.name,collection=ingredients");
+		execute("List.orderBy", "property=ingredient.name,collection=ingredients");
+		assertValueInCollection("ingredients", 0, 1, "CAFE");
+		assertValueInCollection("ingredients", 1, 1, "AZUCAR");
+		assertRowCollectionUnchecked("ingredients", 0);
+		assertRowCollectionChecked("ingredients", 1);
+	}
+	
+	public void testSelectAndFilter() throws Exception {
+		assertValueInList(0, 0, "HTML TEST");
+		execute("List.viewDetail", "row=0");
+
+		assertCollectionRowCount("ingredients", 2);
+		assertValueInCollection("ingredients", 0, 1, "AZUCAR");
+		assertValueInCollection("ingredients", 1, 1, "CAFE");
+		checkAllCollection("ingredients");
+
+		setConditionValues("ingredients", new String[] { "", Ingredient.findByName("AZUCAR").getOid()});
+		execute("List.filter", "collection=ingredients");
+		assertCollectionRowCount("ingredients", 1);
+		assertRowCollectionChecked("ingredients", 0);
+		
+		setConditionValues("ingredients", new String[] { "", "" });
+		execute("List.filter", "collection=ingredients");
+		assertCollectionRowCount("ingredients", 2);
+		assertRowCollectionChecked("ingredients", 0);
+		assertRowCollectionChecked("ingredients", 1);
 	}
 	
 	public void testPagingInCollection() throws Exception {

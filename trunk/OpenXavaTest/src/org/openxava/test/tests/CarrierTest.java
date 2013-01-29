@@ -354,13 +354,12 @@ public class CarrierTest extends CarrierTestBase {
 		assertEditable("name");
 	}
 	
-	
 	public void testDeleteWithSelected() throws Exception {
 		assertCarriersCount(5);
 		checkRow(1); // 2, DOS
 		checkRow(2); // 3, TRES
 		checkRow(4); // 5, CINCO		
-		execute("Mode.detailAndFirst");		
+		execute("Mode.detailAndFirst");
 		assertValue("number", "2");
 		assertValue("name", "DOS");
 		execute("Navigation.next");
@@ -436,7 +435,6 @@ public class CarrierTest extends CarrierTestBase {
 		assertValueInCollection("fellowCarriersCalculated", 1, "name", "THREE"); 
 		assertValueInCollection("fellowCarriersCalculated", 2, "name", "FOUR");		
 	}
-	
 	
 	public void testListActionInCollection() throws Exception {		
 		execute("CRUD.new");		

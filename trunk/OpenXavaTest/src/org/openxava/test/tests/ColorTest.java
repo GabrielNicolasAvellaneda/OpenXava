@@ -3,6 +3,7 @@ package org.openxava.test.tests;
 import javax.persistence.*;
 
 import org.apache.commons.logging.*;
+import org.hibernate.validator.util.privilegedactions.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -16,6 +17,85 @@ public class ColorTest extends ModuleTestBase {
 	
 	public ColorTest(String testName) {
 		super(testName, "Color");		
+	}
+	
+	public void testSelectedAllAndDeselectedAll() throws Exception {
+		execute("List.orderBy", "property=number");
+		assertLabelInList(1, "Name");
+		assertTrue(getValueInList(0, 1).equals("ROJO"));
+		checkAll();
+		assertAllChecked();
+		execute("List.orderBy", "property=number");
+		assertFalse(getValueInList(0, 1).equals("ROJO"));
+		assertAllUnchecked();
+		execute("List.orderBy", "property=number");
+		assertTrue(getValueInList(0, 1).equals("ROJO"));
+		uncheckRow(0);
+		uncheckRow(5);
+		execute("List.orderBy", "property=number");
+		assertFalse(getValueInList(0, 1).equals("ROJO"));
+		assertAllUnchecked();
+		checkAll();
+		assertRowChecked(0);
+		execute("List.orderBy", "property=number");
+		assertRowUnchecked(0);
+		assertRowUnchecked(5);
+		checkAll();
+		assertRowChecked(0);
+		uncheckAll();
+		assertRowUnchecked(0);
+		execute("List.orderBy", "property=number");
+		assertFalse(getValueInList(0, 1).equals("ROJO"));
+		assertAllChecked();
+	}
+	
+	/* when you did: select, change page, select, order, select and change page. It lost the selection */
+	public void testSelectAndOrderWithALotOfElements() throws Exception {
+		execute("List.orderBy", "property=number");
+		checkRow(0);
+		checkRow(1);
+		execute("List.goPage", "page=2");
+		checkRow(12);
+		checkRow(13);
+		execute("List.goPage", "page=1");
+		assertRowUnchecked(2);
+		assertRowUnchecked(3);
+		execute("List.orderBy", "property=number");
+		assertRowUnchecked(0);
+		assertRowUnchecked(1);
+		assertRowUnchecked(2);
+		assertRowUnchecked(3);
+		execute("List.goPage", "page=2");
+		assertRowUnchecked(10);
+		assertRowUnchecked(11);
+		assertRowUnchecked(12);
+		assertRowUnchecked(13);
+		execute("List.goPage", "page=1");
+		checkRow(4);
+		execute("List.orderBy", "property=number");
+		assertRowChecked(0);
+		assertRowChecked(1);
+		assertRowUnchecked(2);
+		assertRowUnchecked(3);
+		assertRowUnchecked(4);
+		execute("List.goPage", "page=2");
+		assertRowUnchecked(10);
+		assertRowUnchecked(11);
+		assertRowChecked(12);
+		assertRowChecked(13);
+		assertRowUnchecked(14);
+		execute("List.orderBy", "property=number");
+		assertRowUnchecked(10);
+		assertRowUnchecked(11);
+		assertRowUnchecked(12);
+		assertRowUnchecked(13);
+		assertRowUnchecked(14);
+		execute("List.goPage", "page=1");
+		assertRowUnchecked(0);
+		assertRowUnchecked(1);
+		assertRowUnchecked(2);
+		assertRowUnchecked(3);
+		assertRowChecked(4);
 	}
 	
 	public void testNavigationByKeyZero() throws Exception {
