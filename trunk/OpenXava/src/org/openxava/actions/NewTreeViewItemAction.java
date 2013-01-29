@@ -1,13 +1,10 @@
 package org.openxava.actions;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.model.MapFacade;
-import org.openxava.web.editors.TreeView;
-import org.openxava.web.editors.TreeViewParser;
+import org.apache.commons.logging.*;
+import org.openxava.model.*;
+import org.openxava.web.editors.*;
 
 /**
  * 
@@ -23,10 +20,12 @@ public class NewTreeViewItemAction extends CollectionElementViewBaseAction {
 		if (getCollectionElementView().isRepresentsAggregate()) {
 			getCollectionElementView().reset();				
 		}
-		Map[] keyValues = getCollectionElementView().getCollectionTab().getSelectedKeys();
+		Map[] keyValues = getCollectionElementView().getCollectionTab().getSelectedKeysArray();
+		
 		// if we have a selected one let's add one as a child
-		if (keyValues.length > 0) {
-			Map keyValue = keyValues[keyValues.length - 1];
+		if (keyValues.length > 0) {	
+			Map keyValue = (Map)keyValues[keyValues.length - 1];
+			
 			Object treeNode = MapFacade.findEntity(getCollectionElementView().getCollectionTab().getModelName(), keyValue);
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
 			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());

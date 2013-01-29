@@ -1,17 +1,20 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.*;
+
 
 /**
  * @author Javier Paniza
  */
 
 public class GoPageAction extends TabBaseAction {
-	
+	private static Log log = LogFactory.getLog(GoPageAction.class);
 	private int page;
 	
 	public void execute() throws Exception {
 		getTab().goPage(page);
-		getTab().setNotResetNextTime(true);		
+		getTab().setNotResetNextTime(true);
+		getTab().setAllSelected(new int[0]);
 	}
 
 	public int getPage() {

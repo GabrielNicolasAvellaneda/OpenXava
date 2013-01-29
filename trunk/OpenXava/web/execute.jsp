@@ -1,3 +1,6 @@
+<%@ page import="java.util.Enumeration"%>
+<%@ page import="java.util.StringTokenizer"%>
+<%@ page import="org.openxava.web.Ids"%>
 <%@ page import="java.awt.event.InputEvent" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Iterator" %>
@@ -30,6 +33,28 @@ request.setAttribute("tab", t);
 %>
 <jsp:useBean id="tab" class="org.openxava.tab.Tab" scope="request"/>
 <%
+
+String[] deselected = request.getParameterValues("deselected");
+if (deselected != null){
+	for (int i = 0; i < deselected.length; i++){
+		String d = deselected[i];
+		if (d.contains("xava_tab")) tab.deselected(d);
+		else if (d.contains("xava_collectionTab")){
+			StringTokenizer st = new StringTokenizer(d, ":");
+			String name = st.nextToken();
+			String a = Ids.undecorate(name);
+			String collectionName = a.replace("xava_collectionTab_", "");
+			String viewObject = request.getParameter("viewObject");
+			if (viewObject == null) viewObject = "xava_view";
+			
+			View view = (View) context.get(request, viewObject);
+			View collectionView = view.getSubview(collectionName);
+			org.openxava.tab.Tab collectionTab = collectionView.getCollectionTab();
+			collectionTab.deselected(d);
+		}
+	}	
+}
+
 if (manager.isListMode() || manager.isSplitMode()) { 
 	tab.deselectVisualizedRows();
 }

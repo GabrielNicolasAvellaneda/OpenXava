@@ -25,8 +25,9 @@ public class DeleteAction extends ViewDetailAction {
 			addError("no_delete_not_exists");
 			return;
 		}
+		Map keyValues = getView().getKeyValues();
 		try {
-			MapFacade.remove(getModelName(), getView().getKeyValues());
+			MapFacade.remove(getModelName(), keyValues);
 			resetDescriptionsCache();
 		}
 		catch (ValidationException ex) {
@@ -37,7 +38,7 @@ public class DeleteAction extends ViewDetailAction {
 		getView().clear();
 		boolean selected = false;
 		if (getTab().hasSelected()) {
-			removeSelected();
+			removeSelected(keyValues);
 			selected = true;
 		}
 		else getTab().reset();		 		
@@ -59,23 +60,8 @@ public class DeleteAction extends ViewDetailAction {
 		getErrors().clearAndClose(); // If removal is done, any additional error message may be confused
 	}
 
-	private void removeSelected() throws XavaException {
-		int row = getRow();		
-		int [] selectedOnes = getTab().getSelected();
-		if (Arrays.binarySearch(selectedOnes, row) < 0) return;		
-		int [] news = new int[selectedOnes.length-1];
-		int j = 0;		
-		for (int i = 0; i < news.length; i++) {
-			int v = selectedOnes[j];
-			if (v == row) {
-				j++; i--;				
-			} 
-			else  {				
-				news[i] = v;
-				j++;
-			}					
-		}
-		getTab().setAllSelected(news);
+	private void removeSelected(Map keyValues) throws XavaException {
+		getTab().getSelectedKeys().remove(keyValues);
 	}
 
 }

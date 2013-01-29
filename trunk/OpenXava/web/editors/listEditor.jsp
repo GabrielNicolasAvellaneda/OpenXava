@@ -1,5 +1,7 @@
 <%@ include file="../imports.jsp"%>
 
+<%@ page import="java.util.Collection"%>
+<%@ page import="java.util.Map"%>
 <%@ page import="org.openxava.util.Labels"%>
 <%@ page import="org.openxava.tab.impl.IXTableModel" %>
 <%@ page import="org.openxava.tab.Tab"%>
@@ -138,7 +140,7 @@ if (tab.isTitleVisible()) {
 			String actionOnClickAll = Actions.getActionOnClickAll(
 			request.getParameter("application"), request.getParameter("module"), 
 			onSelectCollectionElementAction, viewObject, prefix,
-			selectedRowStyle, rowStyle);
+			selectedRowStyle, rowStyle, tabObject);
 	%>
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=prefix%>selected_all" <%=actionOnClickAll%> />
 	<%
@@ -377,11 +379,16 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		onSelectCollectionElementAction, f, viewObject, prefixIdRow + f,
 		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction);
+	String onChange = singleSelection?"":Actions.getActionOnChangeCheckBox(
+		request.getParameter("application"), 
+		request.getParameter("module"), 
+		f, 
+		tabObject);
 %>
 	<%if (resizeColumns) {%></nobr><%}%> 
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
-	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> />
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> <%=onChange%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
@@ -641,4 +648,3 @@ else {
 </tr>
 </table>
 <% } %>
-

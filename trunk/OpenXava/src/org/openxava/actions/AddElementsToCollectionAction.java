@@ -38,7 +38,7 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 			associateEntityInRow(row);
 		}
 		else {
-			int [] selectedOnes = getTab().getSelected();					
+			int [] selectedOnes = getTab().getSelected();
 			if (selectedOnes != null) {						
 				for (int i = 0; i < selectedOnes.length; i++) {
 					associateEntityInRow(selectedOnes[i]);

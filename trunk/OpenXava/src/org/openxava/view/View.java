@@ -1264,7 +1264,7 @@ public class View implements java.io.Serializable {
 	 *
 	 * This view must represents a collection in order to call this method.<br>
 	 */
-	public Tab getCollectionTab() throws XavaException {		
+	public Tab getCollectionTab() throws XavaException {
 		assertRepresentsCollection("getCollectionTab()");
 		if (collectionTab == null) {
 			collectionTab = new Tab();
@@ -1553,7 +1553,8 @@ public class View implements java.io.Serializable {
 		}
 		else { 
 			// If not calculated we obtain the data from the Tab
-			return getCollectionValues(getCollectionTab().getSelectedKeys());
+			if (getCollectionTab().getSelectedKeys() == null) new ArrayList();
+			return new ArrayList(getCollectionTab().getSelectedKeys());
 		}
 	}
 
@@ -1631,9 +1632,8 @@ public class View implements java.io.Serializable {
 			return selectedObjects;
 		}
 		else {				
-			selectedKeys = getCollectionTab().getSelectedKeys();
-		}
-		return getCollectionObjects(selectedKeys);						
+			return getCollectionObjects(getCollectionTab().getSelectedKeys());
+		}						
 	}
 
 	private List getCollectionObjects(Map[] keys) throws XavaException {
@@ -1641,6 +1641,23 @@ public class View implements java.io.Serializable {
 		for (int i = 0; i < keys.length; i++) {			
 			try {
 				Object object = MapFacade.findEntity(getModelName(), keys[i]);
+				result.add(object);				
+			}
+			catch (Exception ex) {
+				log.error(ex.getMessage(), ex);
+				getErrors().add("collection_error", getMemberName()); 
+				throw new XavaException("collection_error", getMemberName()); 									
+			}			
+		}
+		return result;
+	}
+	
+	private List getCollectionObjects(Collection<Map> keys) throws XavaException {
+		List result = new ArrayList();
+		if (keys == null || keys.isEmpty()) return result;
+		for (Map key : keys) {			
+			try {
+				Object object = MapFacade.findEntity(getModelName(), key);
 				result.add(object);				
 			}
 			catch (Exception ex) {

@@ -117,6 +117,7 @@ public class Tab implements java.io.Serializable {
 	private String tabObject;
 	private boolean usesConverters;
 	private String title;  
+	private Collection<Map> selectedKeys;
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
@@ -741,16 +742,38 @@ public class Tab implements java.io.Serializable {
 		if (!notResetPageNextTime) { 
 			notResetPageNextTime = false;
 			initialIndex = 0; 		
-			page = 1;	
+			page = 1;
 		}
 	}
 	
+	/**
+	 * Deprecated since 4.7
+	 * @deprecated use getSelectedKeys  
+	 */
 	public int [] getSelected() {
+		// recalculate the selected rows from selectedKeys
+		if (getSelectedKeys() == null) return null;
+		try{
+			selected = new int[getSelectedKeys().size()];
+			int s = 0;
+			for (int i = 0; i < getTableModel().getTotalSize(); i++){
+				Map key = (Map)getTableModel().getObjectAt(i);
+				if (getSelectedKeys().contains(key)){
+					selected[s] = i;
+					s++;
+				}
+			}
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			throw new XavaException();
+		}
+		
 		return selected;
 	}
 	
 	public boolean hasSelected() {
-		return selected != null && selected.length > 0;
+		return getSelectedKeys() != null && !getSelectedKeys().isEmpty();
 	}
 	
 	/**
@@ -760,6 +783,21 @@ public class Tab implements java.io.Serializable {
 	 */
 	public void setAllSelected(int [] values) {
 		this.selected = values;
+		
+		// calculate selectedKeys
+		try{
+			if (values != null && values.length > 0){
+				for (int i = 0; i < values.length; i++){
+					Map key = (Map)getTableModel().getObjectAt(values[i]);
+					if (selectedKeys == null) selectedKeys = new ArrayList<Map>();
+					if (!selectedKeys.contains(key)) selectedKeys.add(key);
+				}
+			}	
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			throw new XavaException();
+		}
 	}
 	
 	public void deselectVisualizedRows() {
@@ -780,10 +818,44 @@ public class Tab implements java.io.Serializable {
 		}				
 	}
 
+	public void deselected(int row){
+		if (row < 0 || selectedKeys == null) return;
+		
+		try{
+			Map key = (Map) getTableModel().getObjectAt(row);
+			if (selectedKeys.contains(key)) selectedKeys.remove(key);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	public void deselected(String deselected){
+		if (Is.empty(deselected)) return;
+		
+		// deselected = 'ox_OpenXavaTest_Color__xava_tab:4,3,1'
+		StringTokenizer st = new StringTokenizer(deselected, ":");
+		String name = st.nextToken();
+		String values = st.nextToken();
+		String[] rows = values.split(",");
+		for (int i = 0; i < rows.length; i++){
+			int row = Integer.parseInt(rows[i]);
+			try{
+				Map key = (Map)getTableModel().getObjectAt(row);
+				if (selectedKeys.contains(key)) selectedKeys.remove(key);
+			}
+			catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+	}
+	
 	/**
 	 * Change the selected ones only within the current page range. <p>
+	 * Also change selectedKeys <p>
 	 * 
-	 * Postcondition <tt>this.selected == values</tt> <b>is not fulfilled</b> 	 
+	 * Postcondition <tt>this.selected == values</tt> <b>is not fulfilled</b>	 
 	 */
 	public void setSelected(int [] values) {
 		List r = new ArrayList();
@@ -795,14 +867,25 @@ public class Tab implements java.io.Serializable {
 				}
 			}
 		}				
-		for (int i=0; i<values.length; i++) {			
+		for (int i=0; i<values.length; i++) {		
 			r.add(new Integer(values[i]));			
 		}		
 		Collections.sort(r);		
-		selected = new int[r.size()];		
-		for (int i=0; i<selected.length; i++) {			
-			selected[i] = ((Integer) r.get(i)).intValue();			
-		}		
+		selected = new int[r.size()];
+		
+		if (selectedKeys == null) selectedKeys = new ArrayList<Map>();
+		for (int i=0; i<selected.length; i++) {
+			selected[i] = ((Integer) r.get(i)).intValue();
+			
+			try{
+				Map key = (Map)getTableModel().getObjectAt(selected[i]);
+				if (!selectedKeys.contains(key)) selectedKeys.add(key);	
+			}
+			catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+		
 	}
 	
 	/**
@@ -820,7 +903,7 @@ public class Tab implements java.io.Serializable {
 		setSelected(intValues);
 	}
 	
-	private void deselectedInCurrentPage() { 
+	private void deselectedInCurrentPage() {
 		List rest = new ArrayList();
 		for (int i = 0; i < selected.length; i++){
 			int value = selected[i];
@@ -837,11 +920,19 @@ public class Tab implements java.io.Serializable {
 	
 	public void deselectAll() {
 		selected = new int[0];
+		selectedKeys = new ArrayList<Map>(); 
 	}
 	
-	public boolean isSelected(int row) {	
-		if (selected == null || selected.length == 0) return false;
-		return Arrays.binarySearch(selected, row) >= 0;
+	public boolean isSelected(int row) {
+		if (selectedKeys == null) return false;
+		try{
+			Map value = (Map) getTableModel().getObjectAt(row);
+			return selectedKeys.contains(value);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return false;
 	}
 	
 	public int getInitialIndex() {		
@@ -1530,25 +1621,19 @@ public class Tab implements java.io.Serializable {
 		this.sortRemainingProperties = sortRemainingProperties;
 	}
 	
-	/**
-	 * An array with the keys (in <code>Map</code> format) of the selected
-	 * rows. <p> 
-	 * 
-	 * @return Never null
-	 */
-	public Map [] getSelectedKeys() { 
-		if (selected == null) return new Map[0];
-		Map [] keys = new Map[selected.length];
-		for (int i = 0; i < keys.length; i++) {
-			try {
-				keys[i] = (Map) getTableModel().getObjectAt(selected[i]); 
-			}
-			catch (Exception ex) {
-				keys[i] = Collections.EMPTY_MAP;
-				log.warn(XavaResources.getString("tab_row_key_warning", new Integer(i)),ex);
-			}
+	public Collection<Map> getSelectedKeys(){
+		return selectedKeys;
+	}
+	
+	public Map[] getSelectedKeysArray(){
+		if (selectedKeys == null || selectedKeys.isEmpty()) return new Map[0];
+		Map[] a = new Map[selectedKeys.size()];
+		int i = 0;
+		for (Map sk : selectedKeys){
+			a[i] = sk;
+			i++;
 		}
-		return keys;
+		return a;
 	}
 
 	/**
@@ -1556,7 +1641,7 @@ public class Tab implements java.io.Serializable {
 	 * rows. <p> 
 	 * 
 	 * @return Never null
-	 */	
+	 */
 	public Map [] getAllKeys() { 
 		Collection allKeys = new ArrayList();
 		for (int i = 0; i < getTableModel().getRowCount(); i++) { 					
@@ -1699,6 +1784,7 @@ public class Tab implements java.io.Serializable {
 
 	public void clearSelected() {
 		selected = null;
+		selectedKeys = new ArrayList<Map>();
 	}
 	
 	/** @since 4m6 */
@@ -1951,5 +2037,5 @@ public class Tab implements java.io.Serializable {
 	public boolean isIgnorePageRowCount() {
 		return ignorePageRowCount;
 	}
-		
+
 }
