@@ -48,6 +48,22 @@ public class ToDoListTest extends ModuleTestBase {
 		execute("List.filter", "collection=tasks");
 		assertCollectionRowCount("tasks", 0);
 		assertAllCollectionUnchecked("tasks");
+		
+		setConditionValues("tasks", new String[] { "" });
+		execute("List.filter", "collection=tasks");
+		assertAllCollectionChecked("tasks");
+		
+		// using 'order by'
+		execute("List.orderBy", "property=name,collection=tasks");
+		assertValueInCollection("tasks", 0, 0, "TASK 1");
+		assertValueInCollection("tasks", 1, 0, "TASK 2");
+		uncheckRowCollection("tasks", 0);
+		execute("List.orderBy", "property=name,collection=tasks");
+		assertValueInCollection("tasks", 0, 0, "TASK 2");
+		assertValueInCollection("tasks", 1, 0, "TASK 1");
+		assertRowCollectionUnchecked("tasks", 1);
+		execute("List.orderBy", "property=name,collection=components");
+		assertAllCollectionUnchecked("components");
 	}
 	
 }
