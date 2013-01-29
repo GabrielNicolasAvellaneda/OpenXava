@@ -1122,7 +1122,7 @@ public class Style {
 	 * @since 4.5
 	 */
 	public String getLayoutLabel() {
-		return "ox-layout-label;";
+		return "ox-layout-label";
 	}
 	
 	/**
@@ -1147,4 +1147,26 @@ public class Style {
 	public String getLayoutRowSpacer() {
 		return "ox-layout-row-spacer";
 	}
+
+	/**
+	 * @since 4.7
+	 */
+	public String getLayoutRowSpacerLabelCell() {
+		return "ox-layout-row-spacer-label-cell";
+	}
+
+	/**
+	 * @since 4.7
+	 */
+	public String getLayoutRowSpacerDataCell() {
+		return "ox-layout-row-spacer-data-cell";
+	}
+	
+	/**
+	 * @since 4.7
+	 */
+	public String getLayoutContentTable() {
+		return "ox-layout-content-table";
+	}
+
 }
