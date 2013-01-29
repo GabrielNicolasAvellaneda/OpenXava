@@ -14,10 +14,10 @@ import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
+import org.openxava.view.View;
 import org.openxava.web.*;
 import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
-import org.openxava.view.View; 
 
 /**
  * For accessing to module execution from DWR. <p>
@@ -42,7 +42,7 @@ public class Module extends DWRBase {
 	private ModuleManager manager;
 	private boolean firstRequest;
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, Boolean firstRequest) throws Exception {
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, String [] deselected, Boolean firstRequest) throws Exception {
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module);	
@@ -58,8 +58,8 @@ public class Module extends DWRBase {
 			Users.setCurrent(request);
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();  			
-			request.setAttribute("style", Style.getInstance(request)); 
-			getURIAsStream("execute.jsp", values, multipleValues, selected, additionalParameters);
+			request.setAttribute("style", Style.getInstance(request));
+			getURIAsStream("execute.jsp", values, multipleValues, selected, deselected, additionalParameters);
 			setDialogLevel(result); 
 			Map changedParts = new HashMap();
 			result.setChangedParts(changedParts);
@@ -92,11 +92,11 @@ public class Module extends DWRBase {
 				changeModule(result);
 			}
 			else {
-				fillResult(result, values, multipleValues, selected, additionalParameters);
+				fillResult(result, values, multipleValues, selected, deselected, additionalParameters);
 			}					
 			result.setViewMember(getView().getMemberName());
 			result.setStrokeActions(getStrokeActions());
-			result.setSelectedRows(getSelectedRows()); 			
+			result.setSelectedRows(getSelectedRows());
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -189,36 +189,36 @@ public class Module extends DWRBase {
 		nextManager.setPreviousModules(manager.getPreviousModules());
 		
 		manager.setNextModule(null);
-		memorizeLastMessages(nextModule);	
+		memorizeLastMessages(nextModule);		
 		result.setNextModule(nextModule);
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {
-		request(request, response, application, module, null, null, null, null, false);  		
+		request(request, response, application, module, null, null, null, null, null, false);  		
 		memorizeLastMessages();
 		manager.setResetFormPostNeeded(true);
 		
 	}
 
-	private InputStream getURIAsStream(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {		
-		return Servlets.getURIAsStream(request, response, getURI(jspFile, values, multipleValues, selected, additionalParameters));
+	private InputStream getURIAsStream(String jspFile, Map values, Map multipleValues, String[] selected, String[] deselected, String additionalParameters) throws Exception {
+		return Servlets.getURIAsStream(request, response, getURI(jspFile, values, multipleValues, selected, deselected, additionalParameters));
 	}
 	
-	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
+	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected, String[] deselected, String additionalParameters) throws Exception {
 		if (jspFile == null) return "";
 		if (jspFile.startsWith("html:")) return jspFile.substring(5); // Using html: prefix the content is returned as is
-		return Servlets.getURIAsString(request, response, getURI(jspFile, values, multipleValues, selected, additionalParameters));
+		return Servlets.getURIAsString(request, response, getURI(jspFile, values, multipleValues, selected, deselected, additionalParameters));
 	}
 	
 
-	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String additionalParameters) throws Exception {
+	private void fillResult(Result result, Map values, Map multipleValues, String[] selected, String[] deselected, String additionalParameters) throws Exception {
 		Map changedParts = result.getChangedParts();
 		getView().resetCollectionsCache(); 
 
 		if (manager.isShowDialog() || manager.isHideDialog() || firstRequest) {
 			if (manager.getDialogLevel() > 0) {
 				changedParts.put(decorateId("dialog" + manager.getDialogLevel()),   
-					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, additionalParameters)					
+					getURIAsString("core.jsp?buttonBar=false", values, multipleValues, selected, deselected, additionalParameters)					
 				);		
 				getView().resetCollectionsCache(); 
 				result.setFocusPropertyId(getView().getFocusPropertyId());
@@ -229,7 +229,7 @@ public class Module extends DWRBase {
 		for (Iterator it = getChangedParts(values).entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry changedPart = (Map.Entry) it.next();			
 			changedParts.put(changedPart.getKey(),
-				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected, additionalParameters)	
+				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected, deselected, additionalParameters)	
 			);			
 		}	
 		if (!manager.isListMode()) {			
@@ -399,7 +399,7 @@ public class Module extends DWRBase {
 		}
 	}
 	
-	private void fillChangedCollections(Map result) {				
+	private void fillChangedCollections(Map result) {
 		View view = getView();			
 		Collection changedCollections = view.getChangedCollections().entrySet(); 		
 		for (Iterator it = changedCollections.iterator(); it.hasNext(); ) {
@@ -468,7 +468,7 @@ public class Module extends DWRBase {
 		restoreLastMessages(request, application, module); 
 	}	
 	
-	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected, String additionalParameters) throws UnsupportedEncodingException {
+	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected, String[] deselected, String additionalParameters) throws UnsupportedEncodingException {
 		StringBuffer result = new StringBuffer(getURIPrefix());
 		result.append(jspFile);
 		if (jspFile.endsWith(".jsp")) result.append('?');
@@ -477,7 +477,7 @@ public class Module extends DWRBase {
 		result.append(application);
 		result.append("&module=");
 		result.append(module);
-		addValuesQueryString(result, values, multipleValues, selected);
+		addValuesQueryString(result, values, multipleValues, selected, deselected);
 		if (!Is.emptyString(additionalParameters)) result.append(additionalParameters);		
 		return result.toString();
 	}
@@ -495,7 +495,7 @@ public class Module extends DWRBase {
 		// return Ids.decorate(application, module, name).replaceAll("\\.", "\\\\.");
 	}
 	
-	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) throws UnsupportedEncodingException {
+	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected, String[] deselected) throws UnsupportedEncodingException {
 		if (values == null) return;
 		if (multipleValues != null) {
 			SortedMap sortedMultipleValues = new TreeMap(multipleValues);  			
@@ -523,6 +523,17 @@ public class Module extends DWRBase {
 				sb.append('=');
 				sb.append(s[1]);				
 			}					
+		}
+		if (deselected != null) {	
+			for (int i=0; i<deselected.length; i++) {
+				if (!deselected[i].contains("[")) continue;
+				// 'ox_OpenXavaTest_Color__xava_tab:[false0][false2][false3]' -> 'deselected=ox_OpenXavaTest_Color__xava_tab:0,2,3'
+				String r = deselected[i].replace("[false", "").replace("]", ",");
+				r = r.substring(0, r.length()-1);
+				sb.append('&');				
+				sb.append("deselected=");
+				sb.append(r);				
+			}
 		}
 	}
 	

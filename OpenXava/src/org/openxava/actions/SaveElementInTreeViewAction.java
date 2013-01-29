@@ -40,6 +40,9 @@ public class SaveElementInTreeViewAction extends SaveElementInCollectionAction {
 				}
 			}
 		}
+		
+		getCollectionElementView().getCollectionTab().clearSelected();	// tmp
+		
 		return returnValue;
 	}
 }

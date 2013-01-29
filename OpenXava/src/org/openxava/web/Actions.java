@@ -1,11 +1,8 @@
 package org.openxava.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.controller.meta.MetaAction;
+import org.apache.commons.logging.*;
+import org.openxava.controller.meta.*;
 import org.openxava.util.*;
-
-import com.steadystate.css.parser.selectors.*;
 
 /**
  * Utility class to help in action code generated for JSPs.
@@ -15,6 +12,16 @@ import com.steadystate.css.parser.selectors.*;
  */
 public class Actions {
 	private static Log log = LogFactory.getLog(Actions.class);
+	
+	public static String getActionOnChangeCheckBox(String application, String module, int row, String tabObject){
+		return "onchange=\"openxava.onChangeCheckBox(" +
+			"this," +
+			row + "," + 
+			"'" + application +  "'," + 
+			"'" + module + "'," +
+			"'" + tabObject + "'" + 
+			")\"";
+	}
 	
 	public static String getActionOnClick(String application, String module, 
 			String onSelectCollectionElementAction, int row, String viewObject, String idRow,
@@ -37,7 +44,7 @@ public class Actions {
 	
 	public static String getActionOnClickAll(String application, String module, 
 			String onSelectCollectionElementAction, String viewObject, String prefix,
-			String selectedRowStyle, String rowStyle){
+			String selectedRowStyle, String rowStyle, String tabObject){
 		return  "onClick=\"openxava.onSelectAll(" +
 			"'" + application + "'," + 
 			"'" + module + "'," + 
@@ -47,7 +54,8 @@ public class Actions {
 			!Is.empty(onSelectCollectionElementAction) + "," +
 			"'" + prefix + "'," + 
 			"'" + selectedRowStyle + "'," +
-			"'" + rowStyle + "'" + 
+			"'" + rowStyle + "'," +
+			"'" + tabObject + "'" + 
 			")\"";
 	}
 	

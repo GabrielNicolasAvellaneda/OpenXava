@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: selected rows are lost when you do a order by any property, a page change,...
+
 OpenXava 4.6.1 (2013-1-9)
 -------------------------
 - New IWithMessage to be implemented by validators to get the messages from @Required, @PropertyValidator and @EntityValidator.
