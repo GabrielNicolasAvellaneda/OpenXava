@@ -65,7 +65,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 			}
 		}
-		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutContentTable());
+		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutContent());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 	}
 
@@ -140,9 +140,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		write(getStyle().getFrameContentStartDecoration(frameId + "content", getView().isFrameClosed(frameId)));
 		// Start the property container
 		attributes.clear();
-		if (maximizeTable) {
-			//attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
-		}
+		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutContent());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 		setContainer(element);
 	}
@@ -574,6 +572,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		}
 		attributes.clear();
 		attributes.put("id", collectionId);
+		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutContent());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_DIV, attributes));
 			includeJspPage("collection.jsp"
 					+ "?collectionName=" + element.getMetaCollection().getName() 
@@ -611,6 +610,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 		attributes.clear();
 		attributes.put(ATTR_ID, Ids.decorate(getRequest(), "sections_" + view.getViewObject()));
+		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutContent());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_DIV, attributes));
 			attributes.clear();
 			attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);

@@ -1165,8 +1165,8 @@ public class Style {
 	/**
 	 * @since 4.7
 	 */
-	public String getLayoutContentTable() {
-		return "ox-layout-content-table";
+	public String getLayoutContent() {
+		return "ox-layout-content";
 	}
-
+	
 }
