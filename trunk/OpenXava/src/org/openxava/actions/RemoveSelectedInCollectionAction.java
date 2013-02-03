@@ -30,7 +30,7 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 					addMessage("aggregate_removed", getCollectionElementView().getModelName());
 				}
 				getView().recalculateProperties();
-				getCollectionElementView().getCollectionTab().deselectAll();
+				getCollectionElementView().collectionDeselectAll();
 			}
 		}
 		catch (ValidationException ex) {			

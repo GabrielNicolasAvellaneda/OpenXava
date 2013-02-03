@@ -20,7 +20,7 @@ public class RemoveTreeViewNodeAction extends CollectionElementViewBaseAction {
 				Map keyValues = getCollectionElementView().getKeyValues();
 				Object treeNode = MapFacade.findEntity(getCollectionElementView().getModelName(), keyValues);
 				TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-				TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+				TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getModelName());
 				path = metaTreeView.getNodeFullPath(treeNode);
 				selectedOnes.add(keyValues);
 				if (metaTreeView != null) {

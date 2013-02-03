@@ -14,21 +14,21 @@ import org.openxava.web.editors.*;
 public class NewTreeViewItemAction extends CollectionElementViewBaseAction {
 	private static Log log = LogFactory.getLog(NewTreeViewItemAction.class);
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void execute() throws Exception {
 		String fullPath = null;
 		if (getCollectionElementView().isRepresentsAggregate()) {
 			getCollectionElementView().reset();				
 		}
-		Map[] keyValues = getCollectionElementView().getCollectionTab().getSelectedKeysArray();
+		List<Map> keyValues = getCollectionElementView().getCollectionSelectedValues();
 		
 		// if we have a selected one let's add one as a child
-		if (keyValues.length > 0) {	
-			Map keyValue = (Map)keyValues[keyValues.length - 1];
+		if (keyValues.size() > 0) {	
+			Map keyValue = (Map)keyValues.get(keyValues.size() - 1);
 			
-			Object treeNode = MapFacade.findEntity(getCollectionElementView().getCollectionTab().getModelName(), keyValue);
+			Object treeNode = MapFacade.findEntity(getCollectionElementView().getModelName(), keyValue);
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getModelName());
 			if (metaTreeView != null){
 				try {
 					fullPath = metaTreeView.getNodeFullPath(treeNode);

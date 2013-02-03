@@ -5026,5 +5026,15 @@ public class View implements java.io.Serializable {
 		}
 		return getParentIfSectionOrGroup().changedActionsByProperty;
 	}
-						
+	
+	/**
+	 * Deselects all items in collection
+	 */
+	public void collectionDeselectAll() {
+		if (isCollectionCalculated()) {
+			listSelected = null;
+		} else {
+			getCollectionTab().deselectAll();
+		}
+	}
 }
