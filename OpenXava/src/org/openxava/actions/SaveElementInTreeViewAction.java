@@ -25,7 +25,7 @@ public class SaveElementInTreeViewAction extends SaveElementInCollectionAction {
 		// This should only be done on new elements!
 		if (entity == null) {
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getModelName());
 			if (metaTreeView != null && returnValue != null){
 				if (!returnValue.containsKey(metaTreeView.getPathProperty())) {
 					String fullPath = (String) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_NODE_FULL_PATH);
@@ -35,13 +35,19 @@ public class SaveElementInTreeViewAction extends SaveElementInCollectionAction {
 				}
 				if (metaTreeView.isOrderDefined() &&
 						!returnValue.containsKey(metaTreeView.getOrderProperty())) {
-					Integer newOrder = getCollectionElementView().getCollectionTab().getTotalSize() * metaTreeView.getKeyIncrement();
+					Integer newOrder = 0;
+					if (getCollectionElementView().isCollectionCalculated()) {
+						newOrder = getCollectionElementView().getCollectionValues().size();
+					} else {
+						newOrder = getCollectionElementView().getCollectionTab().getTotalSize();
+					}
+					newOrder = newOrder * metaTreeView.getKeyIncrement();
 					returnValue.put(metaTreeView.getOrderProperty(), newOrder);
 				}
 			}
 		}
 		
-		getCollectionElementView().getCollectionTab().clearSelected();	// tmp
+		getCollectionElementView().collectionDeselectAll();
 		
 		return returnValue;
 	}

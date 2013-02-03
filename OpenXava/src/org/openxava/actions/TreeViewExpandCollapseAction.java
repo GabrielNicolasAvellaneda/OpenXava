@@ -22,7 +22,7 @@ public class TreeViewExpandCollapseAction extends CollectionElementViewBaseActio
 			Map keyValues = (Map)((List)elements).get(getRow());
 			Object treeNode = (Object)MapFacade.findEntity(getCollectionElementView().getModelName(), keyValues);
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+			TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getModelName());
 			metaTreeView.setNodeExpandedState(treeNode, expanded);
 		}
 	}

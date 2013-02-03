@@ -18,7 +18,7 @@ public class RemoveSelectedTreeViewNodeAction extends CollectionBaseAction {
 	@SuppressWarnings("rawtypes")
 	public void execute() throws Exception {
 		TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);
-		TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getCollectionTab().getModelName());
+		TreeView metaTreeView = treeViewParser.getMetaTreeView(getCollectionElementView().getModelName());
 		Map values;
 		try{						
 			Collection selectedOnes = getMapsSelectedValues();
@@ -57,7 +57,7 @@ public class RemoveSelectedTreeViewNodeAction extends CollectionBaseAction {
 					addMessage("aggregate_removed", getCollectionElementView().getModelName());
 				}
 				getView().recalculateProperties();
-				getCollectionElementView().getCollectionTab().deselectAll();
+				getCollectionElementView().collectionDeselectAll();
 			}
 		}
 		catch (ValidationException ex) {			
