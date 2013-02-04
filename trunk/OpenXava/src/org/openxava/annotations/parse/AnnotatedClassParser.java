@@ -478,12 +478,14 @@ public class AnnotatedClassParser {
 				String nestedGroup = token;
 				members.append("__GROUP__" + nestedGroup); 
 				nextToken = addMembersToView(null, nestedGroup, metaView, st);
+				// By default if a group has no semicolon or comma
+				// the group should be rendered in the next line
 				if (LayoutFactory.rendererDefined()) {
-					if (",".indexOf(nextToken) >= 0) {
-						members.append(',');
+					if (";".indexOf(nextToken) >= 0) {
+						members.append(';');
 					} 
 					else {
-						members.append(';');
+						members.append(',');
 					}
 				} 
 				else {
