@@ -654,10 +654,10 @@ public class DefaultLayoutParser implements ILayoutParser {
 		returnValue.setFrame(false);
 		returnValue.setSections(false);
 		returnValue.setView(view);
-		if (Is.empty(view.getMemberName())) {
+		if (view.getMemberName() == null) {
 			view.setMemberName("");
 		}
-		if (Is.empty(view.getPropertyPrefix())) {
+		if (view.getPropertyPrefix() == null) {
 			view.setPropertyPrefix("");
 		}
 		MetaCollection collection = (MetaCollection) m;
