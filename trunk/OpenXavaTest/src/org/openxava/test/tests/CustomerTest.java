@@ -26,7 +26,7 @@ public class CustomerTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.customReport",
+		"ExtendedPrint.myReports",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",

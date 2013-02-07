@@ -1,7 +1,15 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: selected rows are lost when you do a order by any property, a page change,...
+- ExtendedPrint.myReports stored all the generated reports, so the user can get them by name later. 
+- Action ExtendedPrint.customReport renamed to ExtendedPrint.myReports.
+- Fix: @ManyToMany collections fail after removing one of the elements.
+- New layout engine improved again, though it is still in BETA and deactivated by default.
+- Fix: Selected rows are lost when you do a order by any property, a page change, etc.
+- Fix: When combining filter and order in custom report, filter is ignored. 
+- User preferences support creating and removing subnodes (from Preferences Java API).
+- Fix: Confirm message for actions associated to properties incorrect. 
+- Fix: View.setModel() does not refresh collections.
 
 OpenXava 4.6.1 (2013-1-9)
 -------------------------
@@ -26,8 +34,8 @@ OpenXava 4.6.1 (2013-1-9)
 - Fix: Valid values do not work in custom reports With XML components. 
 - Fix: Duplicate dialog title in custom report.
 - Fix: Incorrect title on reloading custom report dialog.
-- Fix: Valid-values values are not kept when a column is editing in custom report dialog.
-- Fix: Comparator values are not kept when a column is editing in custom report dialog.
+- Fix: Valid-values values are not kept when a column is edited in custom report dialog.
+- Fix: Comparator values are not kept when a column is edited in custom report dialog.
 
 OpenXava 4.6 (2012-11-21)
 -------------------------

@@ -1,10 +1,13 @@
 package org.openxava.session;
 
 import java.util.*;
+import java.util.prefs.*;
 
 import javax.persistence.*;
 import org.openxava.annotations.*;
 import org.openxava.model.meta.*;
+import org.openxava.tab.Tab;
+import org.openxava.util.*;
 
 /**
  * 
@@ -13,7 +16,12 @@ import org.openxava.model.meta.*;
 
 public class CustomReport implements java.io.Serializable {
 	
-	@Required @Column(length=80)
+	private static final String NAME = "name";
+	private static final String LAST_NAME = "lastName"; 
+	private static final String MODEL_NAME = "modelName";
+			
+	@Required @Column(length=80) 
+	@OnChange(org.openxava.actions.OnChangeCustomReportNameAction.class) // It's only thrown in combo format, this is controlled from the editor 
 	private String name;
 	
 	@Hidden
@@ -30,12 +38,47 @@ public class CustomReport implements java.io.Serializable {
 	@ListProperties("name, comparator, value, order")
 	private List<CustomReportColumn> columns;
 	
+	private String rootNodeName;
+	
 	public static CustomReport create(org.openxava.tab.Tab tab) {  
-		CustomReport report = new CustomReport();
-		report.setName(tab.getTitle()); 
+		CustomReport report = createEmpty(tab);
 		report.setColumns(createColumns(report, tab));
-		report.setMetaModel(tab.getMetaTab().getMetaModel());
 		return report;
+	}
+	
+	public static CustomReport createEmpty(Tab tab) {
+		CustomReport report = new CustomReport();
+		report.setName(tab.getTitle()); 	
+		report.setMetaModel(tab.getMetaTab().getMetaModel());
+		report.setNodeName(tab);
+		return report;
+	}
+	
+	public static CustomReport find(org.openxava.tab.Tab tab, String name) throws BackingStoreException {   
+		CustomReport report = new CustomReport();	
+		report.setName(name);
+		report.setNodeName(tab);
+		report.load();
+		return report;
+	}
+		
+	/**
+	 * The names of all the reports of the same Tab of the current one. 
+	 */
+	@Hidden
+	public String [] getAllNames() throws BackingStoreException { 
+		return Users.getCurrentPreferences().node(rootNodeName).childrenNames();
+	}
+	
+	/**
+	 * The name of the last generated report of the same Tab of the current one. 
+	 */	
+	@Hidden
+	public String getLastName() throws BackingStoreException { 
+		String lastName = getRootPreferences().get(LAST_NAME, null);
+		String [] allNames = getAllNames();
+		if (Arrays.binarySearch(allNames, lastName) >= 0) return lastName; 
+		return allNames.length > 0?allNames[0]:""; 
 	}
 	
 	private static List<CustomReportColumn> createColumns(CustomReport report, org.openxava.tab.Tab tab) {
@@ -48,6 +91,40 @@ public class CustomReport implements java.io.Serializable {
 			columns.add(column);
 		}		
 		return columns;		
+	}
+	
+	public void load() throws BackingStoreException { 
+		Preferences preferences = getPreferences();
+		name = preferences.get(NAME, name);
+		String modelName = preferences.get(MODEL_NAME, "Unknown MetaModel");
+		setMetaModel(MetaModel.get(modelName));
+		int i = 0;
+		CustomReportColumn column = new CustomReportColumn();
+		columns = new ArrayList();
+		while (column.load(preferences, i++)) {
+			columns.add(column);
+			column.setReport(this);
+			column = new CustomReportColumn();
+		}
+		preferences.flush();
+	}	
+	
+	public void save() throws BackingStoreException { 
+		Preferences preferences = getPreferences();		
+		preferences.put(NAME, name);
+		preferences.put(MODEL_NAME, getMetaModel().getName());
+		int i = 0;
+		for (CustomReportColumn column: columns) {
+			column.save(preferences, i++);
+		}
+		preferences.flush();
+		Preferences rootPreferences = getRootPreferences();
+		rootPreferences.put(LAST_NAME, name);
+		rootPreferences.flush();
+	}
+	
+	public void remove() throws BackingStoreException { 
+		getPreferences().removeNode();		
 	}
 	
 	public String getName() {
@@ -72,6 +149,23 @@ public class CustomReport implements java.io.Serializable {
 
 	public void setMetaModel(MetaModel metaModel) {
 		this.metaModel = metaModel;
+	}
+	
+	private void setNodeName(org.openxava.tab.Tab tab) { 
+		rootNodeName = "customReport." + tab.friendCustomReportGetPreferencesNodeName();	
+	}
+	
+	private Preferences getPreferences() throws BackingStoreException { 
+		return Users.getCurrentPreferences().node(rootNodeName).node(name);
+	}
+	
+	private Preferences getRootPreferences() throws BackingStoreException {		
+		return Users.getCurrentPreferences().node(rootNodeName);
+	}
+
+	@Override
+	public String toString() {
+		return "CustomReport: " + name;
 	}
 		
 }

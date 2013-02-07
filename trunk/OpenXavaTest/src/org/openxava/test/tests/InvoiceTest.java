@@ -59,7 +59,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testCustomReportFilteringByDateAndBooleanWithConverter() throws Exception { 
 		// Date
-		execute("ExtendedPrint.customReport");
+		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 2, 0, "date");
 		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
 		String [][] dateComparators = {
@@ -88,7 +88,8 @@ public class InvoiceTest extends ModuleTestBase {
 		assertTrue(getPopupPDFLine(4).startsWith("2004 9"));
 
 		// Boolean
-		execute("ExtendedPrint.customReport");
+		execute("ExtendedPrint.myReports");
+		execute("CustomReport.remove", "xava.keyProperty=name");
 		assertValueInCollection("columns", 6, 0, "paid");
 		execute("CustomReport.editColumn", "row=6,viewObject=xava_view_columns");
 		String [][] booleanValues = {
@@ -125,7 +126,15 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		execute("CustomReport.generatePdf");		
 		assertPopupPDFLinesCount(5);  
+		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));
+		
+		execute("ExtendedPrint.myReports");
+		execute("CustomReport.generatePdf");		
+		assertPopupPDFLinesCount(5);  
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));		
+		
+		execute("ExtendedPrint.myReports");
+		execute("CustomReport.remove", "xava.keyProperty=name"); 
 	}
 	
 	public void testFilterByRange() throws Exception{ 

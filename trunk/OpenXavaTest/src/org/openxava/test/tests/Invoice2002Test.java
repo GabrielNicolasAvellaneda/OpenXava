@@ -12,7 +12,7 @@ public class Invoice2002Test extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.customReport",
+		"ExtendedPrint.myReports",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
@@ -76,7 +76,7 @@ public class Invoice2002Test extends ModuleTestBase {
 	}
 	
 	public void testCalculatedPropertiesInListMode() throws Exception {
-		assertActions(listActions);
+		assertActions(listActions); 
 		int rowCount = getListRowCount();
 		for (int i = 0; i < rowCount; i++) {
 			String number = getValueInList(i, "number");

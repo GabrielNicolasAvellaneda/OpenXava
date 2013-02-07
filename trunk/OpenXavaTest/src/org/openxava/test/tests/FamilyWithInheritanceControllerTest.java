@@ -3,6 +3,7 @@ package org.openxava.test.tests;
 import org.openxava.tests.*;
 
 /**
+ * 
  * @author Javier Paniza
  */
 
@@ -33,7 +34,7 @@ public class FamilyWithInheritanceControllerTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.customReport",
+		"ExtendedPrint.myReports",
 		"Family.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",

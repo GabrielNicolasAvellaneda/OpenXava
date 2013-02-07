@@ -66,9 +66,10 @@ here that you want to override.
 	
 	<controller name="ExtendedPrint">
 		<extends controller="Print"/>
-		<action name="customReport" mode="list"
-			class="org.openxava.actions.CustomReportAction"
-			image="report.gif">	
+		
+		<action name="myReports" mode="list"
+			class="org.openxava.actions.MyReportsAction"
+			image="reports.png">	
 		</action>							
 	</controller>
 	
@@ -97,7 +98,13 @@ here that you want to override.
 			class="org.openxava.actions.SaveCustomReportColumnAction"/>			
 		<action name="editColumn" hidden="true" 
 			class="org.openxava.actions.EditCustomReportColumnAction"
-			image="edit.gif"/>																																				
+			image="edit.gif"/>					
+		<action name="createNew" hidden="true"
+			class="org.openxava.actions.CreateNewCustomReportAction"
+			image="create_new.gif"/>			
+		<action name="remove" hidden="true" confirm="true"
+			class="org.openxava.actions.RemoveCustomReportAction"
+			image="delete.gif"/>																																										
 	</controller>
 		
 	<controller name="TypicalNotResetOnSave">

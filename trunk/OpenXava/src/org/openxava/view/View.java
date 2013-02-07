@@ -1559,8 +1559,8 @@ public class View implements java.io.Serializable {
 		}
 		else { 
 			// If not calculated we obtain the data from the Tab
-			if (getCollectionTab().getSelectedKeys() == null) new ArrayList();
-			return new ArrayList(getCollectionTab().getSelectedKeys());
+			Collection<Map> selectedKeys = getCollectionTab().getSelectedKeys();
+			return selectedKeys==null?Collections.EMPTY_LIST:new ArrayList(selectedKeys);
 		}
 	}
 
@@ -1591,7 +1591,7 @@ public class View implements java.io.Serializable {
 	 *  
 	 * @return  Never null.
 	 */		
-	public List getCollectionObjects() throws XavaException {  		
+	public List getCollectionObjects() throws XavaException {   		
 		assertRepresentsCollection("getCollectionObjects()");		
 		Map [] keys = null;
 		if (isCollectionCalculated()) { 
@@ -1658,7 +1658,7 @@ public class View implements java.io.Serializable {
 		return result;
 	}
 	
-	private List getCollectionObjects(Collection<Map> keys) throws XavaException {
+	private List getCollectionObjects(Collection<Map> keys) throws XavaException { 
 		List result = new ArrayList();
 		if (keys == null || keys.isEmpty()) return result;
 		for (Map key : keys) {			
@@ -2854,6 +2854,7 @@ public class View implements java.io.Serializable {
 			clear();
 			return;
 		}
+		refreshCollections();  
 		setModelName(model.getClass().getSimpleName());
 		setValues(MapFacade.getValues(getModelName(), model, getMembersNamesWithHidden()));		
 	}
@@ -4964,14 +4965,14 @@ public class View implements java.io.Serializable {
 	/**
 	 * @return the framesMaximized
 	 */
-	public boolean isFramesMaximized() {
+	public boolean isFramesMaximized() { 
 		return framesMaximized;
 	}
 
 	/**
 	 * @param framesMaximized the framesMaximized to set
 	 */
-	public void setFramesMaximized(boolean framesMaximized) {
+	public void setFramesMaximized(boolean framesMaximized) { 
 		this.framesMaximized = framesMaximized;
 	}
 

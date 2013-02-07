@@ -19,8 +19,6 @@ public class SyncCarriersSelectionAction extends OnSelectElementBaseAction {
 			targetTab.setAllSelected(ArrayUtils.add(selected, getRow()));
 		}
 		else {
-			log.info("[SyncCarriersSelectionAction.execute] se ha deseleccionado"); // tmp
-//			targetTab.setSelected(ArrayUtils.removeElement(selected, getRow())); // It would be setAllSelected, but we use setSelected to test both methods
 			targetTab.deselected(getRow());
 		}
 	}

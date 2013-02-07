@@ -4,8 +4,10 @@ import java.util.*;
 
 import javax.inject.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.session.*;
 import org.openxava.tab.*;
+import org.openxava.util.*;
 
 /**
  * 
@@ -14,11 +16,14 @@ import org.openxava.tab.*;
 
 public class GenerateCustomReportAction extends GenerateReportAction {
 	
+	private static Log log = LogFactory.getLog(GenerateCustomReportAction.class);
+	
 	@Inject
 	private CustomReport customReport; 
 	
 	public void execute() throws Exception {		
 		super.execute();
+		customReport.setName(getView().getValueString("name")); 
 		Tab tab = new Tab();
 		tab.setModelName(getTab().getModelName());
 		tab.setTabName(getTab().getTabName());
@@ -45,12 +50,19 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 				order.append("} ");
 				order.append(column.getOrder() == CustomReportColumn.Order.ASCENDING?"ASC":"DESC");				
 			}
+		}
+		if (order.length() > 0) {
+			tab.setDefaultOrder(order.toString());			
 		}		
 		tab.setConditionComparators(comparators);
 		tab.setConditionValues(values);
 		
-		if (order.length() > 0) tab.setDefaultOrder(order.toString());
-		
+		try {
+			customReport.save(); 
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("customer_report_save_problems"), ex);
+		}
 		getRequest().getSession().setAttribute("xava_reportTab", tab);		
 		closeDialog();
 	}
