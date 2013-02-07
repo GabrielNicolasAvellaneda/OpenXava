@@ -12,7 +12,7 @@ public class FamilyTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.customReport",
+		"ExtendedPrint.myReports",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
@@ -68,7 +68,7 @@ public class FamilyTest extends ModuleTestBase {
 	}
 	
 	public void testTabDefaultOrder() throws Exception {
-		assertActions(listActions);
+		assertActions(listActions); 
 		assertValueInList(0, "number", "1");
 		assertValueInList(1, "number", "2");
 		assertValueInList(2, "number", "3");

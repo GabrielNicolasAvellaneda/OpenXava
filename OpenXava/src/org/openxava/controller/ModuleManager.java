@@ -332,7 +332,7 @@ public class ModuleManager implements java.io.Serializable {
 
 	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
 		int originalDialogLevel = dialogLevel;
-		try {			
+		try {						
 			Object previousView = getContext().get(applicationName, moduleName, "xava_view");
 			action.setErrors(errors);
 			action.setMessages(messages);
@@ -515,7 +515,7 @@ public class ModuleManager implements java.io.Serializable {
 			lastExecutedMetaAction = metaAction;
 			if (!(metaAction == null && executingAction)) { // For avoiding commit on OnChange actions triggered from a regular action execution
 				doCommit(); // after executing action
-			}		
+			}					
 		}
 		catch (Exception ex) {
 			manageException(metaAction, errors, messages, ex);
@@ -800,7 +800,7 @@ public class ModuleManager implements java.io.Serializable {
 				log.error(ex.getMessage(), ex);
 				String actionName = metaAction==null?action.getClass().getSimpleName():metaAction.getName(); 
 				throw new XavaException("get_property_action_value_error", property, actionName);
-			}
+			}			
 			if (value != null) {  
 				// The nulls are not assigned and thus we allow to have trasient attributes
 				// that it can lost on go and return from server without danger of alter

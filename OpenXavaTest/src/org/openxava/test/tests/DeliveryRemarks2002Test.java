@@ -14,7 +14,7 @@ public class DeliveryRemarks2002Test extends ModuleTestBase {
 		super(testName, "DeliveryRemarks2002");		
 	}
 	
-	public void testGenerateExcelWithMultilineText() throws Exception {
+	public void testGenerateExcelWithMultilineText() throws Exception { 
 		assertListRowCount(1); // We assume that there are only a delivery from 2002
 		assertValueInList(0, 0, "2002");
 		assertValueInList(0, 1, "1");

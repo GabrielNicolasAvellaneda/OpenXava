@@ -360,7 +360,7 @@ public class Tab implements java.io.Serializable {
 	public IXTableModel getAllDataTableModel() throws Exception {								
 		EntityTab tab = EntityTabFactory.createAllData(getMetaTab());
 		usesConverters = tab.usesConverters();
-		tab.search(getCondition(), getKey());
+		tab.search(getCondition(), getKey());		
 		return tab.getTable();					
 	}
 	
@@ -1193,6 +1193,10 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	private Preferences getPreferences() throws BackingStoreException {
+		return Users.getCurrentPreferences().node(getPreferencesNodeName()); 
+	}
+	
+	private String getPreferencesNodeName() { 
 		String application = "";
 		String module = "";
 		HttpServletRequest request = getRequest() == null && getCollectionView() != null? getCollectionView().getRequest(): getRequest();
@@ -1211,10 +1215,13 @@ public class Tab implements java.io.Serializable {
 		if (nodeName.length() > Preferences.MAX_NAME_LENGTH) {
 			nodeName = "tab." + (application + "." + module + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".").hashCode(); 		
 		}
-		return Users.getCurrentPreferences().node(nodeName);
+		return nodeName;
 	}
 	
-	
+	public String friendCustomReportGetPreferencesNodeName() {
+		return getPreferencesNodeName();
+	}
+		
 	public HttpServletRequest getRequest() {
 		return request;
 	}
@@ -1741,7 +1748,7 @@ public class Tab implements java.io.Serializable {
 		getMetaTab().setDefaultOrder(defaultOrder);		
 		resetAfterChangeProperties();				
 	}
-
+	
 	/**
 	 * If this tab represents a collection the collection view of that collection. <p>
 	 * 

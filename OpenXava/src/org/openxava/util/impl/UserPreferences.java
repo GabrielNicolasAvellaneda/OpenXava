@@ -23,6 +23,7 @@ public class UserPreferences extends AbstractPreferences {
 	private static Map preferencesByUser; 
 	private String userName;
 	private String name;
+	private String fileName;
 	private Map children;
 	private Properties properties;
 	
@@ -62,15 +63,22 @@ public class UserPreferences extends AbstractPreferences {
 	}
 
 	protected String[] childrenNamesSpi() throws BackingStoreException {
-		if (children == null) return new String[0];		
-		return XCollections.toStringArray(children.keySet());
+		// It takes 0 milliseconds even with more than 20 entries, so we don't cache
+		File dir = new File(Strings.noLastTokenWithoutLastDelim(getFileName(), "."));
+		String [] files = dir.list(); 
+		if (files == null) return new String[0];			
+		String [] children = new String[files.length];
+		for (int i=0; i< files.length; i++) {
+			children[i] = Strings.noLastTokenWithoutLastDelim(files[i], ".");
+		}
+		return children;
 	}
 
 	protected void flushSpi() throws BackingStoreException {
 		if (properties == null) return;
 		try {			
 			createFileIfNotExist();					
-			properties.store(new FileOutputStream(getFileName()), "OpenXava preferences. User: " + userName + ". Node: " + name); 
+			properties.store(new FileOutputStream(getFileName()), "OpenXava preferences. User: " + userName + ". Node: " + name);
 		} 
 		catch (Exception ex) {
 			throw new BackingStoreException(ex);
@@ -80,14 +88,22 @@ public class UserPreferences extends AbstractPreferences {
 	private void createFileIfNotExist() throws Exception {
 		File f = new File(getFileName());
 		if (!f.exists()) {
-			File dir = new File(getBaseDir());
+			File dir = new File(Strings.noLastToken(getFileName(), "/")); 
 			if (!dir.exists()) dir.mkdirs();
 			f.createNewFile();
 		}
 	}
 
 	private String getFileName() {		
-		return getBaseDir() + userName + "__" + name + ".properties";
+		if (fileName == null) {
+			fileName = getBaseDir() + userName + "__" + getQualifiedName() + ".properties"; 			
+		}
+		return fileName;
+	}
+	
+	private String getQualifiedName() {
+		if (parent() == null || parent().name().trim().equals("")) return name;
+		return parent().name() + "/" + name; 
 	}
 
 	protected String getSpi(String key) {
@@ -106,7 +122,9 @@ public class UserPreferences extends AbstractPreferences {
 	}
 
 	protected void removeNodeSpi() throws BackingStoreException {		
-		if (properties != null) properties.clear();
+		File f = new File(getFileName());
+		f.delete();
+		preferencesByUser = null; 
 	}
 
 	protected void removeSpi(String key) {

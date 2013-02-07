@@ -14,7 +14,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.customReport",
+		"ExtendedPrint.myReports",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow", 
@@ -32,7 +32,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	private String [] listCustomizeActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.customReport",
+		"ExtendedPrint.myReports",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",
@@ -57,7 +57,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 	
 	public void testCustomReportFilteringByValidValues() throws Exception { 
-		execute("ExtendedPrint.customReport");
+		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 1, 0, "type");
 		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
 		String [][] validValuesValues = {
@@ -106,6 +106,14 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("CustomReport.generatePdf");
 		assertPopupPDFLinesCount(5);
 		assertTrue(getPopupPDFLine(3).startsWith("Javi Steady"));
+		
+		execute("ExtendedPrint.myReports");
+		execute("CustomReport.generatePdf");
+		assertPopupPDFLinesCount(5);
+		assertTrue(getPopupPDFLine(3).startsWith("Javi Steady"));
+				
+		execute("ExtendedPrint.myReports"); 		
+		execute("CustomReport.remove", "xava.keyProperty=name");
 	}
 	
 	public void testDialogsInNestedCollections() throws Exception { 
@@ -443,7 +451,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 	
 	public void testCustomizeList() throws Exception { 
-		doTestCustomizeList_moveAndRemove(); 
+		doTestCustomizeList_moveAndRemove();
 		tearDown();	setUp();
 		doTestCustomizeList_generatePDF();
 		tearDown();	setUp();

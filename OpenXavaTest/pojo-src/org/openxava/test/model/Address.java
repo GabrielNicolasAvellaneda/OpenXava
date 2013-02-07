@@ -15,7 +15,7 @@ import org.openxava.annotations.*;
 		"street, zipCode, Address.addFullAddress();" +		
 		"city [" +
 		"	city, state;" +
-		"]" +
+		"]" + 
 		"asString"
 	),
 	@View( name="StateAsForm" ),

@@ -1,5 +1,7 @@
 package org.openxava.session;
 
+import java.util.prefs.*;
+
 import javax.persistence.*;
 
 import org.openxava.actions.*;
@@ -13,6 +15,15 @@ import org.openxava.util.*;
  */
 
 public class CustomReportColumn implements java.io.Serializable {
+	
+	private final static String COLUMN = "column";
+	private final static String NAME = "name";
+	private final static String COMPARATOR = "comparator";
+	private final static String VALUE ="value";
+	private final static String BOOLEAN_VALUE = "booleanValue";
+	private final static String VALID_VALUES_VALUE = "validValuesValue";
+	private final static String CALCULATED = "calculated";
+	private final static String ORDER = "order";
 	
 	@Hidden
 	private CustomReport report;
@@ -60,7 +71,7 @@ public class CustomReportColumn implements java.io.Serializable {
 		if (booleanValue != null) {
 			return booleanValue?Labels.get("yes", Locales.getCurrent()):Labels.get("no", Locales.getCurrent()); 			
 		}
-		if (validValuesValue > 0) {  
+		if (validValuesValue > 0) {
 			return getReport().getMetaModel().getMetaProperty(getName()).getValidValueLabel(getValidValuesIndex()); 
 		}
 		return value;
@@ -126,5 +137,36 @@ public class CustomReportColumn implements java.io.Serializable {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
+	public void save(Preferences preferences, int index) {		
+		preferences.put(COLUMN + index + "." + NAME, name);
+		if (comparator != null) preferences.put(COLUMN + index + "." + COMPARATOR, comparator);
+		else preferences.remove(COLUMN + index + "." + COMPARATOR);
+		if (value != null) preferences.put(COLUMN + index + "." + VALUE, value);
+		else preferences.remove(COLUMN + index + "." + VALUE);
+		if (booleanValue != null) preferences.putBoolean(COLUMN + index + "." + BOOLEAN_VALUE, booleanValue);
+		else preferences.remove(COLUMN + index + "." + BOOLEAN_VALUE);
+		preferences.putInt(COLUMN + index + "." + VALID_VALUES_VALUE, validValuesValue);
+		preferences.putBoolean(COLUMN + index + "." + CALCULATED, calculated);
+		if (order != null) preferences.put(COLUMN + index + "." + ORDER, order.name());
+		else preferences.remove(COLUMN + index + "." + ORDER);
+	}
+
+	public boolean load(Preferences preferences, int index) {
+		String name = preferences.get(COLUMN + index + "." + NAME, null);
+		if (name == null) return false;
+		this.name = name;
+		comparator = preferences.get(COLUMN + index + "." + COMPARATOR, null);
+		value = preferences.get(COLUMN + index + "." + VALUE, null);
+		String booleanValue = preferences.get(COLUMN + index + "." + BOOLEAN_VALUE, null);
+		this.booleanValue = booleanValue == null?null:new Boolean(booleanValue);
+		validValuesValue = preferences.getInt(COLUMN + index + "." + VALID_VALUES_VALUE, 0);
+		calculated = preferences.getBoolean(COLUMN + index + "." + CALCULATED, false);		
+		String order = preferences.get(COLUMN + index + "." + ORDER, null); 
+		this.order =  order == null?null:Order.valueOf(order);
+		return true;
+	}
+	
+	
 	
 }

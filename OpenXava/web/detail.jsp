@@ -276,9 +276,9 @@ if (!layoutPainterManager.renderView(view, pageContext)) {
 				<%=collection.getLabel(request) %>
 <% 
 				String frameId = Ids.decorate(request, "frame_" + view.getPropertyPrefix() + collection.getName());
-				String collectionHeaderId = frameId + "header";
+				String colletionHeaderId = frameId + "header";
 %>				
-				<span id="<xava:id name='<%=collectionHeaderId%>'/>">
+				<span id="<xava:id name='<%=colletionHeaderId%>'/>">
 					<jsp:include page="collectionFrameHeader.jsp"> 
 						<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
 						<jsp:param name="viewObject" value="<%=viewObject%>"/>			

@@ -22,7 +22,7 @@ public class DeliveryTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.customReport",		
+		"ExtendedPrint.myReports",		
 		"CRUD.new",
 		"CRUD.deleteSelected", 
 		"CRUD.deleteRow",
@@ -1017,7 +1017,7 @@ public class DeliveryTest extends ModuleTestBase {
 		// Verifying if date property is well in list 
 		// Only works if there are lest than 11 object (because see in first page)		
 		execute("Mode.list"); 
-		assertActions(listActions);   
+		assertActions(listActions); 
 		assertNoErrors();
 		int quantity = getListRowCount();
 		boolean found = false;

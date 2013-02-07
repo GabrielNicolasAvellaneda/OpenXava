@@ -1,24 +1,23 @@
 package org.openxava.actions;
 
 import javax.inject.*;
+
 import org.openxava.session.*;
 
 /**
  * 
- * @author Javier Paniza 
+ * @author Javier Paniza
  */
-public class CustomReportAction extends TabBaseAction {
+public class CreateNewCustomReportAction extends TabBaseAction {
 	
 	@Inject
 	private CustomReport customReport; 
 
 	public void execute() throws Exception {
-		setNextMode(DETAIL);
-		showDialog();	
-		getView().setTitleId("customReport");
 		customReport = CustomReport.create(getTab());
 		getView().setModel(customReport);		
-		setControllers("CustomReport");
+		getView().setEditable("name", true);			
+		getView().removeActionForProperty("name", "CustomReport.createNew");
 	}
 
 }
