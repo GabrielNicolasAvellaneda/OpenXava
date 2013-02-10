@@ -756,11 +756,22 @@ public class Tab implements java.io.Serializable {
 		try{
 			selected = new int[getSelectedKeys().size()];
 			int s = 0;
-			for (int i = 0; i < getTableModel().getTotalSize(); i++){
+			int start = getInitialIndex();
+			if (start > getTableModel().getTotalSize()) {
+				start = getTableModel().getTotalSize() - 1;
+			}
+			int end = start + getPageRowCount();
+			if (end > getTableModel().getTotalSize()) {
+				end = start;
+			}
+			for (int i = start; i < end; i++){
 				Map key = (Map)getTableModel().getObjectAt(i);
 				if (getSelectedKeys().contains(key)){
 					selected[s] = i;
 					s++;
+					if (s > selected.length) {
+						break; // No need to go on
+					}
 				}
 			}
 		}
