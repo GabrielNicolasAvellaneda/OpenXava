@@ -750,32 +750,18 @@ public class Tab implements java.io.Serializable {
 	 * Deprecated since 4.7
 	 * @deprecated use getSelectedKeys  
 	 */
-	public int [] getSelected() {
+	public int [] getSelected() { 
 		// recalculate the selected rows from selectedKeys
 		if (getSelectedKeys() == null) return null;
 		try{
 			selected = new int[getSelectedKeys().size()];
-			if (getSelectedKeys().size() > 0) {
-				int s = 0;
-				int start = getInitialIndex();
-				if (start > getTableModel().getTotalSize()) {
-					start = getTableModel().getTotalSize() - 1;
-				}
-				if (start >= 0) {
-					int end = start + getPageRowCount();
-					if (end > getTableModel().getTotalSize()) {
-						end = getTableModel().getTotalSize();
-					}
-					for (int i = start; i < end; i++){
-						Map key = (Map)getTableModel().getObjectAt(i);
-						if (getSelectedKeys().contains(key)){
-							selected[s] = i;
-							s++;
-							if (s > selected.length) {
-								break; // No need to go on
-							}
-						}
-					}
+			int s = 0;
+			int totalSize = getTableModel().getTotalSize();
+			for (int i = 0; i < totalSize; i++){
+				Map key = (Map)getTableModel().getObjectAt(i);
+				if (getSelectedKeys().contains(key)){
+					selected[s] = i;
+					s++;
 				}
 			}
 		}
@@ -1225,11 +1211,11 @@ public class Tab implements java.io.Serializable {
 				module = (String) request.getAttribute("xava.module");				
 			}
 		}
-		
-		String nodeName = "tab." + application + "." + module + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".";
+		String tabName = Is.emptyString(getTabName())?"":"." + getTabName();
+		String nodeName = "tab." + application + "." + module + "." + getMetaTab().getMetaModel().getName() + tabName;
 		if (nodeName.length() > Preferences.MAX_NAME_LENGTH) {
-			nodeName = "tab." + (application + "." + module + "." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".").hashCode(); 		
-		}
+			nodeName = "tab." + (application + "." + module + "." + getMetaTab().getMetaModel().getName() + tabName).hashCode(); 		
+		}		
 		return nodeName;
 	}
 	

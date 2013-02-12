@@ -19,7 +19,6 @@ import org.openxava.controller.meta.MetaAction;
 import org.openxava.controller.meta.MetaController;
 import org.openxava.controller.meta.MetaControllers;
 import org.openxava.filters.*;
-import org.openxava.jpa.*;
 import org.openxava.mapping.ModelMapping;
 import org.openxava.model.MapFacade;
 import org.openxava.model.PersistenceFacade;

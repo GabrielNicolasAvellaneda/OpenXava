@@ -156,7 +156,7 @@ public class PropertiesManager implements java.io.Serializable {
 			else if (value instanceof Map && !Map.class.isAssignableFrom(pd.getPropertyType())) {
 				value = mapToObject(pd.getPropertyType(), (Map) value);
 			}
-			Object[] arg = { value };			
+			Object[] arg = { value };
 			met.invoke(object, arg);
 		}
 		catch (PropertiesManagerException ex) {

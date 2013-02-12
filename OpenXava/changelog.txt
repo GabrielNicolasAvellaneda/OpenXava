@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: In custom reports filters gt_comparator is shown instead of > with Spanish.
 - ExtendedPrint.myReports stored all the generated reports, so the user can get them by name later. 
 - Action ExtendedPrint.customReport renamed to ExtendedPrint.myReports.
 - Fix: @ManyToMany collections fail after removing one of the elements.

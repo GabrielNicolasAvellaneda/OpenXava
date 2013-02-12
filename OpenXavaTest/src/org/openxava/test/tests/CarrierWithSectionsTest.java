@@ -272,7 +272,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 1, "");
 		assertValueInCollection("columns", 1, 2, "");
 		assertValueInCollection("columns", 1, 3, "Descending");
-		execute("CustomReport.generatePdf");
+		execute("CustomReport.generatePdf");		
 		assertPopupPDFLinesCount(8);  
 		assertPopupPDFLine(1, "Carrier report With no CALCULATED");		
 		assertPopupPDFLine(2, "Number Name");		

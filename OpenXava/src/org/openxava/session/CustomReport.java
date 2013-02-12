@@ -75,7 +75,7 @@ public class CustomReport implements java.io.Serializable {
 	 */	
 	@Hidden
 	public String getLastName() throws BackingStoreException { 
-		String lastName = getRootPreferences().get(LAST_NAME, null);
+		String lastName = getRootPreferences().get(LAST_NAME, ""); 
 		String [] allNames = getAllNames();
 		if (Arrays.binarySearch(allNames, lastName) >= 0) return lastName; 
 		return allNames.length > 0?allNames[0]:""; 
