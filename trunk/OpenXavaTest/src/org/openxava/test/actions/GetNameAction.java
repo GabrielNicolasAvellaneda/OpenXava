@@ -8,7 +8,7 @@ import org.openxava.actions.*;
 public class GetNameAction extends ViewBaseAction {
 
 	public void execute() throws Exception {
-		addMessage("name_is", getView().getValue("name"));				
+		addMessage("name_is", getView().getValue("name"));	
 	}
 
 }
