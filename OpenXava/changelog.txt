@@ -1,8 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Many standard i18n messages do not show correctly apostrophes.
 - Fix: In custom reports filters gt_comparator is shown instead of > with Spanish.
-- ExtendedPrint.myReports stored all the generated reports, so the user can get them by name later. 
+- ExtendedPrint.myReports stores all the generated reports, so the user can get them by name later. 
 - Action ExtendedPrint.customReport renamed to ExtendedPrint.myReports.
 - Fix: @ManyToMany collections fail after removing one of the elements.
 - New layout engine improved again, though it is still in BETA and deactivated by default.
@@ -29,7 +30,7 @@ OpenXava 4.6.1 (2013-1-9)
 - Fix: Obtaining selected object from a calculated collection fails with transient elements.
 - Fix: Attribute message of @Required is ignored.
 - Fix: Incorrect validation message from PositiveValidator.
-- Fix: Messages in i18n files with no arguments are not formatting in the standard way.
+- Fix: Messages in i18n files with no arguments are not formatted in the standard way.
 - Fix: Thai MS874 encoding fails with IE.
 - Fix: Custom reports fail with XML components if persistence.xml is not defined.
 - Fix: Valid values do not work in custom reports With XML components. 
