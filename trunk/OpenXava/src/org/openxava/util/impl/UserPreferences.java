@@ -77,8 +77,10 @@ public class UserPreferences extends AbstractPreferences {
 	protected void flushSpi() throws BackingStoreException {
 		if (properties == null) return;
 		try {			
-			createFileIfNotExist();					
-			properties.store(new FileOutputStream(getFileName()), "OpenXava preferences. User: " + userName + ". Node: " + name);
+			createFileIfNotExist();
+			FileOutputStream stream = new FileOutputStream(getFileName());
+			properties.store(stream, "OpenXava preferences. User: " + userName + ". Node: " + name);
+			stream.close();
 		} 
 		catch (Exception ex) {
 			throw new BackingStoreException(ex);
@@ -123,7 +125,9 @@ public class UserPreferences extends AbstractPreferences {
 
 	protected void removeNodeSpi() throws BackingStoreException {		
 		File f = new File(getFileName());
-		f.delete();
+		if (!f.delete()) {
+			throw new BackingStoreException(XavaResources.getString("preferences_node_not_removed")); 
+		}
 		preferencesByUser = null; 
 	}
 
@@ -134,7 +138,9 @@ public class UserPreferences extends AbstractPreferences {
 	protected void syncSpi() throws BackingStoreException {		
 		try {
 			Properties newProperties = new Properties();
-			newProperties.load(new FileInputStream(getFileName()));
+			FileInputStream stream = new FileInputStream(getFileName());
+			newProperties.load(stream);
+			stream.close();
 			if (properties == null) properties = newProperties;
 			else properties.putAll(newProperties);
 		} 

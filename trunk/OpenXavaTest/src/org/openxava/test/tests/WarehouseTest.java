@@ -495,7 +495,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertValue("number", number1);
 		assertValue("name", name1);
 		execute("Navigation.next");
-		assertValue("zoneNumber", zoneNumber2);
+		assertValue("zoneNumber", zoneNumber2); 
 		assertValue("number", number2);
 		assertValue("name", name2);
 		execute("Navigation.next");
