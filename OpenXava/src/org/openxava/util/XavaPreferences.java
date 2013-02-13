@@ -95,11 +95,19 @@ public class XavaPreferences {
 	public String getSMTPUserPassword() {
 		return getProperties().getProperty("smtpUserPassword");
 	}
+	
+	/**
+	 * @since 4.7
+	 */
+	public boolean isSMTPHostTrusted() { 
+		return "true".equalsIgnoreCase(getProperties().getProperty(
+				"smtpHostTrusted", "false").trim());
+	}	
 
 	public String getCSVSeparator() {
 		return getProperties().getProperty("csvSeparator", ";");
 	}
-	
+		
 	/**
 	 * @since 4.2.1 
 	 */
@@ -509,5 +517,6 @@ public class XavaPreferences {
 	public boolean isSectionFramesMaximized() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("sectionFramesMaximized", "true"));
 	}
+	
 	
 }

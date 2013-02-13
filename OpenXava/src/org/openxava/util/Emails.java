@@ -176,6 +176,10 @@ public class Emails {
         props.put("mail.smtp.port", "" + smtpPort);
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
+        
+        if (XavaPreferences.getInstance().isSMTPHostTrusted()) {
+        	props.put("mail.smtp.ssl.trust", smtpHost);
+		}
 
         Authenticator auth = new SMTPAuthenticator(mailUser, mailUserPassword);
 
@@ -194,7 +198,6 @@ public class Emails {
         Session session = Session.getDefaultInstance(props);
         return session;
     }
-
 
     private static Message setTORecipients(Message msg, String emails) throws MessagingException {
 
