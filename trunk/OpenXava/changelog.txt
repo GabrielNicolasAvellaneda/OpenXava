@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New smtpHostTrusted property in xava.properties to use email servers with expired certificates. 
 - Fix: Many standard i18n messages do not show correctly apostrophes.
 - Fix: In custom reports filters gt_comparator is shown instead of > with Spanish.
 - ExtendedPrint.myReports stores all the generated reports, so the user can get them by name later. 
