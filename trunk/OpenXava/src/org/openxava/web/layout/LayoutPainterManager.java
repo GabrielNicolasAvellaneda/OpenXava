@@ -34,7 +34,7 @@ public class LayoutPainterManager {
 					(HttpServletRequest) pageContext.getRequest());
 			if (painter != null) {
 				returnValue = true;
-				Collection<LayoutElement> elements = parser.parseView(view, pageContext);
+				Collection<ILayoutElement> elements = parser.parseView(view, pageContext);
 				painter.initialize(view, pageContext);
 				renderElements(painter, elements, view, pageContext);
 				painter.finalize(view, pageContext);
@@ -56,11 +56,9 @@ public class LayoutPainterManager {
 		if (painter != null) {
 			returnValue = true;
 			painter.initialize(view, pageContext);
-			LayoutElement element = new LayoutElement(view, 0);
-			element.setElementType(LayoutElementType.SECTIONS_BEGIN);
-			element.setSections(true);
+			ILayoutElement element = painter.defaultSectionsElement(view);
 			element.setView(view);
-			Collection<LayoutElement> elements = new ArrayList<LayoutElement>();
+			Collection<ILayoutElement> elements = new ArrayList<ILayoutElement>();
 			elements.add(element);
 			renderElements(painter, elements, view, pageContext);
 			painter.finalize(view, pageContext);
@@ -73,29 +71,12 @@ public class LayoutPainterManager {
 	 * @param painter Painter which render the elements.
 	 * @param elements Collection of layout elements.
 	 */
-	public void renderElements(ILayoutPainter painter, Collection<LayoutElement> elements, View view, PageContext pageContext) {
+	public void renderElements(ILayoutPainter painter, Collection<ILayoutElement> elements, View view, PageContext pageContext) {
 		painter.setPainterManager(this);
-		Iterator<LayoutElement> it = elements.iterator();
+		Iterator<ILayoutElement> it = elements.iterator();
 		while(it.hasNext()) {
-			LayoutElement element = (LayoutElement) it.next();
-			switch(element.getElementType()) {
-				case VIEW_BEGIN: painter.beginView(element); break;
-				case VIEW_END: painter.endView(element); break;
-				case GROUP_BEGIN: painter.beginGroup(element); break;
-				case GROUP_END: painter.endGroup(element); break;
-				case FRAME_BEGIN: painter.beginFrame(element); break;
-				case FRAME_END: painter.endFrame(element); break;
-				case COLLECTION_BEGIN: painter.beginCollection(element); break;
-				case COLLECTION_END: painter.endCollection(element); break;
-				case SECTIONS_BEGIN: painter.beginSections(element); break;
-				case SECTIONS_END: painter.endSections(element); break;
-				case ROW_BEGIN: painter.beginRow(element); break;
-				case ROW_END: painter.endRow(element); break;
-				case COLUMN_BEGIN: painter.beginColumn(element); break;
-				case COLUMN_END: painter.endColumn(element); break;
-				case PROPERTY_BEGIN: painter.beginProperty(element); break;
-				case PROPERTY_END: painter.endProperty(element); break;
-			}
+			ILayoutElement element = it.next();
+			element.render(painter);
 		}
 	}
 	

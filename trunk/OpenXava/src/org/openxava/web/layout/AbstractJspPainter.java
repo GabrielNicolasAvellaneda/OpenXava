@@ -23,6 +23,8 @@ import org.openxava.web.style.Style;
  *
  */
 public abstract class AbstractJspPainter extends AbstractBasePainter {
+	private static final long serialVersionUID = 1L;
+
 	private Log LOG = LogFactory.getLog(AbstractJspPainter.class);
 	
 	private Style style;

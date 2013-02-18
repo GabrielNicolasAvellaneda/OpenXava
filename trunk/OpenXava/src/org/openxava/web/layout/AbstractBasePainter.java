@@ -3,6 +3,7 @@
  */
 package org.openxava.web.layout;
 
+import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
@@ -17,12 +18,14 @@ import org.openxava.view.View;
  * @author Juan Mendoza and Federico Alcantara
  *
  */
-public abstract class AbstractBasePainter implements ILayoutPainter {
+public abstract class AbstractBasePainter implements ILayoutPainter, Serializable {
+	private static final long serialVersionUID = 1L;
 	private static final Log LOG = LogFactory.getLog(AbstractBasePainter.class);
-	private Stack<LayoutElement> containersStack;
-	private Stack<LayoutElement> rowsStack;
+
+	private Stack<ILayoutContainerElement> containersStack;
+	private Stack<ILayoutRowBeginElement> rowsStack;
 	private View view;
-	private LayoutElement viewElement;
+	private ILayoutViewBeginElement viewElement;
 	private PageContext pageContext;
 	private LayoutPainterManager painterManager;
 
@@ -55,8 +58,8 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * 
 	 * @return Current container.
 	 */
-	protected LayoutElement getContainer() {
-		LayoutElement returnValue = null;
+	protected ILayoutContainerElement getContainer() {
+		ILayoutContainerElement returnValue = null;
 		try {
 			returnValue = getContainersStack().peek();
 		} catch (EmptyStackException e) {
@@ -68,8 +71,8 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	/**
 	 * @return Current row.
 	 */
-	protected LayoutElement getRow() {
-		LayoutElement returnValue = null;
+	protected ILayoutRowBeginElement getRow() {
+		ILayoutRowBeginElement returnValue = null;
 		try {
 			returnValue = getRowsStack().peek();
 		} catch (EmptyStackException e) {
@@ -82,10 +85,10 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * Sets element as the current container.
 	 * @param layoutContainer.
 	 */
-	protected void setContainer(LayoutElement layoutElement) {
+	protected void setContainer(ILayoutContainerElement layoutElement) {
 		getContainersStack().push(layoutElement);
-		if (layoutElement.getElementType().equals(LayoutElementType.VIEW_BEGIN)) {
-			viewElement = layoutElement;
+		if ((layoutElement instanceof ILayoutViewBeginElement)) {
+			viewElement = (ILayoutViewBeginElement)layoutElement;
 		}
 	}
 	
@@ -103,7 +106,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * Sets the element as the current row and resets its column count to 0.
 	 * @param layoutElement
 	 */
-	protected void setRow(LayoutElement layoutElement) {
+	protected void setRow(ILayoutRowBeginElement layoutElement) {
 		layoutElement.setRowCurrentColumnsCount(0);
 		getRowsStack().push(layoutElement);
 	}
@@ -124,9 +127,9 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * the current container.
 	 * @return The current container stack;
 	 */
-	protected Stack<LayoutElement> getContainersStack() {
+	protected Stack<ILayoutContainerElement> getContainersStack() {
 		if (containersStack == null) {
-			containersStack = new Stack<LayoutElement>();
+			containersStack = new Stack<ILayoutContainerElement>();
 		}
 		return containersStack;
 	}
@@ -135,7 +138,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * Sets (or resets) the containers stack.
 	 * @param containersStack New container stack to use.
 	 */
-	protected void setContainersStack(Stack<LayoutElement> containersStack) {
+	protected void setContainersStack(Stack<ILayoutContainerElement> containersStack) {
 		this.containersStack = containersStack;
 	}
 
@@ -144,9 +147,9 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * represents the current row.
 	 * @return instance of row stack.
 	 */
-	protected Stack<LayoutElement> getRowsStack() {
+	protected Stack<ILayoutRowBeginElement> getRowsStack() {
 		if (rowsStack == null) {
-			rowsStack = new Stack<LayoutElement>();
+			rowsStack = new Stack<ILayoutRowBeginElement>();
 		}
 		return rowsStack;
 	}
@@ -155,7 +158,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * Sets or (resets) the row stack.
 	 * @param rowsStack New row stack to use.
 	 */
-	protected void setRowsStack(Stack<LayoutElement> rowsStack) {
+	protected void setRowsStack(Stack<ILayoutRowBeginElement> rowsStack) {
 		this.rowsStack = rowsStack;
 	}
 	
@@ -164,7 +167,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	 * @return The maximun number of columns in the view.
 	 */
 	protected int getMaxColumnsOnView() {
-		return viewElement.getMaxViewColumnsCount();
+		return viewElement.getMaxContainerColumnsCount();
 	}
 	
 	/**
@@ -180,4 +183,5 @@ public abstract class AbstractBasePainter implements ILayoutPainter {
 	protected PageContext getPageContext() {
 		return pageContext;
 	}
+	
 }
