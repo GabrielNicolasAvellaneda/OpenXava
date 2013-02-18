@@ -4,6 +4,7 @@
 package org.openxava.web.layout;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -15,7 +16,7 @@ import org.openxava.view.View;
  * @author Federico Alcantara
  *
  */
-public interface ILayoutPainter {
+public interface ILayoutPainter extends Serializable {
 	/**
 	 * Starts to paint form.
 	 * @param view Originating view.
@@ -30,28 +31,30 @@ public interface ILayoutPainter {
 	
 	public void setPainterManager(LayoutPainterManager painterManager);
 	
-	public void beginView(LayoutElement element);
-	public void endView(LayoutElement element);
+	public void beginView(ILayoutViewBeginElement element);
+	public void endView(ILayoutViewEndElement element);
 	
-	public void beginGroup(LayoutElement element);
-	public void endGroup(LayoutElement element);
+	public void beginGroup(ILayoutGroupBeginElement element);
+	public void endGroup(ILayoutGroupEndElement element);
 
-	public void beginFrame(LayoutElement element);
-	public void endFrame(LayoutElement element);
+	public void beginFrame(ILayoutFrameBeginElement element);
+	public void endFrame(ILayoutFrameEndElement element);
 	
-	public void beginRow(LayoutElement element);
-	public void endRow(LayoutElement element);
+	public void beginRow(ILayoutRowBeginElement element);
+	public void endRow(ILayoutRowEndElement element);
 	
-	public void beginColumn(LayoutElement element);
-	public void endColumn(LayoutElement element);
+	public void beginColumn(ILayoutColumnBeginElement element);
+	public void endColumn(ILayoutColumnEndElement element);
 	
-	public void beginProperty(LayoutElement element);
-	public void endProperty(LayoutElement element);
+	public void beginProperty(ILayoutPropertyBeginElement element);
+	public void endProperty(ILayoutPropertyEndElement element);
 	
-	public void beginCollection(LayoutElement element);
-	public void endCollection(LayoutElement element);
+	public void beginCollection(ILayoutCollectionBeginElement element);
+	public void endCollection(ILayoutCollectionEndElement element);
 	
-	public void beginSections(LayoutElement element);
-	public void endSections(LayoutElement element);
+	public void beginSections(ILayoutSectionsBeginElement element);
+	public void endSections(ILayoutSectionsEndElement element);
+	
+	public ILayoutSectionsBeginElement defaultSectionsElement(View view);
 
 }
