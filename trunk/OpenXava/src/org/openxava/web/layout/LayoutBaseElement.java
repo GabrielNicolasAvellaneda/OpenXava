@@ -1,10 +1,9 @@
 /**
  * 
  */
-package org.openxava.web.layout.impl;
+package org.openxava.web.layout;
 
 import org.openxava.view.View;
-import org.openxava.web.layout.ILayoutElement;
 
 /**
  * Default implementation for Layout element

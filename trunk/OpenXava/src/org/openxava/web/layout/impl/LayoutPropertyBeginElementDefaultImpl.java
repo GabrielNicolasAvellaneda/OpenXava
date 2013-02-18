@@ -11,6 +11,7 @@ import org.openxava.model.meta.MetaReference;
 import org.openxava.view.View;
 import org.openxava.web.layout.ILayoutPainter;
 import org.openxava.web.layout.ILayoutPropertyBeginElement;
+import org.openxava.web.layout.LayoutBaseElement;
 
 /**
  * @author Federico Alcantara

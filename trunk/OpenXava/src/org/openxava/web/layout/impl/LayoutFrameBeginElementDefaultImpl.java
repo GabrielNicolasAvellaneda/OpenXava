@@ -11,6 +11,7 @@ import org.openxava.view.View;
 import org.openxava.web.layout.ILayoutFrameBeginElement;
 import org.openxava.web.layout.ILayoutPainter;
 import org.openxava.web.layout.ILayoutRowBeginElement;
+import org.openxava.web.layout.LayoutBaseElement;
 
 /**
  * @author Federico Alcantara

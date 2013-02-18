@@ -6,6 +6,7 @@ package org.openxava.web.layout.impl;
 import org.openxava.view.View;
 import org.openxava.web.layout.ILayoutPainter;
 import org.openxava.web.layout.ILayoutViewEndElement;
+import org.openxava.web.layout.LayoutBaseElement;
 
 /**
  * Default implementation for ILayoutViewEndElement.

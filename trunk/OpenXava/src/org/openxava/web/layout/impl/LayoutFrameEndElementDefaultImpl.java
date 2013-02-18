@@ -7,6 +7,7 @@ import org.openxava.util.meta.MetaElement;
 import org.openxava.view.View;
 import org.openxava.web.layout.ILayoutFrameEndElement;
 import org.openxava.web.layout.ILayoutPainter;
+import org.openxava.web.layout.LayoutBaseElement;
 
 /**
  * @author Federico Alcantara
