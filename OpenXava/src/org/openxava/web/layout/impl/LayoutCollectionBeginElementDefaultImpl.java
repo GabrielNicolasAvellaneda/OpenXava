@@ -7,6 +7,7 @@ import org.openxava.model.meta.MetaCollection;
 import org.openxava.view.View;
 import org.openxava.web.layout.ILayoutCollectionBeginElement;
 import org.openxava.web.layout.ILayoutPainter;
+import org.openxava.web.layout.LayoutBaseElement;
 
 /**
  * Default implementation of collection layout element.
