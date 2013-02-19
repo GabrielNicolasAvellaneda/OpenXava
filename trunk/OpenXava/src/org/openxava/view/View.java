@@ -1558,8 +1558,7 @@ public class View implements java.io.Serializable {
 		}
 		else { 
 			// If not calculated we obtain the data from the Tab
-			Collection<Map> selectedKeys = getCollectionTab().getSelectedKeys();
-			return selectedKeys==null?Collections.EMPTY_LIST:new ArrayList(selectedKeys);
+			return getCollectionTab().getSelectedKeys() == null ? Collections.EMPTY_LIST : Arrays.asList(getCollectionTab().getSelectedKeys());
 		}
 	}
 
@@ -4573,7 +4572,7 @@ public class View implements java.io.Serializable {
 					!isHidden(subview.getMemberName()))  
 				{
 					if (subview.collectionTab != null) {						
-						int [] selected = subview.collectionTab.getSelected();
+						int [] selected = subview.collectionTab.getSelected();	// only we need the displayed data so we don't use getSelectedKeys
 						if (!XArrays.haveSameElements(selected, subview.listSelected)) {
 							result.put(getPropertyPrefix() + subview.getMemberName(), selected);				
 						}
@@ -5036,5 +5035,19 @@ public class View implements java.io.Serializable {
 		} else {
 			getCollectionTab().deselectAll();
 		}
+	}
+	
+	/**
+	 * @param as 'ox_OpenXavaTest_CarrierWithCollectionsTogether__xava_collectionTab_fellowCarriers:1,3,2'
+	 */
+	public void deselectCollection(String deselect){
+		// deselect = ox_OpenXavaTest_CarrierWithCollectionsTogether__xava_collectionTab_fellowCarriers:1,3,2
+		StringTokenizer st = new StringTokenizer(deselect, ":");
+		String name = st.nextToken();
+		String a = Ids.undecorate(name);
+		String collectionName = a.replace("xava_collectionTab_", "");
+		View collectionView = getSubview(collectionName);
+		org.openxava.tab.Tab collectionTab = collectionView.getCollectionTab();
+		collectionTab.deselect(deselect);
 	}
 }

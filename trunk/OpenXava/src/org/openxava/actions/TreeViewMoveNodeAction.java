@@ -1,14 +1,11 @@
 package org.openxava.actions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.jpa.XPersistence;
-import org.openxava.util.Is;
+import org.apache.commons.logging.*;
+import org.openxava.jpa.*;
+import org.openxava.model.*;
+import org.openxava.util.*;
 import org.openxava.web.editors.*;
 
 public class TreeViewMoveNodeAction extends CollectionElementViewBaseAction {
@@ -28,15 +25,18 @@ public class TreeViewMoveNodeAction extends CollectionElementViewBaseAction {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void execute() throws Exception {
 		Object node = null;
-		int[] selected = row != -1 ? new int[] {row} :
-				getCollectionElementView().getCollectionTab().getSelected();
-		entities =
-				getCollectionElementView().getCollectionObjects();
+		
+		Map[] selected = row != -1 ? 
+			new Map[] {(Map)getCollectionElementView().getCollectionTab().getTableModel().getObjectAt(row)} :
+			getCollectionElementView().getCollectionTab().getSelectedKeys();
+		
+		entities = getCollectionElementView().getCollectionObjects();
 		selectedEntities = new ArrayList<Object>();
+		
 		if (entities.size() > 0) {
-			for (int selectedRow: selected) {
-				node = entities.get(selectedRow);
-				selectedEntities.add(node);
+			for (Map selectedRow: selected) {
+				Object o = MapFacade.findEntity(getCollectionElementView().getModelName(), selectedRow);
+				selectedEntities.add(o);
 			}
 			node = entities.get(0);
 			TreeViewParser treeViewParser = (TreeViewParser) getContext().get(getRequest(), TreeViewParser.XAVA_TREE_VIEW_PARSER);

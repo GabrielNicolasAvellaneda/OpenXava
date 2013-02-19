@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.inject.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -11,6 +12,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 public class ViewDetailAction extends TabBaseAction implements IChainAction, IModelAction {
+	private static Log log = LogFactory.getLog(ViewDetailAction.class);
 	
 	@Inject  
 	private int row = Integer.MIN_VALUE; 
@@ -25,55 +27,60 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 	@Inject
 	private Tab mainTab;
 	
+	private Map nextKey = null;	// si viene de deleteAction el contenido de selectedKeys varia y no podemos saber desde dónde estabamos partiendo
+	private boolean deleteAllSelected = false;
+	
 	@Override
 	protected Tab getTab() throws XavaException {
 		return getMainTab() != null ? getMainTab() : super.getTab();
 	}
-	
+
 	public void execute() throws Exception {			
 		getView().setModelName(model); 
 		setAtListBegin(false);
 		setNoElementsInList(false);				
-		if (increment < 0 && row == 0) {
-			setAtListBegin(true);
-			addError("at_list_begin");			
-			return;
-		}		
-		int previous = row;
-		row = goFirst?0:row + increment;		
-		int [] selectedOnes = getTab().getSelected();
-		boolean lastSelectedPassed = false;
-		if (!explicitRow && selectedOnes != null && selectedOnes.length > 0) {
-			if (increment >= 0) {				
-				int last = selectedOnes[selectedOnes.length - 1];				
-				if (row > last) lastSelectedPassed = true;
-				else {					
-					while (Arrays.binarySearch(selectedOnes, row) < 0 && row < last) { 
-						row++;
-					} 		
-				}	
+		int previous = -1;
+		
+		Map [] selectedOnes = getTab().getSelectedKeys();
+		
+		if (!Is.empty(nextKey)) key = nextKey;
+		else if (isDeleteAllSelected()) key = null;
+		else if (!explicitRow && selectedOnes != null && selectedOnes.length > 0){	// hay seleccionados y no hay fila específica
+			// buscamos la clave actual y la situamos en el array, después buscaremos según el increment
+			Map keyActual = getView().getKeyValues();
+			List l = Arrays.asList(selectedOnes);
+			if (isGoFirst() || Is.empty(keyActual)) key = (Map) l.get(0);
+			else{
+				int index = l.indexOf(keyActual);
+				if (increment < 0 && index == 0){
+					setAtListBegin(true);
+					addError("at_list_begin");			
+					return;
+				}
+				index = index + increment;
+				if (l.size() == index) key = null;	// last element
+				else key = (Map)l.get(index);	
 			}
-			else {
-				int first = selectedOnes[0];
-				if (row < first) lastSelectedPassed = true;
-				else {
-					while (Arrays.binarySearch(selectedOnes, row) < 0 && row > first) { 
-						row--;
-					} 		
-				}					
-			}			
-		}		
-		if (lastSelectedPassed) {		
-			key = null;
+			
 		}
-		else {
+		else{	// no hay seleccionados o hay fila específica
+			if (increment < 0 && row == 0) {
+				setAtListBegin(true);
+				addError("at_list_begin");			
+				return;
+			}		
+			
+			previous = row;
+			row = goFirst?0:row + increment;
+			
 			if (row < 0) row = 0; 
-			key = (Map) getTab().getTableModel().getObjectAt(row);			
+			key = (Map) getTab().getTableModel().getObjectAt(row);
 		}
 		if (key == null) {
 			setNoElementsInList(true);
 			addError("no_list_elements");
-			row = previous;
+			// row = previous;
+			if (previous >= 0) row = previous;
 		}		
 		if (key != null) {			
 			getView().setValues(key);									
@@ -91,7 +98,6 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		if (row != Integer.MIN_VALUE) explicitRow = true;   
 		row = i;		
 	}
-		
 	
 	public String getNextAction() throws XavaException {
 		if (Is.emptyString(nextAction) || getManager().isSplitMode()) { 
@@ -148,5 +154,21 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 	public void setMainTab(Tab mainTab) {
 		this.mainTab = mainTab;
 	}
+
+	public Map getNextKey() {
+		return nextKey;
+	}
+
+	public void setNextKey(Map nextKey) {
+		this.nextKey = nextKey;
+	}
+
+	public boolean isDeleteAllSelected() {
+		return deleteAllSelected;
+	}
+
+	public void setDeleteAllSelected(boolean deleteAllSelected) {
+		this.deleteAllSelected = deleteAllSelected;
+	}	
 
 }

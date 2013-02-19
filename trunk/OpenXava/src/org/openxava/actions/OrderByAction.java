@@ -13,7 +13,8 @@ public class OrderByAction extends TabBaseAction  {
 	
 	public void execute() throws Exception {		
 		getTab().orderBy(property);
-		getTab().setAllSelected(new int[0]);
+		
+		// getTab().setAllSelected(new int[0]);
 	}
 
 	public String getProperty() {

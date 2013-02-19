@@ -19,7 +19,7 @@ public class GenerateReportAction extends TabBaseAction implements IForwardActio
 			throw new XavaException("report_type_not_supported", getType(), "pdf, csv");
 		}
 		getRequest().getSession().setAttribute("xava_reportTab", getTab());		
-		getRequest().getSession().setAttribute("xava_selectedRowsReportTab", getTab().getSelected());
+		getRequest().getSession().setAttribute("xava_selectedRowsReportTab", getTab().getSelectedKeys());
 		String hibernateDefaultSchema = getHibernateDefaultSchema();
 		if (!Is.emptyString(hibernateDefaultSchema)) {
 			getRequest().getSession().setAttribute("xava_hibernateDefaultSchemaTab", hibernateDefaultSchema);

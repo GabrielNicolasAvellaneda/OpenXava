@@ -1,5 +1,7 @@
 package org.openxava.tab.impl;
 
+import java.util.*;
+
 /**
  * 
  * @author Javier Paniza
@@ -7,18 +9,18 @@ package org.openxava.tab.impl;
 
 public class SelectedRowsXTableModel extends XTableModelDecoratorBase {
 	
-	private int [] selectedRows;
+	private Map [] selectedRows;
 
-	public SelectedRowsXTableModel(IXTableModel toDecorate, int [] selectedRows) {
+	public SelectedRowsXTableModel(IXTableModel toDecorate, Map [] selectedRows) {
 		super(toDecorate);
-		this.selectedRows = selectedRows == null?new int[0]:selectedRows; 
+		this.selectedRows = selectedRows == null?new Map[0]:selectedRows; 
 	}
 		
 	public int getRowCount() {
 		return selectedRows.length;
 	}
 	
-	public Object getValueAt(int rowIndex, int columnIndex) {		
-		return super.getValueAt(selectedRows[rowIndex], columnIndex);
-	}
+//	public Object getValueAt(int rowIndex, int columnIndex) {		
+//		return super.getValueAt(selectedRows[rowIndex], columnIndex);
+//	}
 }
