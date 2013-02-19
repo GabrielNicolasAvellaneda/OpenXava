@@ -1,5 +1,7 @@
 package org.openxava.test.actions;
 
+import java.util.*;
+
 import org.apache.commons.lang.*;
 import org.apache.commons.logging.*;
 import org.openxava.actions.*;
@@ -14,13 +16,14 @@ public class SyncCarriersSelectionAction extends OnSelectElementBaseAction {
 	
 	public void execute() throws Exception {
 		Tab targetTab = getView().getSubview("fellowCarriers").getCollectionTab();
-		int [] selected = targetTab.getSelected();		
+		Map [] selected = targetTab.getSelectedKeys();		
 		if (isSelected()) {
-			targetTab.setAllSelected(ArrayUtils.add(selected, getRow()));
+			Map newKey = (Map) targetTab.getTableModel().getObjectAt(getRow());
+			targetTab.setAllSelectedKeys((Map[])ArrayUtils.add(selected, newKey));
 		}
 		else {
-			targetTab.deselected(getRow());
+			targetTab.deselect(getRow());
 		}
 	}
-
+	
 }
