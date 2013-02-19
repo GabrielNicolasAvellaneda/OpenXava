@@ -12,7 +12,8 @@ public class GoNextPageAction extends TabBaseAction {
 	public void execute() throws Exception {
 		getTab().pageForward();
 		getTab().setNotResetNextTime(true);
-		getTab().setAllSelected(new int[0]);
+		
+		// getTab().setAllSelected(new int[0]);
 	}
 
 }

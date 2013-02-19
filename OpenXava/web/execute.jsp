@@ -33,24 +33,15 @@ request.setAttribute("tab", t);
 %>
 <jsp:useBean id="tab" class="org.openxava.tab.Tab" scope="request"/>
 <%
+View view = (View) context.get(request, "xava_view");
 
 String[] deselected = request.getParameterValues("deselected");
 if (deselected != null){
 	for (int i = 0; i < deselected.length; i++){
 		String d = deselected[i];
-		if (d.contains("xava_tab")) tab.deselected(d);
-		else if (d.contains("xava_collectionTab")){
-			StringTokenizer st = new StringTokenizer(d, ":");
-			String name = st.nextToken();
-			String a = Ids.undecorate(name);
-			String collectionName = a.replace("xava_collectionTab_", "");
-			String viewObject = request.getParameter("viewObject");
-			if (viewObject == null) viewObject = "xava_view";
-			
-			View view = (View) context.get(request, viewObject);
-			View collectionView = view.getSubview(collectionName);
-			org.openxava.tab.Tab collectionTab = collectionView.getCollectionTab();
-			collectionTab.deselected(d);
+		if (d.contains("xava_tab")) tab.deselect(d);
+		else if (d.contains("xava_collectionTab")) {
+			view.deselectCollection(d);
 		}
 	}	
 }
@@ -67,8 +58,7 @@ if (manager.isListMode() || manager.isSplitMode()) {
 <%
 manager.setApplicationName(request.getParameter("application"));
 manager.setModuleName(request.getParameter("module"));
-manager.executeBeforeEachRequestActions(request, errors, messages); 
-View view = (View) context.get(request, "xava_view");
+manager.executeBeforeEachRequestActions(request, errors, messages);
 view.setRequest(request);
 view.setErrors(errors);
 view.setMessages(messages);

@@ -143,7 +143,7 @@ public class GenerateReportServlet extends HttpServlet {
 			request.getParameter("module"); // for a bug in websphere 5.1
 			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");			
 			request.getSession().removeAttribute("xava_reportTab"); 
-			int [] selectedRows = (int []) request.getSession().getAttribute("xava_selectedRowsReportTab"); 
+			Map [] selectedRows = (Map []) request.getSession().getAttribute("xava_selectedRowsReportTab"); 
 			request.getSession().removeAttribute("xava_selectedRowsReportTab");
 			setDefaultSchema(request);
 			String user = (String) request.getSession().getAttribute("xava_user");
@@ -237,11 +237,11 @@ public class GenerateReportServlet extends HttpServlet {
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
 	
-	private JRDataSource getDataSource(Tab tab, int [] selectedRows, ServletRequest request) throws Exception {
+	private JRDataSource getDataSource(Tab tab, Map [] selectedRows, ServletRequest request) throws Exception {
 		return new JRTableModelDataSource(getTableModel(tab, selectedRows, request, false));		
 	}		  	
 	
-	private TableModel getTableModel(Tab tab, int [] selectedRows, ServletRequest request, boolean labelAsHeader) throws Exception {
+	private TableModel getTableModel(Tab tab, Map [] selectedRows, ServletRequest request, boolean labelAsHeader) throws Exception {
 		TableModel data = null;
 		if (selectedRows != null && selectedRows.length > 0) {
 			data = new SelectedRowsXTableModel(tab.getTableModel(), selectedRows);

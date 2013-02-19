@@ -23,13 +23,14 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	private boolean	chosen = true;
 	
 	public void execute() throws Exception {						
-		int [] selectedOnes = tab.getSelected();
+		Map [] selectedOnes = tab.getSelectedKeys();
 		Map key = null;
 		if (row >= 0) {
 			key = (Map) getTab().getTableModel().getObjectAt(row);
 		}				
 		else if (selectedOnes != null && selectedOnes.length > 0) {			
-			key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
+			key = selectedOnes[0];
+			// key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
 		}		
 		if (key == null) {
 			chosen = false;

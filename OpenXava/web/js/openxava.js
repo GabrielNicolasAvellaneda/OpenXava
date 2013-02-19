@@ -1,5 +1,5 @@
 if (openxava == null) var openxava = {};
-deselected = [];
+openxava.deselected = [];
 
 openxava.init = function(application, module) {
 	document.onkeydown = openxava.processKey;
@@ -27,11 +27,11 @@ openxava.ajaxRequest = function(application, module, firstRequest) {
 			openxava.getFormValues(openxava.getForm(application, module)), 
 			openxava.getMultipleValues(application, module), 
 			openxava.getSelectedValues(application, module),
-			deselected,
+			openxava.deselected,
 			firstRequest,
 			openxava.refreshPage);	
 	$(window).unbind('resize');
-	deselected = [];
+	openxava.deselected = [];
 }
 
 openxava.refreshPage = function(result) {	
@@ -673,14 +673,14 @@ openxava.onSelectAll = function(application, module, action, argv, checkValue, h
 	var name = openxava.decorateId(application, module, tabObject);
 	var index = -1;
 	var value = name + ":";
-	for (var i=0; i<deselected.length; i++) {
-		if (deselected[i].indexOf(name) == 0){
+	for (var i=0; i<openxava.deselected.length; i++) {
+		if (openxava.deselected[i].indexOf(name) == 0){
 			index = i;
-			value = deselected[i];
+			value = openxava.deselected[i];
 			break;
 		}
 	}
-	if (index < 0) index = deselected.length;
+	if (index < 0) index = openxava.deselected.length;
 	
 	//
 	var selected = document.getElementsByName(openxava.decorateId(application, module, "xava_selected"));
@@ -713,7 +713,7 @@ openxava.onSelectAll = function(application, module, action, argv, checkValue, h
 			selected[i].checked=checkValue?1:0;
 		}
 	}
-	deselected[index] = value;
+	openxava.deselected[index] = value;
 	
 	if (first < 0) return;	// no items in the collection
 	if (hasOnSelectAction){ 
@@ -778,14 +778,14 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 	var name = openxava.decorateId(application, module, tabObject);
 	var index = -1;
 	var value = name + ":";
-	for (var i=0; i<deselected.length; i++) {
-		if (deselected[i].indexOf(name) == 0){
+	for (var i=0; i<openxava.deselected.length; i++) {
+		if (openxava.deselected[i].indexOf(name) == 0){
 			index = i;
-			value = deselected[i];
+			value = openxava.deselected[i];
 			break;
 		}
 	}
-	if (index < 0) index = deselected.length;
+	if (index < 0) index = openxava.deselected.length;
 	
 	if (cb.checked == true){
 		var c = "[" + !cb.checked + row + "]";
@@ -796,5 +796,5 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 	else {
 		value = value + "[" + cb.checked + row + "]";
 	}
-	deselected[index] = value;
+	openxava.deselected[index] = value;
 }

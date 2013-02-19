@@ -38,10 +38,10 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 			associateEntityInRow(row);
 		}
 		else {
-			int [] selectedOnes = getTab().getSelected();
-			if (selectedOnes != null) {						
+			Map [] selectedOnes = getTab().getSelectedKeys();
+			if (selectedOnes != null && selectedOnes.length > 0) {						
 				for (int i = 0; i < selectedOnes.length; i++) {
-					associateEntityInRow(selectedOnes[i]);
+					associateKey(selectedOnes[i]);
 				}
 			}		
 			else {
@@ -59,6 +59,10 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 
 	private void associateEntityInRow(int row) throws FinderException, Exception {
 		Map key = (Map) getTab().getTableModel().getObjectAt(row);
+		associateKey(key);
+	}
+	
+	private void associateKey(Map key){
 		try {									
 			associateEntity(key); 					
 			added++;

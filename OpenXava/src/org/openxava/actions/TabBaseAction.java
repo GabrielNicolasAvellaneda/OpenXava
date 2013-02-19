@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import java.util.*;
+
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -21,15 +23,42 @@ abstract public class TabBaseAction extends ViewBaseAction {
 	private String viewObject;  
 	
 	/**
+	 * Deprecated since 4.7 <p>
+	 * 
 	 * Returns the indexes of the selected rows. <p>
 	 * 
 	 * If row property has value return an array with it as unique value.
 	 * This happens when the action has been clicked from the row, 
 	 * 
 	 * @return
+	 * @deprecated use getSelectedKeys
 	 */
+	@Deprecated
 	protected int [] getSelected() {
 		return row<0?getTab().getSelected():new int [] { row };		
+	}
+	
+	/**
+	 * 
+	 * Returns the keys of the selected rows. <p>
+	 * 
+	 * If row property has value return an array with it as unique value.
+	 * This happens when the action has been clicked from the row,
+	 * 
+	 * @return
+	 */
+	protected Map [] getSelectedKeys(){
+		if (row < 0) return getTab().getSelectedKeys();
+		else{
+			Map key = new HashMap();
+			try{
+				key = (Map)getTab().getTableModel().getObjectAt(row);
+				return new Map[] {key};
+			}
+			catch(Exception ex){
+				throw new XavaException(XavaResources.getString("object_not_found", getModelName(), key)); 
+			}
+		}
 	}
 
 	protected Tab getTab() throws XavaException {
