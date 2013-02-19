@@ -15,10 +15,10 @@ public class DeleteSelectedAction extends TabBaseAction implements IModelAction 
 	private String model;
 		
 	public void execute() throws Exception {				
-		int [] selectedOnes = getSelected(); 
+		Map [] selectedOnes = getSelectedKeys(); 
 		if (selectedOnes != null) {						
 			for (int i = 0; i < selectedOnes.length; i++) {				
-				Map key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[i]);
+				Map key = selectedOnes[i];
 				try {									
 					MapFacade.remove(model, key);					
 				}
