@@ -26,7 +26,15 @@ public class EditorTag extends TagSupport {
 	private boolean explicitEditable = false; 
 	private boolean throwPropertyChanged; 
 	private boolean explicitThrowPropertyChanged; 
+	private String viewObject;
+	private boolean viewObjectSet;
+	private String propertyPrefix;
+	private boolean propertyPrefixSet;
 	
+	public EditorTag() {
+		viewObjectSet = false;
+		propertyPrefixSet = false;
+	}
 	
 	public int doStartTag() throws JspException {
 		try {
@@ -34,13 +42,19 @@ public class EditorTag extends TagSupport {
 
 			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
 									
-			String viewObject = request.getParameter("viewObject");				
+			String viewObject = request.getParameter("viewObject");
+			if (viewObjectSet) {
+				viewObject = getViewObject();
+			}
 			viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 			View view = (View) context.get(request, viewObject);
 
 			MetaProperty metaProperty = view.getMetaProperty(property); 
 
 			String propertyPrefix = request.getParameter("propertyPrefix");
+			if (propertyPrefixSet) {
+				propertyPrefix = getPropertyPrefix();
+			}
 			propertyPrefix = propertyPrefix == null?"":propertyPrefix; 
 			String application = request.getParameter("application");
 			String module = request.getParameter("module");
@@ -78,14 +92,24 @@ public class EditorTag extends TagSupport {
 
 			boolean editable = explicitEditable?this.editable:view.isEditable(property);  
 			
-			String editorURL = org.openxava.web.WebEditors.getUrl(metaProperty, view.getViewName());
-			char nexus = editorURL.indexOf('?') < 0?'?':'&';
+			StringBuffer editorURL = new StringBuffer(org.openxava.web.WebEditors.getUrl(metaProperty, view.getViewName()));
+			char nexus = editorURL.toString().indexOf('?') < 0?'?':'&';
 			String maxSize = "";
 			int displaySize = view.getDisplaySizeForProperty(property);
 			if (displaySize > -1) {
 				maxSize = "maxSize=" + displaySize + "&";
 			}
-			editorURL = editorURL + nexus + maxSize + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;			
+			
+			editorURL.append(nexus)
+				.append(maxSize)
+				.append("script=")
+				.append(script)
+				.append("&editable=")
+				.append(editable)
+				.append("&propertyKey=")
+				.append(propertyKey)
+				.append("&viewObject=")
+				.append(viewObject);			
 			
 			if (org.openxava.web.WebEditors.mustToFormat(metaProperty, view.getViewName())) {
 				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors, view.getViewName(), false);
@@ -107,7 +131,7 @@ public class EditorTag extends TagSupport {
 			}			
 			try {
 				// If the JSP that uses this tag is in a subfolder
-				pageContext.include("../xava/" + editorURL);								
+				pageContext.include("../xava/" + editorURL.toString());								
 			}
 			catch (ServletException ex) {
 				Throwable cause = ex.getRootCause() == null?ex:ex.getRootCause(); 
@@ -117,7 +141,7 @@ public class EditorTag extends TagSupport {
 			catch (Exception ex) {	
 				// If the JSP that uses this tag is in root folder
 				try {
-					pageContext.include("xava/" + editorURL);
+					pageContext.include("xava/" + editorURL.toString());
 				}
 				catch (ServletException ex2) { 	
 					log.error(ex2.getRootCause().getMessage(), ex2.getRootCause());
@@ -161,6 +185,38 @@ public class EditorTag extends TagSupport {
 	public void setThrowPropertyChanged(boolean throwPropertyChanged) {
 		this.throwPropertyChanged = throwPropertyChanged;
 		this.explicitThrowPropertyChanged = true;
+	}
+
+
+	/**
+	 * @return the viewObject
+	 */
+	public String getViewObject() {
+		return viewObject;
+	}
+
+
+	/**
+	 * @param viewObject the viewObject to set
+	 */
+	public void setViewObject(String viewObject) {
+		this.viewObjectSet = true;
+		this.viewObject = viewObject;
+	}
+
+	/**
+	 * @return the propertyPrefix
+	 */
+	public String getPropertyPrefix() {
+		return propertyPrefix;
+	}
+
+	/**
+	 * @param propertyPrefix the propertyPrefix to set
+	 */
+	public void setPropertyPrefix(String propertyPrefix) {
+		this.propertyPrefixSet = true;
+		this.propertyPrefix = propertyPrefix;
 	}
 
 	

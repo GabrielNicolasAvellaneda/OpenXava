@@ -9,6 +9,7 @@ import org.openxava.model.meta.MetaMember;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.model.meta.MetaReference;
 import org.openxava.view.View;
+import org.openxava.view.meta.MetaViewAction;
 import org.openxava.web.layout.ILayoutPainter;
 import org.openxava.web.layout.ILayoutPropertyBeginElement;
 import org.openxava.web.layout.LayoutBaseElement;
@@ -380,6 +381,13 @@ public class LayoutPropertyBeginElementDefaultImpl extends LayoutBaseElement
 		return returnValue;
 	}
 
+	public boolean isMetaViewAction() {
+		if (metaProperty != null &&
+				(metaProperty instanceof MetaViewAction)) {
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -387,7 +395,9 @@ public class LayoutPropertyBeginElementDefaultImpl extends LayoutBaseElement
 	public String toString() {
 		return "PropertyBegin [label=" + label
 				+ ", propertyKey=" + propertyKey + ", propertyPrefix="
-				+ propertyPrefix + ", name=" + name + ", groupLevel="
+				+ propertyPrefix + ", name=" + name
+				+ ", viewObject=" + getViewObject()
+				+ ", groupLevel="
 				+ getGroupLevel() + "]";
 	}
 	

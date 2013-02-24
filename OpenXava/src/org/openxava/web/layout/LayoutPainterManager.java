@@ -49,17 +49,27 @@ public class LayoutPainterManager {
 	 * @param pageContext page context.
 	 * @return True if a suitable parser / painter combination is found and used.
 	 */
-	public boolean renderSection(View view, PageContext pageContext) {
+	public boolean renderSection(View parentView, PageContext pageContext) {
 		boolean returnValue = false;
 		ILayoutPainter painter = LayoutFactory.getLayoutPainterInstance(
 				(HttpServletRequest) pageContext.getRequest());
 		if (painter != null) {
 			returnValue = true;
+			View view = parentView.getSectionView(parentView.getActiveSection());
+			String propertyPrefix = view.getPropertyPrefix();
+			view.setPropertyPrefix("");
 			painter.initialize(view, pageContext);
-			ILayoutElement element = painter.defaultSectionsElement(view);
-			element.setView(view);
+			ILayoutSectionsRenderBeginElement beginElement = painter.defaultBeginSectionsRenderElement(view);
+			ILayoutSectionsRenderEndElement endElement = painter.defaultEndSectionsRenderElement(view);
+			beginElement.setView(parentView);
+			endElement.setView(parentView);
 			Collection<ILayoutElement> elements = new ArrayList<ILayoutElement>();
-			elements.add(element);
+			elements.add(beginElement);
+			elements.addAll(
+					LayoutFactory.getLayoutParserInstance((HttpServletRequest) pageContext.getRequest())
+						.parseView(view, pageContext, true));
+			elements.add(endElement);
+			view.setPropertyPrefix(propertyPrefix);
 			renderElements(painter, elements, view, pageContext);
 			painter.finalize(view, pageContext);
 		}

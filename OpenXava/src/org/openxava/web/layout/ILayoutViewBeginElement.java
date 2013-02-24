@@ -7,7 +7,7 @@ package org.openxava.web.layout;
  * @author Federico Alcantara
  *
  */
-public interface ILayoutViewBeginElement extends ILayoutElement, ILayoutContainerElement {
+public interface ILayoutViewBeginElement extends ILayoutContainerElement {
 	/**
 	 * If true indicates that the contents of this view is a 
 	 * tab of a section.

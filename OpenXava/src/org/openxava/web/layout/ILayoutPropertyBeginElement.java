@@ -245,4 +245,10 @@ public interface ILayoutPropertyBeginElement extends ILayoutElement {
 	 * @return The metamember. Either MetaReference or MetaProperty
 	 */
 	public MetaMember getMetaMember();
+		
+	/**
+	 * 
+	 * @return True if this property represents a MetaViewAction
+	 */
+	boolean isMetaViewAction();
 }

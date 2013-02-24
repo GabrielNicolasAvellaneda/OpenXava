@@ -3,29 +3,23 @@
  */
 package org.openxava.web.layout.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.openxava.model.meta.MetaMember;
 import org.openxava.util.meta.MetaElement;
 import org.openxava.view.View;
 import org.openxava.web.layout.ILayoutFrameBeginElement;
 import org.openxava.web.layout.ILayoutPainter;
-import org.openxava.web.layout.ILayoutRowBeginElement;
-import org.openxava.web.layout.LayoutBaseElement;
+import org.openxava.web.layout.LayoutBaseContainerElement;
 
 /**
  * @author Federico Alcantara
  *
  */
-public class LayoutFrameBeginElementDefaultImpl extends LayoutBaseElement
+public class LayoutFrameBeginElementDefaultImpl extends LayoutBaseContainerElement
 		implements ILayoutFrameBeginElement {
 	
 	private String propertyPrefix;
 	private String label;
 	private String name;
-	private Integer maxFramesCount;
-	private Integer maxContainerColumnsCount;
-	private List<ILayoutRowBeginElement> rows;
 	
 	public LayoutFrameBeginElementDefaultImpl(View view, int groupLevel) {
 		super(view, groupLevel);
@@ -34,7 +28,11 @@ public class LayoutFrameBeginElementDefaultImpl extends LayoutBaseElement
 	public LayoutFrameBeginElementDefaultImpl(View view, int groupLevel, MetaElement metaElement) {
 		super(view, groupLevel);
 		setPropertyPrefix("");
-		setLabel(metaElement.getLabel());
+		if (metaElement instanceof MetaMember) {
+			setLabel(view.getLabelFor((MetaMember)metaElement));
+		} else {
+			setLabel(metaElement.getLabel());
+		}
 		setName(metaElement.getName());
 		setMaxFramesCount(0);
 		setMaxContainerColumnsCount(0);
@@ -89,29 +87,6 @@ public class LayoutFrameBeginElementDefaultImpl extends LayoutBaseElement
 		this.name = name;
 	}
 
-	public Integer getMaxFramesCount() {
-		return maxFramesCount;
-	}
-
-	public void setMaxFramesCount(Integer maxFramesCount) {
-		this.maxFramesCount = maxFramesCount;
-	}
-
-	public Integer getMaxContainerColumnsCount() {
-		return maxContainerColumnsCount;
-	}
-
-	public void setMaxContainerColumnsCount(Integer maxContainerColumnsCount) {
-		this.maxContainerColumnsCount = maxContainerColumnsCount;
-	}
-
-	public List<ILayoutRowBeginElement> getRows() {
-		if (rows == null) {
-			rows = new ArrayList<ILayoutRowBeginElement>();
-		}
-		return rows;
-	}
-	
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -119,8 +94,8 @@ public class LayoutFrameBeginElementDefaultImpl extends LayoutBaseElement
 	public String toString() {
 		return "FrameBegin [propertyPrefix="
 				+ propertyPrefix + ", label=" + label + ", name=" + name
-				+ ", maxFramesCount=" + maxFramesCount
-				+ ", maxContainerColumnsCount=" + maxContainerColumnsCount
+				+ ", maxFramesCount=" + getMaxFramesCount()
+				+ ", maxContainerColumnsCount=" + getMaxContainerColumnsCount()
 				+ ", groupLevel=" + getGroupLevel() + "]";
 	}
 
