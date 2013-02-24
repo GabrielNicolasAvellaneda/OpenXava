@@ -55,6 +55,10 @@ public interface ILayoutPainter extends Serializable {
 	public void beginSections(ILayoutSectionsBeginElement element);
 	public void endSections(ILayoutSectionsEndElement element);
 	
-	public ILayoutSectionsBeginElement defaultSectionsElement(View view);
+	public void beginSectionsRender(ILayoutSectionsRenderBeginElement element);
+	public void endSectionsRender(ILayoutSectionsRenderEndElement element);
+	
+	public ILayoutSectionsRenderBeginElement defaultBeginSectionsRenderElement(View view);
+	public ILayoutSectionsRenderEndElement defaultEndSectionsRenderElement(View view);
 
 }

@@ -16,6 +16,10 @@ public interface ILayoutElement {
 	
 	View getView();
 	
+	void setViewObject(String viewObject);
+	
+	String getViewObject();
+	
 	void render(ILayoutPainter layoutPainter);
 	
 	int getGroupLevel();

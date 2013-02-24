@@ -19,7 +19,8 @@ public class LayoutRowBeginElementDefaultImpl extends LayoutBaseElement
 	private Integer rowIndex;
 	private Integer maxRowColumnsCount;
 	private Integer rowCurrentColumnsCount;
-	private boolean freeForm;
+	private boolean blockStart;
+	private boolean blockEnd;
 	
 	public LayoutRowBeginElementDefaultImpl(View view, int groupLevel) {
 		super(view, groupLevel);
@@ -27,7 +28,8 @@ public class LayoutRowBeginElementDefaultImpl extends LayoutBaseElement
 		rowIndex = -1;
 		maxRowColumnsCount = 0;
 		rowCurrentColumnsCount = 0;
-		freeForm = true; // it should change to false if more than one row is displayed.
+		blockStart = false;
+		blockEnd = false;
 	}
 
 	/**
@@ -81,12 +83,32 @@ public class LayoutRowBeginElementDefaultImpl extends LayoutBaseElement
 		this.rowCurrentColumnsCount = rowCurrentColumnsCount;
 	}
 
-	public boolean isFreeForm() {
-		return freeForm;
+	/**
+	 * @return the blockStart
+	 */
+	public boolean isBlockStart() {
+		return blockStart;
 	}
 
-	public void setFreeForm(boolean freeForm) {
-		this.freeForm = freeForm;
+	/**
+	 * @return the blockEnd
+	 */
+	public boolean isBlockEnd() {
+		return blockEnd;
+	}
+
+	/**
+	 * @param blockStart the blockStart to set
+	 */
+	public void setBlockStart(boolean blockStart) {
+		this.blockStart = blockStart;
+	}
+
+	/**
+	 * @param blockEnd the blockEnd to set
+	 */
+	public void setBlockEnd(boolean blockEnd) {
+		this.blockEnd = blockEnd;
 	}
 
 	/**
@@ -98,8 +120,8 @@ public class LayoutRowBeginElementDefaultImpl extends LayoutBaseElement
 				+ maxFramesCount + ", rowIndex=" + rowIndex
 				+ ", maxRowColumnsCount=" + maxRowColumnsCount
 				+ ", rowCurrentColumnsCount=" + rowCurrentColumnsCount
-				+ ", freeForm=" + freeForm + ", groupLevel="
-				+ getGroupLevel() + "]";
+				+ ", blockStart=" + blockStart + ", blockEnd=" + blockEnd
+				+ ", groupLevel=" + getGroupLevel() + "]";
 	}
 
 }

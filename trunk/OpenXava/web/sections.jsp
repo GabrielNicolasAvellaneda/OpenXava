@@ -13,8 +13,6 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 java.util.Collection sections = view.getSections();
 int activeSection = view.getActiveSection();
-if (!layoutPainterManager.renderSection(view, pageContext)) {
-
 %>
 
 <table width='100%' cellspacing="0" border="0" cellpadding="0">
@@ -72,5 +70,5 @@ if (!layoutPainterManager.renderSection(view, pageContext)) {
 </table>
 <br>
 <%
-} // END IF Not painter is in use
+ // END IF Not painter is in use
 %>

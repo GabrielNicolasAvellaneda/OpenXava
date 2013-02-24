@@ -56,19 +56,29 @@ public interface ILayoutRowBeginElement extends ILayoutElement {
 	 * @param rowCurrentColumnsCount Number of columns already displayed.
 	 */
 	void setRowCurrentColumnsCount(Integer rowCurrentColumnsCount);
+
+	/**
+	 * 
+	 * @return True if the row starts a block.
+	 */
+	boolean isBlockStart();
 	
+	/**
+	 * Sets the block start state of the row.
+	 * @param blockEnd New block start state to set.
+	 */
+	void setBlockStart(boolean blockStart);
 	
 	/**
 	 * 
-	 * @return If true indicates that the properties are displayed using free form.
-	 * Each row has its own table. This is very similar to original OX renderer.
+	 * @return True if the row ends a block.
 	 */
-	boolean isFreeForm();
+	boolean isBlockEnd();
 	
 	/**
-	 * Sets the freeForm value.
-	 * @param freeForm
+	 * Sets the block end state of the row.
+	 * @param blockEnd New block end state to set.
 	 */
-	void setFreeForm(boolean freeForm);
+	void setBlockEnd(boolean blockEnd);
 	
 }

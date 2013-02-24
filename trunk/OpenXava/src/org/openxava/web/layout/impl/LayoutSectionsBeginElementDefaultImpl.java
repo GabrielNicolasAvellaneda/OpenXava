@@ -29,8 +29,12 @@ public class LayoutSectionsBeginElementDefaultImpl extends
 	 */
 	@Override
 	public String toString() {
-		return "SectionsBegin [groupLevel="
-				+ getGroupLevel() + "]";
+		return "SectionsBegin [representsSection="
+				+ isRepresentsSection() + ", maxFramesCount="
+				+ getMaxFramesCount() + ", maxContainerColumnsCount="
+				+ getMaxContainerColumnsCount() + ", rows=" + getRows()
+				+ ", groupLevel=" + getGroupLevel() + "]";
 	}
+
 	
 }

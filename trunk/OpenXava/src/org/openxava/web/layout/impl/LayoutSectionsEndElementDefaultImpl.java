@@ -22,6 +22,7 @@ public class LayoutSectionsEndElementDefaultImpl extends
 	public void render(ILayoutPainter layoutPainter) {
 		layoutPainter.endSections(this);
 	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

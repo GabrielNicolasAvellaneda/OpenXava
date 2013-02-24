@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -31,7 +30,6 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	private StringBuffer logMessage;
 	protected Map<String, String> attributes = new HashMap<String, String>();
 	private int level = 0;
-	private JspWriter writer = null;
 
 	/**
 	 * Writes to the page context output.
@@ -54,7 +52,7 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 						if (level < 0) {
 							level = 0;
 						}
-						logMessage.append(StringUtils.repeat("  ", level))
+						getLogMessage().append(StringUtils.repeat("  ", level))
 								.append(tag)
 								.append('\n');
 						if (difBrackets > 0) {
@@ -78,7 +76,7 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 		try {
 			getPageContext().include(page, true);
 			if (LOG.isDebugEnabled()) {
-				logMessage.append(StringUtils.repeat("  ", level))
+				getLogMessage().append(StringUtils.repeat("  ", level))
 						.append(page)
 						.append('\n');
 			}
@@ -115,20 +113,20 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 		return style;
 	}
 
-	protected JspWriter getWriter() {
-		if (writer == null) {
-			writer = getPageContext().getOut();
-		}
-		return writer;
-	}
-	
 	protected void resetLog() {
 		logMessage = new StringBuffer("");
 	}
 	
+	private StringBuffer getLogMessage() {
+		if (logMessage == null) {
+			logMessage = new StringBuffer("");
+		}
+		return logMessage;
+	}
+	
 	protected void outputLog() {
-		if (LOG.isDebugEnabled() && logMessage != null) { 
-			LOG.debug(logMessage.toString());
+		if (LOG.isDebugEnabled()) { 
+			LOG.debug(getLogMessage().toString());
 		}
 	}
 }

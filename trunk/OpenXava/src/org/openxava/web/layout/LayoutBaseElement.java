@@ -13,10 +13,12 @@ import org.openxava.view.View;
 public abstract class LayoutBaseElement implements ILayoutElement {
 
 	private View view;
+	private String viewObject;
 	private int groupLevel;
 	
 	public LayoutBaseElement(View view, int groupLevel){
 		this.view = view;
+		this.viewObject = view.getViewObject();
 		this.groupLevel = groupLevel;
 	}
 	
@@ -34,6 +36,13 @@ public abstract class LayoutBaseElement implements ILayoutElement {
 		return view;
 	}
 
+	public void setViewObject(String viewObject) {
+		this.viewObject = viewObject;
+	}
+	
+	public String getViewObject() {
+		return viewObject;
+	}
 
 	/**
 	 * @see org.openxava.web.layout.ILayoutElement#getGroupLevel()

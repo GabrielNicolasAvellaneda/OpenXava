@@ -9,7 +9,7 @@ import java.util.List;
  * @author Federico Alcantara
  *
  */
-public interface ILayoutContainerElement {
+public interface ILayoutContainerElement extends ILayoutElement {
 	/**
 	 * 
 	 * @return Maximum number of frames within the container.
