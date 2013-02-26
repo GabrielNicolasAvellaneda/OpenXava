@@ -16,7 +16,7 @@ class GoToSellerJSPTest extends ModuleTestBase {
 		assertValue "name", "" 
 		execute "GoToSellerJSP.goSellerJSP"
 		execute "Mode.detailAndFirst"
-		assertValue "name", "MANUEL CHAVARRI"
+		assertValue "name", "MANUEL CHAVARRI" 
 		assertNoDialog()
 		execute "SellerJSP.changeName"
 		assertDialog()

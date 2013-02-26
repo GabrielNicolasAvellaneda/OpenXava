@@ -40,7 +40,7 @@ class BookTest extends ModuleTestBase {
 	
 	// This test fails in PostgreSQL, but not in Hypersonic
 	void testListFilterByBooleanColumnInDB() {
-		assertListRowCount 2
+		assertListRowCount 2 
 		setConditionComparators ([ "=", "=" ])
 		setConditionValues (["", "true" ])
 		execute "List.filter"

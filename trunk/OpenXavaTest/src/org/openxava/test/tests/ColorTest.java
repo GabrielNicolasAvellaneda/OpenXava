@@ -49,8 +49,11 @@ public class ColorTest extends ModuleTestBase {
 		assertAllChecked();
 	}
 	
-	/* when you did: select, change page, select, order, select and change page. It lost the selection */
-	public void testSelectAndOrderWithALotOfElements() throws Exception {
+	/*
+	 This test requires at least 6 pages (more than 50 elements) to work. 
+	 When you did: select, change page, select, order, select and change page. It lost the selection 
+	 */
+	public void testSelectAndOrderWithALotOfElements() throws Exception { 
 		execute("List.orderBy", "property=number");
 		checkRow(0);
 		checkRow(1);
@@ -66,7 +69,7 @@ public class ColorTest extends ModuleTestBase {
 		assertRowUnchecked(2);
 		assertRowUnchecked(3);
 		execute("List.goPage", "page=2");
-		assertRowUnchecked(10);
+		assertRowUnchecked(10); 
 		assertRowUnchecked(11);
 		assertRowUnchecked(12);
 		assertRowUnchecked(13);

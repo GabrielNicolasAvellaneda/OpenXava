@@ -3,6 +3,7 @@ package org.openxava.test.tests;
 import org.openxava.tests.ModuleTestBase;
 
 /**
+ * 
  * @author Federico Alcantara
  */
 

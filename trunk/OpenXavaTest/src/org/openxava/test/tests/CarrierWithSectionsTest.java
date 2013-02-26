@@ -258,15 +258,15 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		setValue("name", "Carrier report With no CALCULATED");
 		execute("CustomReport.removeColumn", "row=0,viewObject=xava_view_columns");
 		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
-		setValue("comparator", "gt_comparator"); 
-		setValue("value", "1");
+		setValue("comparator", "lt_comparator"); 
+		setValue("value", "5");		
 		execute("CustomReport.saveColumn");
 		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
 		setValue("order", "1"); // DESCENDING
 		execute("CustomReport.saveColumn");
 		assertValueInCollection("columns", 0, 0, "number");
-		assertValueInCollection("columns", 0, 1, ">");
-		assertValueInCollection("columns", 0, 2, "1");
+		assertValueInCollection("columns", 0, 1, "<");
+		assertValueInCollection("columns", 0, 2, "5");		
 		assertValueInCollection("columns", 0, 3, "");
 		assertValueInCollection("columns", 1, 0, "name");
 		assertValueInCollection("columns", 1, 1, "");
@@ -275,22 +275,22 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		execute("CustomReport.generatePdf");		
 		assertPopupPDFLinesCount(8);  
 		assertPopupPDFLine(1, "Carrier report With no CALCULATED");		
-		assertPopupPDFLine(2, "Number Name");		
-		assertPopupPDFLine(3, "3 TRES");
-		assertPopupPDFLine(4, "2 DOS");
-		assertPopupPDFLine(5, "5 Cinco");
-		assertPopupPDFLine(6, "4 CUATRO");		
+		assertPopupPDFLine(2, "Number Name");
+		assertPopupPDFLine(3, "1 UNO");
+		assertPopupPDFLine(4, "3 TRES");
+		assertPopupPDFLine(5, "2 DOS");
+		assertPopupPDFLine(6, "4 CUATRO");				
 		
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report With no CALCULATED"); 
 		execute("CustomReport.generatePdf");
 		assertPopupPDFLinesCount(8);  
 		assertPopupPDFLine(1, "Carrier report With no CALCULATED");		
-		assertPopupPDFLine(2, "Number Name");		
-		assertPopupPDFLine(3, "3 TRES");
-		assertPopupPDFLine(4, "2 DOS");
-		assertPopupPDFLine(5, "5 Cinco");
-		assertPopupPDFLine(6, "4 CUATRO");		
+		assertPopupPDFLine(2, "Number Name");
+		assertPopupPDFLine(3, "1 UNO");
+		assertPopupPDFLine(4, "3 TRES");
+		assertPopupPDFLine(5, "2 DOS");
+		assertPopupPDFLine(6, "4 CUATRO");				
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report With no CALCULATED"); 
 		String [][] customReports3 = {
@@ -301,8 +301,8 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValidValues("name", customReports3);
 		assertCollectionRowCount("columns", 2);
 		assertValueInCollection("columns", 0, 0, "number");
-		assertValueInCollection("columns", 0, 1, ">");
-		assertValueInCollection("columns", 0, 2, "1");
+		assertValueInCollection("columns", 0, 1, "<");
+		assertValueInCollection("columns", 0, 2, "5");
 		assertValueInCollection("columns", 0, 3, "");
 		assertValueInCollection("columns", 1, 0, "name");
 		assertValueInCollection("columns", 1, 1, "");
@@ -319,8 +319,8 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValue("name", "Carrier report With no CALCULATED");
 		assertCollectionRowCount("columns", 2);
 		assertValueInCollection("columns", 0, 0, "number");
-		assertValueInCollection("columns", 0, 1, ">");
-		assertValueInCollection("columns", 0, 2, "1");
+		assertValueInCollection("columns", 0, 1, "<");
+		assertValueInCollection("columns", 0, 2, "5");		
 		assertValueInCollection("columns", 0, 3, "");
 		assertValueInCollection("columns", 1, 0, "name");
 		assertValueInCollection("columns", 1, 1, "");

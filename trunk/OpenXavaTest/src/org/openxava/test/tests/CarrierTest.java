@@ -125,7 +125,7 @@ public class CarrierTest extends CarrierTestBase {
 		// Cancel in AddColumns returns to detail (not list mode)
 		execute("List.addColumns", "collection=fellowCarriers");
 		execute("AddColumns.cancel");
-		assertValue("name", "UNO"); // In detail mode		
+		assertValue("name", "UNO"); // In detail mode 
 	}
 		
 	public void testHideShowRows() throws Exception {		

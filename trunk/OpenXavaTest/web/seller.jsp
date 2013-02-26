@@ -1,4 +1,4 @@
-<%@ include file="../xava/imports.jsp"%>
+<%@ include file="/xava/imports.jsp"%>
 
 <table>
 <tr>

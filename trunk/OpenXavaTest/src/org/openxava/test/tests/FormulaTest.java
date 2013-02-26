@@ -1,6 +1,5 @@
 package org.openxava.test.tests;
 
-import java.io.*;
 import java.net.URL;
 
 import javax.persistence.Query;
@@ -19,6 +18,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 
 /**
+ * 
  * @author Javier Paniza
  */
 
@@ -175,13 +175,13 @@ public class FormulaTest extends ModuleTestBase {
 		
 		String [][] ingredients = {
 			{ "", "" },
-			{ "03C5C64CC0A80116000000009590B64C", "AZUCAR" },
-			{ "03C59CF0C0A8011600000000618CC74B", "CAFE" },
-			{ "03C6E1ADC0A8011600000000498BC537", "CAFE CON LECHE" },
-			{ "03C6B61AC0A8011600000000AB4E7ACB", "LECHE" }, 
-			{ "03C6C61DC0A801160000000076765581", "LECHE CONDENSADA"} 
+			{ "03C5C64CC0A80116000000009590B64C", "AZUCAR" },			
+			{ "03C59CF0C0A8011600000000618CC74B", "CAFE" },			
+			{ "03C6E1ADC0A8011600000000498BC537", "CAFE CON LECHE" },			
+			{ "03C6B61AC0A8011600000000AB4E7ACB", "LECHE" },			
+			{ "03C6C61DC0A801160000000076765581", "LECHE CONDENSADA"}			
 		};
-		
+				
 		String [][] empty = {
 			{ "", "" }
 		};

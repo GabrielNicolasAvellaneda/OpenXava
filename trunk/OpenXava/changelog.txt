@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- WebSphere 8 support.
+- Fix: web.xml is not Servlet 2.4 compatible, though OpenXava uses Servlet 2.4 since v3.1.
+- If a session object has a request property, the current request is injected before injecting the object into the action. 
+- Fix: Sometimes columns customization for collections is not stored.
+- Fix: Report title is not shown for automatic PDF reports in some machines.
 - New smtpHostTrusted property in xava.properties to use email servers with expired certificates. 
 - Fix: Many standard i18n messages do not show correctly apostrophes.
 - Fix: In custom reports filters gt_comparator is shown instead of > with Spanish.
