@@ -104,7 +104,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInCollection("columns", 1, 2, "Steady");
 		
 		execute("CustomReport.generatePdf");
-		assertPopupPDFLinesCount(5);
+		assertPopupPDFLinesCount(5); 
 		assertTrue(getPopupPDFLine(3).startsWith("Javi Steady"));
 		
 		execute("ExtendedPrint.myReports");

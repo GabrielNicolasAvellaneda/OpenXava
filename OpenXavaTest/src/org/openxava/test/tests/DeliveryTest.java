@@ -216,7 +216,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("type.number", "1");
 		setValue("number", "666");
 		execute("CRUD.refresh");
-		assertNoErrors();
+		assertNoErrors(); 
 		assertValue("description", "DELIVERY JUNIT 666"); 
 		
 		execute("Sections.change", "activeSection=2");
@@ -293,7 +293,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertMessage("type=null");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02"); 						
+		assertValue("invoice.date", "1/1/02");  						
 		setValue("type.number", "0");
 		assertMessage("type=0"); // Verifies zero as value for on change action
 		deleteDeliveryType(0);
@@ -459,7 +459,7 @@ public class DeliveryTest extends ModuleTestBase {
 		
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02");					
+		assertValue("invoice.date", "1/1/02"); 					
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
@@ -565,7 +565,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02"); 						
+		assertValue("invoice.date", "1/1/02"); 					
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
@@ -722,7 +722,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02");						
+		assertValue("invoice.date", "1/1/02"); 						
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
@@ -854,7 +854,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");		
 		setValue("invoice.year", "2004"); // We supose that not exists 		
 		setValue("invoice.number", "907"); // We supose that not exists		
-		assertError("Invoice with key {year=2004, number=907} not found");
+		assertError("Invoice with key {year=2004, number=907} not found"); 		
 				
 		// The reference datas are deleted in screen
 		assertValue("invoice.year", "");

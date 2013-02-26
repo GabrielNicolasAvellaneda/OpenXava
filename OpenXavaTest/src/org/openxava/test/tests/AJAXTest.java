@@ -38,7 +38,7 @@ public class AJAXTest extends ModuleTestBase {
 	public void testOnSelectElementNotReloadCollection() throws Exception { 
 		changeModule("Formula");
 		execute("Mode.detailAndFirst");
-		checkRowCollection("ingredients", 0);
+		checkRowCollection("ingredients", 0); 
 		assertLoadedParts(
 				"editor_selectedIngredientNames," +
 				"editor_selectedIngredientSize," +
@@ -123,7 +123,7 @@ public class AJAXTest extends ModuleTestBase {
 				// "editor_comboDeliveries," + // Only with XML components, because in XML is a view property, and in JPA is a transient property 
 				"editor_number," +  
 				"errors, messages");
-		assertListRowCount(6);
+		assertListRowCount(6); 
 		execute("CRUD.new");
 		setValue("number", "66");
 		setValue("description", "JUNIT DELIVERY TYPE");
@@ -694,7 +694,7 @@ public class AJAXTest extends ModuleTestBase {
 	public void testHandmadeWebView() throws Exception {
 		changeModule("SellerJSP");
 		execute("Mode.detailAndFirst");
-		assertLoadedParts("core, ");
+		assertLoadedParts("core, "); 
 		setValue("level.id", "B");
 		assertLoadedParts("errors, view, messages");
 		execute("Navigation.next");

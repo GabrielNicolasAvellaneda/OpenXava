@@ -23,7 +23,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 2);
 		assertValueInCollection("details", 0, "product.unitPrice", "11");
 		assertValueInCollection("details", 1, "product.unitPrice", "20");
-		assertTotalInCollection("details", "product.unitPrice", "31");
+		assertTotalInCollection("details", "product.unitPrice", "31"); 
 				
 		// Defined by the user
 		execute("List.removeColumnSum", "property=product.unitPrice,collection=details");
@@ -42,7 +42,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		setValue("year", "2004");
 		setValue("number", "9");
 		execute("Search.search");
-		assertTotalInCollection("details", "product.unitPrice", "");
+		assertTotalInCollection("details", "product.unitPrice", ""); 
 		assertTotalInCollection("details", "quantity", "8");
 		
 		// Restore initial values

@@ -23,7 +23,7 @@ public class SizeTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("name", "JUNIT SIZE " + (int) (Math.random() * 200));
 		execute("CRUD.save");
-		assertNoErrors();		
+		assertNoErrors(); 		
 		execute("Mode.list");
 		String next = String.valueOf(Integer.parseInt(last) + 1);
 		assertValueInList(0, "id", next);		

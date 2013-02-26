@@ -65,6 +65,7 @@ abstract public class TabBaseAction extends ViewBaseAction {
 		if (tab == null ) {			
 			String tabObject = Is.emptyString(getCollection())?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(getCollection(), ".", "_"); 
 			tab = (Tab) getContext().get(getRequest(), tabObject);
+			tab.setRequest(getRequest()); 
 			if (tab.getCollectionView() != null) {				
 				tab.getCollectionView().refreshCollections(); 				
 			}

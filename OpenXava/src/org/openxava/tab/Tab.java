@@ -117,7 +117,7 @@ public class Tab implements java.io.Serializable {
 	private String tabObject;
 	private boolean usesConverters;
 	private String title;  
-	private ArrayList<Map> selectedKeys;
+	private List<Map> selectedKeys; 
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
@@ -754,7 +754,7 @@ public class Tab implements java.io.Serializable {
 		// recalculate the selected rows from selectedKeys
 		if (selectedKeys == null) return null;
 		try{
-			selected = new int[selectedKeys.size()];
+			selected = new int[selectedKeys.size()]; 
 			if (selectedKeys.size() > 0) {
 				int s = 0;
 				int start = getInitialIndex();
@@ -763,10 +763,10 @@ public class Tab implements java.io.Serializable {
 				}
 				if (start >= 0) {
 					int end = start + getPageRowCount();
-					if (end > getTableModel().getTotalSize()) {
+					if (end > getTableModel().getTotalSize()) { 
 						end = getTableModel().getTotalSize();
 					}
-					for (int i = start; i < end; i++){
+					for (int i = start; i < end; i++){ 
 						Map key = (Map)getTableModel().getObjectAt(i);
 						if (selectedKeys.contains(key)){
 							selected[s] = i;
@@ -780,8 +780,8 @@ public class Tab implements java.io.Serializable {
 			}
 		}
 		catch(Exception ex){
-			ex.printStackTrace();
-			throw new XavaException();
+			ex.printStackTrace();  
+			throw new XavaException();  
 		}
 		
 		return selected;

@@ -73,7 +73,7 @@ class Product5Test extends ModuleTestBase {
 		execute "List.customize", "collection=productDetailsSupplierContactDetails"
 		execute "List.addColumns", "collection=productDetailsSupplierContactDetails"
 		execute "AddColumns.restoreDefault"
-		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
+		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2 
 		
 		resetModule()
 		

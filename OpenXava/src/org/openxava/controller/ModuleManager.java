@@ -338,7 +338,7 @@ public class ModuleManager implements java.io.Serializable {
 			action.setMessages(messages);
 			action.setEnvironment(getEnvironment());
 			String previousDefaultActionQualifiedName = getDefaultActionQualifiedName();			
-			setObjectsInAction(action, metaAction);
+			setObjectsInAction(action, metaAction, request); 
 			Map xavaValues = setPropertyValues(action, propertyValues);
 			if (action instanceof IModuleContextAction) {
 				((IModuleContextAction) action).setContext(getContext());
@@ -845,12 +845,12 @@ public class ModuleManager implements java.io.Serializable {
 		return objectName;
 	}
 
-	private void setObjectsInAction(IAction action, MetaAction metaAction) throws XavaException { 
-		setObjectsToActionUseObjects(action, metaAction);		
-		setObjectsToActionInjectFields(action, metaAction); 
+	private void setObjectsInAction(IAction action, MetaAction metaAction, HttpServletRequest request) throws XavaException {  
+		setObjectsToActionUseObjects(action, metaAction, request); 		
+		setObjectsToActionInjectFields(action, metaAction, request);  
 	}
 
-	private void setObjectsToActionInjectFields(IAction action, MetaAction metaAction) {
+	private void setObjectsToActionInjectFields(IAction action, MetaAction metaAction, HttpServletRequest request) {
 		for (Field f: Classes.getFieldsAnnotatedWith(action.getClass(), Inject.class)) {
 			String objectName = getObjectNameFromActionField(f);
 			String property = f.getName();
@@ -858,6 +858,7 @@ public class ModuleManager implements java.io.Serializable {
 				continue;
 			}
 			Object value = getObjectFromContext(objectName);			
+			assignRequestToObject(request, value); 
 			
 			try {
 				f.setAccessible(true);
@@ -873,7 +874,7 @@ public class ModuleManager implements java.io.Serializable {
 		}
 	}
 
-	private void setObjectsToActionUseObjects(IAction action, MetaAction metaAction) {
+	private void setObjectsToActionUseObjects(IAction action, MetaAction metaAction, HttpServletRequest request) {
 		if (metaAction == null) return; 
 		PropertiesManager mp = new PropertiesManager(action);
 		Iterator it = metaAction.getMetaUseObjects().iterator();
@@ -887,6 +888,8 @@ public class ModuleManager implements java.io.Serializable {
 				setObjectInContext(objectName, value);					
 			}
 			
+			assignRequestToObject(request, value); 
+			
 			try {
 				mp.executeSet(property, value);
 				log.warn(XavaResources.getString("use_inject_instead", property, metaAction.getQualifiedName()));
@@ -895,6 +898,18 @@ public class ModuleManager implements java.io.Serializable {
 				log.warn(XavaResources.getString("set_property_action_value_error", property, metaAction.getName()), ex);
 			}
 			getSession().setAttribute(objectName, value);
+		}
+	}
+
+	private void assignRequestToObject(HttpServletRequest request, Object object) {
+		try {
+			PropertiesManager pm = new PropertiesManager(object);
+			if (pm.exists("request") && pm.hasSetter("request")) {
+				pm.executeSet("request", request);
+			}	
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("inject_request_warning") , ex);
 		}
 	}
 		

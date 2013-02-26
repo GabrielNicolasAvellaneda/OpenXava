@@ -192,9 +192,12 @@
 		<for-stereotype stereotype="DOCUMENT_LIBRARY" />
 		<for-stereotype stereotype="LIBRERIA_DOCUMENTOS" />
 	</editor>
+
+	<editor url="customReportNameEditor.jsp">
+		<for-model-property model="CustomReport" property="name"/>
+	</editor>		
 	
 	<editor url="textEditor.jsp">
-		<for-model-property model="CustomReport" property="name"/>
 		<for-model-property model="CustomReportColumn" property="value" />
 	</editor>
 		
@@ -210,5 +213,5 @@
 	<editor url="customReportColumnValidValuesValueEditor.jsp">
 		<for-model-property model="CustomReportColumn" property="validValuesValue" />	
 	</editor>
-										
+												
 </editors>

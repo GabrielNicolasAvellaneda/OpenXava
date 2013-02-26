@@ -19,7 +19,7 @@ class ArtistTest extends ModuleTestBase {
 		execute "Mode.detailAndFirst"
 		setValue "age", "99"		
 		execute "CRUD.save"
-		assertError "99 is not a valid value for Age of Artist: must be less than or equal to 90"
+		assertError "99 is not a valid value for Age of Artist: must be less than or equal to 90"  
 		assertErrorImage();
 	}
 			

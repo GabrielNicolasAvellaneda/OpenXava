@@ -8,10 +8,9 @@ import org.openxava.tab.*;
  * @author Javier Paniza
  */
 
-public class RestoreDefaultColumnsAction extends BaseAction implements INavigationAction, IChangeModeAction  {
+public class RestoreDefaultColumnsAction extends BaseAction implements INavigationAction, IChangeModeAction  { 
 
-	private Tab tab;
-	
+	private Tab tab;	
 
 	public void execute() throws Exception {		
 		getTab().restoreDefaultProperties();		
@@ -23,7 +22,6 @@ public class RestoreDefaultColumnsAction extends BaseAction implements INavigati
 	public void setTab(Tab tab) {
 		this.tab = tab;
 	}
-
 	
 	public String[] getNextControllers() throws Exception {
 		return PREVIOUS_CONTROLLERS; 

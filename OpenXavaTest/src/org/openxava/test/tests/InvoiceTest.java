@@ -155,7 +155,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setConditionValuesTo("2004", "", "05/01/2004");
 		assertTrue(isVisibleConditionValueTo("conditionValueTo___2"));
 		execute("List.filter");
-		assertListRowCount(3);
+		assertListRowCount(3); 
 		// int & Date & boolean
 		setConditionComparators("range_comparator", "eq", "range_comparator", "eq");
 		execute("List.filter");
@@ -818,7 +818,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.refresh");
 		assertNoErrors();
-		assertValue("date", "04/01/1934");
+		assertValue("date", "04/01/1934"); 
 		
 		setValue("date", "30/2/2008");
 		execute("CRUD.save");

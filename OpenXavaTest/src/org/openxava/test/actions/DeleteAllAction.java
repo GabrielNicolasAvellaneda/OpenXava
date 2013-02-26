@@ -17,6 +17,7 @@ public class DeleteAllAction extends BaseAction implements IJDBCAction {
 	public void execute() throws Exception {
 		Connection con = provider.getConnection();
 		try {
+			
 			String table = MetaComponent.get(getModel()).getEntityMapping().getTable();
 			PreparedStatement ps = con.prepareStatement("DELETE FROM " + table);
 			ps.executeUpdate();

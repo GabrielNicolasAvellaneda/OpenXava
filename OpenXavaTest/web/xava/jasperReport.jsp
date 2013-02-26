@@ -241,7 +241,7 @@ else {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="16"/>
+						<font reportFont="Arial_Normal" size="15"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String">$P{Title}</textFieldExpression>					
 				</textField>

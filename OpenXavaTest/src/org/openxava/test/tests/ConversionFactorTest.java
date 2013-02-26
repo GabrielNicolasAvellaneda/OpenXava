@@ -27,7 +27,7 @@ public class ConversionFactorTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("id", "1");
 		execute("CRUD.refresh");
-		assertValue("fromUnit", "GALLONS");
+		assertValue("fromUnit", "GALLONS"); 
 		assertValue("toUnit", "CUBIC FEET");
 		assertValue("factor", "0.133681");
 		assertValue("reverseFactor", "7.480519");

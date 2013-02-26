@@ -130,28 +130,17 @@ public class EditorTag extends TagSupport {
 				pageContext.getOut().println("'/>");				
 			}			
 			try {
-				// If the JSP that uses this tag is in a subfolder
-				pageContext.include("../xava/" + editorURL.toString());								
+				pageContext.include("/xava/" + editorURL);			
 			}
-			catch (ServletException ex) {
+			catch (ServletException ex) { 
 				Throwable cause = ex.getRootCause() == null?ex:ex.getRootCause(); 
 				log.error(cause.getMessage(), cause);
-				pageContext.include("../xava/editors/notAvailableEditor.jsp");
+				pageContext.include("/xava/editors/notAvailableEditor.jsp");
 			}
 			catch (Exception ex) {	
-				// If the JSP that uses this tag is in root folder
-				try {
-					pageContext.include("xava/" + editorURL.toString());
-				}
-				catch (ServletException ex2) { 	
-					log.error(ex2.getRootCause().getMessage(), ex2.getRootCause());
-					pageContext.include("xava/editors/notAvailableEditor.jsp");
-				}
-				catch (Exception ex2) {
-					log.error(ex2.getMessage(), ex2);
-					pageContext.include("xava/editors/notAvailableEditor.jsp");					
-				}		
-			}		
+				log.error(ex.getMessage(), ex);
+				pageContext.include("/xava/editors/notAvailableEditor.jsp");
+			}					
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

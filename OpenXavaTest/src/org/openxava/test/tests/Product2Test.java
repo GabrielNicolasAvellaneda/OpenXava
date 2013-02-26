@@ -40,7 +40,7 @@ public class Product2Test extends ModuleTestBase {
 		// Just remove this file and this test will pass. Changing classloading policy of war does not work
 		execute("FamilyProductsReport.generateExcel");  
 		assertNoErrors();
-		assertContentTypeForPopup("application/vnd.ms-excel");
+		assertContentTypeForPopup("application/vnd.ms-excel"); 
 		assertDialog(); 
 		assertNoAction("Product2.reportBySubfamily");
 		assertAction("FamilyProductsReport.generateExcel");				
