@@ -16,7 +16,24 @@ public class SyncCarriersSelectionAction extends OnSelectElementBaseAction {
 	
 	public void execute() throws Exception {
 		Tab targetTab = getView().getSubview("fellowCarriers").getCollectionTab();
-		Map [] selected = targetTab.getSelectedKeys();		
+		
+		boolean oldSync = ((Boolean)getView().getValue("oldSync")).booleanValue();
+		
+		if (oldSync) oldImplementation(targetTab);
+		else newImplementation(targetTab);
+	}
+	
+	private void oldImplementation(Tab targetTab) throws Exception{
+		int [] selected = targetTab.getSelected();		
+		if (isSelected()) 
+			targetTab.setAllSelected(ArrayUtils.add(selected, getRow()));
+		else 
+			targetTab.setSelected(ArrayUtils.removeElement(selected, getRow())); // It would be setAllSelected, but we use setSelected to test both methods
+	}
+	
+	private void newImplementation(Tab targetTab) throws Exception{
+		Map [] selected = targetTab.getSelectedKeys();
+		
 		if (isSelected()) {
 			Map newKey = (Map) targetTab.getTableModel().getObjectAt(getRow());
 			targetTab.setAllSelectedKeys((Map[])ArrayUtils.add(selected, newKey));
