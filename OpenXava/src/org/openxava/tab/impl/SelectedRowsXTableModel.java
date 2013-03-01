@@ -20,7 +20,4 @@ public class SelectedRowsXTableModel extends XTableModelDecoratorBase {
 		return selectedRows.length;
 	}
 	
-//	public Object getValueAt(int rowIndex, int columnIndex) {		
-//		return super.getValueAt(selectedRows[rowIndex], columnIndex);
-//	}
 }

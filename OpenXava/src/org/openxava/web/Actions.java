@@ -13,20 +13,10 @@ import org.openxava.util.*;
 public class Actions {
 	private static Log log = LogFactory.getLog(Actions.class);
 	
-	public static String getActionOnChangeCheckBox(String application, String module, int row, String tabObject){
-		return "onchange=\"openxava.onChangeCheckBox(" +
-			"this," +
-			row + "," + 
-			"'" + application +  "'," + 
-			"'" + module + "'," +
-			"'" + tabObject + "'" + 
-			")\"";
-	}
-	
 	public static String getActionOnClick(String application, String module, 
 			String onSelectCollectionElementAction, int row, String viewObject, String idRow,
 			String selectedRowStyle, String rowStyle,
-			MetaAction onSelectCollectionElementMetaAction){
+			MetaAction onSelectCollectionElementMetaAction, String tabObject){
 		return "onClick=\"openxava.onSelectElement(" +
 			"'" + application + "'," + 
 			"'" + module + "'," + 
@@ -38,7 +28,10 @@ public class Actions {
 			"'" + selectedRowStyle + "'," +
 			"'" + rowStyle + "'," +
 			"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 
-			(Is.empty(onSelectCollectionElementMetaAction)?false:onSelectCollectionElementMetaAction.isTakesLong()) + 
+			(Is.empty(onSelectCollectionElementMetaAction)?false:onSelectCollectionElementMetaAction.isTakesLong()) + "," +
+			"false," + 
+			row + "," +
+			"'" + tabObject + "'" + 
 			")\"";
 	}
 	
