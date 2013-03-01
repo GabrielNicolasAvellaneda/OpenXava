@@ -28,7 +28,9 @@ import org.openxava.jpa.*;
 			"fellowCarriers {fellowCarriersCalculated} " ),
 	@View(
 		name="CollectionsTogether",
-		members="warehouse; fellowCarriers, fellowCarriersCalculated")
+		members=
+			"warehouse, oldSync; " +
+			"fellowCarriers, fellowCarriersCalculated")
 	
 })
 @Tab(properties="calculated, number, name")
@@ -111,7 +113,10 @@ public class Carrier {
 		// This method exists for compliance with OpenXavaTest
 		return getFellowCarriers();
 	}
-		
+	
+	@Transient
+	public boolean oldSync;
+	
 	@Transient @ReadOnly
 	private Integer fellowCarriersCalculatedSize;
 	
@@ -249,6 +254,14 @@ public class Carrier {
 
 	public void setFellowCarriersCalculatedSize(Integer fellowCarriersCalculatedSize) {
 		this.fellowCarriersCalculatedSize = fellowCarriersCalculatedSize;
+	}
+
+	public boolean isOldSync() {
+		return oldSync;
+	}
+
+	public void setOldSync(boolean oldSync) {
+		this.oldSync = oldSync;
 	}
 	
 }
