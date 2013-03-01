@@ -1,32 +1,88 @@
 package org.openxava.test.tests;
 
-import java.net.URL;
+import java.net.*;
 
-import javax.persistence.Query;
+import javax.persistence.*;
 
-import org.openxava.jpa.XPersistence;
-import org.openxava.test.model.Formula;
-import org.openxava.test.model.FormulaIngredient;
-import org.openxava.test.model.Ingredient;
-import org.openxava.tests.ModuleTestBase;
-import org.openxava.util.Strings;
+import org.openxava.jpa.*;
+import org.openxava.test.model.*;
+import org.openxava.tests.*;
+import org.openxava.util.*;
 
-import com.gargoylesoftware.htmlunit.WebResponse;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.html.*;
 
 
 
 /**
- * 
  * @author Javier Paniza
  */
-
 public class FormulaTest extends ModuleTestBase {
 	
 	public FormulaTest(String testName) {
 		super(testName, "Formula");		
 	}
+	
+	public void testOnSelectElementActionAndSelectedAndSelectedAllAndPaging() throws Exception{
+		setConditionValues("L'AJUNTAMENT");
+		execute("List.filter");
+		assertListRowCount(1);
+		execute("List.viewDetail", "row=0");
+		assertValue("selectedIngredientSize", "");
+		
+		checkRowCollection("ingredients", 0);
+		assertValue("selectedIngredientSize", "1");
+		checkRowCollection("ingredients", 1);
+		assertValue("selectedIngredientSize", "2");
+		checkAllCollection("ingredients");
+		assertValue("selectedIngredientSize", "10");
+		uncheckAllCollection("ingredients");
+		assertValue("selectedIngredientSize", "0");
+		
+		execute("List.goNextPage", ",collection=ingredients");
+		assertCollectionRowCount("ingredients", 3);
+		checkRowCollection("ingredients", 10);
+		assertValue("selectedIngredientSize", "1");
+		checkRowCollection("ingredients", 11);
+		assertValue("selectedIngredientSize", "2");
+		checkAllCollection("ingredients");
+		assertValue("selectedIngredientSize", "3");
+	}
+	
+	public void testOnSelectElementActionAndSelectDeselectFilterWithPaging() throws Exception{
+		setConditionValues("L'AJUNTAMENT");
+		execute("List.filter");
+		assertListRowCount(1);
+		execute("List.viewDetail", "row=0");
+		assertValueInCollection("ingredients", 0, 1, "AZUCAR");
+		assertValueInCollection("ingredients", 9, 1, "AZUCAR");
+		execute("List.goNextPage", "collection=ingredients");
+		assertValueInCollection("ingredients", 2, 1, "CAFE");
+		execute("List.goPreviousPage", "collection=ingredients");
+		setConditionValues("ingredients", new String[] { "", Ingredient.findByName("CAFE").getOid()});
+		execute("List.filter", "collection=ingredients");
+		assertCollectionRowCount("ingredients", 1);
+		assertValueInCollection("ingredients", 0, 1, "CAFE");
+		checkRowCollection("ingredients", 0);
+		assertValue("selectedIngredientSize", "1");
+		setConditionValues("ingredients", new String[] { "", ""});
+		execute("List.filter", "collection=ingredients");
+		assertValue("selectedIngredientSize", "1");
+		assertValueInCollection("ingredients", 0, 1, "AZUCAR");
+		assertValueInCollection("ingredients", 9, 1, "AZUCAR");
+		assertRowCollectionUnchecked("ingredients", 0);
+		checkRowCollection("ingredients", 5);
+		assertValue("selectedIngredientSize", "2");
+		assertRowCollectionUnchecked("ingredients", 0);
+		setConditionValues("ingredients", new String[] { "", Ingredient.findByName("CAFE").getOid()});
+		execute("List.filter", "collection=ingredients");
+		assertCollectionRowCount("ingredients", 1);
+		assertValueInCollection("ingredients", 0, 1, "CAFE");
+		assertRowCollectionChecked("ingredients", 0);
+		uncheckRowCollection("ingredients", 0);
+		assertRowCollectionUnchecked("ingredients", 0);
+		assertValue("selectedIngredientSize", "1");
+	};
 	
 	public void testSelectDeselectAndOrderInACollection() throws Exception {
 		assertValueInList(0, 0, "HTML TEST");
@@ -175,13 +231,13 @@ public class FormulaTest extends ModuleTestBase {
 		
 		String [][] ingredients = {
 			{ "", "" },
-			{ "03C5C64CC0A80116000000009590B64C", "AZUCAR" },			
-			{ "03C59CF0C0A8011600000000618CC74B", "CAFE" },			
-			{ "03C6E1ADC0A8011600000000498BC537", "CAFE CON LECHE" },			
-			{ "03C6B61AC0A8011600000000AB4E7ACB", "LECHE" },			
-			{ "03C6C61DC0A801160000000076765581", "LECHE CONDENSADA"}			
+			{ "03C5C64CC0A80116000000009590B64C", "AZUCAR" },
+			{ "03C59CF0C0A8011600000000618CC74B", "CAFE" },
+			{ "03C6E1ADC0A8011600000000498BC537", "CAFE CON LECHE" },
+			{ "03C6B61AC0A8011600000000AB4E7ACB", "LECHE" }, 
+			{ "03C6C61DC0A801160000000076765581", "LECHE CONDENSADA"} 
 		};
-				
+		
 		String [][] empty = {
 			{ "", "" }
 		};

@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@ page import="java.util.Enumeration"%>
 <%@ page import="java.util.StringTokenizer"%>
 <%@ page import="org.openxava.web.Ids"%>
@@ -35,20 +36,26 @@ request.setAttribute("tab", t);
 <%
 View view = (View) context.get(request, "xava_view");
 
+Map p = request.getParameterMap();
+
+
 String[] deselected = request.getParameterValues("deselected");
 if (deselected != null){
 	for (int i = 0; i < deselected.length; i++){
 		String d = deselected[i];
-		if (d.contains("xava_tab")) tab.deselect(d);
+		if (d.contains("xava_tab")) tab.friendExecuteJspDeselect(d);
 		else if (d.contains("xava_collectionTab")) {
 			view.deselectCollection(d);
 		}
 	}	
 }
 
-if (manager.isListMode() || manager.isSplitMode()) { 
-	tab.deselectVisualizedRows();
-}
+
+/* tmp */
+// if (manager.isListMode() || manager.isSplitMode()) { 
+// 	tab.deselectVisualizedRows();
+// }
+
 %>
 
 <% if (!"false".equals(request.getAttribute("xava.sendParametersToTab"))) { %>  
