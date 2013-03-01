@@ -34,7 +34,7 @@ openxava.ajaxRequest = function(application, module, firstRequest) {
 	openxava.deselected = [];
 }
 
-openxava.refreshPage = function(result) {	
+openxava.refreshPage = function(result) {
 	var changed = "";	
 	if (result.error != null) {		
 		openxava.systemError(result);
@@ -643,20 +643,23 @@ openxava.clearConditionValuesTo = function(application, module, prefix) {
 	}
 }
 
-openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, selectedRowStyle, rowStyle, confirmMessage, takesLong, selectingAll) { 	
-	var row = $("#" + idRow)[0];
+openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, selectedRowStyle, rowStyle, confirmMessage, takesLong, selectingAll, row, tabObject) {
+	openxava.onChangeCheckBox(checkValue,row,application,module,tabObject);
+	
+	var id = $("#" + idRow)[0];
 	if (checkValue) {
-		$(row).addClass("_XAVA_SELECTED_ROW_").addClass(openxava.selectedRowClass);
-		row.style.cssText = rowStyle + selectedRowStyle;
+		$(id).addClass("_XAVA_SELECTED_ROW_").addClass(openxava.selectedRowClass);
+		id.style.cssText = rowStyle + selectedRowStyle;
 	}
 	else {
-		$(row).removeClass("_XAVA_SELECTED_ROW_").removeClass(openxava.selectedRowClass);
-		row.style.cssText = rowStyle;
+		$(id).removeClass("_XAVA_SELECTED_ROW_").removeClass(openxava.selectedRowClass);
+		id.style.cssText = rowStyle;
 	}	
 	if (hasOnSelectAction){
 		argv = argv + ",selected=" + checkValue;
 		openxava.executeAction(application, module, confirmMessage, takesLong, action, argv);	
 	}	
+	
 	if (!selectingAll) openxava.hasOnSelectAll(application, module);
 }
 
@@ -687,7 +690,7 @@ openxava.onSelectAll = function(application, module, action, argv, checkValue, h
 	var first = -1;
 	var last = 0;
 	var alreadyProcessed = "";
-	var selectedPrefix = prefix == ""?"selected:":prefix; 
+	var selectedPrefix = prefix == ""?"selected:":prefix;
 	for (var i=0; i<selected.length; i++) {
 		if (selected[i].value.indexOf(selectedPrefix) == 0){ 
 			var row = selected[i].value.replace(prefix + "selected:", "");
@@ -704,10 +707,12 @@ openxava.onSelectAll = function(application, module, action, argv, checkValue, h
 			
 			if (selected[i].value.search("__SELECTED__") != -1) row = selected[i].value.replace(prefix + "__SELECTED__:", "");	// calculatedCollections
 			if (first < 0) first = row;
-			if (selected[i].checked==checkValue) alreadyProcessed = alreadyProcessed + "_" + i;
+			if (selected[i].checked==checkValue) {
+				alreadyProcessed = alreadyProcessed + "_" + row;
+			}
 			else{
 				var idRow = openxava.decorateId(application, module, prefix) + row;
-				openxava.onSelectElement(application, module, action, argv, checkValue, idRow, null, selectedRowStyle, rowStyle, null, null, true);  
+				openxava.onSelectElement(application, module, action, argv, checkValue, idRow, null, selectedRowStyle, rowStyle, null, null, true, row, tabObject);  
 				last = row;
 			}
 			selected[i].checked=checkValue?1:0;
@@ -786,15 +791,14 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 		}
 	}
 	if (index < 0) index = openxava.deselected.length;
-	
-	if (cb.checked == true){
-		var c = "[" + !cb.checked + row + "]";
+	if (cb == true){
+		var c = "[" + !cb + row + "]";
 		if (value.indexOf(c) > 0){
 			value = value.replace(c, "");
 		}
 	}
 	else {
-		value = value + "[" + cb.checked + row + "]";
+		value = value + "[" + cb + row + "]";
 	}
 	openxava.deselected[index] = value;
 }
