@@ -19,6 +19,17 @@ public class ColorTest extends ModuleTestBase {
 		super(testName, "Color");		
 	}
 	
+	public void testActionWithSelectedRowFromAnotherPage() throws Exception{
+		checkRow(2);
+		checkRow(6);
+		execute("List.goNextPage");
+		checkRow(10);
+		execute("List.goNextPage");
+		execute("Color.seeMessageSelected");
+		assertMessage("Rows of selected colors [2][6][10]");
+		assertNoErrors();
+	}
+	
 	public void testSelectedAllAndDeselectedAll() throws Exception {
 		execute("List.orderBy", "property=number");
 		assertLabelInList(1, "Name");
