@@ -5034,7 +5034,7 @@ public class View implements java.io.Serializable {
 		if (isCollectionCalculated()) {
 			listSelected = null;
 		} else {
-			getCollectionTab().deselectAll();
+			getCollectionTab().clearSelected();
 		}
 	}
 	
@@ -5049,6 +5049,6 @@ public class View implements java.io.Serializable {
 		String collectionName = a.replace("xava_collectionTab_", "");
 		View collectionView = getSubview(collectionName);
 		org.openxava.tab.Tab collectionTab = collectionView.getCollectionTab();
-		collectionTab.deselect(deselect);
+		collectionTab.friendExecuteJspDeselect(deselect);
 	}
 }

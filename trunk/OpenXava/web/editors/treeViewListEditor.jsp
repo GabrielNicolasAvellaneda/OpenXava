@@ -77,16 +77,11 @@ if(!Is.empty(key)){
 				String nodeRef = "openxava.executeAction('" +
 					request.getParameter("application") + "', '" + request.getParameter("module") +"', '', false, '" + action + "', '" +
 					actionWithArgs + "')";
-				String onChange = Actions.getActionOnChangeCheckBox(
-					request.getParameter("application"), 
-					request.getParameter("module"), 
-					count, 
-					tabObject);
 				%>
 				<tr id="<%=indexId%>">
 				  <td>
 				    <input type="CHECKBOX" name="<%=xavaId%>" id="<%=nodeId%>"
-				        value = "<%=nodeValue%>" style="height:0px" <%=onChange %>/>
+				        value = "<%=nodeValue%>" style="height:0px" />
 				    <a href = "<%=nodeRef%>">_</a>
 				  </td>
 				</tr>

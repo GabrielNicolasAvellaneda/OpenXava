@@ -7,7 +7,7 @@ package org.openxava.actions;
 public class DeselectRowsAction extends TabBaseAction {
 
 	public void execute() throws Exception {
-		getTab().deselectAll();
+		getTab().clearSelected();
 	}
 
 }
