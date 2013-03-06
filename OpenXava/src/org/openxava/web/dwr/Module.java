@@ -577,7 +577,7 @@ public class Module extends DWRBase {
 		return URLEncoder.encode(value.toString(), charsetName);
 	}
 	
-	private static boolean isPortlet() {
+	public static boolean isPortlet() { 
 		return portlet;
 	}
 

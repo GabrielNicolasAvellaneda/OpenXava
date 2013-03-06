@@ -25,7 +25,7 @@ public class Product2WithFormulaTest extends ModuleTestBase {
 		setValue("subfamily.number", "11");
 		setValue("unitPrice", "66");
 		execute("Reference.createNew", "model=Formula,keyProperty=xava.Product2.formula.name");
-		setValue("Formula", "name", "JUNIT FORMULA FROM PRODUCT");
+		setValue("Formula", "name", "JUNIT FORMULA FROM PRODUCT"); 
 		execute("NewCreation.saveNew");
 		assertNoErrors();
 		assertValue("formula.name", "JUNIT FORMULA FROM PRODUCT");

@@ -22,7 +22,7 @@ public class SellerWithCustomersAsAggregateTest extends ModuleTestBase {
 		assertValue("name", "ELISEO FERNANDEZ");
 		assertCollectionRowCount("customers", 0);
 						
-		assertCustomerNotExists(66);
+		assertCustomerNotExists(66); 
 		execute("Collection.new", "viewObject=xava_view_customers");
 		assertEditable("number");
 		assertEditable("name");

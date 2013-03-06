@@ -28,7 +28,7 @@ class OrderTest extends ModuleTestBase {
 		assertValue("customer.name", "Javi")
 		assertCollectionRowCount("details", 0)
 		execute("Collection.new", "viewObject=xava_view_details")
-		setValue("product.number", "1")
+		setValue("product.number", "1") 
 		assertValue("product.description", "MULTAS DE TRAFICO")
 		assertValue("product.unitPrice", "11.00")
 		setValue("quantity", "10")

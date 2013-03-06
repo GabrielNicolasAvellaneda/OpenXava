@@ -15,7 +15,7 @@ public class CarrierWithCalculatedFellowsTest extends ModuleTestBase {
 	
 	public void testCalculatedCollectionCacheResetCorrectly() throws Exception { 
 		execute("Mode.detailAndFirst");
-		assertCollectionRowCount("fellowCarriersCalculated", 3);
+		assertCollectionRowCount("fellowCarriersCalculated", 3); 
 		execute("Mode.list"); // It only failed when we pass with list mode
 		execute("CRUD.new");
 		assertCollectionRowCount("fellowCarriersCalculated", 0);

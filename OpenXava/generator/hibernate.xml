@@ -241,16 +241,17 @@ while (itReferences.hasNext()) {
 	else { // reference to entity or persistent aggregate 
 		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
 		boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
-		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";		
+		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";
+		String lazy = overlapped &amp;&amp; reference.isKey()?"lazy='false'":"";
 		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 </java> 
-		&lt;many-to-one name="<expr>reference.getName()</expr>" column="<expr>column</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>" <expr>insertUpdate</expr> access="field"/&gt;
+		&lt;many-to-one name="<expr>reference.getName()</expr>" column="<expr>column</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>" <expr>insertUpdate</expr> <expr>lazy</expr> access="field"/&gt;
 <java>
 		}
 		else { 
 </java> 
-		&lt;many-to-one name="<expr>reference.getName()</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>" <expr>insertUpdate</expr> access="field"&gt; 
+		&lt;many-to-one name="<expr>reference.getName()</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>" <expr>insertUpdate</expr> <expr>lazy</expr> access="field"&gt; 
 <java>
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();

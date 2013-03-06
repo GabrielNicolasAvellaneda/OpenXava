@@ -193,7 +193,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		try {
 			MetaModel metaModel = getMetaModel(modelName);
 			beginTransaction();
-			setValues(metaModel, keyValues, values);			
+			setValues(metaModel, keyValues, values);
 			commitTransaction();
 		}
 		catch (FinderException ex) {
@@ -1259,16 +1259,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		
 	private void setValues(MetaModel metaModel, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException { 		
-		try {
-			updateReferencedEntities(metaModel, values);
+		try {			
+			updateReferencedEntities(metaModel, values);			
 			removeKeyFields(metaModel, values);			
-			removeReadOnlyFields(metaModel, values);
+			removeReadOnlyFields(metaModel, values);						
 			validate(metaModel, values, keyValues, null, false);
-			removeViewProperties(metaModel, values);									
+			removeViewProperties(metaModel, values);												
 			Object entity = findEntity(metaModel, keyValues);			
-			verifyVersion(metaModel, entity, values); 			
+			verifyVersion(metaModel, entity, values);			 			
 			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
-			r.executeSets(convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
+			r.executeSets(convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));						
 			// Collections are not managed			
 		} 
 		catch (FinderException ex) { 
@@ -1580,7 +1580,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Iterator it = values.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
-			String memberName = (String) en.getKey();
+			String memberName = (String) en.getKey();			
 			if (!memberName.equals(MapFacade.MODEL_NAME)) {
 				Object value = null;
 				if (metaModel.containsMetaProperty(memberName)) {

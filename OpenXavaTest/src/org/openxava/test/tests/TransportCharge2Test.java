@@ -45,14 +45,14 @@ public class TransportCharge2Test extends ModuleTestBase {
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
-		assertValue("year", "2002");
+		assertValue("year", "2002"); 
 		assertValue("delivery.invoice.year", year);
 		assertValue("delivery.invoice.number", number);
 		assertValue("amount", "666.00");
 		
 		setValue("amount", "777");
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 
 		assertValue("year", "");
 		assertValue("delivery.invoice.year", "");

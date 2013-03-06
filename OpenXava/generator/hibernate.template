@@ -240,16 +240,17 @@ while (itReferences.hasNext()) {
 	else { // reference to entity or persistent aggregate 
 		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
 		boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
-		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";		
+		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";
+		String lazy = overlapped && reference.isKey()?"lazy='false'":"";
 		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# access="field"/>
+		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# #(lazy)# access="field"/>
 # 
 		}
 		else { 
 # 
-		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# access="field"> 
+		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# #(lazy)# access="field"> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();

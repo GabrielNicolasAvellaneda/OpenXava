@@ -6,8 +6,8 @@
 	<property name="package" value="test"/>
 	<property name="configuration" value="tomcat-hypersonic" />
 	<!-- property name="configuration" value="jboss-hypersonic" /-->
-	<!-- property name="configuration" value="websphere-as400" /-->	
-	<!-- property name="configuration" value="websphere61-as400" /-->
+	<!-- property name="configuration" value="websphere-as400" /-->
+	<!-- property name="configuration" value="websphere-as400" /-->
 	<!-- property name="configuration" value="jboss-as400" /-->	
 	<!-- property name="configuration" value="tomcat-as400" /-->
 	<property file="../openxava.properties"/>

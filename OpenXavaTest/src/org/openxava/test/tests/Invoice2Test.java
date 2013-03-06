@@ -107,7 +107,7 @@ public class Invoice2Test extends ModuleTestBase {
 	
 	public void testCollectionOrderedByAPropertyOfAReference_valueOfNestedRerenceInsideAnEmbeddedCollection() throws Exception {
 		execute("CRUD.new");
-		setValue("year", "2002");
+		setValue("year", "2002"); 
 		setValue("number", "1");
 		execute("CRUD.refresh");
 		assertCollectionRowCount("details", 2);

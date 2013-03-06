@@ -16,7 +16,7 @@ public class ConversionFactorTest extends ModuleTestBase {
 				.executeUpdate();
 	}
 	
-	public void testDigits() throws Exception {
+	public void testDigits() throws Exception { 
 		execute("CRUD.new");
 		setValue("id", "1");
 		setValue("fromUnit", "GALLONS");

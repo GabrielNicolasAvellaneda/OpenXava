@@ -378,17 +378,12 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, f, viewObject, prefixIdRow + f,
 		selectedRowStyle, rowStyle, 
-		onSelectCollectionElementMetaAction);
-	String onChange = singleSelection?"":Actions.getActionOnChangeCheckBox(
-		request.getParameter("application"), 
-		request.getParameter("module"), 
-		f, 
-		tabObject);
+		onSelectCollectionElementMetaAction, tabObject);
 %>
 	<%if (resizeColumns) {%></nobr><%}%> 
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
-	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> <%=onChange%>/>
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {

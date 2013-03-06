@@ -12,6 +12,8 @@ scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
+String tabObject = request.getParameter("tabObject"); // tmp Estos datos no se sacan de un tab
+tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request,
 "xava_customizingTab");
 
@@ -36,10 +38,10 @@ for (Iterator it=tab.getColumnsToAdd().iterator(); it.hasNext();) {
 	String events=f%2==0?style.getListPairEvents():style.getListOddEvents();
 	String rowId = Ids.decorate(request, "xavaPropertiesList") + f;
 	String actionOnClick = org.openxava.web.Actions.getActionOnClick(
-			request.getParameter("application"), request.getParameter("module"), 
-			null, f, null, rowId,
-			"", "", 
-			null);	
+		request.getParameter("application"), request.getParameter("module"), 
+		null, f, null, rowId,
+		"", "", 
+		null, tabObject);	
 	f++;
 	String propertyI18n = Labels.getQualified(property, currentLocale); // Trifon
 %>

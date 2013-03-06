@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Sep 14 14:29:37 CEST 2011
+ * @version Mon Mar 04 10:53:12 CET 2013
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -355,7 +355,8 @@ private String getCheck(MetaProperty property) throws XavaException {
     	else { // reference to entity or persistent aggregate 
     		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
     		boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
-    		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";		
+    		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";
+    		String lazy = overlapped && reference.isKey()?"lazy='false'":"";
     		if (columns.size() == 1) {	
     			String column = (String) columns.iterator().next();
     
@@ -367,6 +368,8 @@ private String getCheck(MetaProperty property) throws XavaException {
     out.print(reference.getMetaModelReferenced().getPOJOClassName());
     out.print("\" ");
     out.print(insertUpdate);
+    out.print(" ");
+    out.print(lazy);
     out.print(" access=\"field\"/>");
     
     		}
@@ -378,6 +381,8 @@ private String getCheck(MetaProperty property) throws XavaException {
     out.print(reference.getMetaModelReferenced().getPOJOClassName());
     out.print("\" ");
     out.print(insertUpdate);
+    out.print(" ");
+    out.print(lazy);
     out.print(" access=\"field\">");
     
     			for (Iterator itC = columns.iterator(); itC.hasNext();) {
@@ -533,7 +538,7 @@ private String getCheck(MetaProperty property) throws XavaException {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Sep 14 14:29:38 CEST 2011", // date this file was generated
+        { "Mon Mar 04 10:53:13 CET 2013", // date this file was generated
              "../OpenXava/generator/hibernate.xml", // input file
              "../OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
