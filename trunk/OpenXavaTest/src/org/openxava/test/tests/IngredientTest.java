@@ -26,7 +26,7 @@ public class IngredientTest extends ModuleTestBase {
 		assertValue("name", "AZUCAR");
 		execute("Navigation.next");
 		assertNoErrors();
-		assertValue("name", "CAFE");
+		assertValue("name", "CAFE"); 
 		execute("Navigation.next");
 		assertNoErrors();
 		assertValue("name", "CAFE CON LECHE");

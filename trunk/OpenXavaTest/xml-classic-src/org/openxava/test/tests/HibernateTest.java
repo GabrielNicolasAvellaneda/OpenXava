@@ -65,7 +65,7 @@ public class HibernateTest extends TestCase {
 		// in order to help in translation from EJB2 to POJO+Hibernate
 		try {
 			Customer.findByNumber(66); // 66 doesn't exist
-			fail("ObjectNotFoundException expected");
+			fail("ObjectNotFoundException expected"); 
 			if (false) throw new javax.ejb.ObjectNotFoundException(); // In order to avoid a compilation error when JPA code is used 
 		}
 		catch (javax.ejb.ObjectNotFoundException ex) {

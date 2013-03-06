@@ -304,7 +304,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testSearchByPropertyWithConverterInDetailMode() throws Exception {
 		execute("CRUD.new");
-		setValue("year", "");
+		setValue("year", ""); 
 		setValue("date", "");
 		setValue("paid", "true");
 		execute("CRUD.refresh");
@@ -895,7 +895,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("deliveryDate", "03/18/04"); // Testing multiple-mapping in aggregate
 		setValue("soldBy.number", getProductNumber());
 		execute("Collection.save");		
-		assertMessage("Invoice detail created successfully");
+		assertMessage("Invoice detail created successfully"); 
 		assertMessage("Invoice created successfully"); 
 		assertNoErrors();		
 		// assertExists("serviceType"); // In OX3 it does not hide detail on save, 
@@ -1369,7 +1369,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();		
 		execute("Sections.change", "activeSection=1");		
 		assertNoDialog(); 
-		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details");
+		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details"); 
 		assertDialog(); 
 		assertNoErrors();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -1426,7 +1426,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testViewCollectionElementWithKeyWithReference() throws Exception {
 		deleteInvoiceDeliveries();
-		createDelivery();
+		createDelivery();  
 		
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoice().getYear()));

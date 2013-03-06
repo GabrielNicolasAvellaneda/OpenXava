@@ -29,7 +29,7 @@ public class CustomerSellerAsAggregateTest extends ModuleTestBase {
 		setValue("seller.name", "SELLER CREATED FROM CUSTOMER");
 		
 		execute("CRUD.save");
-		assertNoErrors();
+		assertNoErrors(); 
 		
 		// Searching to verify
 		assertValue("name", "");
@@ -61,7 +61,7 @@ public class CustomerSellerAsAggregateTest extends ModuleTestBase {
 		assertMessage("Customer deleted successfully");
 		
 		// Asserting that seller is not removed
-		// Although at IU level 'seller' behaves as aggreagate, actually it's a reference
+		// Although at IU level 'seller' behaves as aggregate, actually it's a reference
 		// to entity, therefore it cannot be removed automatically, because maybe reference
 		// from other place.
 		assertCustomerNotExist(66);

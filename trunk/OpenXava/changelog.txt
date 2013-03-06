@@ -1,7 +1,6 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: deselected row fails in collections with onSelectElement action > only in Firefox and IE
 - WebSphere 8 support.
 - Fix: web.xml is not Servlet 2.4 compatible, though OpenXava uses Servlet 2.4 since v3.1.
 - If a session object has a request property, the current request is injected before injecting the object into the action. 

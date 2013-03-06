@@ -16,6 +16,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
+ * 
  * @author Javier Paniza
  */
 

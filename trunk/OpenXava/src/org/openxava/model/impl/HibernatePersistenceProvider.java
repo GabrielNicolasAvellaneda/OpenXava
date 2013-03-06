@@ -9,7 +9,6 @@ import org.apache.commons.logging.*;
 import org.hibernate.*;
 
 import org.openxava.hibernate.*;
-import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.impl.*;
 import org.openxava.util.*;
@@ -24,7 +23,9 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 	protected Object find(Class pojoClass, Serializable key) {
 		flush(); 
 		Object result = XHibernate.getSession().get(pojoClass, (Serializable) key);  
-		if (result != null) refreshIfManaged(result); 			
+		if (result != null) {			
+			refreshIfManaged(result);
+		}
 		return result;
 	}
 	
@@ -85,7 +86,7 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 	public void refreshIfManaged(Object object) { 		
 		if (XHibernate.getSession().contains(object)) {	
 			try {
-				XHibernate.getSession().refresh(object);
+				XHibernate.getSession().refresh(object);			
 			}
 			catch (UnresolvableObjectException ex) { 				
 			}			

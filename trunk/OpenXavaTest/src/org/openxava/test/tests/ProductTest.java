@@ -267,7 +267,7 @@ public class ProductTest extends ModuleTestBase {
 		setValue("number", "1");
 		execute("CRUD.refresh");
 						
-		assertValue("familyNumber", "1");
+		assertValue("familyNumber", "1"); 
 		assertValue("unitPrice", "11");
 		assertValue("unitPriceInPesetas", "1,830");		
 	}

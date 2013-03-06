@@ -12,7 +12,7 @@ public class NotAllActionsInDetailsInvoiceTest extends ModuleTestBase {
 		super(testName, "NotAllActionsInDetailsInvoice");		
 	}
 	
-	public void testEmptyCollectionActions() throws Exception {
+	public void testEmptyCollectionActions() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertNoAction("Collection.new");
 		assertNoAction("Collection.removeSelected");

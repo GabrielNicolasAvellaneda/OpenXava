@@ -116,7 +116,7 @@ public class Tab implements java.io.Serializable {
 	private String tabObject;
 	private boolean usesConverters;
 	private String title;  
-	private ArrayList<Map> selectedKeys;
+	private List<Map> selectedKeys; 
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
@@ -754,13 +754,13 @@ public class Tab implements java.io.Serializable {
 	public int [] getSelected() {
 		if (selectedKeys == null) return null;
 		try{
-			ArrayList<Integer> selected = new ArrayList<Integer>();
+			List<Integer> selected = new ArrayList<Integer>(); 
 			if (selectedKeys.size() > 0){
 				int end = getTableModel().getRowCount();
 				for (int i = 0; i < end; i++){
 					Map key = (Map)getTableModel().getObjectAt(i);
 					if (selectedKeys.contains(key)){
-						selected.add(new Integer(i));
+						selected.add(i); 
 					}
 				}
 			}

@@ -11,6 +11,7 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 import org.openxava.web.*;
+import org.openxava.web.dwr.Module;
 
 
 /**
@@ -128,19 +129,20 @@ public class EditorTag extends TagSupport {
 				pageContext.getOut().print("' value='");
 				pageContext.getOut().print(propertyKey);
 				pageContext.getOut().println("'/>");				
-			}			
+			}		
+			String prefix = Module.isPortlet()?"/WEB-INF/jsp/xava/":"/xava/";  
 			try {
-				pageContext.include("/xava/" + editorURL);			
+				pageContext.include(prefix + editorURL); 
 			}
 			catch (ServletException ex) { 
 				Throwable cause = ex.getRootCause() == null?ex:ex.getRootCause(); 
 				log.error(cause.getMessage(), cause);
-				pageContext.include("/xava/editors/notAvailableEditor.jsp");
+				pageContext.include(prefix + "editors/notAvailableEditor.jsp"); 
 			}
 			catch (Exception ex) {	
 				log.error(ex.getMessage(), ex);
-				pageContext.include("/xava/editors/notAvailableEditor.jsp");
-			}					
+				pageContext.include(prefix + "editors/notAvailableEditor.jsp"); 
+			}								
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

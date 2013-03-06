@@ -854,7 +854,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");		
 		setValue("invoice.year", "2004"); // We supose that not exists 		
 		setValue("invoice.number", "907"); // We supose that not exists		
-		assertError("Invoice with key {year=2004, number=907} not found"); 		
+		assertError("Invoice with key {year=2004, number=907} not found"); 
 				
 		// The reference datas are deleted in screen
 		assertValue("invoice.year", "");
@@ -1088,7 +1088,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("remarks", "No remarks");
 		setValue("remarks", "");
 		
-		searchInvoiceWithList("2002", "1");
+		searchInvoiceWithList("2002", "1"); 
 		assertValue("invoice.year", "2002");		
 		assertValue("invoice.number", "1"); 
 		assertValue("remarks", "First invoice of year");

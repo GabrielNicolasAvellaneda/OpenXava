@@ -33,7 +33,7 @@ public class SellerWithSearchListConditionTest extends ModuleTestBase {
 		closeDialog();
 
 		execute("Collection.add", "viewObject=xava_view_customers");
-		assertListRowCount(5);
+		assertListRowCount(5); 
 	}
 
 	public void testSearchListConditionBlank() throws Exception {

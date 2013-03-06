@@ -446,7 +446,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		checkRowCollection("fellowCarriersCalculated", 1);
 		execute("Sections.change", "activeSection=0");
 		execute("CarrierWithSections.fellowCarriersSelected");
-		assertTrue(getValue("fellowCarriersSelected").equalsIgnoreCase("DOS TRES"));
+		assertTrue(getValue("fellowCarriersSelected").equalsIgnoreCase("DOS TRES")); 
 		execute("Mode.list");
 		execute("List.viewDetail", "row=0");
 		execute("CarrierWithSections.fellowCarriersSelected");
