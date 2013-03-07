@@ -21,6 +21,8 @@ public class DefaultLayoutRowBeginElement extends LayoutBaseElement
 	private Integer rowCurrentColumnsCount;
 	private boolean blockStart;
 	private boolean blockEnd;
+	private boolean first;
+	private boolean last;
 	
 	public DefaultLayoutRowBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
@@ -112,6 +114,34 @@ public class DefaultLayoutRowBeginElement extends LayoutBaseElement
 	}
 
 	/**
+	 * @return the first
+	 */
+	public boolean isFirst() {
+		return first;
+	}
+
+	/**
+	 * @param first the first to set
+	 */
+	public void setFirst(boolean first) {
+		this.first = first;
+	}
+
+	/**
+	 * @return the last
+	 */
+	public boolean isLast() {
+		return last;
+	}
+
+	/**
+	 * @param last the last to set
+	 */
+	public void setLast(boolean last) {
+		this.last = last;
+	}
+
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -121,6 +151,7 @@ public class DefaultLayoutRowBeginElement extends LayoutBaseElement
 				+ ", maxRowColumnsCount=" + maxRowColumnsCount
 				+ ", rowCurrentColumnsCount=" + rowCurrentColumnsCount
 				+ ", blockStart=" + blockStart + ", blockEnd=" + blockEnd
+				+ ", first=" + first + ", last=" + last
 				+ ", groupLevel=" + getGroupLevel() + "]";
 	}
 

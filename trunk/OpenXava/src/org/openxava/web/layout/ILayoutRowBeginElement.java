@@ -81,4 +81,29 @@ public interface ILayoutRowBeginElement extends ILayoutElement {
 	 */
 	void setBlockEnd(boolean blockEnd);
 	
+	
+	/**
+	 * 
+	 * @return True if this row is the first one.
+	 */
+	boolean isFirst();
+	
+	/**
+	 * Sets the first state of the row.
+	 * @param firstState Value to apply to first state property.
+	 */
+	void setFirst(boolean firstState);
+	
+	/**
+	 * 
+	 * @return True if this row is the last.
+	 */
+	boolean isLast();
+	
+	/**
+	 * Sets the last state of the row.
+	 * @param lastState Value to apply to last state property.
+	 */
+	void setLast(boolean lastState);
+	
 }

@@ -240,7 +240,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				blockStarted = false;
 			}
 			write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
-			createRowSpacer();
+			if (!getRow().isLast()) { // Do not create the row spacer for the last row
+				createRowSpacer();
+			}
 		}
 		unsetRow();
 	}

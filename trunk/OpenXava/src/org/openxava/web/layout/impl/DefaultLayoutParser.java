@@ -361,24 +361,50 @@ public class DefaultLayoutParser implements ILayoutParser {
 		return new DefaultLayoutViewEndElement(view, groupLevel);
 	}
 	
+	/**
+	 * Creates a begin group marker.
+	 * @param metaGroup Container metagroup
+	 * @param view Originating view.
+	 * @param label Label to use on the meta group.
+	 * @return An instance of ILayoutGroupBeginElement.
+	 */
 	protected ILayoutGroupBeginElement createBeginGroupMarker(MetaGroup metaGroup, View view, String label) {
 		ILayoutGroupBeginElement returnValue = new DefaultLayoutGroupBeginElement(view, groupLevel, metaGroup);
 		beginContainerProcess(returnValue);
 		return returnValue;
 	}
 	
+	/**
+	 * Creates an end group marker.
+	 * @param metaGroup Container metagroup
+	 * @param view Originating view.
+	 * @return An instance of ILayoutGroupEndElement.
+	 */
 	protected ILayoutGroupEndElement createEndGroupMarker(MetaGroup metaGroup, View view) {
 		endContainerProcess(view);
 		ILayoutGroupEndElement returnValue = new DefaultLayoutGroupEndElement(view, groupLevel, metaGroup);
 		return returnValue;
 	}
 	
+	/**
+	 * Creates a begin frame marker.
+	 * @param metaMember Metamember containing the elements.
+	 * @param view Originating view.
+	 * @param label Label to use for the frame.
+	 * @return An instance of ILayoutFrameBeginElement.
+	 */
 	protected ILayoutFrameBeginElement createBeginFrameMarker(MetaMember metaMember, View view, String label) {
 		ILayoutFrameBeginElement returnValue = new DefaultLayoutFrameBeginElement(view, groupLevel, metaMember);
 		beginContainerProcess(returnValue);
 		return returnValue;
 	}
 	
+	/**
+	 * Creates and end frame marker.
+	 * @param metaMember Metamember containing the elements.
+	 * @param view Originating view.
+	 * @return An instance of ILayoutFrameEndElement.
+	 */
 	protected ILayoutFrameEndElement createEndFrameMarker(MetaMember metaMember, View view) {
 		endContainerProcess(view);
 		ILayoutFrameEndElement returnValue = new DefaultLayoutFrameEndElement(view, groupLevel, metaMember);
@@ -487,6 +513,10 @@ public class DefaultLayoutParser implements ILayoutParser {
 		return new DefaultLayoutSectionsRenderEndElement(view, groupLevel);
 	}
 
+	/**
+	 * Common routine for handling the start of containers (view, group, frames).
+	 * @param frameElement
+	 */
 	protected void beginContainerProcess(ILayoutContainerElement frameElement) {
 		groupLevel++;
 		if (currentRow != null) {
@@ -510,6 +540,11 @@ public class DefaultLayoutParser implements ILayoutParser {
 		if (containersStack.peek().getRows().size() > 0) {
 			boolean blockStarted = false;
 			ILayoutRowBeginElement lastRow = null;
+			// Mark first and last row.
+			containersStack.peek().getRows().get(0).setFirst(true);
+			containersStack.peek().getRows().get(containersStack.peek().getRows().size() - 1)
+					.setLast(true);
+			
 			for (ILayoutRowBeginElement rowBegin: containersStack.peek().getRows()) {
 				rowBegin.setBlockEnd(false);
 				if (rowBegin.getMaxFramesCount() > 0) {
@@ -548,7 +583,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 			}
 			addLayoutElement(createBeginRowMarker(view));
 		}
-		ILayoutColumnBeginElement returnValue = new LayoutColumnBeginElementDefault(view, groupLevel);
+		ILayoutColumnBeginElement returnValue = new DefaultLayoutColumnBeginElement(view, groupLevel);
 		// Add to column
 		int maxRowColumnsCount = currentRow.getMaxRowColumnsCount() + 1;
 		currentRow.setMaxRowColumnsCount(maxRowColumnsCount);
@@ -736,7 +771,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @return returnValue. Layout element of type COLLECTION_BEGIN
 	 */
 	protected ILayoutCollectionBeginElement createBeginCollectionMarker(MetaMember m, View view) {
-		ILayoutCollectionBeginElement returnValue = new LayoutCollectionBeginElementDefault(view, groupLevel);
+		ILayoutCollectionBeginElement returnValue = new DefaultLayoutCollectionBeginElement(view, groupLevel);
 		if (view.getMemberName() == null) {
 			view.setMemberName("");
 		}
@@ -761,7 +796,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @return A layout element of type COLLECTION_END.
 	 */
 	protected ILayoutCollectionEndElement createEndCollectionMarker(View view) {
-		return new LayoutCollectionEndElementDefault(view, groupLevel);
+		return new DefaultLayoutCollectionEndElement(view, groupLevel);
 	}
 	
 	
