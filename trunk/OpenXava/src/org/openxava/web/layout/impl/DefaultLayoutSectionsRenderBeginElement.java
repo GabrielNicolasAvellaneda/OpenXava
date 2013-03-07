@@ -12,10 +12,10 @@ import org.openxava.web.layout.LayoutBaseContainerElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutSectionsRenderBeginElementDefaultImpl extends
+public class DefaultLayoutSectionsRenderBeginElement extends
 		LayoutBaseContainerElement implements ILayoutSectionsRenderBeginElement {
 
-	public LayoutSectionsRenderBeginElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutSectionsRenderBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 

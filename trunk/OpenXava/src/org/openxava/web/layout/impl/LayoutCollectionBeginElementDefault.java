@@ -14,14 +14,14 @@ import org.openxava.web.layout.LayoutBaseElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutCollectionBeginElementDefaultImpl extends LayoutBaseElement
+public class LayoutCollectionBeginElementDefault extends LayoutBaseElement
 		implements ILayoutCollectionBeginElement {
 	
 	private boolean hasFrame;
 	private MetaCollection metaCollection;
 	private String label;
 	
-	public LayoutCollectionBeginElementDefaultImpl(View view, int groupLevel) {
+	public LayoutCollectionBeginElementDefault(View view, int groupLevel) {
 		super(view, groupLevel);
 		setLabel("");
 	}

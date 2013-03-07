@@ -12,12 +12,12 @@ import org.openxava.web.layout.LayoutBaseContainerElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutViewBeginElementDefaultImpl extends LayoutBaseContainerElement implements
+public class DefaultLayoutViewBeginElement extends LayoutBaseContainerElement implements
 		ILayoutViewBeginElement {
 	
 	private boolean representsSection;
 	
-	public LayoutViewBeginElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutViewBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
 		representsSection = false;
 	}

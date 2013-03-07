@@ -4,7 +4,7 @@
 package org.openxava.web.layout.impl;
 
 import org.openxava.view.View;
-import org.openxava.web.layout.ILayoutColumnEndElement;
+import org.openxava.web.layout.ILayoutColumnBeginElement;
 import org.openxava.web.layout.ILayoutPainter;
 import org.openxava.web.layout.LayoutBaseElement;
 
@@ -12,10 +12,10 @@ import org.openxava.web.layout.LayoutBaseElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutColumnEndElementDefaultImpl extends LayoutBaseElement
-		implements ILayoutColumnEndElement {
+public class LayoutColumnBeginElementDefault extends LayoutBaseElement
+		implements ILayoutColumnBeginElement {
 
-	public LayoutColumnEndElementDefaultImpl(View view, int groupLevel) {
+	public LayoutColumnBeginElementDefault(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
@@ -23,15 +23,15 @@ public class LayoutColumnEndElementDefaultImpl extends LayoutBaseElement
 	 * @see org.openxava.web.layout.ILayoutElement#render(org.openxava.web.layout.ILayoutPainter)
 	 */
 	public void render(ILayoutPainter layoutPainter) {
-		layoutPainter.endColumn(this);
+		layoutPainter.beginColumn(this);
 	}
-
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "ColumnEnd [groupLevel="
-				+ getGroupLevel() + "]";
+		return "ColumnBegin [groupLevel=" + getGroupLevel() + "]";
 	}
+
 }

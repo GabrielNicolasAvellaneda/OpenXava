@@ -11,10 +11,10 @@ import org.openxava.web.layout.ILayoutSectionsEndElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutSectionsEndElementDefaultImpl extends
-		LayoutViewEndElementDefaultImpl implements ILayoutSectionsEndElement {
+public class DefaultLayoutSectionsEndElement extends
+		DefaultLayoutViewEndElement implements ILayoutSectionsEndElement {
 
-	public LayoutSectionsEndElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutSectionsEndElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 

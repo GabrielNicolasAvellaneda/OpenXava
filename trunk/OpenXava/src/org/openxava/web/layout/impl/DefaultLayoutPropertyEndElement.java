@@ -5,17 +5,17 @@ package org.openxava.web.layout.impl;
 
 import org.openxava.view.View;
 import org.openxava.web.layout.ILayoutPainter;
-import org.openxava.web.layout.ILayoutRowEndElement;
+import org.openxava.web.layout.ILayoutPropertyEndElement;
 import org.openxava.web.layout.LayoutBaseElement;
 
 /**
  * @author Federico Alcantara
  *
  */
-public class LayoutRowEndElementDefaultImpl extends LayoutBaseElement implements
-		ILayoutRowEndElement {
+public class DefaultLayoutPropertyEndElement extends LayoutBaseElement
+		implements ILayoutPropertyEndElement {
 
-	public LayoutRowEndElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutPropertyEndElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
@@ -23,16 +23,15 @@ public class LayoutRowEndElementDefaultImpl extends LayoutBaseElement implements
 	 * @see org.openxava.web.layout.ILayoutElement#render(org.openxava.web.layout.ILayoutPainter)
 	 */
 	public void render(ILayoutPainter layoutPainter) {
-		layoutPainter.endRow(this);
+		layoutPainter.endProperty(this);
 	}
-
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "RowEnd [groupLevel="
+		return "PropertyEnd [groupLevel="
 				+ getGroupLevel() + "]";
 	}
-	
 }

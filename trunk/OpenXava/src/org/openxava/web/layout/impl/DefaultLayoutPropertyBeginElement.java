@@ -18,7 +18,7 @@ import org.openxava.web.layout.LayoutBaseElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutPropertyBeginElementDefaultImpl extends LayoutBaseElement
+public class DefaultLayoutPropertyBeginElement extends LayoutBaseElement
 		implements ILayoutPropertyBeginElement {
 
  	private MetaProperty metaProperty;
@@ -42,7 +42,7 @@ public class LayoutPropertyBeginElementDefaultImpl extends LayoutBaseElement
 	private String referenceForDescriptionsList;
 	private String name;
 
-	public LayoutPropertyBeginElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutPropertyBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
 		hasActions = false;
 		editable = false;

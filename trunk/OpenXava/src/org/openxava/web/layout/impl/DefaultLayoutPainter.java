@@ -63,13 +63,12 @@ import org.openxava.web.taglib.LinkTag;
  * @author Federico Alcantara
  *
  */
-public class LayoutPainterDefaultImpl extends AbstractJspPainter {
+public class DefaultLayoutPainter extends AbstractJspPainter {
 	private static final long serialVersionUID = 1L;
 
-	private static final Log LOG = LogFactory.getLog(LayoutPainterDefaultImpl.class);
+	private static final Log LOG = LogFactory.getLog(DefaultLayoutPainter.class);
 	private boolean firstCellPainted = false;
 	private int tdPerColumn = 2; // One TD for the label and another for Data and other cells.
-	private int paintedProperties = 0;
 	private int frameLevel = 0;
 	private boolean blockStarted = false;
 	
@@ -253,27 +252,19 @@ public class LayoutPainterDefaultImpl extends AbstractJspPainter {
 		attributes.clear();
 		attributes.put(ATTR_CLASS, getStyle().getLayoutRowSpacer());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TR, attributes));
-		for (int count = 0; count < paintedProperties; count++) {
-			// Label content
-			attributes.clear();
-			attributes.put(ATTR_CLASS, Style.getInstance().getLayoutLabelCell() + " " + Style.getInstance().getLayoutRowSpacerLabelCell());
-			
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-			// Data content
-			attributes.clear();
-			attributes.put(ATTR_CLASS, Style.getInstance().getLayoutDataCell() + " " + Style.getInstance().getLayoutRowSpacerDataCell());
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-		}
-		Integer columnSpan = calculateTdSpan(getMaxColumnsOnView() - paintedProperties);
+		
+		// Label content
 		attributes.clear();
-		attributes.put(ATTR_COLSPAN, columnSpan.toString());
-		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutDataCell());
+		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutLabelCell() + " " + Style.getInstance().getLayoutRowSpacerLabelCell());
+		
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-		write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
-		paintedProperties = 0;
+		// Data content
+		attributes.clear();
+		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutDataCell() + " " + Style.getInstance().getLayoutRowSpacerDataCell());
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+
 	}
 	
 	/**
@@ -335,7 +326,6 @@ public class LayoutPainterDefaultImpl extends AbstractJspPainter {
 	public void beginProperty(ILayoutPropertyBeginElement element) {
 		Integer width =  getMaxColumnsOnView() > 0 ? 50 / getMaxColumnsOnView() : 0;
 		width = 0;
-		paintedProperties++;
 		if (!firstCellPainted) {
 			attributes.clear();
 			attributes.put(ATTR_CLASS, getStyle().getLabel() + " " + getStyle().getLayoutLabelCell());
@@ -400,7 +390,7 @@ public class LayoutPainterDefaultImpl extends AbstractJspPainter {
 			if (columnSpan > 0) {
 				columnSpan = calculateTdSpan(columnSpan);
 				columnSpan = columnSpan + 1;
-				attributes.put(ATTR_COLSPAN, columnSpan.toString());
+				//attributes.put(ATTR_COLSPAN, columnSpan.toString());
 				getRow().setRowCurrentColumnsCount(getMaxColumnsOnView()); // No td to add.
 			}
 		}
@@ -742,7 +732,7 @@ public class LayoutPainterDefaultImpl extends AbstractJspPainter {
 		View view = element.getView().hasSections() ? element.getView() : getView();
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
 		attributes.clear();
-		attributes.put(ATTR_COLSPAN, Integer.toString(calculateTdSpan(0)));
+		attributes.put(ATTR_COLSPAN, Integer.toString(calculateTdSpan(getMaxColumnsOnView())));
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		attributes.clear();
 		attributes.put(ATTR_ID, Ids.decorate(getRequest(), "sections_" + view.getViewObject()));
@@ -853,14 +843,14 @@ public class LayoutPainterDefaultImpl extends AbstractJspPainter {
 	 * @see org.openxava.web.layout.ILayoutPainter#defaultBeginSectionsRenderElement(org.openxava.web.layout.ILayoutSectionsBeginElement)
 	 */
 	public ILayoutSectionsRenderBeginElement defaultBeginSectionsRenderElement(View view) {
-		return new LayoutSectionsRenderBeginElementDefaultImpl(view, 0);
+		return new DefaultLayoutSectionsRenderBeginElement(view, 0);
 	}
 
 	/**
 	 * @see org.openxava.web.layout.ILayoutPainter#defaultEndSectionsRenderElement(org.openxava.web.layout.ILayoutSectionsBeginElement)
 	 */
 	public ILayoutSectionsRenderEndElement defaultEndSectionsRenderElement(View view) {
-		return new LayoutSectionsRenderEndElementDefaultImpl(view, 0);
+		return new DefaultLayoutSectionsRenderEndElement(view, 0);
 	}
 
 }

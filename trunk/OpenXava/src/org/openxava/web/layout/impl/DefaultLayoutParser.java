@@ -59,10 +59,10 @@ import org.openxava.web.meta.MetaEditor;
  * @author Juan Mendoza and Federico Alcantara
  *
  */
-public class LayoutParserDefaultImpl implements ILayoutParser {
+public class DefaultLayoutParser implements ILayoutParser {
 	private static final long serialVersionUID = 1L;
 
-	private static Log LOG = LogFactory.getLog(LayoutParserDefaultImpl.class);
+	private static Log LOG = LogFactory.getLog(DefaultLayoutParser.class);
 
 	private String groupLabel;
 	private List<ILayoutElement> elements;
@@ -79,7 +79,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	private Map<Integer, Boolean> levelRowStarted;
 	private Map<Integer, Boolean> levelMustStartRow;
 	
-	public LayoutParserDefaultImpl() {
+	public DefaultLayoutParser() {
 	}
 	
 	/**
@@ -346,7 +346,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 * @return Created layout element.
 	 */
 	protected ILayoutViewBeginElement createBeginViewMarker(View view) {
-		ILayoutViewBeginElement returnValue = new LayoutViewBeginElementDefaultImpl(view, groupLevel);
+		ILayoutViewBeginElement returnValue = new DefaultLayoutViewBeginElement(view, groupLevel);
 		beginContainerProcess(returnValue);
 		return returnValue;
 	}
@@ -358,30 +358,30 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 */
 	protected ILayoutViewEndElement createEndViewMarker(View view) {
 		endContainerProcess(view);
-		return new LayoutViewEndElementDefaultImpl(view, groupLevel);
+		return new DefaultLayoutViewEndElement(view, groupLevel);
 	}
 	
 	protected ILayoutGroupBeginElement createBeginGroupMarker(MetaGroup metaGroup, View view, String label) {
-		ILayoutGroupBeginElement returnValue = new LayoutGroupBeginElementDefaultImpl(view, groupLevel, metaGroup);
+		ILayoutGroupBeginElement returnValue = new DefaultLayoutGroupBeginElement(view, groupLevel, metaGroup);
 		beginContainerProcess(returnValue);
 		return returnValue;
 	}
 	
 	protected ILayoutGroupEndElement createEndGroupMarker(MetaGroup metaGroup, View view) {
 		endContainerProcess(view);
-		ILayoutGroupEndElement returnValue = new LayoutGroupEndElementDefaultImpl(view, groupLevel, metaGroup);
+		ILayoutGroupEndElement returnValue = new DefaultLayoutGroupEndElement(view, groupLevel, metaGroup);
 		return returnValue;
 	}
 	
 	protected ILayoutFrameBeginElement createBeginFrameMarker(MetaMember metaMember, View view, String label) {
-		ILayoutFrameBeginElement returnValue = new LayoutFrameBeginElementDefaultImpl(view, groupLevel, metaMember);
+		ILayoutFrameBeginElement returnValue = new DefaultLayoutFrameBeginElement(view, groupLevel, metaMember);
 		beginContainerProcess(returnValue);
 		return returnValue;
 	}
 	
 	protected ILayoutFrameEndElement createEndFrameMarker(MetaMember metaMember, View view) {
 		endContainerProcess(view);
-		ILayoutFrameEndElement returnValue = new LayoutFrameEndElementDefaultImpl(view, groupLevel, metaMember);
+		ILayoutFrameEndElement returnValue = new DefaultLayoutFrameEndElement(view, groupLevel, metaMember);
 		return returnValue;
 	}
 
@@ -396,7 +396,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 		}
 		rowIndex++;
 		rowsStack.push(currentRow);
-		currentRow = new LayoutRowBeginElementDefaultImpl(view, groupLevel);
+		currentRow = new DefaultLayoutRowBeginElement(view, groupLevel);
 		levelRowStarted.put(groupLevel, true);
 		levelMustStartRow.put(groupLevel, false);
 		currentRow.setRowIndex(rowIndex);
@@ -421,7 +421,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 		if (last != null && (last instanceof ILayoutRowEndElement)) { // empty row
 			elements.remove(elements.size() - 1);
 		} else {
-			returnValue = new LayoutRowEndElementDefaultImpl(view, groupLevel);
+			returnValue = new DefaultLayoutRowEndElement(view, groupLevel);
 			if (groupLevel <= 2
 					&& currentRow.getMaxFramesCount() > currentView.getMaxFramesCount()) {
 				 currentView.setMaxFramesCount(currentRow.getMaxFramesCount());
@@ -447,7 +447,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 * @return A Layout Element of type SECTIONS_BEGIN
 	 */
 	protected ILayoutSectionsBeginElement createBeginSectionMarker(View view) {
-		ILayoutSectionsBeginElement returnValue = new LayoutSectionsBeginElementDefaultImpl(view, groupLevel);
+		ILayoutSectionsBeginElement returnValue = new DefaultLayoutSectionsBeginElement(view, groupLevel);
 		groupLevel++;
 		return returnValue;
 	}
@@ -460,7 +460,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 */
 	protected ILayoutSectionsEndElement createEndSectionMarker(View view) {
 		groupLevel--;
-		return new LayoutSectionsEndElementDefaultImpl(view, groupLevel);
+		return new DefaultLayoutSectionsEndElement(view, groupLevel);
 	}
 
 	
@@ -471,7 +471,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 * @return A Layout Element of type SECTIONS_BEGIN
 	 */
 	protected ILayoutSectionsRenderBeginElement createBeginSectionRender(View view) {
-		ILayoutSectionsRenderBeginElement returnValue = new LayoutSectionsRenderBeginElementDefaultImpl(view, groupLevel);
+		ILayoutSectionsRenderBeginElement returnValue = new DefaultLayoutSectionsRenderBeginElement(view, groupLevel);
 		beginContainerProcess(returnValue);
 		return returnValue;
 	}
@@ -484,7 +484,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 */
 	protected ILayoutSectionsRenderEndElement createEndSectionRender(View view) {
 		endContainerProcess(view);
-		return new LayoutSectionsRenderEndElementDefaultImpl(view, groupLevel);
+		return new DefaultLayoutSectionsRenderEndElement(view, groupLevel);
 	}
 
 	protected void beginContainerProcess(ILayoutContainerElement frameElement) {
@@ -548,7 +548,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 			}
 			addLayoutElement(createBeginRowMarker(view));
 		}
-		ILayoutColumnBeginElement returnValue = new LayoutColumnBeginElementDefaultImpl(view, groupLevel);
+		ILayoutColumnBeginElement returnValue = new LayoutColumnBeginElementDefault(view, groupLevel);
 		// Add to column
 		int maxRowColumnsCount = currentRow.getMaxRowColumnsCount() + 1;
 		currentRow.setMaxRowColumnsCount(maxRowColumnsCount);
@@ -581,7 +581,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 */
 	protected ILayoutColumnEndElement createEndColumnMarker(View view) {
 		groupLevel--;
-		return new LayoutColumnEndElementDefaultImpl(view, groupLevel);
+		return new DefaultLayoutColumnEndElement(view, groupLevel);
 	}
 
 	/**
@@ -596,7 +596,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 */
 	protected ILayoutPropertyBeginElement createBeginPropertyMarker(MetaMember m, boolean descriptionsList, 
 			boolean suppressLabel, View view, String inputPropertyPrefix) {
-		ILayoutPropertyBeginElement returnValue = new LayoutPropertyBeginElementDefaultImpl(view, groupLevel);
+		ILayoutPropertyBeginElement returnValue = new DefaultLayoutPropertyBeginElement(view, groupLevel);
 		
 		String referenceForDescriptionsList = "";
 		String propertyPrefix = inputPropertyPrefix;
@@ -722,7 +722,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 * @return Layout element of type PROPERTY_END.
 	 */
 	protected ILayoutPropertyEndElement createEndPropertyMarker(View view) {
-		return new LayoutPropertyEndElementDefaultImpl(view, groupLevel);
+		return new DefaultLayoutPropertyEndElement(view, groupLevel);
 	}
 	
 	/**
@@ -736,7 +736,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 * @return returnValue. Layout element of type COLLECTION_BEGIN
 	 */
 	protected ILayoutCollectionBeginElement createBeginCollectionMarker(MetaMember m, View view) {
-		ILayoutCollectionBeginElement returnValue = new LayoutCollectionBeginElementDefaultImpl(view, groupLevel);
+		ILayoutCollectionBeginElement returnValue = new LayoutCollectionBeginElementDefault(view, groupLevel);
 		if (view.getMemberName() == null) {
 			view.setMemberName("");
 		}
@@ -761,7 +761,7 @@ public class LayoutParserDefaultImpl implements ILayoutParser {
 	 * @return A layout element of type COLLECTION_END.
 	 */
 	protected ILayoutCollectionEndElement createEndCollectionMarker(View view) {
-		return new LayoutCollectionEndElementDefaultImpl(view, groupLevel);
+		return new LayoutCollectionEndElementDefault(view, groupLevel);
 	}
 	
 	
