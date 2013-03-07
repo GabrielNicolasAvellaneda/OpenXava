@@ -175,10 +175,5 @@
 	<editor name="TreeViewAlternate" url="treeViewEditor.jsp">
 		<property name="reader" value="org.openxava.test.web.editors.impl.TreeViewReaderTestImpl" />
 	</editor>
-	
-	<!-- tmp Mover a default-editors -->
-	<editor url="customReportNameEditor.jsp">
-		<for-model-property model="CustomReport" property="name"/>
-	</editor>		
-	
+		
 </editors>

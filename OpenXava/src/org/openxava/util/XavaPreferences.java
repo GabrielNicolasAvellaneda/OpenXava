@@ -487,12 +487,12 @@ public class XavaPreferences {
 
 	/** @since 4.5 */
 	public String getLayoutParser() {
-		return getProperties().getProperty("layout.parser", null); 
+		return getProperties().getProperty("layoutParser", null); 
 	}
 
 	/** @since 4.5 */
 	public String getLayoutPainter() {
-		return getProperties().getProperty("layout.painter", null);
+		return getProperties().getProperty("layoutPainter", null);
 	}
 
 	/** @since 4.6 */
