@@ -11,11 +11,11 @@ import org.openxava.web.layout.ILayoutSectionsBeginElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutSectionsBeginElementDefaultImpl extends
-		LayoutViewBeginElementDefaultImpl implements
+public class DefaultLayoutSectionsBeginElement extends
+		DefaultLayoutViewBeginElement implements
 		ILayoutSectionsBeginElement {
 
-	public LayoutSectionsBeginElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutSectionsBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 

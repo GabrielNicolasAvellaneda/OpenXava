@@ -4,18 +4,18 @@
 package org.openxava.web.layout.impl;
 
 import org.openxava.view.View;
+import org.openxava.web.layout.ILayoutColumnEndElement;
 import org.openxava.web.layout.ILayoutPainter;
-import org.openxava.web.layout.ILayoutPropertyEndElement;
 import org.openxava.web.layout.LayoutBaseElement;
 
 /**
  * @author Federico Alcantara
  *
  */
-public class LayoutPropertyEndElementDefaultImpl extends LayoutBaseElement
-		implements ILayoutPropertyEndElement {
+public class DefaultLayoutColumnEndElement extends LayoutBaseElement
+		implements ILayoutColumnEndElement {
 
-	public LayoutPropertyEndElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutColumnEndElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
@@ -23,15 +23,15 @@ public class LayoutPropertyEndElementDefaultImpl extends LayoutBaseElement
 	 * @see org.openxava.web.layout.ILayoutElement#render(org.openxava.web.layout.ILayoutPainter)
 	 */
 	public void render(ILayoutPainter layoutPainter) {
-		layoutPainter.endProperty(this);
+		layoutPainter.endColumn(this);
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "PropertyEnd [groupLevel="
+		return "ColumnEnd [groupLevel="
 				+ getGroupLevel() + "]";
 	}
 }

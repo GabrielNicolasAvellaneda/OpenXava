@@ -13,18 +13,18 @@ import org.openxava.web.layout.LayoutBaseElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutFrameEndElementDefaultImpl extends LayoutBaseElement
+public class DefaultLayoutFrameEndElement extends LayoutBaseElement
 		implements ILayoutFrameEndElement {
 
 	private String propertyPrefix;
 	private String label;
 	private String name;
 
-	public LayoutFrameEndElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutFrameEndElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
-	public LayoutFrameEndElementDefaultImpl(View view, int groupLevel, MetaElement metaElement) {
+	public DefaultLayoutFrameEndElement(View view, int groupLevel, MetaElement metaElement) {
 		super(view, groupLevel);
 		setPropertyPrefix("");
 		setLabel(metaElement.getLabel());

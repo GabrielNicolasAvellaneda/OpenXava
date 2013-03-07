@@ -4,19 +4,18 @@
 package org.openxava.web.layout.impl;
 
 import org.openxava.view.View;
+import org.openxava.web.layout.ILayoutCollectionEndElement;
 import org.openxava.web.layout.ILayoutPainter;
-import org.openxava.web.layout.ILayoutViewEndElement;
 import org.openxava.web.layout.LayoutBaseElement;
 
 /**
- * Default implementation for ILayoutViewEndElement.
  * @author Federico Alcantara
  *
  */
-public class LayoutViewEndElementDefaultImpl extends LayoutBaseElement 
-		implements ILayoutViewEndElement {
+public class LayoutCollectionEndElementDefault extends LayoutBaseElement
+		implements ILayoutCollectionEndElement {
 
-	public LayoutViewEndElementDefaultImpl(View view, int groupLevel) {
+	public LayoutCollectionEndElementDefault(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
@@ -24,16 +23,15 @@ public class LayoutViewEndElementDefaultImpl extends LayoutBaseElement
 	 * @see org.openxava.web.layout.ILayoutElement#render(org.openxava.web.layout.ILayoutPainter)
 	 */
 	public void render(ILayoutPainter layoutPainter) {
-		layoutPainter.endView(this);
+		layoutPainter.endCollection(this);
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "ViewEnd [groupLevel="
+		return "CollectionEnd [groupLevel="
 				+ getGroupLevel() + "]";
 	}
-
 }

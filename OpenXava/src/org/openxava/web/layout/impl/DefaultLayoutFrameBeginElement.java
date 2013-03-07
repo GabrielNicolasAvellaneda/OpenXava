@@ -14,18 +14,18 @@ import org.openxava.web.layout.LayoutBaseContainerElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutFrameBeginElementDefaultImpl extends LayoutBaseContainerElement
+public class DefaultLayoutFrameBeginElement extends LayoutBaseContainerElement
 		implements ILayoutFrameBeginElement {
 	
 	private String propertyPrefix;
 	private String label;
 	private String name;
 	
-	public LayoutFrameBeginElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutFrameBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
-	public LayoutFrameBeginElementDefaultImpl(View view, int groupLevel, MetaElement metaElement) {
+	public DefaultLayoutFrameBeginElement(View view, int groupLevel, MetaElement metaElement) {
 		super(view, groupLevel);
 		setPropertyPrefix("");
 		if (metaElement instanceof MetaMember) {

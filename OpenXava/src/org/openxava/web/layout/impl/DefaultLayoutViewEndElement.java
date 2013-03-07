@@ -4,18 +4,19 @@
 package org.openxava.web.layout.impl;
 
 import org.openxava.view.View;
-import org.openxava.web.layout.ILayoutColumnBeginElement;
 import org.openxava.web.layout.ILayoutPainter;
+import org.openxava.web.layout.ILayoutViewEndElement;
 import org.openxava.web.layout.LayoutBaseElement;
 
 /**
+ * Default implementation for ILayoutViewEndElement.
  * @author Federico Alcantara
  *
  */
-public class LayoutColumnBeginElementDefaultImpl extends LayoutBaseElement
-		implements ILayoutColumnBeginElement {
+public class DefaultLayoutViewEndElement extends LayoutBaseElement 
+		implements ILayoutViewEndElement {
 
-	public LayoutColumnBeginElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutViewEndElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
@@ -23,7 +24,7 @@ public class LayoutColumnBeginElementDefaultImpl extends LayoutBaseElement
 	 * @see org.openxava.web.layout.ILayoutElement#render(org.openxava.web.layout.ILayoutPainter)
 	 */
 	public void render(ILayoutPainter layoutPainter) {
-		layoutPainter.beginColumn(this);
+		layoutPainter.endView(this);
 	}
 	
 	/**
@@ -31,7 +32,8 @@ public class LayoutColumnBeginElementDefaultImpl extends LayoutBaseElement
 	 */
 	@Override
 	public String toString() {
-		return "ColumnBegin [groupLevel=" + getGroupLevel() + "]";
+		return "ViewEnd [groupLevel="
+				+ getGroupLevel() + "]";
 	}
 
 }

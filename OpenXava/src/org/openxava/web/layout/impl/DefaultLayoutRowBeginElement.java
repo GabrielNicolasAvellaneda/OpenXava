@@ -12,7 +12,7 @@ import org.openxava.web.layout.LayoutBaseElement;
  * @author Federico Alcantara
  *
  */
-public class LayoutRowBeginElementDefaultImpl extends LayoutBaseElement
+public class DefaultLayoutRowBeginElement extends LayoutBaseElement
 		implements ILayoutRowBeginElement {
 
 	private Integer maxFramesCount;
@@ -22,7 +22,7 @@ public class LayoutRowBeginElementDefaultImpl extends LayoutBaseElement
 	private boolean blockStart;
 	private boolean blockEnd;
 	
-	public LayoutRowBeginElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutRowBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
 		maxFramesCount = 0;
 		rowIndex = -1;

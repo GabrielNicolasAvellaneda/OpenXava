@@ -12,14 +12,14 @@ import org.openxava.web.layout.ILayoutPainter;
  * @author Federico Alcantara
  *
  */
-public class LayoutGroupEndElementDefaultImpl extends
-		LayoutFrameEndElementDefaultImpl implements ILayoutGroupEndElement {
+public class DefaultLayoutGroupEndElement extends
+		DefaultLayoutFrameEndElement implements ILayoutGroupEndElement {
 
-	public LayoutGroupEndElementDefaultImpl(View view, int groupLevel) {
+	public DefaultLayoutGroupEndElement(View view, int groupLevel) {
 		super(view, groupLevel);
 	}
 
-	public LayoutGroupEndElementDefaultImpl(View view, int groupLevel,
+	public DefaultLayoutGroupEndElement(View view, int groupLevel,
 			MetaElement metaElement) {
 		super(view, groupLevel, metaElement);
 	}
