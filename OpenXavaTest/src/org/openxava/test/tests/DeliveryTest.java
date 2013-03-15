@@ -231,11 +231,12 @@ public class DeliveryTest extends ModuleTestBase {
 		closeDialog();
 		assertCollectionRowCount("details", 3);
 		
+		execute("List.orderBy", "property=number,collection=details"); 
 		checkRowCollection("details", 2);
 		execute("DeliveryDetail.removeSelected", "viewObject=xava_view_section2_details_details");
 		assertNoErrors();
 		assertMessage("Delivery detail deleted from database");
-		assertMessage("Delivery detail 13 deleted successfully"); // This message is by the override action for removeSelected		
+		assertMessage("Delivery detail 13 deleted successfully"); // This message is by the override action for removeSelected 		
 		assertCollectionRowCount("details", 2);
 		
 		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");
@@ -515,7 +516,7 @@ public class DeliveryTest extends ModuleTestBase {
 			String value = getValueInList(i, "invoice.sellerDiscount");			
 			if ("0.00".equals(value)) withoutDiscount = true;
 			else if ("20.00".equals(value)) withDiscount = true;
-			else fail("Only 0.00 or 20.00 are valid values for invoice.sellerDiscount");
+			else fail("Only 0.00 or 20.00 are valid values for invoice.sellerDiscount"); 
 		}
 		assertTrue("It's required deliveries with invoices with and without seller discount", withDiscount && withoutDiscount);
 	}
@@ -854,7 +855,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("CRUD.new");		
 		setValue("invoice.year", "2004"); // We supose that not exists 		
 		setValue("invoice.number", "907"); // We supose that not exists		
-		assertError("Invoice with key {year=2004, number=907} not found"); 
+		assertError("Invoice with key {year=2004, number=907} not found"); 		
 				
 		// The reference datas are deleted in screen
 		assertValue("invoice.year", "");

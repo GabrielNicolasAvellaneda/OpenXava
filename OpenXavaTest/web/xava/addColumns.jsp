@@ -12,7 +12,7 @@ scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
-String tabObject = request.getParameter("tabObject"); // tmp Estos datos no se sacan de un tab
+String tabObject = request.getParameter("tabObject");
 tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request,
 "xava_customizingTab");

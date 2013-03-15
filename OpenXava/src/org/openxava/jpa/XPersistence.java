@@ -304,7 +304,7 @@ public class XPersistence {
 	private static String obtainDefaultSchemaFromPersistenceXML() {
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			URL url = Resources.getLastResource(XPersistence.class, "META-INF/persistence.xml");
+			URL url = PersistenceXml.getResource();
 			Document doc = builder.parse(url.toExternalForm());
 			NodeList units = doc.getElementsByTagName("persistence-unit");
 			int unitsCount = units.getLength();

@@ -461,8 +461,8 @@ public class ModuleTestBase extends TestCase {
 			login(getJetspeed2UserName(), getJetspeed2Password());
 		}		
 		else {	
-			if (this.module != null) { 				
-				page = (HtmlPage) client.getPage(getModuleURL());
+			if (this.module != null) { 		
+				page = (HtmlPage) client.getPage(getModuleURL()); 
 				if (!getMetaModule().isDoc()) {
 					resetForm();
 				}

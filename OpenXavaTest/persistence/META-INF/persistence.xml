@@ -7,7 +7,7 @@
              version="1.0">
              
              
-    <!-- Tomcat + Hypersonic -->                                                           
+    <!-- Tomcat + Hypersonic -->                                                             
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>    	
     	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
@@ -19,8 +19,8 @@
             <property name="hibernate.current_session_context_class" 
                     value="com.autobizlogic.abl.session.LogicThreadLocalSessionContext"/>                                                                               
         </properties>
-    </persistence-unit>      
-    
+    </persistence-unit>          
+        
     <persistence-unit name="companyA">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>    	
     	<non-jta-data-source>java:comp/env/jdbc/CompanyADS</non-jta-data-source>    	
@@ -41,7 +41,7 @@
         </properties>
     </persistence-unit>    
             
-    <!-- WebSphere + AS/400    
+    <!-- WebSphere + AS/400      
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/OpenXavaTestDS</non-jta-data-source>
@@ -101,7 +101,7 @@
     </persistence-unit>     
     -->    
         
-    <!-- JUnit Hypersonic -->                
+    <!-- JUnit Hypersonic -->                 
     <persistence-unit name="junit">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
@@ -111,16 +111,15 @@
 			<property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
     </persistence-unit>
-    
-        
-	<!-- JUnit AS/400        
+            
+	<!-- JUnit AS/400         
     <persistence-unit name="junit">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
 			<property name="hibernate.connection.driver_class" value="com.ibm.as400.access.AS400JDBCDriver"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.DB2400Dialect"/>
 			<property name="hibernate.connection.url" value="jdbc:as400:192.168.1.8"/>
-			<property name="hibernate.default_schema" value="XAVATEST"/>			
+			<property name="hibernate.default_schema" value="XAVATEST"/>
 			<property name="hibernate.connection.username" value=""/>
 			<property name="hibernate.connection.password" value=""/>
         </properties>

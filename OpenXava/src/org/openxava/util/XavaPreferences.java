@@ -149,20 +149,15 @@ public class XavaPreferences {
 		return getProperties().getProperty("liferay43StyleClass",
 				"org.openxava.web.style.Liferay43Style").trim();
 	}
+	
+	public String getWebSpherePortal8StyleClass() { 
+		return getProperties().getProperty("webSpherePortal8StyleClass",
+				"org.openxava.web.style.WebSpherePortal8Style").trim();
+	}	
 
 	public String getWebSpherePortal61StyleClass() {
 		return getProperties().getProperty("webSpherePortal61StyleClass",
 				"org.openxava.web.style.WebSpherePortal61Style").trim();
-	}
-
-	public String getWebSpherePortal6StyleClass() {
-		return getProperties().getProperty("webSpherePortal6StyleClass",
-				"org.openxava.web.style.WebSpherePortal6Style").trim();
-	}
-
-	public String getWebSpherePortalStyleClass() {
-		return getProperties().getProperty("webSpherePortalStyleClass",
-				"org.openxava.web.style.WebSpherePortalStyle").trim();
 	}
 
 	public String getJetSpeed2StyleClass() {
