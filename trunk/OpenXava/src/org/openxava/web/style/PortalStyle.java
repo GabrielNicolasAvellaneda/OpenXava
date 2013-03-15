@@ -2,8 +2,6 @@ package org.openxava.web.style;
 
 import java.util.*;
 
-import javax.servlet.http.*;
-
 import org.apache.commons.logging.*;
 import org.openxava.util.*;
 

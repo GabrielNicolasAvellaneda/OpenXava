@@ -24,7 +24,7 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		execute("ReferenceSearch.choose", "row=" + row);
 		execute("Sections.change", "activeSection=4,viewObject=xava_view_delivery");
 		
-		assertCollectionRowCount("delivery.details", 3);
+		assertCollectionRowCount("delivery.details", 3); 
 		execute("List.orderBy", "property=number,collection=delivery.details"); 
 		assertValueInCollection("delivery.details", 0, 0, "11"); 
 		assertValueInCollection("delivery.details", 1, 0, "12");

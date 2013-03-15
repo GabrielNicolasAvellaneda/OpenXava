@@ -518,12 +518,16 @@ public class Style {
 
 	public String getFrameHeaderStartDecoration(int width) {  
 		StringBuffer r = new StringBuffer();
-		String widthAttribute = width == 0?"":"width=" + width+ "% ";
 		r.append("<table ");
-		r.append(widthAttribute);
 		r.append(" class='");
 		r.append(getFrame());
-		r.append("' style='float:left; margin-right:4px'"); 
+		r.append("' style='float:left;margin-right:4px;");
+		if (width != 0) {
+			r.append("width:");
+			r.append(width);
+			r.append("%");
+		}		
+		r.append("'");
 		r.append(getFrameSpacing());
 		r.append(">");
 		r.append("<tr class='");
@@ -531,7 +535,8 @@ public class Style {
 		r.append("'>");		
 		r.append("<th>\n");						
 		return r.toString();
-	}	
+	}
+	
 	public String getFrameHeaderEndDecoration() { 		
 		return "</th></tr>";			
 	}

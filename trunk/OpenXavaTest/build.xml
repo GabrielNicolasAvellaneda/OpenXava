@@ -87,6 +87,15 @@
 		<ant antfile="../OpenXava/build.xml" target="regenerateWebsphereMapping"/>
 	</target>
 	
+	<target name="createWebSphere8War">
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+		<ant antfile="../OpenXava/build.xml" target="createWebSphere8War"/>     		
+	</target>
+	
+	<target name="generateWebSpherePortal8Portlets">
+		<ant antfile="../OpenXava/build.xml" target="generateWebSpherePortal8Portlets"/>     		
+	</target>	
+	
 	<target name="createWebsphereEar">
 		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>     		
 		<antcall target="createEJBJars"/>		

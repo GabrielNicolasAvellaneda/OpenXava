@@ -676,6 +676,10 @@
 	<target name="createWar" depends="prepareWar">
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="web"/>
 	</target>
+		
+	<target name="createWebSphere8War" depends="prepareWar">
+		<jar jarfile="${dist.dir}/${name.war}.war" basedir="web" excludes="WEB-INF/lib/validation-api.jar"/>
+	</target>
 
 	<target name="deployWar" depends ="createWar">
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.dir}" overwrite="true"/>
@@ -773,7 +777,7 @@
 		</java>
 	</target>
 
-	<target name="createPortletsWar" depends="initPortlets, generatePortletXml">
+	<target name="preparePortletsWar" depends="initPortlets, generatePortletXml">
 		<antcall target="insertCustomPortlets"/> 
 		<antcall target="prepareWar"/>
 		<antcall target="copyI18nPortletsToClasses"/>
@@ -810,9 +814,25 @@
 		<copy todir="${dist.portlets.dir}/xava/help" failonerror="false">
 			<fileset dir="web/help"/>
 		</copy>
-		
+	</target>
+	
+	<target name="createPortletsWar">
+		<antcall target="preparePortletsWar"/> 		
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
 	</target>
+	
+	<target name="createWebSpherePortal8War">
+		<antcall target="preparePortletsWar"/> 		
+		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}" excludes="WEB-INF/lib/validation-api.jar"/>
+	</target>
+	
+	<target name="generateWebSpherePortal8Portlets">
+		<antcall target="touchApplicationXML"/>
+		<delete dir="${dist.portlets.dir}"/>
+		<antcall target="createWebSpherePortal8War">
+			<param name="generate.jetspeed2.files" value="false"/>
+		</antcall>
+	</target>	
 
 	<target name="generatePortlets">
 		<antcall target="touchApplicationXML"/>

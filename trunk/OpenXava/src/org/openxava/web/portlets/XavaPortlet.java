@@ -230,9 +230,8 @@ public class XavaPortlet extends GenericPortlet {
 					else if (portal.indexOf("5.1.") >= 0 || portal.indexOf("5.2.") >= 0) styleClass = preferences.getLiferay51StyleClass();
 					else styleClass = preferences.getLiferay6StyleClass();
 				}
-				else if (portal.indexOf("websphere portal/6.1") >= 0) styleClass = preferences.getWebSpherePortal61StyleClass();  
-				else if (portal.indexOf("websphere portal/6") >= 0) styleClass = preferences.getWebSpherePortal6StyleClass();
-				else if (portal.indexOf("websphere portal/5") >= 0) styleClass = preferences.getWebSpherePortalStyleClass();				
+				else if (portal.indexOf("websphere portal/6.1") >= 0) styleClass = preferences.getWebSpherePortal61StyleClass();
+				else if (portal.indexOf("websphere portal") >= 0) styleClass = preferences.getWebSpherePortal8StyleClass();
 				else if (portal.indexOf("jetspeed") >= 0) styleClass = preferences.getJetSpeed2StyleClass();
 				else style = Style.getInstance();
 				

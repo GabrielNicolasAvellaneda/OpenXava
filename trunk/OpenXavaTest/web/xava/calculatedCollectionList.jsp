@@ -8,7 +8,7 @@
 <%@page import="org.openxava.util.XavaPreferences"%>
 
 <%
-String tabObject = request.getParameter("tabObject"); // tmp Las colecciones calculadas no tienen tab
+String tabObject = request.getParameter("tabObject"); 
 tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
 String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
 String selectedRowStyle = style.getSelectedRowStyle();

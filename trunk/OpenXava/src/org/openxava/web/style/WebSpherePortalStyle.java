@@ -20,7 +20,7 @@ public class WebSpherePortalStyle extends PortalStyle {
 		}
 		return instance;
 	}
-	
+		
 	protected String getJQueryCss() { 
 		return "/xava/style/cupertino/jquery-ui.css";
 	}

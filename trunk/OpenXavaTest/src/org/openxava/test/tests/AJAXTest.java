@@ -479,7 +479,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedPart("reference_editor_address___state"); 
 		
 		execute("Navigation.next");
-		assertValue("number", "3");
+		assertValue("number", "3"); 
 		assertDescriptionValue("address.state.id", "New York");
 		assertLoadedPart("reference_editor_address___state"); 
 		

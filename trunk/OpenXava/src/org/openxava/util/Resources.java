@@ -2,30 +2,12 @@ package org.openxava.util;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 /**
  * @author Javier Paniza
  */
-public class Resources {
-	
-	/**
-	 * Return the last of resource from ClassLoader.getResources(). <p>
-
-	 * @param baseClass Base class from start the search of resource. 
-	 * @param resourceName
-	 * @since 4.7 
-	 */
-	public static URL getLastResource(Class baseClass, String resourceName) throws IOException {
-		Enumeration e = baseClass.getClassLoader().getResources(resourceName);
-		URL url = null;
-		while (e.hasMoreElements()) {
-			url = (URL) e.nextElement();
-		}		
-		return url;
-	}
-	
-	
+public class Resources {	
+		
 	/**
 	 * Load a resource from the classpath and return it in String format. <p>
 	 * 

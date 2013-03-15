@@ -13,6 +13,7 @@ import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
+import org.openxava.jpa.impl.*;
 import org.w3c.dom.*;
 
 /**
@@ -92,7 +93,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 		jpaDataSources = new HashMap();
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			URL url = Resources.getLastResource(XPersistence.class, "META-INF/persistence.xml"); 
+			URL url = PersistenceXml.getResource(); 
 			Document doc = builder.parse(url.toExternalForm());
 			NodeList units = doc.getElementsByTagName("persistence-unit");
 			int unitsCount = units.getLength();
@@ -111,6 +112,8 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 			log.error(ex.getMessage(), ex); 
 		}		
 	}
+	
+
 
 	public static IConnectionProvider getByComponent(String componentName) throws XavaException {
 		if (providers == null) providers = new HashMap();

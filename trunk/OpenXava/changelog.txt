@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- WebSphere Portal 8 support including visual style integration.
 - WebSphere 8 support.
 - Fix: web.xml is not Servlet 2.4 compatible, though OpenXava uses Servlet 2.4 since v3.1.
 - If a session object has a request property, the current request is injected before injecting the object into the action. 
