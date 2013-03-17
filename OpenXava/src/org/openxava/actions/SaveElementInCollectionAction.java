@@ -29,8 +29,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			getView().setKeyEditable(false); // To mark as saved
 		}
-		if (isEntityReferencesCollection()) saveEntity(containerKey);
-		else saveAggregate(containerKey);		
+		saveCollectionElement(containerKey);
 		getView().setKeyEditable(false); // To mark as saved
 		getCollectionElementView().setCollectionEditingRow(-1);
 		getCollectionElementView().clear();
@@ -55,6 +54,16 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 				throw new ValidationException(errors);
 			}
 		}		
+	}
+	
+	/**
+	 * Saves the collection or aggregate.
+	 * @param containerKey 
+	 * @throws Exception
+	 */
+	protected void saveCollectionElement(Map containerKey) throws Exception {
+		if (isEntityReferencesCollection()) saveEntity(containerKey);
+		else saveAggregate(containerKey);		
 	}
 
 	private void saveEntity(Map containerKey) throws Exception {
