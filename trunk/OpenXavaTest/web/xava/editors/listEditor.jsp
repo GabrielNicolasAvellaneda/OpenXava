@@ -393,12 +393,12 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		int columnWidth = tab.getColumnWidth(c);		 		
 		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px"; 
 		String fvalue = null;
-		if (p.hasValidValues()) {
-			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
-		}
-		else {
+// 		if (p.hasValidValues()) {
+// 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
+// 		}
+// 		else {
 			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName(), true);
-		}
+// 		}
 		Object title = WebEditors.formatTitle(request, p, model.getValueAt(f, c), errors, view.getViewName(), true); 
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
