@@ -193,9 +193,8 @@ else {
 	it = tab.getMetaProperties().iterator();
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
-		String type=getType(p); 
 	%>
-	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="<%=type%>"/> 	
+	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="java.lang.String"/> 	
 	<%
 	}
 	%>	
@@ -415,10 +414,7 @@ while (it.hasNext()) {
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
 						<font reportFont="Arial_Normal" size="<%=letterSize%>"/>
 					</textElement>
-					<%		
-					String type=getType(p);
-					%>
-					<textFieldExpression   class="<%=type%>">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
+					<textFieldExpression   class="java.lang.String">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
 				</textField>
 <%
 	x+=(width+columnsSeparation);
