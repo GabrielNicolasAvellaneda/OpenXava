@@ -906,7 +906,7 @@
 	
 	<controller name="Color">
 		<action name="seeMessage" class="org.openxava.test.actions.SeeMessageAction" mode="detail"/>
-		<action name="seeMessageSelected" class="org.openxava.test.actions.SeeMessageSelectedColorsAction" mode="list"/>
+		<action name="seeMessageSelected" class="org.openxava.test.actions.SeeMessageSelectedColorsAction" mode="list"/> 
 	</controller>
 	
 	<controller name="ColorinColorado">  		
