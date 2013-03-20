@@ -25,14 +25,14 @@ class OrphanageTest extends ModuleTestBase {
 		assertPopupPDFLine 4, "ANTONIO"
 		
 		// print only the selected
-		checkRowCollection "orphans", 0
+		checkRowCollection "orphans", 1
 		execute "Print.generatePdf", "viewObject=xava_view_orphanage_orphans"
 		assertNoErrors()
 		assertContentTypeForPopup "application/pdf"
 		assertPopupPDFLinesCount(5);
 		assertPopupPDFLine 1, "Orphans of Orphanage: EL INTERNADO"
 		assertPopupPDFLine 2, "Name"
-		assertPopupPDFLine 3, "JUAN"
+		assertPopupPDFLine 3, "ANTONIO"
 	}
 	
 	void testOrphanRemovalAsEmbedded() {
