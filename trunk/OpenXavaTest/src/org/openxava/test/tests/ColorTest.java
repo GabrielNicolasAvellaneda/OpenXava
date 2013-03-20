@@ -3,7 +3,6 @@ package org.openxava.test.tests;
 import javax.persistence.*;
 
 import org.apache.commons.logging.*;
-import org.hibernate.validator.util.privilegedactions.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -19,6 +18,24 @@ public class ColorTest extends ModuleTestBase {
 		super(testName, "Color");		
 	}
 	
+	public void testPrintPDF() throws Exception {
+		execute("List.orderBy", "property=number");
+		checkRow(1);
+		checkRow(5);
+		execute("List.orderBy", "property=number");
+		checkRow(0);
+		execute("Color.seeMessageSelected");
+		assertMessage("(before) Rows of selected colors [0]");
+		assertMessage("(after) Rows of selected colors [{number= 1}][{number= 1 7 8}][{number= 6 0 4}]");
+		
+		execute("Print.generatePdf");
+		assertContentTypeForPopup("application/pdf");
+		assertPopupPDFLinesCount(7);
+		assertPopupPDFLine(3, "604 JUNIT COLOR 162 NOCOLOR");
+		assertPopupPDFLine(4, "178 JUNIT COLOR 110 NOCOLOR");
+		assertPopupPDFLine(5, "1 NEGRO 000000 BLACK LAMPPOST");
+	}
+	
 	public void testActionWithSelectedRowFromAnotherPage() throws Exception{
 		checkRow(2);
 		checkRow(6);
@@ -26,7 +43,8 @@ public class ColorTest extends ModuleTestBase {
 		checkRow(10);
 		execute("List.goNextPage");
 		execute("Color.seeMessageSelected");
-		assertMessage("Rows of selected colors [2][6][10]");
+		assertMessage("(before) Rows of selected colors [2][6][10]");
+		assertMessage("(after) Rows of selected colors [{number= 2 8}][{number= 1 7 9}][{number= 1 8 3}]");
 		assertNoErrors();
 	}
 	
