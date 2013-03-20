@@ -1,5 +1,7 @@
 package org.openxava.test.actions;
 
+import java.util.*;
+
 import javax.inject.*;
 
 import org.apache.commons.logging.*;
@@ -18,9 +20,13 @@ public class SeeMessageSelectedColorsAction extends BaseAction{
 	
 	public void execute() throws Exception {
 		int[] selected = getTab().getSelected();	// test the old method
+		Map[] selectedKeys = getTab().getSelectedKeys();
 		String m = "";
+		String o = "";
 		for (int i = 0; i < selected.length; i++) m+="[" + selected[i] + "]";
-		addMessage("color_selected", m);
+		for (int i = 0; i < selectedKeys.length; i++) o+="[" + selectedKeys[i] + "]";
+		addMessage("color_selected_old", m);
+		addMessage("color_selected_new", o);
 	}
 
 	public Tab getTab() {
