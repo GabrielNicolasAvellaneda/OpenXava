@@ -43,13 +43,17 @@ public class GenerateReportServlet extends HttpServlet {
 		private boolean withValidValues = false;
 		private Locale locale;
 		private boolean labelAsHeader = false;
+		private HttpServletRequest request;
+		private boolean format = false;	// format or no the values. If format = true, all values to the report are String
 		
-		public TableModelDecorator(TableModel original, List metaProperties, Locale locale, boolean labelAsHeader) throws Exception {
+		public TableModelDecorator(TableModel original, List metaProperties, Locale locale, boolean labelAsHeader, HttpServletRequest request, boolean format) throws Exception {
 			this.original = original;
 			this.metaProperties = metaProperties;
 			this.locale = locale;
 			this.withValidValues = calculateWithValidValues();
 			this.labelAsHeader = labelAsHeader;
+			this.request = request;
+			this.format = format;
 		}
 
 		private boolean calculateWithValidValues() {
@@ -86,6 +90,11 @@ public class GenerateReportServlet extends HttpServlet {
 		}
 
 		public Object getValueAt(int row, int column) {
+			if (isFormat()) return getValueWithWebEditorsFormat(row, column);
+			else return getValueWithoutWebEditorsFormat(row, column);
+		}
+
+		private Object getValueWithoutWebEditorsFormat(int row, int column){
 			Object r = original.getValueAt(row, column);
 
 			if (r instanceof Boolean) {
@@ -118,7 +127,17 @@ public class GenerateReportServlet extends HttpServlet {
 			
 			return r;
 		}
-
+		
+		private Object getValueWithWebEditorsFormat(int row, int column){
+			Object r = original.getValueAt(row, column);
+			MetaProperty metaProperty = getMetaProperty(column);
+			String result = WebEditors.format(this.request, metaProperty, r, null, "", true);
+			if (isHtml(result)){	// this avoids that the report shows html content
+				result = WebEditors.format(this.request, metaProperty, r, null, "", false);
+			}
+			return result;
+		}
+		
 		public void setValueAt(Object value, int row, int column) {
 			original.setValueAt(value, row, column);			
 		}
@@ -129,6 +148,18 @@ public class GenerateReportServlet extends HttpServlet {
 
 		public void removeTableModelListener(TableModelListener l) {
 			original.removeTableModelListener(l);			
+		}
+
+		private boolean isHtml(String value){
+			return value.matches("<.*>");
+		}
+
+		public boolean isFormat() {
+			return format;
+		}
+
+		public void setFormat(boolean format) {
+			this.format = format;
 		}
 	}
 	
@@ -142,9 +173,13 @@ public class GenerateReportServlet extends HttpServlet {
 			request.getParameter("application"); // for a bug in websphere 5.1 
 			request.getParameter("module"); // for a bug in websphere 5.1
 			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");			
-			request.getSession().removeAttribute("xava_reportTab"); 
-			Map [] selectedRows = (Map []) request.getSession().getAttribute("xava_selectedRowsReportTab"); 
+			request.getSession().removeAttribute("xava_reportTab");
+			int [] selectedRowsNumber = (int []) request.getSession().getAttribute("xava_selectedRowsReportTab");
+			Map [] selectedKeys = (Map []) request.getSession().getAttribute("xava_selectedKeysReportTab");
+			int [] selectedRows = getSelectedRows(selectedRowsNumber, selectedKeys, tab);
+			
 			request.getSession().removeAttribute("xava_selectedRowsReportTab");
+			
 			setDefaultSchema(request);
 			String user = (String) request.getSession().getAttribute("xava_user");
 			request.getSession().removeAttribute("xava_user");
@@ -163,7 +198,7 @@ public class GenerateReportServlet extends HttpServlet {
 					}
 					is  = getReport(request, response, tab);
 					ds = getDataSource(tab, selectedRows, request);
-				}				
+				}	
 				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);					
 				response.setContentType("application/pdf");	
 				response.setHeader("Content-Disposition", "inline; filename=\"" + getFileName(tab) + ".pdf\""); 
@@ -179,7 +214,7 @@ public class GenerateReportServlet extends HttpServlet {
 				response.setHeader("Content-Disposition", "inline; filename=\"" + getFileName(tab) + ".csv\""); 
 				synchronized (tab) {
 					tab.setRequest(request);
-					response.getWriter().print(TableModels.toCSV(getTableModel(tab, selectedRows, request, true)));
+					response.getWriter().print(TableModels.toCSV(getTableModel(tab, selectedRows, request, true, false)));
 				}
 			}
 			else {
@@ -191,7 +226,7 @@ public class GenerateReportServlet extends HttpServlet {
 			throw new ServletException(XavaResources.getString("report_error"));
 		}		
 	}
-	
+
 	private String getFileName(Tab tab) { 
 		String now = new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date());
 		return tab.getModelName() + "-list_" + now;
@@ -237,11 +272,11 @@ public class GenerateReportServlet extends HttpServlet {
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
 	
-	private JRDataSource getDataSource(Tab tab, Map [] selectedRows, ServletRequest request) throws Exception {
-		return new JRTableModelDataSource(getTableModel(tab, selectedRows, request, false));		
+	private JRDataSource getDataSource(Tab tab, int [] selectedRows, HttpServletRequest request) throws Exception {
+		return new JRTableModelDataSource(getTableModel(tab, selectedRows, request, false, true));		
 	}		  	
 	
-	private TableModel getTableModel(Tab tab, Map [] selectedRows, ServletRequest request, boolean labelAsHeader) throws Exception {
+	private TableModel getTableModel(Tab tab, int [] selectedRows, HttpServletRequest request, boolean labelAsHeader, boolean format) throws Exception {
 		TableModel data = null;
 		if (selectedRows != null && selectedRows.length > 0) {
 			data = new SelectedRowsXTableModel(tab.getTableModel(), selectedRows);
@@ -249,7 +284,7 @@ public class GenerateReportServlet extends HttpServlet {
 		else {
 			data = tab.getAllDataTableModel();
 		}
-		return new TableModelDecorator(data, tab.getMetaProperties(), Locales.getCurrent(), labelAsHeader);
+		return new TableModelDecorator(data, tab.getMetaProperties(), Locales.getCurrent(), labelAsHeader, request, format);
 	}
 	
 	private static Object formatBigDecimal(Object number, Locale locale) { 
@@ -257,5 +292,30 @@ public class GenerateReportServlet extends HttpServlet {
 		nf.setMinimumFractionDigits(2);
 		return nf.format(number);
 	}
-	
+
+	private int[] getSelectedRows(int[] selectedRowsNumber, Map[] selectedRowsKeys, Tab tab){
+		if (selectedRowsKeys == null || selectedRowsKeys.length == 0) return new int[0];
+		else if (selectedRowsNumber.length == selectedRowsKeys.length) return selectedRowsNumber;
+		else{
+			// find the rows from the selectedKeys
+			try{
+				int[] s = new int[selectedRowsKeys.length];
+				List selectedKeys = Arrays.asList(selectedRowsKeys);
+				int end = tab.getTableModel().getTotalSize();
+				int x = 0;
+				for (int i = 0; i < end; i++){
+					Map key = (Map)tab.getTableModel().getObjectAt(i);
+					if (selectedKeys.contains(key)){
+						s[x] = i; 
+						x++;
+					}
+				}	
+				return s;
+			}
+			catch(Exception ex){
+				log.warn(XavaResources.getString("fails_selected"), ex); 
+				throw new XavaException("fails_selected");
+			}
+		}
+	}
 }
