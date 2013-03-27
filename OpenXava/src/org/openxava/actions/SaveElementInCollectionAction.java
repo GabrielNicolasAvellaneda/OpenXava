@@ -60,6 +60,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	 * Saves the collection or aggregate.
 	 * @param containerKey 
 	 * @throws Exception
+	 * @since 4.7 
 	 */
 	protected void saveCollectionElement(Map containerKey) throws Exception {
 		if (isEntityReferencesCollection()) saveEntity(containerKey);

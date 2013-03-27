@@ -203,6 +203,10 @@ TD.list-title {
 	padding: 2px;
 }
 
+.results-header .liferay-xava-cell-wrapper a {
+	display: inline;
+}
+
 .liferay-xava-cell-wrapper {
 	border: 1px solid #CCCCCC;
 }
@@ -214,6 +218,10 @@ TD.list-title {
 	
 .liferay-xava-label {
 	padding-right: 4px;
+}
+
+.liferay6-xava-label {
+	font-weight:bold;
 }
 
 .editor, .portlet-form-input-field {
@@ -242,7 +250,6 @@ TD.list-title {
 	border-top: 1px solid lightgray;
 	border-right: 1px solid lightgray;
 }
-
 
 .bold-label {
 	font-weight:bold;

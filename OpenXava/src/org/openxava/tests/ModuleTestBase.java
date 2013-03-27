@@ -453,6 +453,8 @@ public class ModuleTestBase extends TestCase {
 		client = new WebClient(getBrowserVersion());		
 		client.setThrowExceptionOnFailingStatusCode(false); // Because some .js are missing in Liferay 4.1
 		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3
+		client.setCssEnabled(false);  
+		
 		if (getLocale() != null) {
 			client.addRequestHeader("Accept-Language", getLocale());			
 			Locale.setDefault(new Locale(getLocale(), ""));
@@ -2221,7 +2223,12 @@ public class ModuleTestBase extends TestCase {
 	 * The use of <b>this method is discoraged</b> because binds your test
 	 * to a HTML implementation.
 	 * Before to use this method look for another more abstract method
-	 * in this class.
+	 * in this class.<br>
+	 * By default CSS is disabled for performance, 
+	 * if you need that CSS works for your test, write this line:
+	 * <pre>
+	 * getWebClient().setCssEnabled(true);
+	 * </pre>
 	 */
 	protected WebClient getWebClient() {
 		return client;
