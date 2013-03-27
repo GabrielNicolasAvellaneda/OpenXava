@@ -43,18 +43,6 @@ private void tightenWidths(int [] widths) {
 	}		
 }
 
-private String getType(MetaProperty p) throws Exception {
-	if (p.hasValidValues() || 
-		p.getType().equals(boolean.class) ||
-		p.getType().equals(java.lang.Object.class)) return "java.lang.String";
-	if (java.sql.Timestamp.class.equals(p.getType())) return "java.lang.String";
-	if (java.util.Date.class.equals(p.getType())) return "java.lang.String";
-	if (java.math.BigDecimal.class.equals(p.getType())) return "java.lang.String";
-	if (java.sql.Time.class.equals(p.getType())) return "java.lang.String";
-	if (java.lang.Number.class.isAssignableFrom(Primitives.toWrapperClass(p.getType()))) return "java.lang.Number";
-	return Primitives.toWrapperClass(p.getType()).getName();
-}
-
 private String getAlign(MetaProperty p) throws Exception {
 	String align = "Left";
 	if (p.isNumber() && !p.hasValidValues()) align = "Right";

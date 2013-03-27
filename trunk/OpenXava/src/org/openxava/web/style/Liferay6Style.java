@@ -87,15 +87,20 @@ public class Liferay6Style extends Liferay51Style {
 	
 	
 	public String getTotalEmptyCellStyle() {  
-		return "border-bottom-style: hidden;";
+		return "border-bottom-style:hidden;border-left-style:hidden;border-right-style:hidden;";   
 	}
+	
+	public String getLabel() {  	
+		return super.getLabel() + " liferay6-xava-label";
+	} 
+
 	
 	public String getTotalCell() { 
 		return "";
 	}
 	
 	public String getTotalCellStyle() {  
-		return getTotalCellAlignStyle() + ";border-bottom-style: hidden;";
+		return getTotalCellAlignStyle() + ";border-bottom-style:hidden;border-left-style:hidden;border-right-style:hidden;"; 
 	}	
 	
 }
