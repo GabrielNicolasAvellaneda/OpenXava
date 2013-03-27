@@ -100,11 +100,12 @@ public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
 		Thread.sleep(1000); // Needed in order the above showCollection() works in all computers
 	}	
 	
-	private void assertTotalsInFrameOfCollection(String collection, String totals, boolean addAction) throws Exception { 
+	private void assertTotalsInFrameOfCollection(String collection, String totals, boolean addAction) throws Exception {
+		getWebClient().setCssEnabled(true); 
 		HtmlElement header = getHtmlPage().getElementById("ox_OpenXavaTest_InvoiceDetailsWithTotals__frame_" + collection + "header");
 		assertEquals("", header.asText());
 		hideCollection(collection); 
-		assertEquals(totals, header.asText());
+		assertEquals(totals, header.asText());		
 		reload(); 
 		header = getHtmlPage().getElementById("ox_OpenXavaTest_InvoiceDetailsWithTotals__frame_" + collection + "header");
 		assertEquals(totals, header.asText());

@@ -43,6 +43,7 @@ private void tightenWidths(int [] widths) {
 	}		
 }
 
+/* tmp
 private String getType(MetaProperty p) throws Exception {
 	if (p.hasValidValues() || 
 		p.getType().equals(boolean.class) ||
@@ -54,6 +55,7 @@ private String getType(MetaProperty p) throws Exception {
 	if (java.lang.Number.class.isAssignableFrom(Primitives.toWrapperClass(p.getType()))) return "java.lang.Number";
 	return Primitives.toWrapperClass(p.getType()).getName();
 }
+*/
 
 private String getAlign(MetaProperty p) throws Exception {
 	String align = "Left";
@@ -193,7 +195,6 @@ else {
 	it = tab.getMetaProperties().iterator();
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
-		// String type=getType(p); 
 	%>
 	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="java.lang.String"/> 	
 	<%
@@ -415,9 +416,6 @@ while (it.hasNext()) {
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
 						<font reportFont="Arial_Normal" size="<%=letterSize%>"/>
 					</textElement>
-					<%		
-					//String type=getType(p);
-					%>
 					<textFieldExpression   class="java.lang.String">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
 				</textField>
 <%
