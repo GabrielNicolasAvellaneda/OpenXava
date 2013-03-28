@@ -1,26 +1,29 @@
 Change Log for OpenXava project
 ===============================
 
-- New protected method saveCollectionElement() in SaveElementInCollectionAction to refine behavior.
-- Data in automatic PDF reports is formatted in the same way as in list. 
-- 30% performance improvement in automated module tests.
-- Liferay 6.1 support.
+OpenXava 4.7 (2013-4-2)
+-----------------------
+- ExtendedPrint.myReports stores all the generated reports, so the user can get them by name later. 
 - WebSphere Portal 8 support including visual style integration.
 - WebSphere 8 support.
-- Fix: web.xml is not Servlet 2.4 compatible, though OpenXava uses Servlet 2.4 since v3.1.
+- Liferay 6.1 support.
+- 30% performance improvement in automated module tests.
+- Action ExtendedPrint.customReport renamed to ExtendedPrint.myReports.
+- New smtpHostTrusted property in xava.properties to use email servers with expired certificates. 
 - If a session object has a request property, the current request is injected before injecting the object into the action. 
+- Date formatting optimized for French.
+- New protected method saveCollectionElement() in SaveElementInCollectionAction to refine behavior.
+- Data in automatic PDF reports is formatted in the same way as in list. 
+- New layout engine improved again, though it is still in BETA and deactivated by default.
+- User preferences support creating and removing subnodes (from Preferences Java API).
+- Fix: web.xml is not Servlet 2.4 compatible, though OpenXava uses Servlet 2.4 since v3.1.
 - Fix: Sometimes columns customization for collections is not stored.
 - Fix: Report title is not shown for automatic PDF reports in some machines.
-- New smtpHostTrusted property in xava.properties to use email servers with expired certificates. 
 - Fix: Many standard i18n messages do not show correctly apostrophes.
 - Fix: In custom reports filters gt_comparator is shown instead of > with Spanish.
-- ExtendedPrint.myReports stores all the generated reports, so the user can get them by name later. 
-- Action ExtendedPrint.customReport renamed to ExtendedPrint.myReports.
 - Fix: @ManyToMany collections fail after removing one of the elements.
-- New layout engine improved again, though it is still in BETA and deactivated by default.
 - Fix: Selected rows are lost when you do a order by any property, a page change, etc.
 - Fix: When combining filter and order in custom report, filter is ignored. 
-- User preferences support creating and removing subnodes (from Preferences Java API).
 - Fix: Confirm message for actions associated to properties incorrect. 
 - Fix: View.setModel() does not refresh collections.
 

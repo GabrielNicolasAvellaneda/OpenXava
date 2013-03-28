@@ -149,6 +149,9 @@
 	</view>	
 	
 	<view name="CollectionsTogether">
+	
+		<property name="oldSync" type="boolean"/>
+	
 		<reference-view reference="warehouse">
 			<descriptions-list description-property="name"/>
 		</reference-view>
@@ -158,7 +161,7 @@
 		</collection-view>
 		
 		<members>
-			warehouse; 
+			warehouse, oldSync; 
 			fellowCarriers, fellowCarriersCalculated;
 		</members>
 	</view>

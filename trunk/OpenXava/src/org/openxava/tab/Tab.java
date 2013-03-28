@@ -1768,8 +1768,15 @@ public class Tab implements java.io.Serializable {
 		this.addColumnsPageRowCount = addColumnsPageRowCount;
 	}
 
-	public void clearSelected() {
+	public void deselectAll() {
 		selectedKeys = new ArrayList<Map>();
+	}
+
+	/**
+	 * @deprecated Since v4.7, use deselectAll() instead
+	 */
+	public void clearSelected() {
+		deselectAll();
 	}
 	
 	/** @since 4m6 */
