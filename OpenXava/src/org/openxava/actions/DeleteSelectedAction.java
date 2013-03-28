@@ -30,7 +30,7 @@ public class DeleteSelectedAction extends TabBaseAction implements IModelAction 
 					addError("no_delete_row", new Integer(i), key);
 				}				
 			}
-			getTab().clearSelected();
+			getTab().deselectAll();
 			resetDescriptionsCache();
 		}
 	}

@@ -19,7 +19,7 @@ public class DateFormatter implements IFormatter {
 	
 	private static DateFormat extendedDateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Only for some locales like "es" and "pl"
 	
-	private static DateFormat [] extendedDateFormats = { // Only for some locales like "es" and "pl"
+	private static DateFormat [] extendedDateFormats = { // Only for some locales like "es", "fr", "ca" and "pl"
 		new SimpleDateFormat("dd/MM/yy"), 
 		new SimpleDateFormat("ddMMyy"),
 		new SimpleDateFormat("dd.MM.yy")				
@@ -53,7 +53,8 @@ public class DateFormatter implements IFormatter {
 	private boolean isExtendedFormat() {
 		return "es".equals(Locales.getCurrent().getLanguage()) ||
 			"ca".equals(Locales.getCurrent().getLanguage()) || 
-			"pl".equals(Locales.getCurrent().getLanguage());
+			"pl".equals(Locales.getCurrent().getLanguage()) ||
+			"fr".equals(Locales.getCurrent().getLanguage());
 	}
 	
 	private DateFormat getDateFormat() {

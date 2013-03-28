@@ -528,7 +528,7 @@ public class View implements java.io.Serializable {
 			}	
 		}	
 		listSelected = null;
-		if (collectionTab != null) collectionTab.clearSelected(); 		
+		if (collectionTab != null) collectionTab.deselectAll(); 		
 	}
 	
 	private void resetCollectionTotals() throws XavaException {
@@ -5034,7 +5034,7 @@ public class View implements java.io.Serializable {
 		if (isCollectionCalculated()) {
 			listSelected = null;
 		} else {
-			getCollectionTab().clearSelected();
+			getCollectionTab().deselectAll();
 		}
 	}
 	
