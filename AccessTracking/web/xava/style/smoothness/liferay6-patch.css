@@ -5,6 +5,7 @@
 	display: none;
 	font-size: 0.1px;
 	position: absolute;
+	z-index: 999; /* tmp Probarlo en LF5 y LF6 */
 }
 
 .xava_resizable .ui-resizable-e {
@@ -13,8 +14,4 @@
 	bottom: 0;
 	top: 0;
 	width: 14px;
-}
-
-.liferay-xava-label {
-	font-weight:bold;
 }

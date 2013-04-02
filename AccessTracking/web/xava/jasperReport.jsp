@@ -43,18 +43,6 @@ private void tightenWidths(int [] widths) {
 	}		
 }
 
-private String getType(MetaProperty p) throws Exception {
-	if (p.hasValidValues() || 
-		p.getType().equals(boolean.class) ||
-		p.getType().equals(java.lang.Object.class)) return "java.lang.String";
-	if (java.sql.Timestamp.class.equals(p.getType())) return "java.lang.String";
-	if (java.util.Date.class.equals(p.getType())) return "java.lang.String";
-	if (java.math.BigDecimal.class.equals(p.getType())) return "java.lang.String";
-	if (java.sql.Time.class.equals(p.getType())) return "java.lang.String";
-	if (java.lang.Number.class.isAssignableFrom(Primitives.toWrapperClass(p.getType()))) return "java.lang.Number";
-	return Primitives.toWrapperClass(p.getType()).getName();
-}
-
 private String getAlign(MetaProperty p) throws Exception {
 	String align = "Left";
 	if (p.isNumber() && !p.hasValidValues()) align = "Right";
@@ -193,9 +181,8 @@ else {
 	it = tab.getMetaProperties().iterator();
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
-		String type=getType(p); 
 	%>
-	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="<%=type%>"/> 	
+	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="java.lang.String"/> 	
 	<%
 	}
 	%>	
@@ -241,7 +228,7 @@ else {
 						isPrintInFirstWholeBand="false"
 						isPrintWhenDetailOverflows="false"/>
 					<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="16"/>
+						<font reportFont="Arial_Normal" size="15"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String">$P{Title}</textFieldExpression>					
 				</textField>
@@ -415,10 +402,7 @@ while (it.hasNext()) {
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
 						<font reportFont="Arial_Normal" size="<%=letterSize%>"/>
 					</textElement>
-					<%		
-					String type=getType(p);
-					%>
-					<textFieldExpression   class="<%=type%>">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
+					<textFieldExpression   class="java.lang.String">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
 				</textField>
 <%
 	x+=(width+columnsSeparation);
