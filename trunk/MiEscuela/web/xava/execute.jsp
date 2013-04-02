@@ -1,3 +1,7 @@
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.Enumeration"%>
+<%@ page import="java.util.StringTokenizer"%>
+<%@ page import="org.openxava.web.Ids"%>
 <%@ page import="java.awt.event.InputEvent" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Iterator" %>
@@ -30,8 +34,16 @@ request.setAttribute("tab", t);
 %>
 <jsp:useBean id="tab" class="org.openxava.tab.Tab" scope="request"/>
 <%
-if (manager.isListMode() || manager.isSplitMode()) { 
-	tab.deselectVisualizedRows();
+View view = (View) context.get(request, "xava_view");
+String[] deselected = request.getParameterValues("deselected");
+if (deselected != null){
+	for (int i = 0; i < deselected.length; i++){
+		String d = deselected[i];
+		if (d.contains("xava_tab")) tab.friendExecuteJspDeselect(d);
+		else if (d.contains("xava_collectionTab")) {
+			view.deselectCollection(d);
+		}
+	}	
 }
 %>
 
@@ -42,8 +54,7 @@ if (manager.isListMode() || manager.isSplitMode()) {
 <%
 manager.setApplicationName(request.getParameter("application"));
 manager.setModuleName(request.getParameter("module"));
-manager.executeBeforeEachRequestActions(request, errors, messages); 
-View view = (View) context.get(request, "xava_view");
+manager.executeBeforeEachRequestActions(request, errors, messages);
 view.setRequest(request);
 view.setErrors(errors);
 view.setMessages(messages);

@@ -203,6 +203,10 @@ TD.list-title {
 	padding: 2px;
 }
 
+.results-header .liferay-xava-cell-wrapper a {
+	display: inline;
+}
+
 .liferay-xava-cell-wrapper {
 	border: 1px solid #CCCCCC;
 }
@@ -216,6 +220,10 @@ TD.list-title {
 	padding-right: 4px;
 }
 
+.liferay6-xava-label {
+	font-weight:bold;
+}
+
 .editor, .portlet-form-input-field {
 	color: #000000;	   	
 }
@@ -223,6 +231,24 @@ TD.list-title {
 .wpsTableHead {
 	border-left-width: 1px;
 	border-left-style: solid;
+}
+
+.wpsPagingTableHeaderMiddle {
+	padding: 5px;
+}
+
+.wpsPagingTableHeaderMiddle .ui-resizable-e {
+	background-image: url("liferay51/images/application/handle_vertical.png");
+	background-position: center;
+	background-repeat: no-repeat; 	
+	bottom: 0;
+	top: 0;
+	width: 14px;
+}
+
+.wpthemeSecondaryBanner {
+	border-top: 1px solid lightgray;
+	border-right: 1px solid lightgray;
 }
 
 .bold-label {
@@ -313,7 +339,12 @@ TD.list-title {
 	border: 1px solid #A7CEDF;	
 	background-color: #DFF4FF;
 	color: #346799; 
-	padding: 4px 4px 4px 0px;  
+	padding: 4px 4px 4px 0px;
+	text-decoration: none;   
+}
+
+.ox-button-bar-mode-button:focus {
+	text-decoration: none; 
 }
 
 .ox-button-bar-mode-button, .ox-button-bar-mode-button:hover { 

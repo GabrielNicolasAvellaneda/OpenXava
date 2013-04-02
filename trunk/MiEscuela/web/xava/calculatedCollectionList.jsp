@@ -8,6 +8,8 @@
 <%@page import="org.openxava.util.XavaPreferences"%>
 
 <%
+String tabObject = request.getParameter("tabObject"); 
+tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
 String onSelectCollectionElementAction = subview.getOnSelectCollectionElementAction();
 String selectedRowStyle = style.getSelectedRowStyle();
 String rowStyle = "border-bottom: 1px solid;";
@@ -34,7 +36,7 @@ String styleOverflow = org.openxava.web.Lists.getOverflow(browser, subview.getMe
 		String actionOnClickAll = Actions.getActionOnClickAll(
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, idCollection, propertyPrefix, 
-		selectedRowStyle, rowStyle);
+		selectedRowStyle, rowStyle, tabObject);
 	%>
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=propertyPrefix%>selected_all" <%=actionOnClickAll%> />
 	</th>
@@ -101,7 +103,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, f, idCollection, idRow,
 		selectedRowStyle, rowStyle, 
-		onSelectCollectionElementMetaAction);
+		onSelectCollectionElementMetaAction, tabObject);
 %>
 <td class="<%=cssCellClass%>" width="5" style="<%=style.getListCellStyle()%>">
 <input type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="<%=propertyPrefix%>__SELECTED__:<%=f%>" <%=actionOnClick%>/>

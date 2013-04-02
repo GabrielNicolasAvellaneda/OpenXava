@@ -1,5 +1,7 @@
 <%@ include file="../imports.jsp"%>
 
+<%@ page import="java.util.Collection"%>
+<%@ page import="java.util.Map"%>
 <%@ page import="org.openxava.util.Labels"%>
 <%@ page import="org.openxava.tab.impl.IXTableModel" %>
 <%@ page import="org.openxava.tab.Tab"%>
@@ -138,7 +140,7 @@ if (tab.isTitleVisible()) {
 			String actionOnClickAll = Actions.getActionOnClickAll(
 			request.getParameter("application"), request.getParameter("module"), 
 			onSelectCollectionElementAction, viewObject, prefix,
-			selectedRowStyle, rowStyle);
+			selectedRowStyle, rowStyle, tabObject);
 	%>
 	<INPUT type="CHECKBOX" name="<xava:id name='xava_selected_all'/>" value="<%=prefix%>selected_all" <%=actionOnClickAll%> />
 	<%
@@ -376,12 +378,12 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		request.getParameter("application"), request.getParameter("module"), 
 		onSelectCollectionElementAction, f, viewObject, prefixIdRow + f,
 		selectedRowStyle, rowStyle, 
-		onSelectCollectionElementMetaAction);
+		onSelectCollectionElementMetaAction, tabObject);
 %>
 	<%if (resizeColumns) {%></nobr><%}%> 
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
-	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> />
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
@@ -391,12 +393,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		int columnWidth = tab.getColumnWidth(c);		 		
 		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px"; 
 		String fvalue = null;
-		if (p.hasValidValues()) {
-			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
-		}
-		else {
-			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName(), true);
-		}
+		fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName(), true);
 		Object title = WebEditors.formatTitle(request, p, model.getValueAt(f, c), errors, view.getViewName(), true); 
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
@@ -641,4 +638,3 @@ else {
 </tr>
 </table>
 <% } %>
-

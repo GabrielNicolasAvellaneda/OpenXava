@@ -13,6 +13,7 @@ OpenXava 4.7 (2013-4-2)
 - If a session object has a request property, the current request is injected before injecting the object into the action. 
 - Date formatting optimized for French.
 - New protected method saveCollectionElement() in SaveElementInCollectionAction to refine behavior.
+- Shell scripts to start HSQLDB manager from command line.
 - Data in automatic PDF reports is formatted in the same way as in list. 
 - New layout engine improved again, though it is still in BETA and deactivated by default.
 - User preferences support creating and removing subnodes (from Preferences Java API).
