@@ -69,14 +69,12 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	private static final Log LOG = LogFactory.getLog(DefaultLayoutPainter.class);
 	private boolean firstCellPainted = false;
 	private int tdPerColumn = 2; // One TD for the label and another for Data and other cells.
-	private int frameLevel = 0;
 	private boolean blockStarted = false;
 	
 	/**
 	 * @see org.openxava.web.layout.ILayoutPainter#beginView(org.openxava.web.layout.LayoutElement)
 	 */
 	public void beginView(ILayoutViewBeginElement element) {
-		frameLevel = 0;
 		resetLog();
 		setContainer(element);
 		attributes.clear();
@@ -96,7 +94,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @see org.openxava.web.layout.ILayoutPainter#endView(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endView(ILayoutViewEndElement element) {
-		frameLevel = 0;
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
 		outputLog();
 	}
@@ -126,16 +123,11 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		// In this design each column is 2 TD wide.
 		// However if this frame is the only one in the row
 		// Takes the full size of the view.
-		frameLevel++;
 		Integer columnSpan = 0;
 		String labelKey = Ids.decorate(
 				getRequest().getParameter("application"),
 				getRequest().getParameter("module"),
 				"label_" + getView().getPropertyPrefix() + element.getName()); 
-		boolean maximizeTable = false;
-		if (frameLevel <= 1) {
-			maximizeTable = getContainer().getView().isFramesMaximized();
-		}
 		int count = getRow().getRowCurrentColumnsCount() + 1;
 		if (getRow().getMaxFramesCount() == getRow().getMaxRowColumnsCount() &&
 				getRow().getMaxFramesCount() == 1 &&
@@ -153,7 +145,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		}
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		
-		write(getStyle().getFrameHeaderStartDecoration(maximizeTable ? 100 : 0));
+		write(getStyle().getFrameHeaderStartDecoration(100));
 			write(getStyle().getFrameTitleStartDecoration());
 				attributes.clear();
 				attributes.put(ATTR_ID, labelKey);
@@ -185,7 +177,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 		createTdColumnSpan();
 		unsetContainer();
-		frameLevel--;
 	}
 
 	/**
@@ -310,6 +301,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	public void beginColumn(ILayoutColumnBeginElement element) {
 		int count = getRow().getRowCurrentColumnsCount() + 1;
 		getRow().setRowCurrentColumnsCount(count);
+		setColumn(element);
 		firstCellPainted = false; // to indicate to the cell renderer that the TD pair is about to start.
 	}
 
@@ -320,6 +312,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	public void endColumn(ILayoutColumnEndElement element) {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+		unsetColumn();
 	}
 
 	/**
@@ -338,16 +331,18 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		}
 		
-		// Left spacer
-		beginPropertySpacer(element, getStyle().getLayoutLabelLeftSpacer());
-		
-		if (!element.isMetaViewAction()) {
-			// Label
-			beginPropertyLabel(element);
+		if (getContainer().getShowColumnLabel(getColumn().getColumnIndex())) {
+			// Left spacer
+			beginPropertySpacer(element, getStyle().getLayoutLabelLeftSpacer());
+			
+			if (!element.isMetaViewAction()) {
+				// Label
+				beginPropertyLabel(element);
+			}
+			
+			// Left spacer
+			beginPropertySpacer(element, getStyle().getLayoutLabelRightSpacer());
 		}
-		
-		// Left spacer
-		beginPropertySpacer(element, getStyle().getLayoutLabelRightSpacer());
 		
 		if (!firstCellPainted) {
 			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
@@ -732,6 +727,11 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	public void beginSections(ILayoutSectionsBeginElement element) {
 		View view = element.getView().hasSections() ? element.getView() : getView();
+		write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
+		attributes.clear();
+		attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
+		
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
 		attributes.clear();
 		attributes.put(ATTR_COLSPAN, Integer.toString(calculateTdSpan(getMaxColumnsOnView())));

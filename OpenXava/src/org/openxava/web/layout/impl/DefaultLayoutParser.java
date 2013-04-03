@@ -17,6 +17,7 @@ import javax.servlet.jsp.PageContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openxava.annotations.LabelFormatType;
 import org.openxava.controller.ModuleContext;
 import org.openxava.model.meta.MetaCollection;
 import org.openxava.model.meta.MetaMember;
@@ -74,6 +75,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	private ILayoutViewBeginElement currentView;
 	private Stack<ILayoutContainerElement> containersStack;
 	private Stack<ILayoutRowBeginElement> rowsStack;
+	private Stack<Integer> containersColumnCountStack;
 	private int rowIndex;
 	private List<Integer> columnsPerRow;
 	private Map<Integer, Boolean> levelRowStarted;
@@ -131,6 +133,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 		groupLevel = 0;
 		elements = new ArrayList<ILayoutElement>();
 		containersStack = new Stack<ILayoutContainerElement>();
+		containersColumnCountStack = new Stack<Integer>();
 		rowsStack = new Stack<ILayoutRowBeginElement>();
 		columnsPerRow = new ArrayList<Integer>();
 		levelRowStarted = new HashMap<Integer, Boolean>();
@@ -524,6 +527,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 			currentRow.setMaxFramesCount(framesCount);
 		}
 		containersStack.push(frameElement);
+		containersColumnCountStack.push(-1);
 	}
 	
 	/**
@@ -567,6 +571,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 			}
 		}
 		containersStack.pop();
+		containersColumnCountStack.pop();
 		groupLevel--;
 	}
 	
@@ -604,7 +609,9 @@ public class DefaultLayoutParser implements ILayoutParser {
 		if (columnsPerIndexedRow > maxViewColumnsCount) {
 			currentView.setMaxContainerColumnsCount(columnsPerIndexedRow);
 		}
-		
+		Integer columnIndex = containersColumnCountStack.pop() + 1;
+		returnValue.setColumnIndex(columnIndex);
+		containersColumnCountStack.push(columnIndex);
 		groupLevel++;
 		return returnValue;
 	}
@@ -616,6 +623,8 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 */
 	protected ILayoutColumnEndElement createEndColumnMarker(View view) {
 		groupLevel--;
+		Integer currentColumn = containersColumnCountStack.pop() - 1;
+		containersColumnCountStack.push(currentColumn);
 		return new DefaultLayoutColumnEndElement(view, groupLevel);
 	}
 
@@ -738,6 +747,12 @@ public class DefaultLayoutParser implements ILayoutParser {
 					!returnValue.getActionsNameForReference().isEmpty()) ||
 					(returnValue.getActionsNameForProperty() != null &&
 					!returnValue.getActionsNameForProperty().isEmpty()));
+			
+			if (!Is.emptyString(propertyLabel) &&
+					labelFormat != LabelFormatType.NO_LABEL.ordinal()) {
+				int columnIndex = containersColumnCountStack.peek();
+				containersStack.peek().setShowColumnLabel(columnIndex, true);
+			}
 		} catch (Exception ex) {
 			LOG.warn("Maybe this is a separator:" + p.getName());
 		}

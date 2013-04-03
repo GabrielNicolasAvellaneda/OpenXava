@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New layout engine improved again, though it is still in BETA it is perfectly usable.
+
+
 OpenXava 4.7 (2013-4-2)
 -----------------------
 - ExtendedPrint.myReports stores all the generated reports, so the user can get them by name later. 
