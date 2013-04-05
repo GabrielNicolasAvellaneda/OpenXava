@@ -188,6 +188,8 @@ public class DefaultLayoutParser implements ILayoutParser {
 
 					setEditable(view.isEditable(p));
 					if (createPropertyOnSameColumn) {
+						Integer currentColumn = containersColumnCountStack.pop() + 1;
+						containersColumnCountStack.push(currentColumn);
 						elements.remove(elements.size() - 1);
 						groupLevel++;
 					} else {
