@@ -325,7 +325,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			attributes.clear();
 			attributes.put(ATTR_CLASS, getStyle().getLabel() + " " + getStyle().getLayoutLabelCell());
 			if (width > 0) {
-				attributes.put(ATTR_STYLE, "width:" + width.toString() + "%");
+				attributes.put(ATTR_STYLE, "width:" + width.toString() + "%; white-space:nowrap");
+			} else {
+				attributes.put(ATTR_STYLE, "white-space:nowrap");
 			}
 			attributes.put("valign", "center");
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
@@ -356,6 +358,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			if (width > 0) {
 				style.append("width:" + width.toString() + "%");
 			}
+			style.append(";white-space:nowrap");
 			if (style.length() > 0) {
 				attributes.put(ATTR_STYLE, style.toString());
 			}
