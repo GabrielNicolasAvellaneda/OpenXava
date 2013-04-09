@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Polymorphic reference from a base class fails.
 - New layout engine improved again, though it is still in BETA it is perfectly usable.
 
 

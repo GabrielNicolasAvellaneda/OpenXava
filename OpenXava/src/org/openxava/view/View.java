@@ -481,11 +481,11 @@ public class View implements java.io.Serializable {
 				String viewName = getViewName(); 
 				setModelName(modelName);
 				setViewName(viewName); 
-				modelChanged = true;
+				modelChanged = true;				
 			}
 		}	
 		setValues(values, true);
-		if (modelChanged) refresh(); 
+		if (modelChanged) refresh(); 		
 	}
 	
 	private void setValues(Map map, boolean closeCollections) throws XavaException { 

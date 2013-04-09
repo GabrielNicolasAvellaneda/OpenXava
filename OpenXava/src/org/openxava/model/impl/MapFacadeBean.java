@@ -1011,8 +1011,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			if (r.isAggregate()) {
 				return getAggregateValues((MetaAggregate) r.getMetaModelReferenced(), object, submembersNames);
 			} 
-			else {				
-				return getAssociatedEntityValues((MetaEntity) r.getMetaModelReferenced(), object, submembersNames);
+			else {		
+				MetaEntity metaEntityReferenced = (MetaEntity) (object==null?r.getMetaModelReferenced():MetaModel.get(Hibernate.getClass(object).getSimpleName()));
+				return getAssociatedEntityValues(metaEntityReferenced, object, submembersNames);
 			}
 		} catch (XavaException ex) {
 			log.error(ex.getMessage(), ex);
