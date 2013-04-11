@@ -540,11 +540,8 @@ openxava.getFormValue = function(ele) { // A refinement of dwr.util.getValue
 	}
 
 	if (dwr.util._isHTMLElement(ele, "input")) {
-	    if (ele.type == "radio") {
+		if (ele.type == "checkbox" || ele.type == "radio") {
 	      return ele.checked?ele.value:null; 
-	    }
-	    if (ele.type == "checkbox") {
-	      return ele.checked;
 	    }
 	    return ele.value;
 	}

@@ -46,7 +46,7 @@ public class AJAXTest extends ModuleTestBase {
 				"messages,");
 	}
 	
-	public void testChangingSelectedElementsOfACollectionTabByCodeNoReloadCollection() throws Exception { 
+	public void testChangingSelectedElementsOfACollectionTabByCodeNoReloadCollection() throws Exception {  
 		changeModule("CarrierWithCollectionsTogether");
 		execute("Mode.detailAndFirst");
 		assertAllCollectionUnchecked("fellowCarriers");

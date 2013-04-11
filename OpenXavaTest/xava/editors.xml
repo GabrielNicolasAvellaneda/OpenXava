@@ -175,5 +175,7 @@
 	<editor name="TreeViewAlternate" url="treeViewEditor.jsp">
 		<property name="reader" value="org.openxava.test.web.editors.impl.TreeViewReaderTestImpl" />
 	</editor>
-		
+	
+	<editor name="Important" url="importantEditor.jsp"/>	
+			
 </editors>

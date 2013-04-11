@@ -335,8 +335,8 @@ here that you want to override.
 		<action name="maximizeImage" hidden="true" image="maximize.gif"
 			class="org.openxava.actions.MaximizeImageAction"/>
 		<action name="minimizeImage" hidden="true" image="minimize.gif"
-			class="org.openxava.actions.MinimizeImageAction"/>
-		<action name="removeImage" hidden="true" image="remove.gif"
+			class="org.openxava.actions.MinimizeImageAction"/>		
+		<action name="removeImage" hidden="true" image="remove.gif" confirm="true"
 			class="org.openxava.actions.RemoveImageFromGalleryAction"/>
 		<action name="return" 
 			class="org.openxava.actions.CancelAction"/>						

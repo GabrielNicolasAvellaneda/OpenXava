@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Checkbox editors for non-boolean values does not work. 
+- Gallery.removeImage action asks for user confirmation.
 - Fix: Polymorphic reference from a base class fails.
 - New layout engine improved again, though it is still in BETA it is perfectly usable.
 

@@ -1664,7 +1664,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 
-	public void testInvoiceNotFound() throws Exception {
+	public void testInvoiceNotFound() throws Exception { 
 		execute("CRUD.new");
 		// with key
 		String year = getValue("year");
@@ -1674,11 +1674,11 @@ public class InvoiceTest extends ModuleTestBase {
 		assertTrue(Is.empty(getValue("year")));
 		setValue("date", "1/2/2004");
 		execute("CRUD.refresh");
-		assertError("Object of type Invoice does not exists with key Date:1/2/04, Paid:No");
+		assertError("Object of type Invoice does not exists with key Date:1/2/04, Paid:No");		
 		// with reference
 		setValue("customer.number", "43");
 		assertValue("customer.name", "Gonzalo Gonzalez");
 		execute("CRUD.refresh");
-		assertError("Object of type Invoice does not exists with key Number:43, Customer discount:0.25, Paid:No");
+		assertError("Object of type Invoice does not exists with key Number:43, Customer discount:0.25, Paid:No");		
 	}
 }
