@@ -1246,6 +1246,8 @@ public class AnnotatedClassParser {
 					addAggregateForCollection(collection.getMetaModel(), getClassNameFor(collection.getMetaReference().getReferencedModelName()), oneToMany.mappedBy());					
 				}
 				else {
+					collection.getMetaModel().setContainerModelName(collection.getMetaModel().getName()); 
+					collection.getMetaModel().setContainerReference(oneToMany.mappedBy()); 
 					cascadeAndSelfReference = true;					
 				}				
 			}

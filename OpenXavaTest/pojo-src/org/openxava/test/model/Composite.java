@@ -14,14 +14,14 @@ import org.openxava.test.actions.*;
 @Entity
 public class Composite extends Nameable {
 
+	
 	@ManyToOne @JoinColumn(name="PARENT_ID")
-	@OnChange(OnChangeVoidAction.class) // Needed to test a case
+	@OnChange(OnChangeVoidAction.class) // Needed to test a case	
 	private Composite composite;
 
 	
 	@OneToMany(mappedBy="composite", cascade=CascadeType.REMOVE) 
 	private Collection<Composite> children;
-	
 	
 	public Composite getComposite() {
 		return composite;
@@ -39,6 +39,5 @@ public class Composite extends Nameable {
 	public void setChildren(Collection<Composite> children) {
 		this.children = children;
 	}
-	
-	
+
 }

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Composite structure fails when the parent reference is not named as the entity.
 - Fix: Checkbox editors for non-boolean values does not work. 
 - Gallery.removeImage action asks for user confirmation.
 - Fix: Polymorphic reference from a base class fails.
