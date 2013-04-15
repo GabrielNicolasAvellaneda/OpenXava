@@ -226,6 +226,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 	protected View getView(){
 		return view;
 	}
+	
 	/**
 	 * @return The current page context.
 	 */

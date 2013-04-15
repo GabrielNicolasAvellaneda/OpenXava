@@ -455,7 +455,14 @@ public class AnnotatedClassParser {
 		boolean alignedByColumns = false;
 		StringBuffer members = new StringBuffer();
 		boolean stHasMoreTokens = st.hasMoreTokens();
-		String token = stHasMoreTokens?st.nextToken().trim():null;		
+		String token = stHasMoreTokens?st.nextToken().trim():null;
+		if (token.equals("#")) {
+			metaView.setAlignedByColumns(true);
+			stHasMoreTokens = st.hasMoreTokens();
+			token = stHasMoreTokens?st.nextToken().trim():null;
+		} else {
+			metaView.setAlignedByColumns(XavaPreferences.getInstance().isAlignedByColumn());
+		}
 		while (stHasMoreTokens) {	
 			stHasMoreTokens = st.hasMoreTokens();			
 			String nextToken = stHasMoreTokens?st.nextToken().trim():"";

@@ -4,6 +4,9 @@
 package org.openxava.web.layout.impl;
 
 import static org.openxava.web.layout.LayoutJspKeys.ATTRVAL_STYLE_WIDTH_100P;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_BORDER;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_CELL_PADDING;
+import static org.openxava.web.layout.LayoutJspKeys.ATTR_CELL_SPACING;
 import static org.openxava.web.layout.LayoutJspKeys.ATTR_CLASS;
 import static org.openxava.web.layout.LayoutJspKeys.ATTR_COLSPAN;
 import static org.openxava.web.layout.LayoutJspKeys.ATTR_ID;
@@ -78,10 +81,11 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		resetLog();
 		setContainer(element);
 		attributes.clear();
-		if (element.isRepresentsSection()) {
+		if (element.isRepresentsSection() &&
+				sectionFullWidthFrames(element.getView())) {
 			attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 		} else {
-			if (element.getView().isFramesMaximized()
+			if (viewFullWidthFrames(element.getView())
 					&& element.getMaxFramesCount() > 0) {
 				attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 			}
@@ -164,6 +168,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		// Start the property container
 		attributes.clear();
 		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutContent());
+		if (getContainer().getMaxFramesCount() <= 1) {
+			attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+		}
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 		setContainer(element);
 	}
@@ -733,6 +740,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
 		attributes.clear();
 		attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+		attributes.put(ATTR_CELL_SPACING, "0");
+		attributes.put(ATTR_BORDER, "0");
+		attributes.put(ATTR_CELL_PADDING, "0");
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 		
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
@@ -757,6 +767,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		}
 		attributes.clear();
 		attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+		attributes.put(ATTR_CELL_SPACING, "0");
+		attributes.put(ATTR_BORDER, "0");
+		attributes.put(ATTR_CELL_PADDING, "0");
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
 				write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
@@ -765,6 +778,10 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 					write(LayoutJspUtils.INSTANCE.startTag(TAG_DIV, attributes));
 						attributes.clear();
 						attributes.put(ATTR_LIST, getStyle().getSectionTableAttributes());
+						attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+						attributes.put(ATTR_CELL_SPACING, "0");
+						attributes.put(ATTR_BORDER, "0");
+						attributes.put(ATTR_CELL_PADDING, "0");
 						write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 							write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
 								
@@ -812,12 +829,17 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				attributes.put(ATTR_CLASS, getStyle().getActiveSection());
 				write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 				attributes.clear();
-				write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE));
+				attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+				attributes.put(ATTR_CELL_SPACING, "0");
+				attributes.put(ATTR_BORDER, "0");
+				attributes.put(ATTR_CELL_PADDING, "0");
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
 				write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
 					write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
 					includeJspPage("detail.jsp"
 									+ "?viewObject=" + sectionView.getViewObject()
-									+ "&propertyPrefix=" + sectionView.getPropertyPrefix());
+									+ "&propertyPrefix=" + sectionView.getPropertyPrefix()
+									+ "&representsSection=true");
 	}
 
 	public void endSectionsRender(ILayoutSectionsRenderEndElement element) {
@@ -856,6 +878,22 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	public ILayoutSectionsRenderEndElement defaultEndSectionsRenderElement(View view) {
 		return new DefaultLayoutSectionsRenderEndElement(view, 0);
+	}
+
+	/**
+	 * @param view Current main view.
+	 * @return True if the frames should occupy 100% of the view.
+	 */
+	protected boolean viewFullWidthFrames(View view) {
+		return true;
+	}
+	
+	/**
+	 * @param view Current section view.
+	 * @return True if the frames should occupy 100% of the view.
+	 */
+	protected boolean sectionFullWidthFrames(View view) {
+		return true;
 	}
 
 }
