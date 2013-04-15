@@ -22,7 +22,7 @@ import org.openxava.validators.*;
 @Entity
 @Table(name="PRODUCT")
 @View( members=
-	"number;" +
+	"#number;" +
 	"description;" +
 	"photos;" +
 	"family;" +

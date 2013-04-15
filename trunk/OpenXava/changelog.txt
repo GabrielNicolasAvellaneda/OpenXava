@@ -6,6 +6,7 @@ Change Log for OpenXava project
 - Gallery.removeImage action asks for user confirmation.
 - Fix: Polymorphic reference from a base class fails.
 - New layout engine improved again, though it is still in BETA it is perfectly usable.
+- New implementation of # for the new layout engine.
 
 
 OpenXava 4.7 (2013-4-2)
