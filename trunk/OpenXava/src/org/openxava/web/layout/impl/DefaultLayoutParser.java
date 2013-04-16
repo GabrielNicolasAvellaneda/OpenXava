@@ -153,7 +153,9 @@ public class DefaultLayoutParser implements ILayoutParser {
 			ILayoutElement frameEndElement = elements.get(elements.size() - 4);
 			
 			if (frameBeginElement instanceof ILayoutFrameBeginElement
-					&& frameEndElement instanceof ILayoutFrameEndElement) {
+					&& frameEndElement instanceof ILayoutFrameEndElement
+					&& !(frameBeginElement instanceof ILayoutGroupBeginElement)
+					&& !(frameEndElement instanceof ILayoutGroupEndElement)) {
 				// We must remove the first row, first column and first (and only) frame
 				currentView.setMaxFramesCount(0);
 				currentView.setMaxContainerColumnsCount(((ILayoutFrameBeginElement)frameBeginElement).getMaxContainerColumnsCount());
