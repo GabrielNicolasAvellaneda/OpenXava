@@ -80,6 +80,56 @@ class Product5Test extends ModuleTestBase {
 		execute "CRUD.new"
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
 	}
-	
+
+	void testRememberActionsInList() throws Exception{
+		String[] listActions = 
+		[
+			'CRUD.new', 'CRUD.deleteRow', 'CRUD.deleteSelected',
+			'Print.generatePdf', 'Print.generateExcel',
+			'List.filter', 'List.sumColumn', 'List.orderBy', 'List.hideRows',
+			'List.viewDetail', 'List.customize',
+			'Mode.detailAndFirst', 'Mode.split',
+			'ExtendedPrint.myReports',
+			'Product5.goB'
+		]
+		String[] detailActions =
+		[
+			"Navigation.previous", "Navigation.first", "Navigation.next",
+			"CRUD.delete", "CRUD.new", "CRUD.refresh", "CRUD.save", "CRUD.search",
+			"Mode.list", "Mode.split",
+			"Gallery.edit", "List.filter", "Print.generatePdf", 
+			"Collection.removeSelected", "List.orderBy", "Collection.new", 
+			"Reference.createNew", "Reference.modify", "Print.generateExcel", "List.customize"
+		]
+		String[] galleryActions =
+		[
+			"Gallery.addImage", "Gallery.return", "Mode.list", "Mode.split"
+		]
+		
+		// list -> detail -> list
+		assertActions(listActions)
+		execute("Product5.goB")
+		assertAction("Product5.goA")
+		assertNoAction("Product5.goB")
+		
+		execute("List.viewDetail", "row=0")
+		assertActions(detailActions)
+		
+		execute("Mode.list")
+		assertAction("Product5.goA")
+		assertNoAction("Product5.goB")
+		assertAction("CRUD.new")
+		
+		// list -> detail -> gallery editor -> list
+		execute("List.viewDetail", "row=0")
+		assertNoErrors();
+		execute("Gallery.edit", "galleryProperty=photos")
+		assertActions(galleryActions)
+		
+		execute("Mode.list")
+		assertAction("Product5.goA")
+		assertNoAction("Product5.goB")
+		assertAction("CRUD.new")
+	}
 	
 }
