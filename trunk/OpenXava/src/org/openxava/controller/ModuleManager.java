@@ -68,6 +68,7 @@ public class ModuleManager implements java.io.Serializable {
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 
+	public static final String XAVA_META_ACTIONS_IN_LIST = "xava_metaActionsInList"; 
 		
 	private String user;	
 	private Collection metaActionsOnInit;
@@ -104,7 +105,7 @@ public class ModuleManager implements java.io.Serializable {
 	private boolean modifiedControllers = false;
 	private String moduleDescription; 
 	private boolean resetFormPostNeeded = false; 
-	
+	private boolean actionsAddedOrRemoved;
 		
 	/**
 	 * HTML action bind to the current form.
@@ -118,11 +119,18 @@ public class ModuleManager implements java.io.Serializable {
 		return "action='" +  portletActionURL + "'";
 	}
 	
+	private void updateXavaMetaActionsInList(){
+		getContext().put(
+			getApplicationName(), getModuleName(), 
+			XAVA_META_ACTIONS_IN_LIST, getMetaActions());
+	}
+	
 	public void addMetaAction(MetaAction action) {
 		getMetaActions().add(action);
 		defaultActionQualifiedName = null; 
 		this.controllersNames = MODIFIED_CONTROLLERS;
 		actionsChanged = true; 
+		actionsAddedOrRemoved = true;
 	}
 	
 	public void removeMetaAction(MetaAction action) {
@@ -130,6 +138,7 @@ public class ModuleManager implements java.io.Serializable {
 		defaultActionQualifiedName = null; 
 		this.controllersNames = MODIFIED_CONTROLLERS;
 		actionsChanged = true; 
+		actionsAddedOrRemoved = true;
 	}
 	
 	public Collection getRowActionsNames() { 
@@ -146,6 +155,13 @@ public class ModuleManager implements java.io.Serializable {
 
 	public Collection<MetaAction> getMetaActions() { 
 		if (metaActions == null) { 
+			Collection<MetaAction> ma = 
+				(Collection<MetaAction>)getContext().get(getApplicationName(), getModuleName(), XAVA_META_ACTIONS_IN_LIST);
+			if (isListMode() && ma != null && ma.size() > 0){
+				metaActions = ma;
+				return metaActions;
+			}
+			
 			try {			
 				Iterator it = getMetaControllers().iterator();
 				metaActions = new ArrayList();
@@ -408,6 +424,9 @@ public class ModuleManager implements java.io.Serializable {
 					memorizePreviousMode(); 
 					setModeName(nextMode);					
 				}								
+				if (isListMode() && isActionsAddedOrRemoved()){
+					updateXavaMetaActionsInList();
+				}
 			}
 			setFormUpload(false);						
 			if (action instanceof ICustomViewAction) {
@@ -1149,6 +1168,7 @@ public class ModuleManager implements java.io.Serializable {
 	 */
 	public void preInitModule() {
 		actionsChanged = false;
+		actionsAddedOrRemoved = false;
 	}
 	
 	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {		
@@ -1417,6 +1437,14 @@ public class ModuleManager implements java.io.Serializable {
 	}
 	public boolean isResetFormPostNeeded() {
 		return resetFormPostNeeded;
+	}
+	
+	public boolean isActionsAddedOrRemoved() {
+		return actionsAddedOrRemoved;
+	}
+
+	public void setActionsAddedOrRemoved(boolean actionsAddedOrRemoved) {
+		this.actionsAddedOrRemoved = actionsAddedOrRemoved;
 	}
 	
 }
