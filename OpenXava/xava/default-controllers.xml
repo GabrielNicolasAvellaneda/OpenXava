@@ -28,7 +28,8 @@ here that you want to override.
 	<object name="xava_treeViewParser" class="org.openxava.util.TreeViewParser" />
 	<object name="xava_treeViewNodeFullPath" class="java.lang.String" />
 	<object name="xava_liferayLibrary" class="org.openxava.session.LiferayLibrary"/>					
-		
+	<object name="xava_metaActionsInList" class="java.util.Collection"/>
+	
 	<controller name="Typical">
 		<extends controller="Navigation"/>
 		<extends controller="CRUD"/>
