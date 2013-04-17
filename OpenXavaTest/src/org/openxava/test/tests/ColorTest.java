@@ -5,6 +5,7 @@ import javax.persistence.*;
 import org.apache.commons.logging.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
+import org.openxava.util.*;
 
 
 /**
@@ -21,30 +22,58 @@ public class ColorTest extends ModuleTestBase {
 	public void testPrintPDF() throws Exception {
 		execute("List.orderBy", "property=number");
 		checkRow(1);
+		String number1 = getValueInList(1, 0);
+		String name1 = getValueInList(1, 1);
+		String hexValue1 = getValueInList(1, 2);
+		String useTo1 = getValueInList(1, 3);
+		String characteristicThing1 = getValueInList(1, 4);
 		checkRow(5);
+		String number5 = getValueInList(5, 0);
+		String name5 = getValueInList(5, 1);
+		String hexValue5 = getValueInList(5, 2);
+		String useTo5 = getValueInList(5, 3);
+		String characteristicThing5 = getValueInList(5, 4);
 		execute("List.orderBy", "property=number");
 		checkRow(0);
+		String number0 = getValueInList(0, 0);
+		String name0 = getValueInList(0, 1);
+		String hexValue0 = getValueInList(0, 2);
+		String useTo0 = getValueInList(0, 3);
+		String characteristicThing0 = getValueInList(0, 4);
 		execute("Color.seeMessageSelected");
 		assertMessage("(before) Rows of selected colors [0]");
-		assertMessage("(after) Rows of selected colors [{number= 1}][{number= 1 7 8}][{number= 6 0 4}]");
+		assertMessage("(after) Rows of selected colors [{number=" + number1 + "}][{number=" + number5 + "}][{number=" + number0 + "}]");
 		
 		execute("Print.generatePdf");
 		assertContentTypeForPopup("application/pdf");
 		assertPopupPDFLinesCount(7);
-		assertPopupPDFLine(3, "604 JUNIT COLOR 162 NOCOLOR");
-		assertPopupPDFLine(4, "178 JUNIT COLOR 110 NOCOLOR");
-		assertPopupPDFLine(5, "1 NEGRO 000000 BLACK LAMPPOST");
+		assertPopupPDFLine(3, getPDFLine(number0, name0, hexValue0, useTo0, characteristicThing0));
+		assertPopupPDFLine(4, getPDFLine(number5, name5, hexValue5, useTo5, characteristicThing5));
+		assertPopupPDFLine(5, getPDFLine(number1, name1, hexValue1, useTo1, characteristicThing1));
+	}
+	
+	private String getPDFLine(String number, String name, String hexValue, String useTo, String characteristicThing){
+		String s = "";
+		s += Is.empty(number) ? "" : number + " ";
+		s += Is.empty(name) ? "" : name + " ";
+		s += Is.empty(hexValue) ? "" : hexValue + " ";
+		s += Is.empty(useTo) ? "" : useTo + " ";
+		s += Is.empty(characteristicThing) ? "" : characteristicThing + " ";
+		return s.trim();
 	}
 	
 	public void testActionWithSelectedRowFromAnotherPage() throws Exception{
 		checkRow(2);
+		String number2 = getValueInList(2, 0);
 		checkRow(6);
+		String number6 = getValueInList(6, 0); 
 		execute("List.goNextPage");
 		checkRow(10);
+		String number10 = getValueInList(0, 0);
 		execute("List.goNextPage");
 		execute("Color.seeMessageSelected");
 		assertMessage("(before) Rows of selected colors [2][6][10]");
-		assertMessage("(after) Rows of selected colors [{number= 2 8}][{number= 1 7 9}][{number= 1 8 3}]");
+		assertMessage("(after) Rows of selected colors [{number=" + number2 + "}][{number=" + number6 + "}][{number=" + number10 + "}]");
 		assertNoErrors();
 	}
 	

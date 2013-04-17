@@ -309,8 +309,19 @@
 			class="org.openxava.test.actions.HideShowGroupAction">								
 			<set property="group" value="description"/>	
 			<set property="show" value="true"/>	
-		</action>				
-					
+		</action>
+	</controller>
+	
+	<controller name="Product5">
+		<extends controller="Typical"/>
+		<action name="goA" on-init="true" mode="list" 
+			class="org.openxava.test.actions.ChangeToButtonAOrButtonB">
+			<set value="a" property="button"/>
+		</action>
+		<action name="goB" mode="list"  
+			class="org.openxava.test.actions.ChangeToButtonAOrButtonB">
+			<set value="b" property="button"/>
+		</action>
 	</controller>
 			 	
 	<controller name="Customer">
@@ -625,7 +636,6 @@
 			<set property="format" value="excel"/>
 			<set property="goBackOnFinish" value="false"/>
 		</action>
-										
 	</controller>		
 
 	<controller name="StateHibernate"> 
@@ -1028,6 +1038,6 @@
 	<controller name="GoDescription">
 		<action name="goDescription" on-each-request="true"
 			class="org.openxava.test.actions.GoDescriptionAction"/>
-	</controller>	
+	</controller>
 	
 </controllers>

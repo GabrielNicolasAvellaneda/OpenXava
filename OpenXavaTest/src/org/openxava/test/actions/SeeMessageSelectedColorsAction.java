@@ -26,7 +26,7 @@ public class SeeMessageSelectedColorsAction extends BaseAction{
 		for (int i = 0; i < selected.length; i++) m+="[" + selected[i] + "]";
 		for (int i = 0; i < selectedKeys.length; i++) o+="[" + selectedKeys[i] + "]";
 		addMessage("color_selected_old", m);
-		addMessage("color_selected_new", o);
+		addMessage("color_selected_new", "'" + o + "'");
 	}
 
 	public Tab getTab() {
