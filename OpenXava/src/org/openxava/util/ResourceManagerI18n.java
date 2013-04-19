@@ -110,7 +110,7 @@ public class ResourceManagerI18n {
 
 	public String getString(Locale locale, String key, Object argv0, Object argv1, Object argv2) {		
 		return getString(locale, key, new Object [] { argv0, argv1, argv2 });
-	}	
+	}
 	
 	public String getString(Locale locale, String key, Object [] argv) {		
 		MessageFormat formateador = new MessageFormat("");

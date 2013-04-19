@@ -32,7 +32,7 @@ public class LayoutPainterManager {
 			ILayoutPainter painter = LayoutFactory.getLayoutPainterInstance(
 					(HttpServletRequest) pageContext.getRequest());
 			if (painter != null) {
-				returnValue = true;
+				returnValue = true;				
 				Collection<ILayoutElement> elements = parser.parseView(view, pageContext);
 				painter.initialize(view, pageContext);
 				renderElements(painter, elements, view, pageContext);
@@ -55,7 +55,7 @@ public class LayoutPainterManager {
 		if (parser != null) {
 			ILayoutPainter painter = LayoutFactory.getLayoutPainterInstance(
 					(HttpServletRequest) pageContext.getRequest());
-			if (painter != null) {
+			if (painter != null) {				
 				returnValue = true;
 				Collection<ILayoutElement> elements = parser.parseView(view, pageContext, true);
 				painter.initialize(view, pageContext);

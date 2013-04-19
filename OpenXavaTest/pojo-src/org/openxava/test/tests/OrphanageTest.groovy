@@ -1,7 +1,10 @@
 package org.openxava.test.tests;
 
+import java.text.*;
+
 import org.openxava.tests.*;
 import org.openxava.test.model.*;
+import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
@@ -13,7 +16,7 @@ class OrphanageTest extends ModuleTestBase {
 		super(testName, "Orphanage")		
 	}
 	
-	void testGeneratePDFForACollectionInsideAGroup() {
+	void testGeneratePDFForACollectionInsideAGroup_dateFormatUsesClientLocale() {
 		execute "Mode.detailAndFirst"
 		execute "Print.generatePdf", "viewObject=xava_view_orphanage_orphans"; 
 		assertNoErrors()
@@ -33,6 +36,9 @@ class OrphanageTest extends ModuleTestBase {
 		assertPopupPDFLine 1, "Orphans of Orphanage: EL INTERNADO"
 		assertPopupPDFLine 2, "Name"
 		assertPopupPDFLine 3, "ANTONIO"
+		
+		// Date formatted in English. It's only tested when the server use a non-English locale
+		assertPopupPDFLine 4, "Page 1 of 1${currentDateInEnglish}" 
 	}
 	
 	void testOrphanRemovalAsEmbedded() {
@@ -57,6 +63,10 @@ class OrphanageTest extends ModuleTestBase {
 		setValue "name", "THE ORPHANAGE VII"
 		execute "ProposeName.propose"
 		assertMessage "I think that THE ORPHANAGE VII is already a good name"
+	}
+	
+	private String getCurrentDateInEnglish() {
+		DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.ENGLISH).format(new Date());
 	}
 	
 }

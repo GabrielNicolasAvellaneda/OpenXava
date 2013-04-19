@@ -9,7 +9,6 @@ import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.validators.*;
-import org.openxava.validators.*;
 
 /**
  * As Product2 but uses property-based access. <p>
@@ -22,7 +21,7 @@ import org.openxava.validators.*;
 @Entity
 @Table(name="PRODUCT")
 @View( members=
-	"#number;" +
+	"#number;" + 
 	"description;" +
 	"photos;" +
 	"family;" +
@@ -45,9 +44,12 @@ public class Product4 {
 	private int subfamilyNumber; 
 	
 	@PrePersist
-	public void validate() throws ValidationException {
+	public void validate() throws org.openxava.validators.ValidationException {
 		if (getDescription().contains("OPENXAVA")) {
-			throw new ValidationException("openxava_not_saleable"); 
+			throw new org.openxava.validators.ValidationException("openxava_not_saleable"); 
+		}
+		if (getDescription().contains("ECLIPSE")) {
+			throw new javax.validation.ValidationException("eclipse_not_saleable"); 
 		}
 		if (getNumber() == 666) {
 			throw new InvalidStateException(
@@ -57,6 +59,26 @@ public class Product4 {
 						getNumber(), this)
 				}
 			);
+		}
+	}
+	
+	@PreRemove
+	public void validateOnRemove() { 		
+		if (number == 1) {
+			throw new InvalidStateException(
+				new InvalidValue [] {
+					new InvalidValue(
+						"one_not_deletable", getClass(), "number", 
+						getNumber(), this)
+				}
+			);
+		}		
+		if (number == 2) {
+			throw new javax.validation.ValidationException("two_not_deletable");
+		}				
+
+		if (family != null) {
+			throw new org.openxava.validators.ValidationException("has_family"); 
 		}
 	}
 		
