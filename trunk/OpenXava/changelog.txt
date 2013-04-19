@@ -1,14 +1,16 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: it lose the added or removed actions in the list when you change to the detail mode.
+- Fix: A ValidationException (both org.openxava and javax.validation) from a callback method shows an ugly message to the user.
+- Fix: It loses the added or removed actions in the list when you change to the detail mode.
+- Fix: Grammatical errors in English messages. 
+- Some new common use labels to be used in applications.
+- Fix: Date in footer of PDF reports is formatted using server locale instead of client locale.
 - Fix: Composite structure fails when the parent reference is not named as the entity.
 - Fix: Checkbox editors for non-boolean values does not work. 
 - Gallery.removeImage action asks for user confirmation.
 - Fix: Polymorphic reference from a base class fails.
 - New layout engine improved again, though it is still in BETA it is perfectly usable.
-- New implementation of # for the new layout engine.
-
 
 OpenXava 4.7 (2013-4-2)
 -----------------------

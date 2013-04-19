@@ -68,7 +68,7 @@ public class ModuleManager implements java.io.Serializable {
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 
-	public static final String XAVA_META_ACTIONS_IN_LIST = "xava_metaActionsInList"; 
+	public static final String XAVA_META_ACTIONS_IN_LIST = "xava_metaActionsInList";  
 		
 	private String user;	
 	private Collection metaActionsOnInit;

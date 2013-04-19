@@ -294,7 +294,7 @@ public class CarrierTest extends CarrierTestBase {
 		
 		execute("Mode.list");				
 		execute("Mode.detailAndFirst");
-		assertError("Impossible go to detail mode, there are no elements in list");		
+		assertError("Impossible to go to detail mode, there are no elements in list");		
 	}
 
 	

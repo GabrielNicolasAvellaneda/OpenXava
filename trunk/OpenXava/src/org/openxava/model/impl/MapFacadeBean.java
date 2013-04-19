@@ -1207,14 +1207,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}			
 			// removing collections are resposibility of persistence provider						
 			getPersistenceProvider().remove(metaModel, keyValues); 
-		} catch (ValidationException ex) {
+		} catch (ValidationException ex) {			
 			throw ex; 					
 		} catch (XavaException ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("remove_error", metaModel.getName(), ex.getLocalizedMessage());				
 		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
-			rollback();
 			throw new RemoteException(XavaResources.getString("remove_error",
 				metaModel.getName(), ex.getLocalizedMessage()));
 		}
