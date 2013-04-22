@@ -103,17 +103,15 @@
 			<on-change class="org.openxava.test.actions.OnChangeWarehouseAction"/>
 		</property-view>		
 		
-		<members>
-			number;
-			description;
-			photos;
-			color;
-			family;
-			subfamily;
-			warehouse, zoneOne;
-			unitPrice, unitPriceInPesetas;
-			unitPriceWithTax
-		</members>		
+		<members aligned-by-columns="true">
+			"number, description;" +
+			"color, photos;" +
+			"family, subfamily;" +
+			"warehouse, zoneOne;" +
+			"unitPrice, unitPriceInPesetas;" +
+			"unitPriceWithTax"			
+		</members>
+			
 				
 	</view>
 	
