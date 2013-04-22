@@ -497,8 +497,8 @@ public class XavaPreferences {
 	}
 	
 	/** @since 4.7.1 */
-	public boolean isAlignedByColumn() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("alignedByColumn", "false").trim());
+	public boolean isAlignedByColumns() { 
+		return "true".equalsIgnoreCase(getProperties().getProperty("alignedByColumns", "false").trim());
 	}
 	
 }

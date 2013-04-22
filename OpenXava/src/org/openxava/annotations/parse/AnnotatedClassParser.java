@@ -461,7 +461,7 @@ public class AnnotatedClassParser {
 			stHasMoreTokens = st.hasMoreTokens();
 			token = stHasMoreTokens?st.nextToken().trim():null;
 		} else {
-			metaView.setAlignedByColumns(XavaPreferences.getInstance().isAlignedByColumn());
+			metaView.setAlignedByColumns(XavaPreferences.getInstance().isAlignedByColumns());
 		}
 		while (stHasMoreTokens) {	
 			stHasMoreTokens = st.hasMoreTokens();			

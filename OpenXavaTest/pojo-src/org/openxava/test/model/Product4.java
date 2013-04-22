@@ -21,11 +21,8 @@ import org.openxava.test.validators.*;
 @Entity
 @Table(name="PRODUCT")
 @View( members=
-	"#number;" + 
-	"description;" +
-	"photos;" +
-	"family;" +
-	"subfamily;" +
+	"#number, description, photos;" + 
+	"family, subfamily;" +
 	"warehouse, zoneOne;" +
 	"unitPrice, unitPriceInPesetas;"		
 )

@@ -36,15 +36,12 @@ import org.openxava.test.validators.*;
 })
 @Views({
 	@View( members=
-		"number;" +
-		"description;" +
-		"photos;" +
-		"color;" + 
-		"family;" +
-		"subfamily;" +
+		"#number, description;" +
+		"color, photos;" +
+		"family, subfamily;" +
 		"warehouse, zoneOne;" +
 		"unitPrice, unitPriceInPesetas;" +
-		"unitPriceWithTax" 
+		"unitPriceWithTax"			
 	),
 	@View( name="ColorWithFrame", members= 
 		"number;" +
