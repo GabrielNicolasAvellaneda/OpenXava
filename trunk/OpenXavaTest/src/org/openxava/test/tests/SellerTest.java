@@ -116,13 +116,6 @@ public class SellerTest extends ModuleTestBase {
 		assertValueInCollection("customers", 0, "number", "2");
 		assertValueInCollection("customers", 1, "number", "1");
 		
-		// Hide rows is not available for collection since 2.2.5
-		/*
-		assertCollectionRowCount("customers", 2);
-		execute("List.hideRows", "collection=customers");
-		assertCollectionRowCount("customers", 0);
-		*/
-		
 		// Filter  
 		String [] condition = { "1" }; 
 		setConditionValues("customers", condition);		
@@ -131,13 +124,21 @@ public class SellerTest extends ModuleTestBase {
 		assertValueInCollection("customers", 0, "number", "1");
 		assertValueInCollection("customers", 0, "name", "Javi");
 		
-		// Hide/Show rows are not available for collection since 2.2.5
-		/*
-		execute("List.hideRows", "collection=customers");
-		assertCollectionRowCount("customers", 0);
-		execute("List.showRows", "collection=customers");
+		// Reset collection filter when main object changes
+		execute("Navigation.next");
+		assertValue("number", "2");
 		assertCollectionRowCount("customers", 1);
-		*/
+		assertValueInCollection("customers", 0, "number", "43");
+		
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertValue("number", "1");
+		assertCollectionRowCount("customers", 2);
+				
+		setConditionValues("customers", condition);		
+		execute("List.filter", "collection=customers");		
+		assertCollectionRowCount("customers", 1);		
+		assertValueInCollection("customers", 0, "number", "1");
 	}
 	
 	public void testMembersOfReferenceToEntityNotEditable() throws Exception {
