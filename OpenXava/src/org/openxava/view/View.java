@@ -513,12 +513,12 @@ public class View implements java.io.Serializable {
 	private void setValues(Map map, boolean closeCollections) throws XavaException { 
 		if (values == null) values = new HashMap();
 		else values.clear();
-		if (closeCollections) closeChildCollectionDetailsAndClearSelected();
+		if (closeCollections) resetCollections();
 		resetCollectionTotals();
 		addValues(map);		
 	}
 
-	private void closeChildCollectionDetailsAndClearSelected() throws XavaException {
+	private void resetCollections() throws XavaException {
 		if (hasSubviews()) { 
 			Iterator it = getSubviews().values().iterator();
 
@@ -526,7 +526,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);
-				subview.closeChildCollectionDetailsAndClearSelected();										
+				subview.resetCollections();										
 			}
 		}
 				
@@ -536,7 +536,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);				
-				subview.closeChildCollectionDetailsAndClearSelected();
+				subview.resetCollections();
 			}
 		}
 				
@@ -546,11 +546,14 @@ public class View implements java.io.Serializable {
 				View subview = getSectionView(i); 
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);
-				subview.closeChildCollectionDetailsAndClearSelected();
+				subview.resetCollections();
 			}	
 		}	
 		listSelected = null;
-		if (collectionTab != null) collectionTab.deselectAll(); 		
+		if (collectionTab != null) {
+			collectionTab.deselectAll();
+			collectionTab.clearCondition(); 
+		}
 	}
 	
 	private void resetCollectionTotals() throws XavaException {

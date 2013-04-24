@@ -117,7 +117,8 @@ public class Tab implements java.io.Serializable {
 	private String tabObject;
 	private boolean usesConverters;
 	private String title;  
-	private List<Map> selectedKeys; 
+	private List<Map> selectedKeys;
+	private boolean conditionJustCleared; 
 	
 	public List<MetaProperty> getMetaProperties() {
 		if (metaProperties == null) {
@@ -999,6 +1000,17 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	/**
+	 * @since 4.7.1
+	 */
+	public void clearCondition() { 
+		conditionValues= null;
+		conditionValuesTo = null;
+		conditionComparators = null;
+		condition = null;
+		conditionJustCleared=true;
+	}
+	
+	/**
 	 * 
 	 * @since 4.6
 	 */
@@ -1124,10 +1136,13 @@ public class Tab implements java.io.Serializable {
 
 	public synchronized void setRequest(HttpServletRequest request) {		
 		this.request = request;
-		String collectionPrefix = getCollectionPrefix();		
-		setConditionComparators(collectionPrefix);
-		setConditionValues(collectionPrefix);
-		setConditionValuesTo(collectionPrefix);		
+		if (!conditionJustCleared) { 
+			String collectionPrefix = getCollectionPrefix();		
+			setConditionComparators(collectionPrefix);
+			setConditionValues(collectionPrefix);
+			setConditionValuesTo(collectionPrefix);
+		}
+		conditionJustCleared = false;
 	}
 
 	private String getCollectionPrefix() {

@@ -11,6 +11,6 @@ at least the next cases:
 	the section has not to be duplicated (it was a bug) 		
 - Invoice: Inside Liferay, buttons inside portlets
 - A section with only a property (enmarcable and not enmarcable) inside Liferay
- 		with more portlets below. The frame of the OX porltet mustn't wrap all other portlets.
+ 		with more portlets below. The frame of the OX portlet mustn't wrap all other portlets.
 - Product5FamilyFromSubfamily: The properties in the group must be in the same line
 	(Not solved yet: http://sourceforge.net/p/openxava/bugs/188/)

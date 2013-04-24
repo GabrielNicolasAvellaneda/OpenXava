@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Filters in collections are stored between elements.
+- New clearCondition() method in Tab, to clear the condition values and comparators.
 - New alignedByColumns property in xava.properties to aligned all the members by columns in the user interface. 
 - Support of # for root view, also available as aligned-by-columns for classic XML components.
 - Russian documentation improved.
