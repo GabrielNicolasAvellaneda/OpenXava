@@ -12,7 +12,7 @@ public class CustomerRadioButtonTest extends ModuleTestBase {
 		super(testName, "CustomerRadioButton");		
 	}
 	
-	public void testEditorByView_radioButton() throws Exception {
+	public void testEditorByView_radioButton() throws Exception { 
 		// Really editor by property-view must be tested visually
 		// and about radioButton we only test that it's possible to use in junit test,
 		// because behaves equals that a combo. Hence it's needed to test visually

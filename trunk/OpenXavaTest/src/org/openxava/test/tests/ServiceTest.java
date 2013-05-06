@@ -26,7 +26,7 @@ public class ServiceTest extends ModuleTestBase {
 	}
 	
 	
-	public void testRemoveAggregateFromCollectionWithReferenceToParentAsKey() throws Exception {
+	public void testRemoveAggregateFromCollectionWithReferenceToParentAsKey() throws Exception { 
 		execute("CRUD.new");		
 		setValue("number", "66");
 		setValue("description", "JUNIT SERVICE");
@@ -167,7 +167,7 @@ public class ServiceTest extends ModuleTestBase {
 		
 	}
 	
-	public void testReferenceWithSearchKeyPropertiesInANotEditableView() throws Exception{
+	public void testReferenceWithSearchKeyPropertiesInANotEditableView() throws Exception{ 
 		createService("998", "JUNIT_1");
 		createService("999", "JUNIT_2");
 		

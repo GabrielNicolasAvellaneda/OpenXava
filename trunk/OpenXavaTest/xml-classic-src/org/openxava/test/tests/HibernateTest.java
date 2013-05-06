@@ -60,7 +60,7 @@ public class HibernateTest extends TestCase {
 		XHibernate.commit(); 		
 	}
 	
-	public void testFinderThrowsObjectNotFound() throws Exception {
+	public void testFinderThrowsObjectNotFound() throws Exception { 
 		// Finders in POJOs has the semantics of the EJB CMP2 
 		// in order to help in translation from EJB2 to POJO+Hibernate
 		try {

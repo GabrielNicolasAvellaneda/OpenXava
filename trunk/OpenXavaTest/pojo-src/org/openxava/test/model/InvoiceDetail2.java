@@ -3,9 +3,7 @@ package org.openxava.test.model;
 import java.math.*;
 
 import javax.persistence.*;
-
 import org.openxava.annotations.*;
-import org.openxava.test.actions.*;
 
 /**
  * 
@@ -91,7 +89,7 @@ public class InvoiceDetail2 {
 
 	public void setInvoice(Invoice2 invoice) {
 		this.invoice = invoice;
-		this.invoice.getDetails().add(this); 
+		this.invoice.getDetails().add(this);  
 	}
 
 

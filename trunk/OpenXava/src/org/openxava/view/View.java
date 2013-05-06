@@ -396,7 +396,7 @@ public class View implements java.io.Serializable {
 	 * you have to use <code>setValues</code> or <code>setValue</code>.<br>
 	 */
 	public Map getValues() throws XavaException {			
-		return new HashMap(getValues(false));
+		return Maps.recursiveClone(getValues(false)); 
 	}
 
 	/**

@@ -158,7 +158,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	
-	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception { 
+	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception {  
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");		
 		assertDialog();
@@ -208,7 +208,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertMessage("Invoice deleted successfully");
 	}
 	
-	public void testMinimunInCollection_overrideCollectionActions() throws Exception {
+	public void testMinimunInCollection_overrideCollectionActions() throws Exception { 
 		// minimunCollection
 		execute("CRUD.new");
 		setValue("invoice.year", "2004");

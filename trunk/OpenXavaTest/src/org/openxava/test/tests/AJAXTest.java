@@ -21,7 +21,7 @@ import com.gargoylesoftware.htmlunit.html.*;
  * @author Javier Paniza
  */
 
-public class AJAXTest extends ModuleTestBase {
+public class AJAXTest extends ModuleTestBase { 
 	
 	public AJAXTest(String nameTest) {
 		super(nameTest, null);
@@ -416,7 +416,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, view, messages");
 	}
 	
-	public void testEditorForReference() throws Exception {		
+	public void testEditorForReference() throws Exception { 		
 		changeModule("Product2");
 		assertEditorForReference();		
 		changeModule("Product2ColorWithFrame");
@@ -494,7 +494,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedPart("reference_editor_address___state"); 
 	}
 			
-	public void testDependentDescriptionsList_resetDescriptionsCache_setEditable() throws Exception { 
+	public void testDependentDescriptionsList_resetDescriptionsCache_setEditable() throws Exception {  
 		changeModule("Product2"); 
 		// Dependent descriptions list 
 		assertLoadedParts(""); 
@@ -522,7 +522,7 @@ public class AJAXTest extends ModuleTestBase {
 				"messages,");
 	}
 		
-	public void	testShowingHiddingPartsReloadsFullView() throws Exception {
+	public void testShowingHiddingPartsReloadsFullView() throws Exception { 
 		changeModule("Product2"); 
 		execute("Mode.detailAndFirst");
 		assertNotExists("zoneOne");
@@ -650,7 +650,7 @@ public class AJAXTest extends ModuleTestBase {
 				"messages");		
 	}	
 	
-	public void testErrorImagesForPropertiesAndDescriptionsLists() throws Exception {
+	public void testErrorImagesForPropertiesAndDescriptionsLists() throws Exception { 
 		changeModule("Product2");
 		execute("CRUD.new");
 		execute("CRUD.save");
@@ -710,7 +710,7 @@ public class AJAXTest extends ModuleTestBase {
 	}
 
 	
-	public void testCustomView_uploadFile() throws Exception {
+	public void testCustomView_uploadFile() throws Exception { 
 		changeModule("Product2");
 		execute("Mode.detailAndFirst");
 		execute("Gallery.edit", "galleryProperty=photos");

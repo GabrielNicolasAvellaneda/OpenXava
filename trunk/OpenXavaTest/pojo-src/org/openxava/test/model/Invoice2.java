@@ -83,6 +83,7 @@ public class Invoice2 {
 		BigDecimal result = new BigDecimal("0.00");
 		for (InvoiceDetail2 detail: getDetails()) {
 			result = result.add(detail.getAmount());
+			
 		}
 		setAmountsSum(result);
 	}

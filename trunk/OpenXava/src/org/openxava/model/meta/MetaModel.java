@@ -692,7 +692,7 @@ abstract public class MetaModel extends MetaElement {
 		ArrayList result = new ArrayList();
 		while (it.hasNext()) {
 			String name = (String) it.next();
-			if (!containsMetaProperty(name)) continue;			
+			if (!containsMetaProperty(name)) continue;
 			MetaProperty p = (MetaProperty) getMetaProperty(name);
 			if (p.isKey()) {
 				result.add(p);

@@ -25,7 +25,7 @@ public class SellerWithSearchListConditionTest extends ModuleTestBase {
 		assertListRowCount(4);
 	}
 
-	public void testSearchListConditionOff() throws Exception {
+	public void testSearchListConditionOff() throws Exception {  
 		changeModule("SellerSearchListConditionOff");
 		execute("Mode.detailAndFirst");
 		execute("Reference.search", "keyProperty=level.id");

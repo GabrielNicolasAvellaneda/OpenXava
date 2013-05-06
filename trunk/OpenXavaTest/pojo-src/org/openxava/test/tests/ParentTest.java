@@ -53,7 +53,7 @@ public class ParentTest extends ModuleTestBase {
 	 * Tests for normal CRUD operation at child level.
 	 * @throws Exception
 	 */
-	public void testEmbeddedCollectionFromChildrenCRUD() throws Exception {
+	public void testEmbeddedCollectionFromChildrenCRUD() throws Exception { 
 		execute("CRUD.new");
 		setValue("id","FATHER");
 		setValue("description", "THE FATHER");

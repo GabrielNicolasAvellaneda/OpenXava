@@ -13,7 +13,7 @@ public class CustomerTwoSellersInListTest extends ModuleTestBase {
 		super(testName, "CustomerTwoSellersInList");				
 	}
 	
-	public void test2ReferenceToSameModelInList() throws Exception {
+	public void test2ReferenceToSameModelInList() throws Exception { 
 		assertListRowCount(5); 
 		assertValueInList(0, "name", "Javi");
 		assertValueInList(0, "seller.name", "MANUEL CHAVARRI");

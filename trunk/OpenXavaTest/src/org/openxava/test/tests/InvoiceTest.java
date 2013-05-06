@@ -318,7 +318,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertAction("Customer.prefixStreet");
 	}
 	
-	public void testTestingCheckBox() throws Exception {
+	public void testTestingCheckBox() throws Exception { 
 		// Demo for make tests with checkbox
 		
 		// Create
@@ -856,7 +856,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("customer.name", customerName);				
 	}
 	
-	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {  		
+	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {   		
 		// Create
 		execute("CRUD.new");					
 		assertExists("customer.number");
@@ -1171,7 +1171,7 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	
-	public void testValidationOnSaveAggregateAndModelValidatorReceivesReferenceAndCalculatedProperty() throws Exception {		
+	public void testValidationOnSaveAggregateAndModelValidatorReceivesReferenceAndCalculatedProperty() throws Exception { 		
 		// Create
 		execute("CRUD.new");						
 		assertExists("customer.number");
