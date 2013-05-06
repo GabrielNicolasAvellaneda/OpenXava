@@ -17,7 +17,7 @@ public class ShipmentTest extends ModuleTestBase {
 		super(testName, "Shipment");		
 	}
 	
-	public void testCreateReferenceFromCreatingReference() throws Exception {
+	public void testCreateReferenceFromCreatingReference() throws Exception { 
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=CustomerContactPerson,keyProperty=xava.Shipment.customerContactPerson.name");
 		execute("Reference.createNew", "model=Customer,keyProperty=xava.CustomerContactPerson.customer.number");

@@ -11,7 +11,7 @@ import org.openxava.tests.*;
  * @author Javier Paniza
  */
 
-public class Product2Test extends ModuleTestBase {
+public class Product2Test extends ModuleTestBase { 
 	
 	public Product2Test(String testName) {
 		super(testName, "Product2");		

@@ -15,7 +15,7 @@ public class IngredientTest extends ModuleTestBase {
 	}
 	
 	// This test fails with XML components 
-	public void testNavigationWithHiddenKeyAndSections() throws Exception {
+	public void testNavigationWithHiddenKeyAndSections() throws Exception { 
 		assertLabelInList(0, "Name");
 		execute("List.orderBy", "property=name");
 		assertValueInList(0, 0, "AZUCAR");

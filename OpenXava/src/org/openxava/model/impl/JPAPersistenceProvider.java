@@ -31,7 +31,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 		}
 		catch (EntityNotFoundException ex) {
 			// As in JPA specification find does not throw EntityNotFoundException
-			// but Hibernate (at least 3.2RC2) throw it (maybe an bug?)
+			// but Hibernate (at least 3.2RC2) throw it (maybe a bug?)
 			return null;
 		}
 	}

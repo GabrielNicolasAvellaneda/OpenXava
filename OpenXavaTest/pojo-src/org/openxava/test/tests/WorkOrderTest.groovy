@@ -12,7 +12,7 @@ class WorkOrderTest extends ModuleTestBase {
 		super(testName, "WorkOrder")		
 	}
 	
-	void testCompositeKeyEntityWithNestedCollections() {
+	void testCompositeKeyEntityWithNestedCollections() { 
 		execute "CRUD.new"
 		setValue "year", "2011"
 		setValue "number", "66"

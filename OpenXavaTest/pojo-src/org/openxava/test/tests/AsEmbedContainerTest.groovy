@@ -42,7 +42,8 @@ class AsEmbedContainerTest extends ModuleTestBase {
 			createQuery("delete from AsEmbed2").executeUpdate()
 			createQuery("delete from AsEmbed3").executeUpdate()
 			createQuery("delete from AsEmbedContainer").executeUpdate()
-		}
+		}		
+		XPersistence.commit()
 	}
 
 }

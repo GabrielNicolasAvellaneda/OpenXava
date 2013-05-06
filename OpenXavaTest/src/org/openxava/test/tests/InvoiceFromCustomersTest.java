@@ -42,7 +42,7 @@ public class InvoiceFromCustomersTest extends ModuleTestBase {
 		assertNoPopup();		
 	}
 	
-	public void testModuleChange() throws Exception {
+	public void testModuleChange() throws Exception { 
 		// Verifying in initial module
 		assertAction("Invoice.listOfCustomer");
 		assertNoAction("CustomerInvoices.return");

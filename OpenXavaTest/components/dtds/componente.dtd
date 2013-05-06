@@ -44,7 +44,7 @@
 >
 
 <!ELEMENT miembros (#PCDATA|grupo|seccion|accion)*>
-<!ELEMENT miembros 
+<!ATTLIST miembros 
 	alineado-por-columnas (true|false) "false"
 >	
 

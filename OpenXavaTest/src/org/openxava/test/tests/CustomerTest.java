@@ -65,7 +65,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertContentTypeForPopup("application/pdf");		
 	}
 	
-	public void testListActionInNestedCollection() throws Exception {
+	public void testListActionInNestedCollection() throws Exception { 
 		execute("CRUD.new");
 		setValue("number", "4");
 		execute("CRUD.refresh");
@@ -318,7 +318,7 @@ public class CustomerTest extends ModuleTestBase {
 		
 	
 	// references to entities and aggregates
-	public void testCreateModifyAndReadWithReferencesAndOverwriteSaveAction() throws Exception { 				
+	public void testCreateModifyAndReadWithReferencesAndOverwriteSaveAction() throws Exception { 			
 		// Create one new
 		execute("CRUD.new");
 		assertNoErrors();

@@ -13,7 +13,7 @@ class JournalTest extends ModuleTestBase {
 		super(testName, "Journal") 		
 	}
 	
-	void testEntityValidatorInACascadeAllCollectionElementWithAReferenceToParentThatNotMatchWithEntityName() {
+	void testEntityValidatorInACascadeAllCollectionElementWithAReferenceToParentThatNotMatchWithEntityName() { 
 		execute "Mode.detailAndFirst"
 		execute "Collection.edit", "row=0,viewObject=xava_view_entries"
 		execute "Collection.save"

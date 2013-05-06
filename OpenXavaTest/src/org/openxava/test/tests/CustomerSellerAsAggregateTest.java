@@ -15,7 +15,7 @@ public class CustomerSellerAsAggregateTest extends ModuleTestBase {
 	}
 	
 
-	public void testReferenceToEntityAsAggregate() throws Exception {
+	public void testReferenceToEntityAsAggregate() throws Exception { 
 		// Creating customer and its seller at once
 		execute("CRUD.new");
 		setValue("number", "66");

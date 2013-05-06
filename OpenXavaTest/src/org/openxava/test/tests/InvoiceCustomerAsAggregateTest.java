@@ -13,7 +13,7 @@ public class InvoiceCustomerAsAggregateTest extends ModuleTestBase {
 		super(testName, "InvoiceCustomerAsAggregate");		
 	}
 	
-	public void testCollectionsInsideReferenceAsEmbedded() throws Exception {
+	public void testCollectionsInsideReferenceAsEmbedded() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount("customer.deliveryPlaces", 0);
 		execute("Collection.new", "viewObject=xava_view_customer_deliveryPlaces");

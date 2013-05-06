@@ -15,7 +15,7 @@ public class SellerWithCustomersAsAggregateTest extends ModuleTestBase {
 		super(testName, "SellerWithCustomersAsAggregate");		
 	}
 	
-	public void testEntityCollectionAsAggregate() throws Exception {
+	public void testEntityCollectionAsAggregate() throws Exception { 
 		execute("CRUD.new");
 		setValue("number", "3");
 		execute("CRUD.refresh");
