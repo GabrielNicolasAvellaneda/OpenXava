@@ -112,14 +112,21 @@ openxava.refreshPage = function(result) {
 		}  
 		if (result.showDialog){	
 			dialog.attr("application", result.application); 
-			dialog.attr("module", result.module); 
+			dialog.attr("module", result.module); 			
 			dialog.dialog('option', 'title', result.dialogTitle);
 			dialog.dialog('option', 'width', 'auto');
 			dialog.dialog('option', 'width', dialog.parent().width());
-			dialog.dialog('option', 'height', 'auto');
+			dialog.dialog('option', 'height', 'auto');			
 			dialog.dialog('option', 'position', 'center' );
 			dialog.dialog('option', 'zIndex', 99999 );
 			dialog.dialog('open');
+		}
+		else if (result.resizeDialog) {
+			var dialog = openxava.getDialog(result.application, result.module);
+			dialog.dialog('close');	
+			dialog.dialog('option', 'width', 'auto');
+			dialog.dialog('option', 'width', dialog.parent().width());
+			dialog.dialog('open');									
 		}
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
@@ -230,11 +237,11 @@ openxava.disableElements = function(result) {
 	);		
 }
 
-openxava.closeDialog = function(result) { 
-	var dialog = openxava.getDialog(result.application, result.module); 
+openxava.closeDialog = function(result) {
+	var dialog = openxava.getDialog(result.application, result.module);
 	dialog.attr("application", ""); 
-	dialog.attr("module", ""); 
-	dialog.dialog('close');
+	dialog.attr("module", "");
+	dialog.dialog('close');	
 }
 
 openxava.onCloseDialog = function(event) {  
