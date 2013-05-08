@@ -259,6 +259,7 @@ public class Module extends DWRBase {
 		if (firstRequest && manager.getDialogLevel() > 0) { 
 			result.setShowDialog(true);
 		}
+		result.setResizeDialog(manager.getDialogLevel() > 0 && (getView().isReloadNeeded() || manager.isReloadViewNeeded())); 		
 	}
 
 	private void setDialogTitle(Result result) { 		

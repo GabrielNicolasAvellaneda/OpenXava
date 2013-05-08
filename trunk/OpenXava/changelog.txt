@@ -1,10 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: When elements are hidden or shown inside a dialog the dialog width is not adjusted. 
 - Fix: With two embedded collections of the same type adding to the second collection adds the element to the first one.  
 - Fix: View.getValues() returns only a copy of the first tree level, so it produces some lateral effects sometimes.
 - Counter injected in IAggregateOidCalculator now is a random number. It only applies to XML classic components.
-- Fix: Failing updating an entity can leave referenced objects created.
+- Fix: If updating an entity fails referenced objects can be left created.
 - Fix: Filters in collections are stored between elements.
 - New clearCondition() method in Tab, to clear the condition values and comparators.
 - New alignedByColumns property in xava.properties to aligned all the members by columns in the user interface. 
