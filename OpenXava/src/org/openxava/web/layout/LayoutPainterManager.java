@@ -3,6 +3,7 @@
  */
 package org.openxava.web.layout;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -17,7 +18,9 @@ import org.openxava.view.View;
  * @author Federico Alcantara
  *
  */
-public class LayoutPainterManager {
+public class LayoutPainterManager implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	/** 
 	 * Render the view.
 	 * @param view Originating view.

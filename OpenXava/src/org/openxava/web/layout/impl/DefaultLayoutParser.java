@@ -144,7 +144,10 @@ public class DefaultLayoutParser implements ILayoutParser {
 		currentView = createBeginViewMarker(view);
 		currentView.setRepresentsSection(representsSection);
 		addLayoutElement(currentView);
-		parseMetamembers(view.getMetaMembers(), view, false, true, inputPropertyPrefix);
+		MetaView metaView = view.getMetaModel().getMetaView(view.getViewName());
+		boolean alignedByColumn = (metaView == null ? false : metaView.isAlignedByColumns());
+
+		parseMetamembers(view.getMetaMembers(), view, false, true, inputPropertyPrefix, alignedByColumn);
 		addLayoutElement(createEndViewMarker(view));
 		if (currentView.isRepresentsSection() && 
 				currentView.getMaxFramesCount() == 1 &&
@@ -197,13 +200,11 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 */
 	@SuppressWarnings("rawtypes")
 	protected void parseMetamembers(Collection metaMembers, View view, boolean isDescriptionsList, boolean isGrouped,
-			String inputPropertyPrefix) {
+			String inputPropertyPrefix, boolean alignedByColumn) {
 		boolean displayAsDescriptionsList = isDescriptionsList;
 		boolean frameOnSameColumn = false;
 		int frameStartingRowIndex = -1;
 		int frameMaxEndingRowIndex = -1;
-		MetaView metaView = view.getMetaModel().getMetaView(view.getViewName());
-		boolean alignedByColumn = metaView == null ? false : metaView.isAlignedByColumns();
 		setCurrentMustStartRow(isGrouped || rowsStack.isEmpty());
 
 		Iterator it = metaMembers.iterator();
@@ -224,9 +225,11 @@ public class DefaultLayoutParser implements ILayoutParser {
 					ILayoutElement beforeLast = elements.size() > 1 ? elements.get(elements.size() - 2) : null;
 					ILayoutElement last = elements.size() > 0 ? elements.get(elements.size() - 1) : null;
 					MetaViewAction action = (p instanceof MetaViewAction) ? (MetaViewAction) p : null;
+
+					boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
+					
 					boolean createPropertyOnSameColumn = (action != null || !alignedByColumn) && !currentMustStartRow() && currentRowStarted()
 							&& (last instanceof ILayoutColumnEndElement) && (beforeLast instanceof ILayoutPropertyEndElement);
-					boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
 
 					setEditable(view.isEditable(p));
 					if (createPropertyOnSameColumn) {
@@ -292,10 +295,14 @@ public class DefaultLayoutParser implements ILayoutParser {
 								addLayoutElement(createEndColumnMarker(view));
 							} else {
 								if ("referenceEditor.jsp".equalsIgnoreCase(metaEditor.getUrl())) {
+									boolean referenceAlignedByColumns = alignedByColumn;
+									if (isFramed) {
+										referenceAlignedByColumns = subView.isAlignedByColumns();
+									}
 									parseMetamembers(subView.getMetaMembers(), subView, isReferenceAsDescriptionsList, isFramed 
 											|| (currentRowStarted() && !isReferenceAsDescriptionsList) 
 											|| (!currentRowStarted() && currentMustStartRow()),
-											subView.getPropertyPrefix());
+											subView.getPropertyPrefix(), referenceAlignedByColumns);
 								} else { // uses it owns reference editor
 									addLayoutElement(createBeginColumnMarker(view));
 									addLayoutElement(createBeginReferenceMarker(ref, isReferenceAsDescriptionsList, false, view,
@@ -330,7 +337,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 					addLayoutElement(createBeginColumnMarker(view));
 			  		addLayoutElement(createBeginGroupMarker(group, subView, groupLabel));
 					parseMetamembers(group.getMetaView().getMetaMembers(), subView, false, true,
-							subView.getPropertyPrefix());
+							subView.getPropertyPrefix(), group.getMetaView().isAlignedByColumns());
 					if (rowIndex > frameMaxEndingRowIndex) {
 						frameMaxEndingRowIndex = rowIndex;
 					}
