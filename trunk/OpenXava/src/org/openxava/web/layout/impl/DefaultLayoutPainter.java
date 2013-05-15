@@ -264,7 +264,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutDataCell() + " " + Style.getInstance().getLayoutRowSpacerDataCell());
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-
+		write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
 	}
 	
 	/**
