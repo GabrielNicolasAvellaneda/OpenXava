@@ -20,7 +20,10 @@ class InvoiceDetailTest extends ModuleTestBase {
 		execute "Gallery.edit", "galleryProperty=photos,viewObject=xava_view_product"
 		assertNoErrors()
 		assertMessage "No images"
-		assertAction "Return.return"
+		assertDialog() 
+		execute "Close.close" 
+		assertNoDialog()
+		assertExists "quantity"
 	}
 	
 }

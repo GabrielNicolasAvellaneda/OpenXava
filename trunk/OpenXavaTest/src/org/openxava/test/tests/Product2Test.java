@@ -155,7 +155,7 @@ public class Product2Test extends ModuleTestBase {
 		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());		
 		
 		// Returning to the main entity
-		execute("Gallery.return");
+		execute("Gallery.close"); 
 		//execute("CRUD.save"); It's not needed explicit saving of the main entity
 		assertNoErrors();
 		
@@ -169,7 +169,7 @@ public class Product2Test extends ModuleTestBase {
 		assertNoAction("Gallery.minimizeImage");
 		assertNoAction("Gallery.removeImage");
 		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());		
-		execute("Gallery.return");
+		execute("Gallery.close"); 
 		
 		// Verifying that product 1 has the added image
 		execute("CRUD.new");
@@ -201,7 +201,7 @@ public class Product2Test extends ModuleTestBase {
 		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
 		
 		// Verifying read-only
-		execute("Gallery.return");
+		execute("Gallery.close"); 
 		execute("EditableOnOff.setOff");
 		execute("Gallery.edit", "galleryProperty=photos");
 		assertNoErrors();
@@ -211,7 +211,7 @@ public class Product2Test extends ModuleTestBase {
 		assertNoAction("Gallery.minimizeImage");
 		assertNoAction("Gallery.removeImage");
 		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
-		execute("Return.return");
+		execute("Close.close");
 		execute("EditableOnOff.setOn");
 		
 		// Removing the image
@@ -225,7 +225,7 @@ public class Product2Test extends ModuleTestBase {
 		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());
 		
 		// Verifying that product 1 has no images
-		execute("Gallery.return");
+		execute("Gallery.close"); 
 		execute("CRUD.new");
 		setValue("number", "1");
 		execute("CRUD.refresh");

@@ -16,7 +16,7 @@
 		the resources in 'Labels.properties' or '${application}-labels.properties'
 		take preference over it.
 		That is to say, it is better specify the labels in resources files and not here.		
-	-->
+	-->	
 	
 	<controller name="ShowSeller">
 		<action name="show" class="org.openxava.test.actions.ShowSellerAction"/>
@@ -24,6 +24,11 @@
 			<set property="nextModule" value="ShowSeller"/>
 			<set property="reinit" value="true"/>
 		</action>	
+	</controller>
+	
+	<controller name="GalleryNoDialog">		
+		<action name="edit" image="photo.gif" hidden="true"
+			class="org.openxava.test.actions.EditGalleryNoDialogAction"/>			
 	</controller>
 
 	<controller name="Author">	

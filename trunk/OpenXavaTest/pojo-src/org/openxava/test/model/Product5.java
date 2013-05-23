@@ -48,7 +48,7 @@ public class Product5 {
 	@Column(length=40) @Required
 	private String description;
 	
-	@Stereotype("IMAGES_GALLERY")
+	@Editor("GalleryNoDialog") 
 	private String photos;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
