@@ -17,8 +17,8 @@ openxava.init = function(application, module) {
 openxava.ajaxRequest = function(application, module, firstRequest) {
 	if (openxava.isRequesting(application, module)) return;
 	openxava.setRequesting(application, module);
-	document.throwPropertyChange = false; 
-	openxava.getElementById(application, module, "loading").value=true;    
+	document.throwPropertyChange = false;
+	openxava.getElementById(application, module, "loading").value=true;
 	document.body.style.cursor='wait';
 	$('#xava_loading').show(); 	
 	$('#xava_loading2').show();
@@ -93,7 +93,7 @@ openxava.refreshPage = function(result) {
 		}
 		openxava.dialogLevel = result.dialogLevel;
 		var dialog;
-		if (result.showDialog) {
+		if (result.showDialog || result.resizeDialog) { 
 			dialog = openxava.getDialog(result.application, result.module);
 		}
 		openxava.strokeActions = result.strokeActions;
@@ -111,8 +111,8 @@ openxava.refreshPage = function(result) {
 			}			
 		}  
 		if (result.showDialog){	
-			dialog.attr("application", result.application); 
-			dialog.attr("module", result.module); 			
+			dialog.attr("application", result.application);
+			dialog.attr("module", result.module);
 			dialog.dialog('option', 'title', result.dialogTitle);
 			dialog.dialog('option', 'width', 'auto');
 			dialog.dialog('option', 'width', dialog.parent().width());
@@ -122,18 +122,18 @@ openxava.refreshPage = function(result) {
 			dialog.dialog('open');
 		}
 		else if (result.resizeDialog) {
-			var dialog = openxava.getDialog(result.application, result.module);
-			dialog.dialog('close');	
+			if (dialog.dialog('isOpen')) dialog.dialog('close'); 
+			if (result.dialogTitle) dialog.dialog('option', 'title', result.dialogTitle); 			
 			dialog.dialog('option', 'width', 'auto');
 			dialog.dialog('option', 'width', dialog.parent().width());
-			dialog.dialog('open');									
+			dialog.dialog('open');					
 		}
 		if (result.focusPropertyId != null) { 
 			openxava.getElementById(result.application, result.module, "xava_focus_property_id").value = result.focusPropertyId;
-			openxava.setFocus(result.application, result.module);		
+			openxava.setFocus(result.application, result.module);
 		}	
-		openxava.selectRows(result.application, result.module, result.selectedRows); 
-		openxava.initUI(result.application, result.module, result.currentRow); 	
+		openxava.selectRows(result.application, result.module, result.selectedRows);
+		openxava.initUI(result.application, result.module, result.currentRow);
 	}		
 	document.getElementById('xava_processing_layer').style.display='none';
 	var form = openxava.getForm(result.application, result.module);	
@@ -246,8 +246,8 @@ openxava.closeDialog = function(result) {
 
 openxava.onCloseDialog = function(event) {  
 	var dialog = $(event.target); 
-	var application = dialog.attr("application");	
-	if (application != "") {
+	var application = dialog.attr("application");
+	if (application && application != "") { 
 		var module = dialog.attr("module");
 		openxava.executeAction(application, module, false, false, "Dialog.cancel");
 		return;

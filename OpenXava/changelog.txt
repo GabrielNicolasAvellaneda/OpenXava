@@ -1,6 +1,14 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Adding images to a gallery from a dialog produces a JavaScript error.
+- On closing a dialog if it has an action named return, volver, close or cerrar, the action is called automatically.
+- Fix: Methods assertDialog(), assertNoDialog(), assertDialogTitle(), closeDialog() of ModuleTestBase fail after upload a file.
+- Images gallery editor uses a dialog.
+- New generic controller Close useful for dialogs with just a close button.
+- Fix: Title for dialogs with no associated model has an unneeded hyphen.
+- Fix: Dialog titles are lost when closing dialogs after upload a file from a dialog.    
+
 - Fix: When elements are hidden or shown inside a dialog the dialog width is not adjusted. 
 - Fix: With two embedded collections of the same type adding to the second collection adds the element to the first one.  
 - Fix: View.getValues() returns only a copy of the first tree level, so it produces some lateral effects sometimes.

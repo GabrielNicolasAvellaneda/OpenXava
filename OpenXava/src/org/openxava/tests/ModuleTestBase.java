@@ -2298,17 +2298,16 @@ public class ModuleTestBase extends TestCase {
 	
 	private String getTopDialog(String module) throws Exception { 
 		int level = 0;
-		for (level = 1; ; level++) {
+		for (level = 10; level > 0; level--) {
 			try {
 				HtmlElement el = page.getElementById(Ids.decorate(application, module, "dialog" + level));
-				if (el == null || !el.hasChildNodes()) break;
+				if (el != null && el.hasChildNodes()) break;
 			}
 			catch (ElementNotFoundException ex) {
-				break;
-			}
+			}			
 		}
-		if (level == 1) return null;
-		return "dialog" + (level - 1);
+		if (level == 0) return null;		
+		return "dialog" + level;		
 	}
 
 	

@@ -3,9 +3,7 @@
 <!DOCTYPE component SYSTEM "dtds/component.dtd">
 
 <!-- 
-	Implemented using a handmade EJB (in this case with XDoclet, 
-	but a pure handmade EJB, or wizard generated EJB is like this too).
-	and a simple handmade bean (POJO) too. (for use with hibernate for example).
+	Implemented using a simple handmade bean (POJO) (for use with hibernate for example).
 	It's not typical use both styles in the same application,
 	but it's here for ilustrative purpose.
 	
@@ -15,12 +13,6 @@
 <component name="Family">
 
 	<entity>
-		<!-- tmp Quitar dtd 
-		<ejb remote="org.openxava.test.model.FamilyRemote"
-			home="org.openxava.test.model.FamilyHome"
-			primaryKey="org.openxava.test.model.FamilyKey"
-			jndi="ejb/openxava.test/Family"/>
-		-->			
 		<bean class="org.openxava.test.model.Family"/>	
 		<property name="oid" type="String" hidden="true" key="true" required="false"/>
 		

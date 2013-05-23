@@ -56,6 +56,60 @@ public class InvoiceTest extends ModuleTestBase {
 		String element = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", name)).toString();
 		return element.contains("display: inline;");
 	}
+		
+	public void testImagesGalleryInDialog() throws Exception { 
+		execute("Mode.detailAndFirst");
+		execute("Sections.change", "activeSection=1");
+		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details");
+		assertDialogTitle("Edit - Invoice detail");
+		execute("Reference.modify", "model=Product,keyProperty=product.number");
+		assertDialogTitle("Modify - Product");
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertDialogTitle("Edit images gallery");  
+		assertMessage("No images");
+		
+		// Adding one image		
+		execute("Gallery.addImage");
+		assertNoErrors();
+		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
+		setFileValue("newImage", imageUrl);
+		execute("LoadImageIntoGallery.loadImage");
+		assertDialogTitle("Edit images gallery");
+		assertNoErrors();
+		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
+		
+		execute("Gallery.close");		
+		assertDialogTitle("Modify - Product");
+		execute("Modification.update");
+		assertDialogTitle("Edit - Invoice detail");
+		assertNoErrors();
+		execute("Collection.save");
+		assertNoDialog();
+		
+		// Verifying the image has been aded, and removing it  
+		execute("Invoice.editDetail", "row=0,viewObject=xava_view_section1_details");
+		execute("Reference.modify", "model=Product,keyProperty=product.number");
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertNoMessage("No images");
+		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
+		String imageOid = getForm().getInputByName("xava.GALLERY.images").getValueAttribute();
+		execute("Gallery.removeImage", "oid="+imageOid);
+		assertNoErrors();
+		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());
+		
+		// Closing all the dialogs with X (we need to test this case)
+		assertDialogTitle("Edit images gallery");		
+		closeDialog(); 
+		assertDialogTitle("Modify - Product");
+		assertExists("unitPrice");
+		closeDialog();
+		assertDialogTitle("Edit - Invoice detail");
+		assertExists("quantity");
+		closeDialog();
+		assertNoDialog();
+		assertAction("CRUD.new");
+		assertExists("paid");
+	}
 	
 	public void testCustomReportFilteringByDateAndBooleanWithConverter() throws Exception { 
 		// Date

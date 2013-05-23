@@ -97,13 +97,13 @@ class Product5Test extends ModuleTestBase {
 			"Navigation.previous", "Navigation.first", "Navigation.next",
 			"CRUD.delete", "CRUD.new", "CRUD.refresh", "CRUD.save", "CRUD.search",
 			"Mode.list", "Mode.split",
-			"Gallery.edit", "List.filter", "Print.generatePdf", 
+			"GalleryNoDialog.edit", "List.filter", "Print.generatePdf", 
 			"Collection.removeSelected", "List.orderBy", "Collection.new", 
 			"Reference.createNew", "Reference.modify", "Print.generateExcel", "List.customize"
 		]
 		String[] galleryActions =
 		[
-			"Gallery.addImage", "Gallery.return", "Mode.list", "Mode.split"
+			"Gallery.addImage", "Gallery.close", "Mode.list", "Mode.split" 
 		]
 		
 		// list -> detail -> list
@@ -123,7 +123,7 @@ class Product5Test extends ModuleTestBase {
 		// list -> detail -> gallery editor -> list
 		execute("List.viewDetail", "row=0")
 		assertNoErrors();
-		execute("Gallery.edit", "galleryProperty=photos")
+		execute("GalleryNoDialog.edit", "galleryProperty=photos") 
 		assertActions(galleryActions)
 		
 		execute("Mode.list")

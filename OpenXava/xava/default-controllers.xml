@@ -339,7 +339,7 @@ here that you want to override.
 			class="org.openxava.actions.MinimizeImageAction"/>		
 		<action name="removeImage" hidden="true" image="remove.gif" confirm="true"
 			class="org.openxava.actions.RemoveImageFromGalleryAction"/>
-		<action name="return" 
+		<action name="close" 
 			class="org.openxava.actions.CancelAction"/>						
 	</controller>
 	
@@ -361,6 +361,11 @@ here that you want to override.
 	<controller name="Return">
 		<action name="return" 
 			class="org.openxava.actions.ReturnAction"/>			
+	</controller>	
+	
+	<controller name="Close">
+		<action name="close" 
+			class="org.openxava.actions.CancelAction"/>			
 	</controller>	
 	
 	<controller name="Reference">		<action name="search"			class="org.openxava.actions.ReferenceSearchAction"			image="search.gif"/>				<action name="createNew" 

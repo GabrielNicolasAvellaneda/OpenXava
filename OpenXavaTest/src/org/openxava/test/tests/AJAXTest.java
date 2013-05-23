@@ -711,9 +711,9 @@ public class AJAXTest extends ModuleTestBase {
 
 	
 	public void testCustomView_uploadFile() throws Exception { 
-		changeModule("Product2");
+		changeModule("Product5"); 
 		execute("Mode.detailAndFirst");
-		execute("Gallery.edit", "galleryProperty=photos");
+		execute("GalleryNoDialog.edit", "galleryProperty=photos"); 
 		assertLoadedParts("errors, view, bottom_buttons, " +
 				"button_bar, messages");
 		execute("Gallery.addImage");
@@ -729,7 +729,7 @@ public class AJAXTest extends ModuleTestBase {
 		String imageOid = getForm().getInputByName("xava.GALLERY.images").getValueAttribute();
 		execute("Gallery.removeImage", "oid="+imageOid);
 		assertLoadedParts("errors, view, messages");
-		execute("Gallery.return");
+		execute("Gallery.close"); 
 		assertLoadedParts("errors, view, bottom_buttons, " +
 				"button_bar, messages");
 	}
