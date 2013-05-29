@@ -200,7 +200,7 @@ public class Product4 {
 	}
 	
 	@Transient @Depends("unitPrice")  
-	@Max(999999999999999999L) 	
+	@Max(999999999999999999L) 
 	public BigDecimal getUnitPriceInPesetas() {
 		if (unitPrice == null) return null;
 		return unitPrice.multiply(new BigDecimal("166.386")).setScale(0, BigDecimal.ROUND_HALF_UP);
