@@ -711,6 +711,7 @@ public class AJAXTest extends ModuleTestBase {
 
 	
 	public void testCustomView_uploadFile() throws Exception { 
+		if (!usesAnnotatedPOJO()) return;
 		changeModule("Product5"); 
 		execute("Mode.detailAndFirst");
 		execute("GalleryNoDialog.edit", "galleryProperty=photos"); 
