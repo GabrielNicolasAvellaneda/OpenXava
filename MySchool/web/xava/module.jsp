@@ -64,13 +64,15 @@
 	manager.setApplicationName(request.getParameter("application"));
 
 	manager.setModuleName(module); // In order to show the correct description in head
-
+	
+	boolean restoreLastMessage = false;
 	if (manager.isFormUpload()) {
 		new Module().requestMultipart(request, response, app, module);
 	}
 	else {
-		Module.restoreLastMessages(request, app, module); 
+		restoreLastMessage = true;
 	}	
+
 	boolean isPortlet = (session.getAttribute(Ids.decorate(app, request
 			.getParameter("module"), "xava.portlet.uploadActionURL")) != null);
 
@@ -185,7 +187,10 @@
 	}
 %> 
 <% 
-boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0 || manager.hasInitForwardActions(); 
+boolean coreViaAJAX = !manager.getPreviousModules().isEmpty() || manager.getDialogLevel() > 0 || manager.hasInitForwardActions();
+if (!coreViaAJAX && restoreLastMessage) {
+	Module.restoreLastMessages(request, app, module);
+}	
 
 if (manager.isResetFormPostNeeded()) {	
 %>		
