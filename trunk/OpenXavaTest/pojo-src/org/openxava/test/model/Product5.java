@@ -38,7 +38,8 @@ import org.openxava.test.validators.*;
 		"	description, " +
 		"	subfamily;" +
 		"]" 		
-	)	
+	),
+	@View( name="Dialog", members="description;")
 })
 public class Product5 {
 	

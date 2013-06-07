@@ -22,7 +22,8 @@ import org.openxava.test.actions.*;
 	@View( name="View2", members="property2"), 
 	@View( name="View2Sub1", members="property2Sub1"), 
 	@View( name="View2Sub2", members="property2Sub2"),
-	@View( name="Groups", members="group; group1[property1], group2[property2]")
+	@View( name="Groups", members="group; group1[property1], group2[property2]"),
+	@View( name="Sub", members="actionNumber")
 })
 @Tabs({
 	@Tab( properties = "number, name, hexValue, sample, usedTo.name, characteristicThing.description"),
@@ -116,6 +117,8 @@ public class Color {
 	private Group group;
 	public enum Group { GROUP1, GROUP2 }
 	
+	@Transient
+	public int actionNumber;
 	
 	public static Collection<Color> findAll() {
 		Query query = XPersistence.getManager().createQuery("from Color");
@@ -224,6 +227,14 @@ public class Color {
 
 	public void setMixture(Mixture mixture) {
 		this.mixture = mixture;
+	}
+
+	public int getActionNumber() {
+		return actionNumber;
+	}
+
+	public void setActionNumber(int actionNumber) {
+		this.actionNumber = actionNumber;
 	}
 
 }
