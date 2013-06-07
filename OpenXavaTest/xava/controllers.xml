@@ -327,6 +327,8 @@
 			class="org.openxava.test.actions.ChangeToButtonAOrButtonB">
 			<set value="b" property="button"/>
 		</action>
+		<action name="seeInitial" mode="detail"
+			class="org.openxava.test.actions.SeeInitialOfProductNameInADialog"/>
 	</controller>
 			 	
 	<controller name="Customer">
@@ -921,7 +923,21 @@
 	
 	<controller name="Color">
 		<action name="seeMessage" class="org.openxava.test.actions.SeeMessageAction" mode="detail"/>
-		<action name="seeMessageSelected" class="org.openxava.test.actions.SeeMessageSelectedColorsAction" mode="list"/> 
+		<action name="seeMessageSelected" class="org.openxava.test.actions.SeeMessageSelectedColorsAction" mode="list"/>
+		<subcontroller controller="ColorSub" image="options.png"/> 
+	</controller>
+	
+	<controller name="ColorSub">
+		<action name="firstAction" image="report.gif" 
+			class="org.openxava.test.actions.SeeDialogInColor">
+			<set value="1" property="actionNumber"/>
+		</action>
+		<action name="secondAction" class="org.openxava.test.actions.SeeDialogInColor">
+			<set value="2" property="actionNumber"/>
+		</action>
+		<action name="thirdAction" class="org.openxava.test.actions.SeeDialogInColor">
+			<set value="3" property="actionNumber"/>
+		</action>
 	</controller>
 	
 	<controller name="ColorinColorado">  		

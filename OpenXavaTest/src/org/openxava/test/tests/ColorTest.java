@@ -7,6 +7,8 @@ import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 
 /**
  * @author Javier Paniza
@@ -17,6 +19,19 @@ public class ColorTest extends ModuleTestBase {
 	
 	public ColorTest(String testName) {
 		super(testName, "Color");		
+	}
+	
+	public void testSubcontroller() throws Exception {
+		HtmlElement container = getHtmlPage().getDocumentElement().getElementById("ox_OpenXavaTest_Color__sc-container-ColorSub");
+		HtmlElement button = container.getElementById("ox_OpenXavaTest_Color__sc-button-ColorSub");
+		HtmlElement menu = container.getElementById("ox_OpenXavaTest_Color__sc-ColorSub");
+		assertTrue("display:none;".equals(menu.getAttribute("style")));
+		assertTrue(container.asText().contains("My processes"));
+		assertTrue(container.asText().contains("First action from subcontroller"));
+		assertTrue(container.asText().contains("Second action"));
+		assertTrue(container.asText().contains("Third action"));
+		execute("ColorSub.firstAction");
+		assertDialog();
 	}
 	
 	public void testPrintPDF() throws Exception {

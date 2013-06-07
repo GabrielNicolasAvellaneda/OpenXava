@@ -1,6 +1,6 @@
 package org.openxava.test.tests;
 
-import org.openxava.tests.*;
+import org.openxava.tests.*
 
 /**
  * @author Javier Paniza
@@ -99,7 +99,8 @@ class Product5Test extends ModuleTestBase {
 			"Mode.list", "Mode.split",
 			"GalleryNoDialog.edit", "List.filter", "Print.generatePdf", 
 			"Collection.removeSelected", "List.orderBy", "Collection.new", 
-			"Reference.createNew", "Reference.modify", "Print.generateExcel", "List.customize"
+			"Reference.createNew", "Reference.modify", "Print.generateExcel", "List.customize",
+			"Product5.seeInitial"
 		]
 		String[] galleryActions =
 		[
@@ -132,4 +133,16 @@ class Product5Test extends ModuleTestBase {
 		assertAction("CRUD.new")
 	}
 	
+	
+	/* it fails after you execute an action with addActions or removeActions */
+	void testDialogAfterAddRemoveActions() throws Exception{
+		assertAction "Product5.goB"
+		execute "List.viewDetail", "row=0"
+		assertAction "Navigation.first"
+		execute "Product5.seeInitial"
+		assertNoErrors()
+		assertAction "Dialog.cancel"
+		execute "Dialog.cancel"
+		assertAction "Navigation.first"
+	}
 }
