@@ -1,3 +1,10 @@
+<!ELEMENT subcontrolador EMPTY>
+<!ATTLIST subcontrolador
+ controlador CDATA #REQUIRED
+ imagen CDATA #IMPLIED
+ modo (detail|list|ALL|NONE) "ALL"
+>
+
 <!ELEMENT var-entorno EMPTY>
 <!ATTLIST var-entorno
  nombre CDATA #REQUIRED
@@ -50,7 +57,7 @@
  controlador CDATA #REQUIRED
 >
 
-<!ELEMENT controlador (hereda-de*, accion*)>
+<!ELEMENT controlador (hereda-de*, accion*, subcontrolador*)>
 <!ATTLIST controlador
  nombre CDATA #REQUIRED
  etiqueta CDATA #IMPLIED

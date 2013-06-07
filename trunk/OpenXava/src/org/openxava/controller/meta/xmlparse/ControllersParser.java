@@ -40,6 +40,7 @@ public class ControllersParser extends ParserBase {
 		result.setClassName(el.getAttribute(xclass[lang]));
 		fillExtends(el, result);		
 		fillActions(el, result);
+		fillSubcontroller(el, result);
 		return result;
 	}
 	private boolean isContextComun(String context) {
@@ -140,8 +141,6 @@ public class ControllersParser extends ParserBase {
 		return a;
 	}
 	
-	
-	
 	private MetaObject createObject(Node n) throws XavaException {
 		Element el = (Element) n;
 		MetaObject result = new MetaObject();
@@ -149,6 +148,18 @@ public class ControllersParser extends ParserBase {
 		result.setClassName(el.getAttribute(xclass[lang]));
 		result.setValue(el.getAttribute(xvalue[lang]));
 		result.setGlobal(el.getAttribute(xscope[lang]).equals(xglobal[lang]));
+		return result;
+	}
+	
+	private MetaSubcontroller createSubcontroller(Node n) throws XavaException {
+		Element el = (Element) n;
+		MetaSubcontroller result = new MetaSubcontroller();
+		
+		result.setImage(el.getAttribute(ximage[lang]));
+		result.setControllerName(el.getAttribute(xcontroller[lang]));
+		String mode = el.getAttribute(xmode[lang]);
+		if ("ALL".equals(mode)) mode = "";
+		result.setMode(mode);
 		return result;
 	}
 	
@@ -170,6 +181,13 @@ public class ControllersParser extends ParserBase {
 		}
 	}
 
+	private void fillSubcontroller(Element el, MetaController container)throws XavaException {
+		NodeList l = el.getElementsByTagName(xsubcontroller[lang]);
+		int c = l.getLength();
+		for (int i = 0; i < c; i++){
+			container.addMetaSubcontroller(createSubcontroller(l.item(i)));
+		}
+	}
 	
 	private void fillActions(Element el, MetaController container)
 		throws XavaException {

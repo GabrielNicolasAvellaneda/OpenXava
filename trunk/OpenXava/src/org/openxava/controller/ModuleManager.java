@@ -2,6 +2,7 @@ package org.openxava.controller;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.Collections;
 
 import javax.inject.*;
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.logging.*;
 import org.hibernate.validator.*;
-
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
@@ -24,8 +24,7 @@ import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.ValidationException;
 import org.openxava.view.*;
-import org.openxava.web.Ids; 
-import org.openxava.web.DescriptionsLists; 
+import org.openxava.web.*;
 import org.openxava.web.style.*;
 
 /**
@@ -106,6 +105,7 @@ public class ModuleManager implements java.io.Serializable {
 	private String moduleDescription; 
 	private boolean resetFormPostNeeded = false; 
 	private boolean actionsAddedOrRemoved;
+	private Collection<MetaSubcontroller> metaSubControllers;
 		
 	/**
 	 * HTML action bind to the current form.
@@ -126,21 +126,35 @@ public class ModuleManager implements java.io.Serializable {
 	}
 	
 	public void addMetaAction(MetaAction action) {
+		addSimpleMetaAction(action);
+		this.controllersNames = MODIFIED_CONTROLLERS;
+	}
+	
+	/**
+	 * @since 4.8
+	 */
+	public void addSimpleMetaAction(MetaAction action){
 		getMetaActions().add(action);
 		defaultActionQualifiedName = null; 
-		this.controllersNames = MODIFIED_CONTROLLERS;
 		actionsChanged = true; 
 		actionsAddedOrRemoved = true;
 	}
 	
 	public void removeMetaAction(MetaAction action) {
+		removeSimpleMetaAction(action);
+		this.controllersNames = MODIFIED_CONTROLLERS;
+	}
+	
+	/**
+	 * @since 4.8
+	 */
+	public void removeSimpleMetaAction(MetaAction action){
 		getMetaActions().remove(action);
 		defaultActionQualifiedName = null; 
-		this.controllersNames = MODIFIED_CONTROLLERS;
 		actionsChanged = true; 
 		actionsAddedOrRemoved = true;
 	}
-	
+		
 	public Collection getRowActionsNames() { 
 		Collection actions = new ArrayList(); 
 		for (MetaAction action: getMetaActions()) {
@@ -153,6 +167,18 @@ public class ModuleManager implements java.io.Serializable {
 		return actions;
 	}
 
+	public Collection getSubcontrollers(){
+		if (metaSubControllers == null){
+			metaSubControllers = new ArrayList<MetaSubcontroller>();
+			Iterator it = getMetaControllers().iterator();
+			while(it.hasNext()){
+				MetaController mc = (MetaController) it.next();
+				metaSubControllers.addAll(mc.getMetaSubcontrollers());
+			}	
+		}
+		return metaSubControllers;
+	}
+	
 	public Collection<MetaAction> getMetaActions() { 
 		if (metaActions == null) { 
 			Collection<MetaAction> ma = 
@@ -715,7 +741,7 @@ public class ModuleManager implements java.io.Serializable {
 		actionsChanged = true; 		
 	}
 	
-	public void restorePreviousControllers() throws XavaException { 
+	public void restorePreviousControllers() throws XavaException {
 		Stack previousControllers = getPreviousControllers();
 		if (previousControllers.isEmpty()) {
 			setupModuleControllers();
@@ -745,7 +771,7 @@ public class ModuleManager implements java.io.Serializable {
 		
 	public void memorizeControllers() throws XavaException {
 		Stack previousControllers = getPreviousControllers();
-		if (this.controllersNames == MODIFIED_CONTROLLERS) { 
+		if (this.controllersNames == MODIFIED_CONTROLLERS) {
 			previousControllers.push(this.metaActions);
 		}
 		else {
@@ -758,7 +784,7 @@ public class ModuleManager implements java.io.Serializable {
 		return previousControllers;
 	}
 	
-	private void memorizeCustomView() throws XavaException { 
+	private void memorizeCustomView() throws XavaException {
 		Stack previousCustomViews = (Stack) getObjectFromContext("xava_previousCustomViews");	
 		previousCustomViews.push(this.viewName);		
 	}	

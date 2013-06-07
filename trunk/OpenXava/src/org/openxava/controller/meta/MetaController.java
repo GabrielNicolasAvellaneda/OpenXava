@@ -3,8 +3,6 @@ package org.openxava.controller.meta;
 
 import java.util.*;
 
-
-
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
@@ -16,7 +14,7 @@ public class MetaController extends MetaElement {
 	private Collection parentsNames = new ArrayList();
 	private Collection parents = new ArrayList();
 	private Map mapMetaActions = new HashMap();
-	
+	private Collection<MetaSubcontroller> metaSubcontroller = new ArrayList();
 		
 	/**
 	 * Only for spanish/swing version
@@ -29,6 +27,13 @@ public class MetaController extends MetaElement {
 	 */
 	public void setClassName(String className) {
 		this.className = className;
+	}
+
+	/**
+	 * @since 4.8
+	 */
+	public void addMetaSubcontroller(MetaSubcontroller subcontroller){
+		metaSubcontroller.add(subcontroller);
 	}
 
 	public void addMetaAction(MetaAction action) {
@@ -57,6 +62,13 @@ public class MetaController extends MetaElement {
 		return Collections.unmodifiableCollection(metaActions);
 	}
 	
+	/**
+	 * @since 4.8
+	 */
+	public Collection<MetaSubcontroller> getMetaSubcontrollers(){
+		return metaSubcontroller;
+	}
+
 	public boolean containsMetaAction(String actionName) {
 		return metaActions.contains(new MetaAction(actionName));
 	}	
