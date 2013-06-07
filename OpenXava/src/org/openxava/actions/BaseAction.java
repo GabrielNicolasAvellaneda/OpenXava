@@ -1,14 +1,14 @@
 package org.openxava.actions;
 
-import java.util.Locale;
+import java.util.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
-import org.openxava.web.DescriptionsLists;
+import org.openxava.web.*;
 
 /**
  * 
@@ -173,7 +173,8 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 				action = action.cloneMetaAction();
 				action.setHidden(false);
 			}
-			getManager().addMetaAction(action);
+			if (getManager().isShowDialog()) getManager().addMetaAction(action);
+			else getManager().addSimpleMetaAction(action);
 		}
 	}
 	
@@ -182,7 +183,12 @@ abstract public class BaseAction implements IAction, IRequestAction, IModuleCont
 	 */		
 	protected void removeActions(String ... qualifiedActions) { 
 		for (String qualifiedAction: qualifiedActions) {
-			getManager().removeMetaAction(MetaControllers.getMetaAction(qualifiedAction));
+			if(getManager().isShowDialog()){
+				getManager().removeMetaAction(MetaControllers.getMetaAction(qualifiedAction));
+			}
+			else{
+				getManager().removeSimpleMetaAction(MetaControllers.getMetaAction(qualifiedAction));	
+			}
 		}
 	}
 

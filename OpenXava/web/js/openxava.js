@@ -806,3 +806,22 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 	}
 	openxava.deselected[index] = value;
 }
+
+openxava.subcontroller = function(id,idContainer,idButton,idImage,idA){
+	$('#'+id).css('display','inline');
+	var a = $('#'+idA);
+	var h = $('#'+idButton).height();	
+	var f = a.position();
+	$('#'+id).css({ 
+		'top': f.top + h,
+		'left': f.left + 4
+	});
+	// 
+	$('#'+idImage).fadeTo("fast",0.3);
+	$('#'+idButton).addClass('ox-subcontroller-select');
+	$('#'+idContainer).mouseleave(function(){
+		$('#'+id).css('display','none');
+		$('#'+idButton).removeClass('ox-subcontroller-select');
+		$('#'+idImage).fadeTo("fast",1);
+	});
+}
