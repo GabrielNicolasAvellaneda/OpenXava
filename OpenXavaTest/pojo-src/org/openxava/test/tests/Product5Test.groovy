@@ -1,6 +1,6 @@
 package org.openxava.test.tests;
 
-import org.openxava.tests.*
+import org.openxava.tests.*;
 
 /**
  * @author Javier Paniza
@@ -11,8 +11,20 @@ class Product5Test extends ModuleTestBase {
 	Product5Test(String testName) {
 		super(testName, "Product5")		
 	}
-
-	void testDescriptionsListDependsOnEnum() throws Exception {
+	
+	// This case can be only reproduced in custom dialog with Product5 (in other Product it works)
+	void testDialogActionsAreNotLost() {  
+		execute "ExtendedPrint.myReports"
+		assertValueInCollection "columns", 4, 0, "unitPrice"
+		assertValueInCollection "columns", 4, 4, "No"
+		execute "CustomReport.editColumn", "row=4,viewObject=xava_view_columns"
+		setValue "sum", "true"
+		execute "CustomReport.saveColumn"
+		assertValueInCollection("columns", 4, 4, "Yes");
+		assertAction "CustomReport.generatePdf"
+	}
+	
+	void testDescriptionsListDependsOnEnum() {
 		
 		execute("CRUD.new");
 	
@@ -81,7 +93,7 @@ class Product5Test extends ModuleTestBase {
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
 	}
 
-	void testRememberActionsInList() throws Exception{
+	void testRememberActionsInList() {
 		String[] listActions = 
 		[
 			'CRUD.new', 'CRUD.deleteRow', 'CRUD.deleteSelected',

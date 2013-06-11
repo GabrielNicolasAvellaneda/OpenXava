@@ -1936,9 +1936,16 @@ public class Tab implements java.io.Serializable {
 	 * @since 4.1
 	 */
 	public boolean isTotalCapable(int column) {  
-		MetaProperty p = getMetaProperty(column);			
+		return isTotalCapable(getMetaProperty(column));			
+	}
+	
+	/**
+	 * @since 4.8
+	 */
+	public boolean isTotalCapable(MetaProperty p) {   
 		return !p.isCalculated() && p.isNumber() && !p.hasValidValues();
 	}
+	
 	
 	/**
 	 * @since 4.3

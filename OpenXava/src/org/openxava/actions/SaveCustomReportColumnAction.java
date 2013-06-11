@@ -32,7 +32,10 @@ public class SaveCustomReportColumnAction extends CollectionElementViewBaseActio
 		column.setValidValuesValue(validValuesValue);
 
 		CustomReportColumn.Order order = (CustomReportColumn.Order) getCollectionElementView().getValue("order");		
-		column.setOrder(order);		
+		column.setOrder(order);	
+		
+		Boolean sum = (Boolean) getCollectionElementView().getValue("sum");
+		column.setSum(sum==null?false:sum);
 		
 		if (getCollectionElementView().getCollectionEditingRow() < 0) {
 			if (alreadyExists(columnName)) {

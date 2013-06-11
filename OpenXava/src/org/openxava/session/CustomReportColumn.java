@@ -24,6 +24,7 @@ public class CustomReportColumn implements java.io.Serializable {
 	private final static String VALID_VALUES_VALUE = "validValuesValue";
 	private final static String CALCULATED = "calculated";
 	private final static String ORDER = "order";
+	private final static String SUM = "sum"; 
 	
 	@Hidden
 	private CustomReport report;
@@ -48,6 +49,8 @@ public class CustomReportColumn implements java.io.Serializable {
 	public enum Order { ASCENDING, DESCENDING } 
 	@Column(name="ORDERING")
 	private Order order;
+	
+	private boolean sum; 
 	
 	public String getName() {
 		return name;
@@ -150,6 +153,7 @@ public class CustomReportColumn implements java.io.Serializable {
 		preferences.putBoolean(COLUMN + index + "." + CALCULATED, calculated);
 		if (order != null) preferences.put(COLUMN + index + "." + ORDER, order.name());
 		else preferences.remove(COLUMN + index + "." + ORDER);
+		preferences.put(COLUMN + index + "." + SUM, Boolean.toString(sum));
 	}
 
 	public boolean load(Preferences preferences, int index) {
@@ -164,7 +168,17 @@ public class CustomReportColumn implements java.io.Serializable {
 		calculated = preferences.getBoolean(COLUMN + index + "." + CALCULATED, false);		
 		String order = preferences.get(COLUMN + index + "." + ORDER, null); 
 		this.order =  order == null?null:Order.valueOf(order);
+		String sum = preferences.get(COLUMN + index + "." + SUM, null);
+		this.sum = sum == null?false:Boolean.valueOf(sum);
 		return true;
+	}
+
+	public boolean isSum() {
+		return sum;
+	}
+
+	public void setSum(boolean sum) {
+		this.sum = sum;
 	}
 	
 	
