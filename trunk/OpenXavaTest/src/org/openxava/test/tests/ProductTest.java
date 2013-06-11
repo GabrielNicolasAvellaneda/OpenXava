@@ -65,6 +65,46 @@ public class ProductTest extends ModuleTestBase {
 		assertError("Unit price in Product has too much decimals. Only 2 are allowed");
 	}
 	*/
+	
+	public void testSumInCustomReport() throws Exception { 
+		execute("ExtendedPrint.myReports");
+		
+		assertValueInCollection("columns", 0, 0, "number");		
+		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
+		assertExists("sum");
+		closeDialog();
+		
+		assertValueInCollection("columns", 1, 0, "description");		
+		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		assertNotExists("sum");
+		closeDialog();
+				
+		assertValueInCollection("columns", 3, 0, "unitPriceInPesetas");		
+		execute("CustomReport.editColumn", "row=3,viewObject=xava_view_columns");
+		assertNotExists("sum");
+		closeDialog();			
+		
+		assertValueInCollection("columns", 2, 0, "unitPrice");
+		assertValueInCollection("columns", 2, 4, "No");
+		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		setValue("sum", "true");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 2, 4, "Yes");
+		execute("CustomReport.generatePdf");
+		assertPopupPDFLinesCount(12); // There are 7 products
+		assertPopupPDFLine(10, "629"); // The sum of the 7 product, if the price of some product has been changed you have to change this value
+
+		execute("ExtendedPrint.myReports");
+		assertValueInCollection("columns", 2, 4, "Yes");
+		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		setValue("sum", "false");
+		execute("CustomReport.saveColumn");
+		assertValueInCollection("columns", 2, 4, "No");
+		execute("CustomReport.generatePdf");
+		
+		assertPopupPDFLinesCount(11); // There are 7 products, but now without the summation
+	}
+	
 		
 	public void testCustomizeList_sortProperties() throws Exception {
 		execute("List.customize");

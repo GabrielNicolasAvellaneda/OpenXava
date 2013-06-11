@@ -434,3 +434,40 @@ TD.list-title {
 .ox-layout-data {
 	white-space:nowrap;
 }
+
+/* subcontroller --------> */
+div.ox-subcontroller {
+	padding: 0;
+	margin: 0;
+	position: absolute; 
+	clear: both; 
+	background-color: rgb(246, 248, 251); 
+	display: none; 
+	z-index: 999;
+	box-shadow: 4px 4px 4px #666;
+}
+
+div.ox-subcontroller table{
+	width: 100%;
+}
+
+div.ox-subcontroller table tr td{
+	float: right;
+	width: 100%;
+	text-align: left;
+	background-color: rgb(246, 248, 251);
+	z-index: 999; 
+	padding: 4px 4px 4px 0px;
+}
+
+div.ox-subcontroller table tr td a{
+	width: 100% !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: none !important; 
+}
+
+span.ox-subcontroller-select a{
+	border: 1px solid #A7CEDF !important;
+}
+/* --------< subcontroller << */

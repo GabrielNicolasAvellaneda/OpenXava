@@ -41,7 +41,8 @@ public class Address implements IWithCity {
 	@Action(value="Customer.prefixStreet", alwaysEnabled=true)
 	private String street;
 	
-	@Required @Column(length=5) @LabelFormat(LabelFormatType.SMALL)	
+	@Required @Column(length=5) 
+	@LabelFormat(LabelFormatType.SMALL)	
 	private int zipCode;
 	
 	

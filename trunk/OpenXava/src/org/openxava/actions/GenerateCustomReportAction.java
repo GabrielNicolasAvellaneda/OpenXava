@@ -50,6 +50,12 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 				order.append("} ");
 				order.append(column.getOrder() == CustomReportColumn.Order.ASCENDING?"ASC":"DESC");				
 			}
+			if (column.isSum()) {
+				tab.addSumProperty(column.getName());
+			}
+			else {
+				tab.removeSumProperty(column.getName());
+			}
 		}
 		if (order.length() > 0) {
 			tab.setDefaultOrder(order.toString());			

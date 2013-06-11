@@ -20,11 +20,13 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 	public void execute() throws Exception {		
 		String propertyName = (String) newValue;
 		if (Is.emptyString(propertyName)) {
-			getView().setValue("comparator", EMPTY_COMPARATOR); 
+			getView().setValue("comparator", EMPTY_COMPARATOR);
+			getView().setHidden("sum", true); // We hide it by default, because there are more non-summable properties than summable ones
 			showStandardMembers();
 			return;
 		}		
-		MetaProperty property = getTab().getMetaTab().getMetaModel().getMetaProperty(propertyName);		
+		MetaProperty property = getTab().getMetaTab().getMetaModel().getMetaProperty(propertyName);
+		getView().setHidden("sum", !getTab().isTotalCapable(property));   
 		if (property.isCalculated()) {
 			hideMembers();
 			return;
@@ -77,6 +79,7 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 		getView().setHidden("booleanValue", true);
 		getView().setHidden("validValuesValue", true);
 		getView().setHidden("order", true);
+		getView().setHidden("sum", true); 
 	}
 
 	private void showStandardMembers() {

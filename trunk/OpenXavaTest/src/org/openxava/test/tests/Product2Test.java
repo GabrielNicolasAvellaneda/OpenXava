@@ -64,7 +64,7 @@ public class Product2Test extends ModuleTestBase {
 		assertAction("Product2.reportBySubfamily");
 		assertNoAction("FamilyProductsReport.generatePdf");		
 	}
-	
+		
 	public void testFormula() throws Exception {
 		assertValueInList(0, "unitPrice", "11.00");
 		assertValueInList(0, "unitPriceWithTax", "12.76");

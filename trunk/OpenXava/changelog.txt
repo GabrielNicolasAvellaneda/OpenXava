@@ -1,10 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
-OpenXava 4.8
---------------------------
-- Drop-down buttons: in your 'controller.xml' file, you can define 'subcontroller' that will show a drop-down button with several actions.
-- Fix: open a dialog after add/remove actions in list, its fails to show the controllers.
+- Summation for columns allowed for 'My reports'.
+- Booleans in list and collections are rendered with a green check sign.
+- In controllers.xml you can define 'subcontroller' that will show a drop-down button with nested actions.
+- Fix: Opening a dialog after adding or removing actions in list fails to show the controllers.
 
 OpenXava 4.7.1 (2013-5-28)
 --------------------------
