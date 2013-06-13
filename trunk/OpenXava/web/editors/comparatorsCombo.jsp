@@ -22,6 +22,7 @@ String gt = Tab.GT_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String lt = Tab.LT_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String startsWith = Tab.STARTS_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String contains = Tab.CONTAINS_COMPARATOR.equals(comparator)?"selected='selected'":"";
+String endsWith = Tab.ENDS_COMPARATOR.equals(comparator)?"selected='selected'":""; 
 String notContains = Tab.NOT_CONTAINS_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String year = Tab.YEAR_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String month = Tab.MONTH_COMPARATOR.equals(comparator)?"selected='selected'":"";
@@ -57,7 +58,8 @@ else {
 	if (isString) {
 	%>						
 	<option value="<%=Tab.STARTS_COMPARATOR%>" <%=startsWith%>><xava:message key="<%=Tab.STARTS_COMPARATOR%>"/></option>
-	<option value="<%=Tab.CONTAINS_COMPARATOR%>" <%=contains%>><xava:message key="<%=Tab.CONTAINS_COMPARATOR%>"/></option>
+	<option value="<%=Tab.ENDS_COMPARATOR%>" <%=endsWith%>><xava:message key="<%=Tab.ENDS_COMPARATOR%>"/></option>
+	<option value="<%=Tab.CONTAINS_COMPARATOR%>" <%=contains%>><xava:message key="<%=Tab.CONTAINS_COMPARATOR%>"/></option>	
 	<option value="<%=Tab.NOT_CONTAINS_COMPARATOR%>" <%=notContains%>><xava:message key="<%=Tab.NOT_CONTAINS_COMPARATOR%>"/></option>
 	<%
 	}

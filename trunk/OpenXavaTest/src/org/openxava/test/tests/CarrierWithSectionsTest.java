@@ -80,6 +80,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		String [][] stringComparators = {
 			{ "", "" },	
 			{ "starts_comparator", "starts" },
+			{ "ends_comparator", "ends" }, 
 			{ "contains_comparator", "contains" },
 			{ "not_contains_comparator", "not contains" },
 			{ "eq_comparator", "=" },
