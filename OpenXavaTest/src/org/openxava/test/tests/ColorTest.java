@@ -380,7 +380,7 @@ public class ColorTest extends ModuleTestBase {
 		assertValue("mixture.KEY", "");
 	}
 	
-	public void testFilterNotContains() throws Exception{
+	public void testFilterByString() throws Exception{
 		assertLabelInList(1, "Name");
 		assertLabelInList(5, "Description of Characteristic thing");
 		setConditionValues("", "", "", "", "3 places");
@@ -397,6 +397,13 @@ public class ColorTest extends ModuleTestBase {
 		setConditionValues("", "ROJO", "", "", "3 places");
 		execute("List.filter");
 		assertListRowCount(0);
+		
+		setConditionComparators("=", "ends_comparator", "starts_comparator", "starts_comparator", "starts_comparator");
+		setConditionValues("", "O", "", "", "");
+		execute("List.filter");
+		assertListRowCount(2);		
+		assertValueInList(0, 1, "ROJO");
+		assertValueInList(1, 1, "NEGRO");
 	}
 	
 }

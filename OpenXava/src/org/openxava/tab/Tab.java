@@ -26,6 +26,8 @@ import org.openxava.web.*;
  * Session object to work with tabular data. <p> 
  * 
  * @author Javier Paniza
+ * @author Ana Andrés
+ * @author Trifon Trifonov
  */
 
 public class Tab implements java.io.Serializable {
@@ -39,8 +41,9 @@ public class Tab implements java.io.Serializable {
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
 	public final static String TAB_RESETED_PREFIX = "xava.tab.reseted.";
 	
-	public final static String STARTS_COMPARATOR = "starts_comparator";
+	public final static String STARTS_COMPARATOR = "starts_comparator";	
 	public final static String CONTAINS_COMPARATOR = "contains_comparator";
+	public final static String ENDS_COMPARATOR = "ends_comparator"; 
 	public final static String NOT_CONTAINS_COMPARATOR = "not_contains_comparator";
 	public final static String YEAR_COMPARATOR = "year_comparator";
 	public final static String MONTH_COMPARATOR = "month_comparator";
@@ -587,9 +590,9 @@ public class Tab implements java.io.Serializable {
 
 
 	private Object convertComparator(MetaProperty p, String comparator) throws XavaException {
-		if (STARTS_COMPARATOR.equals(comparator)) return "like";
-		
+		if (STARTS_COMPARATOR.equals(comparator)) return "like";		
 		if (CONTAINS_COMPARATOR.equals(comparator)) return "like";
+		if (ENDS_COMPARATOR.equals(comparator)) return "like"; 
 		if (NOT_CONTAINS_COMPARATOR.equals(comparator)) return "not like";
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
 		if (MONTH_COMPARATOR.equals(comparator)) return "=";
@@ -635,7 +638,11 @@ public class Tab implements java.io.Serializable {
 						NOT_CONTAINS_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) {
 					value = "%" + convertStringArgument(value.toString()) + "%";
 					key.add(value);
-				} 
+				}
+				else if (ENDS_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) { 
+					value = "%" + convertStringArgument(value.toString());
+					key.add(value);
+				}
 				else if (YEAR_COMPARATOR.equals(this.conditionComparatorsToWhere[i]) || MONTH_COMPARATOR.equals(this.conditionComparatorsToWhere[i])) {
 					value = convertStringArgument(value.toString());
 					try {					

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Calendars are shown in filters for date types in list and collections. 
+- New filter condition "Ends with" for list and collections.
+- Bulgarian translation of JavaScript calendar with UTF-8 character encoding.
 - Summation for columns allowed for 'My reports'.
 - Booleans in list and collections are rendered with a green check sign.
 - In controllers.xml you can define 'subcontroller' that will show a drop-down button with nested actions.

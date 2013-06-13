@@ -644,6 +644,7 @@ openxava.clearConditionValuesTo = function(application, module, prefix) {
 		element.value = '';
 		element.style.display='none';
 		element = form.elements[elementName + (++i)];
+		$(element).next().hide();
 	}
 }
 
@@ -774,11 +775,11 @@ openxava.hideFrame = function(id) {
 openxava.onChangeComparator = function(id,idConditionValue,idConditionValueTo,labelFrom) {
 	var comparator = openxava.getFormValue(document.getElementById(id));
 	if ("range_comparator" == comparator){
-		document.getElementById(idConditionValueTo).style.display='inline';
+		$('#' + idConditionValueTo).show().next().show();
 		document.getElementById(idConditionValue).placeholder = labelFrom;
 	}
 	else{
-		document.getElementById(idConditionValueTo).style.display='none';
+		$('#' + idConditionValueTo).hide().next().hide();
 		document.getElementById(idConditionValue).placeholder = "";
 	}
 }

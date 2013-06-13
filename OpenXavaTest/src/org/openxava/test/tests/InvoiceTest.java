@@ -30,6 +30,8 @@ import org.openxava.util.Strings;
 import org.openxava.util.XavaPreferences;
 import org.openxava.web.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 
 /**
  * 
@@ -52,11 +54,21 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
-	private boolean isVisibleConditionValueTo(String name){
-		String element = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", name)).toString();
-		return element.contains("display: inline;");
-	}
+	private boolean isVisibleConditionValueTo(int number) {
+		/* tmp
+		String element = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", name)).toString();		
+		return element.contains("display: inline;");		
+		*/
 		
+		return getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).isDisplayed();
+	}
+	
+	private boolean isVisibleConditionValueToCalendar(int number) { // tmp
+		DomNode node = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling();
+		if (!node.isDisplayed()) return false;
+		return node.toString().contains("return showCalendar");
+	}
+			
 	public void testImagesGalleryInDialog() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
@@ -191,15 +203,25 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CustomReport.remove", "xava.keyProperty=name"); 
 	}
 	
-	public void testFilterByRange() throws Exception{ 
+	public void testFilterByRange() throws Exception{
+		getWebClient().setCssEnabled(true); 
+		
 		assertLabelInList(0, "Year");
 		assertLabelInList(2, "Date");
 		assertLabelInList(6, "Paid");		
 		// int
 		setConditionComparators("range_comparator");
 		setConditionValues("2000");
+		/* tmp
 		assertTrue(isVisibleConditionValueTo("conditionValueTo___0"));
 		assertFalse(isVisibleConditionValueTo("conditionValueTo___2"));
+		*/
+		// tmp ini
+		assertTrue(isVisibleConditionValueTo(0));
+		assertFalse(isVisibleConditionValueToCalendar(0));
+		assertFalse(isVisibleConditionValueTo(2));		
+		assertFalse(isVisibleConditionValueToCalendar(2));
+		// tmp fin
 		setConditionValuesTo("2004");
 		execute("List.filter");
 		assertListRowCount(6);
@@ -207,13 +229,27 @@ public class InvoiceTest extends ModuleTestBase {
 		setConditionComparators("range_comparator", "eq", "range_comparator");
 		setConditionValues("2000", "", "01/01/2002");
 		setConditionValuesTo("2004", "", "05/01/2004");
-		assertTrue(isVisibleConditionValueTo("conditionValueTo___2"));
+		// tmp assertTrue(isVisibleConditionValueTo("conditionValueTo___2"));
+		assertTrue(isVisibleConditionValueTo(2)); // tmp
+		assertTrue(isVisibleConditionValueToCalendar(2)); // tmp
 		execute("List.filter");
 		assertListRowCount(3); 
 		// int & Date & boolean
 		setConditionComparators("range_comparator", "eq", "range_comparator", "eq");
 		execute("List.filter");
 		assertListRowCount(1);
+		
+		// tmp ini
+		assertTrue(isVisibleConditionValueTo(0));
+		assertFalse(isVisibleConditionValueToCalendar(0));
+		assertTrue(isVisibleConditionValueTo(2));		
+		assertTrue(isVisibleConditionValueToCalendar(2));		
+		setConditionComparators("eq", "eq", "eq", "eq");
+		assertFalse(isVisibleConditionValueTo(0));
+		assertFalse(isVisibleConditionValueToCalendar(0));
+		assertFalse(isVisibleConditionValueTo(2));		
+		assertFalse(isVisibleConditionValueToCalendar(2));				
+		// tmp fin
 	}
 	
 	public void testSearchUsesSimpleView() throws Exception { 
