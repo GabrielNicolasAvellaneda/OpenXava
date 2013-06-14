@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import java.util.*;
+
 import org.openxava.tests.ModuleTestBase;
 import org.openxava.util.Is;
 
@@ -203,6 +205,19 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertPopupPDFLine(2, "Calculated Number Name");
 		assertPopupPDFLine(3, "TR 5 Cinco");
 		assertPopupPDFLine(7, "TR 1 UNO");
+		
+		execute("ExtendedPrint.myReports");
+		execute("CustomReport.generateExcel");
+		assertContentTypeForPopup("text/x-csv");		
+		StringTokenizer excel = new StringTokenizer(getPopupText(), "\n\r");
+		String header = excel.nextToken();
+		assertEquals("header", "Calculated;Number;Name", header);		
+		String line1 = excel.nextToken();
+		assertEquals("line1", "\"TR\";5;\"Cinco\"", line1);
+		excel.nextToken(); excel.nextToken(); excel.nextToken();// Lines 2, 3, 4
+		String line5 = excel.nextToken();
+		assertEquals("line1", "\"TR\";1;\"UNO\"", line5);
+		assertTrue("Only five lines must have generated", !excel.hasMoreTokens());		
 		
 		execute("ExtendedPrint.myReports"); 
 		execute("CustomReport.remove", "xava.keyProperty=name"); 				

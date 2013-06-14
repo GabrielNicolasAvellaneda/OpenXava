@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Generate Excel action available from 'My reports' dialog.
 - Calendars are shown in filters for date types in list and collections. 
 - New filter condition "Ends with" for list and collections.
 - Bulgarian translation of JavaScript calendar with UTF-8 character encoding.

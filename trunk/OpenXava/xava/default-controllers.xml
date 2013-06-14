@@ -80,6 +80,12 @@ here that you want to override.
 			keystroke="Control Alt P">
 			<set property="type" value="pdf"/>
 		</action>
+		<action name="generateExcel" 
+			class="org.openxava.actions.GenerateCustomReportAction"
+			image="excel.gif"
+			keystroke="Control Alt X">
+			<set property="type" value="csv"/>	
+		</action>		
 		<action name="cancel" 
 			class="org.openxava.actions.CancelDialogAction"/>
 		<action name="columnUp" hidden="true" 
