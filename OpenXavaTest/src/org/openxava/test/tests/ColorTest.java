@@ -243,8 +243,8 @@ public class ColorTest extends ModuleTestBase {
 		assertLabelInList(4, "Name of Used to");
 		assertValueInList(0, 4, "CAR");
 		setConditionValues(new String[] { "", "", "", "1"} );
-		execute("List.filter");
-		assertListNotEmpty();
+		// execute("List.filter"); // Not needed because filterOnChange=true
+		assertListRowCount(1); 
 	}
 	
 	public void modifyColorFromFirstUser(int id) throws Exception {		

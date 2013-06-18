@@ -2,6 +2,7 @@
 
 <%@ page import="java.util.StringTokenizer" %>
 <%@ page import="org.openxava.tab.Tab"%>
+<%@ page import="org.openxava.util.Is"%>
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -19,11 +20,18 @@ try {
 catch (Exception ex) {
 }
 int index = Integer.parseInt(request.getParameter("index"));
+boolean filterOnChange = org.openxava.util.XavaPreferences.getInstance().isFilterOnChange();
+String collection = request.getParameter("collection"); 
+String collectionArgv = Is.emptyString(collection)?"":"collection="+collection;
 %>
-
 <input type="hidden" name="<xava:id name='<%=prefix  + "conditionComparator."  + index%>'/>" value="<%=Tab.EQ_COMPARATOR%>">
 <input type="hidden" name="<xava:id name='<%=prefix  + "conditionValueTo."  + index%>'/>" >
-<select name="<xava:id name='<%=prefix  + "conditionValue."  + index%>'/>" class=<%=style.getEditor()%>>
+
+<select name="<xava:id name='<%=prefix  + "conditionValue."  + index%>'/>" class=<%=style.getEditor()%>
+<% if(filterOnChange) { %>
+	onchange="openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '', false, 'List.filter','<%=collectionArgv%>')"
+<% } %>
+>	
 	<option value=""></option>
 <%
 	StringTokenizer st = new StringTokenizer(validValues, "|");

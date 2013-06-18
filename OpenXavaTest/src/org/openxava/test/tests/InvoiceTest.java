@@ -55,20 +55,15 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	private boolean isVisibleConditionValueTo(int number) {
-		/* tmp
-		String element = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", name)).toString();		
-		return element.contains("display: inline;");		
-		*/
-		
 		return getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).isDisplayed();
 	}
 	
-	private boolean isVisibleConditionValueToCalendar(int number) { // tmp
+	private boolean isVisibleConditionValueToCalendar(int number) { 
 		DomNode node = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling();
 		if (!node.isDisplayed()) return false;
 		return node.toString().contains("return showCalendar");
 	}
-			
+	
 	public void testImagesGalleryInDialog() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
@@ -212,16 +207,10 @@ public class InvoiceTest extends ModuleTestBase {
 		// int
 		setConditionComparators("range_comparator");
 		setConditionValues("2000");
-		/* tmp
-		assertTrue(isVisibleConditionValueTo("conditionValueTo___0"));
-		assertFalse(isVisibleConditionValueTo("conditionValueTo___2"));
-		*/
-		// tmp ini
 		assertTrue(isVisibleConditionValueTo(0));
 		assertFalse(isVisibleConditionValueToCalendar(0));
 		assertFalse(isVisibleConditionValueTo(2));		
 		assertFalse(isVisibleConditionValueToCalendar(2));
-		// tmp fin
 		setConditionValuesTo("2004");
 		execute("List.filter");
 		assertListRowCount(6);
@@ -229,9 +218,8 @@ public class InvoiceTest extends ModuleTestBase {
 		setConditionComparators("range_comparator", "eq", "range_comparator");
 		setConditionValues("2000", "", "01/01/2002");
 		setConditionValuesTo("2004", "", "05/01/2004");
-		// tmp assertTrue(isVisibleConditionValueTo("conditionValueTo___2"));
-		assertTrue(isVisibleConditionValueTo(2)); // tmp
-		assertTrue(isVisibleConditionValueToCalendar(2)); // tmp
+		assertTrue(isVisibleConditionValueTo(2)); 
+		assertTrue(isVisibleConditionValueToCalendar(2)); 
 		execute("List.filter");
 		assertListRowCount(3); 
 		// int & Date & boolean
@@ -239,7 +227,6 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("List.filter");
 		assertListRowCount(1);
 		
-		// tmp ini
 		assertTrue(isVisibleConditionValueTo(0));
 		assertFalse(isVisibleConditionValueToCalendar(0));
 		assertTrue(isVisibleConditionValueTo(2));		
@@ -249,7 +236,6 @@ public class InvoiceTest extends ModuleTestBase {
 		assertFalse(isVisibleConditionValueToCalendar(0));
 		assertFalse(isVisibleConditionValueTo(2));		
 		assertFalse(isVisibleConditionValueToCalendar(2));				
-		// tmp fin
 	}
 	
 	public void testSearchUsesSimpleView() throws Exception { 
@@ -800,22 +786,22 @@ public class InvoiceTest extends ModuleTestBase {
 		String [] paidConditions = { "", "", "", "true"	};
 		setConditionComparators(paidComparators);
 		setConditionValues(paidConditions);
-		execute("List.filter");
+		// execute("List.filter"); // Not needed because filterOnChange=true 
 		assertListRowCount(paidOnes);
 		
 		String [] notPaidComparatos = { "=", "=", "=", "<>"};
 		String [] notPaidConditions = { " ", " ", " ", "true" }; // For dark reasons it is necessary to leave a blank space so it runs.
 		setConditionComparators(notPaidComparatos);
 		setConditionValues(notPaidConditions);		
-		execute("List.filter");
+		// execute("List.filter"); // Not needed because filterOnChange=true
 		assertNoErrors();
 		assertListRowCount(notPaidOnes);		
 		
 		String [] totalComparators = { "=", "=", "=", ""};
-		String [] totalCondition = { " ", " ", " ", "true" }; // Por razones oscuras hay que dejar un espacio en blanco para que funcione.
+		String [] totalCondition = { " ", " ", " ", "true" }; // For dark reasons it is necessary to leave a blank space so it runs.
 		setConditionComparators(totalComparators);
 		setConditionValues(totalCondition);		
-		execute("List.filter");
+		// execute("List.filter"); // Not needed because filterOnChange=true
 		assertNoErrors();
 		assertListRowCount(total);				
 	}
