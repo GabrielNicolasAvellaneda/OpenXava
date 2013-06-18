@@ -183,7 +183,7 @@ public class CustomerTest extends ModuleTestBase {
 			String [] normalCondition = { " ", "1", "", "" };		
 			setConditionValues(normalCondition);			
 		}
-		execute("List.filter");
+		// execute("List.filter"); // Not needed because filterOnChange=true
 		assertNoErrors();
 		
 		assertListRowCount(normalOnes);
@@ -198,13 +198,13 @@ public class CustomerTest extends ModuleTestBase {
 			String [] steadyCondition = { " ", "2", "", "" }; 
 			setConditionValues(steadyCondition);			
 		}
-		execute("List.filter");
+		// execute("List.filter"); // Not needed because filterOnChange=true
 		assertNoErrors();
 		assertListRowCount(steadyOnes);		
 		
 		String [] totalCondition = { "", "", "", "" };		
 		setConditionValues(totalCondition);		
-		execute("List.filter");
+		// execute("List.filter"); // Not needed because filterOnChange=true
 		assertNoErrors();
 		assertListRowCount(total);		
 	}
@@ -713,8 +713,11 @@ public class CustomerTest extends ModuleTestBase {
 		
 		assertLabelInCollection("deliveryPlaces", 3, "Name of Preferred warehouse"); 
 		assertValueInCollection("deliveryPlaces", 0, 3, "CENTRAL VALENCIA");
-		setConditionValues("deliveryPlaces", new String[] { "", "", "", "[.1.1.]"} );
-		execute("List.filter", "collection=deliveryPlaces");
+		setConditionValues("deliveryPlaces", new String[] { "", "", "", "[.1.2.]" } );
+		// execute("List.filter", "collection=deliveryPlaces"); // Not needed because filterOnChange=true
+		assertCollectionRowCount("deliveryPlaces", 0);		
+		setConditionValues("deliveryPlaces", new String[] { "", "", "", "[.1.1.]" } );
+		// execute("List.filter", "collection=deliveryPlaces"); // Not needed because filterOnChange=true
 		assertCollectionNotEmpty("deliveryPlaces");
 		
 		try{

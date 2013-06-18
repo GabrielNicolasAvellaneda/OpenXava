@@ -501,4 +501,9 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("alignedByColumns", "false").trim());
 	}
 	
+	/** @since 4.8 */
+	public boolean isFilterOnChange() { 
+		return "true".equalsIgnoreCase(getProperties().getProperty("filterOnChange", "true").trim());
+	}
+	
 }
