@@ -15,8 +15,6 @@ import java.util.StringTokenizer;
 
 import javax.rmi.PortableRemoteObject;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openxava.jpa.XPersistence;
 import org.openxava.test.calculators.YearInvoiceDiscountCalculator;
 import org.openxava.test.model.Delivery;
@@ -39,7 +37,6 @@ import com.gargoylesoftware.htmlunit.html.*;
  */
 
 public class InvoiceTest extends ModuleTestBase {
-	private static Log log = LogFactory.getLog(InvoiceTest.class);
 	
 	private Invoice invoice;
 	private BigDecimal productUnitPriceDB;
@@ -52,16 +49,6 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public InvoiceTest(String testName) {
 		super(testName, "Invoice");		
-	}
-	
-	private boolean isVisibleConditionValueTo(int number) {
-		return getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).isDisplayed();
-	}
-	
-	private boolean isVisibleConditionValueToCalendar(int number) { 
-		DomNode node = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling();
-		if (!node.isDisplayed()) return false;
-		return node.toString().contains("return showCalendar");
 	}
 	
 	public void testImagesGalleryInDialog() throws Exception { 
@@ -1757,4 +1744,15 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CRUD.refresh");
 		assertError("Object of type Invoice does not exists with key Number:43, Customer discount:0.25, Paid:No");		
 	}
+	
+	private boolean isVisibleConditionValueTo(int number) {
+		return getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).isDisplayed();
+	}
+	
+	private boolean isVisibleConditionValueToCalendar(int number) { 
+		DomNode node = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling();
+		if (!node.isDisplayed()) return false;
+		return node.toString().contains("return showCalendar");
+	}
+	
 }

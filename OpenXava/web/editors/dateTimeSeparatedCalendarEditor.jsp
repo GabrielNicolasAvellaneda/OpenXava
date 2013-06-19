@@ -21,11 +21,9 @@ if (editable || !label) {
 	align='<%=align%>'
 	maxlength="10" 
 	size="10"  
-	value="<%=fDate%>" <%=disabled%>	<%=script%>><%if (editable) {%><input type="image"
-	name="<%=propertyKey%>_CALENDAR_BUTTON_"
+	value="<%=fDate%>" <%=disabled%> <%=script%>><%if (editable) {%><a href="javascript:showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>')"><img	
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
-	style='vertical-align: middle;'
-	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>');"><%} %> <input name="<%=propertyKey%>" class=<%=style.getEditor()%>
+	style='vertical-align: middle;'/></a><%} %> <input name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	type="text" 
 	title="<%=p.getDescription(request)%>"
 	align='<%=align%>'
@@ -33,7 +31,7 @@ if (editable || !label) {
 	size="8" 
 	value="<%=fTime%>"
 	<%=disabled%>
-	<%=script%>	/>
+	<%=script%>/>	
 <%
 } else {
 %>

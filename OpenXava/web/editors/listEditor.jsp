@@ -309,17 +309,15 @@ while (it.hasNext()) {
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
 <nobr>  
-<input id="<%=idConditionValue%>" name="<%=idConditionValue%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>" placeholder="<%=labelFrom%>"/><% if (isDate) { %><input type="image"
+<input id="<%=idConditionValue%>" name="<%=idConditionValue%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>" placeholder="<%=labelFrom%>"/><% if (isDate) { %><a href="javascript:showCalendar('<%=idConditionValue%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>')"><img	
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
-	style='vertical-align: middle;'
-	onclick="return showCalendar('<%=idConditionValue%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>');">
+	style='vertical-align: middle;'/></a>
 <% } %>
 </nobr>
 <nobr>
-<input id="<%=idConditionValueTo%>" name="<%=idConditionValueTo%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=valueTo%>" placeholder="<%=labelTo%>" style="<%=styleConditionValueTo%>"/><% if (isDate) { %><input type="image"
-	src="<%=request.getContextPath()%>/xava/images/calendar.gif" alt="..."
-	style='vertical-align: middle;<%=styleConditionValueTo%>'
-	onclick="return showCalendar('<%=idConditionValueTo%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>');">
+<input id="<%=idConditionValueTo%>" name="<%=idConditionValueTo%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=valueTo%>" placeholder="<%=labelTo%>" style="<%=styleConditionValueTo%>"/><% if (isDate) { %><a style="<%=styleConditionValueTo%>" href="javascript:showCalendar('<%=idConditionValueTo%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>')"><img	
+	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
+	style='vertical-align: middle;'/></a>
 <% } %>
 </nobr>
 	<%			

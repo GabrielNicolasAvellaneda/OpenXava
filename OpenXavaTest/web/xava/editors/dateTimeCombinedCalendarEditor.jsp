@@ -20,11 +20,9 @@ if (editable || !label) {
 	size="19"  	
 	value="<%=fvalue%>"
 	<%=disabled%>
-	<%=script%>><%if (editable) {%><input type="image" 
-	name="<%=propertyKey%>_CALENDAR_BUTTON_"
+	<%=script%>><%if (editable) {%><a href="javascript:showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateTimeFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>', '12')"><img	
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
-	style='vertical-align: middle;'
-	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateTimeFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>', '12');"><%} %>	
+	style='vertical-align: middle;'/></a><%} %>		
 <%
 
 } else {
