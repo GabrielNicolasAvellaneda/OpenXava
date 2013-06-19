@@ -18,12 +18,9 @@ if (editable || !label) {
 	align='<%=align%>'
 	maxlength="<%=p.getSize()%>" 
 	size="<%=p.getSize()%>" 	 
-	value="<%=fvalue%>" <%=disabled%>	<%=script%>><%if (editable) {%><input type="image"
-	name="<%=propertyKey%>_CALENDAR_BUTTON_"
+	value="<%=fvalue%>" <%=disabled%> <%=script%>><%if (editable) {%><a href="javascript:showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>')"><img	
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
-	style='vertical-align: middle;'
-	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>');"><%} %>
-	
+	style='vertical-align: middle;'/></a><%} %>
 <%
 
 } else {

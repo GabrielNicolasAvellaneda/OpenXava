@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Pressing ENTER in a view with a JavaScript calendar shows the calendar and does not execute the corresponding action.
 - On choosing a combo in list the filtering is executed automatically (it can be deactivated with filterOnChange=false). 
 - Generate Excel action available from 'My reports' dialog.
 - Calendars are shown in filters for date types in list and collections. 
