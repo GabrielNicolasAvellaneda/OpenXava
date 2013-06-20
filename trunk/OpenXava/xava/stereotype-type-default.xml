@@ -35,5 +35,6 @@
 	<for stereotype="TARJETA_CREDITO" type="String"/>
 	<for stereotype="EMAIL_LIST" type="String"/>
 	<for stereotype="LISTA_EMAIL" type="String"/>
+	<for stereotype="MAC" type="String"/>
 				
 </stereotype-type-default>
