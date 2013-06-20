@@ -37,7 +37,6 @@
 	<validator name="NOT_ZERO" 
 		class="org.openxava.validators.NotZeroValidator"/>
 		
-        
 	<required-validator>  
 		<validator-name name="NOT_ZERO"/>
 		<for-type type="java.lang.Number"/>
@@ -84,8 +83,12 @@
 	<default-validator>
 		<validator-class class="org.openxava.validators.URLValidator"/>
 		<for-stereotype stereotype="WEBURL"/>
+	</default-validator>
+	
+	<default-validator>
+		<validator-class class="org.openxava.validators.MACValidator"/>
+		<for-stereotype stereotype="MAC"/>
 	</default-validator>	
-		
 					
 </validators>
   
