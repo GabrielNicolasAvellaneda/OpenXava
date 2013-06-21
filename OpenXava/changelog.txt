@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Export to excel (CSV) exports null as empty strings.
 - New MAC stereotype for MAC address.
 - Fix: Pressing ENTER in a view with a JavaScript calendar shows the calendar and does not execute the corresponding action.
 - On choosing a combo in list the filtering is executed automatically (it can be deactivated with filterOnChange=false). 

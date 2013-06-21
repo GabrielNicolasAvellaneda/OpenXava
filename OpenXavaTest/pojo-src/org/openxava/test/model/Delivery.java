@@ -119,9 +119,9 @@ public class Delivery {
 	@OnChange(forViews="DEFAULT, MoreSections", value=OnChangeInvoiceNumberInDeliveryAction.class)
 	@ReferenceView(notForViews="FullInvoice", value="Simple") 
 	@NoFrame(forViews="FullInvoice") 
-	@Action(forViews="DEFAULT, MoreSections", value="Delivery.setDefaultInvoice") 
+	@Action(forViews="DEFAULT, MoreSections", value="Delivery.setDefaultInvoice")	
 	private Invoice invoice;
-
+	
 	// JoinColumn and ManyToOne fetch are also specified in DeliveryKey because 
 	// a bug in Hibernate, see http://opensource.atlassian.com/projects/hibernate/browse/ANN-361
 	// We use code in 'getType()' for simulate a hibernate not-found='ignore'

@@ -288,7 +288,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertFocusOn("remarks");		
 	}
 	
-	public void testZeroValueOnChange() throws Exception {
+	public void testZeroValueOnChange() throws Exception { 
 		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
 		execute("CRUD.new");
 		assertMessage("type=null");
@@ -397,14 +397,14 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("Search.search");
 		assertNoErrors();
 		assertValue("description", "DELIVERY JUNIT 666");				
-	}	
-	
+	}		
 		
-	public void testDateCalendarEditor() throws Exception {
+	public void testDateCalendarEditor() throws Exception { 
 		execute("CRUD.new");
 		assertExists("invoice.date");
-		assertNotExists("invoice.date_CALENDAR_BUTTON_");
-		assertExists("date_CALENDAR_BUTTON_");		
+		String html = getHtml();
+		assertFalse(html.contains("showCalendar('ox_OpenXavaTest_Delivery__invoice___date'")); 
+		assertTrue(html.contains("showCalendar('ox_OpenXavaTest_Delivery__date'")); 
 	}
 	
 	public void testAggregateInCollectionWithVisibleKeyDoesNotTryToSearchOnChangeKey() throws Exception {
@@ -679,7 +679,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertActions(minimumActions);	
 	}
 	
-	public void testPropertyAndReferenceActions() throws Exception {
+	public void testPropertyAndReferenceActions() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertNoErrors(); 
 		assertNoAction("Delivery.generateNumber"); // of property

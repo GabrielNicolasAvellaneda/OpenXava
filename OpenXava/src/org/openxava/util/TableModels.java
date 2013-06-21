@@ -10,8 +10,11 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Javier Paniza
+ * @author Trifon Trifonov
  */
 public class TableModels {
+
+	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(TableModels.class);
 	
 	public static String toCSV(TableModel table) {
@@ -36,6 +39,9 @@ public class TableModels {
 	}
 
 	private static Object convert(Object valueAt) {
+		if (valueAt == null) {
+			return "";
+		}
 		if (!(valueAt instanceof String)) return valueAt;
 		return "\"" + ((String) valueAt).
 			replaceAll("\n\r", " ").
@@ -46,11 +52,10 @@ public class TableModels {
 			"\"";
 	}
 
-
 	public static void saveCSV(TableModel table, String file) throws IOException {
 		FileOutputStream ostream = new FileOutputStream(file);				
 		ostream.write(toCSV(table).getBytes());				
 		ostream.close();		
 	}
-	
+
 }
