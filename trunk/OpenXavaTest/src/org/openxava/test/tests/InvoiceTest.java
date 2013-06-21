@@ -185,7 +185,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("CustomReport.remove", "xava.keyProperty=name"); 
 	}
 	
-	public void testFilterByRange() throws Exception{
+	public void testFilterByRange() throws Exception{ 
 		getWebClient().setCssEnabled(true); 
 		
 		assertLabelInList(0, "Year");
@@ -1752,7 +1752,7 @@ public class InvoiceTest extends ModuleTestBase {
 	private boolean isVisibleConditionValueToCalendar(int number) { 
 		DomNode node = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling();
 		if (!node.isDisplayed()) return false;
-		return node.toString().contains("return showCalendar");
+		return node.toString().contains("javascript:showCalendar");
 	}
 	
 }

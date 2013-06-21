@@ -216,7 +216,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertEquals("line1", "\"TR\";5;\"Cinco\"", line1);
 		excel.nextToken(); excel.nextToken(); excel.nextToken();// Lines 2, 3, 4
 		String line5 = excel.nextToken();
-		assertEquals("line1", "\"TR\";1;\"UNO\"", line5);
+		assertEquals("line5", "\"TR\";1;\"UNO\"", line5);
 		assertTrue("Only five lines must have generated", !excel.hasMoreTokens());		
 		
 		execute("ExtendedPrint.myReports"); 
