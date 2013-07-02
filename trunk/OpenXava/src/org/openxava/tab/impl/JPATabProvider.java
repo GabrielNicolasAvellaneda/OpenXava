@@ -150,7 +150,7 @@ public class JPATabProvider extends TabProviderBase {
 	private List<Object []> nextBlock() {		
 		if (keyHasNulls()) return Collections.EMPTY_LIST; // Because some databases (like Informix) have problems setting nulls
 				
-		Query query = XPersistence.getManager().createQuery(getSelect()); 
+		Query query = XPersistence.createManager().createQuery(getSelect()); // Federico Alcantara: we don't want a transaction here
 		// Fill key values
 		StringBuffer message =
 			new StringBuffer("[JPATabProvider.nextBlock] ");
@@ -173,7 +173,7 @@ public class JPATabProvider extends TabProviderBase {
 	protected Number executeNumberSelect(String select, String errorId) {
 		if (select == null || keyHasNulls()) return 0;						
 		try {			
-			Query query = XPersistence.getManager().createQuery(select);
+			Query query = XPersistence.createManager().createQuery(select); // Federico Alcantara: we don't want a transaction here
 			Object [] key = getKey();
 			for (int i = 0; i < key.length; i++) {
 				query.setParameter("p" + i, key[i]);				

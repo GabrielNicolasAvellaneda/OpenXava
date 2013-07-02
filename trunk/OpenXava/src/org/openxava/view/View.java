@@ -35,6 +35,7 @@ import org.openxava.controller.meta.MetaController;
 import org.openxava.controller.meta.MetaControllers;
 import org.openxava.filters.CollectionInViewFilter;
 import org.openxava.filters.CollectionWithConditionInViewFilter;
+import org.openxava.jpa.XPersistence;
 import org.openxava.mapping.ModelMapping;
 import org.openxava.model.MapFacade;
 import org.openxava.model.PersistenceFacade;
@@ -1492,6 +1493,9 @@ public class View implements java.io.Serializable {
 				catch (javax.ejb.ObjectNotFoundException ex) {
 					collectionTotals = Collections.EMPTY_MAP;
 				}
+				// Next line added by Federico Alcantara.
+				// MapFacade opened a transaction that must be closed.
+				XPersistence.commit(); 
 			}
 		}
 		return collectionTotals;
