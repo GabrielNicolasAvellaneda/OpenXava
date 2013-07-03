@@ -299,4 +299,7 @@ window.onload = <%=onLoadFunction%>;
 setTimeout('<%=onLoadFunction%>()', 1000);
 document.additionalParameters="<%=getAdditionalParameters(request)%>";
 </script>
-<% } %>
+<% }
+manager.commit();
+%>
+
