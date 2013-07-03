@@ -1412,6 +1412,9 @@ public class View implements java.io.Serializable {
 						mapReturnValues = MapFacade.getValues(getParent().getModelName(), oParentObject, mapMembersNames);
 					}
 					collectionValues = (List) mapReturnValues.get(getMemberName());
+					// The next line was added by Federico Alcantara
+					// Since MapFacade will open a new transaction and it MUST be closed.
+					XPersistence.commit();
 				}
 				catch (ObjectNotFoundException ex) { // New one is creating
 					collectionValues = Collections.EMPTY_LIST;
