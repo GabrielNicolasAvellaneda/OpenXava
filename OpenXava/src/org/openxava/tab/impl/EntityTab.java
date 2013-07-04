@@ -100,7 +100,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 	}
 
 
-	private String[] getHeading() throws XavaException {
+	private String[] getHeading() throws XavaException { 
 		String[] result = new String[getProperties().size() + getIndexesPK().length];
 		Iterator it = getProperties().iterator();		
 		int i = getIndexesPK().length;

@@ -173,7 +173,6 @@ public class GenerateReportServlet extends HttpServlet {
 			request.getParameter("application"); // for a bug in websphere 5.1 
 			request.getParameter("module"); // for a bug in websphere 5.1
 			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");			
-			request.getSession().removeAttribute("xava_reportTab");
 			int [] selectedRowsNumber = (int []) request.getSession().getAttribute("xava_selectedRowsReportTab");
 			Map [] selectedKeys = (Map []) request.getSession().getAttribute("xava_selectedKeysReportTab");
 			int [] selectedRows = getSelectedRows(selectedRowsNumber, selectedKeys, tab);
@@ -226,6 +225,9 @@ public class GenerateReportServlet extends HttpServlet {
 			log.error(ex.getMessage(), ex);
 			throw new ServletException(XavaResources.getString("report_error"));
 		}		
+		finally {
+			request.getSession().removeAttribute("xava_reportTab");
+		}
 	}
 
 	private String getCurrentDate() {
@@ -263,17 +265,9 @@ public class GenerateReportServlet extends HttpServlet {
 	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab) throws ServletException, IOException {		
 		StringBuffer suri = new StringBuffer();
 		suri.append("/xava/jasperReport");
-		suri.append("?model=");
-		suri.append(tab.getModelName());
-		suri.append("&language=");		
+		suri.append("?language="); 
 		suri.append(Locales.getCurrent().getLanguage());
-		suri.append("&tab=");
-		suri.append(tab.getTabName());
-		suri.append("&properties=");
-		suri.append(tab.getPropertiesNamesAsString());		
-		suri.append("&totalProperties=");
-		suri.append(tab.getTotalPropertiesNamesAsString());						
-		response.setCharacterEncoding(XSystem.getEncoding()); 				
+		response.setCharacterEncoding(XSystem.getEncoding());
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
 	

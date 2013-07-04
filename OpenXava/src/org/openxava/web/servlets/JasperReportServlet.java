@@ -44,16 +44,8 @@ public class JasperReportServlet extends HttpServlet {
 	private InputStream getReportStream(HttpServletRequest request, HttpServletResponse response, String model, String language, String tab, String properties, String totalProperties) throws IOException, ServletException {
 		StringBuffer suri = new StringBuffer();
 		suri.append("/xava/jasperReport");		
-		suri.append(".jsp?model=");
-		suri.append(model);
-		suri.append("&language=");
+		suri.append(".jsp?language="); 
 		suri.append(language);
-		suri.append("&tab=");
-		suri.append(tab);
-		suri.append("&properties=");
-		suri.append(properties);
-		suri.append("&totalProperties=");
-		suri.append(totalProperties);
 		return Servlets.getURIAsStream(request, response, suri.toString(), XSystem.getEncoding());
 	}
 		

@@ -35,7 +35,7 @@ public class CustomReport implements java.io.Serializable {
 	@AsEmbedded 
 	@SaveAction("CustomReport.saveColumn")
 	@EditAction("CustomReport.editColumn")
-	@ListProperties("name, comparator, value, order, sum")
+	@ListProperties("label, comparator, value, order, sum")
 	private List<CustomReportColumn> columns;
 	
 	private String rootNodeName;
@@ -87,6 +87,7 @@ public class CustomReport implements java.io.Serializable {
 			CustomReportColumn column = new CustomReportColumn();
 			column.setReport(report);
 			column.setName(property.getQualifiedName());
+			column.setLabel(property.getQualifiedLabel(Locales.getCurrent()));
 			column.setCalculated(property.isCalculated());
 			columns.add(column);
 		}		
@@ -111,7 +112,7 @@ public class CustomReport implements java.io.Serializable {
 	
 	public void save() throws BackingStoreException { 
 		Preferences preferences = getPreferences();		
-		preferences.put(NAME, name);
+		preferences.put(NAME, name);		
 		preferences.put(MODEL_NAME, getMetaModel().getName());
 		int i = 0;
 		for (CustomReportColumn column: columns) {

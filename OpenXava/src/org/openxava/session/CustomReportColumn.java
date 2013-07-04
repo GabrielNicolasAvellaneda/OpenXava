@@ -18,6 +18,7 @@ public class CustomReportColumn implements java.io.Serializable {
 	
 	private final static String COLUMN = "column";
 	private final static String NAME = "name";
+	private final static String LABEL = "label"; 
 	private final static String COMPARATOR = "comparator";
 	private final static String VALUE ="value";
 	private final static String BOOLEAN_VALUE = "booleanValue";
@@ -32,6 +33,9 @@ public class CustomReportColumn implements java.io.Serializable {
 	@OnChange(OnChangeCustomReportColumnNameAction.class)
 	@Required
 	private String name;
+	
+	@Required
+	private String label; 
 	
 	private String comparator;
 	
@@ -143,6 +147,7 @@ public class CustomReportColumn implements java.io.Serializable {
 
 	public void save(Preferences preferences, int index) {		
 		preferences.put(COLUMN + index + "." + NAME, name);
+		preferences.put(COLUMN + index + "." + LABEL, label); 
 		if (comparator != null) preferences.put(COLUMN + index + "." + COMPARATOR, comparator);
 		else preferences.remove(COLUMN + index + "." + COMPARATOR);
 		if (value != null) preferences.put(COLUMN + index + "." + VALUE, value);
@@ -160,6 +165,7 @@ public class CustomReportColumn implements java.io.Serializable {
 		String name = preferences.get(COLUMN + index + "." + NAME, null);
 		if (name == null) return false;
 		this.name = name;
+		this.label = preferences.get(COLUMN + index + "." + LABEL, name); 
 		comparator = preferences.get(COLUMN + index + "." + COMPARATOR, null);
 		value = preferences.get(COLUMN + index + "." + VALUE, null);
 		String booleanValue = preferences.get(COLUMN + index + "." + BOOLEAN_VALUE, null);
@@ -179,6 +185,14 @@ public class CustomReportColumn implements java.io.Serializable {
 
 	public void setSum(boolean sum) {
 		this.sum = sum;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

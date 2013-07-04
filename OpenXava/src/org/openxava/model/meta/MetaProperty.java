@@ -9,14 +9,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import javax.servlet.ServletRequest;
 
@@ -29,18 +22,7 @@ import org.openxava.mapping.ModelMapping;
 import org.openxava.mapping.PropertyMapping;
 import org.openxava.model.IModel;
 import org.openxava.tab.meta.MetaTab;
-import org.openxava.util.ElementNotFoundException;
-import org.openxava.util.FieldComparator;
-import org.openxava.util.Is;
-import org.openxava.util.Labels;
-import org.openxava.util.Locales;
-import org.openxava.util.Messages;
-import org.openxava.util.Objects;
-import org.openxava.util.Primitives;
-import org.openxava.util.PropertiesManager;
-import org.openxava.util.Strings;
-import org.openxava.util.XavaException;
-import org.openxava.util.XavaResources;
+import org.openxava.util.*;
 import org.openxava.util.meta.MetaSet;
 import org.openxava.util.meta.MetaSetsContainer;
 import org.openxava.validators.*;
@@ -56,7 +38,7 @@ import org.openxava.view.meta.MetaView;
 public class MetaProperty extends MetaMember implements Cloneable {
 	
 	private static Log log = LogFactory.getLog(MetaProperty.class);
-	
+		
 	private Collection propertyNamesThatIDepend;
 	private Collection metaValidators;	
 	private Collection validators;
@@ -82,7 +64,17 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private PropertyMapping mapping;
 	private DateFormat timeFormat = new SimpleDateFormat("HH:mm"); // 24 hours for all locales
 	private boolean _transient;
-	private String requiredMessage = "required"; 
+	private String requiredMessage = "required";
+	private String label;
+	
+	public String getLabel(Locale locale) {
+		return Is.emptyString(label)?super.getLabel(locale):label;
+	}
+		
+	public void setLabel(String newLabel) {
+		super.setLabel(newLabel);
+		label = newLabel;
+	}
 		
 	public void addValidValue(Object validValue) {
 		getValidValues().add(validValue);
@@ -951,7 +943,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		catch (NumberFormatException ex) {
 			// We try parse from the string representation of the enum
 			// We use introspection in order that this code compile and run in a Java 1.4
-			return Objects.execute(getEnumClass(), "valueOf", Class.class, getType(), String.class, value);			
+			return XObjects.execute(getEnumClass(), "valueOf", Class.class, getType(), String.class, value); 			
 		}
 	}
 		

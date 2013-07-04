@@ -13,12 +13,12 @@
 <%@ page import="org.openxava.util.Strings" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.tab.meta.MetaTab" %>
+<%@ page import="org.openxava.tab.Tab"%> 
 <%@ page import="org.openxava.component.MetaComponent" %>
 <%@ page import="org.openxava.model.meta.MetaModel" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.util.XSystem"%>
 <%@ page import="org.openxava.util.XavaPreferences"%>
-
 
 <%!
 
@@ -53,37 +53,23 @@ private String getAlign(MetaProperty p) throws Exception {
 %>
 
 <%
-String modelName = request.getParameter("model");
-String reportName = Strings.change(modelName, ".", "_");
-MetaModel metaModel = MetaModel.get(modelName);
-String tabName = request.getParameter("tab");
-MetaTab tab = null;
-if (tabName.startsWith(org.openxava.tab.Tab.COLLECTION_PREFIX)) {
-	tab = MetaTab.createDefault(metaModel);
-}
-else {
-	MetaComponent component = metaModel.getMetaComponent();
-	tab = component.getMetaTab(tabName);
-}
-String propertiesNames = request.getParameter("properties");
-if (!Is.emptyString(propertiesNames)) {
-	tab = tab.cloneMetaTab();
-	tab.setPropertiesNames(propertiesNames);
-}
-java.util.Set totalProperties = Strings.toSet(request.getParameter("totalProperties"));
+Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
+String reportName = Strings.change(tab.getModelName(), ".", "_"); 
+java.util.Collection totalProperties = tab.getTotalPropertiesNames();  		
+		 
 String language = request.getParameter("language");
 if (language == null) language = org.openxava.util.Locales.getCurrent().getDisplayLanguage();
 language = language == null?request.getLocale().getDisplayLanguage():language;
 java.util.Locale locale = new java.util.Locale(language, "");
 
-int columnsSeparation = 10; 
+int columnsSeparation = 10;
 Iterator it = tab.getMetaProperties().iterator();
 int [] widths = new int[tab.getMetaProperties().size()];
 int totalWidth = 0;
 int i=0;
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
-	String label = p.getLabel(locale);	
+	String label = p.getLabel(locale);
 	widths[i]=Math.max(p.getSize(), label.length());
 	totalWidth+=widths[i];
 	i++;

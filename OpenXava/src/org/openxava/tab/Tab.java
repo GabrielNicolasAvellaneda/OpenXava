@@ -82,7 +82,7 @@ public class Tab implements java.io.Serializable {
 	private String[] conditionValuesTo;	// to the range: conditionValues like 'from' and conditionValuesTo like 'to'
 	private String[] conditionComparatorsToWhere;
 	private Object[] conditionValuesToWhere;
-	private List metaProperties;
+	private List<MetaProperty> metaProperties; 
 	private int page = 1;
 	private int addColumnsPage = 1; 
 	private int addColumnsLastPage; 
@@ -121,16 +121,27 @@ public class Tab implements java.io.Serializable {
 	private boolean usesConverters;
 	private String title;  
 	private List<Map> selectedKeys;
-	private boolean conditionJustCleared; 
+	private boolean conditionJustCleared;
+	private Map<String, String> labels;  
 	
-	public List<MetaProperty> getMetaProperties() {
+	public List<MetaProperty> getMetaProperties() { 
 		if (metaProperties == null) {
 			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;				
 			metaProperties = getMetaTab().getMetaProperties();
+			setPropertiesLabels(metaProperties); 
 		}				
 		return metaProperties;
 	}
 	
+	private void setPropertiesLabels(List<MetaProperty> metaProperties) { 
+		if (labels == null) return;
+		for (MetaProperty p: metaProperties) {
+			if (labels.containsKey(p.getQualifiedName())) {
+				p.setLabel(labels.get(p.getQualifiedName()));				
+			}
+		}
+	}
+
 	private List getRemainingPropertiesNames() throws XavaException {
 		if (isSortRemainingProperties()) {
 			List result = new ArrayList(getMetaTab().getRemainingPropertiesNames());
@@ -1365,8 +1376,18 @@ public class Tab implements java.io.Serializable {
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}
-	
-	
+		
+	/**
+	 * 
+	 * @param propertyName
+	 * @param label
+	 * @since 4.8
+	 */
+	public void setLabel(String propertyName, String label) { 
+		if (labels == null) labels = new HashMap<String, String>();
+		labels.put(propertyName, label); 
+		resetAfterChangeProperties(); 
+	}
 
 	public void removeProperty(String propertyName) throws XavaException {
 		cloneMetaTab();
@@ -2036,15 +2057,7 @@ public class Tab implements java.io.Serializable {
 
 	private String removeTotalPropertyPrefix(String totalProperty) {
 		return getCollectionView().getMetaCollection().removeTotalPropertyPrefix(totalProperty);
-	}
-		
-	/**
-	 * @since 4.1
-	 */		
-	public String getTotalPropertiesNamesAsString() { 
-		return Strings.toString(getTotalPropertiesNames()); 
-	}
-	
+	}			
 
 	public void setIgnorePageRowCount(boolean ignorePageRowCount) {
 		this.ignorePageRowCount = ignorePageRowCount;
