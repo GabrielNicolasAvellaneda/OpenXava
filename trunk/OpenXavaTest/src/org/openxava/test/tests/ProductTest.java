@@ -69,22 +69,22 @@ public class ProductTest extends ModuleTestBase {
 	public void testSumInCustomReport() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		
-		assertValueInCollection("columns", 0, 0, "number");		
+		assertValueInCollection("columns", 0, 0, "Number");		
 		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
 		assertExists("sum");
 		closeDialog();
 		
-		assertValueInCollection("columns", 1, 0, "description");		
+		assertValueInCollection("columns", 1, 0, "Description");		
 		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
 		assertNotExists("sum");
 		closeDialog();
 				
-		assertValueInCollection("columns", 3, 0, "unitPriceInPesetas");		
+		assertValueInCollection("columns", 3, 0, "Unit price in pesetas");		
 		execute("CustomReport.editColumn", "row=3,viewObject=xava_view_columns");
 		assertNotExists("sum");
 		closeDialog();			
 		
-		assertValueInCollection("columns", 2, 0, "unitPrice");
+		assertValueInCollection("columns", 2, 0, "Unit price");
 		assertValueInCollection("columns", 2, 4, "No");
 		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
 		setValue("sum", "true");

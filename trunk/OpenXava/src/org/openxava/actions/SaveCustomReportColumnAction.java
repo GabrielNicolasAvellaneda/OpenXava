@@ -17,7 +17,9 @@ public class SaveCustomReportColumnAction extends CollectionElementViewBaseActio
 		CustomReportColumn column = new CustomReportColumn();
 		column.setReport(customReport);
 		String columnName = getCollectionElementView().getValueString("name");
-		column.setName(columnName);		
+		column.setName(columnName);
+		String columnLabel = getCollectionElementView().getValueString("label");
+		column.setLabel(columnLabel);		
 		if (getCollectionElementView().getMembersNames().containsKey("comparator")) {
 			String comparator = getCollectionElementView().getValueString("comparator");
 			column.setComparator(comparator);

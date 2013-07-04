@@ -34,6 +34,7 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 		StringBuffer order = new StringBuffer();
 		for (CustomReportColumn column: customReport.getColumns()) {
 			tab.addProperty(column.getName());
+			tab.setLabel(column.getName(), column.getLabel()); 
 			if (column.isCalculated()) continue;
 			if (column.getComparator() != null) {
 				comparators.add(column.getComparator());

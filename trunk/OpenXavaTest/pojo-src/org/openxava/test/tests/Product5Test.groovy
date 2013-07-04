@@ -15,7 +15,7 @@ class Product5Test extends ModuleTestBase {
 	// This case can be only reproduced in custom dialog with Product5 (in other Product it works)
 	void testDialogActionsAreNotLost() {  
 		execute "ExtendedPrint.myReports"
-		assertValueInCollection "columns", 4, 0, "unitPrice"
+		assertValueInCollection "columns", 4, 0, "Unit price"
 		assertValueInCollection "columns", 4, 4, "No"
 		execute "CustomReport.editColumn", "row=4,viewObject=xava_view_columns"
 		setValue "sum", "true"

@@ -202,7 +202,8 @@
 	</editor>		
 	
 	<editor url="textEditor.jsp">
-		<for-model-property model="CustomReportColumn" property="value" />
+		<for-model-property model="CustomReportColumn" property="label" /> 
+		<for-model-property model="CustomReportColumn" property="value" />				
 	</editor>
 		
 	<editor url="customReportColumnNameEditor.jsp">

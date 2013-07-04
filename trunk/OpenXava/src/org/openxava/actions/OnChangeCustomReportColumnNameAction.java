@@ -1,6 +1,7 @@
 package org.openxava.actions;
 
 import org.openxava.model.meta.*;
+import org.openxava.session.*;
 import org.openxava.util.*;
 
 /**
@@ -20,12 +21,22 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 	public void execute() throws Exception {		
 		String propertyName = (String) newValue;
 		if (Is.emptyString(propertyName)) {
+			getView().setValue("label", ""); 
 			getView().setValue("comparator", EMPTY_COMPARATOR);
 			getView().setHidden("sum", true); // We hide it by default, because there are more non-summable properties than summable ones
 			showStandardMembers();
 			return;
 		}		
 		MetaProperty property = getTab().getMetaTab().getMetaModel().getMetaProperty(propertyName);
+		CustomReportColumn column = (CustomReportColumn) getView().getModel();
+		if (column != null && propertyName.equals(column.getName())) {
+			getView().setValue("label", column.getLabel());
+		}
+		else {
+			property = property.cloneMetaProperty();
+			property.setQualifiedName(propertyName);
+			getView().setValue("label", property.getQualifiedLabel(Locales.getCurrent()));
+		}
 		getView().setHidden("sum", !getTab().isTotalCapable(property));   
 		if (property.isCalculated()) {
 			hideMembers();

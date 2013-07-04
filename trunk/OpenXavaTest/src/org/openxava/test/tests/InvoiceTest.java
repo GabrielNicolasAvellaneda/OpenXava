@@ -105,10 +105,10 @@ public class InvoiceTest extends ModuleTestBase {
 		assertExists("paid");
 	}
 	
-	public void testCustomReportFilteringByDateAndBooleanWithConverter() throws Exception { 
+	public void testCustomReportFilteringByDateAndBooleanWithConverter() throws Exception {  
 		// Date
 		execute("ExtendedPrint.myReports");
-		assertValueInCollection("columns", 2, 0, "date");
+		assertValueInCollection("columns", 2, 0, "Date");
 		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
 		String [][] dateComparators = {
 			{ "", "" },	
@@ -126,7 +126,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("comparator", "year_comparator");
 		setValue("value", "2004");
 		execute("CustomReport.saveColumn");
-		assertValueInCollection("columns", 2, 0, "date");
+		assertValueInCollection("columns", 2, 0, "Date");
 		assertValueInCollection("columns", 2, 1, "year =");
 		assertValueInCollection("columns", 2, 2, "2004");
 		
@@ -138,7 +138,7 @@ public class InvoiceTest extends ModuleTestBase {
 		// Boolean
 		execute("ExtendedPrint.myReports");
 		execute("CustomReport.remove", "xava.keyProperty=name");
-		assertValueInCollection("columns", 6, 0, "paid");
+		assertValueInCollection("columns", 6, 0, "Paid");
 		execute("CustomReport.editColumn", "row=6,viewObject=xava_view_columns");
 		String [][] booleanValues = {
 			{ "", "" },	
@@ -147,7 +147,7 @@ public class InvoiceTest extends ModuleTestBase {
 		};
 		assertValidValues("booleanValue", booleanValues);
 		execute("CustomReport.saveColumn");
-		assertValueInCollection("columns", 6, 0, "paid");
+		assertValueInCollection("columns", 6, 0, "Paid");
 		assertValueInCollection("columns", 6, 1, "");
 		assertValueInCollection("columns", 6, 2, ""); // BTW, this tests BooleanFormatter for supporting nulls 
 		
@@ -168,7 +168,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertExists("order");
 		setValue("booleanValue", "true");
 		execute("CustomReport.saveColumn");
-		assertValueInCollection("columns", 6, 0, "paid");
+		assertValueInCollection("columns", 6, 0, "Paid");
 		assertValueInCollection("columns", 6, 1, "=");
 		assertValueInCollection("columns", 6, 2, "Yes");
 		
