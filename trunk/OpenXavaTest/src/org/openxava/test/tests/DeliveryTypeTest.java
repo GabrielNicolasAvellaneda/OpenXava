@@ -28,7 +28,7 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertValue("comboDeliveries", toKeyString(delivery));
 	}	
 			
-	public void testSaveActionNotResetRefreshData() throws Exception {
+	public void testSaveActionNotResetWithAndWithoutRefresh() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "66");
 		setValue("description", "JUNIT &%=+"); // &%=+ is to test URL special characters
@@ -50,9 +50,31 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		
 		execute("CRUD.delete");		
 		assertNoErrors();
-		assertMessage("Delivery type deleted successfully");				 				
-	}
+		assertMessage("Delivery type deleted successfully");
 		
+		execute("CRUD.new");
+		setValue("number", "66");
+		setValue("description", "JUNIT"); 
+		execute("DeliveryType.saveNotRefresh");
+		assertNoErrors();
+		
+		assertValue("number", "66");		
+		assertValue("description", "JUNIT"); // 'CREATED' though added in database is not displayed 
+		assertNoEditable("number");
+		assertEditable("description");
+		
+		setValue("description", "JUNIT M CREATED"); // We modify it
+		execute("DeliveryType.saveNotRefresh");
+		assertValue("number", "66");		
+		assertValue("description", "JUNIT M CREATED"); // 'MODIFIED' though added in database is not displayed
+		assertNoEditable("number");
+		assertEditable("description");
+		
+		execute("CRUD.delete");		
+		assertNoErrors();
+		assertMessage("Delivery type deleted successfully");				 						
+	}
+	
 	public void testPostmodifiyCalculatorNotOnRead() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
@@ -71,6 +93,8 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		setValue("number", "66");
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
+		assertValue("number", ""); 
+		assertValue("description", ""); 		
 		assertNoErrors();
 		assertMessage("Delivery type created successfully"); 
 				
@@ -80,6 +104,8 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertValue("description", "JUNIT CREATED"); // 'CREATED' is added in postcreate
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
+		assertValue("number", ""); 
+		assertValue("description", ""); 				
 		assertNoErrors();
 		assertMessage("Delivery type modified successfully");
 		

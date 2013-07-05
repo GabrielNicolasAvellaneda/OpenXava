@@ -16,14 +16,14 @@ import org.openxava.validators.*;
 public class SaveAction extends ViewBaseAction {
 		
 	private boolean resetAfter = true;
-	
+	private boolean refreshAfter = true; 
     
 	public void execute() throws Exception {		
 		try {
 			Map values = null;			
 			if (getView().isKeyEditable()) {
 				// Create			
-				if (isResetAfter()) {				
+				if (isResetAfter() || !isRefreshAfter()) { 
 					MapFacade.create(getModelName(), getValuesToSave());
 					addMessage("entity_created", getModelName());
 				}
@@ -39,7 +39,7 @@ public class SaveAction extends ViewBaseAction {
 				Map keyValues = getView().getKeyValues();				
 				MapFacade.setValues(getModelName(), keyValues, getValuesToSave());
 				addMessage("entity_modified", getModelName());
-				if (!isResetAfter()) {	
+				if (!isResetAfter() && isRefreshAfter()) {
 					getView().clear(); 
 					values = MapFacade.getValues(getModelName(), keyValues, getView().getMembersNamesWithHidden());
 				}
@@ -51,7 +51,7 @@ public class SaveAction extends ViewBaseAction {
 			}
 			else {				
 				getView().setKeyEditable(false);				
-				getView().setValues(values);				
+				if (isRefreshAfter()) getView().setValues(values); 
 			}			
 			resetDescriptionsCache();
 		}
@@ -88,6 +88,34 @@ public class SaveAction extends ViewBaseAction {
 	 */
 	public void setResetAfter(boolean b) {
 		resetAfter = b;
+	}
+
+	/**
+	 * If <tt>false</tt> after save does not refresh the
+	 * form from database. <p>
+	 * 
+	 * It only has effect if <tt>resetAfter</tt> is <tt>false</tt>.
+	 * 
+	 * The default value is <tt>true</tt>.
+	 * 
+	 * @since 4.8
+	 */	
+	public boolean isRefreshAfter() {
+		return refreshAfter;
+	}
+
+	/**
+	 * If <tt>false</tt> after save does not refresh the
+	 * form from database. <p>
+	 * 
+	 * It only has effect if <tt>resetAfter</tt> is <tt>false</tt>.
+	 * 
+	 * The default value is <tt>true</tt>.
+	 * 
+	 * @since 4.8
+	 */		
+	public void setRefreshAfter(boolean refreshAfter) {
+		this.refreshAfter = refreshAfter;
 	}
 
 }
