@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New refreshAfter property in SaveAction to not refreshing from database after saving. 
 - New CSS class ox-images-gallery to define the visual style of images gallery editor.  
 - The user can modify the column labels in 'My reports'.
 - The columns shown in 'My reports' use the labels instead of the property names.

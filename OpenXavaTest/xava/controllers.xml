@@ -204,6 +204,13 @@
 			keystroke="control alt S">			
 			<set property="resetAfter" value="false"/>
 		</action>
+		<action name="saveNotRefresh" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			image="save.gif"
+			keystroke="control alt S">			
+			<set property="resetAfter" value="false"/>
+			<set property="refreshAfter" value="false"/>
+		</action>		
 		<action name="assertComboDeliveries" mode="detail"
 			class="org.openxava.test.actions.AssertComboDeliveriesAction"/>			
 	</controller>
