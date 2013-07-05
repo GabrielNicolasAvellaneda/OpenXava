@@ -1,11 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- New CSS class ox-images-gallery to define the visual style of images gallery editor.  
 - The user can modify the column labels in 'My reports'.
 - The columns shown in 'My reports' use the labels instead of the property names.
 - New setLabel() method in Tab to change the column labels programmatically. 
 - Fix: Labels for qualified properties in 'My reports' PDFs do not match labels in screen list.
-- Fix: Connection leaks in the first page load when using calculated properties in list or descriptions list in detail.
+- Fix: Connection leaks produced in the first page load.
 - New CurrentMonthCalculator.
 - Export to excel (CSV) exports null as empty strings.
 - New MAC stereotype for MAC address.

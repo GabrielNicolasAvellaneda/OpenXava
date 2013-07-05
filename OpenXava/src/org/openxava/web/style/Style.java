@@ -394,7 +394,14 @@ public class Style {
 	protected String getFrameContent() { 
 		return "ox-frame-content";
 	}
-
+	
+	/** 
+	 * 
+	 * @since 4.8
+	 */
+	public String getImagesGallery() { 
+		return "ox-images-gallery"; 
+	}
 	
 	public String getList() {  
 		return "ox-list";
