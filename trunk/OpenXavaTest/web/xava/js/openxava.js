@@ -295,7 +295,7 @@ openxava.initLists = function(application, module) {
 		}
 	});				
 	openxava.setListsSize(application, module, "list", 1);	
-	openxava.setListsSize(application, module, "collection", 0.95);
+	openxava.setListsSize(application, module, "collection", openxava.collectionWidthRatio);	
 }
 
 openxava.setListsSize = function(application, module, type, percentage) {
