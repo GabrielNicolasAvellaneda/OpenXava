@@ -277,7 +277,8 @@ if (manager.isResetFormPostNeeded()) {
 		openxava.imageFilterPrefix = '<%=org.openxava.web.Lists.getImageFilterPrefix(request)%>'; 
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
-		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';		
+		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';	
+		openxava.collectionWidthRatio = <%=style.getCollectionWidthRatio()%>;
 		openxava.closeDialogOnEscape = <%=browser != null && browser.indexOf("Firefox") >= 0 ? "false":"true"%>;		  
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';

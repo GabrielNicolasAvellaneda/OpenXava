@@ -121,6 +121,14 @@ public class Style {
 		return styleClasses;
 	}
 	
+	/**
+	 * 
+	 * @since 4.8
+	 */
+	public double getCollectionWidthRatio() { 
+		return 0.95;		
+	}
+	
 
 	/**
 	 * If this style is specific for the indicated browser.
@@ -612,7 +620,7 @@ public class Style {
 	}
 	
 	protected String getFrame() { 
-		return "frame";
+		return "ox-frame"; 
 	}
 	
 	protected String getFrameTitle() {   

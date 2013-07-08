@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Width ratio for collections depends on style, to better definition of custom styles. 
+- CSS class frame renamed to ox-frame.
 - New refreshAfter property in SaveAction to not refreshing from database after saving. 
 - New CSS class ox-images-gallery to define the visual style of images gallery editor.  
 - The user can modify the column labels in 'My reports'.
