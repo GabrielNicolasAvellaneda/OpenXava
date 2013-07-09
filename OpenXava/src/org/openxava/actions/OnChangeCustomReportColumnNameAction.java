@@ -53,17 +53,18 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 			return;
 		}
 				
-		String comparatorValue = getView().getValueString("comparator"); 
+		String value = getView().getValueString("value"); 
+		String comparatorValue = Is.emptyString(value)?"":getView().getValueString("comparator"); 
 		if ("java.lang.String".equals(property.getType().getName())) {
-			getView().setValue("comparator", STRING_COMPARATOR + ":" + comparatorValue); 
+			getView().setValue("comparator", STRING_COMPARATOR + ":" + comparatorValue); 			
 		}
 		else if (java.util.Date.class.isAssignableFrom(property.getType()) && 
 			!property.getType().equals(java.sql.Time.class)) 
 		{ 			
-			getView().setValue("comparator", DATE_COMPARATOR + ":" + comparatorValue); 
+			getView().setValue("comparator", DATE_COMPARATOR + ":" + comparatorValue); 			
 		}
 		else {			
-			getView().setValue("comparator", OTHER_COMPARATOR + ":" + comparatorValue); 
+			getView().setValue("comparator", OTHER_COMPARATOR + ":" + comparatorValue); 			
 		}
 		showStandardMembers();
 	}

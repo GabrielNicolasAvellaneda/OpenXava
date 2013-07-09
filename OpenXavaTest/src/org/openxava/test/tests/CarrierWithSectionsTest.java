@@ -76,14 +76,26 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			{ "calculated", "calculated" }
 		};
 		assertValidValues("name", validColumnNames);
-		assertValue("name", "");
+		assertValue("name", "");		
 		String [][] emptyComparators = {
-			{ "", "" }
 		};
 		assertValidValues("comparator", emptyComparators);
+		setValue("name", "warehouse.zoneNumber");
+		assertValue("label", "Zone of Warehouse");
+		assertValue("comparator", "eq_comparator"); 
+		String [][] numberComparators = {
+			{ "eq_comparator", "=" },
+			{ "ne_comparator", "<>" },  
+			{ "ge_comparator", ">=" }, 
+			{ "le_comparator", "<=" }, 
+			{ "gt_comparator", ">" }, 
+			{ "lt_comparator", "<" } 
+		};
+		assertValidValues("comparator", numberComparators);
+		
 		setValue("name", "name");
+		assertValue("comparator", "starts_comparator"); 
 		String [][] stringComparators = {
-			{ "", "" },	
 			{ "starts_comparator", "starts" },
 			{ "ends_comparator", "ends" }, 
 			{ "contains_comparator", "contains" },
@@ -96,19 +108,12 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			{ "lt_comparator", "<" } 
 		};
 		assertValidValues("comparator", stringComparators);
-		setValue("name", "warehouse.zoneNumber");
+
+		setValue("name", "warehouse.zoneNumber"); 
 		assertValue("label", "Zone of Warehouse"); 
-		String [][] numberComparators = {
-			{ "", "" },	
-			{ "eq_comparator", "=" },
-			{ "ne_comparator", "<>" },  
-			{ "ge_comparator", ">=" }, 
-			{ "le_comparator", "<=" }, 
-			{ "gt_comparator", ">" }, 
-			{ "lt_comparator", "<" } 
-		};
-		assertValidValues("comparator", numberComparators);		
-		setValue("comparator", "eq_comparator"); 
+		assertValue("comparator", "eq_comparator"); 
+		assertValidValues("comparator", numberComparators); 
+		
 		setValue("value", "1");
 		execute("CustomReport.saveColumn");
 		assertCollectionRowCount("columns", 3);

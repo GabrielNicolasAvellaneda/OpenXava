@@ -1,7 +1,9 @@
 package org.openxava.actions;
 
 import javax.inject.*;
+
 import org.openxava.session.*;
+import org.openxava.util.*;
 
 /**
  * 
@@ -19,14 +21,16 @@ public class SaveCustomReportColumnAction extends CollectionElementViewBaseActio
 		String columnName = getCollectionElementView().getValueString("name");
 		column.setName(columnName);
 		String columnLabel = getCollectionElementView().getValueString("label");
-		column.setLabel(columnLabel);		
-		if (getCollectionElementView().getMembersNames().containsKey("comparator")) {
-			String comparator = getCollectionElementView().getValueString("comparator");
-			column.setComparator(comparator);
-		}
+		column.setLabel(columnLabel);
 		if (getCollectionElementView().getMembersNames().containsKey("value")) {
 			String value = getCollectionElementView().getValueString("value");
 			column.setValue(value);
+		}				
+		if (getCollectionElementView().getMembersNames().containsKey("comparator")) {
+			String comparator = getCollectionElementView().getValueString("comparator");
+			if (!Is.emptyString(column.getValue())) {
+				column.setComparator(comparator);
+			}
 		}
 		Boolean booleanValue = (Boolean) getCollectionElementView().getValue("booleanValue");		
 		column.setBooleanValue(booleanValue);
