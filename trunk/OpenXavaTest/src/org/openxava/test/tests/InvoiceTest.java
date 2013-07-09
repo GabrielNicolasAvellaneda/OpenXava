@@ -111,7 +111,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 0, "Date");
 		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
 		String [][] dateComparators = {
-			{ "", "" },	
+			// tmp { "", "" },	
 			{ "eq_comparator", "=" },
 			{ "ne_comparator", "<>" },
 			{ "ge_comparator", ">=" },

@@ -45,13 +45,6 @@ else {
 %>
 <select id="<%=name%>" name="<%=name%>" class=<%=style.getEditor()%> <%=script%>>
 	<% 
-	if (propertyKey != null) {
-	%>
-	<option value=""></option>	
-	<% 
-	}
-	%>
-	<% 
 	if (!isEmpty) { 
 	%>
 	<%

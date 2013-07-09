@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- The default value for comparators in 'My reports' is '=' or 'starts with'. 
 - Width ratio for collections depends on style, to better definition of custom styles. 
 - CSS class frame renamed to ox-frame.
 - New refreshAfter property in SaveAction to not refreshing from database after saving. 
