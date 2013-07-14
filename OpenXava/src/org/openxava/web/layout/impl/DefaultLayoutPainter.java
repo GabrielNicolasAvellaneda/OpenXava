@@ -69,7 +69,7 @@ import org.openxava.web.taglib.LinkTag;
 public class DefaultLayoutPainter extends AbstractJspPainter {
 	private static final long serialVersionUID = 1L;
 
-	private static final Log LOG = LogFactory.getLog(DefaultLayoutPainter.class);
+	private static final Log log = LogFactory.getLog(DefaultLayoutPainter.class);
 	private boolean firstCellPainted = false;
 	private int tdPerColumn = 2; // One TD for the label and another for Data and other cells.
 	private boolean blockStarted = false;
@@ -339,7 +339,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			attributes.put("valign", "center");
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		}
-		
+
 		if (getContainer().getShowColumnLabel(getColumn().getColumnIndex())) {
 			// Left spacer
 			beginPropertySpacer(element, getStyle().getLayoutLabelLeftSpacer());
@@ -352,7 +352,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			// Left spacer
 			beginPropertySpacer(element, getStyle().getLayoutLabelRightSpacer());
 		}
-		
 		if (!firstCellPainted) {
 			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 		}
@@ -422,7 +421,10 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	protected void beginPropertyLabel(ILayoutPropertyBeginElement element) {
 		attributes.clear();
-		attributes.put(ATTR_CLASS, getStyle().getLayoutLabel());
+		if (element.getMetaProperty() == null ||
+				!element.getLabelFormat().equals(LabelFormatType.SMALL.ordinal())) {
+			attributes.put(ATTR_CLASS, getStyle().getLayoutLabel());
+		}
 		if (!element.isDisplayAsDescriptionsList()) {
 			attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
 					+ element.getName()));
@@ -498,7 +500,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		try {
 			editorTag.doStartTag();
 		} catch (JspException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 
@@ -518,17 +520,17 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		try {
 			isSearch = element.getView().isSearch();
 		} catch (Exception e) {
-			LOG.debug(e.getMessage());
+			log.trace(e.getMessage());
 		}
 		try {
 			isCreateNew = element.getView().isCreateNew();
 		} catch (Exception e) {
-			LOG.debug(e.getMessage());
+			log.trace(e.getMessage());
 		}
 		try {
 			isModify = element.getView().isModify();
 		} catch (Exception e) {
-			LOG.debug(e.getMessage());
+			log.trace(e.getMessage());
 		}
 		beginPropertyDataAddActions(element, isSearch, isCreateNew, isModify);
 	}
@@ -578,7 +580,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				}
 			}
 		} catch (JspException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 		try {
@@ -608,7 +610,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				}
 			}
 		} catch (JspException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
@@ -812,7 +814,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 											linkTag.doEndTag();
 											write(getStyle().getSectionTabEndDecoration());
 										} catch (JspException e) {
-											LOG.error(e.getMessage(), e);
+											log.error(e.getMessage(), e);
 											throw new RuntimeException(e);
 										}
 									}

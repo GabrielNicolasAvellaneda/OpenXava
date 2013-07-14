@@ -20,7 +20,7 @@ import org.openxava.view.View;
  */
 public abstract class AbstractBasePainter implements ILayoutPainter, Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Log LOG = LogFactory.getLog(AbstractBasePainter.class);
+	private static final Log log = LogFactory.getLog(AbstractBasePainter.class);
 
 	private Stack<ILayoutContainerElement> containersStack;
 	private Stack<ILayoutRowBeginElement> rowsStack;
@@ -37,6 +37,9 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 	public void initialize(View view, PageContext pageContext) {
 		this.view = view;
 		this.pageContext = pageContext;
+		if (log.isDebugEnabled()) {
+			log.debug(this.getClass().getName());
+		}
 		pageContext.getResponse().setContentType("text/html");
 		setContainersStack(null);
 		setRowsStack(null);
@@ -65,7 +68,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 		try {
 			returnValue = getContainersStack().peek();
 		} catch (EmptyStackException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return returnValue;
 	}
@@ -78,7 +81,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 		try {
 			returnValue = getRowsStack().peek();
 		} catch (EmptyStackException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return returnValue;
 	}
@@ -91,7 +94,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 		try {
 			returnValue = getColumnsStack().peek();
 		} catch (EmptyStackException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return returnValue;
 	}
@@ -114,7 +117,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 		try {
 			getContainersStack().pop();
 		} catch (EmptyStackException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 	
@@ -130,7 +133,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 		try {
 			getColumnsStack().pop();
 		} catch (EmptyStackException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 	
@@ -150,7 +153,7 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 		try {
 			getRowsStack().pop();
 		} catch (EmptyStackException e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 
