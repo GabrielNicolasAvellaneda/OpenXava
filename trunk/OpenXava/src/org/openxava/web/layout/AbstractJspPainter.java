@@ -24,7 +24,7 @@ import org.openxava.web.style.Style;
 public abstract class AbstractJspPainter extends AbstractBasePainter {
 	private static final long serialVersionUID = 1L;
 
-	private Log LOG = LogFactory.getLog(AbstractJspPainter.class);
+	private Log log = LogFactory.getLog(AbstractJspPainter.class);
 	
 	private Style style;
 	private StringBuffer logMessage;
@@ -38,7 +38,7 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	protected void write(String value) {
 		try {
 			getPageContext().getOut().print(value);
-			if (LOG.isDebugEnabled()) {
+			if (log.isTraceEnabled()) {
 				String[] tags = value.replaceAll("\\n", "").split(">");
 				for (String tagValue : tags) {
 					if (!tagValue.equals("")) {
@@ -63,7 +63,7 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 				}
 			}
 		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -75,15 +75,15 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	protected void includeJspPage(String page) {
 		try {
 			getPageContext().include(page, true);
-			if (LOG.isDebugEnabled()) {
+			if (log.isTraceEnabled()) {
 				getLogMessage().append(StringUtils.repeat("  ", level))
 						.append(page)
 						.append('\n');
 			}
 		} catch (ServletException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -125,8 +125,8 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 	}
 	
 	protected void outputLog() {
-		if (LOG.isDebugEnabled()) { 
-			LOG.debug(getLogMessage().toString());
+		if (log.isTraceEnabled()) { 
+			log.trace(getLogMessage().toString());
 		}
 	}
 }

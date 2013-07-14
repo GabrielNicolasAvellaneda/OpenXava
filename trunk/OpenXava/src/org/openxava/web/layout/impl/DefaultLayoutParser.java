@@ -64,7 +64,7 @@ import org.openxava.web.meta.MetaEditor;
 public class DefaultLayoutParser implements ILayoutParser {
 	private static final long serialVersionUID = 1L;
 
-	private static Log LOG = LogFactory.getLog(DefaultLayoutParser.class);
+	private static Log log = LogFactory.getLog(DefaultLayoutParser.class);
 
 	private String groupLabel;
 	private List<ILayoutElement> elements;
@@ -112,14 +112,17 @@ public class DefaultLayoutParser implements ILayoutParser {
 		view.setPropertyPrefix("");
 		parseLayout(view, representsSection, propertyPrefix);
 		view.setPropertyPrefix(propertyPrefix);
-		if (LOG.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
+			log.debug(this.getClass().getName());
+		}
+		if (log.isTraceEnabled()) {
 			StringBuffer buffer = new StringBuffer("\n\n");
 			for (ILayoutElement readElement : elements) {
 				buffer.append(StringUtils.repeat("    ", readElement.getGroupLevel()) 
 						+ readElement.toString());
 				buffer.append('\n');
 			}
-			LOG.debug(buffer.toString());
+			log.trace(buffer.toString());
 		}
 		return elements;
 	}
@@ -319,7 +322,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 						}
 						
 					} catch (Exception ex) {
-						LOG.info("Sub-view not found: " + ref.getName());
+						log.info("Sub-view not found: " + ref.getName());
 					}
 			  	} else if (m instanceof MetaGroup) {
 					MetaGroup group = (MetaGroup) m;
@@ -807,7 +810,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 				containersStack.peek().setShowColumnLabel(columnIndex, true);
 			}
 		} catch (Exception ex) {
-			LOG.warn("Maybe this is a separator:" + p.getName());
+			log.warn("Maybe this is a separator:" + p.getName());
 		}
 		return returnValue;
 	}
@@ -899,7 +902,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 		}
 		if (e != null) {
 			elements.add(e);
-			LOG.trace(StringUtils.repeat("    ", e.getGroupLevel()) 
+			log.trace(StringUtils.repeat("    ", e.getGroupLevel()) 
 				+ e.toString());
 		}
 	}

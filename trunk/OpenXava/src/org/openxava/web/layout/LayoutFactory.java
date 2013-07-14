@@ -17,7 +17,7 @@ import org.openxava.util.XavaPreferences;
  *
  */
 public class LayoutFactory {
-	private static final Log LOG = LogFactory.getLog(LayoutFactory.class);
+	private static final Log log = LogFactory.getLog(LayoutFactory.class);
 	
 	/**
 	 * 
@@ -61,11 +61,11 @@ public class LayoutFactory {
 			try {
 				instance = (ILayoutParser)Class.forName(layoutParserName).newInstance();
 			} catch (ClassNotFoundException e) {
-				LOG.debug(e.getMessage());
+				log.trace(e.getMessage());
 			} catch (InstantiationException e) {
-				LOG.debug(e.getMessage());
+				log.trace(e.getMessage());
 			} catch (IllegalAccessException e) {
-				LOG.debug(e.getMessage());
+				log.trace(e.getMessage());
 			}
 		}
 		return instance;
@@ -82,11 +82,11 @@ public class LayoutFactory {
 			try {
 				instance = (ILayoutPainter)Class.forName(layoutPainterName).newInstance();
 			} catch (ClassNotFoundException e) {
-				LOG.debug(e.getMessage());
+				log.trace(e.getMessage());
 			} catch (InstantiationException e) {
-				LOG.debug(e.getMessage());
+				log.trace(e.getMessage());
 			} catch (IllegalAccessException e) {
-				LOG.debug(e.getMessage());
+				log.trace(e.getMessage());
 			}
 		}
 		return instance;
@@ -107,7 +107,7 @@ public class LayoutFactory {
 				Class.forName(layoutPainterName);
 				returnValue = true;
 			} catch (ClassNotFoundException e) {
-				LOG.debug(e.getMessage());
+				log.trace(e.getMessage());
 			}
 		}
 		return returnValue;
