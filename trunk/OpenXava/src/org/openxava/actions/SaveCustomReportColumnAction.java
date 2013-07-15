@@ -36,7 +36,8 @@ public class SaveCustomReportColumnAction extends CollectionElementViewBaseActio
 		column.setBooleanValue(booleanValue);
 		int validValuesValue = getCollectionElementView().getValueInt("validValuesValue");
 		column.setValidValuesValue(validValuesValue);
-
+		String descriptionsListValue = getCollectionElementView().getValueString("descriptionsListValue");
+		column.setDescriptionsListValue(descriptionsListValue);
 		CustomReportColumn.Order order = (CustomReportColumn.Order) getCollectionElementView().getValue("order");		
 		column.setOrder(order);	
 		

@@ -3,6 +3,7 @@ package org.openxava.actions;
 import org.openxava.model.meta.*;
 import org.openxava.session.*;
 import org.openxava.util.*;
+import org.openxava.web.*;
 
 /**
  * 
@@ -37,7 +38,7 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 			property.setQualifiedName(propertyName);
 			getView().setValue("label", property.getQualifiedLabel(Locales.getCurrent()));
 		}
-		getView().setHidden("sum", !getTab().isTotalCapable(property));   
+		getView().setHidden("sum", !getTab().isTotalCapable(property));
 		if (property.isCalculated()) {
 			hideMembers();
 			return;
@@ -50,6 +51,16 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 		
 		if (property.hasValidValues()) {
 			showValidValuesValue();
+			return;
+		}
+		
+		String descriptionsListEditorURL = WebEditors.getEditorURLDescriptionsList(
+				getTab().getTabName(), getTab().getModelName(), "${propertyKey}", 
+				-1, "", propertyName, property.getName());
+		
+		if (!Is.emptyString(descriptionsListEditorURL)) {
+			getView().putObject("xava.customReportColumnDescriptionsListEditorURL", descriptionsListEditorURL); 
+			showDescriptionsListValue();
 			return;
 		}
 				
@@ -72,6 +83,7 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 	private void showBooleanValue() {
 		getView().setHidden("comparator", true);
 		getView().setHidden("value", true);
+		getView().setHidden("descriptionsListValue", true); 
 		getView().setHidden("booleanValue", false);
 		getView().setHidden("validValuesValue", true);
 		getView().setHidden("order", false);
@@ -80,14 +92,25 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 	private void showValidValuesValue() {
 		getView().setHidden("comparator", true);
 		getView().setHidden("value", true);
+		getView().setHidden("descriptionsListValue", true); 
 		getView().setHidden("booleanValue", true);
 		getView().setHidden("validValuesValue", false);
+		getView().setHidden("order", false);
+	}
+	
+	private void showDescriptionsListValue() { 
+		getView().setHidden("comparator", true);
+		getView().setHidden("value", true);
+		getView().setHidden("descriptionsListValue", false); 
+		getView().setHidden("booleanValue", true);
+		getView().setHidden("validValuesValue", true);
 		getView().setHidden("order", false);
 	}	
 
 	private void hideMembers() {
 		getView().setHidden("comparator", true);
 		getView().setHidden("value", true);
+		getView().setHidden("descriptionsListValue", true); 
 		getView().setHidden("booleanValue", true);
 		getView().setHidden("validValuesValue", true);
 		getView().setHidden("order", true);
@@ -97,6 +120,7 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 	private void showStandardMembers() {
 		getView().setHidden("comparator", false);
 		getView().setHidden("value", false);			
+		getView().setHidden("descriptionsListValue", true); 
 		getView().setHidden("booleanValue", true);
 		getView().setHidden("validValuesValue", true);
 		getView().setHidden("order", false);

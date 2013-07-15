@@ -45,16 +45,28 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertNotExists("order");
+		assertNotExists("descriptionsListValue");  
+		assertNotExists("booleanValue"); 
+		assertNotExists("validValuesValue"); 
+		
 		setValue("name", "number");
 		assertValue("label", "Number"); 
 		assertExists("comparator");
 		assertExists("value");
 		assertExists("order");
+		assertNotExists("descriptionsListValue"); 
+		assertNotExists("booleanValue"); 
+		assertNotExists("validValuesValue"); 
+		
 		setValue("name", "calculated");
 		assertValue("label", "Calculated"); 
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertNotExists("order");
+		assertNotExists("descriptionsListValue"); 
+		assertNotExists("booleanValue"); 
+		assertNotExists("validValuesValue"); 
+		
 		execute("Collection.hideDetail");
 		
 		execute("CustomReport.removeColumn", "row=1,viewObject=xava_view_columns");
@@ -151,7 +163,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		execute("CustomReport.saveColumn");
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "Name");
-		assertValueInCollection("columns", 0, 1, "starts");
+		assertValueInCollection("columns", 0, 1, "starts"); 
 		assertValueInCollection("columns", 0, 2, "c");
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 1, 1, "");
@@ -204,7 +216,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		setValue("order", "1"); // DESCENDING
 		execute("CustomReport.saveColumn");
 		assertValueInCollection("columns", 1, 0, "Number");
-		assertValueInCollection("columns", 1, 1, "");
+		assertValueInCollection("columns", 1, 1, ""); 
 		assertValueInCollection("columns", 1, 2, "");
 		assertValueInCollection("columns", 1, 3, "Descending");
 		execute("CustomReport.generatePdf");		

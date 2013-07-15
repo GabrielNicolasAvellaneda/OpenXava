@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created on 21/08/2009
- * @autor Ana Andres
+ * @author Ana Andres
  */
 public class DescriptionsLists {
 	

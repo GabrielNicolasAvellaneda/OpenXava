@@ -210,7 +210,7 @@ public class DescriptionsCalculator implements ICalculator {
 		return keyPropertiesCollection;
 	}
 		
-	public void setKeyProperty(String keyProperty) {		
+	public void setKeyProperty(String keyProperty) {	
 		this.keyProperty = keyProperty;		
 		metaTab = null;
 	}

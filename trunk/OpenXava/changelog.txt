@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Combos for @DescriptionsList references in 'My reports'.
+- New layout engine improved again, though it's not activated by default it's almost ready for production.
 - Fix: reference.jsp left an open tag when using alternate renderer.
 - Fix: descriptionsEditor.jsp had a no terminated input tag. 
 - The default value for comparators in 'My reports' is '=' or 'starts with'. 
