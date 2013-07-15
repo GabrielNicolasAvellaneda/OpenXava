@@ -218,5 +218,9 @@
 	<editor url="customReportColumnValidValuesValueEditor.jsp">
 		<for-model-property model="CustomReportColumn" property="validValuesValue" />	
 	</editor>
+	
+	<editor url="customReportColumnDescriptionsListValueEditor.jsp">
+		<for-model-property model="CustomReportColumn" property="descriptionsListValue" />	
+	</editor>
 												
 </editors>

@@ -23,6 +23,7 @@ public class CustomReportColumn implements java.io.Serializable {
 	private final static String VALUE ="value";
 	private final static String BOOLEAN_VALUE = "booleanValue";
 	private final static String VALID_VALUES_VALUE = "validValuesValue";
+	private final static String DESCRIPTIONS_LIST_VALUE = "descriptionsListValue"; 
 	private final static String CALCULATED = "calculated";
 	private final static String ORDER = "order";
 	private final static String SUM = "sum"; 
@@ -46,6 +47,8 @@ public class CustomReportColumn implements java.io.Serializable {
 		
 	private int validValuesValue; 
 	
+	private String descriptionsListValue; 
+	
 	@Hidden
 	private boolean calculated;
 	
@@ -66,7 +69,7 @@ public class CustomReportColumn implements java.io.Serializable {
 
 	
 	public String getComparator() {
-		if (booleanValue != null || validValuesValue > 0) return org.openxava.tab.Tab.EQ_COMPARATOR; 				
+		if (booleanValue != null || validValuesValue > 0 || !Is.emptyString(descriptionsListValue)) return org.openxava.tab.Tab.EQ_COMPARATOR;
 		return comparator;
 	}
 
@@ -81,6 +84,9 @@ public class CustomReportColumn implements java.io.Serializable {
 		if (validValuesValue > 0) {
 			return getReport().getMetaModel().getMetaProperty(getName()).getValidValueLabel(getValidValuesIndex()); 
 		}
+		if (!Is.emptyString(descriptionsListValue)) {
+			return descriptionsListValue.split("::")[1];
+		}
 		return value;
 	}
 	
@@ -91,6 +97,9 @@ public class CustomReportColumn implements java.io.Serializable {
 		}		
 		if (validValuesValue > 0) {			
 			return Integer.toString(getValidValuesIndex()); 
+		}
+		if (!Is.emptyString(descriptionsListValue)) {
+			return descriptionsListValue.split("::")[0];
 		}
 		return value;
 	}
@@ -155,6 +164,8 @@ public class CustomReportColumn implements java.io.Serializable {
 		if (booleanValue != null) preferences.putBoolean(COLUMN + index + "." + BOOLEAN_VALUE, booleanValue);
 		else preferences.remove(COLUMN + index + "." + BOOLEAN_VALUE);
 		preferences.putInt(COLUMN + index + "." + VALID_VALUES_VALUE, validValuesValue);
+		if (descriptionsListValue != null) preferences.put(COLUMN + index + "." + DESCRIPTIONS_LIST_VALUE, descriptionsListValue);
+		else preferences.remove(COLUMN + index + "." + DESCRIPTIONS_LIST_VALUE);
 		preferences.putBoolean(COLUMN + index + "." + CALCULATED, calculated);
 		if (order != null) preferences.put(COLUMN + index + "." + ORDER, order.name());
 		else preferences.remove(COLUMN + index + "." + ORDER);
@@ -171,6 +182,7 @@ public class CustomReportColumn implements java.io.Serializable {
 		String booleanValue = preferences.get(COLUMN + index + "." + BOOLEAN_VALUE, null);
 		this.booleanValue = booleanValue == null?null:new Boolean(booleanValue);
 		validValuesValue = preferences.getInt(COLUMN + index + "." + VALID_VALUES_VALUE, 0);
+		descriptionsListValue = preferences.get(COLUMN + index + "." + DESCRIPTIONS_LIST_VALUE, null);
 		calculated = preferences.getBoolean(COLUMN + index + "." + CALCULATED, false);		
 		String order = preferences.get(COLUMN + index + "." + ORDER, null); 
 		this.order =  order == null?null:Order.valueOf(order);
@@ -193,6 +205,14 @@ public class CustomReportColumn implements java.io.Serializable {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getDescriptionsListValue() {
+		return descriptionsListValue;
+	}
+
+	public void setDescriptionsListValue(String descriptionsListValue) {
+		this.descriptionsListValue = descriptionsListValue;
 	}
 	
 	
