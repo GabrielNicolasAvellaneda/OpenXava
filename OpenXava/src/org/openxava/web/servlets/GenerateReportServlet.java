@@ -236,7 +236,7 @@ public class GenerateReportServlet extends HttpServlet {
 
 	private String getFileName(Tab tab) { 
 		String now = new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date());
-		return tab.getModelName() + "-list_" + now;
+		return tab.getTitle() + " " + now;
 	}
 
 	private Object getTotal(HttpServletRequest request, Tab tab, String totalProperty) {
