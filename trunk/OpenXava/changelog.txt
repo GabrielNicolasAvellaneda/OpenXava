@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Report file name for 'Generate PDF', 'Excel' and 'My reports' is the report title.
 - Combos for @DescriptionsList references in 'My reports'.
 - New layout engine improved again, though it's not activated by default it's almost ready for production.
 - Fix: reference.jsp left an open tag when using alternate renderer.
