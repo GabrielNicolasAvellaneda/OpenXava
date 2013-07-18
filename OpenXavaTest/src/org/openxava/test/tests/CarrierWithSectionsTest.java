@@ -185,6 +185,72 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		execute("CustomReport.remove", "xava.keyProperty=name");
 	}
 	
+	public void testCustomReportWithHiddenProperties() throws Exception { 
+		execute("ExtendedPrint.myReports");
+		setValue("name", "Carriers of zone 2");
+		assertCollectionRowCount("columns", 3);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 2, 0, "Name");
+		
+		execute("Collection.new", "viewObject=xava_view_columns");
+		setValue("name", "warehouse.zoneNumber");
+		setValue("value", "2");
+		setValue("hidden", "true");
+		execute("CustomReport.saveColumn");
+
+		assertCollectionRowCount("columns", 4);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 2, 0, "Name");
+		assertValueInCollection("columns", 3, 0, "Zone of Warehouse");
+		assertValueInCollection("columns", 3, 1, "=");
+		assertValueInCollection("columns", 3, 2, "2");
+		assertValueInCollection("columns", 3, 5, "Yes");
+		
+		execute("CustomReport.columnUp", "row=3,viewObject=xava_view_columns");
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 2, 0, "Zone of Warehouse");
+		assertValueInCollection("columns", 2, 1, "=");
+		assertValueInCollection("columns", 2, 2, "2");
+		assertValueInCollection("columns", 2, 5, "Yes");
+		assertValueInCollection("columns", 3, 0, "Name");
+
+		execute("CustomReport.generatePdf");
+
+		assertPopupPDFLinesCount(5); // Instead of 9, because of warehouse.zoneNumber = 1 and name like 'c%' condition 
+		assertPopupPDFLine(1, "Carriers of zone 2");
+		assertPopupPDFLine(2, "Calculated Number Name");  
+		assertPopupPDFLine(3, "TR 5 Cinco");
+		
+		execute("ExtendedPrint.myReports");
+		assertCollectionRowCount("columns", 4);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 2, 0, "Zone of Warehouse");
+		assertValueInCollection("columns", 2, 1, "=");
+		assertValueInCollection("columns", 2, 2, "2");
+		assertValueInCollection("columns", 2, 5, "Yes");
+		assertValueInCollection("columns", 3, 0, "Name");
+		
+		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		assertValue("hidden", "true");
+		closeDialog();
+		
+		execute("CustomReport.generateExcel");
+		assertContentTypeForPopup("text/x-csv");		
+		StringTokenizer excel = new StringTokenizer(getPopupText(), "\n\r");
+		String header = excel.nextToken();
+		assertEquals("header", "Calculated;Number;Name", header);		
+		String line1 = excel.nextToken();
+		assertEquals("line1", "\"TR\";5;\"Cinco\"", line1);
+		assertTrue("Only one line must be generated", !excel.hasMoreTokens());		
+
+		execute("ExtendedPrint.myReports");
+		execute("CustomReport.remove", "xava.keyProperty=name");		
+	}
+	
 	public void testCustomReportFilteringByExactStringAndOrdering() throws Exception {
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 2, 0, "Name");
@@ -238,7 +304,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		excel.nextToken(); excel.nextToken(); excel.nextToken();// Lines 2, 3, 4
 		String line5 = excel.nextToken();
 		assertEquals("line5", "\"TR\";1;\"UNO\"", line5);
-		assertTrue("Only five lines must have generated", !excel.hasMoreTokens());		
+		assertTrue("Only five lines must be generated", !excel.hasMoreTokens());		
 		
 		execute("ExtendedPrint.myReports"); 
 		execute("CustomReport.remove", "xava.keyProperty=name"); 				

@@ -27,6 +27,7 @@ public class CustomReportColumn implements java.io.Serializable {
 	private final static String CALCULATED = "calculated";
 	private final static String ORDER = "order";
 	private final static String SUM = "sum"; 
+	private final static String HIDDEN = "hidden"; 
 	
 	@Hidden
 	private CustomReport report;
@@ -58,6 +59,8 @@ public class CustomReportColumn implements java.io.Serializable {
 	private Order order;
 	
 	private boolean sum; 
+	
+	private boolean hidden; 
 	
 	public String getName() {
 		return name;
@@ -170,6 +173,7 @@ public class CustomReportColumn implements java.io.Serializable {
 		if (order != null) preferences.put(COLUMN + index + "." + ORDER, order.name());
 		else preferences.remove(COLUMN + index + "." + ORDER);
 		preferences.put(COLUMN + index + "." + SUM, Boolean.toString(sum));
+		preferences.put(COLUMN + index + "." + HIDDEN, Boolean.toString(hidden)); 
 	}
 
 	public boolean load(Preferences preferences, int index) {
@@ -188,6 +192,8 @@ public class CustomReportColumn implements java.io.Serializable {
 		this.order =  order == null?null:Order.valueOf(order);
 		String sum = preferences.get(COLUMN + index + "." + SUM, null);
 		this.sum = sum == null?false:Boolean.valueOf(sum);
+		String hidden = preferences.get(COLUMN + index + "." + HIDDEN, null);
+		this.hidden = hidden == null?false:Boolean.valueOf(hidden);
 		return true;
 	}
 
@@ -213,6 +219,14 @@ public class CustomReportColumn implements java.io.Serializable {
 
 	public void setDescriptionsListValue(String descriptionsListValue) {
 		this.descriptionsListValue = descriptionsListValue;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 	
 	

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Hidden columns in 'My reports', they can be used for filtering and ordering but are not shown in the report. 
 - Report file name for 'Generate PDF', 'Excel' and 'My reports' is the report title.
 - Combos for @DescriptionsList references in 'My reports'.
 - New layout engine improved again, though it's not activated by default it's almost ready for production.

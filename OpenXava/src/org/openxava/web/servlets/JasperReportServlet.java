@@ -20,11 +20,8 @@ public class JasperReportServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {
-			String model = request.getParameter("model");
 			String language = request.getParameter("language");
-			String tab = request.getParameter("tab");
-			String properties = request.getParameter("properties");
-			String totalProperties = request.getParameter("totalProperties"); 			
+			String columnCountLimit = request.getParameter("columnCountLimit"); 
 			
 			ServletContext application = request.getSession().getServletContext();		
 									
@@ -33,7 +30,7 @@ public class JasperReportServlet extends HttpServlet {
 					System.getProperty("path.separator") + 
 					application.getRealPath("/WEB-INF/classes/")
 					);											
-			JasperCompileManager.compileReportToStream(getReportStream(request, response, model, language, tab, properties, totalProperties), response.getOutputStream());
+			JasperCompileManager.compileReportToStream(getReportStream(request, response, language, columnCountLimit), response.getOutputStream()); 
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -41,11 +38,15 @@ public class JasperReportServlet extends HttpServlet {
 		}		
 	}
 	
-	private InputStream getReportStream(HttpServletRequest request, HttpServletResponse response, String model, String language, String tab, String properties, String totalProperties) throws IOException, ServletException {
+	private InputStream getReportStream(HttpServletRequest request, HttpServletResponse response, String language, String columnCountLimit) throws IOException, ServletException { 
 		StringBuffer suri = new StringBuffer();
 		suri.append("/xava/jasperReport");		
 		suri.append(".jsp?language="); 
 		suri.append(language);
+		if (columnCountLimit != null) {
+			suri.append("&columnCountLimit="); 
+			suri.append(columnCountLimit);			
+		}
 		return Servlets.getURIAsStream(request, response, suri.toString(), XSystem.getEncoding());
 	}
 		
