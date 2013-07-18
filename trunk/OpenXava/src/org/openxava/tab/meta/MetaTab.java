@@ -11,6 +11,7 @@ import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
+import org.openxava.view.meta.*;
 
 /**
  * 

@@ -5,6 +5,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
+<%@ page import="java.util.Collection" %> 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
@@ -50,21 +51,35 @@ private String getAlign(MetaProperty p) throws Exception {
 	return align;
 }
 
+private Collection getMetaProperties(Tab tab, Integer columnCountLimit) { 
+	if (columnCountLimit == null) return tab.getMetaProperties();
+	Collection result = new java.util.ArrayList();
+	int c = 0;
+	for (MetaProperty p: tab.getMetaProperties()) {
+		if (++c > columnCountLimit) break; 
+		result.add(p);
+	}	
+	return result;
+}
 %>
 
 <%
 Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
 String reportName = Strings.change(tab.getModelName(), ".", "_"); 
-java.util.Collection totalProperties = tab.getTotalPropertiesNames();  		
+Collection totalProperties = tab.getTotalPropertiesNames();  		
 		 
 String language = request.getParameter("language");
 if (language == null) language = org.openxava.util.Locales.getCurrent().getDisplayLanguage();
 language = language == null?request.getLocale().getDisplayLanguage():language;
 java.util.Locale locale = new java.util.Locale(language, "");
+String scolumnCountLimit = request.getParameter("columnCountLimit");
+Integer columnCountLimit = scolumnCountLimit == null?null:Integer.parseInt(scolumnCountLimit);
+
+Collection metaProperties = getMetaProperties(tab, columnCountLimit);
 
 int columnsSeparation = 10;
-Iterator it = tab.getMetaProperties().iterator();
-int [] widths = new int[tab.getMetaProperties().size()];
+Iterator it = metaProperties.iterator(); 
+int [] widths = new int[metaProperties.size()]; 
 int totalWidth = 0;
 int i=0;
 while (it.hasNext()) {
@@ -153,7 +168,7 @@ else {
 	<parameter name="Organization" class="java.lang.String"/>
 	<parameter name="Date" class="java.lang.String"/>
 	<%
-	it = tab.getMetaProperties().iterator();
+	it = metaProperties.iterator(); 
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();				
 		if (totalProperties.contains(p.getQualifiedName())) {				 
@@ -165,7 +180,7 @@ else {
 	%>	
 		
 	<%
-	it = tab.getMetaProperties().iterator();
+	it = metaProperties.iterator(); 
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
 	%>
@@ -313,7 +328,7 @@ else {
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
 <%
-it = tab.getMetaProperties().iterator();
+it = metaProperties.iterator(); 
 int x = 0;
 i=0;
 while (it.hasNext()) {			
@@ -366,7 +381,7 @@ while (it.hasNext()) {
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
 <%
-it = tab.getMetaProperties().iterator();
+it = metaProperties.iterator(); 
 x = 0;
 i=0;
 while (it.hasNext()) {			
@@ -496,7 +511,7 @@ while (it.hasNext()) {
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
 <%
-it = tab.getMetaProperties().iterator();
+it = metaProperties.iterator(); 
 x = 0;
 i=0;
 while (it.hasNext()) {			

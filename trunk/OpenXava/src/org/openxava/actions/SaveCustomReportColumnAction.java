@@ -40,9 +40,10 @@ public class SaveCustomReportColumnAction extends CollectionElementViewBaseActio
 		column.setDescriptionsListValue(descriptionsListValue);
 		CustomReportColumn.Order order = (CustomReportColumn.Order) getCollectionElementView().getValue("order");		
 		column.setOrder(order);	
-		
 		Boolean sum = (Boolean) getCollectionElementView().getValue("sum");
 		column.setSum(sum==null?false:sum);
+		Boolean hidden = (Boolean) getCollectionElementView().getValue("hidden");
+		column.setHidden(hidden==null?false:hidden);		
 		
 		if (getCollectionElementView().getCollectionEditingRow() < 0) {
 			if (alreadyExists(columnName)) {

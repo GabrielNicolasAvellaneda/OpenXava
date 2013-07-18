@@ -35,7 +35,7 @@ public class CustomReport implements java.io.Serializable {
 	@AsEmbedded 
 	@SaveAction("CustomReport.saveColumn")
 	@EditAction("CustomReport.editColumn")
-	@ListProperties("label, comparator, value, order, sum")
+	@ListProperties("label, comparator, value, order, sum, hidden") 
 	private List<CustomReportColumn> columns;
 	
 	private String rootNodeName;

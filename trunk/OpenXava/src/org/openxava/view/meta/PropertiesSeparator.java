@@ -3,6 +3,7 @@ package org.openxava.view.meta;
 
 
 import org.openxava.model.meta.*;
+import org.openxava.util.*;
 
 /**
  * It's used in a property collection for
@@ -30,5 +31,5 @@ public class PropertiesSeparator extends MetaProperty {
 	public String getLabel() {
 		return "";
 	}
-
+	
 }
