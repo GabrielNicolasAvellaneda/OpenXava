@@ -40,7 +40,9 @@ function closeHandler(cal) {
     }
   }
 //  cal.destroy();
+  _dynarch_popupCalendar.sel.focus(); 
   _dynarch_popupCalendar = null;
+  
 }
 
 // This function shows the calendar under the element having the given id.
@@ -75,8 +77,6 @@ function showCalendar(id, format, showsTime, showsOtherMonths) {
   // triggers the calendar.  In this example we align the calendar bottom-right
   // to the button.
   _dynarch_popupCalendar.showAtElement(el.nextSibling, openxava.calendarAlign); // show the calendar
-
-  return false;
 }
 
 var MINUTE = 60 * 1000;

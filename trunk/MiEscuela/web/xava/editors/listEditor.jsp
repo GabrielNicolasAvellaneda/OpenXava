@@ -308,9 +308,19 @@ while (it.hasNext()) {
 		+ "&idConditionValueTo=" + idConditionValueTo;
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
-<input id="<%=idConditionValue%>" name="<%=idConditionValue%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>" placeholder="<%=labelFrom%>"/>
-<input id="<%=idConditionValueTo%>" name="<%=idConditionValueTo%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=valueTo%>" placeholder="<%=labelTo%>" style="<%=styleConditionValueTo%>"/>
-	<%
+<nobr>  
+<input id="<%=idConditionValue%>" name="<%=idConditionValue%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>" placeholder="<%=labelFrom%>"/><% if (isDate) { %><a href="javascript:showCalendar('<%=idConditionValue%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>')"><img	
+	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
+	style='vertical-align: middle;'/></a>
+<% } %>
+</nobr>
+<nobr>
+<input id="<%=idConditionValueTo%>" name="<%=idConditionValueTo%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=valueTo%>" placeholder="<%=labelTo%>" style="<%=styleConditionValueTo%>"/><% if (isDate) { %><a style="<%=styleConditionValueTo%>" href="javascript:showCalendar('<%=idConditionValueTo%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>')"><img	
+	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
+	style='vertical-align: middle;'/></a>
+<% } %>
+</nobr>
+	<%			
 		}
 	%>
 </div>	

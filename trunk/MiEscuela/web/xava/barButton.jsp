@@ -11,6 +11,8 @@
 boolean showImages = style.isShowImageInButtonBarButton();
 boolean showLabels = !showImages?true:XavaPreferences.getInstance().isShowLabelsForToolBarActions();
 String actionName = request.getParameter("action");
+String addSpaceWithoutImage = request.getParameter("addSpaceWithoutImage");
+boolean addSpace = "true".equals(addSpaceWithoutImage);
 if (!Is.emptyString(actionName)) {
 	MetaAction action = MetaControllers.getMetaAction(request.getParameter("action"));
 	String argv = request.getParameter("argv");
@@ -28,10 +30,15 @@ if (!Is.emptyString(actionName)) {
 		%>
 		<% if (showImage) { %>
 		<span style="padding:4px; background: url(<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=action.getImage()%>) no-repeat 5px 50%;">				
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</span>		
-		<% } %>
-		<% if (showLabel) { %>			 				 			
+		<% } else if(addSpace) {%>
+		<span style="padding:4px;">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</span>
+		<%
+		}
+		if (showLabel) { %>			 				 			
 		<%=label%>
 		<% } %>		
 	</xava:link>

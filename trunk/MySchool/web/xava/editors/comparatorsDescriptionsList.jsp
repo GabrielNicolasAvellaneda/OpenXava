@@ -16,12 +16,11 @@
 <%@ page import="org.openxava.formatters.IFormatter" %>
 
 <%
-String value = request.getParameter("value");
 String propertyKey = request.getParameter("propertyKey");
 int index = Integer.parseInt(request.getParameter("index"));
 String prefix = request.getParameter("prefix");
 if (prefix == null) prefix = "";
-
+String value = index < 0?(String) request.getAttribute(propertyKey + ".fvalue"):request.getParameter("value"); 
 IFormatter formatter = null;
 String descriptionsFormatterClass=request.getParameter("descriptionsFormatter");
 if (descriptionsFormatterClass == null) {
@@ -82,11 +81,22 @@ calculator.setOrderByKey(orderByKey);
 
 java.util.Collection descriptions = calculator.getDescriptions();
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
+boolean filterOnChange = org.openxava.util.XavaPreferences.getInstance().isFilterOnChange();
+String collection = request.getParameter("collection"); 
+String collectionArgv = Is.emptyString(collection)?"":"collection="+collection;
 %>
 <input type="hidden" name="<xava:id name='<%=prefix  + "conditionComparator."  + index%>'/>" value="<%=Tab.EQ_COMPARATOR%>">
 <input type="hidden" name="<xava:id name='<%=prefix  + "conditionValueTo."  + index%>'/>" >
+<% if (index < 0) { %>
+<select id="<%=propertyKey%>" name="<%=propertyKey%>" tabindex="1" class=<%=style.getEditor()%>>
+<% } else {  %>
+<select name="<xava:id name='<%=prefix + "conditionValue." + index%>'/>" class=<%=style.getEditor()%>
+<% if(filterOnChange) { %>
+	onchange="openxava.executeAction('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '', false, 'List.filter','<%=collectionArgv%>')"
+<% } %>
+>
 
-<select name="<xava:id name='<%=prefix + "conditionValue." + index%>'/>" class=<%=style.getEditor()%>>
+<% } %>
 	<option value=""></option>
 <%
 	java.util.Iterator it = descriptions.iterator();
@@ -95,12 +105,14 @@ MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 		KeyAndDescription cl = (KeyAndDescription) it.next();	
 		String selected = "";
 		String description = formatter==null?cl.getDescription().toString():formatter.format(request, cl.getDescription());
-		if (Is.equalAsStringIgnoreCase(value, cl.getKey())) {
+		// Intead of asking index < 0 it would better to use a specific parameter such as descriptionInKey or so
+		Object key =index < 0?cl.getKey() + "::" + description:cl.getKey();
+		if (Is.equalAsStringIgnoreCase(value, key)) {
 			selected = "selected"; 
 			selectedDescription = description;
 		} 		
 %>
-	<option value="<%=cl.getKey()%>" <%=selected%>><%=description%></option>
+	<option value="<%=key%>" <%=selected%>><%=description%></option>
 <%
 	} // del while
 %>

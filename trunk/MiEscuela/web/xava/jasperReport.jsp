@@ -5,6 +5,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
+<%@ page import="java.util.Collection" %> 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
@@ -13,12 +14,12 @@
 <%@ page import="org.openxava.util.Strings" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.tab.meta.MetaTab" %>
+<%@ page import="org.openxava.tab.Tab"%> 
 <%@ page import="org.openxava.component.MetaComponent" %>
 <%@ page import="org.openxava.model.meta.MetaModel" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.util.XSystem"%>
 <%@ page import="org.openxava.util.XavaPreferences"%>
-
 
 <%!
 
@@ -50,40 +51,40 @@ private String getAlign(MetaProperty p) throws Exception {
 	return align;
 }
 
+private Collection getMetaProperties(Tab tab, Integer columnCountLimit) { 
+	if (columnCountLimit == null) return tab.getMetaProperties();
+	Collection result = new java.util.ArrayList();
+	int c = 0;
+	for (MetaProperty p: tab.getMetaProperties()) {
+		if (++c > columnCountLimit) break; 
+		result.add(p);
+	}	
+	return result;
+}
 %>
 
 <%
-String modelName = request.getParameter("model");
-String reportName = Strings.change(modelName, ".", "_");
-MetaModel metaModel = MetaModel.get(modelName);
-String tabName = request.getParameter("tab");
-MetaTab tab = null;
-if (tabName.startsWith(org.openxava.tab.Tab.COLLECTION_PREFIX)) {
-	tab = MetaTab.createDefault(metaModel);
-}
-else {
-	MetaComponent component = metaModel.getMetaComponent();
-	tab = component.getMetaTab(tabName);
-}
-String propertiesNames = request.getParameter("properties");
-if (!Is.emptyString(propertiesNames)) {
-	tab = tab.cloneMetaTab();
-	tab.setPropertiesNames(propertiesNames);
-}
-java.util.Set totalProperties = Strings.toSet(request.getParameter("totalProperties"));
+Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
+String reportName = Strings.change(tab.getModelName(), ".", "_"); 
+Collection totalProperties = tab.getTotalPropertiesNames();  		
+		 
 String language = request.getParameter("language");
 if (language == null) language = org.openxava.util.Locales.getCurrent().getDisplayLanguage();
 language = language == null?request.getLocale().getDisplayLanguage():language;
 java.util.Locale locale = new java.util.Locale(language, "");
+String scolumnCountLimit = request.getParameter("columnCountLimit");
+Integer columnCountLimit = scolumnCountLimit == null?null:Integer.parseInt(scolumnCountLimit);
 
-int columnsSeparation = 10; 
-Iterator it = tab.getMetaProperties().iterator();
-int [] widths = new int[tab.getMetaProperties().size()];
+Collection metaProperties = getMetaProperties(tab, columnCountLimit);
+
+int columnsSeparation = 10;
+Iterator it = metaProperties.iterator(); 
+int [] widths = new int[metaProperties.size()]; 
 int totalWidth = 0;
 int i=0;
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
-	String label = p.getLabel(locale);	
+	String label = p.getLabel(locale);
 	widths[i]=Math.max(p.getSize(), label.length());
 	totalWidth+=widths[i];
 	i++;
@@ -167,7 +168,7 @@ else {
 	<parameter name="Organization" class="java.lang.String"/>
 	<parameter name="Date" class="java.lang.String"/>
 	<%
-	it = tab.getMetaProperties().iterator();
+	it = metaProperties.iterator(); 
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();				
 		if (totalProperties.contains(p.getQualifiedName())) {				 
@@ -179,7 +180,7 @@ else {
 	%>	
 		
 	<%
-	it = tab.getMetaProperties().iterator();
+	it = metaProperties.iterator(); 
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
 	%>
@@ -327,7 +328,7 @@ else {
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
 <%
-it = tab.getMetaProperties().iterator();
+it = metaProperties.iterator(); 
 int x = 0;
 i=0;
 while (it.hasNext()) {			
@@ -380,7 +381,7 @@ while (it.hasNext()) {
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
 <%
-it = tab.getMetaProperties().iterator();
+it = metaProperties.iterator(); 
 x = 0;
 i=0;
 while (it.hasNext()) {			
@@ -510,7 +511,7 @@ while (it.hasNext()) {
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
 <%
-it = tab.getMetaProperties().iterator();
+it = metaProperties.iterator(); 
 x = 0;
 i=0;
 while (it.hasNext()) {			
