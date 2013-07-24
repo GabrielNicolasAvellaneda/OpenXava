@@ -210,10 +210,12 @@ if (!frame) while (itActions.hasNext()) {
 <% if (!composite) { %>
 </span>
 <% }
-if (!LayoutFactory.rendererDefined()) {%>
-<%=postEditor%>
-<%}
-if (!onlyEditor && labelFormat == MetaPropertyView.SMALL_LABEL) { %>
-</td></tr>
-</table>
-<% } %>
+if (!onlyEditor) {
+	if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
+		</td></tr>
+		</table>
+<%  }%>
+	<%=postEditor%>
+<%}%>
+
+

@@ -295,7 +295,7 @@ openxava.initLists = function(application, module) {
 		}
 	});				
 	openxava.setListsSize(application, module, "list", 1);	
-	openxava.setListsSize(application, module, "collection", 0.95);
+	openxava.setListsSize(application, module, "collection", openxava.collectionWidthRatio);	
 }
 
 openxava.setListsSize = function(application, module, type, percentage) {
@@ -644,6 +644,7 @@ openxava.clearConditionValuesTo = function(application, module, prefix) {
 		element.value = '';
 		element.style.display='none';
 		element = form.elements[elementName + (++i)];
+		$(element).next().hide();
 	}
 }
 
@@ -774,11 +775,11 @@ openxava.hideFrame = function(id) {
 openxava.onChangeComparator = function(id,idConditionValue,idConditionValueTo,labelFrom) {
 	var comparator = openxava.getFormValue(document.getElementById(id));
 	if ("range_comparator" == comparator){
-		document.getElementById(idConditionValueTo).style.display='inline';
+		$('#' + idConditionValueTo).show().next().show();
 		document.getElementById(idConditionValue).placeholder = labelFrom;
 	}
 	else{
-		document.getElementById(idConditionValueTo).style.display='none';
+		$('#' + idConditionValueTo).hide().next().hide();
 		document.getElementById(idConditionValue).placeholder = "";
 	}
 }
@@ -805,4 +806,23 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 		value = value + "[" + cb + row + "]";
 	}
 	openxava.deselected[index] = value;
+}
+
+openxava.subcontroller = function(id,idContainer,idButton,idImage,idA){
+	$('#'+id).css('display','inline');
+	var a = $('#'+idA);
+	var h = $('#'+idButton).height();	
+	var f = a.position();
+	$('#'+id).css({ 
+		'top': f.top + h,
+		'left': f.left + 4
+	});
+	// 
+	$('#'+idImage).fadeTo("fast",0.3);
+	$('#'+idButton).addClass('ox-subcontroller-select');
+	$('#'+idContainer).mouseleave(function(){
+		$('#'+id).css('display','none');
+		$('#'+idButton).removeClass('ox-subcontroller-select');
+		$('#'+idImage).fadeTo("fast",1);
+	});
 }

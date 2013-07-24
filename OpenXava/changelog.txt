@@ -1,34 +1,36 @@
 Change Log for OpenXava project
 ===============================
 
-- Hidden columns in 'My reports', they can be used for filtering and ordering but are not shown in the report. 
-- Report file name for 'Generate PDF', 'Excel' and 'My reports' is the report title.
-- Combos for @DescriptionsList references in 'My reports'.
-- New layout engine improved again, though it's not activated by default it's almost ready for production.
-- Fix: reference.jsp left an open tag when using alternate renderer.
-- Fix: descriptionsEditor.jsp had a no terminated input tag. 
-- The default value for comparators in 'My reports' is '=' or 'starts with'. 
-- Width ratio for collections depends on style, to better definition of custom styles. 
-- CSS class frame renamed to ox-frame.
-- New refreshAfter property in SaveAction to not refreshing from database after saving. 
-- New CSS class ox-images-gallery to define the visual style of images gallery editor.  
+OpenXava 4.8 (2013-7-23)
+------------------------
+- In controllers.xml you can define 'subcontroller' that will show a drop-down button with nested actions.
 - The user can modify the column labels in 'My reports'.
 - The columns shown in 'My reports' use the labels instead of the property names.
+- Hidden columns in 'My reports', they can be used for filtering and ordering but are not shown in the report. 
+- The default value for comparators in 'My reports' is '=' or 'starts with'. 
+- Combos for @DescriptionsList references in 'My reports'.
+- Generate Excel action available from 'My reports' dialog.
+- Summation for columns allowed for 'My reports'.
+- Report file name for 'Generate PDF', 'Excel' and 'My reports' is the report title.
+- Booleans in list and collections are rendered with a green check sign.
+- On choosing a combo in list the filtering is executed automatically (it can be deactivated with filterOnChange=false). 
+- Calendars are shown in filters for date types in list and collections. 
+- Bulgarian translation of JavaScript calendar with UTF-8 character encoding.
 - New setLabel() method in Tab to change the column labels programmatically. 
-- Fix: Labels for qualified properties in 'My reports' PDFs do not match labels in screen list.
-- Fix: Connection leaks produced in the first page load.
 - New CurrentMonthCalculator.
 - Export to excel (CSV) exports null as empty strings.
 - New MAC stereotype for MAC address.
-- Fix: Pressing ENTER in a view with a JavaScript calendar shows the calendar and does not execute the corresponding action.
-- On choosing a combo in list the filtering is executed automatically (it can be deactivated with filterOnChange=false). 
-- Generate Excel action available from 'My reports' dialog.
-- Calendars are shown in filters for date types in list and collections. 
 - New filter condition "Ends with" for list and collections.
-- Bulgarian translation of JavaScript calendar with UTF-8 character encoding.
-- Summation for columns allowed for 'My reports'.
-- Booleans in list and collections are rendered with a green check sign.
-- In controllers.xml you can define 'subcontroller' that will show a drop-down button with nested actions.
+- New layout engine improved again, though it's not activated by default it's almost ready for production.
+- New refreshAfter property in SaveAction to not refreshing from database after saving. 
+- Width ratio for collections depends on style, to better definition of custom styles. 
+- CSS class frame renamed to ox-frame.
+- New CSS class ox-images-gallery to define the visual style of images gallery editor.  
+- Fix: reference.jsp left an open tag when using alternate renderer.
+- Fix: descriptionsEditor.jsp had a no terminated input tag. 
+- Fix: Labels for qualified properties in 'My reports' PDFs do not match labels in screen list.
+- Fix: Connection leaks produced in the first page load.
+- Fix: Pressing ENTER in a view with a JavaScript calendar shows the calendar and does not execute the corresponding action.
 - Fix: Opening a dialog after adding or removing actions in list fails to show the controllers.
 
 OpenXava 4.7.1 (2013-5-28)

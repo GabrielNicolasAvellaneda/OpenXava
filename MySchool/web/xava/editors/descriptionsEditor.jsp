@@ -180,7 +180,7 @@ if (editable) {
 	} // del while
 %>
 </select>	
-<input type="hidden" name="<%=propertyKey%>__DESCRIPTION__" value="<%=selectedDescription%>">
+<input type="hidden" name="<%=propertyKey%>__DESCRIPTION__" value="<%=selectedDescription%>"/>
 <% 
 } else { 
 	Object description = "";
@@ -215,5 +215,5 @@ if (bold) { %> <b> <%}%>
 		disabled
 	/>
 <%  } %>	
-	<input type="hidden" name="<%=propertyKey%>" value="<%=fvalue%>">	
+	<input type="hidden" name="<%=propertyKey%>" value="<%=fvalue%>"/>	
 <% } %>			

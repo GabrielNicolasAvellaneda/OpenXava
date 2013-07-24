@@ -3,6 +3,8 @@
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.util.XavaPreferences"%>
 <%@ page import="org.openxava.util.Is"%>
+<%@page import="org.openxava.controller.meta.MetaSubcontroller"%>
+<%@page import="java.util.Collection"%>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -18,6 +20,8 @@ boolean headerButtonBar = !manager.isSplitMode() || mode.equals("list");
 if (manager.isButtonBarVisible()) {
 %>
 	<div class="<%=style.getButtonBar()%>">
+	<div id="controllers">
+	<span style="float: left">
 	<%
 	java.util.Iterator it = manager.getMetaActions().iterator();
 	boolean showLabels = XavaPreferences.getInstance().isShowLabelsForToolBarActions(); 
@@ -33,7 +37,28 @@ if (manager.isButtonBarVisible()) {
 		} 
 	}
 	%>
+	</span>
+	</div>
 	
+	<div id="subcontrollers">
+	<span style="float:left">	
+	<%
+			Collection<MetaSubcontroller> metaSubcontrollers = manager.getSubcontrollers();
+			for (MetaSubcontroller m : metaSubcontrollers){
+				if (m.appliesToMode(mode)){
+		%>
+		<jsp:include page="subButton.jsp">
+			<jsp:param name="controller" value="<%=m.getControllerName()%>"/>
+			<jsp:param name="image" value="<%=m.getImage()%>"/>
+		</jsp:include>
+		<%
+				}
+			}
+	%>
+	</span>
+	</div>
+	
+	<div id="modes">
 	<span style="float: right">	
 	<%
 	java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); 
@@ -115,7 +140,7 @@ if (manager.isButtonBarVisible()) {
 	%>
 	&nbsp;
 	</span>		
-
+	</div>	<!-- modes -->
 	</div>
 	
 <% } // end isButtonBarVisible %>
