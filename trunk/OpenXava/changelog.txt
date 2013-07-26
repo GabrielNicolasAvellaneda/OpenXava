@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Some labels for 'My reports' are not translated.
+
 OpenXava 4.8 (2013-7-23)
 ------------------------
 - In controllers.xml you can define 'subcontroller' that will show a drop-down button with nested actions.
