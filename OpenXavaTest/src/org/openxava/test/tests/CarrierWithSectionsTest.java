@@ -531,11 +531,23 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertCollectionRowCount("columns", 2);
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Name");
+		
+		execute("CustomReport.generatePdf");
+		execute("ExtendedPrint.myReports");
+		assertCollectionRowCount("columns", 2);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Name");		
 				
 		execute("CustomReport.removeColumn", "row=0,viewObject=xava_view_columns");
 		assertNoErrors();
 		assertCollectionRowCount("columns", 1);
 		assertValueInCollection("columns", 0, 0, "Name");
+		
+		execute("CustomReport.generatePdf");
+		execute("ExtendedPrint.myReports");
+		assertCollectionRowCount("columns", 1);
+		assertValueInCollection("columns", 0, 0, "Name");
+		execute("CustomReport.remove", "xava.keyProperty=name");
 	}
 
 		

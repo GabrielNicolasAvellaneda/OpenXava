@@ -157,7 +157,7 @@ public class CustomReportColumn implements java.io.Serializable {
 		this.order = order;
 	}
 
-	public void save(Preferences preferences, int index) {		
+	void save(Preferences preferences, int index) { 		
 		preferences.put(COLUMN + index + "." + NAME, name);
 		preferences.put(COLUMN + index + "." + LABEL, label); 
 		if (comparator != null) preferences.put(COLUMN + index + "." + COMPARATOR, comparator);
@@ -176,7 +176,7 @@ public class CustomReportColumn implements java.io.Serializable {
 		preferences.put(COLUMN + index + "." + HIDDEN, Boolean.toString(hidden)); 
 	}
 
-	public boolean load(Preferences preferences, int index) {
+	boolean load(Preferences preferences, int index) { 
 		String name = preferences.get(COLUMN + index + "." + NAME, null);
 		if (name == null) return false;
 		this.name = name;
@@ -196,6 +196,24 @@ public class CustomReportColumn implements java.io.Serializable {
 		this.hidden = hidden == null?false:Boolean.valueOf(hidden);
 		return true;
 	}
+	
+	static boolean remove(Preferences preferences, int index) { 
+		String name = preferences.get(COLUMN + index + "." + NAME, null);
+		if (name == null) return false;
+		preferences.remove(COLUMN + index + "." + NAME);		
+		preferences.remove(COLUMN + index + "." + LABEL); 
+		preferences.remove(COLUMN + index + "." + COMPARATOR);
+		preferences.remove(COLUMN + index + "." + VALUE);
+		preferences.remove(COLUMN + index + "." + BOOLEAN_VALUE);
+		preferences.remove(COLUMN + index + "." + VALID_VALUES_VALUE);
+		preferences.remove(COLUMN + index + "." + DESCRIPTIONS_LIST_VALUE);
+		preferences.remove(COLUMN + index + "." + CALCULATED);		
+		preferences.remove(COLUMN + index + "." + ORDER); 
+		preferences.remove(COLUMN + index + "." + SUM);
+		preferences.remove(COLUMN + index + "." + HIDDEN);
+		return true;
+	}
+
 
 	public boolean isSum() {
 		return sum;
@@ -228,6 +246,7 @@ public class CustomReportColumn implements java.io.Serializable {
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
 	}
+
 	
 	
 	

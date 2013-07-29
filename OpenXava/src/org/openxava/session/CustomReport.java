@@ -111,13 +111,14 @@ public class CustomReport implements java.io.Serializable {
 	}	
 	
 	public void save() throws BackingStoreException { 
-		Preferences preferences = getPreferences();		
+		Preferences preferences = getPreferences();
 		preferences.put(NAME, name);		
 		preferences.put(MODEL_NAME, getMetaModel().getName());
 		int i = 0;
 		for (CustomReportColumn column: columns) {
 			column.save(preferences, i++);
 		}
+		while (CustomReportColumn.remove(preferences, i)) i++; 		
 		preferences.flush();
 		Preferences rootPreferences = getRootPreferences();
 		rootPreferences.put(LAST_NAME, name);
