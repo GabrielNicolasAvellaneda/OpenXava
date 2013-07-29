@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Removing a property of a stored 'My reports' report does not work.
 - Fix: Some labels for 'My reports' are not translated.
 
 OpenXava 4.8 (2013-7-23)
