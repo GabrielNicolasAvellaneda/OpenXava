@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fall-back encoding now is UTF-8 (before it was ISO-8859-1), however it still tries to use the system encoding first. 
+- Fix: Incorrect encoding in the first page load. 
 - Fix: Removing a property of a stored 'My reports' report does not work.
 - Fix: Some labels for 'My reports' are not translated.
 
