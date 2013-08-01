@@ -74,7 +74,7 @@ public class XSystem {
 			else {
 				encoding = System.getProperty("ibm.system.encoding");
 				if (encoding == null) encoding = System.getProperty("file.encoding");
-				if (encoding == null) encoding = "ISO-8859-1";
+				if (encoding == null) encoding = "UTF-8"; 
 				else if ("Cp1252".equalsIgnoreCase(encoding)) encoding = "ISO-8859-1";
 				else if ("utf8".equalsIgnoreCase(encoding)) encoding = "UTF-8";
 				else if ("iso8859-1".equalsIgnoreCase(encoding)) encoding = "ISO-8859-1";
