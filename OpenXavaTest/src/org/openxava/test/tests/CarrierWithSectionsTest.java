@@ -551,7 +551,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 	}
 
 		
-	public void testCarrierSelected() throws Exception{
+	public void testCarrierSelected() throws Exception{ 
 		assertListNotEmpty();
 		execute("List.viewDetail", "row=0");
 		execute("CarrierWithSections.fellowCarriersSelected");

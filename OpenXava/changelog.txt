@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: XML component with a validator that uses 'from' fails if the view has a view property.
 - Fix: Links of several actions associated to the same property are too close.
 - Fall-back encoding now is UTF-8 (before it was ISO-8859-1), however it still tries to use the system encoding first. 
 - Fix: Incorrect encoding in the first page load. 

@@ -74,7 +74,14 @@ therefore it's show some features more advances of stereotypes.
 			<set property="limit" value="1000"/>
 			<set property="description"/>
 			<set property="unitPrice"/>
-		</validator>						
+		</validator>
+		
+		<validator class="org.openxava.test.validators.ExpensiveProductValidator">
+			<set property="limit" value="166000"/>
+			<set property="description"/>
+			<set property="unitPrice" from="unitPriceInPesetas"/> <!-- To test validator with from combined with a view property -->
+		</validator>		
+								
 		<validator class="org.openxava.test.validators.ForbiddenPriceValidator" only-on-create="true">
 			<set property="forbiddenPrice" value="555"/>
 			<set property="unitPrice"/>
@@ -82,7 +89,7 @@ therefore it's show some features more advances of stereotypes.
 	</entity> 
 	
 	<view>
-
+	
 		<property-view property="unitPrice">
 			<on-change class="org.openxava.test.actions.OnChangeProductUnitPriceAction"/>
 		</property-view>
@@ -90,7 +97,7 @@ therefore it's show some features more advances of stereotypes.
 	</view>
 	
 	<view name="WithSection">
-
+	
 		<property-view property="unitPrice">
 			<on-change class="org.openxava.test.actions.OnChangeProductUnitPriceAction"/>
 		</property-view>
@@ -98,7 +105,7 @@ therefore it's show some features more advances of stereotypes.
 		<property-view property="warehouseKey"> 
 			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
 		</property-view>
-				
+		
 		<members>
 			number;
 			<section name="data">
@@ -117,6 +124,18 @@ therefore it's show some features more advances of stereotypes.
 				
 	</view>
 	
+	<view name="WithViewProperty">	
+		<property name="ephemeralRemarks" type="String"/>
+		<members>
+			number;
+			description;
+			familyNumber;
+			subfamilyNumber;
+			warehouseKey;
+			unitPrice;
+			ephemeralRemarks;
+		</members>		
+	</view>		
 	
 	<view name="Simple">
 		<property-view property="unitPrice" editor="Money"/>
