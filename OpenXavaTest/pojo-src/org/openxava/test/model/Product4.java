@@ -20,14 +20,21 @@ import org.openxava.test.validators.*;
 
 @Entity
 @Table(name="PRODUCT")
-@View( members=
-	"#number, description, photos;" + 
-	"family, subfamily;" +
-	"warehouse, zoneOne;" +
-	"unitPrice, unitPriceInPesetas;"		
-)
+@Views({
+	@View( members=
+		"#number, description, photos;" + 
+		"family, subfamily;" +
+		"warehouse, zoneOne;" +
+		"unitPrice, unitPriceInPesetas;"		
+	),
+	@View( name="NotAligned", members=
+		"number, description, photos;" + 
+		"family, subfamily;" +
+		"warehouse, zoneOne;" +
+		"unitPrice, unitPriceInPesetas;"		
+	)	
+})
 @Tab(properties="number, description, family.description, subfamily.description")
-
 public class Product4 {
 		 
 	private long number;	

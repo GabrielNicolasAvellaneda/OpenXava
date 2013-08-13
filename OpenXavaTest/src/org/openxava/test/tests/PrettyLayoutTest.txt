@@ -5,8 +5,10 @@ at least the next cases:
  		With <reference-view reference="invoice" frame="true"/>
  		and  <reference-view reference="invoice" frame="false"/>
  		in FullInvoice view of Delivery   
- 		The problem may be in layout of bottom element (outside invoice reference)
+ 		The problem may be in layout of bottom element (outside invoice reference) 		
 - Customer: seller with relationWithSeller group
+- InvoiceAmounts, InvoiceAmountsInSection and Product4: Aligned by columns 
+- InvoiceAmountsNotAligned, InvoiceAmountsNotAlignedInSection and Product4NotAligned: Not aligned by column
 - InvoiceNestedSections2: On select the section data > details 
 	the section has not to be duplicated (it was a bug) 		
 - Invoice: Inside Liferay, buttons inside portlets
