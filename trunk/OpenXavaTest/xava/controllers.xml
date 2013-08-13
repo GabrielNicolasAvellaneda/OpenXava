@@ -49,7 +49,7 @@
 			class="org.openxava.test.actions.AddSuffixAction">
 			<set property="property" value="author"/>	
 			<set property="suffix" value=" LUCAS"/>
-		</action>				
+		</action>			
 	</controller>	
 		
 	<controller name="OrderDetail">				
