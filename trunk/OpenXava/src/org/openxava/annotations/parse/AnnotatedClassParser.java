@@ -452,17 +452,10 @@ public class AnnotatedClassParser {
 	}
 	
 	private String addMembersToView(String sectionName, String groupName, MetaView metaView, StringTokenizer st) throws XavaException {
-		boolean alignedByColumns = false;
 		StringBuffer members = new StringBuffer();
 		boolean stHasMoreTokens = st.hasMoreTokens();
 		String token = stHasMoreTokens?st.nextToken().trim():null;
-		if (token.equals("#")) {
-			metaView.setAlignedByColumns(true);
-			stHasMoreTokens = st.hasMoreTokens();
-			token = stHasMoreTokens?st.nextToken().trim():null;
-		} else {
-			metaView.setAlignedByColumns(XavaPreferences.getInstance().isAlignedByColumns());
-		}
+		boolean alignedByColumns = XavaPreferences.getInstance().isAlignedByColumns();
 		while (stHasMoreTokens) {	
 			stHasMoreTokens = st.hasMoreTokens();			
 			String nextToken = stHasMoreTokens?st.nextToken().trim():"";
@@ -522,6 +515,7 @@ public class AnnotatedClassParser {
 		if (groupName != null) throw new XavaException("group_unclosed", groupName); 		
 		if (sectionName != null) throw new XavaException("section_unclosed", sectionName);		
 		metaView.setMembersNamesNotResetSections(members.toString());
+		metaView.setAlignedByColumns(alignedByColumns); 
 		return null;
 	}
 

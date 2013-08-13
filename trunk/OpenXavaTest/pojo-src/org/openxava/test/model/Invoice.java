@@ -90,6 +90,27 @@ import org.openxava.util.*;
 			"amountsSum, vatPercentage, vat;" +
 		"]"			
 	),
+	@View(name="AmountsInSection", members=
+		"year, number;" +
+		"amounts {#" + 		
+			"customerDiscount, customerTypeDiscount, yearDiscount;" +
+			"amountsSum, vatPercentage, vat;" +
+		"}"			
+	),
+	@View(name="AmountsNotAligned", members=
+		"year, number;" +
+		"amounts [" + 		
+			"customerDiscount, customerTypeDiscount, yearDiscount;" +
+			"amountsSum, vatPercentage, vat;" +
+		"]"			
+	),	
+	@View(name="AmountsNotAlignedInSection", members=
+		"year, number;" +
+		"amounts {" + 		
+			"customerDiscount, customerTypeDiscount, yearDiscount;" +
+			"amountsSum, vatPercentage, vat;" +
+		"}"			
+	),	
 	@View(name="CustomerAsAggregateWithDeliveryPlaces", members=
 		"year, number, date, paid;" +
 		"customer"
