@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Floats and doubles are truncated on display.
 - Fix: # in groups and sections to align by columns does not work.
 - Fix: XML component with a validator that uses 'from' fails if the view has a view property.
 - Fix: Links of several actions associated to the same property are too close.
