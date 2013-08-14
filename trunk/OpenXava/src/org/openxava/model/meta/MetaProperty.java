@@ -1018,11 +1018,12 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
 				return value.toString();
 			}
-			if (Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
-				return NumberFormat.getNumberInstance(locale).format(value);
-			}
-			if (Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
-				return NumberFormat.getNumberInstance(locale).format(value);
+			if (Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type) ||
+				Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) 
+			{
+				NumberFormat nf = NumberFormat.getNumberInstance(locale);
+				nf.setMaximumFractionDigits(getScale()); 
+				return nf.format(value);
 			}
 			if (BigInteger.class.isAssignableFrom(type)) {
 				NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
