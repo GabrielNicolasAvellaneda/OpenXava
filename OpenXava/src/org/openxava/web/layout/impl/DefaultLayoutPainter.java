@@ -767,6 +767,10 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (view.getViewObject() == null) {
 			view.setViewObject("xava_view");
 		}
+		if (sectionView != null && !Is.emptyString(sectionView.getViewObject())) {
+			ModuleContext context = (ModuleContext) getRequest().getSession().getAttribute("context");
+			context.put(getRequest(), sectionView.getViewObject(), sectionView);
+		}
 		attributes.clear();
 		attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 		attributes.put(ATTR_CELL_SPACING, "0");
