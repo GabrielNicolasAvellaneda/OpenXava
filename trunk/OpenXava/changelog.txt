@@ -9,6 +9,9 @@ Change Log for OpenXava project
 - Fix: Incorrect encoding in the first page load. 
 - Fix: Removing a property of a stored 'My reports' report does not work.
 - Fix: Some labels for 'My reports' are not translated.
+- Fix: Bug 363. New renderer failed to align by columns in section.
+- Fix: Some groups or properties overflowed the view.
+- OpenXavaTest now includes selenium tests for visual testing of views. 
 
 OpenXava 4.8 (2013-7-23)
 ------------------------

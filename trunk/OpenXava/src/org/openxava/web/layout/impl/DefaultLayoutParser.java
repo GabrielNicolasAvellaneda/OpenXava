@@ -147,7 +147,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 		currentView = createBeginViewMarker(view);
 		currentView.setRepresentsSection(representsSection);
 		addLayoutElement(currentView);
-		MetaView metaView = view.getMetaModel().getMetaView(view.getViewName());
+		MetaView metaView = view.getMetaView();
 		boolean alignedByColumn = (metaView == null ? false : metaView.isAlignedByColumns());
 
 		parseMetamembers(view.getMetaMembers(), view, false, true, inputPropertyPrefix, alignedByColumn);

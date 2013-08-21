@@ -353,7 +353,7 @@ public class View implements java.io.Serializable {
 		this.subviews = null;
 	}
 	
-	private MetaView getMetaView() throws XavaException {
+	public MetaView getMetaView() throws XavaException {
 		if (metaView == null) {			
 			if (Is.emptyString(getViewName())) {
 				metaView = getMetaModel().getMetaViewByDefault();				
