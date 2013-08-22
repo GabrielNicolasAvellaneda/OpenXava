@@ -20,6 +20,7 @@ public abstract class LayoutBaseContainerElement extends LayoutBaseElement
 	private Integer maxContainerColumnsCount;
 	private List<ILayoutRowBeginElement> rows;
 	private List<Boolean> showColumnLabelStates;
+	private int position;
 
 	public LayoutBaseContainerElement(View view, int groupLevel) {
 		super(view, groupLevel);
@@ -96,6 +97,27 @@ public abstract class LayoutBaseContainerElement extends LayoutBaseElement
 			showColumnLabelStates = new ArrayList<Boolean>();
 		}
 		return showColumnLabelStates;
+	}
+
+	/**
+	 * @param showColumnLabelStates the showColumnLabelStates to set
+	 */
+	public void setShowColumnLabelStates(List<Boolean> showColumnLabelStates) {
+		this.showColumnLabelStates = showColumnLabelStates;
+	}
+
+	/**
+	 * @return the position
+	 */
+	public int getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 }

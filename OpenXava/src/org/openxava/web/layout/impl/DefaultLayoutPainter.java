@@ -147,6 +147,19 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (columnSpan > 0) {
 			attributes.put(ATTR_COLSPAN, columnSpan.toString());
 		}
+		StringBuffer style = new StringBuffer("");
+		if (getRow().getMaxFramesCount() > 1) {
+			if (element.getPosition() > 0) {
+				style.append("padding-left:4px;");
+			}
+			if (element.getPosition() < getRow().getMaxFramesCount() - 1) {
+				style.append("padding-right:4px;");
+			}
+		}
+		if (style.length() > 0) {
+			attributes.put(ATTR_STYLE, style.toString());
+		}
+
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		
 		write(getStyle().getFrameHeaderStartDecoration(100));

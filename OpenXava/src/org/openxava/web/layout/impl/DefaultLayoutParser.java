@@ -579,7 +579,9 @@ public class DefaultLayoutParser implements ILayoutParser {
 	protected void beginContainerProcess(ILayoutContainerElement frameElement) {
 		groupLevel++;
 		if (currentRow != null) {
-			int framesCount = currentRow.getMaxFramesCount() + 1;
+			int framesCount = currentRow.getMaxFramesCount();
+			frameElement.setPosition(framesCount);
+			framesCount++;
 			currentRow.setMaxFramesCount(framesCount);
 		}
 		containersStack.push(frameElement);

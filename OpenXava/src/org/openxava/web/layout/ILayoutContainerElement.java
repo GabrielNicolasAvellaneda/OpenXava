@@ -55,5 +55,16 @@ public interface ILayoutContainerElement extends ILayoutElement {
 	 */
 	boolean getShowColumnLabel(int columnIndex);
 	
+	/**
+	 * Gets the frame relative position.
+	 * @return Gets the position of the frame. Value is greater equal to 0 and less than container maximum frame count.
+	 */
+	int getPosition();
+	
+	/**
+	 * Sets the relative position of the frame.
+	 * @param framePosition New position to set.
+	 */
+	void setPosition(int framePosition);
 	
 }
