@@ -753,11 +753,11 @@ public class Strings {
 	 */
 	public static String removeAccents(String value){ 
 		return value.
-			replace("á", "a").replace("Á", "A").
-			replace("é", "e").replace("É", "E").
-			replace("í", "i").replace("Í", "I").
-			replace("ó", "o").replace("Ó", "O").
-			replace("ú", "u").replace("Ú", "U");
+            replace("\u00E1", "a").replace("\u00C1", "A").
+            replace("\u00E9", "e").replace("\u00C9", "E").
+            replace("\u00ED", "i").replace("\u00CD", "I").
+            replace("\u00F3", "o").replace("\u00D3", "O").
+            replace("\u00FA", "u").replace("\u00DA", "U");      
 	}
 	
 	/**

@@ -1,7 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Ignoring accents for string arguments in the filter fails on some machines. 
+- Some new common use labels to be used in applications.
+- Fix: Combining @OneToOne and @OnChange produces a 'Duplicate Component' error.
 - Fix: Floats and doubles are truncated on display.
+- Fix: # in root view with groups in the view does not work.
 - Fix: # in groups and sections to align by columns does not work.
 - Fix: XML component with a validator that uses 'from' fails if the view has a view property.
 - Fix: Links of several actions associated to the same property are too close.
@@ -9,10 +13,10 @@ Change Log for OpenXava project
 - Fix: Incorrect encoding in the first page load. 
 - Fix: Removing a property of a stored 'My reports' report does not work.
 - Fix: Some labels for 'My reports' are not translated.
-- Fix: Bug 363. New renderer failed to align by columns in section.
-- Fix: Some groups or properties overflowed the view.
-- Fix: Bug 359. Collections and group within the same line were displayed too close.
-- OpenXavaTest now includes selenium tests for visual testing of views. 
+- Fix: New (still BETA) renderer failed to align by columns in section.
+- Fix: Some groups or properties overflowed the view with new (still BETA) renderer.
+- Fix: Collections and group within the same line were displayed too close with new (still BETA) renderer.
+- OpenXavaTest now includes Selenium tests for visual testing of views. 
 
 OpenXava 4.8 (2013-7-23)
 ------------------------

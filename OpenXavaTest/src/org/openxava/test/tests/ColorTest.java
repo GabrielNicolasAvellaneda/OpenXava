@@ -328,6 +328,15 @@ public class ColorTest extends ModuleTestBase {
 		assertListRowCount(1);
 		assertValueInList(0, 1, "MARRÓN");
 		
+		// filter by 'marrón'
+		setConditionValues("", "");
+		execute("List.filter");
+		assertListRowCount(10);
+		setConditionValues("", "marrón");
+		execute("List.filter");
+		assertListRowCount(1);
+		assertValueInList(0, 1, "MARRÓN");		
+		
 		// delete
 		checkAll();
 		execute("CRUD.deleteSelected");

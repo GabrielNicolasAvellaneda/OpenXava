@@ -43,9 +43,7 @@ public class MetaComponent implements Serializable {
 	private EntityMapping entityMapping;
 	private String packageName;
 	private boolean _transient; 
-	
 		
-	
 	/**
 	 * 
 	 * @exception ElementNotFoundException  If component does not exist.
@@ -61,12 +59,9 @@ public class MetaComponent implements Serializable {
 			if (r == null) {				
 				throw new ElementNotFoundException("component_not_found", name);
 			}
-			r.validate();						
-			Object previous = components.put(name, r);
-			if (previous != null) {
-				throw new XavaException("duplicate_component", name);
-			}
-		}		
+			r.validate();	
+			components.put(name, r); 
+		}
 		return r;
 	}
 		

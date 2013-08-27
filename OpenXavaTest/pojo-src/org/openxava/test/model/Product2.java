@@ -41,7 +41,7 @@ import org.openxava.test.validators.*;
 		"family, subfamily;" +
 		"warehouse, zoneOne;" +
 		"unitPrice, unitPriceInPesetas;" +
-		"unitPriceWithTax"			
+		"unitPriceWithTax"
 	),
 	@View( name="ColorWithFrame", members= 
 		"number;" +

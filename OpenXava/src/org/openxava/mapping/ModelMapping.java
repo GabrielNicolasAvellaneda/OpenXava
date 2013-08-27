@@ -236,13 +236,16 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * 
 	 * @since v4m6
 	 */
-	public String translateSQLFunction(String column){ 
-		if (supportsTranslateFunction()) return "translate(" + column + ",'aeiouAEIOU','áéíóúÁÉÍÓÚ')";
-		return 
-			"replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(" + 
-			column + 
-			", 'Ú', 'U'), 'ú', 'u'), 'Ó', 'O'), 'ó', 'o'), 'Í', 'I'), " +
-			"'í', 'i'), 'É', 'E'), 'é', 'e'), 'Á', 'A'), 'á', 'a')";
+	public String translateSQLFunction(String column){
+		if (supportsTranslateFunction()) {
+	        return "translate(" + column + 
+	            ",'aeiouAEIOU','\u00E1\u00E9\u00ED\u00F3\u00FA\u00C1\u00C9\u00CD\u00D3\u00DA')"; 
+	    }
+	    return 
+	        "replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(" + 
+	        column + 
+	        ", '\u00DA', 'U'), '\u00FA', 'u'), '\u00D3', 'O'), '\u00F3', 'o'), '\u00CD', 'I'), " +
+	        "'\u00ED', 'i'), '\u00C9', 'E'), '\u00E9', 'e'), '\u00C1', 'A'), '\u00E1', 'a')";           
 	}
 
 	private boolean supportsYearFunction() { 
