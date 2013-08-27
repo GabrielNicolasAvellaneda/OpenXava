@@ -53,8 +53,9 @@ public class AnnotatedClassParser {
 	private static Collection<String> managedClassPackages;
 	private static Map<Class, Collection<Class>> entityFirstLevelSubclasses;
 	private static Map<String, MetaComponent> parsingComponents;
-		
+	
 	public MetaComponent parse(String name) throws Exception {
+		if (isParsingComponent(name)) return getParsingComponent(name);
 		if (name.contains("_")) { 
 			log.warn(XavaResources.getString("underscore_not_allowed_for_class_name", name));
 		}
