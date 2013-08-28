@@ -275,6 +275,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertPopupPDFLine(2, "Calculated Number Name");
 		assertPopupPDFLine(3, "TR 1 UNO");
 		
+		checkRow(3); // To test that checked rows are ignored in custom reports
 		execute("ExtendedPrint.myReports");
 		execute("CustomReport.remove", "xava.keyProperty=name"); 		
 		assertValueInCollection("columns", 1, 0, "Number");
