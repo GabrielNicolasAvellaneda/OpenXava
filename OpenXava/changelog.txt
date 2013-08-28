@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: When there are selected rows 'My reports' prints only the selected ones. 
 - Fix: Ignoring accents for string arguments in the filter fails on some machines. 
 - Some new common use labels to be used in applications.
 - Fix: Combining @OneToOne and @OnChange produces a 'Duplicate Component' error.

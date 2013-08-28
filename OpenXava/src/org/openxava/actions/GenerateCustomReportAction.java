@@ -23,7 +23,10 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 	private CustomReport customReport; 
 	
 	public void execute() throws Exception {		
-		super.execute();
+		super.execute();		
+		getRequest().getSession().removeAttribute("xava_selectedRowsReportTab"); 
+		getRequest().getSession().removeAttribute("xava_selectedKeysReportTab"); 
+		
 		customReport.setName(getView().getValueString("name")); 
 		Tab tab = new Tab();
 		tab.setModelName(getTab().getModelName());

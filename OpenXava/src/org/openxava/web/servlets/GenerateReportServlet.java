@@ -2,7 +2,6 @@ package org.openxava.web.servlets;
 
 import java.io.*;
 import java.math.*;
-import java.sql.*;
 import java.text.*;
 import java.util.*;
 import java.util.Date;
@@ -301,9 +300,14 @@ public class GenerateReportServlet extends HttpServlet {
 
 	private int[] getSelectedRows(int[] selectedRowsNumber, Map[] selectedRowsKeys, Tab tab){
 		if (selectedRowsKeys == null || selectedRowsKeys.length == 0) return new int[0];
+		// selectedRowsNumber is the most performant so we use it when possible
 		else if (selectedRowsNumber.length == selectedRowsKeys.length) return selectedRowsNumber;
-		else{
+		else{			
 			// find the rows from the selectedKeys
+			
+			// This has a poor performance, but it covers the case when the selected
+			// rows are not loaded for the tab, something that can occurs if the user
+			// select rows and afterwards reorder the list.
 			try{
 				int[] s = new int[selectedRowsKeys.length];
 				List selectedKeys = Arrays.asList(selectedRowsKeys);
