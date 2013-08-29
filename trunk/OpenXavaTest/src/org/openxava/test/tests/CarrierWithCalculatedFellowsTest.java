@@ -36,8 +36,10 @@ public class CarrierWithCalculatedFellowsTest extends ModuleTestBase {
 		execute("List.viewDetail", "row=0");		
 		assertValue("fellowCarriersCalculatedSize", "");
 		checkRowCollection("fellowCarriersCalculated", 0);
+		assertMessage("Selected carriers: 2"); 
 		assertValue("fellowCarriersCalculatedSize", "1");
 		uncheckRowCollection("fellowCarriersCalculated", 0);
+		assertMessage("Selected carriers:"); 
 		assertValue("fellowCarriersCalculatedSize", "0");
 	}
 	
