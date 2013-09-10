@@ -12,7 +12,7 @@ public class Product3WithGroupTest extends ModuleTestBase {
 		super(testName, "Product3WithGroup");		
 	}
 	
-	public void testNotOnChangeActionWhenSearch() throws Exception {
+	public void testNotOnChangeActionWhenSearch() throws Exception { 
 		execute("CRUD.new");
 		assertNoErrors();
 		execute("Product3.showDescription"); // description is hide in a init action for test purpose
@@ -22,7 +22,7 @@ public class Product3WithGroupTest extends ModuleTestBase {
 		assertEditable("description"); // well: on-change for make this not editable not throw
 	}
 	
-	public void testDescriptionsListWithHiddenKeyThrowsChanged() throws Exception {
+	public void testDescriptionsListWithHiddenKeyThrowsChanged() throws Exception { 
 		execute("CRUD.new");
 		assertNoErrors();
 		execute("Product3.showDescription"); // description is hide in a init action for test purpose
@@ -32,7 +32,7 @@ public class Product3WithGroupTest extends ModuleTestBase {
 		assertValue("comments", "Family changed");
 	}
 	
-	public void testSetValueNotifyingOnReferenceWithHiddenKeyNotResetGroup() throws Exception {
+	public void testSetValueNotifyingOnReferenceWithHiddenKeyNotResetGroup() throws Exception { 
 		execute("CRUD.new");
 		assertNoErrors();
 		execute("Product3.showDescription"); // description is hide in a init action for test purpose

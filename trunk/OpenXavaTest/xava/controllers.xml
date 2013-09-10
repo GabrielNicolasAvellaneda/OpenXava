@@ -229,8 +229,8 @@
 			class="org.openxava.test.actions.SearchDeliveryAction"
 			keystroke="F8"/>									
 		<action name="activateDeactivateSection" mode="detail"
-			class="org.openxava.test.actions.ActivateDeactivateSectionAction">					
-			<set property="section" value="remarks" />			
+			class="org.openxava.test.actions.ActivateDeactivateSectionAction">
+			<set property="section" value="comments" />
 		</action> 	
 		<action name="generateNumber" hidden="true"
 			class="org.openxava.test.actions.GenerateDeliveryNumberAction"/>					
@@ -248,17 +248,17 @@
 		<action name="hideActions" mode="detail"
 			class="org.openxava.test.actions.HideDeliveryActionsAction"/>																			
 		<action name="viewCurrentYearInvoices" mode="detail"
-			class="org.openxava.test.actions.ViewCurrentYearInvoicesAction"/>	
+			class="org.openxava.test.actions.ViewCurrentYearInvoicesAction"/>
 		<action name="hideAdvice" mode="detail"
-			class="org.openxava.test.actions.HideShowPropertyAction">					
-			<set property="property" value="advice" />
+			class="org.openxava.test.actions.HideShowAction">					
+			<set property="name" value="advice" />
 			<set property="hide" value="true" />			
 		</action>
 		<action name="hideShortcut" mode="detail" 
-			class="org.openxava.test.actions.HideShowPropertyAction">					
-			<set property="property" value="shortcut" />
+			class="org.openxava.test.actions.HideShowAction">					
+			<set property="name" value="shortcut" />
 			<set property="hide" value="true" />
-		</action>								
+		</action>		
 	</controller>
 	
 	<controller name="DeliveryDetail">		
@@ -312,15 +312,15 @@
 		</action>					
 		
 		<action name="hideDescription" mode="detail" on-init="true" 
-			class="org.openxava.test.actions.HideShowGroupAction">								
-			<set property="group" value="description"/>	
+			class="org.openxava.test.actions.HideShowAction">								
+			<set property="name" value="description"/>	
 			<set property="hide" value="true"/>	
 		</action>				
 		
 		<action name="showDescription" mode="detail" 
-			class="org.openxava.test.actions.HideShowGroupAction">								
-			<set property="group" value="description"/>	
-			<set property="show" value="true"/>	
+			class="org.openxava.test.actions.HideShowAction">								
+			<set property="name" value="description"/>	
+			<set property="hide" value="false"/>	
 		</action>
 	</controller>
 	
@@ -351,16 +351,17 @@
 		</action>				
 
 		<action name="hideSeller" mode="detail" 
-			class="org.openxava.test.actions.HideShowGroupAction">								
-			<set property="group" value="seller"/>	
+			class="org.openxava.test.actions.HideShowAction">								
+			<set property="name" value="seller"/>	
 			<set property="hide" value="true"/>	
-		</action>				
-
+		</action>			
+			
 		<action name="showSeller" mode="detail" 
-			class="org.openxava.test.actions.HideShowGroupAction">								
-			<set property="group" value="seller"/>	
-			<set property="show" value="true"/>	
+			class="org.openxava.test.actions.HideShowAction">								
+			<set property="name" value="seller"/>	
+			<set property="hide" value="false"/>	
 		</action>
+				
 		<action name="hideSellerInList" mode="list"
 			class="org.openxava.test.actions.HideListPropertyAction">								
 			<set property="property" value="seller.name"/>	
@@ -388,8 +389,7 @@
 			<set property="property" value="address.state"/>
 			<set property="label" value="Provincia"/>
 		</action>				
-						
-		
+								
 		<action name="prefixStreet" class="org.openxava.test.actions.PrefixAction" hidden="true">
 			<!-- This is an IPropertyAction hence xava_view is not injected -->
 			<set property="prefix" value="C/ "/>
@@ -438,6 +438,62 @@
 	
 	<controller name="Invoice">
 		<extends controller="Typical"/>
+		<subcontroller controller="InvoicePrint" image="report.gif"/>
+		<action name="searchFromDelivery" hidden="true"
+			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction"/>														
+		<action name="listOfCustomer" hidden="true"
+			class="org.openxava.test.actions.ListCustomerInvoicesAction"/>
+		<action name="editDetail" hidden="true" 
+			image="edit.gif"
+			class="org.openxava.test.actions.EditInvoiceDetailAction"/>				
+		<action name="viewDelivery" hidden="true"
+			class="org.openxava.test.actions.ViewDeliveryFromInvoiceAction"/>
+				
+		<action name="viewProduct" hidden="true"
+			class="org.openxava.test.actions.ViewProductFromInvoiceDetailAction"/>
+		 
+		<action name="removeViewDeliveryInInvoice"
+			class="org.openxava.test.actions.RemoveViewDeliveryInInvoiceAction"/>	
+		<action name="addViewDeliveryInInvoice"
+			class="org.openxava.test.actions.AddViewDeliveryInInvoiceAction"/>	
+		
+		<action name="changeTab" mode="list"
+			class="org.openxava.test.actions.ChangeInvoiceTabAction"/>	
+		
+		<action name="setAddColumnsPageRowCountTo10" mode="list"
+			class="org.openxava.test.actions.SetAddColumnsPageRowCountTo10Action"/>	
+		
+		<action name="viewCustomer" mode="detail"
+			class="org.openxava.test.actions.ViewCustomerFromInvoiceAction"/>
+			
+		<action name="hideCustomer" mode="detail"  
+			class="org.openxava.test.actions.HideShowAction">
+			<set property="name" value="customer"/>
+			<set property="hide" value="true"/>	
+		</action>
+		
+		<action name="showCustomer" mode="detail"  
+			class="org.openxava.test.actions.HideShowAction">
+			<set property="name" value="customer"/>
+			<set property="hide" value="false"/>	
+		</action>
+		
+		<action name="hideAmounts" mode="detail"  
+			class="org.openxava.test.actions.HideShowAction">
+			<set property="name" value="amounts"/>
+			<set property="hide" value="true"/>	
+		</action>
+		
+		<action name="showAmounts" mode="detail"  
+			class="org.openxava.test.actions.HideShowAction">
+			<set property="name" value="amounts"/>
+			<set property="hide" value="false"/>	
+		</action>																
+											
+	</controller>
+	
+
+	<controller name="InvoicePrint">
 		<action name="printPdf" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
 			image="pdf.gif">
@@ -472,41 +528,14 @@
 			class="org.openxava.test.actions.InvoiceReportAction"
 			image="odt.gif">
 			<set property="format" value="odt"/>												
-		</action>						
-		<action name="searchFromDelivery" hidden="true"
-			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction"/>														
-		<action name="listOfCustomer" hidden="true"
-			class="org.openxava.test.actions.ListCustomerInvoicesAction"/>
-		<action name="editDetail" hidden="true" 
-			image="edit.gif"
-			class="org.openxava.test.actions.EditInvoiceDetailAction"/>				
-		<action name="viewDelivery" hidden="true"
-			class="org.openxava.test.actions.ViewDeliveryFromInvoiceAction"/>
-				
-		<action name="viewProduct" hidden="true"
-			class="org.openxava.test.actions.ViewProductFromInvoiceDetailAction"/>
-		 
-		<action name="removeViewDeliveryInInvoice"
-			class="org.openxava.test.actions.RemoveViewDeliveryInInvoiceAction"/>	
-		<action name="addViewDeliveryInInvoice"
-			class="org.openxava.test.actions.AddViewDeliveryInInvoiceAction"/>	
-		
-		<action name="changeTab" mode="list"
-			class="org.openxava.test.actions.ChangeInvoiceTabAction"/>	
-		
-		<action name="setAddColumnsPageRowCountTo10" mode="list"
-			class="org.openxava.test.actions.SetAddColumnsPageRowCountTo10Action"/>	
-
+		</action>
 		<action name="printPdfNewAfter" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction" >
 			<set property="format" value="pdf"/>
 			<set property="newAfter" value="true"/>												
-		</action>
-		
-		<action name="viewCustomer" mode="detail"
-			class="org.openxava.test.actions.ViewCustomerFromInvoiceAction"/>
-		
+		</action>	
 	</controller>
+	
 		
 	<controller name="InvoiceDetail2">
 		<action name="new" image="create_new.gif"
@@ -701,15 +730,15 @@
 	
 	<controller name="Remarks">
 		<action name="hideRemarks" 
-			class="org.openxava.test.actions.HideShowPropertyAction">					
-			<set property="property" value="remarks" />
+			class="org.openxava.test.actions.HideShowAction">					
+			<set property="name" value="remarks" />
 			<set property="hide" value="true" />			
 		</action>			
 		<action name="showRemarks" mode="detail"
-			class="org.openxava.test.actions.HideShowPropertyAction">					
-			<set property="property" value="remarks" />
+			class="org.openxava.test.actions.HideShowAction">					
+			<set property="name" value="remarks" />
 			<set property="hide" value="false" />
-		</action>
+		</action>		
 		<action name="setRemarks" mode="detail"
 			class="org.openxava.test.actions.SetPropertyValueAction">					
 			<set property="property" value="remarks" />

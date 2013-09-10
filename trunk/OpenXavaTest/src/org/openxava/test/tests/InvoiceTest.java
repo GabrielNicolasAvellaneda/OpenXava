@@ -1,18 +1,31 @@
 package org.openxava.test.tests;
 
-import java.math.*;
-import java.rmi.*;
-import java.text.*;
-import java.util.*;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
-import javax.rmi.*;
+import javax.rmi.PortableRemoteObject;
 
-import org.apache.commons.logging.*;
-import org.openxava.jpa.*;
-import org.openxava.test.calculators.*;
-import org.openxava.test.model.*;
-import org.openxava.tests.*;
-import org.openxava.util.*;
+import org.openxava.jpa.XPersistence;
+import org.openxava.test.calculators.YearInvoiceDiscountCalculator;
+import org.openxava.test.model.Delivery;
+import org.openxava.test.model.DeliveryType;
+import org.openxava.test.model.Invoice;
+import org.openxava.test.model.Product;
+import org.openxava.tests.ModuleTestBase;
+import org.openxava.util.Dates;
+import org.openxava.util.Is;
+import org.openxava.util.Strings;
+import org.openxava.util.XavaPreferences;
 import org.openxava.web.*;
 
 import com.gargoylesoftware.htmlunit.html.*;
@@ -24,7 +37,6 @@ import com.gargoylesoftware.htmlunit.html.*;
  */
 
 public class InvoiceTest extends ModuleTestBase {
-	private static Log log = LogFactory.getLog(InvoiceTest.class);
 	
 	private Invoice invoice;
 	private BigDecimal productUnitPriceDB;
@@ -37,6 +49,118 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public InvoiceTest(String testName) {
 		super(testName, "Invoice");		
+	}
+	
+	public void testHideShowSection() throws Exception { 
+		execute("Mode.detailAndFirst");
+	
+		assertNoAction("Sections.change", "activeSection=0");
+		assertAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertExists("customer.number");
+		assertNotExists("details");
+		assertValue("customer.number", "1");
+		
+		execute("Invoice.hideCustomer");
+		assertNoAction("Sections.change", "activeSection=0");
+		assertAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertNoAction("Sections.change", "activeSection=3");
+		assertNotExists("customer.number");
+		assertExists("details");
+		
+		execute("Invoice.showCustomer");
+		assertAction("Sections.change", "activeSection=0");
+		assertNoAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertNotExists("customer.number");
+		assertExists("details");
+		assertNoErrors(); 
+		
+		execute("Sections.change", "activeSection=0");
+		assertValue("customer.number", "1");
+		
+		execute("Sections.change", "activeSection=2"); 
+		assertAction("Sections.change", "activeSection=0");
+		assertAction("Sections.change", "activeSection=1");
+		assertNoAction("Sections.change", "activeSection=2");
+		assertAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertNotExists("deliveries");
+		assertExists("amountsSum");
+		
+		execute("Invoice.hideCustomer");		
+		assertAction("Sections.change", "activeSection=0");
+		assertNoAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertNoAction("Sections.change", "activeSection=3");
+		assertNotExists("deliveries");
+		assertExists("amountsSum");
+		
+		execute("Invoice.showCustomer");
+		assertAction("Sections.change", "activeSection=0");
+		assertAction("Sections.change", "activeSection=1");
+		assertNoAction("Sections.change", "activeSection=2");
+		assertAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertNotExists("deliveries");
+		assertExists("amountsSum");
+		
+		execute("Sections.change", "activeSection=3"); 
+		assertAction("Sections.change", "activeSection=0");
+		assertAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertNoAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertExists("deliveries");
+		assertNotExists("amountsSum");
+		
+		execute("Invoice.hideCustomer");		
+		assertAction("Sections.change", "activeSection=0");
+		assertAction("Sections.change", "activeSection=1");
+		assertNoAction("Sections.change", "activeSection=2");
+		assertNoAction("Sections.change", "activeSection=3");
+		assertExists("deliveries");
+		assertNotExists("amountsSum");
+		
+		execute("Invoice.showCustomer");
+		assertAction("Sections.change", "activeSection=0");
+		assertAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertNoAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertExists("deliveries");
+		assertNotExists("amountsSum");
+		
+		execute("Sections.change", "activeSection=1"); 
+		assertAction("Sections.change", "activeSection=0");
+		assertNoAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertExists("details");
+		assertNotExists("customer");
+		
+		execute("Invoice.hideAmounts");		
+		assertAction("Sections.change", "activeSection=0");
+		assertNoAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertNoAction("Sections.change", "activeSection=3");
+		assertExists("details");
+		assertNotExists("customer");
+		
+		execute("Invoice.showAmounts");
+		assertAction("Sections.change", "activeSection=0");
+		assertNoAction("Sections.change", "activeSection=1");
+		assertAction("Sections.change", "activeSection=2");
+		assertAction("Sections.change", "activeSection=3");
+		assertNoAction("Sections.change", "activeSection=4");		
+		assertExists("details");
+		assertNotExists("customer");
 	}
 	
 	public void testImagesGalleryInDialog() throws Exception { 
@@ -246,9 +370,9 @@ public class InvoiceTest extends ModuleTestBase {
 		assertRowCollectionUnchecked("details", 0);
 	}
 	
-	public void testGenerateCustomPdfAndPrepareNewAfter() throws Exception {
+	public void testGenerateCustomPdfAndPrepareNewAfter() throws Exception { 
 		execute("Mode.detailAndFirst");
-		execute("Invoice.printPdfNewAfter");
+		execute("InvoicePrint.printPdfNewAfter"); 
 		assertNoErrors(); 
 		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/pdf");
@@ -257,37 +381,37 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testGenerateCustomPdfExcelRtfOdt() throws Exception { 
 		execute("Mode.detailAndFirst");
-		execute("Invoice.printPdf");
+		execute("InvoicePrint.printPdf"); 
 		assertNoErrors(); 
 		assertMessage("The print was successful"); 
 		assertContentTypeForPopup("application/pdf");
 		
-		execute("Invoice.printExcel");
+		execute("InvoicePrint.printExcel"); 
 		assertNoErrors(); 
 		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/vnd.ms-excel");		
 		
-		execute("Invoice.printRtf");
+		execute("InvoicePrint.printRtf"); 
 		assertNoErrors(); 
 		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/rtf");
 		
-		execute("Invoice.printOdt");
+		execute("InvoicePrint.printOdt"); 
 		assertNoErrors(); 
 		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/vnd.oasis.opendocument.text");				
 	}
 	
-	public void testGenerateTwoReportsAtOnce() throws Exception {
-		assertGenerateTwoReportsAtOnce("Invoice.print2Pdfs");
+	public void testGenerateTwoReportsAtOnce() throws Exception { 
+		assertGenerateTwoReportsAtOnce("InvoicePrint.print2Pdfs"); 
 	}
 	
-	public void testGenerateTwoReportsAtOnceWithDifferentParameters() throws Exception {
-		assertGenerateTwoReportsAtOnce("Invoice.printInvoiceAndCustomer");
+	public void testGenerateTwoReportsAtOnceWithDifferentParameters() throws Exception { 
+		assertGenerateTwoReportsAtOnce("InvoicePrint.printInvoiceAndCustomer"); 
 	}
 	
-	public void testGenerateTwoReportsAtOnceWithDifferentParametersUsingAddParameters() throws Exception {
-		assertGenerateTwoReportsAtOnce("Invoice.printInvoiceAndCustomer2");
+	public void testGenerateTwoReportsAtOnceWithDifferentParametersUsingAddParameters() throws Exception { 
+		assertGenerateTwoReportsAtOnce("InvoicePrint.printInvoiceAndCustomer2"); 
 	}
 
 	
@@ -1324,16 +1448,16 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.delete",
 			"CRUD.search",
 			"CRUD.refresh",
-			"Invoice.printPdf",
-			"Invoice.print2Pdfs",
-			"Invoice.printInvoiceAndCustomer",
-			"Invoice.printInvoiceAndCustomer2",
-			"Invoice.printExcel",
-			"Invoice.printRtf",
-			"Invoice.printOdt",
+			"InvoicePrint.printPdf",
+			"InvoicePrint.print2Pdfs",
+			"InvoicePrint.printInvoiceAndCustomer",
+			"InvoicePrint.printInvoiceAndCustomer2",
+			"InvoicePrint.printExcel",
+			"InvoicePrint.printRtf",
+			"InvoicePrint.printOdt",
 			"Invoice.removeViewDeliveryInInvoice",
 			"Invoice.addViewDeliveryInInvoice",			
-			"Invoice.viewCustomer",
+			"Invoice.viewCustomer",			
 			"Sections.change",
 			"Customer.changeNameLabel",
 			"Customer.prefixStreet",
@@ -1342,7 +1466,11 @@ public class InvoiceTest extends ModuleTestBase {
 			"Reference.modify",
 			"Mode.list",
 			"Mode.split",
-			"Invoice.printPdfNewAfter"
+			"InvoicePrint.printPdfNewAfter", 
+			"Invoice.hideCustomer",
+			"Invoice.showCustomer",
+			"Invoice.hideAmounts",
+			"Invoice.showAmounts"  			
 		};		
 		assertActions(initialActions); 
 				
@@ -1362,13 +1490,13 @@ public class InvoiceTest extends ModuleTestBase {
 			"CRUD.delete",
 			"CRUD.search",
 			"CRUD.refresh",
-			"Invoice.printPdf",
-			"Invoice.print2Pdfs",
-			"Invoice.printInvoiceAndCustomer",
-			"Invoice.printInvoiceAndCustomer2",			
-			"Invoice.printExcel",
-			"Invoice.printRtf",
-			"Invoice.printOdt",
+			"InvoicePrint.printPdf",
+			"InvoicePrint.print2Pdfs",
+			"InvoicePrint.printInvoiceAndCustomer",
+			"InvoicePrint.printInvoiceAndCustomer2",
+			"InvoicePrint.printExcel",
+			"InvoicePrint.printRtf",
+			"InvoicePrint.printOdt",
 			"Invoice.removeViewDeliveryInInvoice",
 			"Invoice.addViewDeliveryInInvoice",									
 			"Invoice.viewCustomer",
@@ -1384,7 +1512,11 @@ public class InvoiceTest extends ModuleTestBase {
 			"List.orderBy", 
 			"List.customize",
 			"List.sumColumn",
-			"Invoice.printPdfNewAfter"			
+			"InvoicePrint.printPdfNewAfter", 
+			"Invoice.hideCustomer",
+			"Invoice.showCustomer",
+			"Invoice.hideAmounts",
+			"Invoice.showAmounts"  			
 		};		
 		assertActions(aggregateListActions); 
 		
