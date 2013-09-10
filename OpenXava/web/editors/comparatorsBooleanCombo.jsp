@@ -16,8 +16,11 @@ boolean filterOnChange = org.openxava.util.XavaPreferences.getInstance().isFilte
 String collection = request.getParameter("collection"); 
 String collectionArgv = Is.emptyString(collection)?"":"collection="+collection;
 %>
-<input type="hidden" name="<xava:id name='<%=prefix + "conditionValue." + index%>'/>" value="true">
-<input type="hidden" name="<xava:id name='<%=prefix + "conditionValueTo." + index%>'/>" >
+<div>
+	<input type="hidden" name="<xava:id name='<%=prefix + "conditionValue." + index%>'/>" value="true">
+	<input type="hidden" name="<xava:id name='<%=prefix + "conditionValueTo." + index%>'/>" >
+	<!-- conditionValueTo: we need all indexes to implement the range filters -->
+</div>
 
 <select name="<xava:id name='<%=prefix + "conditionComparator."  + index%>'/>" class=<%=style.getEditor()%>
 <% if(filterOnChange) { %>

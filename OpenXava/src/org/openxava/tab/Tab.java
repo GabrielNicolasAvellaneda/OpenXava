@@ -1204,10 +1204,10 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	private Preferences getPreferences() throws BackingStoreException {
-		return Users.getCurrentPreferences().node(getPreferencesNodeName()); 
+		return Users.getCurrentPreferences().node(getPreferencesNodeName("")); 
 	}
 	
-	private String getPreferencesNodeName() { 
+	private String getPreferencesNodeName(String prefix) { 
 		String application = "";
 		String module = "";
 		HttpServletRequest request = getRequest() == null && getCollectionView() != null? getCollectionView().getRequest(): getRequest();
@@ -1222,15 +1222,15 @@ public class Tab implements java.io.Serializable {
 			}
 		}
 		String tabName = Is.emptyString(getTabName())?"":"." + getTabName();
-		String nodeName = "tab." + application + "." + module + "." + getMetaTab().getMetaModel().getName() + tabName;
+		String nodeName = prefix + "tab." + application + "." + module + "." + getMetaTab().getMetaModel().getName() + tabName;
 		if (nodeName.length() > Preferences.MAX_NAME_LENGTH) {
-			nodeName = "tab." + (application + "." + module + "." + getMetaTab().getMetaModel().getName() + tabName).hashCode(); 		
+			nodeName = prefix + "tab." + (application + "." + module + "." + getMetaTab().getMetaModel().getName() + tabName).hashCode(); 		
 		}		
 		return nodeName;
 	}
 	
-	public String friendCustomReportGetPreferencesNodeName() {
-		return getPreferencesNodeName();
+	public String friendCustomReportGetPreferencesNodeName(String prefix) {
+		return getPreferencesNodeName(prefix);
 	}
 		
 	public HttpServletRequest getRequest() {
