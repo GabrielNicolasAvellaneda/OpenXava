@@ -16,10 +16,7 @@ import org.openxava.annotations.*;
 @AttributeOverrides(
 	@AttributeOverride(name="name", column=@Column(name="PNAME"))
 )
-@Views({
-	@View(members="name; sex;"), // tmp by bug -> https://sourceforge.net/tracker/?func=detail&aid=3314594&group_id=123187&atid=695743
-	@View(name="WithGroup", members="name; group [ sex ]")
-})
+@View(name="WithGroup", members="name; group [ sex ]")
 public class Human extends Nameable {
 
 	@Enumerated(EnumType.STRING)

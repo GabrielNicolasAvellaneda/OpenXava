@@ -21,17 +21,28 @@ public class ColorTest extends ModuleTestBase {
 		super(testName, "Color");		
 	}
 	
+	public void testSubcontrollerOnChangeControllers() throws Exception{
+		assertAction("ColorSub.firstAction");
+		execute("List.customize");
+		execute("List.addColumns");
+		assertNoAction("ColorSub.firstAction");
+	}
+	
 	public void testSubcontroller() throws Exception {
+		assertNoAction("ColorSub.fourAction");
+		execute("ColorSub.firstAction");
+		assertDialog();
+		closeDialog();
+		execute("Mode.detailAndFirst");
+		assertAction("ColorSub.fourAction");
+		// 
 		HtmlElement container = getHtmlPage().getDocumentElement().getElementById("ox_OpenXavaTest_Color__sc-container-ColorSub");
-		HtmlElement button = container.getElementById("ox_OpenXavaTest_Color__sc-button-ColorSub");
 		HtmlElement menu = container.getElementById("ox_OpenXavaTest_Color__sc-ColorSub");
 		assertTrue("display:none;".equals(menu.getAttribute("style")));
 		assertTrue(container.asText().contains("My processes"));
 		assertTrue(container.asText().contains("First action from subcontroller"));
 		assertTrue(container.asText().contains("Second action"));
 		assertTrue(container.asText().contains("Third action"));
-		execute("ColorSub.firstAction");
-		assertDialog();
 	}
 	
 	public void testPrintPDF() throws Exception {
