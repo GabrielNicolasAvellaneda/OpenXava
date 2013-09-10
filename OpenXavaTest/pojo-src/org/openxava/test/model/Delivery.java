@@ -44,7 +44,7 @@ import org.openxava.jpa.*;
 		"		employee;" +			
 		"	]" +
 		"]" +
-		"remarks { advice, shortcut; remarks }" +						
+		"comments { advice, shortcut; remarks }" +						
 		"incidents { incidents }" +
 		"details {" +
 		"	details [" +

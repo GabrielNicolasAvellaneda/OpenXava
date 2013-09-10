@@ -60,7 +60,7 @@ import org.openxava.util.Users;
 import org.openxava.util.XArrays;
 import org.openxava.util.XavaException;
 import org.openxava.util.XavaResources;
-import org.openxava.util.meta.MetaSet;
+import org.openxava.util.meta.*;
 import org.openxava.view.meta.MetaCollectionView;
 import org.openxava.view.meta.MetaDescriptionsList;
 import org.openxava.view.meta.MetaGroup;
@@ -150,7 +150,7 @@ public class View implements java.io.Serializable {
 	private transient HttpServletRequest request;
 	private Collection depends;
 	private boolean hasToSearchOnChangeIfSubview = true;
-	private View [] sectionsViews;
+	private Map<MetaView, View> sectionsViews;
 	private int activeSection;
 	private String memberName;
 	private boolean collectionMembersEditables; 
@@ -198,6 +198,7 @@ public class View implements java.io.Serializable {
 	private Map<String, Collection<String>> changedActionsByProperty = null; 
 	private Collection propertiesWithChangedActions;
 	private Object model;
+	private List sections; 
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -236,7 +237,7 @@ public class View implements java.io.Serializable {
 			
 	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
 		if (getModelName() == null) return Collections.EMPTY_LIST; 		
-		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());		
+		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());
 		if (isRepresentsAggregate()) { 			
 			metaMembers = extractAggregateRecursiveReference(metaMembers);					
 		}				
@@ -311,11 +312,11 @@ public class View implements java.io.Serializable {
 		if (PropertiesSeparator.INSTANCE.equals(member)) it.remove();
 	}
 
-	private void removeHidden(Collection metaMembers) {
-		Iterator it = metaMembers.iterator();		
+	private void removeHidden(Collection metaElements) { 
+		Iterator it = metaElements.iterator();
 		while (it.hasNext()) {			
-			MetaMember member = (MetaMember) it.next();
-			if (hiddenMembers.contains(member.getName())) it.remove();			
+			MetaElement member = (MetaElement) it.next(); 
+			if (hiddenMembers.contains(member.getName())) it.remove();
 		}
 	}
 	
@@ -2234,6 +2235,8 @@ public class View implements java.io.Serializable {
 		depends = null;
 		subviews = null;
 		sectionsViews = null;
+		sections = null; 
+		hiddenMembers = null; 
 		groupsViews = null;
 	}
 	
@@ -3456,6 +3459,17 @@ public class View implements java.io.Serializable {
 		return hiddenMembers != null && hiddenMembers.contains(name);
 	}
 
+	/**
+	 * To hide/show an element of the user interface. 
+	 * <br/>
+	 * You can hide properties, references, collections, groups and sections. 
+	 * <br/>
+	 * If the name of a member and its container section or group is the same, the container section or
+	 * group will be hidden. If you want to hide the member inside you should rename the group or section.
+	 * 
+	 * @param name  Name of the member, group or section
+	 * @param hidden  true to hide, false to show
+	 */
 	public void setHidden(String name, boolean hidden) throws XavaException {		
 		if (hiddenMembers == null) {
 			if (!hidden) return;		
@@ -3475,8 +3489,9 @@ public class View implements java.io.Serializable {
 			membersNamesWithoutSectionsAndCollections = null;
 			membersNamesWithHidden = null;
 			membersNamesInGroup = null;
-			metaPropertiesQualified = null; 
+			metaPropertiesQualified = null;						 
 			reloadNeeded = true;			
+			updateHiddenSections(); 
 			getRoot().reloadNeeded = true; 
 			refreshCollection();
 		}
@@ -3572,26 +3587,53 @@ public class View implements java.io.Serializable {
 		}		
 	}
 
-	public List getSections() throws XavaException {		
-		return getMetaView().getSections();
+	public List getSections() throws XavaException {	
+		if (sections == null) {
+			sections = getMetaView().getSections();
+		}
+		return sections;
 	}
 	
-	public View getSectionView(int index) throws XavaException {		
-		if (sectionsViews == null) {
-			sectionsViews = new View[getSections().size()];			
+	private void updateHiddenSections() { 
+		if (!getMetaView().hasSections()) return;
+		Object preSection = sections==null?null:sections.get(activeSection);
+		if (hiddenMembers != null && !hiddenMembers.isEmpty()) {
+			List newSections = new ArrayList(getMetaView().getSections());			
+			removeHidden(newSections);			
+			sections = newSections;
 		}
-		if (index >= sectionsViews.length) sectionsViews = new View[getSections().size()];
-		if (sectionsViews[index] == null) {
-			View v = new View();
+		else {
+			sections = getMetaView().getSections();
+		}
+		Object postSection = activeSection < sections.size()?sections.get(activeSection):null;
+		if (preSection != postSection) {
+			int idx = sections.indexOf(preSection);
+			if (idx >= 0) activeSection = idx;
+		}
+	}
+	
+	public View getSectionView(int index) throws XavaException {
+		return getSectionView((MetaView) getSections().get(index));
+	}
+			
+	private View getSectionView(MetaView metaView) { 
+		if (sectionsViews == null) {
+			sectionsViews = new HashMap<MetaView, View>();			
+		}
+		View v = sectionsViews.get(metaView); 
+		
+		if (v == null) {
+			v = new View();
 			v.setSection(true);
 			v.setParent(this);			
 			v.setModelName(getModelName());			
-			v.setMetaView((MetaView) getSections().get(index));
-			sectionsViews[index] = v;
+			v.setMetaView(metaView);
+			sectionsViews.put(metaView, v);
 		}		
-		return sectionsViews[index];
+		
+		return v;
 	}
-			
+
 	public boolean isSection() {		
 		return section;
 	}

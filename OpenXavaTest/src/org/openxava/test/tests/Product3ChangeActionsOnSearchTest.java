@@ -12,7 +12,7 @@ public class Product3ChangeActionsOnSearchTest extends ModuleTestBase {
 		super(testName, "Product3ChangeActionsOnSearch");		
 	}
 	
-	public void testChangeActionWhenSearch() throws Exception {
+	public void testChangeActionWhenSearch() throws Exception { 
 		execute("CRUD.new");
 		execute("Product3.showDescription"); // description is hide in a init action for test purpose
 		setValue("number", "77");

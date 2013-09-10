@@ -1,10 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: 'My report' with name more than 80 lenght 
-- Fix: clear condition in tab: hidden the combos (enum, boolean, descriptionsList) 
-- Fix: subcontroller: fix when the controllers change.
-- Fix: subcontroller: show the actions according the mode (list, detail or both).
+- Fix: The setHidden() method of View does not work with sections.
+- Fix: 'My reports' when tab name is too long fail. 
+- Fix: Clear condition in list hide some combos (enum, boolean and descriptionsList). 
+- Fix: Subcontrollers do not change when the container controller is changed by code.
+- Fix: subcontrollers do not show the actions according the mode (list, detail or both).
 - Fix: Using getSelectedObjects() from an @OnSelectElementAction in calculated collections fails.
 - Fix: When there are selected rows 'My reports' prints only the selected ones. 
 - Fix: Ignoring accents for string arguments in the filter fails on some machines. 

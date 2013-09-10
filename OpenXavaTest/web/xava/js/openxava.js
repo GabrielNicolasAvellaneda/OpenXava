@@ -644,7 +644,7 @@ openxava.clearConditionValuesTo = function(application, module, prefix) {
 		element.value = '';
 		element.style.display='none';
 		element = form.elements[elementName + (++i)];
-		$(element).next().hide();
+		$(element).next().hide();	// calendar image
 	}
 }
 
