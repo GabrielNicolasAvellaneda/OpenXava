@@ -1,3 +1,4 @@
+<%@page import="org.openxava.util.Is"%>
 <%@page import="org.openxava.web.Ids"%>
 <%@page import="org.openxava.util.Labels"%>
 <%@page import="java.util.Collection"%>
@@ -9,8 +10,11 @@
 <%@ include file="imports.jsp"%>
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 
 <%
+org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+manager.setSession(session);
 String controllerName = request.getParameter("controller");
 String image = request.getParameter("image");
 String id = Ids.decorate(request, "sc-" + controllerName);
@@ -42,8 +46,10 @@ String idA = Ids.decorate(request, "sc-a-" + controllerName);
 		<%
 		MetaController controller = MetaControllers.getMetaController(controllerName);
 		Collection<MetaAction> actions = controller.getMetaActions();
-		
+		String mode = request.getParameter("xava_mode"); 
+		if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
 		for (MetaAction action : actions){
+			if (action.appliesToMode(mode)) {
 		%>	
 			<tr><td>
 				<jsp:include page="barButton.jsp">
@@ -52,6 +58,7 @@ String idA = Ids.decorate(request, "sc-a-" + controllerName);
 				</jsp:include>
 			</td></tr>
 		<%
+			}
 		}
 		%>
 		</table>

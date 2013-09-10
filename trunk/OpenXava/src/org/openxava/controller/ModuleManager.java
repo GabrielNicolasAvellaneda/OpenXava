@@ -67,7 +67,7 @@ public class ModuleManager implements java.io.Serializable {
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 
-	public static final String XAVA_META_ACTIONS_IN_LIST = "xava_metaActionsInList";  
+	private static final String XAVA_META_ACTIONS_IN_LIST = "xava_metaActionsInList";  
 		
 	private String user;	
 	private Collection metaActionsOnInit;
@@ -174,7 +174,7 @@ public class ModuleManager implements java.io.Serializable {
 			while(it.hasNext()){
 				MetaController mc = (MetaController) it.next();
 				metaSubControllers.addAll(mc.getMetaSubcontrollers());
-			}	
+			}
 		}
 		return metaSubControllers;
 	}
@@ -472,6 +472,7 @@ public class ModuleManager implements java.io.Serializable {
 				IChangeControllersAction changeControllersAction = (IChangeControllersAction) action;
 				String [] nextControllers = changeControllersAction.getNextControllers();
 				setControllers(nextControllers);
+				metaSubControllers = null;
 			}			
 			if (action instanceof IHideActionAction) {
 				String actionToHide = ((IHideActionAction) action).getActionToHide();

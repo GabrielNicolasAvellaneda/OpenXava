@@ -5,13 +5,15 @@ import java.net.*;
 import java.util.*;
 import java.util.logging.*;
 
+import junit.framework.*;
+
 import org.apache.commons.logging.*;
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.util.*;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
-import org.openxava.hibernate.XHibernate;
+import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
@@ -25,8 +27,6 @@ import org.xml.sax.*;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
-
-import junit.framework.*;
 
 
 /**
@@ -615,8 +615,13 @@ public class ModuleTestBase extends TestCase {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
 	}
-	
 
+	/** @since 4.8.1 */
+	public void clearCondition(String name) throws Exception{
+		HtmlImage c = (HtmlImage) getForm().getElementById(name);
+		c.click();
+	}
+	
 	private void assertSystemError() { 
 		Object systemError = page.getElementById("xava_system_error"); 
 		if (systemError != null) {

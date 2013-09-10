@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.prefs.*;
 
 import javax.persistence.*;
+
 import org.openxava.annotations.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.Tab;
@@ -154,7 +155,7 @@ public class CustomReport implements java.io.Serializable {
 	}
 	
 	private void setNodeName(org.openxava.tab.Tab tab) { 
-		rootNodeName = "customReport." + tab.friendCustomReportGetPreferencesNodeName();	
+		rootNodeName = tab.friendCustomReportGetPreferencesNodeName("customReport.");
 	}
 	
 	private Preferences getPreferences() throws BackingStoreException { 
