@@ -754,7 +754,8 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Navigation.next");		
 		assertLoadedParts("editor_sex, errors, " +
 				"editor_name, " +
-				"messages,");
+				"messages," +
+				"reference_editor_favoriteAuthor,");
 		
 		// Now the model changes...
 		execute("Navigation.next"); 

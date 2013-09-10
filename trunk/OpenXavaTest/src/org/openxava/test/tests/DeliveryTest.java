@@ -11,6 +11,8 @@ import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 /**
  * @author Javier Paniza
  */
@@ -1267,4 +1269,15 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("List.filter");
 		assertListRowCount(1);
 	}
+	
+	public void testDescriptionsListHiddenAfterClearCondition() throws Exception {
+		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Delivery__conditionValue___3");
+		String s = select.getAttribute("style");
+		assertTrue(Is.empty(s));
+		clearCondition("ox_OpenXavaTest_Delivery__xava_clear_condition");
+		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Delivery__conditionValue___3");
+		s = select.getAttribute("style");
+		assertTrue(Is.empty(s));
+	}
+	
 }

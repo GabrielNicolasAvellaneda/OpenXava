@@ -21,6 +21,7 @@ public class SeeMessageSelectedColorsAction extends BaseAction{
 	public void execute() throws Exception {
 		int[] selected = getTab().getSelected();	// test the old method
 		Map[] selectedKeys = getTab().getSelectedKeys();
+		if (selected == null || selectedKeys == null) return;
 		String m = "";
 		String o = "";
 		for (int i = 0; i < selected.length; i++) m+="[" + selected[i] + "]";

@@ -1,7 +1,10 @@
 package org.openxava.test.tests;
 
+import org.apache.commons.logging.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
+
+import com.gargoylesoftware.htmlunit.html.*;
 
 /**
  * 
@@ -9,6 +12,7 @@ import org.openxava.util.*;
  */
 
 public class HumanTest extends ModuleTestBase {
+	private static Log log = LogFactory.getLog(HumanTest.class);
 	
 	public HumanTest(String testName) {
 		super(testName, "Human");		
@@ -160,5 +164,15 @@ public class HumanTest extends ModuleTestBase {
 		assertNotExists("mainLanguage");
 		assertNotExists("favouriteFramework");		
 	}
-			
+
+	public void testValidValuesHiddenAfterClearCondition() throws Exception {
+		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Human__conditionValue___1");
+		String s = select.getAttribute("style");
+		assertTrue(Is.empty(s));
+		clearCondition("ox_OpenXavaTest_Human__xava_clear_condition");
+		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Human__conditionValue___1");
+		s = select.getAttribute("style");
+		assertTrue(Is.empty(s));
+	}
+				
 }

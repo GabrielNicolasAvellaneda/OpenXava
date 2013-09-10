@@ -1,31 +1,18 @@
 package org.openxava.test.tests;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.StringTokenizer;
+import java.math.*;
+import java.rmi.*;
+import java.text.*;
+import java.util.*;
 
-import javax.rmi.PortableRemoteObject;
+import javax.rmi.*;
 
-import org.openxava.jpa.XPersistence;
-import org.openxava.test.calculators.YearInvoiceDiscountCalculator;
-import org.openxava.test.model.Delivery;
-import org.openxava.test.model.DeliveryType;
-import org.openxava.test.model.Invoice;
-import org.openxava.test.model.Product;
-import org.openxava.tests.ModuleTestBase;
-import org.openxava.util.Dates;
-import org.openxava.util.Is;
-import org.openxava.util.Strings;
-import org.openxava.util.XavaPreferences;
+import org.apache.commons.logging.*;
+import org.openxava.jpa.*;
+import org.openxava.test.calculators.*;
+import org.openxava.test.model.*;
+import org.openxava.tests.*;
+import org.openxava.util.*;
 import org.openxava.web.*;
 
 import com.gargoylesoftware.htmlunit.html.*;
@@ -37,6 +24,7 @@ import com.gargoylesoftware.htmlunit.html.*;
  */
 
 public class InvoiceTest extends ModuleTestBase {
+	private static Log log = LogFactory.getLog(InvoiceTest.class);
 	
 	private Invoice invoice;
 	private BigDecimal productUnitPriceDB;
@@ -1752,6 +1740,16 @@ public class InvoiceTest extends ModuleTestBase {
 		DomNode node = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling();
 		if (!node.isDisplayed()) return false;
 		return node.toString().contains("javascript:showCalendar");
+	}
+	
+	public void testBooleanComboHiddenAfterClearCondition() throws Exception{
+		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Invoice__conditionComparator___3");
+		String s = select.getAttribute("style");
+		assertTrue(Is.empty(s));
+		clearCondition("ox_OpenXavaTest_Invoice__xava_clear_condition");
+		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Invoice__conditionComparator___3");
+		s = select.getAttribute("style");
+		assertTrue(Is.empty(s));
 	}
 	
 }
