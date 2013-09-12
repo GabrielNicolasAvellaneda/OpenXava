@@ -757,8 +757,23 @@ public class AnnotatedClassParser {
 	}
 	
 	
-	private void addConverter(PropertyMapping mapping, Type type, Columns columns) throws Exception {					
-		if (CompositeUserType.class.isAssignableFrom(Class.forName(type.type()))) {				
+	private void addConverter(PropertyMapping mapping, Type type, Columns columns) throws Exception {
+		Class typeClass = null;
+		try {
+			typeClass = Class.forName(type.type());
+		}
+		catch (ClassNotFoundException ex) {
+			// If type.type() is a type name and not a class we do not add it, this is not a problem
+			// since in JPA the data is obtained always via JPA so adding converter metadata is not needed at all.
+			// Indeed we could remove this method completely with no consequences, however we keep it for in the
+			// case we need to use JDBCTabProvider for some special cases (SQL native syntaxt for example)
+			// in the future, in that cases TypeDef would be not supported. Anyways, the combination 
+			// JPA + JDBCTabProvider + TypeDef is not a very common case.
+			
+			// If type.type() is a class name mistyped the JPA will complain, so we do not to do it here
+			return;
+		}
+		if (CompositeUserType.class.isAssignableFrom(typeClass)) { 
 			mapping.setMultipleConverterClassName(HibernateCompositeTypeConverter.class.getName());
 			
 			MetaSet typeMetaSet = new MetaSet(); 
@@ -807,7 +822,7 @@ public class AnnotatedClassParser {
 			parameterMetaSet.setPropertyName("parameters");
 			parameterMetaSet.setValue(parameters.toString());					
 			mapping.addMetaSet(parameterMetaSet);
-		}
+		}		
 	}
 
 	private void processAnnotations(MetaProperty property, AnnotatedElement element) throws XavaException {
