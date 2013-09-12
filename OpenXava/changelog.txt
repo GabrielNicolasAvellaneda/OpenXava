@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Hibernate @Type annotation fails when a @TypeDef is used as name.
 - Fix: The setHidden() method of View does not work with sections.
 - Fix: 'My reports' when tab name is too long fail. 
 - Fix: Clear condition in list hide some combos (enum, boolean and descriptionsList). 

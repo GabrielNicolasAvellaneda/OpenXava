@@ -20,7 +20,7 @@ public class Invoice3Test extends ModuleTestBase {
 	}
 	
 	// Default tabs are those from tabs.xml
-	public void assertDefaultTabs(boolean ascending) throws Exception {
+	private void assertDefaultTabs(boolean ascending) throws Exception {
 		assertListRowCount(5); 		
 		assertListColumnCount(3);
 		assertLabelInList(0, "Year");
