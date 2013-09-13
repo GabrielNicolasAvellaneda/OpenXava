@@ -30,4 +30,11 @@ class Invoice4Test extends ModuleTestBase {
 		assertValue "paid", "true"
 	}
 	
+	void testTabSetConditionValueByDate() {
+		execute "Invoice4.filterByDate"
+		assertListRowCount 2
+		assertValueInList 0, 2, "1/4/04"
+		assertValueInList 1, 2, "1/4/04"
+	}
+	
 }

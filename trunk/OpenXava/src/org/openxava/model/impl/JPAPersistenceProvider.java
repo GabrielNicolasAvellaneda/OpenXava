@@ -134,7 +134,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 	}
 
 	public ITabProvider createTabProvider() {
-		return new JPATabProvider();										
+		return new JPATabProvider();												
 	}
 
 }

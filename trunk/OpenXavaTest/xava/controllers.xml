@@ -561,8 +561,14 @@
 			class="org.openxava.test.actions.ChangeListTitleAction">
 			<set property="titleId" value="my_2002_invoices_title"/>			
 		</action>
-	</controller>	
-		
+	</controller>
+	
+	<controller name="Invoice4">
+		<extends controller="Typical"/>
+		<action name="filterByDate" 
+			class="org.openxava.test.actions.FilterInvoice4ByDateAction"/>
+	</controller>														
+				
 	<controller name="ChangeProductsPrice">			
 
 		<action name="init" hidden="true" on-init="true"
