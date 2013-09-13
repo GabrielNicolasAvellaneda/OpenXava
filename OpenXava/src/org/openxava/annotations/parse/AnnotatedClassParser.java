@@ -763,12 +763,9 @@ public class AnnotatedClassParser {
 			typeClass = Class.forName(type.type());
 		}
 		catch (ClassNotFoundException ex) {
-			// If type.type() is a type name and not a class we do not add it, this is not a problem
-			// since in JPA the data is obtained always via JPA so adding converter metadata is not needed at all.
-			// Indeed we could remove this method completely with no consequences, however we keep it for in the
-			// case we need to use JDBCTabProvider for some special cases (SQL native syntaxt for example)
-			// in the future, in that cases TypeDef would be not supported. Anyways, the combination 
-			// JPA + JDBCTabProvider + TypeDef is not a very common case.
+			// If type.type() is a type name and not a class we do not add it, this is not a big problem
+			// since in JPA most data is obtained via JPA so converters are only used for a very few things.
+			// The not supported combination is JPA + JDBCTabProvider + TypeDef, not a very common one.
 			
 			// If type.type() is a class name mistyped the JPA will complain, so we do not to do it here
 			return;

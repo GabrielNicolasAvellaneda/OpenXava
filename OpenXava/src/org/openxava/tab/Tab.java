@@ -1825,10 +1825,11 @@ public class Tab implements java.io.Serializable {
 			filterConditionValues = new String[size];
 			for (int i = 0; i < size; i++) {
 				filterConditionValues[i] = "";
-				if (((MetaProperty) metaPropertiesNC.get(i)).getName().equals(property)) {
-					filterConditionValues[i] = value==null?null:value.toString(); // A little rundimentary, maybe would be better to use a formatter
+				MetaProperty metaProperty = (MetaProperty) metaPropertiesNC.get(i);
+				if (metaProperty.getName().equals(property)) {
+					filterConditionValues[i] = value==null?null:metaProperty.format(value, Locales.getCurrent()); 
 					filtered = true;
-				}
+				}				
 			}
 		}	
 	}
