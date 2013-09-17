@@ -576,12 +576,7 @@ public class ModuleTestBase extends TestCase {
 	 * Execute the action clicking in the link or button.
 	 */
 	protected void execute(String action) throws Exception {
-		// Before click in the buttom, we blur from the current element		
-		HtmlElement focusedElement = page.getFocusedElement();
-		if (focusedElement != null) {			
-			focusedElement.blur();
-		}
-				
+		waitUntilPageIsLoaded(); // Needed when a setValue() before throws an onchange action (not easily reproducible, depend on performance)
 		throwChangeOfLastNotNotifiedProperty();		
 		if (page.getElementsByName(Ids.decorate(application, module, ACTION_PREFIX + "." + action)).size() > 1) { // Action of list/collection
 			execute(action, null);
