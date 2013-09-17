@@ -1828,7 +1828,8 @@ public class View implements java.io.Serializable {
 		}
 
 		collectionTotals = null;
-		setIdFocusProperty(null);		
+		setIdFocusProperty(null);
+		setFocusCurrentId(null); 
 		setCollectionDetailVisible(false);
 		resetRecalculatedProperties(); 
 		if (values == null) return;		

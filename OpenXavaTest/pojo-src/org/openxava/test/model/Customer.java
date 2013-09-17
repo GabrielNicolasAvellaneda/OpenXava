@@ -20,7 +20,7 @@ import org.openxava.test.actions.*;
 	@View( members= 	
 		"number;" +
 		"type;" +
-		"name, Customer.changeNameLabel();" +		
+		"name, Customer.changeNameLabel();" +
 		"photo;" +
 		"telephone, email;" +
 		"website;" +

@@ -18,6 +18,5 @@ public class WarehouseSpecialNewTest extends ModuleTestBase {
 		assertNoErrors();
 		assertMessagesCount(2);
 	}
-
-		
+	
 }

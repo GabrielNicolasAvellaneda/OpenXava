@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Clearing the view does not put the focus in the correct place when the action is called from a keystroke.
+- Fix: An on-change action can be execute twice sometimes from tests.
+- Fix: When in a test a setValue() throws an on-change action then next execute() fails sometimes.
 - Fix: The setConditionValue() method of Tab fails with dates.
 - Fix: Hibernate @Type annotation fails when a @TypeDef is used as name.
 - Fix: The setHidden() method of View does not work with sections.

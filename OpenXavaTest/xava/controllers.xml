@@ -634,7 +634,7 @@
 			image="new.gif"
 			keystroke="Control N">
 			<set property="restoreModel" value="true"/>			
-		</action>			
+		</action>
 	</controller>
 	
 	<controller name="MyReference">
