@@ -94,7 +94,8 @@
 				if ((e.ctrlKey) && (kdCode == 67 || kdCode == 86 || kdCode == 88)){ // allows controll key & copy(c=67), past (v=86), cut (v=88) or the delete key (46)
 					return true;
 				}
-				if (kdCode == 8 || kdCode == 9 || kdCode == 35 || kdCode == 36 || kdCode == 37 || kdCode == 39 || kdCode == 46){ // allows the backspace (8), tab (9), enter 13, end (35), home(36), left(37) and right(39) arrows key to function in some browsers (FF & O)
+				// kdCode == 13 added by Javier Paniza
+				if (kdCode == 8 || kdCode == 9 || kdCode == 13 || kdCode == 35 || kdCode == 36 || kdCode == 37 || kdCode == 39 || kdCode == 46){ // allows the backspace (8), tab (9), enter 13, end (35), home(36), left(37) and right(39) arrows key to function in some browsers (FF & O)
 					return true;
 				}
 				if (allowed.indexOf(cCode) == -1){// checks for allowed characters
