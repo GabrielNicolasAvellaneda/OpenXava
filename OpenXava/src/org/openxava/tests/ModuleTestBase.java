@@ -779,7 +779,7 @@ public class ModuleTestBase extends TestCase {
 
 	protected void executeDefaultAction() throws Exception {
  		HtmlButton button = getForm().getButtonByName("xava.DEFAULT_ACTION");
- 		page = (HtmlPage) button.click();		
+ 		page = (HtmlPage) button.click();
 		resetForm();
 		restorePage(); 
 	}
