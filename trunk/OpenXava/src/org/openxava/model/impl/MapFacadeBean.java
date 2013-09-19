@@ -468,6 +468,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				// If not (as in ManyToMany relationship), we update the collection in parent
 				Object parent = findEntity(parentMetaModel, keyValues);
 				Object child = findEntity(childMetaModel, collectionElementKeyValues);
+				if (metaCollection.hasInverseCollection()) {
+					Object theChild = child;
+					child = parent;
+					parent = theChild;
+					collectionName = metaCollection.getInverseCollection(); 
+				}				
 				PropertiesManager pm = new PropertiesManager(parent);
 				Collection collection = (Collection) pm.executeGet(collectionName);
 				collection.remove(child);
@@ -521,15 +527,21 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 		else {
 			// If not (as in ManyToMany relationship), we update the collection in parent
-			Object parent = findEntity(parentMetaModel, keyValues);
+			Object parent = findEntity(parentMetaModel, keyValues);			
 			Object child = findEntity(childMetaModel, collectionElementKeyValues);
+			if (metaCollection.hasInverseCollection()) {
+				Object theChild = child;
+				child = parent;
+				parent = theChild;
+				collectionName = metaCollection.getInverseCollection(); 
+			}
 			PropertiesManager pm = new PropertiesManager(parent);
 			Collection collection = (Collection) pm.executeGet(collectionName);
 			if (collection == null) {
 				collection = new HashSet();
 				pm.executeSet(collectionName, collection);
 			}
-			collection.add(child);
+			collection.add(child);			 		
 		}		
 	}
 		

@@ -24,6 +24,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private int maximum; 
 	private String condition;
 	private String order;
+	private String inverseCollection;  
 	private boolean orphanRemoval; 
 	
 	private MetaReference metaReference;
@@ -319,6 +320,18 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 
 	public boolean isOrphanRemoval() {
 		return orphanRemoval;
+	}
+
+	public String getInverseCollection() {
+		return inverseCollection;
+	}
+
+	public void setInverseCollection(String inverseCollection) {
+		this.inverseCollection = inverseCollection;
+	}
+	
+	public boolean hasInverseCollection() { 
+		return !Is.emptyString(inverseCollection);
 	}
 
 }
