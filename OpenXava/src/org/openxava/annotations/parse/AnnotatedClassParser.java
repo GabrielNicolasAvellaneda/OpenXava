@@ -1267,10 +1267,15 @@ public class AnnotatedClassParser {
 			}
 			collection.setOrphanRemoval(oneToMany.orphanRemoval());
 		}
-		else if (element.isAnnotationPresent(Condition.class)){			
+		else if (element.isAnnotationPresent(ManyToMany.class)) {
+			ManyToMany manyToMany = element.getAnnotation(ManyToMany.class);
+			collection.setInverseCollection(manyToMany.mappedBy());
+			// For the rest ManyToMany collections are processed as calculated one
+		}
+		else if (element.isAnnotationPresent(Condition.class)) {			
 			collection.setMetaCalculator(null); 
 		}		
-		// ManyToMany collections are processed as calculated one
+		
 		if (element.isAnnotationPresent(javax.validation.constraints.Size.class)) {
 			javax.validation.constraints.Size size = element.getAnnotation(javax.validation.constraints.Size.class);
 			collection.setMinimum(size.min());
