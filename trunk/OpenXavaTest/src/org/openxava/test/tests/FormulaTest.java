@@ -23,6 +23,8 @@ public class FormulaTest extends ModuleTestBase {
 		super(testName, "Formula");		
 	}
 	
+	
+	
 	public void testOnSelectElementActionAndSelectedAndSelectedAllAndPaging() throws Exception{
 		setConditionValues("L'AJUNTAMENT");
 		execute("List.filter");
