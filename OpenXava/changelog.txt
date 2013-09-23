@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @OnChange actions do not work in both mode.
 - It's possible to add JavaScript functions to release resources to editors.
 - Fix: HtmlText editor produces a JavaScript error when changing the mode or section.
 - Fix: Adding and removing elements in the not owning side of a @ManyToMany collection does not work. 
@@ -14,7 +15,7 @@ Change Log for OpenXava project
 - Fix: 'My reports' when tab name is too long fail. 
 - Fix: Clear condition in list hide some combos (enum, boolean and descriptionsList). 
 - Fix: Subcontrollers do not change when the container controller is changed by code.
-- Fix: subcontrollers do not show the actions according the mode (list, detail or both).
+- Fix: Subcontrollers do not show the actions according the mode (list, detail or both).
 - Fix: Using getSelectedObjects() from an @OnSelectElementAction in calculated collections fails.
 - Fix: When there are selected rows 'My reports' prints only the selected ones. 
 - Fix: Ignoring accents for string arguments in the filter fails on some machines. 

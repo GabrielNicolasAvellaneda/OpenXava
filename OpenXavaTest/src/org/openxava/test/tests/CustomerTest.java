@@ -307,7 +307,8 @@ public class CustomerTest extends ModuleTestBase {
 		assertValidValues("type", validValues);
 	}
 	
-	public void testOnChangeAction() throws Exception {   				
+	public void testOnChangeAction() throws Exception {
+		execute("Mode.split"); // To test a case
 		execute("CRUD.new");		
 		assertValue("type", usesAnnotatedPOJO()?"0":"1");		
 		setValue("name", "PEPE");
