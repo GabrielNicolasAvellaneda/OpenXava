@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Application does not start with Tomcat 7 inside Eclipse in Windows.
+- TLDs moved from openxava.jar to openxava.tld in WEB-INF (to work with Tomcat 7 + Eclipse WTP in Windows).
 - Fix: @OnChange actions do not work in both mode.
 - It's possible to add JavaScript functions to release resources to editors.
 - Fix: HtmlText editor produces a JavaScript error when changing the mode or section.
