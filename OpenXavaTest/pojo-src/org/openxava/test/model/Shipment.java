@@ -51,7 +51,7 @@ public class Shipment {
 	@Column(length=50) @Required
 	private String description;
 	
-	@Editor(forViews="SeparatedTime", value="DateTimeSeparatedCalendar") 
+	@Editor(forViews="SeparatedTime", value="DateTimeSeparatedCalendar")
 	private Timestamp time;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

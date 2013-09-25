@@ -500,8 +500,14 @@ public class Tab implements java.io.Serializable {
 						}
 						Object v = p.parse(value.toString(), getLocale());
 						if (v instanceof Timestamp && EQ_COMPARATOR.equals(this.conditionComparators[i])) {
-							valuesToWhere.add(Dates.cloneWithoutTime((Timestamp) v));
-							valuesToWhere.add(Dates.cloneWith2359((Timestamp) v));
+							if (Dates.hasTime((Timestamp) v)) {
+								valuesToWhere.add(v);
+								valuesToWhere.add(v);
+							}
+							else {
+								valuesToWhere.add(Dates.cloneWithoutTime((Timestamp) v));
+								valuesToWhere.add(Dates.cloneWith2359((Timestamp) v));								
+							}
 							comparatorsToWhere.add(this.conditionComparators[i]);
 							comparatorsToWhere.add(this.conditionComparators[i]);
 						}
