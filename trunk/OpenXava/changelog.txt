@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Time part of Timestamp properties cannot be used for filtering in list.
+- New method hasTime() in Dates. 
 - Fix: Application does not start with Tomcat 7 inside Eclipse in Windows.
 - TLDs moved from openxava.jar to openxava.tld in WEB-INF (to work with Tomcat 7 + Eclipse WTP in Windows).
 - Fix: @OnChange actions do not work in both mode.

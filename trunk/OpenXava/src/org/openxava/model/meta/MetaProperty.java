@@ -866,7 +866,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			
 			if (java.sql.Timestamp.class.isAssignableFrom(type)) {
 				if (emptyString) return null;
-				java.util.Date date = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
+				java.util.Date date = null;
+				try {
+					date = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale).parse(value); 
+				}
+				catch (ParseException ex) {
+					date = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
+				}
 				return new Timestamp(date.getTime());
 			}		
 			

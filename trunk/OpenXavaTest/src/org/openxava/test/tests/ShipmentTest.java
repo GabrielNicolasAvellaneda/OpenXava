@@ -162,6 +162,17 @@ public class ShipmentTest extends ModuleTestBase {
 		assertListRowCount(1);
 		assertValueInList(0, "description", "CINC");	
 		assertValueInList(0, "time", "12/25/06 11:33 AM"); 
+		
+		setConditionValues( new String [] { "", "", "12/25/06 11:32 AM"} );
+		setConditionComparators(new String [] { "=", "=", "="}); 
+		execute("List.filter");
+		assertListRowCount(0);
+		
+		setConditionValues( new String [] { "", "", "12/25/06 11:33 AM"} );
+		execute("List.filter");
+		assertListRowCount(1);
+		assertValueInList(0, "description", "CINC");	
+		assertValueInList(0, "time", "12/25/06 11:33 AM");
 	}
 	
 	private void deleteCustomerAndContactPerson(int number) throws Exception {

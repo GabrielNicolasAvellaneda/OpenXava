@@ -133,6 +133,23 @@ public class Dates {
 	}
 	
 	/**
+	 * If the hours, minutes, seconds and milliseconds are zero. <p>
+	 * 
+	 * @return If argument is null it return false, without throwing exception.
+	 * @since 4.8.1
+	 */
+	public static boolean hasTime(Date date) { 
+		if (date == null) return false;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return 
+			cal.get(Calendar.HOUR_OF_DAY) != 0 || 
+			cal.get(Calendar.MINUTE) != 0 ||
+			cal.get(Calendar.SECOND) != 0 ||
+			cal.get(Calendar.MILLISECOND) != 0;
+	}
+	
+	/**
 	 * Returns a clone but without hours, minutes, seconds and milliseconds. <p>
 	 * 
 	 * @return If null if sent a null is returned.
@@ -375,6 +392,16 @@ public class Dates {
 				
 		return df;
 	}
+	
+	/**
+	 * 
+	 * @since 4.8.1
+	 */
+	public static String dateFormatForJSCalendar(Locale locale, boolean includeTime) { 		
+		if (includeTime) return dateTimeFormatForJSCalendar(locale);
+		return dateFormatForJSCalendar(locale);
+	}	
+
 	
 	public static String dateFormatForJSCalendar(Locale locale) {		
 		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
