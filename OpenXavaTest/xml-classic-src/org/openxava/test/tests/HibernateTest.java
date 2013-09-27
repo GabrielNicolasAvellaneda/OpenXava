@@ -57,7 +57,9 @@ public class HibernateTest extends TestCase {
 		c1.setNumber(6);
 		c1.setName("SIX");
 		XHibernate.getSession().save(c1);
-		XHibernate.commit(); 		
+		XHibernate.commit(); 
+		
+		XHibernate.getSession().delete(c1);
 	}
 	
 	public void testFinderThrowsObjectNotFound() throws Exception { 

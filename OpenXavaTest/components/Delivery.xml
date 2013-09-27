@@ -161,7 +161,7 @@
 					employee;			
 				</group>
 			</group>
-			<section name="remarks">advice, shortcut; remarks</section>
+			<section name="comments">advice, shortcut; remarks</section>
 			<section name="incidents">incidents</section>
 			<section name="details">
 				<group name="details">
