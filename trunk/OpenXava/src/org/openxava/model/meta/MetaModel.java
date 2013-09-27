@@ -1363,6 +1363,7 @@ abstract public class MetaModel extends MetaElement {
 					}
 				}
 				else {
+					if (isViewProperty((String)en.getKey())) continue;
 					MetaProperty property = getMetaProperty((String)en.getKey());
 					if (property.isReadOnly()) continue; 
 					Object value = en.getValue();
@@ -1498,6 +1499,10 @@ abstract public class MetaModel extends MetaElement {
 		return toStringValue.toString();
 	}	
 	
+	private boolean isViewProperty(String name) { // View properties only exist in XML components
+		if (isAnnotatedEJB3()) return false;
+		return getMapMetaPropertiesView().containsKey(name);
+	}
 
 	public Collection getViewPropertiesNames() {
 		return Collections.unmodifiableCollection(getMapMetaPropertiesView().keySet());

@@ -1,12 +1,18 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Time part of Timestamp properties cannot be used for filtering in list.
-- New method hasTime() in Dates. 
-- Fix: Application does not start with Tomcat 7 inside Eclipse in Windows.
-- TLDs moved from openxava.jar to openxava.tld in WEB-INF (to work with Tomcat 7 + Eclipse WTP in Windows).
-- Fix: @OnChange actions do not work in both mode.
+OpenXava 4.8.1 (2013-9-30)
+--------------------------
+- OpenXavaTest now includes Selenium tests for visual testing of views.
 - It's possible to add JavaScript functions to release resources to editors.
+- New method hasTime() in Dates.
+- TLDs moved from openxava.jar to openxava.tld in WEB-INF (to work with Tomcat 7 + Eclipse WTP in Windows).
+- Some new common use labels to be used in applications.
+- Fall-back encoding now is UTF-8 (before it was ISO-8859-1), however it still tries to use the system encoding first. 
+- Fix: Calling to View.getEntity() when the view has view properties fails (only for XML components).
+- Fix: Time part of Timestamp properties cannot be used for filtering in list.
+- Fix: Application does not start with Tomcat 7 inside Eclipse in Windows.
+- Fix: @OnChange actions do not work in both mode.
 - Fix: HtmlText editor produces a JavaScript error when changing the mode or section.
 - Fix: Adding and removing elements in the not owning side of a @ManyToMany collection does not work. 
 - Fix: Pressing ENTER from a numeric field does not execute the default action.
@@ -23,21 +29,18 @@ Change Log for OpenXava project
 - Fix: Using getSelectedObjects() from an @OnSelectElementAction in calculated collections fails.
 - Fix: When there are selected rows 'My reports' prints only the selected ones. 
 - Fix: Ignoring accents for string arguments in the filter fails on some machines. 
-- Some new common use labels to be used in applications.
 - Fix: Combining @OneToOne and @OnChange produces a 'Duplicate Component' error.
 - Fix: Floats and doubles are truncated on display.
 - Fix: # in root view with groups in the view does not work.
 - Fix: # in groups and sections to align by columns does not work.
 - Fix: XML component with a validator that uses 'from' fails if the view has a view property.
 - Fix: Links of several actions associated to the same property are too close.
-- Fall-back encoding now is UTF-8 (before it was ISO-8859-1), however it still tries to use the system encoding first. 
 - Fix: Incorrect encoding in the first page load. 
 - Fix: Removing a property of a stored 'My reports' report does not work.
 - Fix: Some labels for 'My reports' are not translated.
 - Fix: New (still BETA) renderer failed to align by columns in section.
 - Fix: Some groups or properties overflowed the view with new (still BETA) renderer.
 - Fix: Collections and group within the same line were displayed too close with new (still BETA) renderer.
-- OpenXavaTest now includes Selenium tests for visual testing of views. 
 
 OpenXava 4.8 (2013-7-23)
 ------------------------
