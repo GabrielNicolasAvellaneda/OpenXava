@@ -101,7 +101,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 	} 
 	String actionOnClick = Actions.getActionOnClick(
 		request.getParameter("application"), request.getParameter("module"), 
-		onSelectCollectionElementAction, f, idCollection, idRow,
+		onSelectCollectionElementAction, f, viewName, idRow,
 		selectedRowStyle, rowStyle, 
 		onSelectCollectionElementMetaAction, tabObject);
 %>

@@ -376,6 +376,10 @@ TD.list-title {
 	outline: none;
 }
 
+.ox-action-link {
+	margin-left: 7px;
+}
+
 .ox-help img {
 	border: 0;
 	padding-top: 5px;
@@ -420,7 +424,6 @@ TD.list-title {
 }
 
 .ox-layout-label {
-	
 }
 
 .ox-layout-row-spacer {
@@ -428,11 +431,10 @@ TD.list-title {
 }
 
 .ox-layout-data-cell {
-	white-space:nowrap;
+	
 }
 
 .ox-layout-data {
-	white-space:nowrap;
 }
 
 /* subcontroller --------> */
