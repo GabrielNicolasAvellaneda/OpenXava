@@ -96,6 +96,7 @@ openxava.refreshPage = function(result) {
 		if (result.showDialog || result.resizeDialog) { 
 			dialog = openxava.getDialog(result.application, result.module);
 		}
+		openxava.destroyEditors(); 
 		openxava.strokeActions = result.strokeActions;
 		var changedParts = result.changedParts;
 		for (var id in changedParts) {			
@@ -161,7 +162,7 @@ openxava.initUI = function(application, module, currentRow) {
 	openxava.clearLists(application, module); 
 	openxava.initLists(application, module);
 	if (typeof currentRow != "undefined") {
-		openxava.initEditors(application, module);
+		openxava.initEditors(); 
 	}
 	openxava.initSelectedRows();
 	openxava.initCurrentRow(application, module, currentRow);	
@@ -309,6 +310,14 @@ openxava.setListsSize = function(application, module, type, percentage) {
 	});		
 }
 
+openxava.addEditorDestroyFunction = function(destroyFunction) { 
+	if (openxava.editorsDestroyFunctionsClosed) return; 
+	if (openxava.editorsDestroyFunctions == null) {
+		openxava.editorsDestroyFunctions = new Array();	
+	}
+	openxava.editorsDestroyFunctions.push(destroyFunction);	
+}
+
 openxava.addEditorInitFunction = function(initFunction) {
 	if (openxava.editorsInitFunctionsClosed) return; 
 	if (openxava.editorsInitFunctions == null) {
@@ -317,7 +326,14 @@ openxava.addEditorInitFunction = function(initFunction) {
 	openxava.editorsInitFunctions.push(initFunction);	
 }
 
-openxava.initEditors = function(application, module) { 
+openxava.destroyEditors = function() {   
+	if (openxava.editorsDestroyFunctions == null) return;	
+	for (var i in openxava.editorsDestroyFunctions) {
+		openxava.editorsDestroyFunctions[i]();
+	}
+}
+
+openxava.initEditors = function() { 
 	if (openxava.editorsInitFunctions == null) return;	
 	for (var i in openxava.editorsInitFunctions) {
 		openxava.editorsInitFunctions[i]();
@@ -644,7 +660,7 @@ openxava.clearConditionValuesTo = function(application, module, prefix) {
 		element.value = '';
 		element.style.display='none';
 		element = form.elements[elementName + (++i)];
-		$(element).next().hide();
+		$(element).next().hide();	// calendar image
 	}
 }
 

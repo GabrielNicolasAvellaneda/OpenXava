@@ -1,3 +1,5 @@
+<% Servlets.setCharacterEncoding(request, response); %> <%-- Must be the very first, in order character encoding takes effect --%>
+
 <%@ include file="imports.jsp"%>
 
 <%@page import="java.io.File"%>
@@ -11,10 +13,9 @@
 <%@page import="org.openxava.web.dwr.Module"%>
 <%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.openxava.web.Ids"%>
-<%@page import="org.openxava.web.servlets.Servlets"%>
-<%@page import="org.openxava.web.servlets.Servlets"%>
 <%@page import="org.apache.commons.logging.LogFactory" %>
 <%@page import="org.apache.commons.logging.Log" %>
+
 
 <%!private static Log log = LogFactory.getLog("module.jsp");
 
@@ -43,7 +44,6 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
-	Servlets.setCharacterEncoding(request, response);
 	Locales.setCurrent(request);	
 	request.getSession().setAttribute("xava.user",
 			request.getRemoteUser());
@@ -303,4 +303,3 @@ document.additionalParameters="<%=getAdditionalParameters(request)%>";
 <% }
 manager.commit();
 %>
-
