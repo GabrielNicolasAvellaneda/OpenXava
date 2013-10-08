@@ -8,26 +8,25 @@ import org.apache.commons.logging.*;
 import org.openxava.session.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
-import org.openxava.view.meta.*;
 
 /**
  * 
  * @author Javier Paniza
  */
 
-public class GenerateCustomReportAction extends GenerateReportAction {
+public class GenerateMyReportAction extends GenerateReportAction {
 	
-	private static Log log = LogFactory.getLog(GenerateCustomReportAction.class);
+	private static Log log = LogFactory.getLog(GenerateMyReportAction.class);
 	
 	@Inject
-	private CustomReport customReport; 
+	private MyReport myReport; 
 	
 	public void execute() throws Exception {		
 		super.execute();		
 		getRequest().getSession().removeAttribute("xava_selectedRowsReportTab"); 
 		getRequest().getSession().removeAttribute("xava_selectedKeysReportTab"); 
 		
-		customReport.setName(getView().getValueString("name")); 
+		myReport.setName(getView().getValueString("name")); 
 		Tab tab = new Tab();
 		tab.setModelName(getTab().getModelName());
 		tab.setTabName(getTab().getTabName());
@@ -37,17 +36,17 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 		Collection<String> values = new ArrayList<String>();
 		StringBuffer order = new StringBuffer();
 		int columnCountLimit = 0;
-		for (CustomReportColumn column: customReport.getColumns()) {
+		for (MyReportColumn column: myReport.getColumns()) {
 			if (column.isHidden()) continue;
 			addColumn(tab, comparators, values, order, column);
 			columnCountLimit++;
 		}			
-		for (CustomReportColumn column: customReport.getColumns()) {
+		for (MyReportColumn column: myReport.getColumns()) {
 			if (column.isHidden()) {
 				addColumn(tab, comparators, values, order, column);
 			}
 		}
-		if (customReport.getColumns().size() > columnCountLimit) {
+		if (myReport.getColumns().size() > columnCountLimit) {
 			getRequest().getSession().setAttribute("xava_columnCountLimitReportTab", columnCountLimit);
 		}
 		if (order.length() > 0) {
@@ -57,10 +56,10 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 		tab.setConditionValues(values);
 		
 		try {
-			customReport.save(); 
+			myReport.save(); 
 		}
 		catch (Exception ex) {
-			log.warn(XavaResources.getString("customer_report_save_problems"), ex);
+			log.warn(XavaResources.getString("my_report_save_problems"), ex);
 		}
 		getRequest().getSession().setAttribute("xava_reportTab", tab);		
 		closeDialog();
@@ -68,7 +67,7 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 
 	private void addColumn(Tab tab, Collection<String> comparators,
 			Collection<String> values, StringBuffer order,
-			CustomReportColumn column) {
+			MyReportColumn column) {
 		tab.addProperty(column.getName());
 		tab.setLabel(column.getName(), column.getLabel()); 
 		if (column.isCalculated())
@@ -86,7 +85,7 @@ public class GenerateCustomReportAction extends GenerateReportAction {
 			order.append("${");
 			order.append(column.getName());
 			order.append("} ");
-			order.append(column.getOrder() == CustomReportColumn.Order.ASCENDING?"ASC":"DESC");				
+			order.append(column.getOrder() == MyReportColumn.Order.ASCENDING?"ASC":"DESC");				
 		}
 		if (column.isSum()) {
 			tab.addSumProperty(column.getName());

@@ -66,41 +66,41 @@ public class ProductTest extends ModuleTestBase {
 	}
 	*/
 	
-	public void testSumInCustomReport() throws Exception { 
+	public void testSumInMyReport() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		
 		assertValueInCollection("columns", 0, 0, "Number");		
-		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=0,viewObject=xava_view_columns");
 		assertExists("sum");
 		closeDialog();
 		
 		assertValueInCollection("columns", 1, 0, "Description");		
-		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
 		assertNotExists("sum");
 		closeDialog();
 				
 		assertValueInCollection("columns", 3, 0, "Unit price in pesetas");		
-		execute("CustomReport.editColumn", "row=3,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=3,viewObject=xava_view_columns");
 		assertNotExists("sum");
 		closeDialog();			
 		
 		assertValueInCollection("columns", 2, 0, "Unit price");
 		assertValueInCollection("columns", 2, 4, "No");
-		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
 		setValue("sum", "true");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 2, 4, "Yes");
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		assertPopupPDFLinesCount(12); // There are 7 products
 		assertPopupPDFLine(10, "629"); // The sum of the 7 product, if the price of some product has been changed you have to change this value
 
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 2, 4, "Yes");
-		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
 		setValue("sum", "false");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 2, 4, "No");
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		
 		assertPopupPDFLinesCount(11); // There are 7 products, but now without the summation
 	}

@@ -977,7 +977,12 @@
 		<delete file="../${project}/web/xava/comparatorsCombo.jsp"/>
 		<delete file="../${project}/web/xava/comparatorsDescriptionsList.jsp"/>
 		<delete file="../${project}/web/xava/comparatorsValidValuesCombo.jsp"/>
-		
+		<!-- Delete renamed JSPs -->
+		<delete file="../${project}/web/xava/editors/customReportNameEditor.jsp"/>
+		<delete file="../${project}/web/xava/editors/customReportColumnNameEditor.jsp"/>
+		<delete file="../${project}/web/xava/editors/customReportColumnComparatorEditor.jsp"/>
+		<delete file="../${project}/web/xava/editors/customReportColumnValidValuesValueEditor.jsp"/>
+		<delete file="../${project}/web/xava/editors/customReportColumnDescriptionsListValueEditor.jsp"/>
 	</target>
 
 	<target name="defineHibernateTool">

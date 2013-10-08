@@ -10,26 +10,26 @@ import org.openxava.session.*;
 public class MyReportsAction extends TabBaseAction {
 	
 	@Inject
-	private CustomReport customReport; 
+	private MyReport myReport; 
 
 	public void execute() throws Exception {
 		setNextMode(DETAIL);
 		showDialog();	
 		getView().setTitleId("myReports");
-		customReport = CustomReport.createEmpty(getTab()); 
-		getView().setModel(customReport);			
-		if (customReport.getAllNames().length > 0) {
+		myReport = MyReport.createEmpty(getTab()); 
+		getView().setModel(myReport);			
+		if (myReport.getAllNames().length > 0) {
 			getView().setEditable("name", false);
-			getView().addActionForProperty("name", "CustomReport.createNew");
-			getView().setValueNotifying("name", customReport.getLastName()); 
-			customReport = (CustomReport) getView().getModel(); 
+			getView().addActionForProperty("name", "MyReport.createNew");
+			getView().setValueNotifying("name", myReport.getLastName()); 
+			myReport = (MyReport) getView().getModel(); 
 		}
 		else {
-			customReport = CustomReport.create(getTab()); 
-			getView().setModel(customReport);			
+			myReport = MyReport.create(getTab()); 
+			getView().setModel(myReport);			
 		}
-		getView().addActionForProperty("name", "CustomReport.remove");						
-		setControllers("CustomReport");
+		getView().addActionForProperty("name", "MyReport.remove");						
+		setControllers("MyReport");
 	}
 	
 }

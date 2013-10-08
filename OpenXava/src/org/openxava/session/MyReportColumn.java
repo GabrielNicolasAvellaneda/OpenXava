@@ -14,7 +14,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class CustomReportColumn implements java.io.Serializable {
+public class MyReportColumn implements java.io.Serializable {
 	
 	private final static String COLUMN = "column";
 	private final static String NAME = "name";
@@ -30,9 +30,9 @@ public class CustomReportColumn implements java.io.Serializable {
 	private final static String HIDDEN = "hidden"; 
 	
 	@Hidden
-	private CustomReport report;
+	private MyReport report;
 		
-	@OnChange(OnChangeCustomReportColumnNameAction.class)
+	@OnChange(OnChangeMyReportColumnNameAction.class)
 	@Required
 	private String name;
 	
@@ -140,11 +140,11 @@ public class CustomReportColumn implements java.io.Serializable {
 		this.validValuesValue = validValuesValue;
 	}
 
-	public CustomReport getReport() {
+	public MyReport getReport() {
 		return report;
 	}
 
-	public void setReport(CustomReport report) {
+	public void setReport(MyReport report) {
 		this.report = report;
 	}
 

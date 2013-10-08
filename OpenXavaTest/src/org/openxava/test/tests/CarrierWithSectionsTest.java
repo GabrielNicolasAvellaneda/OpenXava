@@ -17,7 +17,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		super(testName, "CarrierWithSections");
 	}
 	
-	public void testCustomReport() throws Exception { 
+	public void testMyReports() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		assertDialogTitle("My reports"); 
 		assertValue("name", "Carrier report");
@@ -26,7 +26,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
 
-		execute("CustomReport.columnUp", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.columnUp", "row=2,viewObject=xava_view_columns"); 
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Name");
 		assertValueInCollection("columns", 2, 0, "Number");
@@ -34,12 +34,13 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		reload();
 		assertDialogTitle("My reports");  
 		
-		execute("CustomReport.columnDown", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.columnDown", "row=0,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Name");
 		assertValueInCollection("columns", 1, 0, "Calculated");
 		assertValueInCollection("columns", 2, 0, "Number");
 		
-		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
+		assertDialogTitle("Edit - Report column"); 
 		assertValue("name", "calculated");
 		assertValue("label", "Calculated"); 
 		assertNotExists("comparator");
@@ -69,11 +70,12 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		
 		execute("Collection.hideDetail");
 		
-		execute("CustomReport.removeColumn", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.removeColumn", "row=1,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Name");
 		assertValueInCollection("columns", 1, 0, "Number");
 		
 		execute("Collection.new", "viewObject=xava_view_columns");
+		assertDialogTitle("Create a new entity - Report column");
 		String [][] validColumnNames = {
 			{ "", "" },	
 			{ "number", "number" },
@@ -127,7 +129,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValidValues("comparator", numberComparators); 
 		
 		setValue("value", "1");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "Name");
 		assertValueInCollection("columns", 0, 1, "");
@@ -143,7 +145,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		setValue("name", "name");
 		setValue("comparator", "eq_comparator"); 
 		setValue("value", "UNO");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertError("Column name not added to report. Already exists");
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "Name");
@@ -156,11 +158,11 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 1, "=");
 		assertValueInCollection("columns", 2, 2, "1");
 				
-		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=0,viewObject=xava_view_columns");
 		assertValue("name", "name");
 		setValue("comparator", "starts_comparator"); 
 		setValue("value", "c"); // In lowercase to verify that it's case insensitive
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "Name");
 		assertValueInCollection("columns", 0, 1, "starts"); 
@@ -174,7 +176,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		
 						
 		setValue("name", "jUnit Carrier report");
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		
 		assertPopupPDFLinesCount(5); // Instead of 9, because of warehouse.zoneNumber = 1 and name like 'c%' condition 
 		assertPopupPDFLine(1, "jUnit Carrier report");
@@ -182,10 +184,10 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertPopupPDFLine(3, "CUATRO 4 1");
 		
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 	}
 	
-	public void testCustomReportWithHiddenProperties() throws Exception { 
+	public void testMyReportWithHiddenProperties() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		setValue("name", "Carriers of zone 2");
 		assertCollectionRowCount("columns", 3);
@@ -197,7 +199,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		setValue("name", "warehouse.zoneNumber");
 		setValue("value", "2");
 		setValue("hidden", "true");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 
 		assertCollectionRowCount("columns", 4);
 		assertValueInCollection("columns", 0, 0, "Calculated");
@@ -208,7 +210,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 3, 2, "2");
 		assertValueInCollection("columns", 3, 5, "Yes");
 		
-		execute("CustomReport.columnUp", "row=3,viewObject=xava_view_columns");
+		execute("MyReport.columnUp", "row=3,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Zone of Warehouse");
@@ -217,7 +219,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 5, "Yes");
 		assertValueInCollection("columns", 3, 0, "Name");
 
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 
 		assertPopupPDFLinesCount(5); // Instead of 9, because of warehouse.zoneNumber = 1 and name like 'c%' condition 
 		assertPopupPDFLine(1, "Carriers of zone 2");
@@ -234,11 +236,11 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 5, "Yes");
 		assertValueInCollection("columns", 3, 0, "Name");
 		
-		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
 		assertValue("hidden", "true");
 		closeDialog();
 		
-		execute("CustomReport.generateExcel");
+		execute("MyReport.generateExcel");
 		assertContentTypeForPopup("text/x-csv");		
 		StringTokenizer excel = new StringTokenizer(getPopupText(), "\n\r");
 		String header = excel.nextToken();
@@ -248,27 +250,27 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertTrue("Only one line must be generated", !excel.hasMoreTokens());		
 
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.remove", "xava.keyProperty=name");		
+		execute("MyReport.remove", "xava.keyProperty=name");		
 	}
 	
-	public void testCustomReportFilteringByExactStringAndOrdering() throws Exception {
+	public void testMyReportFilteringByExactStringAndOrdering() throws Exception {
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 2, 0, "Name");
-		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
 		setValue("comparator", "eq_comparator"); 
 		setValue("value", "UNO");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 2, 0, "Name");
 		assertValueInCollection("columns", 2, 1, "=");
 		assertValueInCollection("columns", 2, 2, "UNO");
-		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
 		assertValue("comparator", "eq_comparator"); 
 		assertValue("value", "UNO");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 2, 0, "Name");
 		assertValueInCollection("columns", 2, 1, "=");
 		assertValueInCollection("columns", 2, 2, "UNO");		
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		
 		assertPopupPDFLinesCount(5); // Instead of 9, because of name = 'UNO' 
 		assertPopupPDFLine(1, "Carrier report");
@@ -277,16 +279,16 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		
 		checkRow(3); // To test that checked rows are ignored in custom reports
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.remove", "xava.keyProperty=name"); 		
+		execute("MyReport.remove", "xava.keyProperty=name"); 		
 		assertValueInCollection("columns", 1, 0, "Number");
-		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
 		setValue("order", "1"); // DESCENDING
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 1, 1, ""); 
 		assertValueInCollection("columns", 1, 2, "");
 		assertValueInCollection("columns", 1, 3, "Descending");
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		
 		assertPopupPDFLinesCount(9);  
 		assertPopupPDFLine(1, "Carrier report");
@@ -295,7 +297,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertPopupPDFLine(7, "TR 1 UNO");
 		
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.generateExcel");
+		execute("MyReport.generateExcel");
 		assertContentTypeForPopup("text/x-csv");		
 		StringTokenizer excel = new StringTokenizer(getPopupText(), "\n\r");
 		String header = excel.nextToken();
@@ -308,23 +310,23 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertTrue("Only five lines must be generated", !excel.hasMoreTokens());		
 		
 		execute("ExtendedPrint.myReports"); 
-		execute("CustomReport.remove", "xava.keyProperty=name"); 				
+		execute("MyReport.remove", "xava.keyProperty=name"); 				
 	}
 	
 	
-	public void testStoringCustomReports() throws Exception { 
+	public void testStoringMyReports() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report");
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
-		assertNoAction("CustomReport.createNew");
-		assertAction("CustomReport.remove");
+		assertNoAction("MyReport.createNew");
+		assertAction("MyReport.remove");
 		setValue("name", "Carrier report NUMBER first");
-		execute("CustomReport.columnUp", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.columnUp", "row=1,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Number");
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report NUMBER first");
@@ -336,14 +338,14 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 0, 0, "Number");
 		assertValueInCollection("columns", 1, 0, "Calculated");
 		assertValueInCollection("columns", 2, 0, "Name");
-		assertAction("CustomReport.createNew");
-		assertAction("CustomReport.remove");
-		execute("CustomReport.createNew", "xava.keyProperty=name");
+		assertAction("MyReport.createNew");
+		assertAction("MyReport.remove");
+		execute("MyReport.createNew", "xava.keyProperty=name");
 		setValue("name", "Carrier report NAME first");
-		execute("CustomReport.columnUp", "row=2,viewObject=xava_view_columns");
-		execute("CustomReport.columnUp", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.columnUp", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.columnUp", "row=1,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Name");
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report NAME first");
@@ -356,18 +358,18 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 0, 0, "Name");
 		assertValueInCollection("columns", 1, 0, "Calculated");
 		assertValueInCollection("columns", 2, 0, "Number");
-		assertAction("CustomReport.createNew");
-		assertAction("CustomReport.remove");
-		execute("CustomReport.createNew", "xava.keyProperty=name");
+		assertAction("MyReport.createNew");
+		assertAction("MyReport.remove");
+		execute("MyReport.createNew", "xava.keyProperty=name");
 		setValue("name", "Carrier report With no CALCULATED");
-		execute("CustomReport.removeColumn", "row=0,viewObject=xava_view_columns");
-		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.removeColumn", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=0,viewObject=xava_view_columns");
 		setValue("comparator", "lt_comparator"); 
 		setValue("value", "5");		
-		execute("CustomReport.saveColumn");
-		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.saveColumn");
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
 		setValue("order", "1"); // DESCENDING
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 0, 0, "Number");
 		assertValueInCollection("columns", 0, 1, "<");
 		assertValueInCollection("columns", 0, 2, "5");		
@@ -376,7 +378,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 1, "");
 		assertValueInCollection("columns", 1, 2, "");
 		assertValueInCollection("columns", 1, 3, "Descending");
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		assertPopupPDFLinesCount(8);  
 		assertPopupPDFLine(1, "Carrier report With no CALCULATED");		
 		assertPopupPDFLine(2, "Number Name");
@@ -387,7 +389,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report With no CALCULATED"); 
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		assertPopupPDFLinesCount(8);  
 		assertPopupPDFLine(1, "Carrier report With no CALCULATED");		
 		assertPopupPDFLine(2, "Number Name");
@@ -431,7 +433,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 2, "");
 		assertValueInCollection("columns", 1, 3, "Descending");
 		
-		execute("CustomReport.remove", "xava.keyProperty=name"); 
+		execute("MyReport.remove", "xava.keyProperty=name"); 
 		assertMessage("Report 'Carrier report With no CALCULATED' removed");		
 		assertValidValuesCount("name", 2);
 		assertValidValues("name", customReports2);
@@ -441,27 +443,27 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 0, "Calculated");
 		assertValueInCollection("columns", 2, 0, "Number");
 		
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 		assertValidValuesCount("name", 1);
 		assertValidValues("name", customReports1);
 		assertValue("name", "Carrier report NUMBER first");
 		assertValueInCollection("columns", 0, 0, "Number");
-		assertAction("CustomReport.createNew");
-		assertAction("CustomReport.remove");
+		assertAction("MyReport.createNew");
+		assertAction("MyReport.remove");
 				
-		execute("CustomReport.remove", "xava.keyProperty=name");		
+		execute("MyReport.remove", "xava.keyProperty=name");		
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
-		assertNoAction("CustomReport.createNew");
-		assertAction("CustomReport.remove");
+		assertNoAction("MyReport.createNew");
+		assertAction("MyReport.remove");
 	}
 	
-	public void testRemoveReportInCustomReport() throws Exception { 
+	public void testRemoveReportInMyReport() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		setValue("name", "Carrier report 1");
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		
 		execute("ExtendedPrint.myReports");
 		String [][] customReports1 = {
@@ -470,9 +472,9 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValidValues("name", customReports1);
 		
 		assertValue("name", "Carrier report 1");
-		execute("CustomReport.createNew", "xava.keyProperty=name");
+		execute("MyReport.createNew", "xava.keyProperty=name");
 		setValue("name", "Carrier report 7");
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		execute("ExtendedPrint.myReports");
 		String [][] customReports2 = {
 			{ "Carrier report 1", "Carrier report 1" },	
@@ -480,75 +482,75 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		};
 		assertValidValues("name", customReports2);
 		assertValue("name", "Carrier report 7");
-		execute("CustomReport.createNew", "xava.keyProperty=name");
+		execute("MyReport.createNew", "xava.keyProperty=name");
 		setValue("name", "Carrier report 2");
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 		assertValue("name", "Carrier report 7"); // The last report generated
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 		assertValidValues("name", customReports1);
 		assertValue("name", "Carrier report 1");
 				
-		execute("CustomReport.createNew", "xava.keyProperty=name");
+		execute("MyReport.createNew", "xava.keyProperty=name");
 		setValue("name", "Carrier report 2");
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 		assertMessage("Report 'Carrier report 2' removed");  
 		assertValue("name", "Carrier report 1");
 		assertValidValues("name", customReports1);
 		
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 		assertValue("name", "Carrier report");
 		setValue("name", "Carrier report NUEVO");
 		assertValueInCollection("columns", 0, 0, "Calculated");
-		execute("CustomReport.columnUp", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.columnUp", "row=1,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Number");		
 		
-		execute("CustomReport.remove", "xava.keyProperty=name");	
+		execute("MyReport.remove", "xava.keyProperty=name");	
 		assertMessage("Report 'Carrier report NUEVO' removed"); 
 		assertValue("name", "Carrier report");
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		
 		setValue("name", "Carrier report 1");
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		assertNoErrors();
 		
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report 1");
 		assertValueInCollection("columns", 0, 0, "Calculated");
-		execute("CustomReport.columnUp", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.columnUp", "row=1,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Number");
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 		assertMessage("Report 'Carrier report 1' removed"); 		
 	}
 	
-	public void testRemoveColumnsInCustomReport() throws Exception  { 
+	public void testRemoveColumnsInMyReport() throws Exception  { 
 		execute("ExtendedPrint.myReports"); 
 		assertCollectionRowCount("columns", 3);
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
 		checkRowCollection("columns", 1);
-		execute("CustomReport.removeColumn", "viewObject=xava_view_columns");
+		execute("MyReport.removeColumn", "viewObject=xava_view_columns");
 		assertNoErrors();
 		assertCollectionRowCount("columns", 2);
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Name");
 		
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		execute("ExtendedPrint.myReports");
 		assertCollectionRowCount("columns", 2);
 		assertValueInCollection("columns", 0, 0, "Calculated");
 		assertValueInCollection("columns", 1, 0, "Name");		
 				
-		execute("CustomReport.removeColumn", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.removeColumn", "row=0,viewObject=xava_view_columns");
 		assertNoErrors();
 		assertCollectionRowCount("columns", 1);
 		assertValueInCollection("columns", 0, 0, "Name");
 		
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		execute("ExtendedPrint.myReports");
 		assertCollectionRowCount("columns", 1);
 		assertValueInCollection("columns", 0, 0, "Name");
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 	}
 
 		

@@ -7,14 +7,14 @@ import org.openxava.session.*;
  * 
  * @author Javier Paniza
  */
-public class RemoveCustomReportColumnAction extends CollectionBaseAction {
+public class RemoveMyReportColumnAction extends CollectionBaseAction {
 	
 	@Inject
-	private CustomReport customReport; 
+	private MyReport myReport; 
 	
 	public void execute() throws Exception {
 		for (Object o: getSelectedObjects()) {
-			customReport.getColumns().remove(o);
+			myReport.getColumns().remove(o);
 		}
 	}
 

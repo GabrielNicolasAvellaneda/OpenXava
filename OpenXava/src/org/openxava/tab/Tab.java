@@ -1235,7 +1235,7 @@ public class Tab implements java.io.Serializable {
 		return nodeName;
 	}
 	
-	public String friendCustomReportGetPreferencesNodeName(String prefix) {
+	public String friendMyReportGetPreferencesNodeName(String prefix) {
 		return getPreferencesNodeName(prefix);
 	}
 		

@@ -217,11 +217,11 @@ public class InvoiceTest extends ModuleTestBase {
 		assertExists("paid");
 	}
 	
-	public void testCustomReportFilteringByDateAndBooleanWithConverter() throws Exception {  
+	public void testMyReportFilteringByDateAndBooleanWithConverter() throws Exception {  
 		// Date
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 2, 0, "Date");
-		execute("CustomReport.editColumn", "row=2,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
 		String [][] dateComparators = {
 			{ "eq_comparator", "=" },
 			{ "ne_comparator", "<>" },
@@ -236,33 +236,33 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValidValues("comparator", dateComparators);		
 		setValue("comparator", "year_comparator");
 		setValue("value", "2004");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 2, 0, "Date");
 		assertValueInCollection("columns", 2, 1, "year =");
 		assertValueInCollection("columns", 2, 2, "2004");
 		
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		assertPopupPDFLinesCount(6);  
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));
 		assertTrue(getPopupPDFLine(4).startsWith("2004 9"));
 
 		// Boolean
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 		assertValueInCollection("columns", 6, 0, "Paid");
-		execute("CustomReport.editColumn", "row=6,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=6,viewObject=xava_view_columns");
 		String [][] booleanValues = {
 			{ "", "" },	
 			{ "true", "Yes" },
 			{ "false", "No" }
 		};
 		assertValidValues("booleanValue", booleanValues);
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 6, 0, "Paid");
 		assertValueInCollection("columns", 6, 1, "");
 		assertValueInCollection("columns", 6, 2, ""); // BTW, this tests BooleanFormatter for supporting nulls 
 		
-		execute("CustomReport.editColumn", "row=6,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=6,viewObject=xava_view_columns");
 		assertExists("booleanValue");
 		assertNotExists("comparator");
 		assertNotExists("value");
@@ -278,22 +278,22 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNotExists("value");
 		assertExists("order");
 		setValue("booleanValue", "true");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 6, 0, "Paid");
 		assertValueInCollection("columns", 6, 1, "=");
 		assertValueInCollection("columns", 6, 2, "Yes");
 		
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		assertPopupPDFLinesCount(5);  
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));
 		
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		assertPopupPDFLinesCount(5);  
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));		
 		
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.remove", "xava.keyProperty=name"); 
+		execute("MyReport.remove", "xava.keyProperty=name"); 
 	}
 	
 	public void testFilterByRange() throws Exception{ 

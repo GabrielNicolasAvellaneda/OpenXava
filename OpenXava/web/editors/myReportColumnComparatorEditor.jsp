@@ -1,22 +1,24 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
-<%@ page import="org.openxava.actions.OnChangeCustomReportColumnNameAction" %>
+<%@ page import="org.openxava.actions.OnChangeMyReportColumnNameAction" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
-<% 
+<%
 boolean editable="true".equals(request.getParameter("editable"));
 if (!editable) {
 %>
 
 <jsp:include page="textEditor.jsp"/>
 
-<% } else {
+<%
+} 
+else {
 	String propertyKey = request.getParameter("propertyKey");
 	String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
-	boolean isString = fvalue.startsWith(OnChangeCustomReportColumnNameAction.STRING_COMPARATOR); 	
-	boolean isDate = fvalue.startsWith(OnChangeCustomReportColumnNameAction.DATE_COMPARATOR);
-	boolean isEmpty = fvalue.startsWith(OnChangeCustomReportColumnNameAction.EMPTY_COMPARATOR);
+	boolean isString = fvalue.startsWith(OnChangeMyReportColumnNameAction.STRING_COMPARATOR); 	
+	boolean isDate = fvalue.startsWith(OnChangeMyReportColumnNameAction.DATE_COMPARATOR);
+	boolean isEmpty = fvalue.startsWith(OnChangeMyReportColumnNameAction.EMPTY_COMPARATOR);
 	String [] tokens = fvalue.split(":");
 	String comparator = tokens.length>1?tokens[1]:"";
 %>
@@ -29,4 +31,6 @@ if (!editable) {
 	<jsp:param name="isEmpty" value="<%=isEmpty%>"/>
 </jsp:include>
 
-<% } %>
+<% 
+} 
+%>

@@ -49,7 +49,7 @@
 	
 	<editor name="BooleanYesNoCombo" url="booleanYesNoEditor.jsp">
 		<formatter class="org.openxava.formatters.BooleanFormatter" />
-		<for-model-property model="CustomReportColumn" property="booleanValue" />	
+		<for-model-property model="MyReportColumn" property="booleanValue" />
 	</editor>	
 	<editor name="DateCalendar" url="dateCalendarEditor.jsp">
 		<formatter class="org.openxava.formatters.DateFormatter" />		<for-type type="java.util.Date" />	</editor>
@@ -197,30 +197,30 @@
 		<for-stereotype stereotype="LIBRERIA_DOCUMENTOS" />
 	</editor>
 
-	<editor url="customReportNameEditor.jsp">
-		<for-model-property model="CustomReport" property="name"/>
+	<editor url="myReportNameEditor.jsp">
+		<for-model-property model="MyReport" property="name"/>
 	</editor>		
 	
 	<editor url="textEditor.jsp">
-		<for-model-property model="CustomReportColumn" property="label" /> 
-		<for-model-property model="CustomReportColumn" property="value" />				
+		<for-model-property model="MyReportColumn" property="label" /> 
+		<for-model-property model="MyReportColumn" property="value" />				
 	</editor>
 		
-	<editor url="customReportColumnNameEditor.jsp">
-		<for-model-property model="CustomReportColumn" property="name" />
+	<editor url="myReportColumnNameEditor.jsp">
+		<for-model-property model="MyReportColumn" property="name" />
 	</editor>
 		
-	<editor url="customReportColumnComparatorEditor.jsp">
-		<list-formatter class="org.openxava.formatters.CustomReportComparatorListFormatter"/>
-		<for-model-property model="CustomReportColumn" property="comparator" />
+	<editor url="myReportColumnComparatorEditor.jsp">
+		<list-formatter class="org.openxava.formatters.MyReportComparatorListFormatter"/>
+		<for-model-property model="MyReportColumn" property="comparator" />
 	</editor>
 			
-	<editor url="customReportColumnValidValuesValueEditor.jsp">
-		<for-model-property model="CustomReportColumn" property="validValuesValue" />	
+	<editor url="myReportColumnValidValuesValueEditor.jsp">
+		<for-model-property model="MyReportColumn" property="validValuesValue" />	
 	</editor>
 	
-	<editor url="customReportColumnDescriptionsListValueEditor.jsp">
-		<for-model-property model="CustomReportColumn" property="descriptionsListValue" />	
-	</editor>
+	<editor url="myReportColumnDescriptionsListValueEditor.jsp">
+		<for-model-property model="MyReportColumn" property="descriptionsListValue" />	
+	</editor>	
 												
 </editors>

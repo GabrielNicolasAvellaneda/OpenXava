@@ -10,14 +10,14 @@ import org.openxava.util.*;
  * @author Javier Paniza 
  */
 
-public class SaveCustomReportColumnAction extends CollectionElementViewBaseAction {
+public class SaveMyReportColumnAction extends CollectionElementViewBaseAction {
 	
 	@Inject
-	private CustomReport customReport; 
+	private MyReport myReport; 
 
 	public void execute() throws Exception {
-		CustomReportColumn column = new CustomReportColumn();
-		column.setReport(customReport);
+		MyReportColumn column = new MyReportColumn();
+		column.setReport(myReport);
 		String columnName = getCollectionElementView().getValueString("name");
 		column.setName(columnName);
 		String columnLabel = getCollectionElementView().getValueString("label");
@@ -38,7 +38,7 @@ public class SaveCustomReportColumnAction extends CollectionElementViewBaseActio
 		column.setValidValuesValue(validValuesValue);
 		String descriptionsListValue = getCollectionElementView().getValueString("descriptionsListValue");
 		column.setDescriptionsListValue(descriptionsListValue);
-		CustomReportColumn.Order order = (CustomReportColumn.Order) getCollectionElementView().getValue("order");		
+		MyReportColumn.Order order = (MyReportColumn.Order) getCollectionElementView().getValue("order");		
 		column.setOrder(order);	
 		Boolean sum = (Boolean) getCollectionElementView().getValue("sum");
 		column.setSum(sum==null?false:sum);
@@ -50,19 +50,19 @@ public class SaveCustomReportColumnAction extends CollectionElementViewBaseActio
 				addError("column_not_added_to_report", "'" + columnName + "'"); 
 			}
 			else {
-				customReport.getColumns().add(column);
+				myReport.getColumns().add(column);
 				addMessage("column_added_to_report", "'" + columnName + "'");
 			}
 		}
 		else {
-			customReport.getColumns().set(getCollectionElementView().getCollectionEditingRow(), column);
+			myReport.getColumns().set(getCollectionElementView().getCollectionEditingRow(), column);
 			addMessage("report_column_modified", "'" + columnName + "'");			
 		}
 		closeDialog();
 	}
 
 	private boolean alreadyExists(String columnName) {
-		for (CustomReportColumn column: customReport.getColumns()) {
+		for (MyReportColumn column: myReport.getColumns()) {
 			if (column.getName().equals(columnName)) return true;
 		}
 		return false;

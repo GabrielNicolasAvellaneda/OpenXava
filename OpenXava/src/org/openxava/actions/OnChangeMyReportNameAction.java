@@ -9,16 +9,16 @@ import org.openxava.session.*;
  * @author Javier Paniza 
  */
 
-public class OnChangeCustomReportNameAction extends TabBaseAction implements IOnChangePropertyAction  {
+public class OnChangeMyReportNameAction extends TabBaseAction implements IOnChangePropertyAction  {
 	
 	@Inject
-	private CustomReport customReport;
+	private MyReport myReport;
 
 	private String name;
 	
 	public void execute() throws Exception {
-		customReport = CustomReport.find(getTab(), name);
-		getView().setModel(customReport);		
+		myReport = MyReport.find(getTab(), name);
+		getView().setModel(myReport);		
 	}
 
 	public void setChangedProperty(String propertyName) {

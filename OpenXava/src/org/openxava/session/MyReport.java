@@ -15,48 +15,48 @@ import org.openxava.util.*;
  * @author Javier Paniza 
  */
 
-public class CustomReport implements java.io.Serializable {
+public class MyReport implements java.io.Serializable {
 	
 	private static final String NAME = "name";
 	private static final String LAST_NAME = "lastName"; 
 	private static final String MODEL_NAME = "modelName";
 			
 	@Required @Column(length=80) 
-	@OnChange(org.openxava.actions.OnChangeCustomReportNameAction.class) // It's only thrown in combo format, this is controlled from the editor 
+	@OnChange(org.openxava.actions.OnChangeMyReportNameAction.class) // It's only thrown in combo format, this is controlled from the editor 
 	private String name;
 	
 	@Hidden
 	private MetaModel metaModel;
 	
 	@RowActions({
-		@RowAction("CustomReport.columnUp"),
-		@RowAction("CustomReport.columnDown")
+		@RowAction("MyReport.columnUp"),
+		@RowAction("MyReport.columnDown")
 	})
-	@RemoveSelectedAction("CustomReport.removeColumn")
+	@RemoveSelectedAction("MyReport.removeColumn")
 	@AsEmbedded 
-	@SaveAction("CustomReport.saveColumn")
-	@EditAction("CustomReport.editColumn")
+	@SaveAction("MyReport.saveColumn")
+	@EditAction("MyReport.editColumn")
 	@ListProperties("label, comparator, value, order, sum, hidden") 
-	private List<CustomReportColumn> columns;
+	private List<MyReportColumn> columns;
 	
 	private String rootNodeName;
 	
-	public static CustomReport create(org.openxava.tab.Tab tab) {  
-		CustomReport report = createEmpty(tab);
+	public static MyReport create(org.openxava.tab.Tab tab) {  
+		MyReport report = createEmpty(tab);
 		report.setColumns(createColumns(report, tab));
 		return report;
 	}
 	
-	public static CustomReport createEmpty(Tab tab) {
-		CustomReport report = new CustomReport();
+	public static MyReport createEmpty(Tab tab) {
+		MyReport report = new MyReport();
 		report.setName(tab.getTitle()); 	
 		report.setMetaModel(tab.getMetaTab().getMetaModel());
 		report.setNodeName(tab);
 		return report;
 	}
 	
-	public static CustomReport find(org.openxava.tab.Tab tab, String name) throws BackingStoreException {   
-		CustomReport report = new CustomReport();	
+	public static MyReport find(org.openxava.tab.Tab tab, String name) throws BackingStoreException {   
+		MyReport report = new MyReport();	
 		report.setName(name);
 		report.setNodeName(tab);
 		report.load();
@@ -82,10 +82,10 @@ public class CustomReport implements java.io.Serializable {
 		return allNames.length > 0?allNames[0]:""; 
 	}
 	
-	private static List<CustomReportColumn> createColumns(CustomReport report, org.openxava.tab.Tab tab) {
-		List<CustomReportColumn> columns = new ArrayList<CustomReportColumn>();
+	private static List<MyReportColumn> createColumns(MyReport report, org.openxava.tab.Tab tab) {
+		List<MyReportColumn> columns = new ArrayList<MyReportColumn>();
 		for (MetaProperty property: tab.getMetaProperties()) {		
-			CustomReportColumn column = new CustomReportColumn();
+			MyReportColumn column = new MyReportColumn();
 			column.setReport(report);
 			column.setName(property.getQualifiedName());
 			column.setLabel(property.getQualifiedLabel(Locales.getCurrent()));
@@ -101,12 +101,12 @@ public class CustomReport implements java.io.Serializable {
 		String modelName = preferences.get(MODEL_NAME, "Unknown MetaModel");
 		setMetaModel(MetaModel.get(modelName));
 		int i = 0;
-		CustomReportColumn column = new CustomReportColumn();
+		MyReportColumn column = new MyReportColumn();
 		columns = new ArrayList();
 		while (column.load(preferences, i++)) {
 			columns.add(column);
 			column.setReport(this);
-			column = new CustomReportColumn();
+			column = new MyReportColumn();
 		}
 		preferences.flush();
 	}	
@@ -116,10 +116,10 @@ public class CustomReport implements java.io.Serializable {
 		preferences.put(NAME, name);		
 		preferences.put(MODEL_NAME, getMetaModel().getName());
 		int i = 0;
-		for (CustomReportColumn column: columns) {
+		for (MyReportColumn column: columns) {
 			column.save(preferences, i++);
 		}
-		while (CustomReportColumn.remove(preferences, i)) i++; 		
+		while (MyReportColumn.remove(preferences, i)) i++; 		
 		preferences.flush();
 		Preferences rootPreferences = getRootPreferences();
 		rootPreferences.put(LAST_NAME, name);
@@ -138,11 +138,11 @@ public class CustomReport implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public List<CustomReportColumn> getColumns() {
+	public List<MyReportColumn> getColumns() {
 		return columns;
 	}
 
-	public void setColumns(List<CustomReportColumn> columns) {
+	public void setColumns(List<MyReportColumn> columns) {
 		this.columns = columns;
 	}
 
@@ -155,7 +155,7 @@ public class CustomReport implements java.io.Serializable {
 	}
 	
 	private void setNodeName(org.openxava.tab.Tab tab) { 
-		rootNodeName = tab.friendCustomReportGetPreferencesNodeName("customReport.");
+		rootNodeName = tab.friendMyReportGetPreferencesNodeName("myReport."); 
 	}
 	
 	private Preferences getPreferences() throws BackingStoreException { 

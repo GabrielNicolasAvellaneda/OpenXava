@@ -17,11 +17,11 @@ class Product5Test extends ModuleTestBase {
 		execute "ExtendedPrint.myReports"
 		assertValueInCollection "columns", 4, 0, "Unit price"
 		assertValueInCollection "columns", 4, 4, "No"
-		execute "CustomReport.editColumn", "row=4,viewObject=xava_view_columns"
+		execute "MyReport.editColumn", "row=4,viewObject=xava_view_columns"
 		setValue "sum", "true"
-		execute "CustomReport.saveColumn"
+		execute "MyReport.saveColumn"
 		assertValueInCollection("columns", 4, 4, "Yes");
-		assertAction "CustomReport.generatePdf"
+		assertAction "MyReport.generatePdf"
 	}
 	
 	void testDescriptionsListDependsOnEnum() {
