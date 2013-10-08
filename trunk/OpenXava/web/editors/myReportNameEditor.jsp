@@ -13,7 +13,7 @@
 <%@ page import="org.openxava.converters.IConverter"%>
 
 <%
-String viewObject = request.getParameter("viewObject");
+	String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String propertyKey = request.getParameter("propertyKey");
@@ -23,9 +23,9 @@ String title = (p == null)?"":p.getDescription(request);
 String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
 boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel() || "true".equalsIgnoreCase(request.getParameter("readOnlyAsLabel"));
-org.openxava.session.CustomReport report = (org.openxava.session.CustomReport) view.getModel();
+org.openxava.session.MyReport report = (org.openxava.session.MyReport) view.getModel();
 String [] descriptions = report.getAllNames();
-if (!editable) { 
+if (!editable) {
 %>
 <select id="<%=propertyKey%>" name="<%=propertyKey%>" tabindex="1" class=<%=style.getEditor()%> <%=script%> title="<%=title%>">	
 <%	

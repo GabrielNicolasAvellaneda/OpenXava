@@ -10,7 +10,7 @@ import org.openxava.web.*;
  * @author Javier Paniza 
  */
 
-public class OnChangeCustomReportColumnNameAction extends TabBaseAction implements IOnChangePropertyAction {
+public class OnChangeMyReportColumnNameAction extends TabBaseAction implements IOnChangePropertyAction {
 	
 	public final static String STRING_COMPARATOR = "__STRING__";
 	public final static String DATE_COMPARATOR = "__DATE__";
@@ -29,7 +29,7 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 			return;
 		}		
 		MetaProperty property = getTab().getMetaTab().getMetaModel().getMetaProperty(propertyName);
-		CustomReportColumn column = (CustomReportColumn) getView().getModel();
+		MyReportColumn column = (MyReportColumn) getView().getModel();
 		if (column != null && propertyName.equals(column.getName())) {
 			getView().setValue("label", column.getLabel());
 		}
@@ -59,7 +59,7 @@ public class OnChangeCustomReportColumnNameAction extends TabBaseAction implemen
 				-1, "", propertyName, property.getName());
 		
 		if (!Is.emptyString(descriptionsListEditorURL)) {
-			getView().putObject("xava.customReportColumnDescriptionsListEditorURL", descriptionsListEditorURL); 
+			getView().putObject("xava.myReportColumnDescriptionsListEditorURL", descriptionsListEditorURL); 
 			showDescriptionsListValue();
 			return;
 		}

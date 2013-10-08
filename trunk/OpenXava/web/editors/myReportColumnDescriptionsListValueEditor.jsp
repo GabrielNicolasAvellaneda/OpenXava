@@ -11,7 +11,7 @@ String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 View view = (View) context.get(request, viewObject);
 String propertyKey = request.getParameter("propertyKey");
-String url = (String) view.getObject("xava.customReportColumnDescriptionsListEditorURL");
+String url = (String) view.getObject("xava.myReportColumnDescriptionsListEditorURL");
 url = url.replace("${propertyKey}", propertyKey);
 %>	
 

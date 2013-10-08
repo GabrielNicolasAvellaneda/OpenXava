@@ -14,7 +14,7 @@ import org.openxava.validators.*;
 /**
  * This is for the case of collections of entities without @AsEmbedded (or without as-aggregate="true"). <p>
  * 
- * The remainings cases are treated by {@link SaveElementInCollectionAction}.<br> 
+ * The remaining cases are treated by {@link SaveElementInCollectionAction}.<br> 
  * This case add a group of entities from a list.<br>
  *  
  * @author Javier Paniza

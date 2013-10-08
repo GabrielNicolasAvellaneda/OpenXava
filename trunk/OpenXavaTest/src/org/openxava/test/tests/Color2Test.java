@@ -13,10 +13,10 @@ public class Color2Test extends ModuleTestBase {
 		super(testName, "Color2");		
 	}
 	
-	public void testDescriptionsListInCustomReports() throws Exception { 
+	public void testDescriptionsListInMyReport() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 4, 0, "Name of Used to");
-		execute("CustomReport.editColumn", "row=4,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=4,viewObject=xava_view_columns");
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertNotExists("booleanValue");
@@ -51,25 +51,25 @@ public class Color2Test extends ModuleTestBase {
 		assertValidValues("descriptionsListValue", validValues);
 		assertValue("descriptionsListValue", "");
 		setValue("descriptionsListValue", "1::CAR");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 4, 2, "CAR");
 		
-		execute("CustomReport.editColumn", "row=4,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=4,viewObject=xava_view_columns");
 		assertValue("descriptionsListValue", "1::CAR");		
 		closeDialog();
 		
-		execute("CustomReport.generatePdf");		
+		execute("MyReport.generatePdf");		
 		assertPopupPDFLinesCount(5);  
 		assertPopupPDFLine(3, "0 ROJO FF0000 RED CAR 3 PLACES");
 		
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 4, 0, "Name of Used to");
 		assertValueInCollection("columns", 4, 2, "CAR");
-		execute("CustomReport.editColumn", "row=4,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=4,viewObject=xava_view_columns");
 		assertValue("descriptionsListValue", "1::CAR");		
 		closeDialog();
 		
-		execute("CustomReport.remove", "xava.keyProperty=name");				
+		execute("MyReport.remove", "xava.keyProperty=name");				
 	}
 	
 	public void testFilterDescriptionsList_keyReferenceWithSameNameThatPropertyFather() throws Exception{ 

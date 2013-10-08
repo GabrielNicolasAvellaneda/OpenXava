@@ -8,16 +8,16 @@ import org.openxava.session.*;
  * 
  * @author Javier Paniza
  */
-public class MoveCustomReportColumnAction extends CollectionBaseAction {
+public class MoveMyReportColumnAction extends CollectionBaseAction {
 	
 	@Inject
-	private CustomReport customReport;
+	private MyReport myReport;
 	private int increment;
 	
 	public void execute() throws Exception {
 		int otherRow = getRow() + increment;
 		if (otherRow < 0 || otherRow >= getMapValues().size()) return;
-		Collections.swap(customReport.getColumns(), getRow(), otherRow);	
+		Collections.swap(myReport.getColumns(), getRow(), otherRow);	
 	}
 
 	public int getIncrement() {

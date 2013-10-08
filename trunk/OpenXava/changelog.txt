@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Dialog title of 'My reports' column editing improved.
+- Refactoring of 'My reports' code (CustomReport renamed to MyReport) that produces the loss of current store user reports.
+
 OpenXava 4.8.1 (2013-9-30)
 --------------------------
 - OpenXavaTest now includes Selenium tests for visual testing of views.

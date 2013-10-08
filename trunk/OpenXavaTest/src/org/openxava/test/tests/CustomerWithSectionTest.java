@@ -56,7 +56,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		super(testName, "CustomerWithSection", true);		
 	}
 	
-	public void testCustomReportColumnLabels() throws Exception { 
+	public void testMyReportColumnLabels() throws Exception { 
 		assertLabelInList(0, "Name");
 		
 		execute("ExtendedPrint.myReports");
@@ -69,13 +69,13 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInCollection("columns", 5, 0, "State of Address");
 		assertValueInCollection("columns", 6, 0, "Web site");
 		
-		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=0,viewObject=xava_view_columns");
 		setValue("label", "My name");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		
-		execute("CustomReport.editColumn", "row=4,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=4,viewObject=xava_view_columns");
 		setValue("label", "My seller level");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		
 		assertValueInCollection("columns", 0, 0, "My name");
 		assertValueInCollection("columns", 1, 0, "Type");
@@ -85,7 +85,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInCollection("columns", 5, 0, "State of Address");
 		assertValueInCollection("columns", 6, 0, "Web site");
 		
-		execute("CustomReport.generatePdf");						 
+		execute("MyReport.generatePdf");						 
 		assertPopupPDFLine(2, "My name Type Seller City of Address My seller level State of Address Web site");
 		assertLabelInList(0, "Name"); // The list labels are not affected
 		
@@ -97,20 +97,20 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInCollection("columns", 4, 0, "My seller level");
 		assertValueInCollection("columns", 5, 0, "State of Address");
 		assertValueInCollection("columns", 6, 0, "Web site");
-		execute("CustomReport.editColumn", "row=0,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=0,viewObject=xava_view_columns");
 		assertValue("label", "My name");
 		setValue("name", "number");
 		assertValue("label", "Number");
 		setValue("name", "name");
 		assertValue("label", "My name");
 		closeDialog();
-		execute("CustomReport.remove", "xava.keyProperty=name");		
+		execute("MyReport.remove", "xava.keyProperty=name");		
 	}
 	
-	public void testCustomReportFilteringByValidValues() throws Exception { 
+	public void testMyReportFilteringByValidValues() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 1, 0, "Type"); 
-		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
 		String [][] validValuesValues = {
 			{ "0", "" },	
 			{ "1", "Normal" },
@@ -136,35 +136,35 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertExists("order");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 1, 0, "Type");
 		assertValueInCollection("columns", 1, 1, "");
 		assertValueInCollection("columns", 1, 2, "");  
-		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");		
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");		
 		setValue("validValuesValue", "3");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 1, 0, "Type");
 		assertValueInCollection("columns", 1, 1, "=");
 		assertValueInCollection("columns", 1, 2, "Special");
-		execute("CustomReport.editColumn", "row=1,viewObject=xava_view_columns");
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
 		assertValue("validValuesValue", "3");
 		setValue("validValuesValue", "2");
-		execute("CustomReport.saveColumn");
+		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 1, 0, "Type");
 		assertValueInCollection("columns", 1, 1, "=");
 		assertValueInCollection("columns", 1, 2, "Steady");
 		
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		assertPopupPDFLinesCount(5); 
 		assertTrue(getPopupPDFLine(3).startsWith("Javi Steady"));
 		
 		execute("ExtendedPrint.myReports");
-		execute("CustomReport.generatePdf");
+		execute("MyReport.generatePdf");
 		assertPopupPDFLinesCount(5);
 		assertTrue(getPopupPDFLine(3).startsWith("Javi Steady"));
 				
 		execute("ExtendedPrint.myReports"); 		
-		execute("CustomReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name");
 	}
 	
 	public void testDialogsInNestedCollections() throws Exception { 

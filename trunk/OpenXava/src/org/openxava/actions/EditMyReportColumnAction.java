@@ -12,10 +12,10 @@ import org.openxava.session.*;
  * @author Javier Paniza 
  */
 
-public class EditCustomReportColumnAction extends CollectionElementViewBaseAction  {
+public class EditMyReportColumnAction extends CollectionElementViewBaseAction  {
 	
 	@Inject
-	private CustomReport customReport; 
+	private MyReport myReport; 
 	
 	private int row;
 		
@@ -27,7 +27,7 @@ public class EditCustomReportColumnAction extends CollectionElementViewBaseActio
 		Map keys = null;
 		Map	values = null;
 		getCollectionElementView().setCollectionEditingRow(getRow());
-		CustomReportColumn column = customReport.getColumns().get(row); 
+		MyReportColumn column = myReport.getColumns().get(row); 
 		getCollectionElementView().setModel(column); 
 		getCollectionElementView().setValueNotifying("name", column.getName()); // To throw the change event  
 		showDialog(getCollectionElementView());		
