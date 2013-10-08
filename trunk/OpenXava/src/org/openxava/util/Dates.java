@@ -87,6 +87,7 @@ public class Dates {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.set(Calendar.DAY_OF_MONTH, day);
+		date.setTime(cal.getTimeInMillis()); 
 	}
 	
 	/**
@@ -99,6 +100,7 @@ public class Dates {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.set(Calendar.MONTH, month - 1);
+		date.setTime(cal.getTimeInMillis()); 
 	}
 	
 	/**
@@ -111,6 +113,7 @@ public class Dates {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.set(Calendar.YEAR, year);
+		date.setTime(cal.getTimeInMillis()); 
 	}
 	
 	
@@ -452,7 +455,7 @@ public class Dates {
 	 * @param boolean includeStartDate<p>
 	 *  
 	 */	
-	  public static int daysInterval (Date startDate, Date endDate,
+	public static int daysInterval (Date startDate, Date endDate,
 	  		boolean includeStartDate ) {
 		
 		startDate = Dates.removeTime(startDate);
@@ -473,10 +476,73 @@ public class Dates {
 			start.add(Calendar.DATE,1);
 		}
 		return days;
+	}	
+	  
+	/**
+	 * Add the days to the date. <p>
+	 *
+	 * If date is null it has no effect (but no exception is thrown)
+	 * 
+	 * @since 4.8.1
+	 */
+	public static void addDays(Date date, int days) {
+		if (date == null) return;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, days);
+		date.setTime(cal.getTimeInMillis()); 
+	}	
+	
+	/**
+	 * The date of the last day of year. <p>
+	 * 
+	 * @param  The root date, it is not modified.
+	 * @return If null if sent a null is returned.
+	 * @since 4.8.1
+	 */
+	public static Date lastOfYear(Date date) {
+		if (date == null) return null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.MONTH, 11);
+		cal.set(Calendar.DAY_OF_MONTH, 31);
+		return cal.getTime();
 	}
-	  
-	  
-	 
+
+	/**
+	 * The date of the last day of month. <p>
+	 * 
+	 * @param  The root date, it is not modified.
+	 * @return If null if sent a null is returned.
+	 * @since 4.8.1
+	 */
+	public static Date lastOfMonth(Date date) {
+		if (date == null) return null;		  
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH),
+				cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return cal.getTime();
+	}
+
+	/**
+	 * The date of the first day of month. <p>
+	 * 
+	 * @param  The root date, it is not modified.
+	 * @return If null if sent a null is returned.
+	 * @since 4.8.1
+	 */
+	public static Date firstOfMonth(Date date) {
+		if (date == null) return null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH),
+				cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return cal.getTime();
+	}	  
+
 	
 	public static class DateDistance {
 		public  int days;

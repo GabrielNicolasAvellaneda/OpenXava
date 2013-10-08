@@ -124,6 +124,16 @@ here that you want to override.
 			keystroke="F3">			
 			<set property="resetAfter" value="false"/>
 		</action>				
+	</controller>
+	
+	<controller name="TypicalNewOnInit">
+		<extends controller="Typical"/>
+		<action name="new" on-init="true"
+			class="org.openxava.actions.NewAction"
+			image="new.gif"
+			keystroke="Control N">
+			<set property="restoreModel" value="true"/>			
+		</action>		
 	</controller>	
 				
 	<controller name="DetailList">

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New TypicalNewOnInit controller that starts the module in detail mode ready to create a new entity.
+- New methods addDays(), lastOfYear(), lastOfMonth() and firstOfMonth() added to Dates.
+- Fix: Methods setYear(), setMonth() and setDay() of Dates do not work.
 - Dialog title of 'My reports' column editing improved.
 - Refactoring of 'My reports' code (CustomReport renamed to MyReport) that produces the loss of current store user reports.
 
