@@ -47,18 +47,27 @@ public class SaveMyReportColumnAction extends CollectionElementViewBaseAction {
 		
 		if (getCollectionElementView().getCollectionEditingRow() < 0) {
 			if (alreadyExists(columnName)) {
-				addError("column_not_added_to_report", "'" + columnName + "'"); 
-			}
-			else {
-				myReport.getColumns().add(column);
-				addMessage("column_added_to_report", "'" + columnName + "'");
-			}
+				column.setHidden(true);
+			}			
+			myReport.getColumns().add(column);
+			addMessage("column_added_to_report", "'" + columnName + "'");						
 		}
 		else {
 			myReport.getColumns().set(getCollectionElementView().getCollectionEditingRow(), column);
+			setOnlyOneNotHiddeColumn(columnName); 
 			addMessage("report_column_modified", "'" + columnName + "'");			
 		}
 		closeDialog();
+	}
+
+	private void setOnlyOneNotHiddeColumn(String columnName) { 
+		boolean found = false;
+		for (MyReportColumn column: myReport.getColumns()) {
+			if (column.getName().equals(columnName)) {
+				if (found) column.setHidden(true);
+				else if (!column.isHidden()) found = true;
+			}
+		}
 	}
 
 	private boolean alreadyExists(String columnName) {

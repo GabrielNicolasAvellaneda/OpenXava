@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Duplicate columns allowed in 'My reports' to filter by range or complex conditions, though only one is shown in the report.
 - New TypicalNewOnInit controller that starts the module in detail mode ready to create a new entity.
 - New methods addDays(), lastOfYear(), lastOfMonth() and firstOfMonth() added to Dates.
 - Fix: Methods setYear(), setMonth() and setDay() of Dates do not work.

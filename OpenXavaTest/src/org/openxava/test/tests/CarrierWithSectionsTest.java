@@ -141,23 +141,6 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 1, "=");
 		assertValueInCollection("columns", 2, 2, "1");
 		
-		execute("Collection.new", "viewObject=xava_view_columns");		
-		setValue("name", "name");
-		setValue("comparator", "eq_comparator"); 
-		setValue("value", "UNO");
-		execute("MyReport.saveColumn");
-		assertError("Column name not added to report. Already exists");
-		assertCollectionRowCount("columns", 3);
-		assertValueInCollection("columns", 0, 0, "Name");
-		assertValueInCollection("columns", 0, 1, "");
-		assertValueInCollection("columns", 0, 2, "");
-		assertValueInCollection("columns", 1, 0, "Number");
-		assertValueInCollection("columns", 1, 1, "");
-		assertValueInCollection("columns", 1, 2, "");		
-		assertValueInCollection("columns", 2, 0, "Zone of Warehouse");
-		assertValueInCollection("columns", 2, 1, "=");
-		assertValueInCollection("columns", 2, 2, "1");
-				
 		execute("MyReport.editColumn", "row=0,viewObject=xava_view_columns");
 		assertValue("name", "name");
 		setValue("comparator", "starts_comparator"); 
@@ -253,6 +236,70 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		execute("MyReport.remove", "xava.keyProperty=name");		
 	}
 	
+	public void testMyReportWithDuplicateProperties() throws Exception { 
+		execute("ExtendedPrint.myReports");
+		setValue("name", "Carriers between 2 and 4");
+		assertCollectionRowCount("columns", 3);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 2, 0, "Name");
+		
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
+		assertValue("name", "number");
+		setValue("comparator", "ge_comparator");
+		setValue("value", "2");		
+		execute("MyReport.saveColumn");		
+		
+		execute("Collection.new", "viewObject=xava_view_columns");
+		setValue("name", "number");
+		setValue("comparator", "le_comparator");
+		setValue("value", "4");		
+		execute("MyReport.saveColumn");
+
+		assertCollectionRowCount("columns", 4);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 1, 1, ">=");
+		assertValueInCollection("columns", 1, 2, "2");
+		assertValueInCollection("columns", 1, 5, "No");   		
+		assertValueInCollection("columns", 2, 0, "Name");
+		assertValueInCollection("columns", 3, 0, "Number");
+		assertValueInCollection("columns", 3, 1, "<=");
+		assertValueInCollection("columns", 3, 2, "4");
+		assertValueInCollection("columns", 3, 5, "Yes"); // Given it is duplicate it is automatically marked as hidden
+		
+		execute("MyReport.editColumn", "row=3,viewObject=xava_view_columns");
+		assertValue("name", "number");
+		assertValue("value", "4");
+		setValue("hidden", "false");
+		execute("MyReport.saveColumn");		
+
+		assertCollectionRowCount("columns", 4);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 1, 1, ">=");
+		assertValueInCollection("columns", 1, 2, "2");
+		assertValueInCollection("columns", 1, 5, "No");   		
+		assertValueInCollection("columns", 2, 0, "Name");
+		assertValueInCollection("columns", 3, 0, "Number");
+		assertValueInCollection("columns", 3, 1, "<=");
+		assertValueInCollection("columns", 3, 2, "4");
+		assertValueInCollection("columns", 3, 5, "Yes"); // Even on modifying you cannot have more than one not hidden column for the same property		
+		
+		execute("MyReport.generatePdf");		
+		
+		assertPopupPDFLinesCount(7); // Instead of 9, because of number is between 2 and 4 
+		assertPopupPDFLine(1, "Carriers between 2 and 4");
+		assertPopupPDFLine(2, "Calculated Number Name");  
+		assertPopupPDFLine(3, "TR 2 DOS");
+		assertPopupPDFLine(4, "TR 3 TRES");
+		assertPopupPDFLine(5, "TR 4 CUATRO");
+		
+		execute("ExtendedPrint.myReports");
+		execute("MyReport.remove", "xava.keyProperty=name");		
+	}
+
+	
 	public void testMyReportFilteringByExactStringAndOrdering() throws Exception {
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 2, 0, "Name");
@@ -312,8 +359,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		execute("ExtendedPrint.myReports"); 
 		execute("MyReport.remove", "xava.keyProperty=name"); 				
 	}
-	
-	
+			
 	public void testStoringMyReports() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		assertValue("name", "Carrier report");
