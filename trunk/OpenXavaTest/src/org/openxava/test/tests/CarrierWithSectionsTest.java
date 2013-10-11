@@ -170,6 +170,34 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		execute("MyReport.remove", "xava.keyProperty=name");
 	}
 	
+	public void testMyReportConditionAndSortFromList() throws Exception { 
+		assertListRowCount(5);
+		setConditionComparators(">");
+		setConditionValues("1");
+		execute("List.filter");
+		assertListRowCount(4);
+		execute("List.orderBy", "property=name");
+		assertValueInList(0, 1, "4");
+		assertValueInList(1, 1, "5");
+		assertValueInList(2, 1, "2");
+		assertValueInList(3, 1, "3");
+		
+		execute("ExtendedPrint.myReports");
+		assertDialogTitle("My reports"); 
+		assertValue("name", "Carrier report");
+		assertCollectionRowCount("columns", 3);
+		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 1, 0, "Number");
+		assertValueInCollection("columns", 1, 1, ">");
+		assertValueInCollection("columns", 1, 2, "1");
+		assertValueInCollection("columns", 1, 3, "");
+		assertValueInCollection("columns", 2, 0, "Name");
+		assertValueInCollection("columns", 2, 1, "");
+		assertValueInCollection("columns", 2, 2, "");		
+		assertValueInCollection("columns", 2, 3, "Ascending");		
+	}
+	
+	
 	public void testMyReportWithHiddenProperties() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		setValue("name", "Carriers of zone 2");
