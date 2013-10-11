@@ -5,8 +5,10 @@ import java.util.prefs.*;
 
 import javax.persistence.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.annotations.*;
 import org.openxava.model.meta.*;
+import org.openxava.session.MyReportColumn.*;
 import org.openxava.tab.Tab;
 import org.openxava.util.*;
 
@@ -16,6 +18,8 @@ import org.openxava.util.*;
  */
 
 public class MyReport implements java.io.Serializable {
+	
+	private static Log log = LogFactory.getLog(MyReport.class); 
 	
 	private static final String NAME = "name";
 	private static final String LAST_NAME = "lastName"; 
@@ -84,6 +88,9 @@ public class MyReport implements java.io.Serializable {
 	
 	private static List<MyReportColumn> createColumns(MyReport report, org.openxava.tab.Tab tab) {
 		List<MyReportColumn> columns = new ArrayList<MyReportColumn>();
+		String [] comparators = tab.getConditionComparators();
+		String [] values = tab.getConditionValues();
+		int i = 0;
 		for (MetaProperty property: tab.getMetaProperties()) {		
 			MyReportColumn column = new MyReportColumn();
 			column.setReport(report);
@@ -91,6 +98,20 @@ public class MyReport implements java.io.Serializable {
 			column.setLabel(property.getQualifiedLabel(Locales.getCurrent()));
 			column.setCalculated(property.isCalculated());
 			columns.add(column);
+			if (!column.isCalculated()) {
+				try {
+					if (!Is.emptyString(values[i])) {
+						column.setComparator(comparators[i]);
+						column.setValue(values[i]);
+					}
+				}
+				catch (Exception ex) {
+					log.warn(XavaResources.getString("initial_value_for_my_report_column_not_set", column.getName()), ex);					
+				}				
+				i++;				
+			}
+			if (tab.isOrderAscending(column.getName())) column.setOrder(Order.ASCENDING);
+			else if (tab.isOrderDescending(column.getName())) column.setOrder(Order.DESCENDING);
 		}		
 		return columns;		
 	}
