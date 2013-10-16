@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Automatic PDF reports improved: Width of columns is calculated from the real content, not from declaration.
 - Initial condition and ordering for 'My reports' is populated from the current list.
 - Duplicate columns allowed in 'My reports' to filter by range or complex conditions, though only one is shown in the report.
 - New TypicalNewOnInit controller that starts the module in detail mode ready to create a new entity.

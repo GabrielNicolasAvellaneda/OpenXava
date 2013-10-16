@@ -21,7 +21,8 @@ public class JasperReportServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {
 			String language = request.getParameter("language");
-			String columnCountLimit = request.getParameter("columnCountLimit"); 
+			String columnCountLimit = request.getParameter("columnCountLimit");
+			String widths = request.getParameter("widths"); 
 			
 			ServletContext application = request.getSession().getServletContext();		
 									
@@ -30,7 +31,7 @@ public class JasperReportServlet extends HttpServlet {
 					System.getProperty("path.separator") + 
 					application.getRealPath("/WEB-INF/classes/")
 					);											
-			JasperCompileManager.compileReportToStream(getReportStream(request, response, language, columnCountLimit), response.getOutputStream()); 
+			JasperCompileManager.compileReportToStream(getReportStream(request, response, language, columnCountLimit, widths), response.getOutputStream()); 
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -38,11 +39,13 @@ public class JasperReportServlet extends HttpServlet {
 		}		
 	}
 	
-	private InputStream getReportStream(HttpServletRequest request, HttpServletResponse response, String language, String columnCountLimit) throws IOException, ServletException { 
+	private InputStream getReportStream(HttpServletRequest request, HttpServletResponse response, String language, String columnCountLimit, String widths) throws IOException, ServletException { 
 		StringBuffer suri = new StringBuffer();
 		suri.append("/xava/jasperReport");		
 		suri.append(".jsp?language="); 
 		suri.append(language);
+		suri.append("&widths="); 
+		suri.append(widths);			
 		if (columnCountLimit != null) {
 			suri.append("&columnCountLimit="); 
 			suri.append(columnCountLimit);			
