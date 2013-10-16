@@ -4,7 +4,6 @@ import java.io.*;
 import java.math.*;
 import java.text.*;
 import java.util.*;
-import java.util.Date;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -198,14 +197,14 @@ public class GenerateReportServlet extends HttpServlet {
 					for (String totalProperty: tab.getTotalPropertiesNames()) { 								
 						parameters.put(totalProperty + "__TOTAL__", getTotal(request, tab, totalProperty));
 					}
-					is  = getReport(request, response, tab, columnCountLimit); 
-					ds = getDataSource(request, tab, selectedRows);
+					TableModel tableModel = getTableModel(request, tab, selectedRows, false, true, null);
+					is  = getReport(request, response, tab, tableModel, columnCountLimit);
+					ds = new JRTableModelDataSource(tableModel);
 				}	
-				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);					
+				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);
 				response.setContentType("application/pdf");	
-				response.setHeader("Content-Disposition", "inline; filename=\"" + getFileName(tab) + ".pdf\""); 
+				response.setHeader("Content-Disposition", "inline; filename=\"" + getFileName(tab) + ".pdf\"");
 				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
-				
 			}
 			else if (uri.endsWith(".csv")) {	
 				String csvEncoding = XavaPreferences.getInstance().getCSVEncoding(); 
@@ -264,11 +263,13 @@ public class GenerateReportServlet extends HttpServlet {
 		return ReportParametersProviderFactory.getInstance().getOrganization();
 	}
 	
-	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab, Integer columnCountLimit) throws ServletException, IOException {		
+	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab, TableModel tableModel, Integer columnCountLimit) throws ServletException, IOException {
 		StringBuffer suri = new StringBuffer();
 		suri.append("/xava/jasperReport");
 		suri.append("?language="); 
-		suri.append(Locales.getCurrent().getLanguage());		
+		suri.append(Locales.getCurrent().getLanguage());
+		suri.append("&widths=");
+		suri.append(Arrays.toString(getWidths(tableModel))); 
 		if (columnCountLimit != null) {
 			suri.append("&columnCountLimit="); 
 			suri.append(columnCountLimit);			
@@ -277,11 +278,21 @@ public class GenerateReportServlet extends HttpServlet {
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
 	
-	private JRDataSource getDataSource(HttpServletRequest request, Tab tab, int [] selectedRows) throws Exception { 
-		return new JRTableModelDataSource(getTableModel(request, tab, selectedRows, false, true, null)); 
-	}		  	
-	
-	private TableModel getTableModel(HttpServletRequest request, Tab tab, int [] selectedRows, boolean labelAsHeader, boolean format, Integer columnCountLimit) throws Exception { 
+	private int [] getWidths(TableModel tableModel) { 
+		int [] widths = new int[tableModel.getColumnCount()];
+		for (int r=0; r<Math.min(tableModel.getRowCount(), 500); r++) { // 500 is not for performance, but for using only a sample of data with huge table			
+			for (int c=0; c<tableModel.getColumnCount(); c++) {
+				Object o = tableModel.getValueAt(r, c);				
+				if (o instanceof String) {
+					String s = ((String) o).trim();
+					if (s.length() > widths[c]) widths[c] = s.length();
+				}
+			}
+		}
+		return widths;
+	}
+
+	private TableModel getTableModel(HttpServletRequest request, Tab tab, int [] selectedRows, boolean labelAsHeader, boolean format, Integer columnCountLimit) throws Exception {
 		TableModel data = null;
 		if (selectedRows != null && selectedRows.length > 0) {
 			data = new SelectedRowsXTableModel(tab.getTableModel(), selectedRows);

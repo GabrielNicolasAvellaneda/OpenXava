@@ -23,7 +23,16 @@
 
 <%!
 
-private static int EXTRA_WIDTH = 5; 
+private static int EXTRA_WIDTH = 5;
+
+private int [] parseWidths(String widths) { 
+	String [] tokens = widths.split("[\\[\\], ]+");		
+	int [] result = new int[tokens.length - 1];
+	for (int i=0; i<result.length; i++) {
+		result[i] = Integer.parseInt(tokens[i+1]);
+	}
+	return result;	
+}
 
 private void tightenWidths(int [] widths) {	
 	int max = 190;
@@ -79,13 +88,14 @@ Collection metaProperties = getMetaProperties(tab, columnCountLimit);
 
 int columnsSeparation = 10;
 Iterator it = metaProperties.iterator(); 
-int [] widths = new int[metaProperties.size()]; 
+int [] widths = parseWidths(request.getParameter("widths")); 
 int totalWidth = 0;
 int i=0;
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 	String label = p.getLabel(locale);
-	widths[i]=Math.max(p.getSize(), label.length());
+	if (widths[i] == 0) widths[i] = p.getSize();
+	if (widths[i] < label.length()) widths[i] = label.length();
 	totalWidth+=widths[i];
 	i++;
 }

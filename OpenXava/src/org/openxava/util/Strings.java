@@ -408,9 +408,7 @@ public class Strings {
 		}	
 		return cad.toString();
   }
-    
- 
-   
+     
   /**
    * Converts a string a object of the specified type. <p>
    * 
