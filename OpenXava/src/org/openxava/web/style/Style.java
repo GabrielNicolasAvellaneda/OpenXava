@@ -281,11 +281,27 @@ public class Style {
 		return "page_navigation.gif";
 	}
 	
+	/** 
+	 * 
+	 * @since 4.9
+	 */
+	public String getShowFilterImage() { 
+		return "show-filter.gif";
+	}
+	
+	/** 
+	 * 
+	 * @since 4.9
+	 */
+	public String getHideFilterImage() { 
+		return "remove.gif";
+	}
+		
+	
 	public String getModule() {
 		return "ox-module";		
 	}
-	
-	
+		
 	
 	/**
 	 * 

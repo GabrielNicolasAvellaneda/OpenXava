@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New icons for customizing list and collections.
+- Link to hide filter is in the filter row itself.
+- Links to show and hide the filter are only visible in customization mode.
 - Automatic PDF reports improved: Width of columns is calculated from the real content, not from declaration.
 - Initial condition and ordering for 'My reports' is populated from the current list.
 - Duplicate columns allowed in 'My reports' to filter by range or complex conditions, though only one is shown in the report.

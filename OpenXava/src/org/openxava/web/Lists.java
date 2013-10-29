@@ -1,11 +1,7 @@
 package org.openxava.web;
 
 import java.util.*;
-
-import javax.servlet.http.*;
-
 import org.openxava.model.meta.*;
-import org.openxava.tab.*;
 
 /**
  * Utilities used from JSP files for lists. 
@@ -16,10 +12,6 @@ import org.openxava.tab.*;
 public class Lists {
 	
 	public final static String FOCUS_PROPERTY_ID="conditionValue___0";
-	
-	public static String getImageFilterPrefix(HttpServletRequest request) {
-		return request.getContextPath() + "/xava/images/";
-	}
 	
 	public static String getOverflow(String browser, Collection<MetaProperty> metaProperties) {
 		boolean ie9 = browser != null && browser.indexOf("MSIE 9") >= 0;
