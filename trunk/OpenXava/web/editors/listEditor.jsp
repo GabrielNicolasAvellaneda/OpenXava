@@ -55,14 +55,8 @@ else {
 }
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
-String displayFilter=""; 
-String imageFilter="hide-filter";
-String filterMessage="hide_filters";
-if (!tab.isFilterVisible()) {
-	displayFilter="none"; 
-	imageFilter ="show-filter"; 
-	filterMessage="show_filters";
-}
+String displayFilter = tab.isFilterVisible()?"":"none";
+String displayFilterButton = tab.isFilterVisible()?"none":"";
 String lastRow = request.getParameter("lastRow");
 boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
 String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
@@ -120,16 +114,14 @@ if (tab.isTitleVisible()) {
 <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
-	<%
-		String imageFilterPrefix = org.openxava.web.Lists.getImageFilterPrefix(request);  
-	%>
-	<a id="<xava:id name='<%="filter_link_" + id%>'/>" href="javascript:openxava.manageFilterRow('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
-		src='<%=imageFilterPrefix%><%=imageFilter%>.gif' border='0'/></a>
-	<% if (tab.isCustomizeAllowed()) { %> 
+	<% if (tab.isCustomizeAllowed()) { %>
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
 	<%
 		if (tab.isCustomize()) {
-	%><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><%
+	%>
+	<a id="<xava:id name='<%="show_filter_" + id%>'/>" style="display: <%=displayFilterButton%>" href="javascript:openxava.setFilterVisible('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>', true)" title="<xava:message key='show_filters'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getShowFilterImage()%>' border='0' /></a>	
+	<xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><%
 		}
 	} 
 	%>
@@ -228,8 +220,14 @@ while (it.hasNext()) {
 <%
 	if (filter) {
 %>
-<tr id="<xava:id name='<%="tr_list_filter_" + id%>'/>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
+<tr id="<xava:id name='<%="list_filter_" + id%>'/>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
 <th class="<%=style.getFilterCell()%> <%=style.getListSubheaderCell()%>">
+
+	<% if (tab.isCustomize()) { %>
+	<a id="<xava:id name='<%="hide_filter_" + id%>'/>" href="javascript:openxava.setFilterVisible('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>', false)" title="<xava:message key='hide_filters'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>"  
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getHideFilterImage()%>' border='0' style='vertical-align:text-top;'/></a> 
+	<% } %>		
+
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
 <th class=<%=style.getListSubheaderCell()%> width="5">

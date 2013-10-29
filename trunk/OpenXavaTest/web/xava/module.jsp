@@ -274,7 +274,9 @@ if (manager.isResetFormPostNeeded()) {
 	if (openxava != null && openxava.<%=initiated%> == null) {
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
-		openxava.imageFilterPrefix = '<%=org.openxava.web.Lists.getImageFilterPrefix(request)%>'; 
+		<%-- tmp
+		openxava.imageFilterPrefix = '<%=org.openxava.web.Lists.getImageFilterPrefix(request)%>';
+		--%> 
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
 		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';	

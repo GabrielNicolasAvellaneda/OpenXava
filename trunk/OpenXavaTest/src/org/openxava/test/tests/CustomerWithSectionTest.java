@@ -501,6 +501,39 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertLabel("alternateSeller", "Secondary seller");
 	}
 	
+	public void testShowHideFilterInList() throws Exception { 
+		getWebClient().setCssEnabled(true);
+		assertFalse(hasElementById("show_filter_list"));
+		assertFalse(hasElementById("hide_filter_list"));		
+		assertTrue(getElementById("list_filter_list").isDisplayed());
+		execute("List.customize");				
+		assertFalse(getElementById("show_filter_list").isDisplayed());
+		assertTrue(getElementById("hide_filter_list").isDisplayed());
+		assertTrue(getElementById("list_filter_list").isDisplayed());
+		getElementById("hide_filter_list").click();
+		assertTrue(getElementById("show_filter_list").isDisplayed());
+		assertFalse(getElementById("hide_filter_list").isDisplayed());
+		assertFalse(getElementById("list_filter_list").isDisplayed());
+		getElementById("show_filter_list").click();
+		assertFalse(getElementById("show_filter_list").isDisplayed());
+		assertTrue(getElementById("hide_filter_list").isDisplayed());
+		assertTrue(getElementById("list_filter_list").isDisplayed());
+	}
+	
+	private boolean hasElementById(String elementId) { // Copied from ModuleTestBase because we don't want to promote the direct HTML manipulation  
+		try {
+			getElementById(elementId);
+			return true;
+		}
+		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {			
+			return false;
+		}		
+	}
+	
+	private HtmlElement getElementById(String id) { // Copied from ModuleTestBase because we don't want to promote the direct HTML manipulation
+		return getHtmlPage().getHtmlElementById(decorateId(id));
+	}
+	
 	public void testCustomizeList() throws Exception { 
 		doTestCustomizeList_moveAndRemove();
 		tearDown();	setUp();

@@ -259,8 +259,8 @@ here that you want to override.
 			class="org.openxava.actions.CustomizeListAction"
 			hidden="true"
 			mode="list"
-			image="customize.gif">		
-		</action>		
+			image="customize.png">		
+		</action>
 		
 		<action name="moveColumnToLeft"
 			class="org.openxava.actions.MoveColumnToLeftAction"
