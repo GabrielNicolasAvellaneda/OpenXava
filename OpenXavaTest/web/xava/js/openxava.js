@@ -469,28 +469,6 @@ openxava.limitLength = function(ev, max) {
 }
 
 // JavaScript for collections and list
-/* tmp
-openxava.manageFilterRow = function(application, module, id, tabObject) { 
-    // tmp var img = openxava.getElementById(application, module, "filter_image_" + id);
-    var elem = openxava.getElementById(application, module, "tr_list_filter_" + id);
-    var link = openxava.getElementById(application, module, "filter_link_" + id);
-	if (elem.style.display == ''){
-		elem.style.display = 'none';
-		// tmp img.src=openxava.imageFilterPrefix + 'show-filter.gif';
-		link.style.display = ''; // tmp
-		link.title=openxava.showFiltersMessage;		
-		Tab.setFilterVisible(application, module, false, tabObject);
-	}
-	else {
-		elem.style.display = '';		
-		// tmp img.src=openxava.imageFilterPrefix + 'hide-filter.gif'; 
-		link.style.display = 'none'; // tmp
-		link.title=this.hideFiltersMessage;
-		Tab.setFilterVisible(application, module, true, tabObject);
-	}    
-}
-*/
-// tmp ini
 openxava.setFilterVisible = function(application, module, id, tabObject, visible) { 
     var filter = openxava.getElementById(application, module, "list_filter_" + id); 
     var link = openxava.getElementById(application, module, "show_filter_" + id);
@@ -498,7 +476,6 @@ openxava.setFilterVisible = function(application, module, id, tabObject, visible
 	link.style.display = visible?'none':''; 
 	Tab.setFilterVisible(application, module, visible, tabObject);
 }
-// tmp fin
 
 openxava.setPageRowCount = function(application, module, collection, select) {	
 	openxava.executeAction(application, module, '', false, "List.setPageRowCount", "rowCount=" + select.value + ",collection=" + collection)
