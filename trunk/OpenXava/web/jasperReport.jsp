@@ -5,6 +5,7 @@
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
+<%@ page import="java.util.List" %> 
 <%@ page import="java.util.Collection" %> 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
@@ -34,8 +35,9 @@ private int [] parseWidths(String widths) {
 	return result;	
 }
 
-private void tightenWidths(int [] widths) {	
-	int max = 190;
+private int [] tightenWidths(List metaProperties, int [] widths) { 
+	int [] originalWidths = widths.clone(); 
+	int max = 147; 
 	int littleOnesTotal = 0;
 	int littleOnesCount = 0;
 	for (int i=0; i<widths.length; i++) {
@@ -48,9 +50,17 @@ private void tightenWidths(int [] widths) {
 	int bigOnesCount = widths.length - littleOnesCount; 
 	int widthForBig = bigOnesCount==0?20:spaceForBigOnes / bigOnesCount; 
 	if (widthForBig < 20) widthForBig = 20;
+	int total = 0; 
 	for (int i=0; i<widths.length; i++) {
-		if (widths[i] > 20 && widths[i] > widthForBig) widths[i] = widths[i] = widthForBig;
+		if (widths[i] > 20 && widths[i] > widthForBig) widths[i] = widthForBig;
+		total += widths[i];
 	}		
+	if (total > max) {
+		metaProperties.remove(metaProperties.size() - 1);
+		widths = org.apache.commons.lang.ArrayUtils.remove(originalWidths, originalWidths.length - 1);
+		return tightenWidths(metaProperties, widths);
+	}
+	return widths;
 }
 
 private String getAlign(MetaProperty p) throws Exception {
@@ -60,14 +70,14 @@ private String getAlign(MetaProperty p) throws Exception {
 	return align;
 }
 
-private Collection getMetaProperties(Tab tab, Integer columnCountLimit) { 
-	if (columnCountLimit == null) return tab.getMetaProperties();
-	Collection result = new java.util.ArrayList();
+private List getMetaProperties(Tab tab, Integer columnCountLimit) { 
+	if (columnCountLimit == null) return new java.util.ArrayList(tab.getMetaProperties()); 
+	List result = new java.util.ArrayList(); 
 	int c = 0;
 	for (MetaProperty p: tab.getMetaProperties()) {
 		if (++c > columnCountLimit) break; 
 		result.add(p);
-	}	
+	}
 	return result;
 }
 %>
@@ -84,7 +94,7 @@ java.util.Locale locale = new java.util.Locale(language, "");
 String scolumnCountLimit = request.getParameter("columnCountLimit");
 Integer columnCountLimit = scolumnCountLimit == null?null:Integer.parseInt(scolumnCountLimit);
 
-Collection metaProperties = getMetaProperties(tab, columnCountLimit);
+List metaProperties = getMetaProperties(tab, columnCountLimit); 
 
 int columnsSeparation = 10;
 Iterator it = metaProperties.iterator(); 
@@ -107,8 +117,8 @@ int pageHeight;
 int columnWidth;
 String orientation = null;
 
-if (totalWidth > 120) {
-	tightenWidths(widths);
+if (totalWidth > 120) {	
+	widths = tightenWidths(metaProperties, widths);
 	orientation="Landscape";
 	letterWidth = 4;
 	letterSize = 7;
@@ -144,7 +154,6 @@ else {
 	pageHeight=842;
 	columnWidth=535;
 }
-
 %>
 
 <jasperReport
