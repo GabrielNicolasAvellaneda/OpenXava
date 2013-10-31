@@ -15,6 +15,14 @@ public class MetaSubcontroller {
 	private String controllerName;
 	private String mode;
 
+	public boolean hasActionsInThisMode(String mode){
+		Collection<MetaAction> actions = getMetaActions();
+		for (MetaAction action : actions){
+			if (action.appliesToMode(mode)) return true;
+		}
+		return false;
+	}
+	
 	public boolean appliesToMode(String mode) {
 		if ("NONE".equals(getMode())) return false;
 		return Is.emptyString(getMode()) || getMode().equals(mode);

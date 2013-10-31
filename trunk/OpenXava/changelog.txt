@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- subcontrollers: not shows when it's got not any action.
+- subcontrollers: improve its style.
+- subcontrollers: fix behavior. 
+- buttonBar.jsp and subButton.jsp files -> java code 1.4.
 - Algorithm to tight columns in PDF reports optimized: right column is better adjusted and columns that not fit are dropped. 
 - New icons for customizing list and collections.
 - Link to hide filter is in the filter row itself.

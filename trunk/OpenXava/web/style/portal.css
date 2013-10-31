@@ -437,7 +437,8 @@ TD.list-title {
 .ox-layout-data {
 }
 
-/* subcontroller --------> */
+/* ---------- Styling for Subcontrollers ---------- */
+
 div.ox-subcontroller {
 	padding: 0;
 	margin: 0;
@@ -446,20 +447,23 @@ div.ox-subcontroller {
 	background-color: rgb(246, 248, 251); 
 	display: none; 
 	z-index: 999;
-	box-shadow: 4px 4px 4px #666;
+	box-shadow: 0px 3px 3px #DDDDDD;
 }
 
 div.ox-subcontroller table{
+	padding: 0;
+	margin: 0;
 	width: 100%;
+	border: 1px solid #CCCCCC;
 }
 
 div.ox-subcontroller table tr td{
 	float: right;
-	width: 100%;
+	width: 97%;	/* con 100% se expande mucho */
 	text-align: left;
 	background-color: rgb(246, 248, 251);
 	z-index: 999; 
-	padding: 4px 4px 4px 0px;
+	padding: 4px 4px 4px 4px;
 }
 
 div.ox-subcontroller table tr td a{
@@ -472,4 +476,3 @@ div.ox-subcontroller table tr td a{
 span.ox-subcontroller-select a{
 	border: 1px solid #A7CEDF !important;
 }
-/* --------< subcontroller << */
