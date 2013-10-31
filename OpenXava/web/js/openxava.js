@@ -814,21 +814,39 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 	openxava.deselected[index] = value;
 }
 
-openxava.subcontroller = function(id,idContainer,idButton,idImage,idA){
+openxava.subcontroller = function(id,idContainer,idButton,idImage,idA,idSpan){
+	// hidden the menu when click out
+	$('html').click(function(e) {
+		var idElement = e.target.id;
+		if (idA != idElement &&
+			idButton != idElement && 
+			idImage != idElement &&
+			idSpan != idElement){
+			if ('none' != $('#'+id).css('display')){
+				$('#'+id).css('display','none');
+				$('#'+idButton).removeClass('ox-subcontroller-select');
+				$('#'+idImage).fadeTo("fast",1);
+			}
+		}
+	});
+	// hidden the menu when click the button a second time   
+	if ('none' != $('#'+id).css('display')){
+		$('#'+id).css('display','none');
+		$('#'+idButton).removeClass('ox-subcontroller-select');
+		$('#'+idImage).fadeTo("fast",1);
+		return;
+	}
+	// display and position the menu 
 	$('#'+id).css('display','inline');
 	var a = $('#'+idA);
 	var h = $('#'+idButton).height();	
 	var f = a.position();
 	$('#'+id).css({ 
 		'top': f.top + h,
-		'left': f.left + 4
+		'left': f.left
 	});
-	// 
+	//
 	$('#'+idImage).fadeTo("fast",0.3);
 	$('#'+idButton).addClass('ox-subcontroller-select');
-	$('#'+idContainer).mouseleave(function(){
-		$('#'+id).css('display','none');
-		$('#'+idButton).removeClass('ox-subcontroller-select');
-		$('#'+idImage).fadeTo("fast",1);
-	});
+	
 }
