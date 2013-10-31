@@ -22,22 +22,24 @@ String idContainer = Ids.decorate(request, "sc-container-" + controllerName);
 String idButton = Ids.decorate(request, "sc-button-" + controllerName);
 String idImage = Ids.decorate(request, "sc-image-" + controllerName);
 String idA = Ids.decorate(request, "sc-a-" + controllerName);
+String idSpan = Ids.decorate(request, "sc-span-" + controllerName);
 %>
 <span id='<%=idContainer%>'>
 	<span id='<%=idButton%>' class="<%=style.getButtonBarButton()%>">
 		<a 
-			id ='<%=idA%>' 
-			onclick="openxava.subcontroller('<%=id%>','<%=idContainer%>','<%=idButton%>','<%=idImage%>','<%=idA%>');return false;" 
-			href=""
+			id ='<%=idA%>'
+			href="javascript:openxava.subcontroller('<%=id%>','<%=idContainer%>','<%=idButton%>','<%=idImage%>','<%=idA%>','<%=idSpan%>')" 
 			>
-			<span style="padding:4px; background: url(<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=image%>) no-repeat 5px 50%;">				
+			<span
+				id='<%=idSpan%>' 
+				style="padding:4px; background: url(<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=image%>) no-repeat 5px 50%;">				
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
-			</span>		
+			</span>
 			<%= Labels.get(controllerName)%>
 			<img  
 				id='<%=idImage%>' 
 				src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/ascending3.gif'/>
-			
+			&nbsp;
 		</a>
 	</span>
 	
@@ -45,10 +47,12 @@ String idA = Ids.decorate(request, "sc-a-" + controllerName);
 		<table>
 		<%
 		MetaController controller = MetaControllers.getMetaController(controllerName);
-		Collection<MetaAction> actions = controller.getMetaActions();
+		Collection actions = controller.getMetaActions();
 		String mode = request.getParameter("xava_mode"); 
 		if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
-		for (MetaAction action : actions){
+		java.util.Iterator itActions = actions.iterator();
+		while(itActions.hasNext()){
+			MetaAction action = (MetaAction)itActions.next();
 			if (action.appliesToMode(mode)) {
 		%>	
 			<tr><td>
