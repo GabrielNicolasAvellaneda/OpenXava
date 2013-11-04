@@ -814,21 +814,38 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 	openxava.deselected[index] = value;
 }
 
-openxava.subcontroller = function(id,idContainer,idButton,idImage,idA){
+openxava.subcontroller = function(id,containerId,buttonId,imageId,aId,spanId){
+	// hidden the menu when click out
+	$('html').click(function(e) {
+		var elementId = e.target.id;
+		if (aId != elementId &&
+			buttonId != elementId && 
+			imageId != elementId &&
+			spanId != elementId){
+			if ('none' != $('#'+id).css('display')){
+				$('#'+id).css('display','none');
+				$('#'+buttonId).removeClass('ox-subcontroller-select');
+				$('#'+imageId).fadeTo("fast",1);
+			}
+		}
+	});
+	// hidden the menu when click the button a second time   
+	if ('none' != $('#'+id).css('display')){
+		$('#'+id).css('display','none');
+		$('#'+buttonId).removeClass('ox-subcontroller-select');
+		$('#'+imageId).fadeTo("fast",1);
+		return;
+	}
+	// display and position the menu 
 	$('#'+id).css('display','inline');
-	var a = $('#'+idA);
-	var h = $('#'+idButton).height();	
+	var a = $('#'+aId);
+	var h = $('#'+buttonId).height();	
 	var f = a.position();
 	$('#'+id).css({ 
 		'top': f.top + h,
-		'left': f.left + 4
+		'left': f.left
 	});
-	// 
-	$('#'+idImage).fadeTo("fast",0.3);
-	$('#'+idButton).addClass('ox-subcontroller-select');
-	$('#'+idContainer).mouseleave(function(){
-		$('#'+id).css('display','none');
-		$('#'+idButton).removeClass('ox-subcontroller-select');
-		$('#'+idImage).fadeTo("fast",1);
-	});
+	//
+	$('#'+imageId).fadeTo("fast",0.3);
+	$('#'+buttonId).addClass('ox-subcontroller-select');
 }

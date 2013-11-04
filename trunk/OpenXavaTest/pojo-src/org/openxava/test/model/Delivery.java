@@ -97,7 +97,7 @@ import org.openxava.jpa.*;
 	@View(name="Search", members= "invoice; type; number; date;	description;")
 })
 @Tabs({
-	@Tab(properties="invoice.year, invoice.number, type.number, type.description, number, date, description, distance, dateAsLabel, invoice.sellerDiscount"),	
+	@Tab(properties="invoice.year, invoice.number, type.number, type.description, number, date, description, distance, dateAsLabel, invoice.sellerDiscount, invoice.amountsSum, invoice.total"), 
 	@Tab(name="Remarks2002", 
 		properties="invoice.year, invoice.number, remarks",
 		baseCondition="${invoice.year} = 2002"
