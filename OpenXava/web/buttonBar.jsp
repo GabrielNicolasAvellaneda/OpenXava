@@ -19,12 +19,9 @@ if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
 boolean headerButtonBar = !manager.isSplitMode() || mode.equals("list");  
 
 if (manager.isButtonBarVisible()) {
-	String idControllers = Ids.decorate(request, "controllers");
-	String idSubcontrollers = Ids.decorate(request, "subcontrollers");
-	String idModes = Ids.decorate(request, "modes");
 %>
 	<div class="<%=style.getButtonBar()%>">
-	<div id="<%=idControllers%>">
+	<div id="<xava:id name='controllers'/>">
 	<span style="float: left">
 	<%
 	java.util.Iterator it = manager.getMetaActions().iterator();
@@ -44,13 +41,13 @@ if (manager.isButtonBarVisible()) {
 	</span>
 	</div>
 	
-	<div id="<%=idSubcontrollers%>">
+	<div id="<xava:id name='subcontrollers'/>">
 	<span style="float:left">	
 	<%
 			Collection metaSubcontrollers = manager.getSubcontrollers();
-			java.util.Iterator itMetaSubcontrollers = metaSubcontrollers.iterator();
-			while(itMetaSubcontrollers.hasNext()){
-				MetaSubcontroller m = (MetaSubcontroller) itMetaSubcontrollers.next();
+			java.util.Iterator metaSubcontrollersIt = metaSubcontrollers.iterator();
+			while(metaSubcontrollersIt.hasNext()){
+				MetaSubcontroller m = (MetaSubcontroller) metaSubcontrollersIt.next();
 				if (m.appliesToMode(mode) && m.hasActionsInThisMode(mode)){
 		%>
 		<jsp:include page="subButton.jsp">
@@ -64,7 +61,7 @@ if (manager.isButtonBarVisible()) {
 	</span>
 	</div>
 	
-	<div id="<%=idModes%>">
+	<div id="<xava:id name='subcontrollers'/>">
 	<span style="float: right">	
 	<%
 	java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); 
