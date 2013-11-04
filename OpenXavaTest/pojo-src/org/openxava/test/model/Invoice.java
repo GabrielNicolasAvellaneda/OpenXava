@@ -120,6 +120,11 @@ import org.openxava.util.*;
 		"customer;" +
 		"details;" + 
 		"calculatedDetails"
+	),
+	@View(name="DetailsWithManyProperties", members= 
+		"year, number, date, vatPercentage;" +
+		"customer;" +
+		"details;"
 	)
 })
 
@@ -216,7 +221,8 @@ public class Invoice {
 	@ListsProperties({
 		@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free"),
 		@ListProperties(forViews="NoSections", value="product.description, product.unitPrice+, quantity, amount"),  
-		@ListProperties(forViews="DetailsWithTotals", value="deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]"), 						
+		@ListProperties(forViews="DetailsWithTotals", value="deliveryDate [invoice.deliveryDate], product.description, product.unitPrice[invoice.productUnitPriceSum], quantity, amount[invoice.amountsSum, invoice.vat, invoice.total]"),
+		@ListProperties(forViews="DetailsWithManyProperties", value="serviceType, product.description, product.unitPriceInPesetas, quantity+, unitPrice+, amount, free, invoice.year+, invoice.number+, invoice.vatPercentage+, invoice.sellerDiscount") 
 	})
 	@EditAction(forViews="DEFAULT", value="Invoice.editDetail")
 	@DetailAction(forViews="DEFAULT", value="Invoice.viewProduct")

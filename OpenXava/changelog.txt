@@ -1,9 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
-- subcontrollers: not shows when it's got not any action.
-- subcontrollers: improve its style.
-- subcontrollers: fix behavior. 
+- Fix: Totals in automatic PDF reports use two lines when the number is too large.
+- Fix: Little vertical white bar in subcontroller button.
+- Subcontrollers are not shown when they have no action.
+- Style of subcontrollers improved.
+- Subcontrollers behavior improved: now they are closed on clicking again on the button or outside the popup menu. 
 - buttonBar.jsp and subButton.jsp files -> java code 1.4.
 - Algorithm to tight columns in PDF reports optimized: right column is better adjusted and columns that not fit are dropped. 
 - New icons for customizing list and collections.

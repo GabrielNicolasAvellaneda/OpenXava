@@ -23,8 +23,8 @@
 <%@ page import="org.openxava.util.XavaPreferences"%>
 
 <%!
-
-private static int EXTRA_WIDTH = 5;
+private static int EXTRA_WIDTH = 15; 
+private static int MAX_CHARACTERS_PER_ROW = 128; 
 
 private int [] parseWidths(String widths) { 
 	String [] tokens = widths.split("[\\[\\], ]+");		
@@ -37,7 +37,6 @@ private int [] parseWidths(String widths) {
 
 private int [] tightenWidths(List metaProperties, int [] widths) { 
 	int [] originalWidths = widths.clone(); 
-	int max = 147; 
 	int littleOnesTotal = 0;
 	int littleOnesCount = 0;
 	for (int i=0; i<widths.length; i++) {
@@ -46,7 +45,7 @@ private int [] tightenWidths(List metaProperties, int [] widths) {
 			littleOnesCount++;
 		}
 	}	
-	int spaceForBigOnes = max - littleOnesTotal;
+	int spaceForBigOnes = MAX_CHARACTERS_PER_ROW - littleOnesTotal;
 	int bigOnesCount = widths.length - littleOnesCount; 
 	int widthForBig = bigOnesCount==0?20:spaceForBigOnes / bigOnesCount; 
 	if (widthForBig < 20) widthForBig = 20;
@@ -55,7 +54,7 @@ private int [] tightenWidths(List metaProperties, int [] widths) {
 		if (widths[i] > 20 && widths[i] > widthForBig) widths[i] = widthForBig;
 		total += widths[i];
 	}		
-	if (total > max) {
+	if (total > MAX_CHARACTERS_PER_ROW) {
 		metaProperties.remove(metaProperties.size() - 1);
 		widths = org.apache.commons.lang.ArrayUtils.remove(originalWidths, originalWidths.length - 1);
 		return tightenWidths(metaProperties, widths);
@@ -512,7 +511,7 @@ while (it.hasNext()) {
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="19"  isSplitAllowed="true" >
+			<band height="19" isSplitAllowed="true" >
 				<line direction="TopDown">
 					<reportElement
 						mode="Opaque"
@@ -535,7 +534,7 @@ x = 0;
 i=0;
 while (it.hasNext()) {			
 	MetaProperty p = (MetaProperty) it.next();	
-	int width=widths[i++]*letterWidth + + EXTRA_WIDTH;
+	int width=widths[i++]*letterWidth + EXTRA_WIDTH;
 	if (totalProperties.contains(p.getQualifiedName())) { 
 %>								
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None" >					<reportElement
