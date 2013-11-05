@@ -78,17 +78,17 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertDialogTitle("Create a new entity - Report column");
 		String [][] validColumnNames = {
 			{ "", "" },	
-			{ "number", "number" },
-			{ "name", "name" },
-			{ "drivingLicence.type", "drivingLicence.type" },	
-			{ "drivingLicence.level", "drivingLicence.level" },	
-			{ "drivingLicence.description", "drivingLicence.description" },	
-			{ "warehouse.zoneNumber", "warehouse.zoneNumber" },	
-			{ "warehouse.number", "warehouse.number" },	
-			{ "warehouse.name", "warehouse.name" },	
-			{ "remarks", "remarks" },	
-			{ "calculated", "calculated" }
-		};
+			{ "number", "Number" },
+			{ "name", "Name" },
+			{ "drivingLicence.type", "Type of Driving licence" },	
+			{ "drivingLicence.level", "Level of Driving licence" },	
+			{ "drivingLicence.description", "Description of Driving licence" },	
+			{ "warehouse.zoneNumber", "Zone of Warehouse" },	
+			{ "warehouse.number", "Warehouse number" },	
+			{ "warehouse.name", "Name of Warehouse" },	
+			{ "remarks", "Remarks" },	
+			{ "calculated", "Calculated" }
+		};		
 		assertValidValues("name", validColumnNames);
 		assertValue("name", "");		
 		String [][] emptyComparators = {
