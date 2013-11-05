@@ -28,10 +28,14 @@ java.util.Collection columns = tab.getMetaTab().getMetaModel().getRecursiveQuali
 	<option value=""></option>
 	<% 
 	for (java.util.Iterator it = columns.iterator(); it.hasNext(); ) {
-		Object column = it.next();
+		String column = (String) it.next();
+		MetaProperty property = tab.getMetaTab().getMetaModel().getMetaProperty(column);
+		property = property.cloneMetaProperty();
+		property.setQualifiedName(column);
+		String label = property.getQualifiedLabel(org.openxava.util.Locales.getCurrent());
 		String selected = column.equals(fvalue)?"selected":""; 
 	%>
-	<option value="<%=column%>" <%=selected%>><%=column%></option>
+	<option value="<%=column%>" <%=selected%>><%=label%></option>
 	<% 
 	}
 	%>
