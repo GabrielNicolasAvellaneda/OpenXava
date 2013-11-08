@@ -39,6 +39,7 @@ public class MyReport implements java.io.Serializable {
 	@RemoveSelectedAction("MyReport.removeColumn")
 	@AsEmbedded 
 	@SaveAction("MyReport.saveColumn")
+	@NewAction("MyReport.newColumn") 
 	@EditAction("MyReport.editColumn")
 	@ListProperties("label, comparator, value, order, sum, hidden") 
 	private List<MyReportColumn> columns;

@@ -16,11 +16,16 @@ public class OnChangeMyReportColumnNameAction extends TabBaseAction implements I
 	public final static String DATE_COMPARATOR = "__DATE__";
 	public final static String EMPTY_COMPARATOR = "__EMPTY__";
 	public final static String OTHER_COMPARATOR = "__OTHER__";
+	public final static String SHOW_MORE="__MORE__";
 		
 	private Object newValue;
 	
 	public void execute() throws Exception {		
 		String propertyName = (String) newValue;
+		if (SHOW_MORE.equals(propertyName)) {
+			getView().putObject("xava.myReportColumnShowAllColumns", true);
+			propertyName = null;
+		}
 		if (Is.emptyString(propertyName)) {
 			getView().setValue("label", ""); 
 			getView().setValue("comparator", EMPTY_COMPARATOR);

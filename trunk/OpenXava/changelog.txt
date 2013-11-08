@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- The combo for adding columns in 'My report' only shows until second level properties by default.
+- Order for properties when no @View is defined is consistent for all Java vendors.
 - Labels instead of internal names in combo for adding new columns in 'My reports'.
 - Fix: Totals in automatic PDF reports use two lines when the number is too large.
 - Fix: Little vertical white bar in subcontroller button.

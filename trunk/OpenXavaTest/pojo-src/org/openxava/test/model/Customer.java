@@ -251,13 +251,17 @@ public class Customer implements IWithName {
 		inverseJoinColumns=@JoinColumn(name="STATE") 
 	)
 	private Collection<State> states;
- 	
+	 	
 	@Column(length=40)	
 	@Depends("address.zipCode, address.city")	
 	public String getCity() {
 		return getAddress().getZipCode() + " " + getAddress().getCity(); 
 	}
 	
+	public boolean isLocal() {
+		return false;
+	}
+		
  	public static Customer findByNumber(int number) throws NoResultException { 	 			
  		Query query = XPersistence.getManager().createQuery("from Customer as o where o.number = :number"); 
 		query.setParameter("number", new Integer(number)); 
@@ -293,10 +297,6 @@ public class Customer implements IWithName {
  		return query.getResultList();  		
  	} 	 	
  		
-	public boolean isLocal() {
-		return false;
-	}
-	
 	public int getNumber() {
 		return number;
 	}

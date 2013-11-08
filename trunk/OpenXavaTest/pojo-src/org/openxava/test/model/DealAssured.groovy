@@ -15,6 +15,6 @@ public class DealAssured {
 	String name
 	
 	@OneToOne(mappedBy="assured", fetch=FetchType.LAZY)
-	Deal deal  
+	Deal deal
 	
 } 

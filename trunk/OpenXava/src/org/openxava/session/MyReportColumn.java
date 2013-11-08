@@ -35,8 +35,8 @@ public class MyReportColumn implements java.io.Serializable {
 	@OnChange(OnChangeMyReportColumnNameAction.class)
 	@Required
 	private String name;
-	
-	@Required
+		
+	@Required @Column(length=60) 
 	private String label; 
 	
 	private String comparator;
@@ -246,8 +246,5 @@ public class MyReportColumn implements java.io.Serializable {
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
 	}
-
-	
-	
 	
 }

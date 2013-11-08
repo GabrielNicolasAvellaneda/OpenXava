@@ -206,7 +206,7 @@
 		<for-model-property model="MyReportColumn" property="value" />				
 	</editor>
 		
-	<editor url="myReportColumnNameEditor.jsp">
+	<editor url="myReportColumnNameEditor.jsp" always-reload="true">
 		<for-model-property model="MyReportColumn" property="name" />
 	</editor>
 		
