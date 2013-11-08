@@ -213,6 +213,113 @@ public class InvoiceTest extends ModuleTestBase {
 		assertExists("paid");
 	}
 	
+	public void testMyReportAddColumnsOnlyFromTwoLevelQualifiedProperties() throws Exception { 
+		execute("ExtendedPrint.myReports");
+		execute("MyReport.newColumn", "viewObject=xava_view_columns");		
+		String [][] defaultColumnNames = {
+			{ "", "" },	
+			{ "year", "Year" },
+			{ "number", "Number" },
+			{ "date", "Date" },	
+			{ "vatPercentage", "VAT %" },	
+			{ "comment", "Comment" },	
+			{ "paid", "Paid" },	
+			{ "customer.number", "Number of Customer" },	
+			{ "customer.name", "Name of Customer" },
+			{ "customer.type", "Type of Customer" },	
+			{ "customer.photo", "Photo of Customer" },	
+			{ "customer.telephone", "Telephone of Customer" },
+			{ "customer.email", "eMail of Customer" },
+			{ "customer.website", "Web site of Customer" },
+			{ "customer.remarks", "Remarks of Customer" },
+			{ "customer.relationWithSeller", "Relation with seller of Customer" },
+			{ "customer.city", "City of Customer" },
+			{ "customer.local", "Lokal of Customer" },			
+			{ "amountsSum", "Amounts sum" },			
+			{ "customerDiscount", "Customer discount" },
+			{ "customerTypeDiscount", "Customer type discount" },
+			{ "deliveryDate", "Delivery date" },
+			{ "detailsCount", "Details count" },
+			{ "importance", "Importance" },			
+			{ "productUnitPriceSum", "Product unit price sum" },
+			{ "sellerDiscount", "Seller discount" },
+			{ "total", "Total" },
+			{ "vat", "V.A.T." },
+			{ "yearDiscount", "Year discount" },
+			{ "considerable", "Considerable" },
+			{ "__MORE__", "[SHOW MORE...]"}
+		};		
+		assertValidValues("name", defaultColumnNames);
+				
+		setValue("name", "__MORE__");
+		
+		String [][] allColumnNames = {
+			{ "", "" },	
+			{ "year", "Year" },
+			{ "number", "Number" },
+			{ "date", "Date" },	
+			{ "vatPercentage", "VAT %" },	
+			{ "comment", "Comment" },	
+			{ "paid", "Paid" },	
+			{ "customer.number", "Number of Customer" },	
+			{ "customer.name", "Name of Customer" },
+			{ "customer.type", "Type of Customer" },	
+			{ "customer.photo", "Photo of Customer" },	
+			{ "customer.telephone", "Telephone of Customer" },
+			{ "customer.email", "eMail of Customer" },
+			{ "customer.website", "Web site of Customer" },
+			{ "customer.remarks", "Remarks of Customer" },
+			{ "customer.address.street", "Street of Address of Customer" },
+			{ "customer.address.zipCode", "Zip code of Address of Customer" },
+			{ "customer.address.city", "City of Address of Customer" },
+			{ "customer.address.state.id", "Id of State of Address of Customer" },
+			{ "customer.address.state.name", "State" },
+			{ "customer.address.state.fullNameWithFormula", "Full name with formula of State of Address of Customer" },
+			{ "customer.address.state.fullName", "Full name of State of Address of Customer" },
+			{ "customer.address.asString", "As string of Address of Customer" },
+			{ "customer.seller.number", "Number of Seller of Customer" },
+			{ "customer.seller.name", "Name of Seller of Customer" },
+			{ "customer.seller.level.id", "Id of Level of Seller of Customer" },
+			{ "customer.seller.level.description", "Description of Level of Seller of Customer" },
+			{ "customer.seller.regions", "Regions of Seller of Customer" },			
+			{ "customer.relationWithSeller", "Relation with seller of Customer" },
+			{ "customer.alternateSeller.number", "Number of Alternate seller of Customer" },
+			{ "customer.alternateSeller.name", "Name of Alternate seller of Customer" },
+			{ "customer.alternateSeller.level.id", "Id of Level of Alternate seller of Customer" },
+			{ "customer.alternateSeller.level.description", "Description of Level of Alternate seller of Customer" },
+			{ "customer.alternateSeller.regions", "Regions of Alternate seller of Customer" },			
+			{ "customer.city", "City of Customer" },			
+			{ "customer.local", "Lokal of Customer" },			
+			{ "amountsSum", "Amounts sum" },
+			{ "customerDiscount", "Customer discount" },
+			{ "customerTypeDiscount", "Customer type discount" },
+			{ "deliveryDate", "Delivery date" },
+			{ "detailsCount", "Details count" },
+			{ "importance", "Importance" },
+			{ "productUnitPriceSum", "Product unit price sum" },			
+			{ "sellerDiscount", "Seller discount" },
+			{ "total", "Total" },
+			{ "vat", "V.A.T." },			
+			{ "yearDiscount", "Year discount" },
+			{ "considerable", "Considerable" }
+		};		
+		assertValidValues("name", allColumnNames);
+		
+		closeDialog();
+		
+		execute("MyReport.newColumn", "viewObject=xava_view_columns");
+		assertValidValues("name", defaultColumnNames);
+		
+		setValue("name", "__MORE__");
+		setValue("name", "customer.seller.name");
+		execute("MyReport.saveColumn");
+		assertValueInCollection("columns", 8, 0, "Name of Seller of Customer");
+		execute("MyReport.editColumn", "row=8,viewObject=xava_view_columns");
+		assertValue("name", "customer.seller.name");
+		assertValue("label", "Name of Seller of Customer");
+		assertValidValuesCount("name", defaultColumnNames.length + 1);
+	}
+	
 	public void testMyReportFilteringByDateAndBooleanWithConverter() throws Exception {  
 		// Date
 		execute("ExtendedPrint.myReports");

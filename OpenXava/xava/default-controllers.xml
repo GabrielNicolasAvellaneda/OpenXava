@@ -103,7 +103,10 @@ here that you want to override.
 			class="org.openxava.actions.RemoveMyReportColumnAction"
 			image="delete.gif"/>			
 		<action name="saveColumn" hidden="true" 
-			class="org.openxava.actions.SaveMyReportColumnAction"/>			
+			class="org.openxava.actions.SaveMyReportColumnAction"/>
+		<action name="newColumn" hidden="true"
+			class="org.openxava.actions.CreateNewMyReportColumnAction"
+			image="create_new.gif" />						
 		<action name="editColumn" hidden="true" 
 			class="org.openxava.actions.EditMyReportColumnAction"
 			image="edit.gif"/>					

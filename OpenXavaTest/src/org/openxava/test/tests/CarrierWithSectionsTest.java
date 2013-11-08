@@ -74,8 +74,8 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 0, 0, "Name");
 		assertValueInCollection("columns", 1, 0, "Number");
 		
-		execute("Collection.new", "viewObject=xava_view_columns");
-		assertDialogTitle("Create a new entity - Report column");
+		execute("MyReport.newColumn", "viewObject=xava_view_columns");
+		assertDialogTitle("Add - Report column");
 		String [][] validColumnNames = {
 			{ "", "" },	
 			{ "number", "Number" },
@@ -206,7 +206,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
 		
-		execute("Collection.new", "viewObject=xava_view_columns");
+		execute("MyReport.newColumn", "viewObject=xava_view_columns");
 		setValue("name", "warehouse.zoneNumber");
 		setValue("value", "2");
 		setValue("hidden", "true");
@@ -278,7 +278,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		setValue("value", "2");		
 		execute("MyReport.saveColumn");		
 		
-		execute("Collection.new", "viewObject=xava_view_columns");
+		execute("MyReport.newColumn", "viewObject=xava_view_columns");
 		setValue("name", "number");
 		setValue("comparator", "le_comparator");
 		setValue("value", "4");		

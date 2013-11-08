@@ -22,6 +22,7 @@ public class EditMyReportColumnAction extends CollectionElementViewBaseAction  {
 	@SuppressWarnings("unchecked")
 	public void execute() throws Exception {
 		getCollectionElementView().clear(); 
+		getCollectionElementView().removeObject("xava.myReportColumnShowAllColumns");  
 		getCollectionElementView().setCollectionDetailVisible(true);
 		Collection elements;
 		Map keys = null;

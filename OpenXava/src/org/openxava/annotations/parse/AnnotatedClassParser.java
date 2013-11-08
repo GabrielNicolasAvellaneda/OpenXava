@@ -175,8 +175,8 @@ public class AnnotatedClassParser {
 			propertyDescriptors.remove(f.getName());
 		}
 		
-		// Loop over methods in order to preserve the order in source code			
-		for (Method m: pojoClass.getDeclaredMethods()) {
+		// We order the methods to be consistent with both Sun and JRockit, only JRockit returns the method as declared 			
+		for (Method m: getOrderedDeclaredMethods(pojoClass)) { 
 			if (!Modifier.isPublic(m.getModifiers())) continue; 
 			String propertyName = null;
 			if (m.getName().startsWith("get")) {
@@ -193,6 +193,18 @@ public class AnnotatedClassParser {
 		
 		parseAttributeOverrides(pojoClass, mapping);
 	}
+	
+	private Collection<Method> getOrderedDeclaredMethods(Class theClass) { 
+		List<Method> methods = Arrays.asList(theClass.getDeclaredMethods());
+		Collections.sort(methods, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				
+				return ((Method) o1).getName().compareTo( ((Method) o2).getName() );
+			}			
+		});
+		return methods;
+	}
+	
 	
 	private void parseAttributeOverrides(AnnotatedElement element, ModelMapping mapping) throws XavaException {
 		parseAttributeOverrides(element, mapping, null);

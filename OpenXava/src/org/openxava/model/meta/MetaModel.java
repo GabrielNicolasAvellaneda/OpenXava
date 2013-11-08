@@ -71,6 +71,7 @@ abstract public class MetaModel extends MetaElement {
 	private Collection persistentPropertiesNames;
 	private Collection interfaces;
 	private Collection recursiveQualifiedPropertiesNames;
+	private Collection recursiveQualifiedPropertiesNamesUntilSecondLevel; 
 	private Collection metaReferencesWithDefaultValueCalculator;
 	private String qualifiedName;
 	private boolean hasDefaultCalculatorOnCreate = false;
@@ -1602,12 +1603,28 @@ abstract public class MetaModel extends MetaElement {
 		if (recursiveQualifiedPropertiesNames == null) {
 			Collection parents = new HashSet();
 			parents.add(getName());			
-			recursiveQualifiedPropertiesNames = createQualifiedPropertiesNames(parents, "");
+			recursiveQualifiedPropertiesNames = createQualifiedPropertiesNames(parents, "", Integer.MAX_VALUE);
 		}
 		return recursiveQualifiedPropertiesNames;
 	}
 	
-	private Collection createQualifiedPropertiesNames(Collection parents, String prefix) throws XavaException {
+	/**
+	 * Does not include <i>Transient</i> properties
+	 * 
+	 * @since 4.9
+	 */
+	public Collection getRecursiveQualifiedPropertiesNamesUntilSecondLevel() throws XavaException { 
+		if (recursiveQualifiedPropertiesNamesUntilSecondLevel == null) {
+			Collection parents = new HashSet();
+			parents.add(getName());			
+			recursiveQualifiedPropertiesNamesUntilSecondLevel = createQualifiedPropertiesNames(parents, "", 2);
+		}
+		return recursiveQualifiedPropertiesNamesUntilSecondLevel;
+	}
+
+	
+	private Collection createQualifiedPropertiesNames(Collection parents, String prefix, int level) throws XavaException {
+		if (level == 0) return Collections.EMPTY_LIST; 
 		List result = new ArrayList();		
 		for (Iterator it = getMembersNames().iterator(); it.hasNext();) {
 			Object name = it.next();
@@ -1623,7 +1640,7 @@ abstract public class MetaModel extends MetaElement {
 					Collection newParents = new HashSet();
 					newParents.addAll(parents);
 					newParents.add(ref.getReferencedModelName());	
-					result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(newParents, prefix + ref.getName() + "."));
+					result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(newParents, prefix + ref.getName() + ".", level - 1));
 				}
 			}
 		} 
