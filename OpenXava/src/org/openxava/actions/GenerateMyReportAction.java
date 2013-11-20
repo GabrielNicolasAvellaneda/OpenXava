@@ -67,7 +67,8 @@ public class GenerateMyReportAction extends GenerateReportAction {
 
 	private void addColumn(Tab tab, Collection<String> comparators,
 			Collection<String> values, StringBuffer order,
-			MyReportColumn column) {
+			MyReportColumn column) 
+	{
 		tab.addProperty(column.getName());
 		tab.setLabel(column.getName(), column.getLabel()); 
 		if (column.isCalculated())

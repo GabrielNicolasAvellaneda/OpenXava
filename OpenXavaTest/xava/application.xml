@@ -101,8 +101,7 @@
 		<model name="Delivery"/>
 		<view name="FullInvoice"/>		
 		<controller name="Typical"/>
-	</module>	
-	
+	</module>				
 	<module name="TransportChargeWithDistance" folder="invoicing.variations">
 		<model name="TransportCharge"/>
 		<tab name="WithDistance"/>		

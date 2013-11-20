@@ -3,6 +3,11 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN" 
 "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
+<%-- 
+If you modify this file please past the manual tests in 
+OpenXavaTest/src/org/openxava/test/tests/PrettyPrintingTest.txt  
+--%>
+
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
 <%@ page import="java.util.List" %> 
@@ -10,6 +15,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 <%@ page import="org.openxava.util.Primitives" %>
 <%@ page import="org.openxava.util.Strings" %>
@@ -24,15 +30,63 @@
 
 <%!
 private static int EXTRA_WIDTH = 15; 
-private static int MAX_CHARACTERS_PER_ROW = 128; 
+private static int MAX_CHARACTERS_PER_ROW = 122;   // If you modify these
+private static int WIDE_CHARACTERS_PER_ROW = 107;  // values please verify 
+private static int MEDIUM_CHARACTERS_PER_ROW = 63; // if the tests in PrettyPrintingTest 
+private static int NARROW_CHARACTERS_PER_ROW = 44; // pass for the 4 branch of the if below
 
-private int [] parseWidths(String widths) { 
+private int [] parseWidths(String widths, Integer columnCountLimit) { 
 	String [] tokens = widths.split("[\\[\\], ]+");		
-	int [] result = new int[tokens.length - 1];
+	int size = columnCountLimit == null?tokens.length - 1:columnCountLimit.intValue(); 
+	int [] result = new int[size];
 	for (int i=0; i<result.length; i++) {
 		result[i] = Integer.parseInt(tokens[i+1]);
-	}
+	}	
 	return result;	
+}
+
+private int adjustWithsToLabels(List metaProperties, int [] widths, Locale locale) {  
+	int totalWidth = 0;	
+	int i=0;
+	for (Iterator it = metaProperties.iterator(); it.hasNext(); i++) {
+		MetaProperty p = (MetaProperty) it.next();
+		String label = p.getQualifiedLabel(locale);  
+		if (widths[i] == 0) widths[i] = p.getSize();
+		int labelLength = Math.min(label.length(), 10); 
+		if (widths[i] < labelLength) widths[i] = labelLength;
+		totalWidth+=widths[i];		
+	}
+	return totalWidth;
+}
+
+private int calculateRowsInHeader(List metaProperties, int [] widths, Locale locale) { 	 	
+	int rowsInHeader = 1;
+	int i=0;
+	for (Iterator it = metaProperties.iterator(); it.hasNext(); i++) {
+		MetaProperty p = (MetaProperty) it.next();
+		String label = p.getQualifiedLabel(locale); 
+		int rows = (label.length() - 1) / (int) (widths[i] * 1.53) + 1;
+		rowsInHeader = Math.max(rowsInHeader, rows);	
+	}
+	return rowsInHeader;
+}
+
+private void expandWidths(List metaProperties, int [] widths, int max, Locale locale) { 
+	int totalWidth = 0;
+	Collection candidates = new java.util.ArrayList();
+	for (int i=0; i<widths.length; i++) {
+		if (widths[i] < ((MetaProperty) metaProperties.get(i)).getQualifiedLabel(locale).length()) {
+			candidates.add(new Integer(i));
+		}
+		totalWidth += widths[i];
+	}
+	if (totalWidth < max && !candidates.isEmpty()) {
+		int extra = (max - totalWidth) / candidates.size();
+		for (Iterator it = candidates.iterator(); it.hasNext(); ) {
+			int i = ((Integer) it.next()).intValue();
+			widths[i] = widths[i] + extra;
+		}
+	}	
 }
 
 private int [] tightenWidths(List metaProperties, int [] widths) { 
@@ -85,29 +139,16 @@ private List getMetaProperties(Tab tab, Integer columnCountLimit) {
 Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
 String reportName = Strings.change(tab.getModelName(), ".", "_"); 
 Collection totalProperties = tab.getTotalPropertiesNames();  		
-		 
 String language = request.getParameter("language");
 if (language == null) language = org.openxava.util.Locales.getCurrent().getDisplayLanguage();
 language = language == null?request.getLocale().getDisplayLanguage():language;
-java.util.Locale locale = new java.util.Locale(language, "");
+Locale locale = new Locale(language, "");
 String scolumnCountLimit = request.getParameter("columnCountLimit");
 Integer columnCountLimit = scolumnCountLimit == null?null:Integer.parseInt(scolumnCountLimit);
-
-List metaProperties = getMetaProperties(tab, columnCountLimit); 
-
+List metaProperties = getMetaProperties(tab, columnCountLimit);
 int columnsSeparation = 10;
-Iterator it = metaProperties.iterator(); 
-int [] widths = parseWidths(request.getParameter("widths")); 
-int totalWidth = 0;
-int i=0;
-while (it.hasNext()) {
-	MetaProperty p = (MetaProperty) it.next();
-	String label = p.getLabel(locale);
-	if (widths[i] == 0) widths[i] = p.getSize();
-	if (widths[i] < label.length()) widths[i] = label.length();
-	totalWidth+=widths[i];
-	i++;
-}
+int [] widths = parseWidths(request.getParameter("widths"), columnCountLimit); 
+int totalWidth = adjustWithsToLabels(metaProperties, widths, locale); 
 int letterWidth;
 int letterSize;
 int detailHeight;
@@ -116,17 +157,19 @@ int pageHeight;
 int columnWidth;
 String orientation = null;
 
-if (totalWidth > 120) {	
-	widths = tightenWidths(metaProperties, widths);
+if (totalWidth > WIDE_CHARACTERS_PER_ROW) { 
+	if (totalWidth > MAX_CHARACTERS_PER_ROW) tightenWidths(metaProperties, widths);
+	else expandWidths(metaProperties, widths, MAX_CHARACTERS_PER_ROW, locale); 
 	orientation="Landscape";
 	letterWidth = 4;
 	letterSize = 7;
-	detailHeight = 10;
+	detailHeight = 8; 
 	pageWidth=842;
 	pageHeight=595;
 	columnWidth=780;	
 }
-else if (totalWidth > 90) {
+else if (totalWidth > MEDIUM_CHARACTERS_PER_ROW) {  
+	expandWidths(metaProperties, widths, WIDE_CHARACTERS_PER_ROW, locale); 
 	orientation="Landscape";
 	letterWidth = 6;
 	letterSize=8;
@@ -135,7 +178,8 @@ else if (totalWidth > 90) {
 	pageHeight=595;
 	columnWidth=780;	
 } 
-else if (totalWidth > 53) {
+else if (totalWidth > NARROW_CHARACTERS_PER_ROW) {
+	expandWidths(metaProperties, widths, MEDIUM_CHARACTERS_PER_ROW, locale); 
 	orientation="Portrait";
 	letterWidth = 6;
 	letterSize=8;
@@ -145,6 +189,7 @@ else if (totalWidth > 53) {
 	columnWidth=535;
 }
 else {
+	expandWidths(metaProperties, widths, NARROW_CHARACTERS_PER_ROW, locale);
 	orientation="Portrait";
 	letterWidth = 10;
 	letterSize = 12;
@@ -153,6 +198,8 @@ else {
 	pageHeight=842;
 	columnWidth=535;
 }
+
+int rowsInHeader = calculateRowsInHeader(metaProperties, widths, locale);
 %>
 
 <jasperReport
@@ -185,9 +232,8 @@ else {
 	<parameter name="Title" class="java.lang.String"/>	
 	<parameter name="Organization" class="java.lang.String"/>
 	<parameter name="Date" class="java.lang.String"/>
-	<%
-	it = metaProperties.iterator(); 
-	while (it.hasNext()) {
+	<%	 
+	for (Iterator it = metaProperties.iterator(); it.hasNext();) {
 		MetaProperty p = (MetaProperty) it.next();				
 		if (totalProperties.contains(p.getQualifiedName())) {				 
 	%>
@@ -197,9 +243,8 @@ else {
 	}
 	%>	
 		
-	<%
-	it = metaProperties.iterator(); 
-	while (it.hasNext()) {
+	<%		 
+	for (Iterator it = metaProperties.iterator(); it.hasNext();) {
 		MetaProperty p = (MetaProperty) it.next();
 	%>
 	<field name="<%=Strings.change(p.getQualifiedName(), ".", "_")%>" class="java.lang.String"/> 	
@@ -295,15 +340,18 @@ else {
 			<band height="9"  isSplitAllowed="true" >
 			</band>
 		</pageHeader>
+		<% 
+		int headerHeight = rowsInHeader * detailHeight + 8; 
+		%>
 		<columnHeader>
-			<band height="15"  isSplitAllowed="true" >
+			<band height="<%=headerHeight%>" isSplitAllowed="true" >
 				<rectangle radius="0" >
 					<reportElement
 						mode="Opaque"
 						x="0"
 						y="0"
 						width="<%=columnWidth%>"
-						height="15"
+						height="<%=headerHeight - 5%>"
 						forecolor="#000000"
 						backcolor="#808080"
 						positionType="FixRelativeToTop"
@@ -333,7 +381,7 @@ else {
 					<reportElement
 						mode="Opaque"
 						x="0"
-						y="14"
+						y="<%=headerHeight - 6%>"
 						width="<%=columnWidth%>"
 						height="0"
 						forecolor="#000000"
@@ -345,33 +393,32 @@ else {
 						isPrintWhenDetailOverflows="false"/>
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
-<%
-it = metaProperties.iterator(); 
+<% 
 int x = 0;
-i=0;
-while (it.hasNext()) {			
+int i = 0;
+for (Iterator it = metaProperties.iterator(); it.hasNext(); i++) {			
 	MetaProperty p = (MetaProperty) it.next();
-	int width=widths[i++]*letterWidth + EXTRA_WIDTH; 		
-%>								
+	int width=widths[i]*letterWidth + EXTRA_WIDTH; 		
+%>
 				<staticText>
 					<reportElement
 						mode="Transparent"
 						x="<%=x%>"
 						y="2"
 						width="<%=width%>"
-						height="13"
+						height="<%=headerHeight-2%>"
 						forecolor="#FFFFFF"
 						backcolor="#FFFFFF"
 						positionType="FixRelativeToTop"
 						isPrintRepeatedValues="true"
 						isRemoveLineWhenBlank="false"
-						isPrintInFirstWholeBand="false"
-						isPrintWhenDetailOverflows="false"/>
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
-						<font reportFont="Arial_Normal" size="10"/>
+						<font reportFont="Arial_Normal" size="<%=letterSize%>"/>
 					</textElement>
-					<% String label = "<![CDATA[" + p.getLabel(locale) + "]]>"; %>
-					<text><%=label%></text>
+					<% String label = "<![CDATA[" + p.getQualifiedLabel(locale) + "]]>"; %>
+					<text><%=label%></text>					
 				</staticText>
 <%
 	x+=(width+columnsSeparation);
@@ -381,7 +428,7 @@ while (it.hasNext()) {
 		</columnHeader>
 		
 		<detail>
-			<band height="19"  isSplitAllowed="true" >
+			<band height="<%=detailHeight + 2%>"  isSplitAllowed="true" >
 				<line direction="TopDown">
 					<reportElement
 						mode="Opaque"
@@ -398,15 +445,15 @@ while (it.hasNext()) {
 						isPrintWhenDetailOverflows="true"/>					
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
-<%
-it = metaProperties.iterator(); 
+<% 
 x = 0;
-i=0;
-while (it.hasNext()) {			
+i = 0;
+for (Iterator it = metaProperties.iterator(); it.hasNext(); i++) {			
 	MetaProperty p = (MetaProperty) it.next();	
-	int width=widths[i++]*letterWidth + + EXTRA_WIDTH; 
+	int width=widths[i]*letterWidth + EXTRA_WIDTH; 
 %>								
-				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None" >
+					<reportElement
 						mode="Transparent"
 						x="<%=x%>"
 						y="2"
@@ -422,7 +469,7 @@ while (it.hasNext()) {
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
 						<font reportFont="Arial_Normal" size="<%=letterSize%>"/>
 					</textElement>
-					<textFieldExpression   class="java.lang.String">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
+					<textFieldExpression class="java.lang.String">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
 				</textField>
 <%
 	x+=(width+columnsSeparation);
@@ -528,13 +575,12 @@ while (it.hasNext()) {
 						isPrintWhenDetailOverflows="true"/>					
 					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
 				</line>
-<%
-it = metaProperties.iterator(); 
+<% 
 x = 0;
-i=0;
-while (it.hasNext()) {			
+i = 0;
+for (Iterator it = metaProperties.iterator(); it.hasNext(); i++) {			
 	MetaProperty p = (MetaProperty) it.next();	
-	int width=widths[i++]*letterWidth + EXTRA_WIDTH;
+	int width=widths[i]*letterWidth + EXTRA_WIDTH;
 	if (totalProperties.contains(p.getQualifiedName())) { 
 %>								
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None" >					<reportElement
@@ -563,4 +609,3 @@ while (it.hasNext()) {
 			</band>
 		</summary>
 </jasperReport>
-
