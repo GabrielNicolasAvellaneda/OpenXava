@@ -718,8 +718,8 @@ public class AnnotatedClassParser {
 
 
 	private void setCalculated(PropertyDescriptor pd, MetaProperty property) {
-		property.setReadOnly(true);
-		MetaCalculator metaCalculator = new MetaCalculator();
+		property.setReadOnly(true);		
+		MetaCalculator metaCalculator = new MetaCalculator();		
 		metaCalculator.setClassName(org.openxava.calculators.ModelPropertyCalculator.class.getName());
 		MetaSet metaSet = new MetaSet();
 		metaSet.setPropertyName("property");
@@ -733,8 +733,8 @@ public class AnnotatedClassParser {
 				metaSetPropertyFrom.setPropertyNameFrom((String) propertyFrom);
 				metaCalculator.addMetaSet(metaSetPropertyFrom);
 			}
-		}			
-		property.setMetaCalculator(metaCalculator);
+		}		
+		property.setMetaCalculator(metaCalculator);		
 	}
 
 

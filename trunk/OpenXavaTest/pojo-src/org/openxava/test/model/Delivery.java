@@ -101,7 +101,7 @@ import org.openxava.jpa.*;
 	@Tab(name="Remarks2002", 
 		properties="invoice.year, invoice.number, remarks",
 		baseCondition="${invoice.year} = 2002"
-	)
+	),
 })
 
 

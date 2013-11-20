@@ -86,7 +86,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		Object entity = null;
 		Iterator itCalculators = tabCalculators.iterator();
 		while (itCalculators.hasNext()) {
-			TabCalculator tabCalculator = (TabCalculator) itCalculators.next();			
+			TabCalculator tabCalculator = (TabCalculator) itCalculators.next();
 			try {
 				PropertiesManager mpCalculator =
 					tabCalculator.getPropertiesManager();

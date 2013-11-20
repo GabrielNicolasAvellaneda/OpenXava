@@ -16,7 +16,7 @@ public class ModelPropertyCalculator implements IModelCalculator {
 	
 	private Object model;
 	private String property;
-	private Object valueOfDependsProperty;
+	private Object valueOfDependsProperty; 
 
 	public void setModel(Object model) throws RemoteException {
 		this.model = model;		
@@ -35,7 +35,7 @@ public class ModelPropertyCalculator implements IModelCalculator {
 	public void setProperty(String property) {
 		this.property = property;
 	}
-
+	
 	public Object getValueOfDependsProperty() {
 		return valueOfDependsProperty;
 	}

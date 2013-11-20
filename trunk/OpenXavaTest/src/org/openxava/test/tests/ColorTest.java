@@ -285,7 +285,7 @@ public class ColorTest extends ModuleTestBase {
 		
 		// Color: 'usedTo' without descriptionsList and 'characteristicThing' without descriptionsList
 		assertLabelInList(4, "Name of Used to");
-		assertLabelInList(5, "Description of Characteristic thing");
+		assertLabelInList(5, "Characteristic thing"); 
 		assertValueInList(0, 4, "CAR");
 		assertValueInList(0, 5, "3 PLACES");
 		setConditionValues(new String[] { "", "", "", "CAR", "3 PLACES" } );
@@ -296,7 +296,7 @@ public class ColorTest extends ModuleTestBase {
 		// Color2: 'usedTo' with descriptionsList and 'characteristicThing' with descriptionsList and condition
 		changeModule("Color2");
 		assertLabelInList(4, "Name of Used to");
-		assertLabelInList(5, "Description of Characteristic thing");
+		assertLabelInList(5, "Characteristic thing"); 
 		assertValueInList(0, 4, "CAR");
 		assertValueInList(0, 5, "3 PLACES");
 		setConditionValues(new String[] { "", "", "", "1", "0" } );
@@ -393,7 +393,7 @@ public class ColorTest extends ModuleTestBase {
 	
 	public void testFilterByString() throws Exception{
 		assertLabelInList(1, "Name");
-		assertLabelInList(5, "Description of Characteristic thing");
+		assertLabelInList(5, "Characteristic thing");
 		setConditionValues("", "", "", "", "3 places");
 		execute("List.filter");
 		assertListRowCount(1);
