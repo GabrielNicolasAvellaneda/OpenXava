@@ -45,7 +45,7 @@ public class Module extends DWRBase {
 	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, String [] deselected, Boolean firstRequest) throws Exception {
 		Result result = new Result(); 
 		result.setApplication(application); 
-		result.setModule(module);	
+		result.setModule(module);
 		try {
 			Servlets.setCharacterEncoding(request, response);
 			this.request = request;
