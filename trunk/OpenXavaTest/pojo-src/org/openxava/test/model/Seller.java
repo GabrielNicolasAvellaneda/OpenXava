@@ -1,33 +1,12 @@
 package org.openxava.test.model;
 
-import java.util.Collection;
+import java.util.*;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NoResultException;
-import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Type;
-import org.openxava.annotations.AsEmbedded;
-import org.openxava.annotations.CollectionView;
-import org.openxava.annotations.CollectionViews;
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.ListProperties;
-import org.openxava.annotations.NoCreate;
-import org.openxava.annotations.OnChange;
-import org.openxava.annotations.Required;
-import org.openxava.annotations.RowStyle;
-import org.openxava.annotations.SearchListCondition;
-import org.openxava.annotations.SearchListConditions;
-import org.openxava.annotations.Stereotype;
-import org.openxava.annotations.Tab;
-import org.openxava.annotations.Tabs;
-import org.openxava.annotations.View;
-import org.openxava.annotations.Views;
+import org.hibernate.annotations.*;
+import org.openxava.annotations.*;
 
 /**
  * 
@@ -38,6 +17,7 @@ import org.openxava.annotations.Views;
 @Views ({	
 	@View(members="number; name"),				
 	@View(name="Complete",	members="number; name; level; regions; customers"),	
+	@View(name="RegionsWithCheckBoxes", members="number; name; regions"), 
 	@View(name="DecorateName", members="number; name"),	
 	@View(name="ForCustomJSP", members="number; name; level"),
 	@View(name="CannotCreateCustomer", members=
@@ -89,6 +69,7 @@ public class Seller {
 	private Seller boss;	
 	
 	@Stereotype("REGIONS") @Type(type="org.openxava.test.types.RegionsType")
+	@Editor(forViews="RegionsWithCheckBoxes", value="RegionsWithCheckBoxes") 
 	private String [] regions;
 	
  	public static Seller findByNumber(int number) throws NoResultException { 			
