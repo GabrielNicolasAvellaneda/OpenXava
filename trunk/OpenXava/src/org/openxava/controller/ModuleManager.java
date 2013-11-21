@@ -54,7 +54,7 @@ public class ModuleManager implements java.io.Serializable {
 	static private void setVersionInfo() {		
 		try {
 			Properties properties = new Properties();
-			properties.load(ModuleManager.class.getResourceAsStream("/version.properties"));			
+			properties.load(ModuleManager.class.getResourceAsStream("/xava-version.properties"));  			
 			version = properties.getProperty("version", "UNKNOW");
 			versionDate = properties.getProperty("date", "UNKNOW");
 		}
