@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Support for multivalue editors with checkboxes.
 - Fix: Wrong OpenXava version number when using some third party libraries.
 - Long labels in automatic PDF reports can use several lines if needed. 
 - Automatic PDF reports use qualified labels for column header, just as list mode.
