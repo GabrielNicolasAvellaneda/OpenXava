@@ -17,6 +17,14 @@
 		<for-stereotype stereotype="REGIONS" />
 	</editor>
 
+	<!-- tmp -->	
+	<editor name="RegionsWithCheckBoxes" url="regionsWithCheckBoxesEditor.jsp">
+		<property name="regionsCount" value="3" />
+		<formatter
+			class="org.openxava.formatters.MultipleValuesByPassFormatter" />
+	</editor>
+	
+
 	<!-- For work only in uppercase -->
 	<editor url="textEditor.jsp">
 		<formatter class="org.openxava.formatters.UpperCaseFormatter" />
