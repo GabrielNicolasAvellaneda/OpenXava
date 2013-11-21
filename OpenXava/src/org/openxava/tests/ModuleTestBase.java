@@ -349,12 +349,19 @@ public class ModuleTestBase extends TestCase {
 		if (elements.isEmpty()) {
 			elements = getForm().getSelectByName(name).getSelectedOptions();			
 		}
-		String [] values = new String[elements.size()];
-		int i=0;
-		for (Iterator it = elements.iterator(); it.hasNext(); i++) {
-			values[i] = ((HtmlElement) it.next()).getAttribute("value");
+		Collection<String> values = new ArrayList<String>();
+		for (Iterator it = elements.iterator(); it.hasNext(); ) {
+			HtmlElement el = (HtmlElement) it.next();
+			if (el instanceof HtmlCheckBoxInput) { 
+				if (((HtmlCheckBoxInput) el).isChecked()) {
+					values.add(el.getAttribute("value"));
+				}
+			}
+			else {
+				values.add(el.getAttribute("value"));
+			}
 		}
-		return values;
+		return XCollections.toStringArray(values);
 	}
 	
 	private boolean isOneMultipleSelect(List elements) { 
@@ -379,16 +386,25 @@ public class ModuleTestBase extends TestCase {
 		}
 		else {
 			int i=0;
-			for (Iterator it = elements.iterator(); it.hasNext() && i < values.length; i++) {
-				Object element = it.next();						
-				if (element instanceof HtmlInput) {
+			Collection<String> valuesCollection = Arrays.asList(values);
+			for (Iterator it = elements.iterator(); it.hasNext(); i++) {
+				Object element = it.next();
+				if (element instanceof HtmlCheckBoxInput) {
+					HtmlCheckBoxInput checkbox = (HtmlCheckBoxInput) element;
+					String value = checkbox.getValueAttribute();
+					checkbox.setChecked(valuesCollection.contains(value));
+					if (!Is.emptyString(checkbox.getOnChangeAttribute())) {
+						refreshPage = true;
+					}
+				}
+				else if (element instanceof HtmlInput) { 
 					HtmlInput input = (HtmlInput) element;
 					input.setValueAttribute(values[i]);
 					if (!Is.emptyString(input.getOnChangeAttribute())) {
 						refreshPage = true;
 					}
 				}
-				else if (element instanceof HtmlSelect) {				
+				else if (element instanceof HtmlSelect) { 				
 					HtmlSelect select = (HtmlSelect) element;		
 					select.setSelectedAttribute(values[i], true);			
 					if (!Is.emptyString(select.getOnChangeAttribute())) {
