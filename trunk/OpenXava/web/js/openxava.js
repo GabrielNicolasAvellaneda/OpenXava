@@ -452,7 +452,7 @@ openxava.getMultipleValues = function(application, module) {
   				var originalName = elements[j].name;
   				var element = elements[j]; 
   				element.name = indexedName;
-  				result[indexedName] = dwr.util.getValue(indexedName);
+  				result[indexedName] = openxava.getFormValue(element);
   				element.name = originalName;  				  				
   			}
   		}
