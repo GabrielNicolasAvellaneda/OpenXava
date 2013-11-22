@@ -1473,7 +1473,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws XavaException {						
 		for (MetaCollection collection: metaModel.getMetaCollections()) {			 
 			if (collection.getMinimum() > 0) {				
-				errors.add("required", collection.getName(), metaModel.getName());
+				int minimum = collection.getMinimum(); 
+				errors.add("minimum_elements", minimum, minimum == 1?"element":"elements", collection.getName()); 
 			}
 		}
 	}

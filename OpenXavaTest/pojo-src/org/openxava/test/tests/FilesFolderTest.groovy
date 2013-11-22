@@ -7,10 +7,10 @@ import org.openxava.tests.ModuleTestBase
  * 
  * @author Javier Paniza
  */
-class FolderTest extends ModuleTestBase {
+class FilesFolderTest extends ModuleTestBase {
 	
-	FolderTest(String testName) {
-		super(testName, "Folder")		
+	FilesFolderTest(String testName) {
+		super(testName, "FilesFolder")		
 	}
 	
 	void testAddingChildrenWithCollectionElementsInACompositeWhoseParentReferenceNotNamedAsEntity() {

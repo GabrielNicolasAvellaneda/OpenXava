@@ -17,7 +17,9 @@
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.default_schema" value="XAVATEST"/> 
             <property name="hibernate.current_session_context_class" 
-                    value="com.autobizlogic.abl.session.LogicThreadLocalSessionContext"/>                                                                               
+                    value="com.autobizlogic.abl.session.LogicThreadLocalSessionContext"/>
+            <property name="hibernate.jdbc.factory_class" 
+            		value="org.hibernate.jdbc.NonBatchingBatcherFactory"/>                                                                                                                                                                                          
         </properties>
     </persistence-unit>      
                 

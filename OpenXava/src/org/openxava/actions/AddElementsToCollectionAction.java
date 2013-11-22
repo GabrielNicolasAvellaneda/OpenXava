@@ -91,7 +91,23 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 						invalidValues[i].getMessage(), 
 						invalidValues[i].getValue());			
 			}
-		}		
+		}
+		else if(ex instanceof javax.validation.ConstraintViolationException){
+			Set<javax.validation.ConstraintViolation<?>> violations = 
+					((javax.validation.ConstraintViolationException) ex).getConstraintViolations();
+			for(javax.validation.ConstraintViolation<?> violation : violations){
+				String message = violation.getMessage();
+				if (message.startsWith("{") && message.endsWith("}")) {			
+					message = message.substring(1, message.length() - 1); 							
+				}				
+				javax.validation.metadata.ConstraintDescriptor<?> descriptor = violation.getConstraintDescriptor(); 
+				java.lang.annotation.Annotation annotation = descriptor.getAnnotation();
+				if(annotation instanceof javax.validation.constraints.AssertTrue){							
+					Object bean = violation.getRootBean();				
+					addError(message, bean);					
+				}
+			}					
+		}
 	}
 
 	public String getNextAction() throws Exception { 

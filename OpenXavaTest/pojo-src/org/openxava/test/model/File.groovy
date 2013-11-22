@@ -11,6 +11,6 @@ import javax.persistence.*;
 class File extends Nameable {
 	
 	@ManyToOne
-	Folder folder
+	FilesFolder folder
 
 }
