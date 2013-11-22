@@ -2,6 +2,7 @@ package org.openxava.util;
 
 import java.text.*;
 import java.util.*;
+import java.util.regex.*;
 
 import javax.servlet.*;
 
@@ -28,7 +29,11 @@ public class Messages implements java.io.Serializable {
 	
 	public enum Type { ERROR, MESSAGE, INFO, WARNING }   
 	
-	static class Message implements java.io.Serializable { 
+	static class Message implements java.io.Serializable {
+		
+		private static final Pattern MESSAGE_WITH_BRACKETS = Pattern
+				.compile("(\\{[^\\}]+?\\})");
+		
 		private String id;
 		private Object [] argv;
 		private Type type; 
@@ -72,11 +77,35 @@ public class Messages implements java.io.Serializable {
 		}
 		
 		public String toString(Locale locale) {
+			String m = null;
 			try {
-				String m = getMessage(id, locale);
+				m = getMessage(id, locale);
 				return format(m, translate(argv, locale), locale);
 			}
 			catch (Exception ex) {
+				if (argv != null && !(argv[0] instanceof String)
+						&& hasMessageBrackets(m)) 
+				{
+					Matcher matcher = MESSAGE_WITH_BRACKETS.matcher(m);
+					StringBuffer sb = new StringBuffer();
+
+					while (matcher.find()) {
+						String property = matcher.group().substring(1,
+								matcher.group().length() - 1);
+						try {
+							property = org.apache.commons.beanutils.BeanUtils
+									.getProperty(argv[0], property);
+						} catch (Exception e) {
+							log.warn(XavaResources.getString(
+									"property_not_found", property, argv[0]
+											.getClass().getSimpleName()));
+							property = "{" + property + "}"; 
+						}
+						matcher.appendReplacement(sb, property);
+					}
+					matcher.appendTail(sb);					
+					return sb.toString();
+				}
 				if (XavaPreferences.getInstance().isI18nWarnings()) {
 					log.warn(XavaResources.getString("label_i18n_warning", id),ex);
 				}				
@@ -125,7 +154,9 @@ public class Messages implements java.io.Serializable {
 			formatter.applyPattern(message);
 			return formatter.format(argv);		
 		}
-		
+		private boolean hasMessageBrackets(String message) {
+			return MESSAGE_WITH_BRACKETS.matcher(message).find();
+		}
 	}
 	
 	private Collection messages; 

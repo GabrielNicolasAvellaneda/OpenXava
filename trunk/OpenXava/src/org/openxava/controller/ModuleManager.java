@@ -54,7 +54,7 @@ public class ModuleManager implements java.io.Serializable {
 	static private void setVersionInfo() {		
 		try {
 			Properties properties = new Properties();
-			properties.load(ModuleManager.class.getResourceAsStream("/xava-version.properties"));  			
+			properties.load(ModuleManager.class.getResourceAsStream("/xava-version.properties"));    			
 			version = properties.getProperty("version", "UNKNOW");
 			versionDate = properties.getProperty("date", "UNKNOW");
 		}
@@ -614,13 +614,32 @@ public class ModuleManager implements java.io.Serializable {
 		else if (ex instanceof InvalidStateException) {		
 			manageInvalidStateException(metaAction, errors, messages, (InvalidStateException) ex);				
 			doRollback();
-		}				
+		}	
+		else if(ex instanceof javax.persistence.PersistenceException){
+			if(ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException &&
+					((org.hibernate.exception.ConstraintViolationException)ex.getCause()).getConstraintName() != null)
+			{
+				manageHibernateConstraintViolationlException(metaAction, errors, messages,(org.hibernate.exception.ConstraintViolationException)ex.getCause());				
+			}
+			else{
+				manageRegularException(metaAction, errors, messages, ex);
+			}
+			doRollback();
+		}		
 		else {			
 			manageRegularException(metaAction, errors, messages, ex);
 			doRollback();			
 		}						
 	}
-	
+
+	private void manageHibernateConstraintViolationlException(MetaAction metaAction, Messages errors, Messages messages,  
+			org.hibernate.exception.ConstraintViolationException ex)
+	{
+		String constraintName = ex.getConstraintName().toLowerCase();
+		errors.add(constraintName);
+		messages.removeAll();
+	}
+		
 	private void manageInvalidStateException(MetaAction metaAction, Messages errors, Messages messages, InvalidStateException ex) {
 		InvalidValue [] invalidValues = ex.getInvalidValues();
 		for (int i=0; i<invalidValues.length; i++) {
@@ -641,7 +660,15 @@ public class ModuleManager implements java.io.Serializable {
 			String message = violation.getMessage();
 			if (message.startsWith("{") && message.endsWith("}")) {			
 				message = message.substring(1, message.length() - 1); 							
-			}				
+			}
+			javax.validation.metadata.ConstraintDescriptor<?> descriptor = violation.getConstraintDescriptor(); 
+			java.lang.annotation.Annotation annotation = descriptor.getAnnotation();
+			if(annotation instanceof javax.validation.constraints.AssertTrue){							
+				Object bean = violation.getRootBean();				
+				errors.add(message, bean);
+				continue;
+			}
+			
 			message = XavaResources.getString(message);
 			Object invalidValue = violation.getInvalidValue(); 
 			if (Is.emptyString(attrName) || domainClass == null || invalidValue== null) { 

@@ -130,7 +130,6 @@ public class Invoice2Test extends ModuleTestBase {
 		setValue("vatPercentage", "18");
 		setValue("customer.number", "1");
 		execute("CRUD.save");
-		assertError("Value for Details in Invoice 2 is required");
-	}
-							
+		assertError("It's required at least 1 Element in Details");
+	} 							
 }

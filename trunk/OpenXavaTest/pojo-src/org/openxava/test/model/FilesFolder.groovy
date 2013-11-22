@@ -6,14 +6,20 @@ import org.jboss.security.SecurityAssociationActions.GetSubjectAction;
 import org.openxava.annotations.*;
 import org.openxava.model.*;
 
+/**
+ * 
+ * @author Javier Paniza 
+ */
+
 @Entity
-class Folder extends Nameable {
+@Table(name="FOLDER")
+class FilesFolder extends Nameable {
 
     @ManyToOne @DescriptionsList
-    Folder parent // parent, not folder, to test a case
+    FilesFolder parent // parent, not filesFolder, to test a case
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy="parent")
-    Collection<Folder> subfolders
+    Collection<FilesFolder> subfolders
 
     @OneToMany(mappedBy="folder")
     Collection<File> files
