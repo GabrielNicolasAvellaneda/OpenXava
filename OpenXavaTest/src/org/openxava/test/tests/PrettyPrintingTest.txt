@@ -27,3 +27,5 @@ at least the next cases:
 		My reports in English with "Name of Used to" for usedTo.name and "Description of Characteristic thing"
 			for characteristicThing.description, selecting the color with code 0: 
 			The most right column inside the margin.
+- Tax
+		Generate PDF: the total should not be displayed (not fit). It shows several lines for labels but it doesn't use it
