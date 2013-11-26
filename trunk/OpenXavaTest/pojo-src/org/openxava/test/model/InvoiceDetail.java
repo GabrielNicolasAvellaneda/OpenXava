@@ -3,9 +3,9 @@ package org.openxava.test.model;
 import java.math.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Parameter;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
@@ -63,18 +63,6 @@ public class InvoiceDetail {
 	
 	@Stereotype("MONEY") @Required
 	private BigDecimal unitPrice;
-	
-	@Stereotype("MONEY")
-	private BigDecimal firstTax;
-	
-	@Stereotype("MONEY")
-	private BigDecimal secondTax;
-	
-	@Stereotype("MONEY")
-	private BigDecimal thirdTax;
-	
-	@Stereotype("MONEY")
-	private BigDecimal fourthTax;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	private Product product;
@@ -193,38 +181,6 @@ public class InvoiceDetail {
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
-	}
-
-	public BigDecimal getFirstTax() {
-		return firstTax;
-	}
-
-	public void setFirstTax(BigDecimal firstTax) {
-		this.firstTax = firstTax;
-	}
-
-	public BigDecimal getSecondTax() {
-		return secondTax;
-	}
-
-	public void setSecondTax(BigDecimal secondTax) {
-		this.secondTax = secondTax;
-	}
-
-	public BigDecimal getThirdTax() {
-		return thirdTax;
-	}
-
-	public void setThirdTax(BigDecimal thirdTax) {
-		this.thirdTax = thirdTax;
-	}
-
-	public BigDecimal getFourthTax() {
-		return fourthTax;
-	}
-
-	public void setFourthTax(BigDecimal fourthTax) {
-		this.fourthTax = fourthTax;
 	}
 	
 }
