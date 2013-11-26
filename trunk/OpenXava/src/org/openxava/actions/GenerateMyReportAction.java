@@ -61,7 +61,7 @@ public class GenerateMyReportAction extends GenerateReportAction {
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("my_report_save_problems"), ex);
 		}
-		getRequest().getSession().setAttribute("xava_reportTab", tab);		
+		getRequest().getSession().setAttribute("xava_reportTab", tab);
 		closeDialog();
 	}
 

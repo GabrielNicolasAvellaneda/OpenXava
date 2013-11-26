@@ -198,6 +198,11 @@ public class GenerateReportServlet extends HttpServlet {
 						parameters.put(totalProperty + "__TOTAL__", getTotal(request, tab, totalProperty));
 					}
 					TableModel tableModel = getTableModel(request, tab, selectedRows, false, true, null);
+					tableModel.getValueAt(0, 0);
+					if (tableModel.getRowCount() == 0) {
+						generateNoRowsPage(response);
+						return;
+					}
 					is  = getReport(request, response, tab, tableModel, columnCountLimit);
 					ds = new JRTableModelDataSource(tableModel);
 				}	
@@ -229,6 +234,19 @@ public class GenerateReportServlet extends HttpServlet {
 		finally {
 			request.getSession().removeAttribute("xava_reportTab");
 		}
+	}
+
+	private void generateNoRowsPage(HttpServletResponse response) throws Exception { 
+		response.setContentType("text/html");	
+		response.getWriter().println("<html><head><title>");
+		response.getWriter().println(XavaResources.getString("no_rows_report_message_title")); 
+		response.getWriter().println("</title></head><body style='font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;'>");
+		response.getWriter().println("<h1 style='font-size:22px;'>");
+		response.getWriter().println(XavaResources.getString("no_rows_report_message_title"));
+		response.getWriter().println("</h1>");
+		response.getWriter().println("<p style='font-size:16px;'>");
+		response.getWriter().println(XavaResources.getString("no_rows_report_message_detail")); 
+		response.getWriter().println("</p></body></html>");
 	}
 
 	private String getCurrentDate() {
