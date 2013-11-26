@@ -25,4 +25,13 @@ public class DrivingLicenceTest extends ModuleTestBase {
 		assertError("3 is not a valid value for Level of Driving licence: debe ser menor o igual a 2");		
 	}
 	
+	public void testEmptyPDFReport() throws Exception {
+		assertListNotEmpty();
+		setConditionValues("Z");
+		execute("List.filter");
+		assertListRowCount(0);
+		execute("Print.generatePdf");
+		assertTrue(getPopupText().contains("No data. Try other conditions in the filters"));
+	}
+	
 }

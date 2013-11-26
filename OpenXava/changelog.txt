@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- PDF reports with no data show a page with an informative message instead of an empty report.
 - @AssertTrue message can be customized, even values of properties of the current entity can be used.
 - When a ConstraintViolationException is thrown the message to the user is obtained from the constraint definition.
 - @Size validation annotations produces a more significative mensage.
