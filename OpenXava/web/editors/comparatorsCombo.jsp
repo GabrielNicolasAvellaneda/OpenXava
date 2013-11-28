@@ -20,6 +20,8 @@ String ge = Tab.GE_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String le = Tab.LE_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String gt = Tab.GT_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String lt = Tab.LT_COMPARATOR.equals(comparator)?"selected='selected'":"";
+String in = Tab.IN_COMPARATOR.equals(comparator)?"selected='selected'":""; 
+String notIn = Tab.NOT_IN_COMPARATOR.equals(comparator)?"selected='selected'":""; 
 String startsWith = Tab.STARTS_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String contains = Tab.CONTAINS_COMPARATOR.equals(comparator)?"selected='selected'":"";
 String endsWith = Tab.ENDS_COMPARATOR.equals(comparator)?"selected='selected'":""; 
@@ -72,6 +74,8 @@ else {
 	<%
 	}	
 	%>
+	<option value="<%=Tab.IN_COMPARATOR%>" <%=in%>><xava:message key="<%=Tab.IN_COMPARATOR%>"/></option>
+	<option value="<%=Tab.NOT_IN_COMPARATOR%>" <%=notIn%>><xava:message key="<%=Tab.NOT_IN_COMPARATOR%>"/></option>
 	<% 
 	if (propertyKey == null) { 
 	%>	

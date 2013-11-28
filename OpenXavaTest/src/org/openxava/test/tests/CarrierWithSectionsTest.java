@@ -17,6 +17,34 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		super(testName, "CarrierWithSections");
 	}
 	
+	public void testInComparator() throws Exception {
+		assertListRowCount(5);
+		
+		setConditionComparators("in_comparator");
+		setConditionValues("1,3");
+		execute("List.filter");
+		assertListRowCount(2);
+		assertValueInList(0, 1, "1");
+		assertValueInList(1, 1, "3");		
+		
+		setConditionComparators("", "in_comparator");
+		setConditionValues("", "dos, cuatro"); // With space and lowercase
+		execute("List.filter");
+		assertListRowCount(2);
+		assertValueInList(0, 1, "2");
+		assertValueInList(0, 2, "DOS");
+		assertValueInList(1, 1, "4");
+		assertValueInList(1, 2, "CUATRO");
+		
+		setConditionComparators("not_in_comparator", "");
+		setConditionValues("1, 3", "");
+		execute("List.filter");
+		assertListRowCount(3);
+		assertValueInList(0, 1, "2");
+		assertValueInList(1, 1, "4");
+		assertValueInList(2, 1, "5");
+	}
+	
 	public void testMyReports() throws Exception { 
 		execute("ExtendedPrint.myReports");
 		assertDialogTitle("My reports"); 
@@ -103,7 +131,9 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			{ "ge_comparator", ">=" }, 
 			{ "le_comparator", "<=" }, 
 			{ "gt_comparator", ">" }, 
-			{ "lt_comparator", "<" } 
+			{ "lt_comparator", "<" }, 
+			{ "in_comparator", "in group" }, 
+			{ "not_in_comparator", "not in group" } 
 		};
 		assertValidValues("comparator", numberComparators);
 		
@@ -119,7 +149,9 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			{ "ge_comparator", ">=" }, 
 			{ "le_comparator", "<=" }, 
 			{ "gt_comparator", ">" }, 
-			{ "lt_comparator", "<" } 
+			{ "lt_comparator", "<" },
+			{ "in_comparator", "in group" }, 
+			{ "not_in_comparator", "not in group" } 			
 		};
 		assertValidValues("comparator", stringComparators);
 

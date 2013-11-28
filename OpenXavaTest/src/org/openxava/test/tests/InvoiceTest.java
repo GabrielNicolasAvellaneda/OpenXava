@@ -333,8 +333,10 @@ public class InvoiceTest extends ModuleTestBase {
 			{ "gt_comparator", ">" },
 			{ "lt_comparator", "<" },
 			{ "year_comparator", "year =" },
-			{ "month_comparator", "month =" },
-			{ "year_month_comparator", "year/month =" }
+			{ "month_comparator", "month =" },			
+			{ "year_month_comparator", "year/month =" },
+			{ "in_comparator", "in group" }, 
+			{ "not_in_comparator", "not in group" } 						
 		};
 		assertValidValues("comparator", dateComparators);		
 		setValue("comparator", "year_comparator");
@@ -344,7 +346,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 1, "year =");
 		assertValueInCollection("columns", 2, 2, "2004");
 		
-		execute("MyReport.generatePdf");		
+		execute("MyReport.generatePdf");				
 		assertPopupPDFLinesCount(6);  
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));
 		assertTrue(getPopupPDFLine(4).startsWith("2004 9"));

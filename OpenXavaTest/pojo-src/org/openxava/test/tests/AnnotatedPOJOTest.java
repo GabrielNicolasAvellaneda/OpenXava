@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 import java.math.*;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.*;
