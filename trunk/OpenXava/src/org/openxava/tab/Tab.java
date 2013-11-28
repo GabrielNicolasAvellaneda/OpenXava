@@ -55,6 +55,8 @@ public class Tab implements java.io.Serializable {
 	public final static String LE_COMPARATOR = "le_comparator";
 	public final static String GT_COMPARATOR = "gt_comparator";
 	public final static String LT_COMPARATOR = "lt_comparator";	
+	public final static String IN_COMPARATOR = "in_comparator"; 
+	public final static String NOT_IN_COMPARATOR = "not_in_comparator"; 
 	private final static String PROPERTIES_NAMES = "propertiesNames";
 	private final static String SUM_PROPERTIES_NAMES = "sumPropertiesNames"; 
 	private final static String ROWS_HIDDEN = "rowsHidden";
@@ -477,7 +479,9 @@ public class Tab implements java.io.Serializable {
 					sb.append(decorateConditionProperty(p, i));
 					sb.append(' ');
 					sb.append(convertComparator(p, this.conditionComparators[i]));
-					sb.append(" ? ");
+					if (!IN_COMPARATOR.equals(this.conditionComparators[i]) && !NOT_IN_COMPARATOR.equals(this.conditionComparators[i])) {
+						sb.append(" ? ");
+					}
 					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
 					if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i]) ||
 						RANGE_COMPARATOR.equals(this.conditionComparators[i]) ||
@@ -498,8 +502,24 @@ public class Tab implements java.io.Serializable {
 							comparatorsToWhere.add(this.conditionComparators[i]);
 							continue;
 						}
-						Object v = p.parse(value.toString(), getLocale());
-						if (v instanceof Timestamp && EQ_COMPARATOR.equals(this.conditionComparators[i])) {
+						Object v = null;
+						Object [] valuesIn = null;
+						if (IN_COMPARATOR.equals(this.conditionComparators[i]) || NOT_IN_COMPARATOR.equals(this.conditionComparators[i])) {
+							String [] svalues = value.toString().split(",");
+							valuesIn = new Object[svalues.length];
+							int idx = 0;
+							sb.append('(');
+							for (String s: svalues) { 
+								if (idx > 0) sb.append(',');
+								sb.append('?');									
+								valuesIn[idx++] = p.parse(convertStringArgument(s), getLocale());								
+							}
+							sb.append(')');
+						}
+						else {
+							v = p.parse(value.toString(), getLocale());
+						} 
+						if (v instanceof Timestamp && EQ_COMPARATOR.equals(this.conditionComparators[i])) {							
 							if (Dates.hasTime((Timestamp) v)) {
 								valuesToWhere.add(v);
 								valuesToWhere.add(v);
@@ -511,7 +531,7 @@ public class Tab implements java.io.Serializable {
 							comparatorsToWhere.add(this.conditionComparators[i]);
 							comparatorsToWhere.add(this.conditionComparators[i]);
 						}
-						else if (RANGE_COMPARATOR.equals(this.conditionComparators[i])){
+						else if (RANGE_COMPARATOR.equals(this.conditionComparators[i])){							
 							valuesToWhere.add(v);
 							String valueTo = convertStringArgument(this.conditionValuesTo[i].toString());
 							Object vTo = p.parse(valueTo.toString(), getLocale());
@@ -519,15 +539,20 @@ public class Tab implements java.io.Serializable {
 							comparatorsToWhere.add(this.conditionComparators[i]);
 							comparatorsToWhere.add(this.conditionComparators[i]);
 						}
-						else {						
+						else if (IN_COMPARATOR.equals(this.conditionComparators[i]) || NOT_IN_COMPARATOR.equals(this.conditionComparators[i])) {														
+							for (Object valueIn: valuesIn) {
+								valuesToWhere.add(valueIn);
+								comparatorsToWhere.add(this.conditionComparators[i]);
+							}
+						}
+						else {													
 							valuesToWhere.add(v);
 							comparatorsToWhere.add(this.conditionComparators[i]);
 						}
 					}
 					catch (Exception ex) {
 						log.warn(XavaResources.getString("tab_key_value_warning"),ex);
-					}	
-					
+					}						
 				}
 				else{					
 					comparatorsToWhere.add(this.conditionComparators[i]);
@@ -614,6 +639,8 @@ public class Tab implements java.io.Serializable {
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
 		if (MONTH_COMPARATOR.equals(comparator)) return "=";
 		if (YEAR_MONTH_COMPARATOR.equals(comparator)) return "=";
+		if (IN_COMPARATOR.equals(comparator)) return "in"; 
+		if (NOT_IN_COMPARATOR.equals(comparator)) return "not in"; 
 		if (RANGE_COMPARATOR.equals(comparator)) return "between ? and ";
 		if (EQ_COMPARATOR.equals(comparator)) {
 			if (p.getType().equals(Timestamp.class)) {

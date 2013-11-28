@@ -52,12 +52,13 @@ public class Actions {
 			")\"";
 	}
 	
-	public static String getActionOnChangeComparator(String id,String idConditionValue,String idConditionValueTo){
+	public static String getActionOnChangeComparator(String id,String idConditionValue,String idConditionValueTo) {
 		return "onChange=\"openxava.onChangeComparator(" +
 			"'" + id + "'," +
 			"'" + idConditionValue + "'," +
 			"'" + idConditionValueTo + "'," +
-			"'" + Labels.get("from") + "'" +
+			"'" + XavaResources.getString("from") + "'," +
+			"'" + XavaResources.getString("in_values") + "'" + 
 			")\"";
 	}
 	
