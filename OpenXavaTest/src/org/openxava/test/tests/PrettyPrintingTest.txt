@@ -28,4 +28,6 @@ at least the next cases:
 			for characteristicThing.description, selecting the color with code 0: 
 			The most right column inside the margin.
 - Tax
-		Generate PDF: the total should not be displayed (not fit). It shows several lines for labels but it doesn't use it
+		Generate PDF in Spanish: Correct height for header (1 line) 
+			and the most right column inside the margin. 
+		
