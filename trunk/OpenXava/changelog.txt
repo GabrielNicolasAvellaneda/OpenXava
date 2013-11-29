@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Paging in list and collections allows 12 rows per page.
+- It's possible to exclude the html head code when calling a module using htmlHead=false as argument. 
 - 'In group' and not 'in group' (the 'in' of SQL) allowed to filter in list, collections and 'My reports'. 
 - PDF reports with no data show a page with an informative message instead of an empty report.
 - @AssertTrue message can be customized, even values of properties of the current entity can be used.
