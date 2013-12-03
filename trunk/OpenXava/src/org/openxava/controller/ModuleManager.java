@@ -67,8 +67,8 @@ public class ModuleManager implements java.io.Serializable {
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 	private static final String [] MODIFIED_CONTROLLERS = { "__MODIFIED_CONTROLLER__ " }; 
-	private static final String XAVA_META_ACTIONS_IN_LIST = "xava_metaActionsInList";  
-		
+	private static final String XAVA_META_ACTIONS_IN_LIST = "xava_metaActionsInList";
+	
 	private String user;	
 	private Collection metaActionsOnInit;
 	private Collection metaActionsOnEachRequest;
@@ -85,7 +85,8 @@ public class ModuleManager implements java.io.Serializable {
 	private String modeControllerName; 
 	private Collection metaControllers;
 	private MetaController metaControllerMode;
-	transient private HttpSession session; 
+	transient private HttpSession session;
+	private static Object refiner; 
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
@@ -196,8 +197,10 @@ public class ModuleManager implements java.io.Serializable {
 					metaActions.addAll(contr.getAllMetaActions()); 
 				} 										
 				removeHiddenActions();
+				refine(); 
 			}
 			catch (Exception ex) {
+				metaActions = null;
 				log.error(XavaResources.getString("controller_actions_error"),ex);
 				return new ArrayList();
 			}			
@@ -1416,7 +1419,14 @@ public class ModuleManager implements java.io.Serializable {
 			}
 		}
 	}
-
+	
+	private void refine() throws Exception {  
+		if (refiner == null) return;
+		XObjects.execute(refiner,  "refine",
+			MetaModule.class, getMetaModule(), 
+			Collection.class, metaActions);
+	}
+	
 	public boolean isReloadAllUINeeded() {
 		return reloadAllUINeeded;
 	}
@@ -1470,6 +1480,10 @@ public class ModuleManager implements java.io.Serializable {
 	
 	public void closeDialog() {
 		setHideDialog(true);
+	}
+	
+	public static void setRefiner(Object newRefiner) {
+		refiner = newRefiner; 
 	}
 
 	private void setHideDialog(boolean hideDialog) { 
