@@ -45,7 +45,7 @@ else {
 	script = request.getParameter("script");
 }
 %>
-<select id="<%=name%>" name="<%=name%>" class=<%=style.getEditor()%> <%=script%>>
+<select id="<%=name%>" name="<%=name%>" class=<%=style.getEditor()%> <%=script%> style="width: 100%;">
 	<% 
 	if (!isEmpty) { 
 	%>

@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Combos and textfields in list filtering adapt their widths to the column and they are always completely visible.
+- Fix: Filtering in list by Timestamp or DATETIME does not allows to specify the time part. 
 - Paging in list and collections allows 12 rows per page.
 - It's possible to exclude the html head code when calling a module using htmlHead=false as argument. 
 - 'In group' and not 'in group' (the 'in' of SQL) allowed to filter in list, collections and 'My reports'. 

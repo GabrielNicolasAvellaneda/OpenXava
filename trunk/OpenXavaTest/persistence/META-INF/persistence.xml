@@ -7,7 +7,7 @@
              version="1.0">
              
              
-    <!-- Tomcat + Hypersonic -->                                                              
+    <!-- Tomcat + Hypersonic -->                                                               
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>    	
     	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
@@ -21,7 +21,7 @@
             <property name="hibernate.jdbc.factory_class" 
             		value="org.hibernate.jdbc.NonBatchingBatcherFactory"/>                                                                                                                                                                                          
         </properties>
-    </persistence-unit>      
+    </persistence-unit>          
                 
     <persistence-unit name="companyA">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>    	
@@ -43,7 +43,7 @@
         </properties>
     </persistence-unit>    
             
-    <!-- WebSphere + AS/400       
+    <!-- WebSphere + AS/400        
     <persistence-unit name="default">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<non-jta-data-source>jdbc/OpenXavaTestDS</non-jta-data-source>
