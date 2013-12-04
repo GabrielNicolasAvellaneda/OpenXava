@@ -1273,11 +1273,11 @@ public class DeliveryTest extends ModuleTestBase {
 	public void testDescriptionsListHiddenAfterClearCondition() throws Exception {
 		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Delivery__conditionValue___3");
 		String s = select.getAttribute("style");
-		assertTrue(Is.empty(s));
+		assertFalse(s.contains("display: none") || s.contains("display:none"));  
 		clearCondition("ox_OpenXavaTest_Delivery__xava_clear_condition");
 		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Delivery__conditionValue___3");
 		s = select.getAttribute("style");
-		assertTrue(Is.empty(s));
+		assertFalse(s.contains("display: none") || s.contains("display:none")); 
 	}
 	
 }

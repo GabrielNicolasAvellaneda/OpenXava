@@ -168,11 +168,11 @@ public class HumanTest extends ModuleTestBase {
 	public void testValidValuesHiddenAfterClearCondition() throws Exception {
 		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Human__conditionValue___1");
 		String s = select.getAttribute("style");
-		assertTrue(Is.empty(s));
+		assertFalse(s.contains("display: none") || s.contains("display:none"));  
 		clearCondition("ox_OpenXavaTest_Human__xava_clear_condition");
 		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Human__conditionValue___1");
 		s = select.getAttribute("style");
-		assertTrue(Is.empty(s));
+		assertFalse(s.contains("display: none") || s.contains("display:none")); 
 	}
 				
 }

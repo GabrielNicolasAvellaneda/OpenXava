@@ -16,33 +16,33 @@
 			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>
 		</property>	
 		<property name="vatPercentage" type="java.math.BigDecimal"
-			size="2" scale="1" required="true"/>								
+			size="2" scale="1" required="true"/>
+		<property name="comment" type="String" size="50"/>
+		<property name="paid" type="boolean"/>
+		<reference model="Customer" required="true"/>											
 		<property name="amountsSum" stereotype="MONEY">
 			<calculator class="org.openxava.test.calculators.AmountsSumCalculator"/>
-		</property>		
-		<property name="vat" stereotype="MONEY">
-			<calculator class="org.openxava.test.calculators.PercentageCalculator">
-				<set property="percentage" from="vatPercentage"/>
-				<set property="value" from="amountsSum"/>
+		</property>
+		<property name="customerDiscount" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.CustomerInvoiceDiscountCalculator">
+				<set property="number" from="customer.number"/>
+				<set property="paid"/>
 			</calculator>
-		</property>	
-		
-		<property name="comment" type="String" size="50"/>
-		
+		</property>				
+		<property name="customerTypeDiscount" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.CustomerTypeInvoiceDiscountCalculator">
+				<set property="type" from="customer.type"/>
+			</calculator>
+		</property>
+		<property name="deliveryDate" type="java.util.Date">
+			<calculator class="org.openxava.test.calculators.InvoiceDeliveryDateCalculator"/>
+		</property>						
 		<property name="detailsCount" type="int" size="3">
 			<calculator class="org.openxava.test.calculators.DetailsCountCalculator">
 				<set property="year"/>
 				<set property="number"/>
 			</calculator>		
 		</property>
-		<property name="paid" type="boolean"/>
-		<property name="considerable" type="boolean">
-			<calculator class="org.openxava.test.calculators.ConsiderableCalculator">
-				<set property="amount" from="amountsSum"/>
-				<set property="limit" value="10000"/>
-			</calculator>	
-		</property>	
-		
 		<property name="importance" type="String" size="10">
 			<calculator class="org.openxava.test.calculators.ImportanceCalculator">
 				<set property="amount" from="amountsSum"/>
@@ -52,50 +52,39 @@
 				<set property="milestone2" value="3000"/>
 				<set property="importance3" value="Succulent"/>				
 			</calculator>
-		</property>		
-		
-		<property name="customerDiscount" stereotype="MONEY">
-			<calculator class="org.openxava.test.calculators.CustomerInvoiceDiscountCalculator">
-				<set property="number" from="customer.number"/>
-				<set property="paid"/>
-			</calculator>
 		</property>
-		
-		<property name="customerTypeDiscount" stereotype="MONEY">
-			<calculator class="org.openxava.test.calculators.CustomerTypeInvoiceDiscountCalculator">
-				<set property="type" from="customer.type"/>
-			</calculator>
-		</property>
-		
+		<property name="productUnitPriceSum" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.InvoiceProductUnitPriceSumCalculator"/>
+		</property>						
 		<property name="sellerDiscount" stereotype="MONEY">
 			<calculator class="org.openxava.test.calculators.SellerInvoiceDiscountCalculator">
 				<set property="sellerNumber" from="customer.seller.number"/>
 			</calculator>	
 		</property>
-		
-		<property name="yearDiscount" stereotype="MONEY">
-			<calculator class="org.openxava.test.calculators.YearInvoiceDiscountCalculator">
-				<set property="year"/>
-			</calculator>
-		</property>
-		
 		<property name="total" stereotype="MONEY">
 			<calculator class="org.openxava.test.calculators.TotalInvoiceCalculator">
 				<set property="vat"/>
 				<set property="amountsSum"/>
 			</calculator>
 		</property>
-		
-		<property name="productUnitPriceSum" stereotype="MONEY">
-			<calculator class="org.openxava.test.calculators.InvoiceProductUnitPriceSumCalculator"/>
+		<property name="vat" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.PercentageCalculator">
+				<set property="percentage" from="vatPercentage"/>
+				<set property="value" from="amountsSum"/>
+			</calculator>
 		</property>
-		
-		<property name="deliveryDate" type="java.util.Date">
-			<calculator class="org.openxava.test.calculators.InvoiceDeliveryDateCalculator"/>
-		</property>						
-				
-		<reference model="Customer" required="true"/>
-		
+		<property name="yearDiscount" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.YearInvoiceDiscountCalculator">
+				<set property="year"/>
+			</calculator>
+		</property>
+		<property name="considerable" type="boolean">
+			<calculator class="org.openxava.test.calculators.ConsiderableCalculator">
+				<set property="amount" from="amountsSum"/>
+				<set property="limit" value="10000"/>
+			</calculator>	
+		</property>	
+								
 		<collection name="details">
 			<reference model="InvoiceDetail"/>
 			<order>${serviceType} desc</order>
@@ -111,8 +100,7 @@
 			<reference model="InvoiceDetail"/>			
 			<calculator class="org.openxava.test.calculators.InvoiceDetailsCalculator"/>
 		</collection>		
-		
-		
+				
 		<finder name="all" arguments="" collection="true">
 			<condition>1 = 1</condition>
 		</finder>

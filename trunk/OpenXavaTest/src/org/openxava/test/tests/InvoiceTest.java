@@ -1982,11 +1982,11 @@ public class InvoiceTest extends ModuleTestBase {
 	public void testBooleanComboHiddenAfterClearCondition() throws Exception{
 		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Invoice__conditionComparator___3");
 		String s = select.getAttribute("style");
-		assertTrue(Is.empty(s));
+		assertFalse(s.contains("display: none") || s.contains("display:none"));
 		clearCondition("ox_OpenXavaTest_Invoice__xava_clear_condition");
 		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Invoice__conditionComparator___3");
 		s = select.getAttribute("style");
-		assertTrue(Is.empty(s));
+		assertFalse(s.contains("display: none") || s.contains("display:none"));
 	}
 	
 }
