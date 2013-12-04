@@ -31,24 +31,24 @@
 		  
 		<reference name="address" model="Address" required="true"/>
 		
+		<reference name="seller" model="Seller"/>   
+		
+		<property name="relationWithSeller"
+			type="String" size="40">
+			<default-value-calculator class="org.openxava.calculators.StringCalculator">
+				<set property="string" value="GOOD"/>
+			</default-value-calculator>
+		</property>		
+
+		<reference name="alternateSeller" model="Seller"/>   		
+										 		
 		<property name="city" type="String" size="40">
 			<calculator class="org.openxava.calculators.ConcatCalculator">
 				<set property="separator" value=" "/>
 				<set property="int1" from="address.zipCode"/>				
 				<set property="string2" from="address.city"/>
 			</calculator>
-		</property>
-
-		<reference name="seller" model="Seller"/>   
-
-		<reference name="alternateSeller" model="Seller"/>   
-						 
-		<property name="relationWithSeller"
-			type="String" size="40">
-			<default-value-calculator class="org.openxava.calculators.StringCalculator">
-				<set property="string" value="GOOD"/>
-			</default-value-calculator>
-		</property>
+		</property>				
 		
 		<collection name="deliveryPlaces">
 			<reference model="DeliveryPlace"/>
