@@ -77,13 +77,14 @@
 			.getParameter("module"), "xava.portlet.uploadActionURL")) != null);
 
 	Module.setPortlet(isPortlet);
+	boolean htmlHead = isPortlet?false:!Is.equalAsStringIgnoreCase(request.getParameter("htmlHead"), "false");
 	String version = org.openxava.controller.ModuleManager.getVersion();
 	String realPath = request.getSession().getServletContext()
 			.getRealPath("/");			
 %>
 <jsp:include page="execute.jsp"/>
 <%
-	if (!isPortlet) {
+	if (htmlHead) {	
 %>
  
 <!DOCTYPE html>
@@ -177,7 +178,7 @@
 		}   
 	</script>
 <%
-	if (!isPortlet) {
+	if (htmlHead) { 	
 %>
 </head> 
 <body bgcolor="#ffffff">
@@ -244,7 +245,7 @@ if (manager.isResetFormPostNeeded()) {
 	</div>	
 	<% } %>	
 <%
-	if (!isPortlet) {
+	if (htmlHead) { 	
 %>
 <%=style.getNoPortalModuleEndDecoration()%>
 </body>
@@ -274,7 +275,6 @@ if (manager.isResetFormPostNeeded()) {
 	if (openxava != null && openxava.<%=initiated%> == null) {
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
-		openxava.imageFilterPrefix = '<%=org.openxava.web.Lists.getImageFilterPrefix(request)%>'; 
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
 		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';	
