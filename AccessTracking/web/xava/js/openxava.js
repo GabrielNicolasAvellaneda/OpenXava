@@ -452,7 +452,7 @@ openxava.getMultipleValues = function(application, module) {
   				var originalName = elements[j].name;
   				var element = elements[j]; 
   				element.name = indexedName;
-  				result[indexedName] = dwr.util.getValue(indexedName);
+  				result[indexedName] = openxava.getFormValue(element);
   				element.name = originalName;  				  				
   			}
   		}
@@ -469,22 +469,12 @@ openxava.limitLength = function(ev, max) {
 }
 
 // JavaScript for collections and list
-openxava.manageFilterRow = function(application, module, id, tabObject) { 
-    var img = openxava.getElementById(application, module, "filter_image_" + id);
-    var elem = openxava.getElementById(application, module, "tr_list_filter_" + id);
-    var link = openxava.getElementById(application, module, "filter_link_" + id);
-	if (elem.style.display == ''){
-		elem.style.display = 'none';
-		img.src=openxava.imageFilterPrefix + 'show-filter.gif'; 
-		link.title=openxava.showFiltersMessage;		
-		Tab.setFilterVisible(application, module, false, tabObject);
-	}
-	else {
-		elem.style.display = '';		
-		img.src=openxava.imageFilterPrefix + 'hide-filter.gif'; 
-		link.title=this.hideFiltersMessage;
-		Tab.setFilterVisible(application, module, true, tabObject);
-	}    
+openxava.setFilterVisible = function(application, module, id, tabObject, visible) { 
+    var filter = openxava.getElementById(application, module, "list_filter_" + id); 
+    var link = openxava.getElementById(application, module, "show_filter_" + id);
+	filter.style.display = visible?'':'none';
+	link.style.display = visible?'none':''; 
+	Tab.setFilterVisible(application, module, visible, tabObject);
 }
 
 openxava.setPageRowCount = function(application, module, collection, select) {	
@@ -788,7 +778,7 @@ openxava.hideFrame = function(id) {
 	View.setFrameClosed(id, true);
 }
 
-openxava.onChangeComparator = function(id,idConditionValue,idConditionValueTo,labelFrom) {
+openxava.onChangeComparator = function(id,idConditionValue,idConditionValueTo,labelFrom,labelInValues) {
 	var comparator = openxava.getFormValue(document.getElementById(id));
 	if ("range_comparator" == comparator){
 		$('#' + idConditionValueTo).show().next().show();
@@ -796,7 +786,12 @@ openxava.onChangeComparator = function(id,idConditionValue,idConditionValueTo,la
 	}
 	else{
 		$('#' + idConditionValueTo).hide().next().hide();
-		document.getElementById(idConditionValue).placeholder = "";
+		if ("in_comparator" == comparator || "not_in_comparator" == comparator) {
+			document.getElementById(idConditionValue).placeholder = labelInValues;
+		}
+		else {
+			document.getElementById(idConditionValue).placeholder = "";
+		}
 	}
 }
 
@@ -824,21 +819,38 @@ openxava.onChangeCheckBox = function(cb,row,application,module,tabObject){
 	openxava.deselected[index] = value;
 }
 
-openxava.subcontroller = function(id,idContainer,idButton,idImage,idA){
+openxava.subcontroller = function(id,containerId,buttonId,imageId,aId,spanId){
+	// hidden the menu when click out
+	$('html').click(function(e) {
+		var elementId = e.target.id;
+		if (aId != elementId &&
+			buttonId != elementId && 
+			imageId != elementId &&
+			spanId != elementId){
+			if ('none' != $('#'+id).css('display')){
+				$('#'+id).css('display','none');
+				$('#'+buttonId).removeClass('ox-subcontroller-select');
+				$('#'+imageId).fadeTo("fast",1);
+			}
+		}
+	});
+	// hidden the menu when click the button a second time   
+	if ('none' != $('#'+id).css('display')){
+		$('#'+id).css('display','none');
+		$('#'+buttonId).removeClass('ox-subcontroller-select');
+		$('#'+imageId).fadeTo("fast",1);
+		return;
+	}
+	// display and position the menu 
 	$('#'+id).css('display','inline');
-	var a = $('#'+idA);
-	var h = $('#'+idButton).height();	
+	var a = $('#'+aId);
+	var h = $('#'+buttonId).height();	
 	var f = a.position();
 	$('#'+id).css({ 
 		'top': f.top + h,
-		'left': f.left + 4
+		'left': f.left
 	});
-	// 
-	$('#'+idImage).fadeTo("fast",0.3);
-	$('#'+idButton).addClass('ox-subcontroller-select');
-	$('#'+idContainer).mouseleave(function(){
-		$('#'+id).css('display','none');
-		$('#'+idButton).removeClass('ox-subcontroller-select');
-		$('#'+idImage).fadeTo("fast",1);
-	});
+	//
+	$('#'+imageId).fadeTo("fast",0.3);
+	$('#'+buttonId).addClass('ox-subcontroller-select');
 }
