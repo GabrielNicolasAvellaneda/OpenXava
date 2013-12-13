@@ -1,6 +1,44 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 4.9 (2013-12-9)
+------------------------
+- Combos and textfields in list filtering adapt their widths to the column and they are always completely visible.
+- 'In group' and not 'in group' (the 'in' of SQL) allowed to filter in list, collections and 'My reports'. 
+- Link to hide filter is in the filter row itself.
+- Links to show and hide the filter are only visible in customization mode.
+- New icons for customizing list and collections.
+- Paging in list and collections allows 12 rows per page.
+- PDF reports with no data show a page with an informative message instead of an empty report.
+- Long labels in automatic PDF reports can use several lines if needed.
+- Automatic PDF reports use qualified labels for column header, just as list mode.
+- Detail line height optimized for automatic PDF reports.
+- Algorithm to adjust columns in PDF reports optimized: right column is better adjusted and columns that not fit are dropped.
+- Width of columns in automatic PDF reports is calculated from the real content, not from declaration.
+- The combo for adding columns in 'My report' only shows until second level properties by default.
+- Labels instead of internal names in combo for adding new columns in 'My reports'.
+- Initial condition and ordering for 'My reports' is populated from the current list.
+- Duplicate columns allowed in 'My reports' to filter by range or complex conditions, though only one is shown in the report.
+- Dialog title of 'My reports' column editing improved.
+- Refactoring of 'My reports' code (CustomReport renamed to MyReport) that produces the loss of current store user reports. 
+- @AssertTrue message can be customized, even values of properties of the current entity can be used.
+- When a ConstraintViolationException is thrown the message to the user is obtained from the constraint definition.
+- @Size validation annotations produces a more significative message.
+- Support for multivalue editors with checkboxes.
+- It's possible to exclude the HTML head code when calling a module using htmlHead=false as argument. 
+- Order for properties when no @View is defined is consistent for all Java vendors.
+- Subcontrollers are not shown when they have no action.
+- Style of subcontrollers improved.
+- Subcontrollers behavior improved: now they are closed on clicking again on the button or outside the popup menu. 
+- Code for buttonBar.jsp and subButton.jsp downgraded to code 1.4.
+- New TypicalNewOnInit controller that starts the module in detail mode ready to create a new entity.
+- New methods addDays(), lastOfYear(), lastOfMonth() and firstOfMonth() added to Dates.
+- Fix: Methods setYear(), setMonth() and setDay() of Dates do not work.
+- Fix: Wrong OpenXava version number when using some third party libraries.
+- Fix: Filtering in list by Timestamp or DATETIME does not allows to specify the time part. 
+- Fix: Totals in automatic PDF reports use two lines when the number is too large.
+- Fix: Little vertical white bar in subcontroller button.
+
 OpenXava 4.8.1 (2013-9-30)
 --------------------------
 - OpenXavaTest now includes Selenium tests for visual testing of views.

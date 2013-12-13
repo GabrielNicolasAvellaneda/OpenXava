@@ -2,7 +2,7 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="4.8.1"/>
+	<property name="xava.version" value="4.9"/>
 	<property name="xava.workspace" value=".."/>	
 	<property name="openxava.dist.dir" value="/home/javi/openxava"/>
 	<property file="../openxava.properties"/>
