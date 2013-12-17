@@ -1775,7 +1775,7 @@ public class ModuleTestBase extends TestCase {
 		assertMessage(message, "warnings_table", "warning_not_found", "warnings_produced"); 
 	}	
 	
-	private void assertMessage(String message, String tableId, String notFoundMessageId, String messagesProducedMessageId) throws Exception { 
+	private void assertMessage(String message, String tableId, String notFoundMessageId, String messagesProducedMessageId) throws Exception {
 		HtmlTable table = null;
 		try {
 			table = (HtmlTable) getElementById(tableId); 

@@ -50,7 +50,12 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 		}
 		return collectionElementView;
 	}
-		
+	
+	/**@Since 4.9.1*/ 
+	protected MetaCollection getMetaCollection() throws ElementNotFoundException, XavaException {
+		return getCollectionElementView().getParent().getMetaModel().getMetaCollection(getCollectionElementView().getMemberName());
+	}
+	
 	protected boolean isEntityReferencesCollection() throws XavaException {
 		return getCollectionElementView().getMetaModel() instanceof MetaEntity;		
 	}
