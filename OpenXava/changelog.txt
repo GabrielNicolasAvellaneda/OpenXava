@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: When overwriting associateEntity() in SaveElementInCollectionAction we lose the validate minimum functionality.
+- Fix: Minimum for collections declared with @Size(min=) is not validated on remove element.
+- Fix: Adding elements to a collection with no cascade REMOVE or ALL does not validate maximum (@Size(max=)). 
+
 OpenXava 4.9 (2013-12-11)
 -------------------------
 - Combos and textfields in list filtering adapt their widths to the column and they are always completely visible.

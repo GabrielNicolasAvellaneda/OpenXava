@@ -18,6 +18,7 @@ import org.openxava.view.*;
  * is treated by {@link AddElementsToCollectionAction}. <p>
  * 
  * @author Javier Paniza
+ * @author Jeromy Altuna 
  */
 
 public class SaveElementInCollectionAction extends CollectionElementViewBaseAction {
@@ -70,7 +71,8 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			MetaCollection metaCollection = getMetaCollection();
 			parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
 			Map values = getValuesToSave();			
-			values.putAll(parentKey);			
+			values.putAll(parentKey);
+			
 			try {
 				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), values);
 				addMessage(isEntity?"entity_modified":"aggregate_modified", getCollectionElementView().getModelName());
@@ -81,12 +83,13 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}
 		else {
 			// Entity reference used in the standard way
+			validateMaximum(); 
 			associateEntity(getCollectionElementView().getKeyValues());
 			addMessage("entity_associated" , getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
 		}
 	}
-
-	private void create(Map values, boolean isEntity) throws CreateException { 
+	
+	private void create(Map values, boolean isEntity) throws CreateException {
 		validateMaximum();
 		MapFacade.create(getCollectionElementView().getModelName(), values);
 		addMessage(isEntity?"entity_created_and_associated":"aggregate_created", 
@@ -95,16 +98,11 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	}
 
 	protected void associateEntity(Map keyValues) throws ValidationException, XavaException, ObjectNotFoundException, FinderException, RemoteException {		
-		validateMaximum();
 		MapFacade.addCollectionElement(
 				getCollectionElementView().getParent().getMetaModel().getName(),
 				getCollectionElementView().getParent().getKeyValues(),
 				getCollectionElementView().getMemberName(),  
 				keyValues);		
-	}
-
-	private MetaCollection getMetaCollection() throws ElementNotFoundException, XavaException {
-		return getCollectionElementView().getParent().getMetaModel().getMetaCollection(getCollectionElementView().getMemberName());
 	}
 
 	/**

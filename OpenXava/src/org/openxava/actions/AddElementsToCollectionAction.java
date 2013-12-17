@@ -7,6 +7,7 @@ import javax.inject.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.validator.*;
+import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -18,6 +19,7 @@ import org.openxava.validators.*;
  * This case add a group of entities from a list.<br>
  *  
  * @author Javier Paniza
+ * @author Jeromy Altuna
  */
 
 public class AddElementsToCollectionAction extends SaveElementInCollectionAction implements INavigationAction {
@@ -35,10 +37,12 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 	public void execute() throws Exception {
 		saveIfNotExists(getCollectionElementView().getParent());		
 		if (row >= 0) {
+			validateMaximum(1); 
 			associateEntityInRow(row);
 		}
 		else {
 			Map [] selectedOnes = getTab().getSelectedKeys();
+			validateMaximum(selectedOnes.length); 
 			if (selectedOnes != null && selectedOnes.length > 0) {						
 				for (int i = 0; i < selectedOnes.length; i++) {
 					associateKey(selectedOnes[i]);
@@ -109,7 +113,17 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 			}					
 		}
 	}
-
+	
+	private void validateMaximum(int elementsToAdd) throws ValidationException, XavaException{
+		MetaCollection metaCollection = getMetaCollection();
+		int maximum = metaCollection.getMaximum();
+		if(maximum > 0 && (getCollectionElementView().getCollectionSize() + elementsToAdd) > maximum){
+			Messages errors = new Messages();
+			errors.add("maximum_elements", new Integer(maximum), metaCollection.getName(), metaCollection.getMetaModel().getName());
+			throw new ValidationException(errors);
+		}
+	}
+	
 	public String getNextAction() throws Exception { 
 		// In order to annul the chaining of the action
 		return null;

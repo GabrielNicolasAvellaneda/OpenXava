@@ -78,7 +78,7 @@ public class TaskTest extends ModuleTestBase {
 	}	
 	private String getUserId() {
 		if (!isLiferayEnabled()) return "junit";
-		return XavaPreferences.getInstance().isEMailAsUserNameInPortal()?"junit@openxava.org":"11118"; // For Liferay 4.1: liferay.com.1001				
+		return XavaPreferences.getInstance().isEMailAsUserNameInPortal()?"junit@openxava.org":"11118"; 				
 	}
 			
 }
