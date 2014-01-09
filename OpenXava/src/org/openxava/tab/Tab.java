@@ -40,6 +40,7 @@ public class Tab implements java.io.Serializable {
 	 */
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
 	public final static String TAB_RESETED_PREFIX = "xava.tab.reseted.";
+	public final static String DESCRIPTIONS_LIST_SEPARATOR = ":_:"; 
 	
 	public final static String STARTS_COMPARATOR = "starts_comparator";	
 	public final static String CONTAINS_COMPARATOR = "contains_comparator";
@@ -437,7 +438,7 @@ public class Tab implements java.io.Serializable {
 					valuesToWhere.add("");
 					comparatorsToWhere.add(this.conditionComparators[i]);
 				}
-				else if (!Is.empty(WebEditors.getEditorURLDescriptionsList(getTabName(), getModelName(), Ids.decorate(request, p.getQualifiedName()), i, getCollectionPrefix(), p.getQualifiedName(), p.getName()))){
+				else if (!Is.empty(WebEditors.getEditorURLDescriptionsList(getTabName(), getModelName(), Ids.decorate(request, p.getQualifiedName()), i, getCollectionPrefix(), p.getQualifiedName(), p.getName()))){  
 					if (Is.empty(this.conditionValues[i])){
 						comparatorsToWhere.add(this.conditionComparators[i]);
 						valuesToWhere.add(this.conditionValues[i]);
@@ -450,6 +451,9 @@ public class Tab implements java.io.Serializable {
 					
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();
 					String keyValues = this.conditionValues[i].replaceAll("[\\[\\]]", "");
+					if (keyValues.contains(DESCRIPTIONS_LIST_SEPARATOR)) { 
+						keyValues = keyValues.substring(0, keyValues.indexOf(DESCRIPTIONS_LIST_SEPARATOR));
+					}
 					StringTokenizer st = new StringTokenizer(keyValues, ".");					
 					for (CmpField field : fields) {
 						String property = field.getCmpPropertyName().substring(field.getCmpPropertyName().lastIndexOf('_') + 1);

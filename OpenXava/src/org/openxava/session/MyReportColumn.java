@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import org.openxava.actions.*;
 import org.openxava.annotations.*;
+import org.openxava.tab.Tab;
 import org.openxava.util.*;
 
 
@@ -88,7 +89,7 @@ public class MyReportColumn implements java.io.Serializable {
 			return getReport().getMetaModel().getMetaProperty(getName()).getValidValueLabel(getValidValuesIndex()); 
 		}
 		if (!Is.emptyString(descriptionsListValue)) {
-			return descriptionsListValue.split("::")[1];
+			return descriptionsListValue.split(Tab.DESCRIPTIONS_LIST_SEPARATOR)[1];
 		}
 		return value;
 	}
@@ -102,7 +103,7 @@ public class MyReportColumn implements java.io.Serializable {
 			return Integer.toString(getValidValuesIndex()); 
 		}
 		if (!Is.emptyString(descriptionsListValue)) {
-			return descriptionsListValue.split("::")[0];
+			return descriptionsListValue.split(Tab.DESCRIPTIONS_LIST_SEPARATOR)[0];
 		}
 		return value;
 	}
@@ -111,7 +112,6 @@ public class MyReportColumn implements java.io.Serializable {
 		return getReport().getMetaModel().isAnnotatedEJB3()?validValuesValue - 1:validValuesValue;
 	}
 	
-
 	public void setValue(String value) {
 		this.value = value;
 	}

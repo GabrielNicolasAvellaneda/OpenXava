@@ -42,20 +42,20 @@ public class Color2Test extends ModuleTestBase {
 
 		String [][] validValues = {
 			{ "", "" },
-			{ "1::CAR", "CAR" },
-			{ "3::DOOR", "DOOR" },
-			{ "0::HOUSE", "HOUSE" },
-			{ "2::LAMPPOST", "LAMPPOST" }
+			{ "1:_:CAR", "CAR" }, 
+			{ "3:_:DOOR", "DOOR" },
+			{ "0:_:HOUSE", "HOUSE" },
+			{ "2:_:LAMPPOST", "LAMPPOST" }
 		};
 		
 		assertValidValues("descriptionsListValue", validValues);
 		assertValue("descriptionsListValue", "");
-		setValue("descriptionsListValue", "1::CAR");
+		setValue("descriptionsListValue", "1:_:CAR"); 
 		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 4, 2, "CAR");
 		
 		execute("MyReport.editColumn", "row=4,viewObject=xava_view_columns");
-		assertValue("descriptionsListValue", "1::CAR");		
+		assertValue("descriptionsListValue", "1:_:CAR"); 		
 		closeDialog();
 		
 		execute("MyReport.generatePdf");		
@@ -66,7 +66,7 @@ public class Color2Test extends ModuleTestBase {
 		assertValueInCollection("columns", 4, 0, "Name of Used to");
 		assertValueInCollection("columns", 4, 2, "CAR");
 		execute("MyReport.editColumn", "row=4,viewObject=xava_view_columns");
-		assertValue("descriptionsListValue", "1::CAR");		
+		assertValue("descriptionsListValue", "1:_:CAR"); 		
 		closeDialog();
 		
 		execute("MyReport.remove", "xava.keyProperty=name");				
