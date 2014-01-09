@@ -1,7 +1,10 @@
 package org.openxava.actions;
 
+import java.util.*;
+
 import javax.inject.*;
 
+import org.openxava.model.*;
 import org.openxava.session.*;
 import org.openxava.util.*;
 
@@ -16,33 +19,39 @@ public class SaveMyReportColumnAction extends CollectionElementViewBaseAction {
 	private MyReport myReport; 
 
 	public void execute() throws Exception {
+		Map values = getCollectionElementView().getValues();
+		Messages errors = MapFacade.validate("MyReportColumn", values);
+		if (!errors.isEmpty()) {
+			addErrors(errors);
+			return;
+		}
 		MyReportColumn column = new MyReportColumn();
 		column.setReport(myReport);
-		String columnName = getCollectionElementView().getValueString("name");
+		String columnName = (String) values.get("name"); 
 		column.setName(columnName);
-		String columnLabel = getCollectionElementView().getValueString("label");
+		String columnLabel = (String) values.get("label"); 
 		column.setLabel(columnLabel);
 		if (getCollectionElementView().getMembersNames().containsKey("value")) {
-			String value = getCollectionElementView().getValueString("value");
+			String value = (String) values.get("value");
 			column.setValue(value);
 		}				
 		if (getCollectionElementView().getMembersNames().containsKey("comparator")) {
-			String comparator = getCollectionElementView().getValueString("comparator");
+			String comparator = (String) values.get("comparator");
 			if (!Is.emptyString(column.getValue())) {
 				column.setComparator(comparator);
 			}
 		}
-		Boolean booleanValue = (Boolean) getCollectionElementView().getValue("booleanValue");		
+		Boolean booleanValue = (Boolean) values.get("booleanValue");
 		column.setBooleanValue(booleanValue);
-		int validValuesValue = getCollectionElementView().getValueInt("validValuesValue");
-		column.setValidValuesValue(validValuesValue);
-		String descriptionsListValue = getCollectionElementView().getValueString("descriptionsListValue");
+		Integer validValuesValue = (Integer) values.get("validValuesValue");
+		column.setValidValuesValue(validValuesValue==null?0:validValuesValue);		
+		String descriptionsListValue = (String) values.get("descriptionsListValue"); 		
 		column.setDescriptionsListValue(descriptionsListValue);
-		MyReportColumn.Order order = (MyReportColumn.Order) getCollectionElementView().getValue("order");		
+		MyReportColumn.Order order = (MyReportColumn.Order) values.get("order"); 
 		column.setOrder(order);	
-		Boolean sum = (Boolean) getCollectionElementView().getValue("sum");
+		Boolean sum = (Boolean) values.get("sum"); 
 		column.setSum(sum==null?false:sum);
-		Boolean hidden = (Boolean) getCollectionElementView().getValue("hidden");
+		Boolean hidden = (Boolean) values.get("hidden"); 
 		column.setHidden(hidden==null?false:hidden);		
 		
 		if (getCollectionElementView().getCollectionEditingRow() < 0) {

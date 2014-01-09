@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: ModuleTestBase.assertDescriptionValue() does not work for enums.
+- Fix: It's possible to add blank colums in 'My reports'.
+- Fix: true is shown always for boolean columns in 'My reports'.
+- Fix: Populating initial values in 'My reports' fails for booleans, descriptions lists and enums.
 - Fix: When overwriting associateEntity() in SaveElementInCollectionAction we lose the validate minimum functionality.
 - Fix: Minimum for collections declared with @Size(min=) is not validated on remove element.
 - Fix: Adding elements to a collection with no cascade REMOVE or ALL does not validate maximum (@Size(max=)). 

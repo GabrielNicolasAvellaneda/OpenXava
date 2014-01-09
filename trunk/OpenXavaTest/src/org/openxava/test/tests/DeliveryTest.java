@@ -43,6 +43,58 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
+	public void testFilterDescriptionsListAndEnumLetterType_myReportConditionWithDescriptionsListAndValidValues() throws Exception { 		
+		assertLabelInList(3, "Description of Type");
+		assertLabelInList(7, "Distance");
+		if (usesAnnotatedPOJO()) { 
+			setConditionValues(new String[] { "", "", "", "1", "", "", "", "1"} );	// For annotated POJOs
+		}
+		else {
+			setConditionValues(new String[] { "", "", "", "1", "", "", "", "2"} );	// For XML components
+		}
+		execute("List.filter");
+		assertListRowCount(2);	 	
+		assertValueInList(0, 0, "2004");
+		assertValueInList(0, 1, "9");
+		assertValueInList(0, 2, "1");
+		assertValueInList(1, 0, "2004");
+		assertValueInList(1, 1, "10");
+		assertValueInList(1, 2, "1");		
+		
+		execute("ExtendedPrint.myReports");
+		assertValueInCollection("columns", 3, 0, "Description of Type");
+		assertValueInCollection("columns", 3, 1, "=");
+		assertValueInCollection("columns", 3, 2, "FACTURABLE MODIFIED");
+		execute("MyReport.editColumn", "row=3,viewObject=xava_view_columns");
+		assertNotExists("comparator");
+		assertNotExists("value");
+		assertNotExists("booleanValue");
+		assertNotExists("validValuesValue"); 
+		assertExists("descriptionsListValue"); 
+		assertExists("order");
+		assertDescriptionValue("descriptionsListValue", "FACTURABLE MODIFIED"); 
+		execute("MyReport.saveColumn");
+		assertValueInCollection("columns", 3, 0, "Description of Type");
+		assertValueInCollection("columns", 3, 1, "=");
+		assertValueInCollection("columns", 3, 2, "FACTURABLE MODIFIED");		
+		
+		assertValueInCollection("columns", 7, 0, "Distance");
+		assertValueInCollection("columns", 7, 1, "=");
+		assertValueInCollection("columns", 7, 2, "Nachional"); 
+		execute("MyReport.editColumn", "row=7,viewObject=xava_view_columns");
+		assertNotExists("comparator");
+		assertNotExists("value");
+		assertNotExists("booleanValue");
+		assertExists("validValuesValue"); 
+		assertNotExists("descriptionsListValue"); 
+		assertExists("order");		
+		assertDescriptionValue("validValuesValue", "Nachional"); 
+		execute("MyReport.saveColumn");
+		assertValueInCollection("columns", 7, 0, "Distance");
+		assertValueInCollection("columns", 7, 1, "=");
+		assertValueInCollection("columns", 7, 2, "Nachional"); 
+	}
+	
 	public void testFocusOnlyInEditors() throws Exception {
 		execute("CRUD.new");
 		assertFocusOn("invoice.year");
@@ -1256,20 +1308,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertExists("advice");
 		assertNotExists("incidents");
 	}
-	
-	public void testFilterDescriptionsListAndEnumLetterType() throws Exception { 
-		assertLabelInList(3, "Description of Type");
-		assertLabelInList(7, "Distance");
-		if (usesAnnotatedPOJO()) { 
-			setConditionValues(new String[] { "", "", "", "1", "", "", "", "0"} );	// For annotated POJOs
-		}
-		else {
-			setConditionValues(new String[] { "", "", "", "1", "", "", "", "1"} );	// For XML components
-		}
-		execute("List.filter");
-		assertListRowCount(1);
-	}
-	
+
 	public void testDescriptionsListHiddenAfterClearCondition() throws Exception {
 		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Delivery__conditionValue___3");
 		String s = select.getAttribute("style");

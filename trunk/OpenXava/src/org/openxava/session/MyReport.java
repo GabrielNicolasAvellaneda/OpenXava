@@ -11,6 +11,7 @@ import org.openxava.model.meta.*;
 import org.openxava.session.MyReportColumn.*;
 import org.openxava.tab.Tab;
 import org.openxava.util.*;
+import org.openxava.web.*;
 
 /**
  * 
@@ -101,9 +102,22 @@ public class MyReport implements java.io.Serializable {
 			columns.add(column);
 			if (!column.isCalculated()) {
 				try {
-					if (!Is.emptyString(values[i])) {
+					if (!Is.emptyString(values[i]) && !Is.emptyString(comparators[i])) { 
 						column.setComparator(comparators[i]);
-						column.setValue(values[i]);
+						if ("boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName())) {
+							column.setBooleanValue(Tab.EQ_COMPARATOR.equals(comparators[i]));							
+						}
+						else if (property.hasValidValues()) {							
+							int validValue = Integer.parseInt(values[i]);
+							if (property.getMetaModel().isAnnotatedEJB3()) validValue++;		
+							column.setValidValuesValue(validValue); 
+						}
+						else if (values[i].contains(Tab.DESCRIPTIONS_LIST_SEPARATOR)) {
+							column.setDescriptionsListValue(values[i]);
+						}
+						else {
+							column.setValue(values[i]);
+						} 
 					}
 				}
 				catch (Exception ex) {
@@ -116,7 +130,7 @@ public class MyReport implements java.io.Serializable {
 		}		
 		return columns;		
 	}
-	
+		
 	public void load() throws BackingStoreException { 
 		Preferences preferences = getPreferences();
 		name = preferences.get(NAME, name);

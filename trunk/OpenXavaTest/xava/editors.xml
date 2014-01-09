@@ -17,7 +17,6 @@
 		<for-stereotype stereotype="REGIONS" />
 	</editor>
 
-	<!-- tmp -->	
 	<editor name="RegionsWithCheckBoxes" url="regionsWithCheckBoxesEditor.jsp">
 		<property name="regionsCount" value="3" />
 		<formatter

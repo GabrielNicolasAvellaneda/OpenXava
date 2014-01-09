@@ -320,6 +320,26 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValidValuesCount("name", defaultColumnNames.length + 1);
 	}
 	
+	public void testMyReportConditionWithBoolanFromList() throws Exception { 
+		setConditionComparators("", "", "", "=");
+		execute("List.filter");
+		assertListRowCount(1);		
+		assertValueInList(0, 0, "2004");
+		assertValueInList(0, 1, "2");
+		
+		execute("ExtendedPrint.myReports");
+		assertValueInCollection("columns", 6, 0, "Paid");
+		assertValueInCollection("columns", 6, 1, "=");
+		assertValueInCollection("columns", 6, 2, "Yes");
+
+		execute("MyReport.editColumn", "row=6,viewObject=xava_view_columns");
+		assertExists("booleanValue");
+		assertNotExists("comparator");
+		assertNotExists("value");
+		assertExists("order");
+		assertValue("booleanValue", "true");
+	}
+	
 	public void testMyReportFilteringByDateAndBooleanWithConverter() throws Exception {  
 		// Date
 		execute("ExtendedPrint.myReports");
@@ -355,6 +375,8 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("ExtendedPrint.myReports");
 		execute("MyReport.remove", "xava.keyProperty=name");
 		assertValueInCollection("columns", 6, 0, "Paid");
+		assertValueInCollection("columns", 6, 1, "");
+		assertValueInCollection("columns", 6, 2, "");
 		execute("MyReport.editColumn", "row=6,viewObject=xava_view_columns");
 		String [][] booleanValues = {
 			{ "", "" },	
@@ -1081,23 +1103,23 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("date", "04/01/2004");
 		
-		setValue("date", "4/1/33"); // If current year is 2013
+		setValue("date", "4/1/34"); // If current year is 2014
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.refresh");
 		assertNoErrors();
-		assertValue("date", "04/01/2033");
+		assertValue("date", "04/01/2034");
 		
-		setValue("date", "040134"); // If current year is 2013
+		setValue("date", "040135"); // If current year is 2014
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.refresh");
 		assertNoErrors();
-		assertValue("date", "04/01/1934"); 
+		assertValue("date", "04/01/1935"); 
 		
 		setValue("date", "30/2/2008");
 		execute("CRUD.save");
