@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Calendar is not shown when entering dates in 'My reports'. 
 - Fix: ModuleTestBase.assertDescriptionValue() does not work for enums.
 - Fix: It's possible to add blank colums in 'My reports'.
 - Fix: true is shown always for boolean columns in 'My reports'.

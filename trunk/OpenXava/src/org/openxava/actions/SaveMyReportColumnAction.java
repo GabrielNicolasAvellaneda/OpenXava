@@ -34,7 +34,9 @@ public class SaveMyReportColumnAction extends CollectionElementViewBaseAction {
 		if (getCollectionElementView().getMembersNames().containsKey("value")) {
 			String value = (String) values.get("value");
 			column.setValue(value);
-		}				
+		}
+		Date dateValue = (Date) values.get("dateValue");
+		column.setDateValue(dateValue);		
 		if (getCollectionElementView().getMembersNames().containsKey("comparator")) {
 			String comparator = (String) values.get("comparator");
 			if (!Is.emptyString(column.getValue())) {

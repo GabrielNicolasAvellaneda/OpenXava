@@ -1,9 +1,12 @@
 package org.openxava.session;
 
+import java.text.*;
+import java.util.*;
 import java.util.prefs.*;
 
 import javax.persistence.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.actions.*;
 import org.openxava.annotations.*;
 import org.openxava.tab.Tab;
@@ -16,19 +19,24 @@ import org.openxava.util.*;
  */
 
 public class MyReportColumn implements java.io.Serializable {
+
+	private static Log log = LogFactory.getLog(MyReportColumn.class); 
 	
 	private final static String COLUMN = "column";
 	private final static String NAME = "name";
 	private final static String LABEL = "label"; 
 	private final static String COMPARATOR = "comparator";
 	private final static String VALUE ="value";
+	private final static String DATE_VALUE = "dateValue";
 	private final static String BOOLEAN_VALUE = "booleanValue";
 	private final static String VALID_VALUES_VALUE = "validValuesValue";
 	private final static String DESCRIPTIONS_LIST_VALUE = "descriptionsListValue"; 
 	private final static String CALCULATED = "calculated";
 	private final static String ORDER = "order";
 	private final static String SUM = "sum"; 
-	private final static String HIDDEN = "hidden"; 
+	private final static String HIDDEN = "hidden";
+	
+	private static DateFormat dateFormat = null; 
 	
 	@Hidden
 	private MyReport report;
@@ -39,11 +47,14 @@ public class MyReportColumn implements java.io.Serializable {
 		
 	@Required @Column(length=60) 
 	private String label; 
-	
+
+	@OnChange(OnChangeMyReportColumnComparatorAction.class) 
 	private String comparator;
 	
 	@Column(length=80) @DisplaySize(20)
 	private String value;
+	
+	private Date dateValue; 
 	
 	private Boolean booleanValue; 
 		
@@ -82,6 +93,9 @@ public class MyReportColumn implements java.io.Serializable {
 	}
 
 	public String getValue() {
+		if (dateValue != null) {
+			return getReport().getMetaModel().getMetaProperty(getName()).format(dateValue, Locales.getCurrent()); 
+		}
 		if (booleanValue != null) {
 			return booleanValue?Labels.get("yes", Locales.getCurrent()):Labels.get("no", Locales.getCurrent()); 			
 		}
@@ -96,6 +110,9 @@ public class MyReportColumn implements java.io.Serializable {
 	
 	@Hidden
 	public String getValueForCondition() {
+		if (dateValue != null) {
+			return getValue(); 
+		}		
 		if (booleanValue != null) {
 			return booleanValue.toString();
 		}		
@@ -164,6 +181,8 @@ public class MyReportColumn implements java.io.Serializable {
 		else preferences.remove(COLUMN + index + "." + COMPARATOR);
 		if (value != null) preferences.put(COLUMN + index + "." + VALUE, value);
 		else preferences.remove(COLUMN + index + "." + VALUE);
+		if (dateValue != null) preferences.put(COLUMN + index + "." + DATE_VALUE, getDateFormat().format(dateValue));
+		else preferences.remove(COLUMN + index + "." + DATE_VALUE);		
 		if (booleanValue != null) preferences.putBoolean(COLUMN + index + "." + BOOLEAN_VALUE, booleanValue);
 		else preferences.remove(COLUMN + index + "." + BOOLEAN_VALUE);
 		preferences.putInt(COLUMN + index + "." + VALID_VALUES_VALUE, validValuesValue);
@@ -176,13 +195,22 @@ public class MyReportColumn implements java.io.Serializable {
 		preferences.put(COLUMN + index + "." + HIDDEN, Boolean.toString(hidden)); 
 	}
 
-	boolean load(Preferences preferences, int index) { 
+	boolean load(Preferences preferences, int index) throws BackingStoreException {   
 		String name = preferences.get(COLUMN + index + "." + NAME, null);
 		if (name == null) return false;
 		this.name = name;
 		this.label = preferences.get(COLUMN + index + "." + LABEL, name); 
 		comparator = preferences.get(COLUMN + index + "." + COMPARATOR, null);
 		value = preferences.get(COLUMN + index + "." + VALUE, null);
+		String dateValue = preferences.get(COLUMN + index + "." + DATE_VALUE, null);
+		try {
+			this.dateValue = dateValue == null?null:getDateFormat().parse(dateValue);
+		}
+		catch (ParseException ex) {
+			String message = XavaResources.getString("myreport_date_column_not_loaded", this.name);
+			log.warn(message, ex); 
+			throw new BackingStoreException(message);
+		}
 		String booleanValue = preferences.get(COLUMN + index + "." + BOOLEAN_VALUE, null);
 		this.booleanValue = booleanValue == null?null:new Boolean(booleanValue);
 		validValuesValue = preferences.getInt(COLUMN + index + "." + VALID_VALUES_VALUE, 0);
@@ -204,6 +232,7 @@ public class MyReportColumn implements java.io.Serializable {
 		preferences.remove(COLUMN + index + "." + LABEL); 
 		preferences.remove(COLUMN + index + "." + COMPARATOR);
 		preferences.remove(COLUMN + index + "." + VALUE);
+		preferences.remove(COLUMN + index + "." + DATE_VALUE); 
 		preferences.remove(COLUMN + index + "." + BOOLEAN_VALUE);
 		preferences.remove(COLUMN + index + "." + VALID_VALUES_VALUE);
 		preferences.remove(COLUMN + index + "." + DESCRIPTIONS_LIST_VALUE);
@@ -212,6 +241,13 @@ public class MyReportColumn implements java.io.Serializable {
 		preferences.remove(COLUMN + index + "." + SUM);
 		preferences.remove(COLUMN + index + "." + HIDDEN);
 		return true;
+	}
+	
+	private static DateFormat getDateFormat() { 
+		if (dateFormat == null) {
+			dateFormat = new SimpleDateFormat("yyyyMMdd");
+		}
+		return dateFormat;
 	}
 
 
@@ -245,6 +281,14 @@ public class MyReportColumn implements java.io.Serializable {
 
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+
+	public Date getDateValue() {
+		return dateValue;
+	}
+
+	public void setDateValue(Date dateValue) {
+		this.dateValue = dateValue;
 	}
 	
 }

@@ -334,6 +334,7 @@ public class InvoiceTest extends ModuleTestBase {
 
 		execute("MyReport.editColumn", "row=6,viewObject=xava_view_columns");
 		assertExists("booleanValue");
+		assertNotExists("dateValue");
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertExists("order");
@@ -343,6 +344,34 @@ public class InvoiceTest extends ModuleTestBase {
 	public void testMyReportFilteringByDateAndBooleanWithConverter() throws Exception {  
 		// Date
 		execute("ExtendedPrint.myReports");
+		assertValueInCollection("columns", 2, 0, "Date");
+		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
+		
+		assertExists("comparator"); 
+		assertNotExists("value"); 
+		assertNotExists("descriptionsListValue"); 
+		assertNotExists("booleanValue");
+		assertNotExists("validValuesValue");
+		
+		assertTrue(getHtml().contains("showCalendar('ox_OpenXavaTest_Invoice__dateValue'"));
+		
+		setValue("dateValue", "5/28/07");
+		
+		execute("MyReport.saveColumn");
+		assertValueInCollection("columns", 2, 0, "Date");
+		assertValueInCollection("columns", 2, 1, "=");
+		assertValueInCollection("columns", 2, 2, "5/28/07");
+		
+		execute("MyReport.generatePdf");				
+		assertPopupPDFLinesCount(5);  
+		assertTrue(getPopupPDFLine(3).startsWith("2007 14"));
+		
+		execute("ExtendedPrint.myReports");
+		assertValueInCollection("columns", 2, 0, "Date"); 
+		assertValueInCollection("columns", 2, 1, "=");
+		assertValueInCollection("columns", 2, 2, "5/28/07"); 		
+		execute("MyReport.remove", "xava.keyProperty=name");
+
 		assertValueInCollection("columns", 2, 0, "Date");
 		execute("MyReport.editColumn", "row=2,viewObject=xava_view_columns");
 		String [][] dateComparators = {
@@ -358,9 +387,14 @@ public class InvoiceTest extends ModuleTestBase {
 			{ "in_comparator", "in group" }, 
 			{ "not_in_comparator", "not in group" } 						
 		};
-		assertValidValues("comparator", dateComparators);		
-		setValue("comparator", "year_comparator");
+		assertValidValues("comparator", dateComparators);  		
+		setValue("comparator", "year_comparator");		
 		setValue("value", "2004");
+		assertNotExists("dateValue"); 
+		assertNotExists("descriptionsListValue"); 
+		assertNotExists("booleanValue");
+		assertNotExists("validValuesValue");
+		assertValidValues("comparator", dateComparators); 
 		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 2, 0, "Date");
 		assertValueInCollection("columns", 2, 1, "year =");
@@ -371,9 +405,13 @@ public class InvoiceTest extends ModuleTestBase {
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));
 		assertTrue(getPopupPDFLine(4).startsWith("2004 9"));
 
-		// Boolean
 		execute("ExtendedPrint.myReports");
+		assertValueInCollection("columns", 2, 0, "Date");
+		assertValueInCollection("columns", 2, 1, "year =");
+		assertValueInCollection("columns", 2, 2, "2004");		
 		execute("MyReport.remove", "xava.keyProperty=name");
+		
+		// Boolean
 		assertValueInCollection("columns", 6, 0, "Paid");
 		assertValueInCollection("columns", 6, 1, "");
 		assertValueInCollection("columns", 6, 2, "");
@@ -391,16 +429,19 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		execute("MyReport.editColumn", "row=6,viewObject=xava_view_columns");
 		assertExists("booleanValue");
+		assertNotExists("dateValue"); 
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertExists("order");
 		setValue("name", "year");
 		assertNotExists("booleanValue");
+		assertNotExists("dateValue"); 
 		assertExists("comparator");
 		assertExists("value");
 		assertExists("order");
 		setValue("name", "paid");
 		assertExists("booleanValue");
+		assertNotExists("dateValue"); 
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertExists("order");
@@ -420,7 +461,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));		
 		
 		execute("ExtendedPrint.myReports");
-		execute("MyReport.remove", "xava.keyProperty=name"); 
+		execute("MyReport.remove", "xava.keyProperty=name");
 	}
 	
 	public void testFilterByRange() throws Exception{ 

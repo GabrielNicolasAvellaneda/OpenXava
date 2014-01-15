@@ -978,6 +978,8 @@ public class ModuleTestBase extends TestCase {
 			InputStream is = getPopupPage(-1).getWebResponse().getContentAsStream();
 			PDDocument doc = PDDocument.load(is); 
 			popupPDFAsText = new PDFTextStripper().getText(doc);
+			doc.close();
+			is.close();
 		}
 		return popupPDFAsText;
 	}

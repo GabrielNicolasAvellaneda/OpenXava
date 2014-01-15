@@ -1,5 +1,5 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
-<%@ page import="org.openxava.actions.OnChangeMyReportColumnNameAction" %>
+<%@ page import="org.openxava.actions.OnChangeMyReportColumnBaseAction" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -16,9 +16,9 @@ if (!editable) {
 else {
 	String propertyKey = request.getParameter("propertyKey");
 	String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
-	boolean isString = fvalue.startsWith(OnChangeMyReportColumnNameAction.STRING_COMPARATOR); 	
-	boolean isDate = fvalue.startsWith(OnChangeMyReportColumnNameAction.DATE_COMPARATOR);
-	boolean isEmpty = fvalue.startsWith(OnChangeMyReportColumnNameAction.EMPTY_COMPARATOR);
+	boolean isString = fvalue.startsWith(OnChangeMyReportColumnBaseAction.STRING_COMPARATOR); 	
+	boolean isDate = fvalue.startsWith(OnChangeMyReportColumnBaseAction.DATE_COMPARATOR);
+	boolean isEmpty = fvalue.startsWith(OnChangeMyReportColumnBaseAction.EMPTY_COMPARATOR);	
 	String [] tokens = fvalue.split(":");
 	String comparator = tokens.length>1?tokens[1]:"";
 %>
