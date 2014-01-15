@@ -521,7 +521,7 @@ public class Tab implements java.io.Serializable {
 							sb.append(')');
 						}
 						else {
-							v = p.parse(value.toString(), getLocale());
+							v = p.parse(value, getLocale()); 
 						} 
 						if (v instanceof Timestamp && EQ_COMPARATOR.equals(this.conditionComparators[i])) {							
 							if (Dates.hasTime((Timestamp) v)) {

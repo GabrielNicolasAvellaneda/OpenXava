@@ -119,6 +119,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		};
 		assertValidValues("validValuesValue", validValuesValues);
 		assertExists("validValuesValue");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertNotExists("comparator");
 		assertNotExists("value");
@@ -126,12 +127,14 @@ public class CustomerWithSectionTest extends CustomerTest {
 		setValue("comparator", "eq"); // It's important to fill it, in order to see if afterwards is ignored
 		setValue("value", "2");	// It's important to fill it, in order to see if afterwards is ignored			
 		assertNotExists("validValuesValue");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertExists("comparator");
 		assertExists("value");
 		assertExists("order");
 		setValue("name", "type");
 		assertExists("validValuesValue");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertNotExists("comparator");
 		assertNotExists("value");

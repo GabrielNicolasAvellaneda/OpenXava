@@ -27,8 +27,9 @@ class DatesTest extends TestCase {
 		date = Dates.create 8, 10, 2013
 	}
 		
-	void testCreate() {
-		assertEquals "Tue Oct 08 00:00:00 CEST 2013", date.toString()
+	void testCreate() {		
+		assertTrue date.toString().startsWith("Tue Oct 08 00:00:00")
+		assertTrue date.toString().endsWith("2013")
 	}
 	
 	void testSetGetDay() {

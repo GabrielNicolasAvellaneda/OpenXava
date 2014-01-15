@@ -19,22 +19,25 @@ public class Color2Test extends ModuleTestBase {
 		execute("MyReport.editColumn", "row=4,viewObject=xava_view_columns");
 		assertNotExists("comparator");
 		assertNotExists("value");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertNotExists("validValuesValue"); 
 		assertExists("descriptionsListValue"); 
 		assertExists("order");
 		
 		setValue("name", "number");
-		assertExists("comparator");
+		assertExists("comparator"); 
 		assertExists("value");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertNotExists("validValuesValue"); 
 		assertNotExists("descriptionsListValue"); 
 		assertExists("order");
 		
 		setValue("name", "usedTo.name");
-		assertNotExists("comparator");
+		assertNotExists("comparator");		
 		assertNotExists("value");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertNotExists("validValuesValue"); 
 		assertExists("descriptionsListValue"); 

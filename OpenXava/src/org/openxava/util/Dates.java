@@ -17,6 +17,11 @@ public class Dates {
 	/**
 	 * With hour to 0.
 	 * If day, month and year are 0 return null.
+	 * <p>
+	 * The time zone is the default one, so if you print this date in the same JVM you will
+	 * get the correct one. However, if you move the date object from one machine to other, or
+	 * save it in a database that will be read from another locale maybe the dates will not match.
+	 * </p> 
 	 */	
 	public static Date create(int day, int month, int year) {
 		return create(day, month, year, 0, 0, 0);
@@ -24,6 +29,11 @@ public class Dates {
 	
 	/**
 	 * If day, month and year are 0 return null.
+	 * <p>
+	 * The time zone is the default one, so if you print this date in the same JVM you will
+	 * get the correct one. However, if you move the date object from one machine to other, or
+	 * save it in a database that will be read from another locale maybe the dates will not match.
+	 * </p> 
 	 */	
 	public static Date create(int day, int month, int year, int hourofday, int minute, int second) {
 		if (day == 0 && month == 0 && year == 0) return null;

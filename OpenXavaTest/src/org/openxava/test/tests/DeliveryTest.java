@@ -68,6 +68,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("MyReport.editColumn", "row=3,viewObject=xava_view_columns");
 		assertNotExists("comparator");
 		assertNotExists("value");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertNotExists("validValuesValue"); 
 		assertExists("descriptionsListValue"); 
@@ -84,6 +85,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("MyReport.editColumn", "row=7,viewObject=xava_view_columns");
 		assertNotExists("comparator");
 		assertNotExists("value");
+		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
 		assertExists("validValuesValue"); 
 		assertNotExists("descriptionsListValue"); 

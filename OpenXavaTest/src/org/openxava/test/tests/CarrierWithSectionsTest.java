@@ -74,7 +74,8 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertNotExists("order");
-		assertNotExists("descriptionsListValue");  
+		assertNotExists("descriptionsListValue");
+		assertNotExists("dateValue"); 
 		assertNotExists("booleanValue"); 
 		assertNotExists("validValuesValue"); 
 		
@@ -83,7 +84,8 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertExists("comparator");
 		assertExists("value");
 		assertExists("order");
-		assertNotExists("descriptionsListValue"); 
+		assertNotExists("descriptionsListValue");
+		assertNotExists("dateValue"); 
 		assertNotExists("booleanValue"); 
 		assertNotExists("validValuesValue"); 
 		
@@ -92,7 +94,8 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertNotExists("comparator");
 		assertNotExists("value");
 		assertNotExists("order");
-		assertNotExists("descriptionsListValue"); 
+		assertNotExists("descriptionsListValue");
+		assertNotExists("dateValue"); 
 		assertNotExists("booleanValue"); 
 		assertNotExists("validValuesValue"); 
 		
@@ -251,7 +254,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
 		assertValueInCollection("columns", 3, 0, "Zone of Warehouse");
-		assertValueInCollection("columns", 3, 1, "=");
+		assertValueInCollection("columns", 3, 1, "="); 
 		assertValueInCollection("columns", 3, 2, "2");
 		assertValueInCollection("columns", 3, 5, "Yes");
 		
@@ -308,7 +311,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		
 		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
 		assertValue("name", "number");
-		setValue("comparator", "ge_comparator");
+		setValue("comparator", "ge_comparator"); 
 		setValue("value", "2");		
 		execute("MyReport.saveColumn");		
 		
@@ -577,7 +580,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		String [][] customReports1 = {
 			{ "Carrier report 1", "Carrier report 1" },	
 		};
-		assertValidValues("name", customReports1);
+		assertValidValues("name", customReports1); 
 		
 		assertValue("name", "Carrier report 1");
 		execute("MyReport.createNew", "xava.keyProperty=name");
@@ -633,7 +636,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 	public void testRemoveColumnsInMyReport() throws Exception  { 
 		execute("ExtendedPrint.myReports"); 
 		assertCollectionRowCount("columns", 3);
-		assertValueInCollection("columns", 0, 0, "Calculated");
+		assertValueInCollection("columns", 0, 0, "Calculated");  
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
 		checkRowCollection("columns", 1);
