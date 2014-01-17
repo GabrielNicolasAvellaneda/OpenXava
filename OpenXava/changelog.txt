@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: In PDF reports the space for headers sometimes is two lines where there is only a line of text.
+- Fix: In PDF reports the more left column sometimes is out of the report, in the margin.
 - Fix: Calendar is not shown when entering dates in 'My reports'. 
 - Fix: ModuleTestBase.assertDescriptionValue() does not work for enums.
 - Fix: It's possible to add blank colums in 'My reports'.

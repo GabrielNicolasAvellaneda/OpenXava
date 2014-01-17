@@ -106,6 +106,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 0, "Number");
 		
 		execute("MyReport.newColumn", "viewObject=xava_view_columns");
+		assertNoErrors(); // Needed 
 		assertDialogTitle("Add - Report column");
 		execute("MyReport.saveColumn");		
 		assertError("Value for Name in Report column is required");
