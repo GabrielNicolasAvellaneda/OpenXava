@@ -2,6 +2,7 @@ package org.openxava.actions;
 
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
+import org.openxava.util.*;
 
 
 /**
@@ -14,6 +15,7 @@ public class OnChangeMyReportColumnComparatorAction extends OnChangeMyReportColu
 		
 	public void execute() throws Exception {
 		String propertyName = getView().getValueString("name");
+		if (Is.emptyString(propertyName)) return; 
 		MetaProperty property = getTab().getMetaTab().getMetaModel().getMetaProperty(propertyName);
 		if (!java.util.Date.class.equals(property.getType())) return;
 		String comparator = (String) getNewValue(); 

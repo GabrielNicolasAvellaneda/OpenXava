@@ -1,7 +1,7 @@
 The tests in this package do not include pretty printing of automatic PDF reports. 
 Therefore, when you touch jasperReport.jsp you have to test it visually
 at least the next cases:
-- InvoiceDetailsWithManyProperties:
+- InvoiceDetailsWithManyProperties in English:
 		Choose the Invoice 2011/1 with 59 details and print the details. 
 		Every total must be in one line.
 		All collection properties must be shown and the most right column inside the margin.
@@ -14,6 +14,8 @@ at least the next cases:
 		Generate PDF: Correct height for header (1 line) and the most right column inside the margin.
 		My reports with a label long enough to produce a 3 lines header:
 			Correct height for header (3 lines) and the most right column inside the margin.
+- Invoice:
+		Generate PDF in English: Most right column inside the margin.
 - Warehouse:
 		My reports with name long enough to produce a 2 lines header: Correct height for header (2 line)
 - Delivery: 		  			
@@ -28,6 +30,6 @@ at least the next cases:
 			for characteristicThing.description, selecting the color with code 0: 
 			The most right column inside the margin.
 - Tax
-		Generate PDF in Spanish: Correct height for header (1 line) 
+		Generate PDF in Spanish: Correct height for header  
 			and the most right column inside the margin. 
 		
