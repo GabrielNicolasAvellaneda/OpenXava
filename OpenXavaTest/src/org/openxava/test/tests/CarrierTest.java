@@ -241,7 +241,7 @@ public class CarrierTest extends CarrierTestBase {
 	}
 	
 	
-	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception {
+	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception { 
 		execute("Mode.detailAndFirst");		
 		// Modifying		
 		execute("Reference.modify", "model=Warehouse,keyProperty=warehouse.number");		
@@ -273,7 +273,7 @@ public class CarrierTest extends CarrierTestBase {
 		assertNoAction("Mode.list"); 	// When navigate to another view actions are disable		
 	}
 	
-	public void testDeleteUsingBeforeReferenceSearch_dialogLabel() throws Exception {
+	public void testDeleteUsingBeforeReferenceSearch_dialogLabel() throws Exception { 
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		execute("Reference.search", "keyProperty=xava.Carrier.warehouse.number");

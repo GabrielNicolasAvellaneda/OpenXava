@@ -14,6 +14,8 @@ import org.openxava.model.*
  * constraint name manually in Table.
  * 
  * It also allows testing UniqueConstraint on a single column.   
+ * 
+ * tmp ¿Poner en wiki? 
  *
  * @author Jeromy Altuna
  */
