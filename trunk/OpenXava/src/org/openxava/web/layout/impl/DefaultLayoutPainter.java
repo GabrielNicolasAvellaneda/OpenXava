@@ -150,7 +150,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		attributes.put(ATTR_CLASS, "ox-frame");
 		if (getRow().getMaxFramesCount() > 1) {
 			if (element.getPosition() > 0) {
-				attributes.put(ATTR_CLASS, "ox-frame ox-frame-next-sibling");
+				attributes.put(ATTR_CLASS, "ox-frame ox-frame-sibling");
 			}
 		}
 
