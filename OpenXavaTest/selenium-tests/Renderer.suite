@@ -14,6 +14,9 @@
 <tr><td><a href="InvoiceAmountsNotAlignedInSection.case">InvoiceAmountsNotAlignedInSection</a></td></tr>
 <tr><td><a href="Product4NotAligned.case">Product4NotAligned</a></td></tr>
 <tr><td><a href="Product5FamilyFromSubfamily.case">Product5FamilyFromSubfamily</a></td></tr>
+<tr><td><a href="CarrierWithTwoSections.case">CarrierWithTwoSections</a></td></tr>
+<tr><td><a href="Customer-twoFrames.case">Customer-twoFrames</a></td></tr>
+<tr><td><a href="CarrierWithTwoCollectionsTogether.case">CarrierWithTwoCollectionsTogether</a></td></tr>
 </tbody></table>
 </body>
 </html>

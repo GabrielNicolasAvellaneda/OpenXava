@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>CarrierWithTwoCollectionsTogether</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CarrierWithTwoCollectionsTogether</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/OpenXavaTest/modules/CarrierWithCollectionsTogether</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>OpenXavaTest - Carrier with collections together</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>id=ox_OpenXavaTest_CarrierWithCollectionsTogether__Mode___detailAndFirst</td>
+	<td>present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${present}&quot; != &quot;true&quot;</td>
+	<td>afterDetailClick</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ox_OpenXavaTest_CarrierWithCollectionsTogether__Mode___detailAndFirst</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterDetailClick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementWidth</td>
+	<td>css=body</td>
+	<td>width</td>
+</tr>
+<tr>
+	<td>storeElementWidth</td>
+	<td>css=#ox_OpenXavaTest_CarrierWithCollectionsTogether__view table</td>
+	<td>viewWidth</td>
+</tr>
+<tr>
+	<td>assertEval</td>
+	<td>${viewWidth} &lt;= ${width}</td>
+	<td>true</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
