@@ -147,17 +147,11 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (columnSpan > 0) {
 			attributes.put(ATTR_COLSPAN, columnSpan.toString());
 		}
-		StringBuffer style = new StringBuffer("");
+		attributes.put(ATTR_CLASS, "ox-frame");
 		if (getRow().getMaxFramesCount() > 1) {
 			if (element.getPosition() > 0) {
-				style.append("padding-left:4px;");
+				attributes.put(ATTR_CLASS, "ox-frame ox-frame-next-sibling");
 			}
-			if (element.getPosition() < getRow().getMaxFramesCount() - 1) {
-				style.append("padding-right:4px;");
-			}
-		}
-		if (style.length() > 0) {
-			attributes.put(ATTR_STYLE, style.toString());
 		}
 
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
@@ -698,14 +692,14 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		attributes.clear();
 		startTd();
 		if (element.hasFrame()) {
-			write(getStyle().getFrameHeaderStartDecoration(100));
+			write(getStyle().getFrameHeaderStartDecoration(0));
 			write(getStyle().getFrameTitleStartDecoration());
 			write(element.getLabel());
 			String frameId = Ids.decorate(getRequest(), "frame_" + element.getView().getPropertyPrefix() + element.getMetaCollection().getName());
 			String collectionHeaderId = frameId + "header";
 			attributes.clear();
 			attributes.put("id", collectionHeaderId);
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN));
 			includeJspPage("collectionFrameHeader.jsp" 
 				+ "?collectionName=" + element.getMetaCollection().getName()
 				+ "&viewObject=" + element.getView().getViewObject()

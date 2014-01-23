@@ -507,9 +507,9 @@ public class DefaultLayoutParser implements ILayoutParser {
 			elements.remove(elements.size() - 1);
 		} else {
 			returnValue = new DefaultLayoutRowEndElement(view, groupLevel);
-			if (groupLevel <= 2
-					&& currentRow.getMaxFramesCount() > currentView.getMaxFramesCount()) {
-				 currentView.setMaxFramesCount(currentRow.getMaxFramesCount());
+			if (groupLevel <= 2) {
+				 currentView.setMaxFramesCount(currentRow.getMaxFramesCount() +
+						 currentView.getMaxFramesCount());
 			}
 			containersStack.peek().getRows().add(currentRow);
 		}

@@ -5,12 +5,15 @@ package org.openxava.web.layout;
 
 import java.io.Serializable;
 import java.util.EmptyStackException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openxava.util.Is;
 import org.openxava.view.View;
 
 /**
@@ -237,4 +240,57 @@ public abstract class AbstractBasePainter implements ILayoutPainter, Serializabl
 		return pageContext;
 	}
 	
+	/**
+	 * Converts a string of html attributes into map of attributes.
+	 * @param attributeString String containing the list of html attributes.
+	 * @return A Map of html attributes, never null.
+	 */
+	protected Map<String, String> parseAttributes(String attributeString) {
+		Map<String, String> returnValue = new HashMap<String, String>();
+		if (!Is.emptyString(attributeString)) {
+			boolean readingAttributeName = true;
+			boolean dontAppendToAttributeName = false;
+			boolean prepareForReadingAttributeValue = false;
+			boolean readingAttributeValue = false;
+			boolean acceptNextCharacter = false;
+			char attributeValueDelimiter = ' '; 
+			
+			StringBuffer attributeName = new StringBuffer("");
+			StringBuffer attributeValue = new StringBuffer("");
+			for (int index = 0; index < attributeString.length(); index++) {
+				char charAt = attributeString.charAt(index);
+				if (readingAttributeName) {
+					if (charAt == '=') {
+						readingAttributeName = false;
+						prepareForReadingAttributeValue = true;
+					} else if (charAt == ' ' && attributeName.length() > 0){
+						dontAppendToAttributeName = true;
+					} else if (!dontAppendToAttributeName) {
+						attributeName.append(charAt);
+					}
+				} else if (prepareForReadingAttributeValue) {
+					if (charAt == '\'' ||
+							charAt == '"') {
+						attributeValueDelimiter = charAt;
+						prepareForReadingAttributeValue = false;
+						readingAttributeValue = true;
+					}
+				} else if (readingAttributeValue) {
+					if (acceptNextCharacter) {
+						attributeValue.append(charAt);
+						acceptNextCharacter = false;
+					} else if (charAt == 0x1b) {
+						acceptNextCharacter = true;
+					} else if (charAt == attributeValueDelimiter) {
+						if (attributeName.length() > 0) {
+							returnValue.put(attributeName.toString(), attributeValue.toString());
+						}
+						attributeName = new StringBuffer();
+						attributeValue = new StringBuffer();
+					}
+				}
+			}
+		}
+		return returnValue;
+	}
 }
