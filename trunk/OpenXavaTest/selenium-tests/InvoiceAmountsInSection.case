@@ -22,7 +22,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>id=ox_OpenXavaTest_InvoiceAmountsInSection__CRUD___new</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
 	<td>id=ox_OpenXavaTest_InvoiceAmountsInSection__CRUD___new</td>
 	<td></td>
 </tr>

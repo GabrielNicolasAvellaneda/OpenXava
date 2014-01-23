@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>Customer-twoFrames</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Customer-twoFrames</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/OpenXavaTest/modules/Customer</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>OpenXavaTest - Customers management</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ox_OpenXavaTest_Customer__CRUD___new</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td.portlet-msg-success</td>
+	<td>OnChangeVoidAction executed</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=td.portlet-msg-success</td>
+	<td>OnChangeVoidAction executed</td>
+</tr>
+<tr>
+	<td>storeElementPositionLeft</td>
+	<td>xpath=//td[contains(@class,'ox-frame-sibling')][1]/preceding-sibling::td</td>
+	<td>left</td>
+</tr>
+<tr>
+	<td>storeElementWidth</td>
+	<td>xpath=//td[contains(@class,'ox-frame-sibling')][1]/preceding-sibling::td</td>
+	<td>width</td>
+</tr>
+<tr>
+	<td>storeElementPositionLeft</td>
+	<td>css=td.ox-frame-sibling table</td>
+	<td>leftSecond</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${left} + ${width}</td>
+	<td>lastX</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${lastX} + 3</td>
+	<td>leftSecondExpected</td>
+</tr>
+<tr>
+	<td>assertEval</td>
+	<td>${leftSecond} &gt;= ${leftSecondExpected}</td>
+	<td>true</td>
+</tr>
+</tbody></table>
+</body>
+</html>

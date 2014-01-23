@@ -22,7 +22,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>id=ox_OpenXavaTest_InvoiceAmounts__CRUD___new</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
 	<td>id=ox_OpenXavaTest_InvoiceAmounts__CRUD___new</td>
 	<td></td>
 </tr>
@@ -101,7 +111,6 @@
 	<td>name=ox_OpenXavaTest_InvoiceAmounts__vat</td>
 	<td>${row2}</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
