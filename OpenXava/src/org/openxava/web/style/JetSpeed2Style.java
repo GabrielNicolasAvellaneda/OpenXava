@@ -62,7 +62,7 @@ public class JetSpeed2Style extends PortalStyle {
 		return "PTitleContent";
 	}	
 	
-	protected String getFrame() {
+	public String getFrame() {
 		return "frame";
 	}
 	

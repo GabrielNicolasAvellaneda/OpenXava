@@ -59,7 +59,7 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 		return "</li>";		
 	}
 
-	protected String getFrame() { 
+	public String getFrame() { 
 		return "wpsPortlet";
 	}
 	

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Bug #350, #356, #359, #373 of new renderer.
 - Fix: Opening a dialog resizes the list and collections.
 - Fix: In PDF reports the space for headers sometimes is two lines where there is only a line of text.
 - Fix: In PDF reports the more left column sometimes is out of the report, in the margin.

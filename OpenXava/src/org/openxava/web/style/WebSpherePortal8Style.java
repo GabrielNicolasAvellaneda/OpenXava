@@ -26,7 +26,7 @@ public class WebSpherePortal8Style extends PortalStyle {
 		return "portlet-form-input-field";
 	}
 	
-	protected String getFrame() {
+	public String getFrame() {
 		return "wpthemeControl wpthemeStandard";
 	}
 	

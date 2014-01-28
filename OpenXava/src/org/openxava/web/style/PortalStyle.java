@@ -146,7 +146,7 @@ public class PortalStyle extends Style {
 		return "list-title";
 	}
 						
-	protected String getFrame() { 
+	public String getFrame() { 
 		return "frame";
 	}
 		
