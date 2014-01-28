@@ -27,6 +27,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>css=td.portlet-msg-success</td>
 	<td>OnChangeVoidAction executed</td>
