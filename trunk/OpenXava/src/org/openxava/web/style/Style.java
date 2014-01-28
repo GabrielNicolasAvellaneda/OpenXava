@@ -1,11 +1,18 @@
 package org.openxava.web.style;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.*;
-import org.openxava.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.util.PropertiesReader;
+import org.openxava.util.XavaPreferences;
+import org.openxava.util.XavaResources;
 
 /**
  * This class and its subclasses is used from JSP code to give
@@ -635,7 +642,7 @@ public class Style {
 		return "\n</td></tr></table>";
 	}
 	
-	protected String getFrame() { 
+	public String getFrame() { 
 		return "ox-frame"; 
 	}
 	
@@ -1034,8 +1041,6 @@ public class Style {
 		return "";
 	}
 	
-
-
 	/**
 	 * @since 4m5
 	 */		
@@ -1117,60 +1122,23 @@ public class Style {
 	}
 	
 	/**
-	 * @since 4.5
-	 */
-	public String getLayoutLabelLeftSpacer() {
-		return "ox-layout-label-left-spacer";
-	}
-	
-	/**
-	 * @since 4.5
-	 */
-	public String getLayoutLabelRightSpacer() {
-		return "ox-layout-label-right-spacer";
-	}
-
-	/**
-	 * @since 4.5
-	 */
-	public String getLayoutLabelRightSpacerStyle() {
-		return "width:4px;";
-	}
-	
-	/**
-	 * The label cell contains the left spacer, label and right spacer.
+	 * To allow the definition of different style for the label side of the view.
 	 * @since 4.5
 	 */
 	public String getLayoutLabelCell() {
 		return "ox-layout-label-cell";
 	}
-	
+
 	/**
-	 * Since the label cell contains the left spacer, label and right spacer.
-	 * this is the class for styling just the label.
+	 * To allow the definition of different style for the data side of the view.
 	 * @since 4.5
-	 */
-	public String getLayoutLabel() {
-		return "ox-layout-label";
-	}
-	
-	/**
-	 * The data cell contains the data and might contain left spacer.
-	 * 
 	 */
 	public String getLayoutDataCell() {
 		return "ox-layout-data-cell";
 	}
-	
-	/**
-	 * The data cell contains the data and might contain left spacer.
-	 * 
-	 */
-	public String getLayoutData() {
-		return "ox-layout-data";
-	}
 
 	/**
+	 * To define the space between rows.
 	 * @since 4.5
 	 */
 	public String getLayoutRowSpacer() {
@@ -1178,20 +1146,7 @@ public class Style {
 	}
 
 	/**
-	 * @since 4.7
-	 */
-	public String getLayoutRowSpacerLabelCell() {
-		return "ox-layout-row-spacer-label-cell";
-	}
-
-	/**
-	 * @since 4.7
-	 */
-	public String getLayoutRowSpacerDataCell() {
-		return "ox-layout-row-spacer-data-cell";
-	}
-	
-	/**
+	 * Helps define additional styles for the content.
 	 * @since 4.7
 	 */
 	public String getLayoutContent() {
@@ -1203,5 +1158,21 @@ public class Style {
 	 */
 	public String getSubcontroller() {
 		return "ox-subcontroller";
-	}	
+	}
+	
+	/**
+	 * @since 4.9.1
+	 * @return Style for the second and next frames within the same row.
+	 */
+	public String getFrameSibling() {
+		return "ox-frame-sibling";
+	}
+	
+	/**
+	 * @since 4.9.1
+	 * @return Left margin for properties.
+	 */
+	public int getPropertyLeftMargin() {
+		return 8;
+	}
 }

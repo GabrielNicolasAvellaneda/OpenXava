@@ -150,7 +150,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 		MetaView metaView = view.getMetaView();
 		boolean alignedByColumn = (metaView == null ? false : metaView.isAlignedByColumns());
 
-		parseMetamembers(view.getMetaMembers(), view, false, true, inputPropertyPrefix, alignedByColumn);
+		parseMetamembers(view.getMetaMembers(), view, false, true, inputPropertyPrefix, alignedByColumn, 0);
 		addLayoutElement(createEndViewMarker(view));
 		if (currentView.isRepresentsSection() && 
 				currentView.getMaxFramesCount() == 1 &&
@@ -203,7 +203,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 */
 	@SuppressWarnings("rawtypes")
 	protected void parseMetamembers(Collection metaMembers, View view, boolean isDescriptionsList, boolean isGrouped,
-			String inputPropertyPrefix, boolean alignedByColumn) {
+			String inputPropertyPrefix, boolean alignedByColumn, int labelFormatForDescriptionsList) {
 		boolean displayAsDescriptionsList = isDescriptionsList;
 		boolean frameOnSameColumn = false;
 		int frameStartingRowIndex = -1;
@@ -250,7 +250,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 						addLayoutElement(createBeginColumnMarker(view));
 					}
 					element = createBeginPropertyMarker(p, displayAsDescriptionsList, hasFrame, view,
-							inputPropertyPrefix); // hasFrame:true = suppress label
+							inputPropertyPrefix, labelFormatForDescriptionsList); // hasFrame:true = suppress label
 					addLayoutElement(element);
 					addLayoutElement(createEndPropertyMarker(view));
 					if (hasFrame) {
@@ -294,7 +294,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 							if (isReferenceAsDescriptionsList && subView.getMetaMembers().isEmpty()) {
 								addLayoutElement(createBeginColumnMarker(view));
 								addLayoutElement(createBeginPropertyMarker(ref, isReferenceAsDescriptionsList, false, subView,
-										subView.getPropertyPrefix()));
+										subView.getPropertyPrefix(), view.getLabelFormatForReference(ref)));
 								addLayoutElement(createEndColumnMarker(view));
 							} else {
 								if ("referenceEditor.jsp".equalsIgnoreCase(metaEditor.getUrl())) {
@@ -305,7 +305,8 @@ public class DefaultLayoutParser implements ILayoutParser {
 									parseMetamembers(subView.getMetaMembers(), subView, isReferenceAsDescriptionsList, isFramed 
 											|| (currentRowStarted() && !isReferenceAsDescriptionsList) 
 											|| (!currentRowStarted() && currentMustStartRow()),
-											subView.getPropertyPrefix(), referenceAlignedByColumns);
+											subView.getPropertyPrefix(), referenceAlignedByColumns,
+											view.getLabelFormatForReference(ref));
 								} else { // uses it owns reference editor
 									addLayoutElement(createBeginColumnMarker(view));
 									addLayoutElement(createBeginReferenceMarker(ref, isReferenceAsDescriptionsList, false, view,
@@ -340,7 +341,8 @@ public class DefaultLayoutParser implements ILayoutParser {
 					addLayoutElement(createBeginColumnMarker(view));
 			  		addLayoutElement(createBeginGroupMarker(group, subView, groupLabel));
 					parseMetamembers(group.getMetaView().getMetaMembers(), subView, false, true,
-							subView.getPropertyPrefix(), group.getMetaView().isAlignedByColumns());
+							subView.getPropertyPrefix(), group.getMetaView().isAlignedByColumns(),
+							0);
 					if (rowIndex > frameMaxEndingRowIndex) {
 						frameMaxEndingRowIndex = rowIndex;
 					}
@@ -697,9 +699,8 @@ public class DefaultLayoutParser implements ILayoutParser {
 	 * @return returnValue. Layout element of type PROPERTY_BEGIN.
 	 */
 	protected ILayoutPropertyBeginElement createBeginPropertyMarker(MetaMember m, boolean descriptionsList, 
-			boolean suppressLabel, View view, String inputPropertyPrefix) {
+			boolean suppressLabel, View view, String inputPropertyPrefix, int labelFormatTypeForDescriptionsList) {
 		ILayoutPropertyBeginElement returnValue = new DefaultLayoutPropertyBeginElement(view, groupLevel);
-		
 		String referenceForDescriptionsList = "";
 		String propertyPrefix = inputPropertyPrefix;
 		String propertyLabel = null;
@@ -730,6 +731,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 				if (referenceForDescriptionsList.contains(".")) {
 					referenceForDescriptionsList = referenceForDescriptionsList.substring(referenceForDescriptionsList.lastIndexOf('.') + 1);
 				}
+				labelFormat = labelFormatTypeForDescriptionsList;
 			}
 		}
 		
@@ -820,7 +822,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 	protected ILayoutPropertyBeginElement createBeginReferenceMarker(MetaMember m, boolean descriptionsList, 
 			boolean suppressLabel, View view, String inputPropertyPrefix) {
 		ILayoutPropertyBeginElement returnValue = 
-				createBeginPropertyMarker(m, descriptionsList, suppressLabel, view, inputPropertyPrefix);
+				createBeginPropertyMarker(m, descriptionsList, suppressLabel, view, inputPropertyPrefix, 0);
 		return returnValue;
 	}
 	

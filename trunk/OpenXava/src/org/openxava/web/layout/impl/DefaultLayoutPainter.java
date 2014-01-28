@@ -71,6 +71,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 	private static final Log log = LogFactory.getLog(DefaultLayoutPainter.class);
 	private boolean firstCellPainted = false;
+	private boolean smallLabelPainted = false;
 	private int tdPerColumn = 2; // One TD for the label and another for Data and other cells.
 	private boolean blockStarted = false;
 	
@@ -147,10 +148,10 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (columnSpan > 0) {
 			attributes.put(ATTR_COLSPAN, columnSpan.toString());
 		}
-		attributes.put(ATTR_CLASS, "ox-frame");
+		attributes.put(ATTR_CLASS, getStyle().getFrame());
 		if (getRow().getMaxFramesCount() > 1) {
 			if (element.getPosition() > 0) {
-				attributes.put(ATTR_CLASS, "ox-frame ox-frame-sibling");
+				attributes.put(ATTR_CLASS, getStyle().getFrame() + " " + getStyle().getFrameSibling());
 			}
 		}
 
@@ -262,14 +263,14 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		
 		// Label content
 		attributes.clear();
-		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutLabelCell() + " " + Style.getInstance().getLayoutRowSpacerLabelCell());
-		
-		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+		attributes.put(ATTR_CLASS, getStyle().getLayoutLabelCell());
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+		
 		// Data content
 		attributes.clear();
-		attributes.put(ATTR_CLASS, Style.getInstance().getLayoutDataCell() + " " + Style.getInstance().getLayoutRowSpacerDataCell());
-		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+		attributes.put(ATTR_CLASS, getStyle().getLayoutDataCell());
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
 	}
@@ -317,6 +318,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		getRow().setRowCurrentColumnsCount(count);
 		setColumn(element);
 		firstCellPainted = false; // to indicate to the cell renderer that the TD pair is about to start.
+		smallLabelPainted = false;
 	}
 
 	/**
@@ -325,6 +327,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @see org.openxava.web.layout.ILayoutPainter#endColumn(org.openxava.web.layout.LayoutElement)
 	 */
 	public void endColumn(ILayoutColumnEndElement element) {
+		closeSmallLabel();
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 		unsetColumn();
 	}
@@ -333,51 +336,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @see org.openxava.web.layout.ILayoutPainter#beginProperty(org.openxava.web.layout.LayoutElement)
 	 */
 	public void beginProperty(ILayoutPropertyBeginElement element) {
-		Integer width =  getMaxColumnsOnView() > 0 ? 50 / getMaxColumnsOnView() : 0;
-		width = 0;
-		if (!firstCellPainted) {
-			attributes.clear();
-			attributes.put(ATTR_CLASS, getStyle().getLabel() + " " + getStyle().getLayoutLabelCell());
-			StringBuffer style = new StringBuffer("");
-			if (width > 0) {
-				style.append("width:" + width.toString() + "%;");
-			}
-			style.append("white-space:nowrap;");
-			attributes.put(ATTR_STYLE, style.toString());
-			attributes.put("valign", "center");
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
-		}
-
-		if (getContainer().getShowColumnLabel(getColumn().getColumnIndex())) {
-			// Left spacer
-			beginPropertySpacer(element, getStyle().getLayoutLabelLeftSpacer());
-			
-			if (!element.isMetaViewAction()) {
-				// Label
-				beginPropertyLabel(element);
-			}
-			
-			// Left spacer
-			beginPropertySpacer(element, getStyle().getLayoutLabelRightSpacer());
-		}
-		if (!firstCellPainted) {
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-		}
-
-		// Data. There is no end TD tag this one is closed by the end column method.
-		if (!firstCellPainted) {
-			attributes.clear();
-			attributes.put(ATTR_CLASS, getStyle().getLayoutDataCell());
-			StringBuffer style = new StringBuffer("");
-			if (width > 0) {
-				style.append("width:" + width.toString() + "%");
-			}
-			if (style.length() > 0) {
-				attributes.put(ATTR_STYLE, style.toString());
-			}
-			attributes.put("valign", "center");
-			startTd();
-		}
 		if (element.isDisplayAsDescriptionsList() 
 				|| element.getMetaReference() != null) {
 			beginReferenceData(element);
@@ -388,91 +346,63 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				beginPropertyData(element);
 			}
 		}
-		
-		// Mark first cell painted
-		firstCellPainted = true;
 	}
 	
 	/**
-	 * Starts a TD properly (with column span if needed).
+	 * Display element as description list.
+	 * @param element Element to be displayed.
 	 */
-	private void startTd() {
-		if (getRow().getMaxRowColumnsCount() == getRow().getRowCurrentColumnsCount() &&
-				!blockStarted) { // last column
-			Integer columnSpan = getMaxColumnsOnView() - getRow().getRowCurrentColumnsCount();
-			if (columnSpan > 0) {
-				columnSpan = calculateTdSpan(columnSpan);
-				columnSpan = columnSpan + 1;
-				//attributes.put(ATTR_COLSPAN, columnSpan.toString());
-				getRow().setRowCurrentColumnsCount(getMaxColumnsOnView()); // No td to add.
-			}
+	private void beginReferenceData(ILayoutPropertyBeginElement element) {
+		initiatePropertyElement(element);
+		beginPropertyLabel(element);
+		processPropertyElement(element);
+		ModuleContext context = (ModuleContext) getPageContext().getSession().getAttribute("context");
+		View view = (View)context.get(getRequest(), element.getViewObject());
+		try {
+			MetaReference metaReference = view.getMetaReference(element.getReferenceForDescriptionsList());
+			String referenceKey = Ids.decorate(getRequest(), element.getPropertyKey());
+			getRequest().setAttribute(referenceKey, metaReference);
+			String editorURL = "reference.jsp"
+					+ "?referenceKey=" + referenceKey 
+					+ "&onlyEditor=true"
+					+ "&frame=false"
+					+ "&composite=false"
+					+ "&descriptionsList=" + element.isDisplayAsDescriptionsList()
+					+ "&viewObject=" + view.getViewObject(); 
+			includeJspPage(editorURL);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+		finalizePropertyElement(element);
 	}
+	
+	/**
+	 * Paints the input controls.
+	 * @param element Element to be painted.
+	 */
+	protected void beginMetaViewActionData(ILayoutPropertyBeginElement element) {
+		initiatePropertyElement(element);
+		// No Label here.
+		processPropertyElement(element);
+		getRequest().setAttribute(element.getPropertyKey(), element.getMetaMember());
+		MetaViewAction metaViewAction = (MetaViewAction) element.getMetaProperty();
+		attributes.clear();
+		attributes.put("id", Ids.decorate(getRequest(), "")
+				+ ("editor_" 
+				+ element.getPropertyPrefix()
+				+ (!Is.emptyString(element.getPropertyPrefix()) ? "__" : "")
+				+ "__ACTION__" + metaViewAction.getAction()).replaceAll("\\.", "_"));
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
 
-	/**
-	 * Paints the cell left spacer.
-	 * @param element Representing cell element.
-	 */
-	protected void beginPropertySpacer(ILayoutPropertyBeginElement element, String classType) {
-		attributes.clear();
-		attributes.put(ATTR_CLASS, classType);
-		attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/spacer.gif");
-		write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
-		write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
-	}
-	
-	/**
-	 * Paints the cell label.
-	 * @param element Representing cell element.
-	 */
-	protected void beginPropertyLabel(ILayoutPropertyBeginElement element) {
-		attributes.clear();
-		if (element.getMetaProperty() == null ||
-				!element.getLabelFormat().equals(LabelFormatType.SMALL.ordinal())) {
-			attributes.put(ATTR_CLASS, getStyle().getLayoutLabel());
-		}
-		if (!element.isDisplayAsDescriptionsList()) {
-			attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
-					+ element.getName()));
-		} else {
-			attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
-					+ element.getReferenceForDescriptionsList()));
-		}
-		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
-		String label = element.getLabelFormat() != LabelFormatType.NO_LABEL.ordinal() &&
-				element.getLabel() != null ? element.getLabel() + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
-		label = label.replaceAll(" ", LayoutJspKeys.CHAR_SPACE);
-		write(label);
-		String img = "";
-		if (!element.isDisplayAsDescriptionsList()) {
-			if (element.isKey()) {
-				img = "key.gif";
-			} else if (element.isRequired()) {
-				if (element.isEditable()) { // No need to mark it as required, since the user can not change it anyway
-					img = "required.gif";
-				}
-			}
-		} else if (element.isRequired()) {
-			img = "required.gif";
-		}
+		
+		String editorURL = "editors/actionEditor.jsp"
+				+ "?propertyKey=" + element.getPropertyKey() 
+				+ "&editable=" + element.isEditable()
+				+ "&viewObject=" + element.getViewObject(); 
+		includeJspPage(editorURL);
+		
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
-		if (!Is.emptyString(img)) {
-			attributes.clear();
-			attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
-		}
-		attributes.clear();
-		attributes.put(ATTR_ID, Ids.decorate(getRequest(), "error_image_" + element.getQualifiedName()));
-		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
-			if (getErrors().memberHas(element.getMetaMember())) {
-				attributes.clear();
-				attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/error.gif");
-				write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
-				write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
-			}
-		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
+		finalizePropertyElement(element);
 	}
 	
 	/**
@@ -480,9 +410,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @param element Element to be painted.
 	 */
 	protected void beginPropertyData(ILayoutPropertyBeginElement element) {
-
-		attributes.clear();
-		attributes.put(ATTR_CLASS, getStyle().getLayoutData());
+		initiatePropertyElement(element);
+		beginPropertyLabel(element);
+		processPropertyElement(element);
 		attributes.put(ATTR_ID, Ids.decorate(getRequest(), "editor_"
 				+ element.getPropertyPrefix() + element.getName()));
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
@@ -514,6 +444,206 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 
 		beginPropertyDataAddPropertyActions(element);
+		
+		finalizePropertyElement(element);
+	}
+	
+	/**
+	 * Initiates a property element.
+	 * @param element Current property element.
+	 */
+	private void initiatePropertyElement(ILayoutPropertyBeginElement element) {
+		Integer width =  getMaxColumnsOnView() > 0 ? 50 / getMaxColumnsOnView() : 0;
+		width = 0;
+		if (!firstCellPainted) {
+			attributes.clear();
+			attributes.put(ATTR_CLASS, getStyle().getLabel() + " " + getStyle().getLayoutLabelCell());
+			StringBuffer style = new StringBuffer("");
+			if (width > 0) {
+				style.append("width:" + width.toString() + "%;");
+			}
+			style.append("white-space:nowrap;");
+			attributes.put(ATTR_STYLE, style.toString());
+			attributes.put("valign", "center");
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+		}
+		if (isSmallLabel(element)) {
+			attributes.clear();
+			attributes.put(ATTR_STYLE, "margin-left:" + getStyle().getPropertyLeftMargin() + "px");
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
+			attributes.clear();
+			attributes.put(ATTR_STYLE, "text-align:left");
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+			smallLabelPainted = true;
+		}
+	}
+	
+	/**
+	 * Process a property element.
+	 * @param element Element.
+	 */
+	private void processPropertyElement(ILayoutPropertyBeginElement element) {
+		// Data. There is no end TD tag this one is closed by the end column method.
+		if (!firstCellPainted) {
+			if (!smallLabelPainted) {
+				closeFirstPropertyElement(element);
+			}
+		}
+	}
+	
+	/**
+	 * Ends wrapping a property element.
+	 * @param element Current property element.
+	 */
+	private void finalizePropertyElement(ILayoutPropertyBeginElement element) {
+		if (!firstCellPainted) {
+			closeSmallLabel();
+			closeFirstPropertyElement(element);
+		}
+		// Mark first cell painted
+		firstCellPainted = true;
+	}
+	
+	/**
+	 * Closes just the first property element.
+	 * @param element Element to close.
+	 */
+	private void closeFirstPropertyElement(ILayoutPropertyBeginElement element) {
+		Integer width =  getMaxColumnsOnView() > 0 ? 50 / getMaxColumnsOnView() : 0;
+		width = 0;
+
+		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+
+		attributes.clear();
+		attributes.put(ATTR_CLASS, getStyle().getLayoutDataCell());
+		StringBuffer style = new StringBuffer("");
+		if (width > 0) {
+			style.append("width:" + width.toString() + "%");
+		}
+		if (style.length() > 0) {
+			attributes.put(ATTR_STYLE, style.toString());
+		}
+		attributes.put("valign", "center");
+		startTd();
+	}
+	
+	/**
+	 * Closes any small label.
+	 */
+	private void closeSmallLabel() {
+		if (smallLabelPainted) {
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
+			smallLabelPainted = false;
+		}
+	}
+	
+	/**
+	 * Paints the cell label.
+	 * @param element Representing cell element.
+	 */
+	protected void beginPropertyLabel(ILayoutPropertyBeginElement element) {
+		if (isLabelShown(element)) {
+			if (!smallLabelPainted) {
+				// Left spacer
+				beginPropertySpacer(element);
+			}
+
+			attributes.clear();
+			if (element.getMetaProperty() == null ||
+					element.getLabelFormat() != LabelFormatType.SMALL.ordinal()) {
+				attributes.put(ATTR_CLASS, getStyle().getLabel() + " " + getStyle().getLayoutLabelCell());
+			} else if (smallLabelPainted) {
+				attributes.put(ATTR_CLASS, getStyle().getSmallLabel() + " " + getStyle().getLayoutLabelCell());
+			}
+			if (!element.isDisplayAsDescriptionsList()) {
+				attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
+						+ element.getName()));
+			} else {
+				attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
+						+ element.getReferenceForDescriptionsList()));
+			}
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
+			String label = element.getLabelFormat() != LabelFormatType.NO_LABEL.ordinal() &&
+					element.getLabel() != null ? element.getLabel() + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
+			label = label.replaceAll(" ", LayoutJspKeys.CHAR_SPACE);
+			write(label);
+			String img = "";
+			if (!element.isDisplayAsDescriptionsList()) {
+				if (element.isKey()) {
+					img = "key.gif";
+				} else if (element.isRequired()) {
+					if (element.isEditable()) { // No need to mark it as required, since the user can not change it anyway
+						img = "required.gif";
+					}
+				}
+			} else if (element.isRequired()) {
+				img = "required.gif";
+			}
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
+			if (!Is.emptyString(img)) {
+				attributes.clear();
+				attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
+				write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
+			}
+			attributes.clear();
+			attributes.put(ATTR_ID, Ids.decorate(getRequest(), "error_image_" + element.getQualifiedName()));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
+				if (getErrors().memberHas(element.getMetaMember())) {
+					attributes.clear();
+					attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/error.gif");
+					write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
+					write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
+				}
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
+
+			if (smallLabelPainted) {
+				write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+				write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
+				attributes.clear();
+				attributes.put(ATTR_STYLE, "text-align:left");
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+			} else {
+				// Left spacer
+				beginPropertySpacer(element);
+			}
+		}
+	}
+	
+	/**
+	 * Checks if the label is going to be shown or not.
+	 * @param element Element containing the label.
+	 * @return True if the label can be shown false otherwise.
+	 */
+	private boolean isLabelShown(ILayoutPropertyBeginElement element) {
+		boolean returnValue = false;
+		if (getContainer().getShowColumnLabel(getColumn().getColumnIndex())) {
+			if (element.getLabelFormat() != LabelFormatType.NO_LABEL.ordinal()) {
+				if (!element.isMetaViewAction()) {
+					returnValue = true;
+				}
+			}
+		}
+		return returnValue;
+	}
+	
+	/**
+	 * Calculates if the label is small.
+	 * @param element Current element containing the label.
+	 * @return True if the element has a small label.
+	 */
+	private boolean isSmallLabel(ILayoutPropertyBeginElement element) {
+		boolean returnValue = false;
+		if (isLabelShown(element)) {
+			if (element.getLabelFormat() == LabelFormatType.SMALL.ordinal()) {
+				returnValue = true;
+			}
+		}
+		return returnValue;
 	}
 	
 	/**
@@ -542,6 +672,38 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		beginPropertyDataAddActions(element, isSearch, isCreateNew, isModify);
 	}
 	
+	
+	/**
+	 * Starts a TD properly (with column span if needed).
+	 */
+	private void startTd() {
+		if (getRow().getMaxRowColumnsCount() == getRow().getRowCurrentColumnsCount() &&
+				!blockStarted) { // last column
+			Integer columnSpan = getMaxColumnsOnView() - getRow().getRowCurrentColumnsCount();
+			if (columnSpan > 0) {
+				columnSpan = calculateTdSpan(columnSpan);
+				columnSpan = columnSpan + 1;
+				//attributes.put(ATTR_COLSPAN, columnSpan.toString());
+				getRow().setRowCurrentColumnsCount(getMaxColumnsOnView()); // No td to add.
+			}
+		}
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+	}
+
+	/**
+	 * Paints the cell left spacer.
+	 * @param element Representing cell element.
+	 */
+	protected void beginPropertySpacer(ILayoutPropertyBeginElement element) {
+		attributes.clear();
+		attributes.put(ATTR_STYLE, "width:" + getStyle().getPropertyLeftMargin() + "px");
+		attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/spacer.gif");
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
+		write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
+	}
+	
+
+
 	@SuppressWarnings("rawtypes")
 	/**
 	 * Paints the action for editable properties according to the state of search, createNew and modify.
@@ -623,54 +785,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 		
 	}
-	/**
-	 * Display element as description list.
-	 * @param element Element to be displayed.
-	 */
-	private void beginReferenceData(ILayoutPropertyBeginElement element) {
-		ModuleContext context = (ModuleContext) getPageContext().getSession().getAttribute("context");
-		View view = (View)context.get(getRequest(), element.getViewObject());
-		try {
-			MetaReference metaReference = view.getMetaReference(element.getReferenceForDescriptionsList());
-			String referenceKey = Ids.decorate(getRequest(), element.getPropertyKey());
-			getRequest().setAttribute(referenceKey, metaReference);
-			String editorURL = "reference.jsp"
-					+ "?referenceKey=" + referenceKey 
-					+ "&onlyEditor=true"
-					+ "&frame=false"
-					+ "&composite=false"
-					+ "&descriptionsList=" + element.isDisplayAsDescriptionsList()
-					+ "&viewObject=" + view.getViewObject(); 
-			includeJspPage(editorURL);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	/**
-	 * Paints the input controls.
-	 * @param element Element to be painted.
-	 */
-	protected void beginMetaViewActionData(ILayoutPropertyBeginElement element) {
-		getRequest().setAttribute(element.getPropertyKey(), element.getMetaMember());
-		MetaViewAction metaViewAction = (MetaViewAction) element.getMetaProperty();
-		attributes.clear();
-		attributes.put("id", Ids.decorate(getRequest(), "")
-				+ ("editor_" 
-				+ element.getPropertyPrefix()
-				+ (!Is.emptyString(element.getPropertyPrefix()) ? "__" : "")
-				+ "__ACTION__" + metaViewAction.getAction()).replaceAll("\\.", "_"));
-		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
 
-		
-		String editorURL = "editors/actionEditor.jsp"
-				+ "?propertyKey=" + element.getPropertyKey() 
-				+ "&editable=" + element.isEditable()
-				+ "&viewObject=" + element.getViewObject(); 
-		includeJspPage(editorURL);
-		
-		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
-	}
 	
 	/**
 	 * In this implementation nothing is done at cell end.

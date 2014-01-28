@@ -85,7 +85,7 @@ public class WebSpherePortalStyle extends PortalStyle {
 		return "wpsTable";
 	}	
 	
-	protected String getFrame() { 
+	public String getFrame() { 
 		return "";
 	}
 	
