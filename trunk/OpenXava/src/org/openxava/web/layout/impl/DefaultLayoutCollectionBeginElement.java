@@ -20,7 +20,8 @@ public class DefaultLayoutCollectionBeginElement extends LayoutBaseElement
 	private boolean hasFrame;
 	private MetaCollection metaCollection;
 	private String label;
-	
+	private boolean first;
+
 	public DefaultLayoutCollectionBeginElement(View view, int groupLevel) {
 		super(view, groupLevel);
 		setLabel("");
@@ -78,4 +79,17 @@ public class DefaultLayoutCollectionBeginElement extends LayoutBaseElement
 				+ ", groupLevel=" + getGroupLevel() + "]";
 	}
 
+	/**
+	 * @see org.openxava.web.layout.ILayoutCollectionBeginElement#isFirst()
+	 */
+	public boolean isFirst() {
+		return first;
+	}
+
+	/**
+	 * @see org.openxava.web.layout.ILayoutCollectionBeginElement#setFirst(boolean)
+	 */
+	public void setFirst(boolean first) {
+		this.first = first;
+	}
 }

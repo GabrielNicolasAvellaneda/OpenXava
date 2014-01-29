@@ -805,9 +805,26 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				propertyPrefix + element.getMetaCollection().getName() + ".";
 		String collectionId = Ids.decorate(getRequest(), "collection_" + collectionPrefix);
 		attributes.clear();
+		boolean multipleElements = false;
+		if (getRow().getMaxFramesCount() > 1) {
+			multipleElements = true;
+			Float percent = 100f / getRow().getMaxFramesCount();
+			StringBuffer style = new StringBuffer("");
+			if (element.isFirst()) {
+				style.append("float:left; margin:0px;");
+			} else {
+				style.append("float:right; margin-left:" + getStyle().getPropertyLeftMargin() + "px;");
+			}
+			style.append("overflow: auto; display: block; border: 1px solid black; width: ")
+					.append(percent.intValue() - 1)
+					.append('%');
+			attributes.put(ATTR_STYLE, style.toString());
+		} else {
+			attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
+		}
 		startTd();
 		if (element.hasFrame()) {
-			write(getStyle().getFrameHeaderStartDecoration(0));
+			write(getStyle().getFrameHeaderStartDecoration(multipleElements ? 0: 100));
 			write(getStyle().getFrameTitleStartDecoration());
 			write(element.getLabel());
 			String frameId = Ids.decorate(getRequest(), "frame_" + element.getView().getPropertyPrefix() + element.getMetaCollection().getName());
@@ -841,7 +858,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (element.hasFrame()) {
 			write(getStyle().getFrameContentEndDecoration());
 		}
-		write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 	}
 
 	/**

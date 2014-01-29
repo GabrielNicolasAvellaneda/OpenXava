@@ -53,20 +53,66 @@
 </tr>
 <tr>
 	<td>storeElementWidth</td>
-	<td>css=body</td>
+	<td>css=.portlet-content</td>
 	<td>width</td>
 </tr>
 <tr>
+	<td>storeElementPositionLeft</td>
+	<td>css=.portlet-content</td>
+	<td>left</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${width} + ${left}</td>
+	<td>viewSize</td>
+</tr>
+<tr>
+	<td>storeElementPositionLeft</td>
+	<td>xpath=id('ox_OpenXavaTest_CarrierWithCollectionsTogether__view')/table/tbody/tr[3]/td/table/tbody/tr/td[2]/table</td>
+	<td>left</td>
+</tr>
+<tr>
 	<td>storeElementWidth</td>
-	<td>css=#ox_OpenXavaTest_CarrierWithCollectionsTogether__view table</td>
-	<td>viewWidth</td>
+	<td>xpath=id('ox_OpenXavaTest_CarrierWithCollectionsTogether__view')/table/tbody/tr[3]/td/table/tbody/tr/td[2]/table</td>
+	<td>width</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${width} + ${left}</td>
+	<td>collectionSize</td>
+</tr>
+<tr>
+	<td>storeElementPositionTop</td>
+	<td>xpath=id('ox_OpenXavaTest_CarrierWithCollectionsTogether__view')/table/tbody/tr[3]/td/table/tbody/tr/td[1]/table</td>
+	<td>firstTop</td>
+</tr>
+<tr>
+	<td>storeElementPositionTop</td>
+	<td>xpath=id('ox_OpenXavaTest_CarrierWithCollectionsTogether__view')/table/tbody/tr[3]/td/table/tbody/tr/td[2]/table</td>
+	<td>secondTop</td>
 </tr>
 <tr>
 	<td>assertEval</td>
-	<td>${viewWidth} &lt;= ${width}</td>
+	<td>${firstTop}==${secondTop}</td>
 	<td>true</td>
 </tr>
-
+<!--******************-->
+<!--THIS SEGMENT-->
+<!--WILL ALWAYS FAIL!!!-->
+<!--Because collection table is at full length,-->
+<!--but visually cropped-->
+<!--within the container-->
+<tr>
+	<td>echo</td>
+	<td>This test will ALWAYS fail, since the table has a bigger value. Manual visual must be performed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyEval</td>
+	<td>${collectionSize} &lt;= ${viewSize}</td>
+	<td>true</td>
+</tr>
+<!--******************-->
 </tbody></table>
 </body>
 </html>

@@ -861,6 +861,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 		if (currentRow != null) {
 			int framesCount = currentRow.getMaxFramesCount() + 1;
 			currentRow.setMaxFramesCount(framesCount);
+			returnValue.setFirst(framesCount == 1);
 		}
 		return returnValue;
 	}
