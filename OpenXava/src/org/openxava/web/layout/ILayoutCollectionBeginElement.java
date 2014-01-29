@@ -45,4 +45,16 @@ public interface ILayoutCollectionBeginElement extends ILayoutElement {
 	 * @param label Sets the collection label.
 	 */
 	void setLabel(String label);
+	
+	/**
+	 * Indicates if the collection is the first collection in its row.
+	 * @return True if it is the first collection to be shown.
+	 */
+	boolean isFirst();
+	
+	/**
+	 * Sets the state of the collection as first in its row.
+	 * @param state State to set.
+	 */
+	void setFirst(boolean state);
 }
