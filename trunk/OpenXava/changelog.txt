@@ -1,7 +1,13 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Bug #350, #356, #359, #373 of new renderer.
+- Fix: Two collections in the same row are not well displayed with the new renderer.
+- Fix: @LabelFormat(LabelFormatType.SMALL) is not working under the new renderer engine.
+- Fix: CSS ox-label class ignored by the new renderer.
+- Fix: Frames in the same row with the new renderer are too close or even overlapped.
+- Fix: New renderer fails with a section with two references. 
+- Fix: Mark for required field is not shown with the new renderer.
+
 - Fix: Opening a dialog resizes the list and collections.
 - Fix: In PDF reports the space for headers sometimes is two lines where there is only a line of text.
 - Fix: In PDF reports the more left column sometimes is out of the report, in the margin.
