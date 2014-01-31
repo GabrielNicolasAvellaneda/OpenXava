@@ -7,7 +7,6 @@ Change Log for OpenXava project
 - Fix: Frames in the same row with the new renderer are too close or even overlapped.
 - Fix: New renderer fails with a section with two references. 
 - Fix: Mark for required field is not shown with the new renderer.
-
 - Fix: Opening a dialog resizes the list and collections.
 - Fix: In PDF reports the space for headers sometimes is two lines where there is only a line of text.
 - Fix: In PDF reports the more left column sometimes is out of the report, in the margin.
