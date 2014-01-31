@@ -6,9 +6,13 @@ Put here your own style
 	font-weight: bold;
 	color: #FF0000;
 }
-.ox-frame-sibling {
+
+/* tmp
+.ox-frame-sibling {  
 	padding-left: 4px;
 }
+*/
+
 /* 
 body {
 	font-size: 9px;

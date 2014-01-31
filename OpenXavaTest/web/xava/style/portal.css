@@ -405,6 +405,11 @@ TD.list-title {
 	font-weight: bold;
 }
 
+.ox-frame-sibling {     
+	padding-left: 4px;
+}
+
+
 .ui-dialog { 
 	width: auto; 
 }

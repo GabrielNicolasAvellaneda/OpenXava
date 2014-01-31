@@ -397,6 +397,13 @@ TD.list-title {
 .ox-frame-totals {
 	float: right; 
 }
+
+/* tmp */
+.ox-frame-sibling {     
+	padding-left: 4px;
+}
+
+
 .ox-frame-totals-label {
 	font-weight: normal;
 }
