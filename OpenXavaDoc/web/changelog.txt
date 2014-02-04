@@ -1,10 +1,30 @@
 Change Log for OpenXava project
 ===============================
 
-OpenXava 4.9 (2013-12-9)
-------------------------
+OpenXava 4.9.1 (2014-2-3)
+-------------------------
+- Fix: Opening a dialog resizes the list and collections.
+- Fix: In PDF reports the space for headers sometimes is two lines where there is only a line of text.
+- Fix: In PDF reports the more left column sometimes is out of the report, in the margin.
+- Fix: Calendar is not shown when entering dates in 'My reports'. 
+- Fix: ModuleTestBase.assertDescriptionValue() does not work for enums.
+- Fix: It's possible to add blank colums in 'My reports'.
+- Fix: true is shown always for boolean columns in 'My reports'.
+- Fix: Populating initial values in 'My reports' fails for booleans, descriptions lists and enums.
+- Fix: When overwriting associateEntity() in SaveElementInCollectionAction we lose the validate minimum functionality.
+- Fix: Minimum for collections declared with @Size(min=) is not validated on remove elements.
+- Fix: Adding elements to a collection with no cascade REMOVE or ALL does not validate maximum (@Size(max=)).
+- Fix: Two collections in the same row are not well displayed with the new renderer.
+- Fix: @LabelFormat(LabelFormatType.SMALL) is not working under the new renderer engine.
+- Fix: CSS ox-label class ignored by the new renderer.
+- Fix: Several frames in the same row with the new renderer are too close or even overlapped.
+- Fix: The new renderer fails with a section with two references. 
+- Fix: Mark for required field is not shown with the new renderer. 
+
+OpenXava 4.9 (2013-12-11)
+-------------------------
 - Combos and textfields in list filtering adapt their widths to the column and they are always completely visible.
-- 'In group' and not 'in group' (the 'in' of SQL) allowed to filter in list, collections and 'My reports'. 
+- 'in group' and 'not in group' (the 'in' of SQL) allowed to filter in list, collections and 'My reports'. 
 - Link to hide filter is in the filter row itself.
 - Links to show and hide the filter are only visible in customization mode.
 - New icons for customizing list and collections.
@@ -30,7 +50,7 @@ OpenXava 4.9 (2013-12-9)
 - Subcontrollers are not shown when they have no action.
 - Style of subcontrollers improved.
 - Subcontrollers behavior improved: now they are closed on clicking again on the button or outside the popup menu. 
-- Code for buttonBar.jsp and subButton.jsp downgraded to code 1.4.
+- Code for buttonBar.jsp and subButton.jsp downgraded to Java 1.4.
 - New TypicalNewOnInit controller that starts the module in detail mode ready to create a new entity.
 - New methods addDays(), lastOfYear(), lastOfMonth() and firstOfMonth() added to Dates.
 - Fix: Methods setYear(), setMonth() and setDay() of Dates do not work.
