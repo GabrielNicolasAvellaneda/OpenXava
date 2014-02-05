@@ -1,12 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Two collections in the same row are not well displayed with the new renderer.
-- Fix: @LabelFormat(LabelFormatType.SMALL) is not working under the new renderer engine.
-- Fix: CSS ox-label class ignored by the new renderer.
-- Fix: Frames in the same row with the new renderer are too close or even overlapped.
-- Fix: New renderer fails with a section with two references. 
-- Fix: Mark for required field is not shown with the new renderer.
+OpenXava 4.9.1 (2014-2-3)
+-------------------------
 - Fix: Opening a dialog resizes the list and collections.
 - Fix: In PDF reports the space for headers sometimes is two lines where there is only a line of text.
 - Fix: In PDF reports the more left column sometimes is out of the report, in the margin.
@@ -16,8 +12,14 @@ Change Log for OpenXava project
 - Fix: true is shown always for boolean columns in 'My reports'.
 - Fix: Populating initial values in 'My reports' fails for booleans, descriptions lists and enums.
 - Fix: When overwriting associateEntity() in SaveElementInCollectionAction we lose the validate minimum functionality.
-- Fix: Minimum for collections declared with @Size(min=) is not validated on remove element.
-- Fix: Adding elements to a collection with no cascade REMOVE or ALL does not validate maximum (@Size(max=)). 
+- Fix: Minimum for collections declared with @Size(min=) is not validated on remove elements.
+- Fix: Adding elements to a collection with no cascade REMOVE or ALL does not validate maximum (@Size(max=)).
+- Fix: Two collections in the same row are not well displayed with the new renderer.
+- Fix: @LabelFormat(LabelFormatType.SMALL) is not working under the new renderer engine.
+- Fix: CSS ox-label class ignored by the new renderer.
+- Fix: Several frames in the same row with the new renderer are too close or even overlapped.
+- Fix: The new renderer fails with a section with two references. 
+- Fix: Mark for required field is not shown with the new renderer. 
 
 OpenXava 4.9 (2013-12-11)
 -------------------------

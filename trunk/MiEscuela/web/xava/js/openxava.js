@@ -229,13 +229,24 @@ openxava.disableElements = function(result) {
 	$("#" + rootId).find("[id^=" + prefixId + "]").each(
 		function () {			
 			this.id = this.id + "__DISABLED__";  
-		}	
+		}
 	);
 	$("#" + rootId).find("[name^=" + prefixId + "]").each(
 		function () {			
 			this.name = this.name + "__DISABLED__"; 
 		}	
-	);		
+	);	
+	openxava.disableScrolls(result, rootId, "list"); // Solves bug 395													 
+	openxava.disableScrolls(result, rootId, "collection"); 
+}
+
+openxava.disableScrolls = function(result, rootId, type) { 
+	var scrollClass = openxava.decorateId(result.application, result.module, type + "_scroll");	
+	$("#" + rootId).find("[class=" + scrollClass + "]").each(
+		function () {			
+			this.className = this.className + "__DISABLED__"; 
+		}	
+	);	
 }
 
 openxava.closeDialog = function(result) {
@@ -253,16 +264,6 @@ openxava.onCloseDialog = function(event) {
 		openxava.executeAction(application, module, false, false, "Dialog.cancel");
 		return;
 	}	
-	$("[id$=__DISABLED__]", dialog).each(
-		function () {
-			this.id = this.id.substring(0, this.id.length - 12);
-		}	
-	);
-	$("[name$=__DISABLED__]", dialog).each(
-		function () {
-			this.name = this.name.substring(0, this.name.length - 12);
-		}	
-	);
 	openxava.clearLists(); 
 	dialog.empty();
 }
@@ -299,7 +300,7 @@ openxava.initLists = function(application, module) {
 	openxava.setListsSize(application, module, "collection", openxava.collectionWidthRatio);	
 }
 
-openxava.setListsSize = function(application, module, type, percentage) {
+openxava.setListsSize = function(application, module, type, percentage) {	
 	var buttonBar = $('#' + openxava.decorateId(application, module, "bottom_buttons"));
 	var scrollId = '.' + openxava.decorateId(application, module, type + "_scroll");
 	$(scrollId).width(50); 	  
@@ -307,7 +308,7 @@ openxava.setListsSize = function(application, module, type, percentage) {
 	$(window).resize(function() {
 		$(scrollId).width(50); 
 		$(scrollId).width(buttonBar.width() * percentage);
-	});		
+	});			
 }
 
 openxava.addEditorDestroyFunction = function(destroyFunction) { 
