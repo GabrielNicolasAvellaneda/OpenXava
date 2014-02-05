@@ -26,7 +26,7 @@ if (validValuesProperty.hasValidValues()) {
 			value = ((Integer) org.openxava.util.Objects.execute(ovalue, "ordinal")).intValue();
 		}
 	}
-	int labelIndex = p.isNumber() && p != validValuesProperty?value - 1:value;
+	int labelIndex = p != validValuesProperty && validValuesProperty.getMetaModel().isAnnotatedEJB3()?value - 1:value; 
 	description = labelIndex == -1?"":validValuesProperty.getValidValueLabel(request, labelIndex);
 }
 %>

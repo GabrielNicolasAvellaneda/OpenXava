@@ -31,8 +31,8 @@ OpenXavaTest/src/org/openxava/test/tests/PrettyPrintingTest.txt
 <%!
 private static int EXTRA_WIDTH = 15; 
 private static int MAX_CHARACTERS_PER_ROW = 122;   // If you modify these
-private static int WIDE_CHARACTERS_PER_ROW = 107;  // values please verify 
-private static int MEDIUM_CHARACTERS_PER_ROW = 63; // if the tests in PrettyPrintingTest 
+private static int WIDE_CHARACTERS_PER_ROW = 104; // values please verify
+private static int MEDIUM_CHARACTERS_PER_ROW = 63; // if the tests in PrettyPrintingTest
 private static int NARROW_CHARACTERS_PER_ROW = 44; // pass for the 4 branch of the if below
 
 private int [] parseWidths(String widths, Integer columnCountLimit) { 
@@ -65,7 +65,7 @@ private int calculateRowsInHeader(List metaProperties, int [] widths, Locale loc
 	for (Iterator it = metaProperties.iterator(); it.hasNext(); i++) {
 		MetaProperty p = (MetaProperty) it.next();
 		String label = p.getQualifiedLabel(locale); 
-		int rows = (label.length() - 1) / (int) (widths[i] * 1.53) + 1;
+		int rows = (label.length() - 1) / (int) (widths[i] * 1.58) + 1; 
 		rowsInHeader = Math.max(rowsInHeader, rows);	
 	}
 	return rowsInHeader;
@@ -157,7 +157,7 @@ int pageHeight;
 int columnWidth;
 String orientation = null;
 
-if (totalWidth > WIDE_CHARACTERS_PER_ROW) { 
+if (totalWidth > WIDE_CHARACTERS_PER_ROW) {
 	if (totalWidth > MAX_CHARACTERS_PER_ROW) tightenWidths(metaProperties, widths);
 	else expandWidths(metaProperties, widths, MAX_CHARACTERS_PER_ROW, locale); 
 	orientation="Landscape";
@@ -168,10 +168,10 @@ if (totalWidth > WIDE_CHARACTERS_PER_ROW) {
 	pageHeight=595;
 	columnWidth=780;	
 }
-else if (totalWidth > MEDIUM_CHARACTERS_PER_ROW) {  
+else if (totalWidth > MEDIUM_CHARACTERS_PER_ROW) {
 	expandWidths(metaProperties, widths, WIDE_CHARACTERS_PER_ROW, locale); 
 	orientation="Landscape";
-	letterWidth = 6;
+	letterWidth = 5;  
 	letterSize=8;
 	detailHeight = 10;
 	pageWidth=842;
@@ -181,7 +181,7 @@ else if (totalWidth > MEDIUM_CHARACTERS_PER_ROW) {
 else if (totalWidth > NARROW_CHARACTERS_PER_ROW) {
 	expandWidths(metaProperties, widths, MEDIUM_CHARACTERS_PER_ROW, locale); 
 	orientation="Portrait";
-	letterWidth = 6;
+	letterWidth = 5; 
 	letterSize=8;
 	detailHeight = 10;
 	pageWidth=595;

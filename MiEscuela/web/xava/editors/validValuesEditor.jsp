@@ -16,6 +16,7 @@ if (editable) {
 	} // while
 %>
 </select>	
+<input type="hidden" name="<%=propertyKey%>__DESCRIPTION__" value="<%=description%>"/>
 <% 
 } else { 
 	if (label) {

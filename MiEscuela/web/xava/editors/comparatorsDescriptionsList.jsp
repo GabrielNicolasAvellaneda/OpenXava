@@ -109,7 +109,7 @@ String collectionArgv = Is.emptyString(collection)?"":"collection="+collection;
 		String selected = "";
 		String description = formatter==null?cl.getDescription().toString():formatter.format(request, cl.getDescription());
 		// Intead of asking index < 0 it would better to use a specific parameter such as descriptionInKey or so
-		Object key =index < 0?cl.getKey() + "::" + description:cl.getKey();
+		Object key =cl.getKey() + Tab.DESCRIPTIONS_LIST_SEPARATOR + description;
 		if (Is.equalAsStringIgnoreCase(value, key)) {
 			selected = "selected"; 
 			selectedDescription = description;
@@ -119,4 +119,7 @@ String collectionArgv = Is.emptyString(collection)?"":"collection="+collection;
 <%
 	} // del while
 %>
-</select>	
+</select>
+<% if (index < 0) { %>
+<input type="hidden" name="<%=propertyKey%>__DESCRIPTION__" value="<%=selectedDescription%>"/>
+<% } %>
