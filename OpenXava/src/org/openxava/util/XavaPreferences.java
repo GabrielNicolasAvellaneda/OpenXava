@@ -1,12 +1,11 @@
 package org.openxava.util;
 
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.Level;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.view.meta.MetaPropertyView;
+import org.apache.commons.logging.*;
+import org.openxava.view.meta.*;
 
 /**
  * @author Javier Paniza
@@ -119,6 +118,11 @@ public class XavaPreferences {
 	public String getReportParametersProviderClass() {
 		return getProperties().getProperty("reportParametersProviderClass",
 				"org.openxava.util.DefaultReportParametersProvider").trim();
+	}
+	
+	public String getReportsProviderClass(){
+		return getProperties().getProperty("reportsProviderClass",
+				"org.openxava.util.DefaultReportsProvider").trim();
 	}
 	
 	public String getPersistenceProviderClass() {

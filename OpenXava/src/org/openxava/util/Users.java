@@ -2,7 +2,7 @@ package org.openxava.util;
 
 import java.util.prefs.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.util.impl.*;
@@ -14,11 +14,11 @@ import org.openxava.util.impl.*;
  */
 
 public class Users {
-	
 	private static Log log = LogFactory.getLog(Users.class);
 	final private static ThreadLocal current = new ThreadLocal(); 
 	final private static ThreadLocal currentUserInfo = new ThreadLocal();
-		
+	public final static String ADMIN_OX = "__ADMINOX__";
+	
 	/**
 	 * The user name associated to the current thread. <p>
 	 * 
@@ -52,6 +52,16 @@ public class Users {
 	 */
 	public static Preferences getCurrentPreferences() throws BackingStoreException {
 		return UserPreferences.getForUser(getCurrent());
+	}
+	
+	/**
+	 * Preferences of the admin user. <p>
+	 * 
+	 * @return  The preferences object associated to the admin user.
+	 * @throws BackingStoreException  Some problem on load preferences.
+	 */
+	public static Preferences getAdminPreferences() throws BackingStoreException {
+		return UserPreferences.getForUser(ADMIN_OX);
 	}
 	
 	/**
