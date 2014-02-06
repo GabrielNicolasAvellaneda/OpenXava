@@ -2,8 +2,8 @@ package org.openxava.test.tests;
 
 import java.util.*;
 
-import org.openxava.tests.ModuleTestBase;
-import org.openxava.util.Is;
+import org.openxava.tests.*;
+import org.openxava.util.*;
 
 /**
  * Create on 07/04/2008 (12:16:03)
@@ -434,7 +434,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
 		assertNoAction("MyReport.createNew");
-		assertAction("MyReport.remove");
+		assertNoAction("MyReport.remove");
 		setValue("name", "Carrier report NUMBER first");
 		execute("MyReport.columnUp", "row=1,viewObject=xava_view_columns");
 		assertValueInCollection("columns", 0, 0, "Number");

@@ -1,3 +1,4 @@
+<%@page import="org.openxava.util.ReportsProviderFactory"%>
 <%@ include file="imports.jsp"%>
 
 <%@ page import="org.openxava.controller.meta.MetaAction" %>

@@ -40,10 +40,10 @@ public class InvoiceTest extends ModuleTestBase {
 	public void testSubcontrollerWithoutActionsInMode() throws Exception {
 		// subcontroller: InvoicePrint -> all actions are in mode list
 		assertNoAction("InvoicePrint.printPdf");
-		assertFalse(getHtml().contains("<span id=\"ox_OpenXavaTest_Invoice__sc-container-InvoicePrint\">"));
+		assertFalse(getHtml().contains("<span id=\"ox_OpenXavaTest_Invoice__sc-container-InvoicePrint_detail\">"));
 		
 		execute("Mode.detailAndFirst");
-		assertTrue(getHtml().contains("<span id=\"ox_OpenXavaTest_Invoice__sc-container-InvoicePrint\">"));
+		assertTrue(getHtml().contains("<span id=\"ox_OpenXavaTest_Invoice__sc-container-InvoicePrint_detail\">"));
 		assertAction("InvoicePrint.printPdf");
 	}
 	
@@ -2046,7 +2046,10 @@ public class InvoiceTest extends ModuleTestBase {
 		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Invoice__conditionComparator___3");
 		String s = select.getAttribute("style");
 		assertFalse(s.contains("display: none") || s.contains("display:none"));
-		clearCondition("ox_OpenXavaTest_Invoice__xava_clear_condition");
+		// clear condition
+		HtmlImage c = (HtmlImage) getForm().getElementById("ox_OpenXavaTest_Invoice__xava_clear_condition");
+		c.click();
+		// 
 		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Invoice__conditionComparator___3");
 		s = select.getAttribute("style");
 		assertFalse(s.contains("display: none") || s.contains("display:none"));
