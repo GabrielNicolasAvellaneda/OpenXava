@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Administration reports
+- Fix: assertListRowCount method from ModuleTestBase fails when the value of summationInList property is false
+- Fix: Subcontrollers fails in split mode  
+
+
 OpenXava 4.9.1 (2014-2-3)
 -------------------------
 - Fix: Opening a dialog resizes the list and collections.
