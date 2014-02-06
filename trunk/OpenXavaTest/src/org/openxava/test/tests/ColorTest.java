@@ -21,6 +21,100 @@ public class ColorTest extends ModuleTestBase {
 		super(testName, "Color");		
 	}
 	
+	public void testAdminReport() throws Exception{
+		// adminReports action only displayed in color module (AdminReportsProvider)
+		changeModule("Invoice");
+		assertNoAction("ExtendedPrint.adminReports");
+		changeModule("Color");
+		assertAction("ExtendedPrint.adminReports");
+		
+		// we need that there is not any report
+		execute("ExtendedPrint.myReports");
+		assertDialogTitle("My reports");
+		assertEditable("name");
+		assertNoAction("MyReport.createNew");
+		execute("MyReport.cancel");
+		
+		execute("ExtendedPrint.adminReports");
+		assertDialogTitle("Administrator report");
+		assertEditable("name");
+		assertNoAction("MyReport.createNew");
+		
+		// create a new administrator report 
+		setValue("name", "This is an admin report");
+		checkRowCollection("columns", 2);
+		checkRowCollection("columns", 3);
+		checkRowCollection("columns", 4);
+		checkRowCollection("columns", 5);
+		execute("MyReport.removeColumn", "viewObject=xava_view_columns");
+		assertCollectionRowCount("columns", 2);
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
+		setValue("value", "rojo");
+		execute("MyReport.saveColumn");
+		assertDialogTitle("Administrator report");
+		execute("MyReport.generatePdf");
+		assertNoDialog();
+		assertNoErrors();
+		//
+		execute("ExtendedPrint.myReports");
+		assertAction("MyReport.createNew");
+		assertNoAction("MyReport.remove");
+		assertValue("name", "This is an admin report__ADMIN_REPORT__");
+		
+		// create a new my report
+		execute("MyReport.createNew", "xava.keyProperty=name");
+		setValue("name", "This is my report");
+		checkRowCollection("columns", 3);
+		checkRowCollection("columns", 4);
+		checkRowCollection("columns", 5);
+		execute("MyReport.removeColumn", "viewObject=xava_view_columns");
+		assertCollectionRowCount("columns", 3);
+		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
+		setValue("value", "negro");
+		execute("MyReport.saveColumn");
+		assertDialogTitle("My reports");
+		execute("MyReport.generatePdf");
+		assertNoDialog();
+		assertNoErrors();
+		//
+		execute("ExtendedPrint.adminReports");
+		assertValue("name", "This is an admin report__ADMIN_REPORT__");
+		assertAction("MyReport.remove");
+		assertValidValuesCount("name", 1);
+		execute("MyReport.cancel");
+		//
+		execute("ExtendedPrint.myReports");
+		assertValue("name", "This is my report");
+		assertValidValuesCount("name", 2);
+		assertCollectionRowCount("columns", 3);
+		assertAction("MyReport.remove");
+		setValue("name", "This is an admin report__ADMIN_REPORT__");
+		assertCollectionRowCount("columns", 2);
+		assertNoAction("MyReport.remove");
+		
+		// 'normal' user do not modify administration report
+		execute("MyReport.removeColumn", "row=0,viewObject=xava_view_columns");
+		assertCollectionRowCount("columns", 1);
+		execute("MyReport.generatePdf");
+		assertNoDialog();
+		assertNoErrors();
+		assertWarningsCount(1);
+		execute("ExtendedPrint.myReports");
+		assertValue("name", "This is an admin report__ADMIN_REPORT__");
+		assertCollectionRowCount("columns", 2);
+		
+		// delete both reports
+		setValue("name", "This is my report");
+		execute("MyReport.remove", "xava.keyProperty=name");
+		assertValidValuesCount("name", 1);
+		execute("MyReport.cancel");
+		//
+		execute("ExtendedPrint.adminReports");
+		execute("MyReport.remove", "xava.keyProperty=name");
+		assertNoAction("MyReport.createNew");
+		execute("MyReport.cancel");
+	}
+	
 	public void testSubcontrollerOnChangeControllers() throws Exception{
 		assertAction("ColorSub.firstAction");
 		execute("List.customize");
@@ -36,8 +130,8 @@ public class ColorTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertAction("ColorSub.fourAction");
 		// 
-		HtmlElement container = getHtmlPage().getDocumentElement().getElementById("ox_OpenXavaTest_Color__sc-container-ColorSub");
-		HtmlElement menu = container.getElementById("ox_OpenXavaTest_Color__sc-ColorSub");
+		HtmlElement container = getHtmlPage().getDocumentElement().getElementById("ox_OpenXavaTest_Color__sc-container-ColorSub_detail");
+		HtmlElement menu = container.getElementById("ox_OpenXavaTest_Color__sc-ColorSub_detail");
 		assertTrue("display:none;".equals(menu.getAttribute("style")));
 		assertTrue(container.asText().contains("My processes"));
 		assertTrue(container.asText().contains("First action from subcontroller"));

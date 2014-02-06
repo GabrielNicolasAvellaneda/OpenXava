@@ -169,7 +169,10 @@ public class HumanTest extends ModuleTestBase {
 		HtmlSelect select = getHtmlPage().getElementByName("ox_OpenXavaTest_Human__conditionValue___1");
 		String s = select.getAttribute("style");
 		assertFalse(s.contains("display: none") || s.contains("display:none"));  
-		clearCondition("ox_OpenXavaTest_Human__xava_clear_condition");
+		// clear condition
+		HtmlImage c = (HtmlImage) getForm().getElementById("ox_OpenXavaTest_Human__xava_clear_condition");
+		c.click();
+		// 
 		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Human__conditionValue___1");
 		s = select.getAttribute("style");
 		assertFalse(s.contains("display: none") || s.contains("display:none")); 

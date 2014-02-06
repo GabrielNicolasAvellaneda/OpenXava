@@ -17,12 +17,15 @@ org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleM
 manager.setSession(session);
 String controllerName = request.getParameter("controller");
 String image = request.getParameter("image");
-String id = Ids.decorate(request, "sc-" + controllerName);
-String containerId = Ids.decorate(request, "sc-container-" + controllerName);
-String buttonId = Ids.decorate(request, "sc-button-" + controllerName);
-String imageId = Ids.decorate(request, "sc-image-" + controllerName);
-String aId = Ids.decorate(request, "sc-a-" + controllerName);
-String spanId = Ids.decorate(request, "sc-span-" + controllerName);
+String mode = request.getParameter("xava_mode"); 
+if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
+// add the mode in the ids to fix problem on the split mode
+String id = Ids.decorate(request, "sc-" + controllerName + "_" + mode);
+String containerId = Ids.decorate(request, "sc-container-" + controllerName + "_" + mode);
+String buttonId = Ids.decorate(request, "sc-button-" + controllerName + "_" + mode);
+String imageId = Ids.decorate(request, "sc-image-" + controllerName + "_" + mode);
+String aId = Ids.decorate(request, "sc-a-" + controllerName + "_" + mode);
+String spanId = Ids.decorate(request, "sc-span-" + controllerName + "_" + mode);
 %>
 <span id='<%=containerId%>'>
 	<span id='<%=buttonId%>' class="<%=style.getButtonBarButton()%>">
@@ -48,8 +51,6 @@ String spanId = Ids.decorate(request, "sc-span-" + controllerName);
 		<%
 		MetaController controller = MetaControllers.getMetaController(controllerName);
 		Collection actions = controller.getMetaActions();
-		String mode = request.getParameter("xava_mode"); 
-		if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
 		java.util.Iterator actionsIt = actions.iterator();
 		while(actionsIt.hasNext()){
 			MetaAction action = (MetaAction)actionsIt.next();
