@@ -626,12 +626,6 @@ public class ModuleTestBase extends TestCase {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
 	}
-
-	/** @since 4.8.1 */
-	public void clearCondition(String name) throws Exception{
-		HtmlImage c = (HtmlImage) getForm().getElementById(name);
-		c.click();
-	}
 	
 	private void assertSystemError() { 
 		Object systemError = page.getElementById("xava_system_error"); 
@@ -1411,11 +1405,8 @@ public class ModuleTestBase extends TestCase {
 		if (table.getRowCount() > 2 && "nodata".equals(table.getRow(2).getId())) { 
 			return 0;
 		}						
-		int increment = 1; // The header
-		if (collectionHasFilterHeader(table)) {
-			increment++; // The filter
-			if (XavaPreferences.getInstance().isSummationInList()) increment++; // The summation row
-		}			
+		int increment = 2; // The header and the summation row
+		if (collectionHasFilterHeader(table)) increment++; // The filter
 		return table.getRowCount() - increment;
 	}
 	

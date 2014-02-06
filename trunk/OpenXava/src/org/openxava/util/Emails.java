@@ -1,23 +1,11 @@
 package org.openxava.util;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.activation.*;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 /**
  * @author Janesh Kodikara
@@ -49,7 +37,7 @@ public class Emails {
 	    }
 	}
 	
-	private final static String MESSAGE_CONTENT_TYPE = "text/html";
+	private final static String MESSAGE_CONTENT_TYPE = "text/html; charset=" + XSystem.getEncoding();
 
 
     public Emails() {

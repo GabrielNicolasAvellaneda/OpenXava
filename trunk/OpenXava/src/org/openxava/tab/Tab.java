@@ -809,7 +809,7 @@ public class Tab implements java.io.Serializable {
 	 * @deprecated use getSelectedKeys  
 	 */
 	public int [] getSelected() {
-		if (selectedKeys == null) return null;
+		if (selectedKeys == null) return new int[0];
 		try{
 			List<Integer> selected = new ArrayList<Integer>(); 
 			if (selectedKeys.size() > 0){
@@ -1688,13 +1688,7 @@ public class Tab implements java.io.Serializable {
 		
 	public Map[] getSelectedKeys(){
 		if (selectedKeys == null || selectedKeys.isEmpty()) return new Map[0];
-		Map[] a = new Map[selectedKeys.size()];
-		int i = 0;
-		for (Map sk : selectedKeys){
-			a[i] = sk;
-			i++;
-		}
-		return a;
+		return selectedKeys.toArray(new Map[selectedKeys.size()]);
 	}
 
 	/**

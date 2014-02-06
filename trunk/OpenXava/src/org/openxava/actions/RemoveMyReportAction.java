@@ -27,7 +27,8 @@ public class RemoveMyReportAction extends TabBaseAction {
 				getView().addActionForProperty("name", "MyReport.remove");
 			}
 			getView().setEditable("name", false);
-			getView().setValueNotifying("name", myReport.getLastName());
+			Boolean fromAdminReportsAction = (Boolean) getContext().get(getRequest(), "xava_fromAdminReportsAction");
+			getView().setValueNotifying("name", myReport.getLastName(fromAdminReportsAction));
 			myReport = (MyReport) getView().getModel();
 		}
 		else {
