@@ -19,5 +19,24 @@ public class IsTest extends TestCase {
 		assertTrue(!Is.empty(fraction));
 		assertTrue(Is.empty(zero));
 	}
+	
+	public void testEmptyString() {
+		assertTrue(Is.emptyString(""));
+		assertTrue(Is.emptyString(null));
+		assertFalse(Is.emptyString("a"));
+		assertTrue(Is.emptyString("", "", ""));
+		assertTrue(Is.emptyString("a", "", "b"));
+		assertTrue(Is.emptyString("a", "b", null));
+		assertFalse(Is.emptyString("a", "b", "c"));
+	}
+	
+	public void testEmptyStringAll() {		
+		assertTrue(Is.emptyStringAll("", "", ""));
+		assertTrue(Is.emptyStringAll("", "", null));
+		assertTrue(Is.emptyStringAll(null, null, null));
+		assertFalse(Is.emptyStringAll("a", "", "b"));
+		assertFalse(Is.emptyStringAll("a", "b", null));
+		assertFalse(Is.emptyStringAll("a", "b", "c"));
+	}	
 
 }

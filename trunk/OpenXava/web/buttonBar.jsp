@@ -30,7 +30,7 @@ if (manager.isButtonBarVisible()) {
 	while (it.hasNext()) {
 		MetaAction action = (MetaAction) it.next();
 		if (action.isHidden()) continue;
-		if ("adminReports".equals(action.getName()) && 
+		if ("adminReports".equals(action.getName()) &&  
 			!ReportsProviderFactory.getInstance().isCurrentUserAdminForReports(request)) 
 			continue;
 		if (action.appliesToMode(mode) && action.hasImage()) {
