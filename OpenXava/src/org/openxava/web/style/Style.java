@@ -1175,4 +1175,5 @@ public class Style {
 	public int getPropertyLeftMargin() {
 		return 8;
 	}
+	
 }

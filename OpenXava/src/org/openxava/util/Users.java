@@ -60,7 +60,7 @@ public class Users {
 	 * @return  The preferences object associated to the admin user.
 	 * @throws BackingStoreException  Some problem on load preferences.
 	 */
-	public static Preferences getAdminPreferences() throws BackingStoreException {
+	public static Preferences getAdminPreferences() throws BackingStoreException { 
 		return UserPreferences.getForUser(ADMIN_OX);
 	}
 	

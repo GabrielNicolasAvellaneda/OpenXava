@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Utility class to reduce the ifs size. <p>
  * 
- * Util to implements asserts (invaritant, preconditions, postcondition).<br>
+ * Useful for implementing asserts (invariants, preconditions, postcondition).<br>
  * 
  * For example:
  * <pre>
@@ -25,6 +25,7 @@ import java.util.*;
  * </pre>  
  *  
  * @author  Javier Paniza
+ * @author  Hayrol Reyes
  */
 
 public class Is {
@@ -34,7 +35,6 @@ public class Is {
 	/**
 	 * Verifies if the sent object is <code>null</code> or empty string 
 	 * (if it's string) or 0 (if it's number) or empty Map. <p>
-	 *   
 	 */
 	public final static boolean empty(Object object) {
 		if (object == null) return true;
@@ -44,88 +44,28 @@ public class Is {
 		if (object instanceof Map) return Maps.isEmptyOrZero((Map) object);
 		return false;
 	}
+	
+	/**
+	 * Verifies if some of the sent strings are <code>null</code> or empty string. <p>
+	 */
+	public final static boolean emptyString(String... strs) { 
+		if (strs == null) return true;
+		for (int i = 0; i < strs.length; i++) {
+		    if (strs[i] == null || strs[i].trim().equals("")) return true;
+		}
+		return false;
+	}
 
-  /**
-   * Verifies if the sent string is <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyString(String string) {
-  	return string == null || string.trim().equals("");
-  }
-  
-  /**
-   * Verifies if some of the sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyString(String string1, String string2) {
-		if (string1 == null || string1.trim().equals(""))
-		  return true;
-		if (string2 == null || string2.trim().equals(""))
-		  return true;
-		return false;
-  }
-  
-  /**
-   * Verifies if some of the sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyString(String string1, String string2, String string3) {
-		if (string1 == null || string1.trim().equals(""))
-		  return true;
-		if (string2 == null || string2.trim().equals(""))
-		  return true;
-		if (string3 == null || string3.trim().equals(""))
-		  return true;
-		return false;
-  }
-  
-  /**
-   * Verifies if some of the sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyString(String string1, String string2, String string3, String string4) {
-		if (string1 == null || string1.trim().equals(""))
-		  return true;
-		if (string2 == null || string2.trim().equals(""))
-		  return true;
-		if (string3 == null || string3.trim().equals(""))
-		  return true;
-		if (string4 == null || string4.trim().equals(""))
-		  return true;
-		return false;
-  }
-  
-  /**
-   * Verifies if some of the sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyString(String string1, String string2, String string3, String string4, String string5) {
-		if (string1 == null || string1.trim().equals(""))
-		  return true;
-		if (string2 == null || string2.trim().equals(""))
-		  return true;
-		if (string3 == null || string3.trim().equals(""))
-		  return true;
-		if (string4 == null || string4.trim().equals(""))
-		  return true;
-		if (string5 == null || string5.trim().equals(""))
-		  return true;
-		return false;
-  }
-  
-  /**
-   * Verifies if some of the sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyString(String string1, String string2, String string3, String string4, String string5, String string6) {
-		if (string1 == null || string1.trim().equals(""))
-		  return true;
-		if (string2 == null || string2.trim().equals(""))
-		  return true;
-		if (string3 == null || string3.trim().equals(""))
-		  return true;
-		if (string4 == null || string4.trim().equals(""))
-		  return true;
-		if (string5 == null || string5.trim().equals(""))
-		  return true;
-		if (string6 == null || string6.trim().equals(""))
-		  return true;
-		return false;
-  }
+	/**
+	 * Verifies if all sent strings are <code>null</code> or empty string. <p>
+	 */
+	public final static boolean emptyStringAll(String... strs) { 
+		if (strs == null) return true;
+		for (int i = 0; i < strs.length; i++) {
+		    if (strs[i] != null && !strs[i].trim().equals("")) return false;
+		}
+		return true;
+	}  
   
 	/**
 	 * If <code>a</code> is equals to <code>b</code>. <p>
@@ -209,55 +149,5 @@ public class Is {
 		String sb = b == null?"":b.toString().trim();
 		return sa.equalsIgnoreCase(sb);
 	}
-
-  /**
-   * Verifies if all sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyStringAll(String string1, String string2) {
-		return (string1 == null || string1.trim().equals(""))
-		    && (string2 == null || string2.trim().equals(""));
-  }
-  
-  /**
-   * Verifies if all sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyStringAll(String string1, String string2, String string3) {
-		return (string1 == null || string1.trim().equals(""))
-		    && (string2 == null || string2.trim().equals(""))
-   	    && (string3 == null || string3.trim().equals(""));
-  }
-  
-  /**
-   * Verifies if all sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyStringAll(String string1, String string2, String string3, String string4) {
-		return (string1 == null || string1.trim().equals(""))
-		    && (string2 == null || string2.trim().equals(""))
-   	    && (string3 == null || string3.trim().equals(""))
-   	    && (string4 == null || string4.trim().equals(""));   	    
-  }
-  
-  /**
-   * Verifies if all sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyStringAll(String string1, String string2, String string3, String string4, String string5) {
-		return (string1 == null || string1.trim().equals(""))
-		    && (string2 == null || string2.trim().equals(""))
-	      && (string3 == null || string3.trim().equals(""))
-   	    && (string4 == null || string4.trim().equals(""))
-   	    && (string5 == null || string5.trim().equals(""));   	       	    
-  }
-  
-  /**
-   * Verifies if all sent strings are <code>null</code> or empty string. <p>
-   */
-  public final static boolean emptyStringAll(String string1, String string2, String string3, String string4, String string5, String string6) {
-		return (string1 == null || string1.trim().equals(""))
-		    && (string2 == null || string2.trim().equals(""))
-   	    && (string3 == null || string3.trim().equals(""))
-   	    && (string4 == null || string4.trim().equals(""))
-   	    && (string5 == null || string5.trim().equals(""))
-   	    && (string6 == null || string6.trim().equals(""));   	       	       	    
-  }
   
 }

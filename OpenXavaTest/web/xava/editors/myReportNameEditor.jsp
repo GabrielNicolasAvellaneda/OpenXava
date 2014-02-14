@@ -1,5 +1,3 @@
-<%@page import="org.openxava.session.MyReport"%>
-<%@page import="org.openxava.util.Labels"%>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -13,6 +11,8 @@
 <%@ page import="org.openxava.filters.IRequestFilter" %>
 <%@ page import="org.openxava.mapping.PropertyMapping"%>
 <%@ page import="org.openxava.converters.IConverter"%>
+<%@ page import="org.openxava.session.MyReport"%>
+<%@ page import="org.openxava.util.Labels"%>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -27,10 +27,7 @@ boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel() || "true".equalsIgnoreCase(request.getParameter("readOnlyAsLabel"));
 org.openxava.session.MyReport report = (org.openxava.session.MyReport) view.getModel();
 
-// 
 java.lang.Boolean fromAdminReportsAction = (java.lang.Boolean) context.get(request, "xava_fromAdminReportsAction");
-// if (fromAdminReportsAction == null) fromAdminReportsAction = Boolean.FALSE;	// tmp
-//
 String[] adminUserDescriptions = report.getAllNamesAdminUser();
 String[] currentUserDescription = report.getAllNamesCurrentUser();
 String sufix = !fromAdminReportsAction ? Labels.get("adminReportSufix") : "";

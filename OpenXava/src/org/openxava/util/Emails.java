@@ -37,7 +37,7 @@ public class Emails {
 	    }
 	}
 	
-	private final static String MESSAGE_CONTENT_TYPE = "text/html; charset=" + XSystem.getEncoding();
+	private final static String MESSAGE_CONTENT_TYPE = "text/html; charset=" + XSystem.getEncoding(); 
 
 
     public Emails() {
