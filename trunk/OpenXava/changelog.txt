@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Dropped Java 5 support, from now on Java 6 or better is required.
+- Dropped WebSphere 6.1 and WebSphere Portal 6.1 support.
 - Methods Is.emptyString() and Is.emptyStringAll() allow infinite number of arguments.
 - Administration reports.
 - clearCondition() method removed from ModuleTestBase.
