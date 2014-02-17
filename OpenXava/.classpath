@@ -35,11 +35,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-jdk14.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/junit.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.java"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javax.inject.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal-kernel.jar"/>
@@ -61,5 +56,10 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/autobizlogic.jar"/>
 	<classpathentry kind="lib" path="lib/pdfbox.jar"/>
 	<classpathentry kind="lib" path="lib/fontbox.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
