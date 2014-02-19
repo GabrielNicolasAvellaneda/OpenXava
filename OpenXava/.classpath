@@ -27,9 +27,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ox-jdbc-adapters.jar"/>
 	<classpathentry kind="lib" path="lib/htmlunit-core-js.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-logging.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/ejb.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsp-api.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jta.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/dwr.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-api.jar"/>
@@ -47,7 +45,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/activation.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-classic-validator.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/validation-api.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/jaxb-api.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-codec.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-lang.jar"/>
 	<classpathentry kind="lib" path="lib/httpclient.jar"/>
@@ -61,5 +58,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/ejb.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jta.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
