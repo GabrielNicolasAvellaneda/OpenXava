@@ -2,7 +2,6 @@ package org.openxava.test.model
 
 import javax.persistence.*;
 
-import org.jboss.security.SecurityAssociationActions.GetSubjectAction;
 import org.openxava.annotations.*;
 import org.openxava.model.*;
 

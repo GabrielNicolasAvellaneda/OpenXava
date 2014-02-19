@@ -36,7 +36,7 @@ public class ColorTest extends ModuleTestBase {
 		execute("MyReport.cancel");
 		
 		execute("ExtendedPrint.adminReports");
-		assertDialogTitle("Administrator report");
+		assertDialogTitle("Administrator reports"); 
 		assertEditable("name");
 		assertNoAction("MyReport.createNew");
 		
@@ -51,7 +51,7 @@ public class ColorTest extends ModuleTestBase {
 		execute("MyReport.editColumn", "row=1,viewObject=xava_view_columns");
 		setValue("value", "rojo");
 		execute("MyReport.saveColumn");
-		assertDialogTitle("Administrator report");
+		assertDialogTitle("Administrator reports");
 		execute("MyReport.generatePdf");
 		assertNoDialog();
 		assertNoErrors();

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Upgrade to Servlet 2.5 and JSP 2.1.
+- Dropped Tomcat 5.5 support.
+- ejb.jar and jpa.jar added to WEB-INF/lib to facilitate deploying in Tomcat. 
 - Dropped Java 5 support, from now on Java 6 or better is required.
 - Dropped WebSphere 6.1 and WebSphere Portal 6.1 support.
 - Methods Is.emptyString() and Is.emptyStringAll() allow infinite number of arguments.

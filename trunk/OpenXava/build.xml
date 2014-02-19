@@ -963,6 +963,8 @@
 		<delete file="../${project}/web/WEB-INF/lib/hibernate-entitymanager.jar"/>
 		<!-- Delete other unused libraries -->
 		<delete file="../${project}/web/WEB-INF/lib/jboss-archive-browsing.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/jaxb-api.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/jaxb-impl.jar"/>
 		<!-- Delete unused CSS -->
 		<delete file="../${project}/web/xava/style/openxava.css"/>
 		<!-- Delete old FCKeditor files -->
