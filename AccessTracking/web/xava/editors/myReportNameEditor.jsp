@@ -11,9 +11,11 @@
 <%@ page import="org.openxava.filters.IRequestFilter" %>
 <%@ page import="org.openxava.mapping.PropertyMapping"%>
 <%@ page import="org.openxava.converters.IConverter"%>
+<%@ page import="org.openxava.session.MyReport"%>
+<%@ page import="org.openxava.util.Labels"%>
 
 <%
-	String viewObject = request.getParameter("viewObject");
+String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String propertyKey = request.getParameter("propertyKey");
@@ -24,21 +26,43 @@ String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
 boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel() || "true".equalsIgnoreCase(request.getParameter("readOnlyAsLabel"));
 org.openxava.session.MyReport report = (org.openxava.session.MyReport) view.getModel();
-String [] descriptions = report.getAllNames();
+
+java.lang.Boolean fromAdminReportsAction = (java.lang.Boolean) context.get(request, "xava_fromAdminReportsAction");
+String[] adminUserDescriptions = report.getAllNamesAdminUser();
+String[] currentUserDescription = report.getAllNamesCurrentUser();
+String sufix = !fromAdminReportsAction ? Labels.get("adminReportSufix") : "";
 if (!editable) {
 %>
 <select id="<%=propertyKey%>" name="<%=propertyKey%>" tabindex="1" class=<%=style.getEditor()%> <%=script%> title="<%=title%>">	
 <%	
-	for (int i=0; i<descriptions.length; i++) {
+	
+	// current user
+	if (!fromAdminReportsAction){
+		for (int i=0; i<currentUserDescription.length; i++) {
+			String selected = "";
+			String description = currentUserDescription[i];		
+			if (Is.equalAsStringIgnoreCase(fvalue, description)) {
+				selected = "selected"; 
+			} 		
+	%>
+		<option value="<%=description%>" <%=selected%>><%=description%></option>
+	<%
+		} // del for currentUserDescription
+	} // if !fromAdminReportsAction
+	
+	// admin user
+	for (int i=0; i<adminUserDescriptions.length; i++) {
 		String selected = "";
-		String description = descriptions[i];		
-		if (Is.equalAsStringIgnoreCase(fvalue, description)) {
+		String description = adminUserDescriptions[i];
+		String descriptionKey = description + MyReport.ADMIN_REPORT;
+		if (!fvalue.endsWith(MyReport.ADMIN_REPORT)) fvalue = fvalue + MyReport.ADMIN_REPORT;
+		if (Is.equalAsStringIgnoreCase(fvalue, descriptionKey)) {
 			selected = "selected"; 
 		} 		
-%>
-	<option value="<%=description%>" <%=selected%>><%=description%></option>
-<%
-	} // del while
+	%>
+	<option value="<%=descriptionKey%>" <%=selected%>><%=description%> <%=sufix%></option>
+	<%
+	} // del for adminUserDescription
 %>
 </select>
 <input type="hidden" name="<%=propertyKey%>__DESCRIPTION__" value="<%=fvalue%>">
