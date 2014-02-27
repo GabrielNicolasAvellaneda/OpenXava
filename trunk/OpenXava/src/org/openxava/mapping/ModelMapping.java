@@ -3,7 +3,6 @@ package org.openxava.mapping;
 import java.sql.*;
 import java.util.*;
 
-import org.apache.commons.collections.map.*;
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
