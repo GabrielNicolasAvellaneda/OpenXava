@@ -547,7 +547,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertEditable("year");
 	}
 	
-	public void testGenerateCustomPdfExcelRtfOdt() throws Exception { 
+	public void testGenerateCustomPdfExcelRtfOdt() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("InvoicePrint.printPdf"); 
 		assertNoErrors(); 

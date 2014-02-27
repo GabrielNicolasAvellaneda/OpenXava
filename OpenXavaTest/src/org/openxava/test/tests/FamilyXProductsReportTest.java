@@ -33,7 +33,7 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 		assertNoAction("Reference.modify"); // To test modify="false" in reference as descriptions list
 	}
 	
-	public void testJasperReportBaseActionTest() throws Exception {
+	public void testJasperReportBaseActionTest() throws Exception { 
 		execute("FamilyProductsReport.generatePdf");
 		// Next line: test that errors of a ValidationException thrown from a action are shown
 		assertError("Value for Subfamily in Filter by subfamily is required"); 

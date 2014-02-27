@@ -58,7 +58,7 @@ public class Product2Test extends ModuleTestBase {
 		assertError("Value for Subfamily in Filter by subfamily is required");		
 		setValue("subfamily.number", "2");
 		execute("FamilyProductsReport.generatePdf");
-		assertNoErrors();
+		assertNoErrors(); // If it does not find the font try to set net.sf.jasperreports.awt.ignore.missing.font=true in jasperreports jar
 		assertContentTypeForPopup("application/pdf");
 		assertNoDialog();
 		assertAction("Product2.reportBySubfamily");

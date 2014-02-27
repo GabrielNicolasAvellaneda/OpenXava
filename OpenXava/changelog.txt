@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- JasperReports upgraded to 5.5.1.
+- Upgrade of commons libraries to: beanutils 1.8.0, logging 1.1.1, digester 2.1, codec 1.9, fileupload 1.3.1, io 2.4, lang 2.6, validator 1.4.0.
+- Added Commons Lang3 3.2.1 library.
+- Removed jakarta-oro library, only used by older commons-validator.
 - Upgrade to Servlet 2.5 and JSP 2.1.
 - Dropped Tomcat 5.5 support.
 - ejb.jar and jpa.jar added to WEB-INF/lib to facilitate deploying in Tomcat. 

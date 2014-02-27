@@ -9,7 +9,7 @@ at least the next cases:
 		Generate PDF: Correct height for header (1 line).
 		My reports with long label for name: The label fill all the space, only 1 line for header.
 		My reports with long label for name moving name to second position: 
-			The label fill all the space, only 1 line for header and all the properties are shown.
+		The label fill all the space, only 1 line for header and all the properties are shown.
 - Customer:		
 		Generate PDF: Correct height for header (1 line) and the most right column inside the margin.
 		My reports with a label long enough to produce a 3 lines header:
@@ -22,14 +22,14 @@ at least the next cases:
 		Generate PDF: Correct height for header (2 lines) and the most right column inside the margin.
 		My reports shortening the labels to fit in 1 line header:	
 			Correct height for header (1 line) and the most right column inside the margin.
-- Product			
+- Product:			
 		Generate PDF: Correct height for header (1 line).
 		My reports with a label long enough to produce a 2 lines header: Correct height for header (2 lines)
-- Color2
+- Color2:
 		My reports in English with "Name of Used to" for usedTo.name and "Description of Characteristic thing"
 			for characteristicThing.description, selecting the color with code 0: 
 			The most right column inside the margin.
-- Tax
+- Tax:
 		Generate PDF in Spanish: Correct height for header  
 			and the most right column inside the margin. 
 		
