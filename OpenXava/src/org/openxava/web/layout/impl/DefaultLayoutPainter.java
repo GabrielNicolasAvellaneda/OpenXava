@@ -148,16 +148,18 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (columnSpan > 0) {
 			attributes.put(ATTR_COLSPAN, columnSpan.toString());
 		}
-		attributes.put(ATTR_CLASS, getStyle().getFrame());
+		boolean sibling = false;
+		//attributes.put(ATTR_CLASS, getStyle().getFrame());
 		if (getRow().getMaxFramesCount() > 1) {
 			if (element.getPosition() > 0) {
-				attributes.put(ATTR_CLASS, getStyle().getFrame() + " " + getStyle().getFrameSibling());
+				//attributes.put(ATTR_CLASS, getStyle().getFrame() + " " + getStyle().getFrameSibling());
+				sibling = true;
 			}
 		}
 
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		
-		write(getStyle().getFrameHeaderStartDecoration(100));
+		write(getStyle().getFrameHeaderStartDecoration(100, sibling));
 			write(getStyle().getFrameTitleStartDecoration());
 				attributes.clear();
 				attributes.put(ATTR_ID, labelKey);
@@ -831,7 +833,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			String collectionHeaderId = frameId + "header";
 			attributes.clear();
 			attributes.put("id", collectionHeaderId);
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
 			includeJspPage("collectionFrameHeader.jsp" 
 				+ "?collectionName=" + element.getMetaCollection().getName()
 				+ "&viewObject=" + element.getView().getViewObject()

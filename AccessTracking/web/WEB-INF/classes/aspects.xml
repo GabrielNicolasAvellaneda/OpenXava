@@ -1,22 +1,0 @@
-<?xml version = "1.0" encoding = "ISO-8859-1"?>
-
-<!DOCTYPE aspects SYSTEM "dtds/aspects.dtd"><!-- AccessTracking -->
-
-<aspects> 	
-
-	<aspect name="AccessTracking">
-		<postcreate-calculator class="org.openxava.tracking.AccessTrackingCalculator">
-			<set property="accessType" value="Create"/>
-		</postcreate-calculator>
-		<postload-calculator class="org.openxava.tracking.AccessTrackingCalculator">
-			<set property="accessType" value="Read"/>
-		</postload-calculator>		
-		<postmodify-calculator class="org.openxava.tracking.AccessTrackingCalculator">
-			<set property="accessType" value="Update"/>
-		</postmodify-calculator>
-		<preremove-calculator class="org.openxava.tracking.AccessTrackingCalculator">
-			<set property="accessType" value="Delete"/>
-		</preremove-calculator>		
-	</aspect>
-	
-</aspects>

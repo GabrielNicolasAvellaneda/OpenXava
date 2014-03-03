@@ -1176,4 +1176,14 @@ public class Style {
 		return 8;
 	}
 	
+	
+	/**
+	 * @param width Width of the table container.
+	 * @param sibling If true this frame is a sibling (to the right) frame.
+	 * @return String representing the decoration of the frame.
+	 * @since 5.0.0
+	 */
+	public String getFrameHeaderStartDecoration(int width, boolean sibling) {
+		return getFrameHeaderStartDecoration(width);
+	}
 }
