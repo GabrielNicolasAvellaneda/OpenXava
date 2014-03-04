@@ -3,9 +3,10 @@
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.util.XavaPreferences"%>
 <%@ page import="org.openxava.util.Is"%>
-<%@page import="org.openxava.controller.meta.MetaSubcontroller"%>
-<%@page import="java.util.Collection"%>
-<%@page import="org.openxava.web.Ids"%>
+<%@ page import="org.openxava.controller.meta.MetaSubcontroller"%>
+<%@ page import="java.util.Collection"%>
+<%@ page import="org.openxava.web.Ids"%>
+<%@ page import="org.openxava.util.ReportsProviderFactory"%>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -14,7 +15,7 @@
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
 boolean onBottom = false;
-String mode = request.getParameter("xava_mode"); 
+String mode = request.getParameter("xava_mode");
 if (mode == null) mode = manager.isSplitMode()?"detail":manager.getModeName();
 boolean headerButtonBar = !manager.isSplitMode() || mode.equals("list");  
 
@@ -29,6 +30,9 @@ if (manager.isButtonBarVisible()) {
 	while (it.hasNext()) {
 		MetaAction action = (MetaAction) it.next();
 		if (action.isHidden()) continue;
+		if ("adminReports".equals(action.getName()) &&  
+			!ReportsProviderFactory.getInstance().isCurrentUserAdminForReports(request)) 
+			continue;
 		if (action.appliesToMode(mode) && action.hasImage()) {
 		%>
 		<jsp:include page="barButton.jsp">
@@ -61,7 +65,7 @@ if (manager.isButtonBarVisible()) {
 	</span>
 	</div>
 	
-	<div id="<xava:id name='subcontrollers'/>">
+	<div id="<xava:id name='modes'/>">
 	<span style="float: right">	
 	<%
 	java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); 
