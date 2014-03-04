@@ -55,7 +55,7 @@ public class Is {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Verifies if all sent strings are <code>null</code> or empty string. <p>
 	 */

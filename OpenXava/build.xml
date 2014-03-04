@@ -966,6 +966,7 @@
 		<delete file="../${project}/web/WEB-INF/lib/jaxb-api.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/jaxb-impl.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/jakarta-oro.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/activation.jar"/>
 		
 		<!-- Delete unused CSS -->
 		<delete file="../${project}/web/xava/style/openxava.css"/>

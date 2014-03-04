@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Groovy upgraded to 2.2.2.
+- JSTL upgraded to 1.2 using Apache Standard Taglibs 1.2.1.
+- JavaMail upgraded to 1.5.1.
+- Fix: Double border when using .ox-frame in the CSS with new renderer.
+- Fix: Totals in collections frames are not shown with the new renderer.
 - JasperReports upgraded to 5.5.1.
 - Upgrade of commons libraries to: beanutils 1.8.0, logging 1.1.1, digester 2.1, codec 1.9, fileupload 1.3.1, io 2.4, lang 2.6, validator 1.4.0.
 - Added Commons Lang3 3.2.1 library.
