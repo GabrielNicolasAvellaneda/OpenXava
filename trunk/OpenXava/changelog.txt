@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- DWR upgraded to 2.0.10.
 - Groovy upgraded to 2.2.2.
 - JSTL upgraded to 1.2 using Apache Standard Taglibs 1.2.1.
 - JavaMail upgraded to 1.5.1.
