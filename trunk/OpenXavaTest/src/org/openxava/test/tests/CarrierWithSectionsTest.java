@@ -569,7 +569,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertValueInCollection("columns", 1, 0, "Number");
 		assertValueInCollection("columns", 2, 0, "Name");
 		assertNoAction("MyReport.createNew");
-		assertAction("MyReport.remove");
+		assertNoAction("MyReport.remove");
 	}
 	
 	public void testRemoveReportInMyReport() throws Exception { 
@@ -594,33 +594,36 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		};
 		assertValidValues("name", customReports2);
 		assertValue("name", "Carrier report 7");
-		execute("MyReport.createNew", "xava.keyProperty=name");
-		setValue("name", "Carrier report 2");
-		execute("MyReport.remove", "xava.keyProperty=name");
-		assertValue("name", "Carrier report 7"); // The last report generated
+		// tmp >> al pulsar el botón nuevo el botón de eliminar se oculta
+//		execute("MyReport.createNew", "xava.keyProperty=name");
+//		setValue("name", "Carrier report 2");
+//		execute("MyReport.remove", "xava.keyProperty=name");
+//		assertValue("name", "Carrier report 7"); // The last report generated
+		// tmp <<
 		execute("MyReport.remove", "xava.keyProperty=name");
 		assertValidValues("name", customReports1);
 		assertValue("name", "Carrier report 1");
-				
-		execute("MyReport.createNew", "xava.keyProperty=name");
-		setValue("name", "Carrier report 2");
-		execute("MyReport.remove", "xava.keyProperty=name");
-		assertMessage("Report 'Carrier report 2' removed");  
-		assertValue("name", "Carrier report 1");
-		assertValidValues("name", customReports1);
 		
-		execute("MyReport.remove", "xava.keyProperty=name");
-		assertValue("name", "Carrier report");
-		setValue("name", "Carrier report NUEVO");
-		assertValueInCollection("columns", 0, 0, "Calculated");
-		execute("MyReport.columnUp", "row=1,viewObject=xava_view_columns");
-		assertValueInCollection("columns", 0, 0, "Number");		
-		
-		execute("MyReport.remove", "xava.keyProperty=name");	
-		assertMessage("Report 'Carrier report NUEVO' removed"); 
-		assertValue("name", "Carrier report");
-		assertValueInCollection("columns", 0, 0, "Calculated");
-		
+		// tmp >>
+//		execute("MyReport.createNew", "xava.keyProperty=name");
+//		setValue("name", "Carrier report 2");
+//		execute("MyReport.remove", "xava.keyProperty=name");
+//		assertMessage("Report 'Carrier report 2' removed");  
+//		assertValue("name", "Carrier report 1");
+//		assertValidValues("name", customReports1);
+//		
+//		execute("MyReport.remove", "xava.keyProperty=name");
+//		assertValue("name", "Carrier report");
+//		setValue("name", "Carrier report NUEVO");
+//		assertValueInCollection("columns", 0, 0, "Calculated");
+//		execute("MyReport.columnUp", "row=1,viewObject=xava_view_columns");
+//		assertValueInCollection("columns", 0, 0, "Number");		
+//		
+//		execute("MyReport.remove", "xava.keyProperty=name");	
+//		assertMessage("Report 'Carrier report NUEVO' removed"); 
+//		assertValue("name", "Carrier report");
+//		assertValueInCollection("columns", 0, 0, "Calculated");
+		// tmp <<
 		setValue("name", "Carrier report 1");
 		execute("MyReport.generatePdf");
 		assertNoErrors();
