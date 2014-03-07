@@ -120,11 +120,6 @@ public class XavaPreferences {
 				"org.openxava.util.DefaultReportParametersProvider").trim();
 	}
 	
-	public String getReportsProviderClass(){
-		return getProperties().getProperty("reportsProviderClass",
-				"org.openxava.util.DefaultReportsProvider").trim();
-	}
-	
 	public String getPersistenceProviderClass() {
 		return getProperties().getProperty("persistenceProviderClass",
 				"org.openxava.model.impl.JPAPersistenceProvider").trim();

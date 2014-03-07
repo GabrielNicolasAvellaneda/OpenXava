@@ -16,12 +16,13 @@ public class CreateNewMyReportAction extends TabBaseAction {
 	private MyReport myReport; 
 
 	public void execute() throws Exception {
-		Boolean fromAdminReportsAction = (Boolean)getContext().get(getRequest(), "xava_fromAdminReportsAction");
 		myReport = MyReport.create(getTab());
-		myReport.setAdmin(fromAdminReportsAction);
+		myReport.setShared(false);
 		getView().setModel(myReport);		
 		getView().setEditable("name", true);			
 		getView().removeActionForProperty("name", "MyReport.createNew");
+		getView().removeActionForProperty("name", "MyReport.remove");
+		getView().removeActionForProperty("name", "MyReport.share");
 	}
 
 }

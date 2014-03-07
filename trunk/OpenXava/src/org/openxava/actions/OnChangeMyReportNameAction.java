@@ -19,13 +19,13 @@ public class OnChangeMyReportNameAction extends TabBaseAction implements IOnChan
 	private String name;
 	
 	public void execute() throws Exception {
-		Boolean fromAdminReports = (Boolean)getContext().get(getRequest(), "xava_fromAdminReportsAction");
-		boolean adminReport = fromAdminReports ? true : name.endsWith(MyReport.ADMIN_REPORT);
-		myReport = MyReport.find(getTab(), name, adminReport);
+		myReport = MyReport.find(getTab(), name);
 		getView().setModel(myReport);
-		
-		if (fromAdminReports|| !myReport.isAdmin()) getView().addActionForProperty("name", "MyReport.remove");
-		else getView().removeActionForProperty("name", "MyReport.remove");
+
+		getView().removeActionForProperty("name", "MyReport.share");
+		if (!name.endsWith(MyReport.SHARED_REPORT)){
+			getView().addActionForProperty("name", "MyReport.share");
+		}
 	}
 
 	public void setChangedProperty(String propertyName) {

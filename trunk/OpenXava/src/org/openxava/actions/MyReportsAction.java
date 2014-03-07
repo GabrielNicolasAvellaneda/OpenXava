@@ -15,34 +15,26 @@ public class MyReportsAction extends TabBaseAction {
 	@Inject
 	private MyReport myReport; 
 	
-	private boolean fromAdminReportsAction = false;
-
 	public void execute() throws Exception {
-		getContext().put(getRequest(), "xava_fromAdminReportsAction", fromAdminReportsAction);
 		setNextMode(DETAIL);
-		showDialog();
-		getView().setTitleId(fromAdminReportsAction ? "adminReports" : "myReports");
-		myReport = MyReport.createEmpty(getTab(), fromAdminReportsAction);
+		showDialog();	
+		getView().setTitleId("myReports");
+		myReport = MyReport.createEmpty(getTab());
 		getView().setModel(myReport);
-		if (myReport.getAllNames(fromAdminReportsAction).length > 0) {
-			getView().setEditable("name", false);
+		
+		if (myReport.getAllNames().length > 0) {
+			getView().setEditable("name", false);			
+			getView().addActionForProperty("name", "MyReport.remove");
 			getView().addActionForProperty("name", "MyReport.createNew");
-			getView().setValueNotifying("name", myReport.getLastName(fromAdminReportsAction));
-			myReport = (MyReport) getView().getModel();
-		}	
+			getView().setValueNotifying("name", myReport.getLastName()); 
+			myReport = (MyReport) getView().getModel(); 
+		}
 		else {
-			myReport = MyReport.create(getTab());
+			myReport = MyReport.create(getTab()); 
 			getView().setModel(myReport);			
 		}
 		setControllers("MyReport");
-	}
-
-	public boolean isAdminAction() {
-		return fromAdminReportsAction;
-	}
-
-	public void setAdminAction(boolean adminAction) {
-		this.fromAdminReportsAction = adminAction;
+		
 	}
 
 }

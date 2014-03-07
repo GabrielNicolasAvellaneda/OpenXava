@@ -18,6 +18,7 @@ public class Users {
 	final private static ThreadLocal current = new ThreadLocal(); 
 	final private static ThreadLocal currentUserInfo = new ThreadLocal();
 	public final static String ADMIN_OX = "__ADMINOX__";
+	public final static String SHARED_OX = "__SHAREDOX__";
 	
 	/**
 	 * The user name associated to the current thread. <p>
@@ -62,6 +63,16 @@ public class Users {
 	 */
 	public static Preferences getAdminPreferences() throws BackingStoreException { 
 		return UserPreferences.getForUser(ADMIN_OX);
+	}
+	
+	/**
+	 * Preferences of the shared user. <p>
+	 * 
+	 * @return  The preferences object associated to the shared user.
+	 * @throws BackingStoreException  Some problem on load preferences.
+	 */
+	public static Preferences getSharedPreferences() throws BackingStoreException {
+		return UserPreferences.getForUser(SHARED_OX);
 	}
 	
 	/**
