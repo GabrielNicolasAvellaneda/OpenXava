@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Shared reports
 - DWR upgraded to 2.0.10.
 - Groovy upgraded to 2.2.2.
 - JSTL upgraded to 1.2 using Apache Standard Taglibs 1.2.1.
@@ -17,7 +18,6 @@ Change Log for OpenXava project
 - Dropped Java 5 support, from now on Java 6 or better is required.
 - Dropped WebSphere 6.1 and WebSphere Portal 6.1 support.
 - Methods Is.emptyString() and Is.emptyStringAll() allow infinite number of arguments.
-- Administration reports.
 - clearCondition() method removed from ModuleTestBase.
 - Fix: assertListRowCount() method from ModuleTestBase fails when the value of summationInList property is false.
 - Fix: Subcontrollers fails in split mode.

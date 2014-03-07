@@ -23,21 +23,24 @@ public class RemoveMyReportAction extends TabBaseAction {
 		if (myReport.getAllNames().length > 0) {
 			if (getView().isEditable("name")) {
 				getView().removeActionForProperty("name", "MyReport.remove");
-				getView().addActionForProperty("name", "MyReport.createNew");
+				getView().removeActionForProperty("name", "MyReport.share");
 				getView().addActionForProperty("name", "MyReport.remove");
+				getView().addActionForProperty("name", "MyReport.createNew");
 			}
 			getView().setEditable("name", false);
-			Boolean fromAdminReportsAction = (Boolean) getContext().get(getRequest(), "xava_fromAdminReportsAction");
-			getView().setValueNotifying("name", myReport.getLastName(fromAdminReportsAction));
+			getView().setValueNotifying("name", myReport.getLastName());
 			myReport = (MyReport) getView().getModel();
+			
 		}
 		else {
 			getView().setEditable("name", true);			
 			myReport = MyReport.create(getTab()); 
 			getView().setModel(myReport);		
 			getView().removeActionForProperty("name", "MyReport.createNew");
+			getView().removeActionForProperty("name", "MyReport.share");
+			getView().removeActionForProperty("name", "MyReport.remove");
 		}
-		addMessage("report_removed", "'" + name + "'");
+		addMessage("report_removed", "'" + name.replace(MyReport.SHARED_REPORT, "") + "'");
 	}
 
 }

@@ -24,8 +24,8 @@ public class MyReport implements java.io.Serializable {
 	private static final String NAME = "name";
 	private static final String LAST_NAME = "lastName"; 
 	private static final String MODEL_NAME = "modelName";
-	private static final String ADMIN = "admin";
-	public static final String ADMIN_REPORT = "__ADMIN_REPORT__";
+	private static final String SHARED = "shared";
+	public static final String SHARED_REPORT = "__SHARED_REPORT__";
 			
 	@Required @Column(length=80) 
 	@OnChange(org.openxava.actions.OnChangeMyReportNameAction.class) // It's only thrown in combo format, this is controlled from the editor 
@@ -49,7 +49,7 @@ public class MyReport implements java.io.Serializable {
 	private String rootNodeName;
 	
 	@Hidden
-	private boolean admin;	// report created by admin user? 
+	private boolean shared;
 	
 	public static MyReport create(org.openxava.tab.Tab tab) {  
 		MyReport report = createEmpty(tab);
@@ -58,27 +58,19 @@ public class MyReport implements java.io.Serializable {
 	}
 	
 	public static MyReport createEmpty(Tab tab) {
-		return createEmpty(tab, false);
-	}
-	
-	public static MyReport createEmpty(Tab tab, boolean admin) {
 		MyReport report = new MyReport();
 		report.setName(tab.getTitle()); 	
 		report.setMetaModel(tab.getMetaTab().getMetaModel());
 		report.setNodeName(tab);
-		report.setAdmin(admin);
+		report.setShared(false);
 		return report;
 	}
 	
-	public static MyReport find(org.openxava.tab.Tab tab, String name)  throws BackingStoreException {
-		return find(tab, name, false);
-	}
-	
-	public static MyReport find(org.openxava.tab.Tab tab, String name, boolean adminReport) throws BackingStoreException {
+	public static MyReport find(org.openxava.tab.Tab tab, String name) throws BackingStoreException {
 		MyReport report = new MyReport();
-		report.setAdmin(name.endsWith(ADMIN_REPORT) || adminReport);
 		report.setName(name);
 		report.setNodeName(tab);
+		report.setShared(name.endsWith(SHARED_REPORT));
 		report.load();
 		return report;
 	}
@@ -87,52 +79,42 @@ public class MyReport implements java.io.Serializable {
 	 * The names of all the reports of the same Tab of the current one. 
 	 */
 	@Hidden
-	public String [] getAllNames() throws BackingStoreException { 
-		return getAllNames(false);
-	}
-	
-	@Hidden
 	public String[] getAllNamesCurrentUser() throws BackingStoreException{
 		return Users.getCurrentPreferences().node(rootNodeName).childrenNames();
 	}
 	
-	@Hidden
-	public String[] getAllNamesAdminUser() throws BackingStoreException{
-		return Users.getAdminPreferences().node(rootNodeName).childrenNames();
-	}
-	
-	@Hidden
-	public String[] getAllNames(boolean admin) throws BackingStoreException {
-		if (admin) {
-			return Users.getAdminPreferences().node(rootNodeName).childrenNames();
-		}
-		else { // reports from the admin user and from the current user
-			String[] currentUser = Users.getCurrentPreferences().node(rootNodeName).childrenNames();
-			String[] adminUser = Users.getAdminPreferences().node(rootNodeName).childrenNames();
-			String[] all = new String[currentUser.length + adminUser.length];
-			System.arraycopy(currentUser, 0, all, 0, currentUser.length);
-			System.arraycopy(adminUser, 0, all, currentUser.length, adminUser.length);
-			return all;
-		}
-	}
-	
 	/**
-	 * The name of the last generated report of the same Tab of the current one. 
-	 */	
+	 * The names of all the shared reports.
+	 */
 	@Hidden
-	public String getLastName(boolean fromAdminReportsAction) throws BackingStoreException {
+	public String[] getAllNamesSharedUser() throws BackingStoreException{
+		return Users.getSharedPreferences().node(rootNodeName).childrenNames();
+	}
+
+	/**
+	 * @return names of all the report: current user + shared
+	 */
+	@Hidden
+	public String[] getAllNames() throws BackingStoreException {
+		String[] currentUser = Users.getCurrentPreferences().node(rootNodeName).childrenNames();
+		String[] sharedUser = Users.getSharedPreferences().node(rootNodeName).childrenNames();
+		String[] sharedUserP = new String[sharedUser.length];
+		for (int x = 0; x < sharedUser.length; x++) {
+			sharedUserP[x] = sharedUser[x] + SHARED_REPORT;
+		}
+		
+		String[] all = new String[currentUser.length + sharedUserP.length];
+		System.arraycopy(currentUser, 0, all, 0, currentUser.length);
+		System.arraycopy(sharedUserP, 0, all, currentUser.length, sharedUserP.length);
+		return all;
+	}
+	
+	@Hidden
+	public String getLastName() throws BackingStoreException {
 		String lastName = getRootPreferences().get(LAST_NAME, "");
-		String [] allNamesFromCurrentUser = getAllNamesCurrentUser();
-		if (!fromAdminReportsAction && Arrays.binarySearch(allNamesFromCurrentUser, lastName) >= 0) {
-			return lastName;
-		}
-		String [] allNamesFromAdminUser = getAllNamesAdminUser();
-		if (Arrays.binarySearch(allNamesFromAdminUser, lastName.replace(ADMIN_REPORT, "")) >= 0) {
-			return lastName;
-		}
-		if (allNamesFromAdminUser.length > 0) return allNamesFromAdminUser[0] + ADMIN_REPORT ;
-		if (allNamesFromCurrentUser.length > 0) return allNamesFromCurrentUser[0];
-		return ""; 
+		String [] allNames = getAllNames();
+		if (Arrays.binarySearch(allNames, lastName) >= 0) return lastName;
+		return allNames.length > 0?allNames[0]:""; 
 	}
 	
 	private static List<MyReportColumn> createColumns(MyReport report, org.openxava.tab.Tab tab) {
@@ -177,13 +159,12 @@ public class MyReport implements java.io.Serializable {
 		}		
 		return columns;		
 	}
-		
+	
 	public void load() throws BackingStoreException {
-		Preferences preferences = getPreferences();
+		Preferences preferences = name.endsWith(SHARED_REPORT) ? getSharedPreferences() : getPreferences();
 		name = preferences.get(NAME, name);
 		String modelName = preferences.get(MODEL_NAME, "Unknown MetaModel");
 		setMetaModel(MetaModel.get(modelName));
-		admin = Boolean.valueOf(preferences.get(ADMIN, "false"));
 		int i = 0;
 		MyReportColumn column = new MyReportColumn();
 		columns = new ArrayList();
@@ -196,35 +177,31 @@ public class MyReport implements java.io.Serializable {
 	}	
 	
 	public void save() throws BackingStoreException {
-		save(false);
+		save(this.shared); 
 	}
 	
-	public void save(boolean fromAdminReports) throws BackingStoreException {
-		// the name has not the ADMIN_REPORT sufix when we make a new report
-		String n = (admin || fromAdminReports) && !name.endsWith(ADMIN_REPORT)? name + ADMIN_REPORT : name;
-		if (fromAdminReports) admin = true;
-		
-		// an admin report just can to be modified by an admin user
-		if (!admin || (admin && fromAdminReports)){
-			Preferences preferences = getPreferences();
-			preferences.put(NAME, n);		
-			preferences.put(MODEL_NAME, getMetaModel().getName());
-			preferences.put(ADMIN, String.valueOf(admin));
-			int i = 0;
-			for (MyReportColumn column: columns) {
-				column.save(preferences, i++);
-			}
-			while (MyReportColumn.remove(preferences, i)) i++; 		
-			preferences.flush();
+	public void save(boolean sharedReport) throws BackingStoreException {
+		if (sharedReport) shared = true;
+		String n = shared && !name.endsWith(SHARED_REPORT) ? name + SHARED_REPORT : name;
+		Preferences preferences = shared ? getSharedPreferences() : getPreferences();
+		preferences.put(NAME, n);		
+		preferences.put(MODEL_NAME, getMetaModel().getName());
+		preferences.put(SHARED, String.valueOf(shared));
+		int i = 0;
+		for (MyReportColumn column: columns) {
+			column.save(preferences, i++);
 		}
-		// 
+		while (MyReportColumn.remove(preferences, i)) i++; 		
+		preferences.flush();
+
 		Preferences rootPreferences = getRootPreferences();
 		rootPreferences.put(LAST_NAME, n);
 		rootPreferences.flush();
 	}
-	
+
 	public void remove() throws BackingStoreException { 
-		getPreferences().removeNode();		
+		if (shared) getSharedPreferences().removeNode();
+		else getPreferences().removeNode();		
 	}
 	
 	public String getName() {
@@ -256,20 +233,23 @@ public class MyReport implements java.io.Serializable {
 	}
 	
 	private Preferences getPreferences() throws BackingStoreException {
-		Preferences preferences = admin ? Users.getAdminPreferences() : Users.getCurrentPreferences();
-		return preferences.node(rootNodeName).node(name.replace(ADMIN_REPORT, ""));
+		return Users.getCurrentPreferences().node(rootNodeName).node(name);
 	}
 	
-	private Preferences getRootPreferences() throws BackingStoreException {		
+	private Preferences getSharedPreferences() throws BackingStoreException {
+		return Users.getSharedPreferences().node(rootNodeName).node(name.replace(SHARED_REPORT, ""));
+	}
+	
+	private Preferences getRootPreferences() throws BackingStoreException {
 		return Users.getCurrentPreferences().node(rootNodeName);
 	}
 
-	public boolean isAdmin() {
-		return admin;
+	public boolean isShared() {
+		return shared;
 	}
 
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 
 	@Override

@@ -30,7 +30,6 @@ here that you want to override.
 	<object name="xava_treeViewNodeFullPath" class="java.lang.String" />
 	<object name="xava_liferayLibrary" class="org.openxava.session.LiferayLibrary"/>					
 	<object name="xava_metaActionsInList" class="java.util.Collection"/>
-	<object name="xava_fromAdminReportsAction" class="java.lang.Boolean"/>
 	
 	<controller name="Typical">
 		<extends controller="Navigation"/>
@@ -73,11 +72,6 @@ here that you want to override.
 		<action name="myReports" mode="list"
 			class="org.openxava.actions.MyReportsAction"
 			image="reports.png">	
-		</action>					
-		<action name="adminReports" mode="list"
-			class="org.openxava.actions.MyReportsAction"
-			image="reportsAdmin.png">
-			<set value="true" property="adminAction"/>	
 		</action>		
 	</controller>
 	
@@ -121,7 +115,9 @@ here that you want to override.
 			image="create_new.gif"/>			
 		<action name="remove" hidden="true" confirm="true"
 			class="org.openxava.actions.RemoveMyReportAction"
-			image="delete.gif"/>																																										
+			image="delete.gif"/>
+		<action name="share" hidden="true" image="shared-reports.png"
+			class="org.openxava.actions.ShareMyReportAction"/>																																										
 	</controller>	
 			
 	<controller name="TypicalNotResetOnSave">

@@ -30,7 +30,7 @@ public class GenerateMyReportAction extends GenerateReportAction {
 		Tab tab = new Tab();
 		tab.setModelName(getTab().getModelName());
 		tab.setTabName(getTab().getTabName());
-		tab.setTitle(getView().getValueString("name").replaceAll(MyReport.ADMIN_REPORT, ""));		
+		tab.setTitle(getView().getValueString("name").replaceAll(MyReport.SHARED_REPORT, ""));
 		tab.clearProperties();		
 		Collection<String> comparators = new ArrayList<String>();
 		Collection<String> values = new ArrayList<String>();
@@ -55,17 +55,14 @@ public class GenerateMyReportAction extends GenerateReportAction {
 		tab.setConditionComparators(comparators);
 		tab.setConditionValues(values);
 
-		Boolean fromAdminReports = (Boolean)getContext().get(getRequest(), "xava_fromAdminReportsAction");
 		try {
-			myReport.save(fromAdminReports);
+			myReport.save();
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("my_report_save_problems"), ex);
 		}
 		getRequest().getSession().setAttribute("xava_reportTab", tab);
 		closeDialog();
-		
-		if (!fromAdminReports && myReport.isAdmin()) addWarning("admin_report_not_save_by_not_admin_user");
 	}
 
 	private void addColumn(Tab tab, Collection<String> comparators,
