@@ -9,7 +9,6 @@
 	<classpathentry kind="src" path="reports"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry exported="true" kind="src" path="/OpenXava"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>

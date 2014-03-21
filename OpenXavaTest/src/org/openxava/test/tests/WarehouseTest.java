@@ -203,21 +203,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertChangeRowCount(20, 10); 
 	}
 	
-	/**
-	 * Needs the project AccessTracking deployed in the application server. <p>
-	 * 
-	 * In addition of AccessTracking and CRUD also it test:
-	 * <ul>
-	 * <li> Aspects to defining calculators.
-	 * <li> postload-calculator
-	 * <li> preremove-calculator
-	 * </ul>
-	 * @throws Exception
-	 */	
-	public void testAccessTracking_createReadUpdateDelete() throws Exception { 
-		XHibernate.getSession().createQuery("delete from Access").executeUpdate();		
-		XHibernate.commit();
-		
+	public void testCreateReadUpdateDelete() throws Exception {
 		assertAction("Warehouse.toLowerCase");
 		assertNoAction("Warehouse.changeZone");
 		
@@ -270,87 +256,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		setValue("number", "666");				
 		execute("CRUD.refresh");		
 		assertError("Object of type Warehouse does not exists with key Warehouse number:666, Zone:66");
-		assertErrorsCount(1);
-		
-		// Date, time and table
-		
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-		String time = timeFormat.format(new Date());
-		
-		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-		String date = dateFormat.format(new Date());
-		
-		String table = MetaModel.get("Warehouse").getMapping().getTable();
-				
-		// Verifying the entries in access tracking		
-		changeModule("AccessTracking", "Accesses"); 
-		assertListRowCount(6);
-		
-		String firstRecordId = getValueInList(0, "recordId");
-		String expectedRecordId= firstRecordId.startsWith("{zoneNumber")?
-				"{zoneNumber=66, number=666}":"{number=666, zoneNumber=66}";
-		
-		assertValueInList(0, "application", "test");
-		assertValueInList(0, "model", "Warehouse");
-		assertValueInList(0, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(0, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(0, "date", date);
-		assertValueInList(0, "time", time); 
-		assertValueInList(0, "type", "Create");
-		assertValueInList(0, "authorized", "Yes");
-		assertValueInList(0, "recordId", expectedRecordId);		
-		
-		assertValueInList(1, "application", "test");
-		assertValueInList(1, "model", "Warehouse");
-		assertValueInList(1, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(1, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(1, "date", date);
-		assertValueInList(1, "time", time);
-		assertValueInList(1, "type", "Read");
-		assertValueInList(1, "authorized", "Yes");
-		assertValueInList(1, "recordId", expectedRecordId);		
-				
-		assertValueInList(2, "application", "test");
-		assertValueInList(2, "model", "Warehouse");
-		assertValueInList(2, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(2, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(2, "date", date);
-		assertValueInList(2, "time", time);
-		assertValueInList(2, "type", "Update");
-		assertValueInList(2, "authorized", "Yes");
-		assertValueInList(2, "recordId", expectedRecordId);		
-		
-		assertValueInList(3, "application", "test");
-		assertValueInList(3, "model", "Warehouse");
-		assertValueInList(3, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(3, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(3, "date", date);
-		assertValueInList(3, "time", time);
-		assertValueInList(3, "type", "Read");
-		assertValueInList(3, "authorized", "Yes");
-		assertValueInList(3, "recordId", expectedRecordId);		
-		
-		assertValueInList(4, "application", "test");
-		assertValueInList(4, "model", "Warehouse");
-		assertValueInList(4, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(4, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(4, "date", date);
-		assertValueInList(4, "time", time);
-		assertValueInList(4, "type", "Delete");
-		assertValueInList(4, "authorized", "Yes");
-		assertValueInList(4, "recordId", expectedRecordId);		
-		
-		assertValueInList(5, "application", "test");
-		assertValueInList(5, "model", "Warehouse");
-		assertValueInList(5, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(5, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(5, "date", date);
-		assertValueInList(5, "time", time);
-		assertValueInList(5, "type", "Read");
-		assertValueInList(5, "authorized", "Yes");
-		
-		assertTrue("The key of displayed data must be not empty", !Is.emptyString(getValueInList(5, "recordId")));
-		assertTrue("The key of displayed data must be different", !getValueInList(5, "recordId").equals("{zoneNumber=66, number=666}"));
+		assertErrorsCount(1);		
 	}
 		
 	public void testNavigateInListWithALotOfObjects() throws Exception { 

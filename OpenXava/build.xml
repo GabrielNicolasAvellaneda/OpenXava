@@ -29,7 +29,7 @@
 	<property name="server.properties.dir" value="../OpenXava/build/server-properties"/>
 	<property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>
 	<property name="model.package" value="model"/>
-	<property name="javac.version" value="1.5"/>
+	<property name="javac.version" value="1.6"/>
 	<property name="portlet.encoding" value="UTF-8"/>
 	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/deploy"/>
 	<property name="generate.jetspeed2.files" value="true"/>

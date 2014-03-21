@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- AccessTracking removed from OpenXava distribution.
+- Fix: Members inside @NoFrame are not aligned with the outside members. 
 - Performance of delete action in detail mode action improved.
 - Improved behavior with READ COMMITED isolation level.
 - New commit() and rollback() methods in BaseAction.
