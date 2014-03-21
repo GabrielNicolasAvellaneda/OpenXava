@@ -3,7 +3,6 @@
 	<name>OpenXavaTest</name>
 	<comment></comment>
 	<projects>
-		<project>AccessTracking</project>
 		<project>OpenXava</project>
 	</projects>
 	<buildSpec>

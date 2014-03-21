@@ -31,7 +31,6 @@
 	</target >
 		
 	<target name="rebuild">
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
 	</target>		
 
@@ -65,21 +64,18 @@
 	</target>		
 		       
 	<target name="createEJBJars">
-        <ant antfile="../OpenXava/build.xml" target="createEJBJar"/>      		
-		<ant antfile="../AccessTracking/build.xml" target="createEJBTracker"/>		
+        <ant antfile="../OpenXava/build.xml" target="createEJBJar"/>     
 	</target>
 	
 	<target name="deployEJB" depends ="createEJBJars">		
 		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
 	</target>
 					
-	<target name="deployWar">		
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 			
 	<target name="deploy">
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>
 		
@@ -88,7 +84,6 @@
 	</target>
 	
 	<target name="createWebSphere8War">
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="createWebSphere8War"/>     		
 	</target>
 	
@@ -98,8 +93,7 @@
 	
 	<target name="createWebsphereEar">
 		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>     		
-		<antcall target="createEJBJars"/>		
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+		<antcall target="createEJBJars"/>
 		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
 	</target>
 
@@ -107,18 +101,15 @@
 		<ant antfile="../OpenXava/build.xml" target="regeneratePortletGenerator"/>
 	</target>
 		
-	<target name="deployPortlets"> 
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+	<target name="deployPortlets">
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
 	
-	<target name="generatePortlets"> 
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+	<target name="generatePortlets">
 		<ant antfile="../OpenXava/build.xml" target="generatePortlets"/>
 	</target>			
 
-	<target name="redeployPortlets"> 
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+	<target name="redeployPortlets">
 		<ant antfile="../OpenXava/build.xml" target="redeployPortlets"/>
 	</target>
 
@@ -170,10 +161,6 @@
 	<target name="updateOX">
 		<ant antfile="../OpenXava/build.xml" target="updateOX"/>
 	</target>		
-	
-	<target name="updateAccessTracking">
-		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
-	</target>
 	
 	<target name="runTests">
 		<junit fork="true"  printsummary="true">
