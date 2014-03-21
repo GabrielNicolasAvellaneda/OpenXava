@@ -31,6 +31,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			getView().setKeyEditable(false); // To mark as saved
 		}
 		saveCollectionElement(containerKey);
+		commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)		
 		getView().setKeyEditable(false); // To mark as saved
 		getCollectionElementView().setCollectionEditingRow(-1);
 		getCollectionElementView().clear();

@@ -1884,7 +1884,7 @@ public class View implements java.io.Serializable {
 								if (calculator instanceof IJDBCCalculator) {
 									((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
 								}		
-								trySetValue(p.getName(), calculator.calculate()); 
+								trySetValue(p.getName(), calculator.calculate());  
 								alreadyPut.add(p.getName());
 							}					
 						}

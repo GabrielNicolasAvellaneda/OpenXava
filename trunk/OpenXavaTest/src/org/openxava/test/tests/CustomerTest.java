@@ -156,7 +156,7 @@ public class CustomerTest extends ModuleTestBase {
 		
 	public void testViewGetValueInGroup() throws Exception {
 		execute("CRUD.new");
-		assertValue("remarks", "");
+		assertValue("remarks", ""); 
 		setValue("relationWithSeller", "RELATION WITH SELLER JUNIT");
 		execute("Customer.moveRelationWithSellerToRemarks");
 		assertNoErrors();

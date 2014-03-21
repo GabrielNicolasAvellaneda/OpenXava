@@ -106,7 +106,8 @@ public class InvoiceDetail {
 		oid = invoice.getYear() + ":" + invoice.getNumber() + ":" + System.currentTimeMillis();
 	}
 	
-	@PostRemove
+	//@PostRemove // Literal translation of postremove-calculator, though it does not work fine with READ COMMITED 
+	@PreRemove  // Works fine with READ COMMITED, though it's not a literal translation of postremove-calculator XML component counterpart 
 	private void postRemove() {
 		invoice.setComment(invoice.getComment() + "DETAIL DELETED");
 	}

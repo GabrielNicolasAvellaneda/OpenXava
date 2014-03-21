@@ -18,7 +18,7 @@ public class Users {
 	final private static ThreadLocal current = new ThreadLocal(); 
 	final private static ThreadLocal currentUserInfo = new ThreadLocal();
 	public final static String ADMIN_OX = "__ADMINOX__";
-	public final static String SHARED_OX = "__SHAREDOX__";
+	public final static String SHARED_OX = "__SHAREDOX__"; 
 	
 	/**
 	 * The user name associated to the current thread. <p>

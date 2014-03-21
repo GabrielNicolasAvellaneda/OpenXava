@@ -47,6 +47,7 @@ public class SaveAction extends ViewBaseAction {
 			
 			if (isResetAfter()) {
 				getView().setKeyEditable(true);
+				commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)
 				getView().reset();				
 			}
 			else {				

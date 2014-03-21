@@ -461,7 +461,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertTrue(getPopupPDFLine(3).startsWith("2004 2"));		
 		
 		execute("ExtendedPrint.myReports");
-		execute("MyReport.remove", "xava.keyProperty=name");
+		execute("MyReport.remove", "xava.keyProperty=name"); 
 	}
 	
 	public void testFilterByRange() throws Exception{ 
@@ -702,7 +702,7 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		// Delete
 		execute("CRUD.delete");		
-		assertMessage("Invoice deleted successfully");				
+		assertMessage("Invoice deleted successfully");			
 	}
 	
 	public void testCustomizeListPaging() throws Exception { 
@@ -1074,7 +1074,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testCreateFromReference() throws Exception {
 		execute("CRUD.new");		
-		execute("Reference.createNew", "model=Customer,keyProperty=xava.Invoice.customer.number");
+		execute("Reference.createNew", "model=Customer,keyProperty=xava.Invoice.customer.number"); 
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");	
@@ -1198,7 +1198,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("customer.name", customerName);				
 	}
 	
-	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {   		
+	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {     		
 		// Create
 		execute("CRUD.new");					
 		assertExists("customer.number");
@@ -1223,7 +1223,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNotExists("vatPercentage");
 		
 		assertCollectionRowCount("details", 0);
-		
+
 		assertNoDialog();
 		execute("Collection.new", "viewObject=xava_view_section1_details");
 		assertDialog();
@@ -1249,7 +1249,7 @@ public class InvoiceTest extends ModuleTestBase {
 
 		assertNoEditable("year"); // Testing header is saved
 		assertNoEditable("number");
-		
+
 		// Testing if recalculate dependent properties
 		execute("Sections.change", "activeSection=2");
 		assertValue("amountsSum", getProductUnitPriceMultiplyBy("20")); 
@@ -1277,7 +1277,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("deliveryDate", getCurrentDate()); 
 		setValue("deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate
 		execute("Collection.save");
-		assertCollectionRowCount("details", 3); 
+		assertCollectionRowCount("details", 3);
 				
 		assertValueInCollection("details", 0, 0, "Urgent");
 		assertValueInCollection("details", 0, 1, getProductDescription());
@@ -1299,7 +1299,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("details", 2, 3, "20");
 		assertValueInCollection("details", 2, 4, getProductUnitPrice());
 		assertValueInCollection("details", 2, 5, getProductUnitPriceMultiplyBy("20"));
-										
+
 		execute("CRUD.save");
 		assertNoErrors();
 		assertValue("number", "");
@@ -1369,7 +1369,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("product.description", getProductDescription());
 		assertValue("quantity", "234");
 		assertValue("deliveryDate", "4/23/04");
-		closeDialog(); 
+		closeDialog();
 		
 		// Return to save and consult for see if the line is edited
 		execute("CRUD.save");
@@ -1412,7 +1412,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("product.description", getProductDescription());
 		assertValue("quantity", "234");
 		assertValue("deliveryDate", "4/23/04");
-		
+
 		// Remove a row from collection
 		execute("Collection.remove");
 		assertMessage("Invoice detail deleted from database");
@@ -1474,7 +1474,7 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=2");		 		
 		assertValue("amountsSum", getProductUnitPriceMultiplyBy("20"));
 		// end of recalculate testing		
-								
+
 		// Delete		
 		execute("CRUD.delete");
 		assertMessage("Invoice deleted successfully");
@@ -1570,7 +1570,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testDefaultValueCalculation() throws Exception {		
 		execute("CRUD.new");
-		assertValue("year", getCurrentYear());		
+		assertValue("year", getCurrentYear()); 		
 		assertValue("date", getCurrentDate());
 		assertValue("yearDiscount", getYearDiscount(getCurrentYear()));
 		setValue("year", "2002");

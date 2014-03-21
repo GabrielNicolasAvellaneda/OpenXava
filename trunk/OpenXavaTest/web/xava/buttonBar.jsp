@@ -6,7 +6,6 @@
 <%@ page import="org.openxava.controller.meta.MetaSubcontroller"%>
 <%@ page import="java.util.Collection"%>
 <%@ page import="org.openxava.web.Ids"%>
-<%@ page import="org.openxava.util.ReportsProviderFactory"%>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -30,9 +29,6 @@ if (manager.isButtonBarVisible()) {
 	while (it.hasNext()) {
 		MetaAction action = (MetaAction) it.next();
 		if (action.isHidden()) continue;
-		if ("adminReports".equals(action.getName()) &&  
-			!ReportsProviderFactory.getInstance().isCurrentUserAdminForReports(request)) 
-			continue;
 		if (action.appliesToMode(mode) && action.hasImage()) {
 		%>
 		<jsp:include page="barButton.jsp">

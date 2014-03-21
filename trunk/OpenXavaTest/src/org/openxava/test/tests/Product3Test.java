@@ -29,7 +29,7 @@ public class Product3Test extends ModuleTestBase {
 		assertTrue("description must have value", !Is.emptyString(description));
 	}
 	
-	public void testSearchingReferenceWithHiddenKeyTypingValue() throws Exception {
+	public void testSearchingReferenceWithHiddenKeyTypingValue() throws Exception { 
 		execute("CRUD.new");
 		assertEditable("family.number");
 		assertValue("family.description", "");
@@ -46,7 +46,7 @@ public class Product3Test extends ModuleTestBase {
 		assertValue("comments", "Family changed");		
 	}
 	
-	public void testReferenceWithHiddenKey_defaultValueCalculatorWithJDBC() throws Exception {
+	public void testReferenceWithHiddenKey_defaultValueCalculatorWithJDBC() throws Exception { 
 		execute("CRUD.new");		
 		assertValue("number", "78"); // to test default-value-calculator
 		setValue("number", "66");

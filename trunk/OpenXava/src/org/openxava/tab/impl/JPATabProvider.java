@@ -131,11 +131,11 @@ public class JPATabProvider extends TabProviderBase {
 		return r.toString();
 	}
 	
-	public DataChunk nextChunk() throws RemoteException {		
+	public DataChunk nextChunk() throws RemoteException {
 		if (getSelect() == null || isEOF()) { // search not called yet
 			return new DataChunk(Collections.EMPTY_LIST, true, getCurrent()); // Empty
 		}		
-		try { 
+		try {
 			List data = nextBlock();			
 			setCurrent(getCurrent() + data.size());			
 			setEOF(data.size() != getChunkSize());

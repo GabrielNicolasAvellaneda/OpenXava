@@ -1,7 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
-- Shared reports
+- Performance of delete action in detail mode action improved.
+- Improved behavior with READ COMMITED isolation level.
+- New commit() and rollback() methods in BaseAction.
+- The user can share a report of 'My reports' with all other users.
 - DWR upgraded to 2.0.10.
 - Groovy upgraded to 2.2.2.
 - JSTL upgraded to 1.2 using Apache Standard Taglibs 1.2.1.
@@ -22,7 +25,6 @@ Change Log for OpenXava project
 - Fix: assertListRowCount() method from ModuleTestBase fails when the value of summationInList property is false.
 - Fix: Subcontrollers fails in split mode.
 - Fix: Incorrect encoding in emails sent by Emails class.  
-
 
 OpenXava 4.9.1 (2014-2-3)
 -------------------------

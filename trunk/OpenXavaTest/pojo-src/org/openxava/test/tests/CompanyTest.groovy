@@ -35,18 +35,24 @@ class CompanyTest extends ModuleTestBase {
 		assertMessagesCount 1		
 	}	
 	
-	void testErrorOnCommitFromADialog() {
+	void testErrorOnCommitFromADialog() { 
 		execute "Mode.detailAndFirst"
 		assertNoDialog()		
 		execute "Collection.edit", "row=0,viewObject=xava_view_buildings"
 		assertDialog()
-		execute "Company.saveBuildingFailing"		
-		assertError "Impossible to execute Save building failing action: Transaction marked as rollbackOnly"
+		execute "Company.failTrasactionInBuilding"
+		assertError "Impossible to execute Fail trasaction in building action: Transaction marked as rollbackOnly"
 		assertNoDialog() // The dialog is closed because the exception is produced on commit when the
-			// dialog has been already closed by the action. If you want to produce exceptions on commit
-			// without closing the dialog use mapFacadeAutoCommit=true in xava.properties, or create your own actions
+			// dialog has been already closed by the action. 
 		execute "Reference.modify", "model=Building,keyProperty=mainBuilding.name"
 		assertNoErrors()
+		assertDialog()
+		
+		closeDialog()
+		execute "Collection.edit", "row=0,viewObject=xava_view_buildings"
+		assertDialog()
+		execute "Company.saveBuildingFailing"
+		assertError "Impossible to execute Save building failing action: Transaction marked as rollbackOnly"
 		assertDialog()
 	}
 	

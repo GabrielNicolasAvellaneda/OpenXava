@@ -131,8 +131,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 			rowCount = allLoaded ? this.data.size() : this.data.size() + 1;
 			fireModelChanged();
 		}
-		if (rowIndex >= rowCount)
-			return null; // P. ej. if list is empty
+		if (rowIndex >= rowCount) return null; // if list is empty, for example
 		return (Object[]) this.data.elementAt(rowIndex);
 	}
 	
@@ -147,7 +146,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 	public Object getObjectAt(int rowIndex) throws FinderException {
 		try {
 			Object[] key = new Object[indexesPK.length];
-			Object[] row = getRow(rowIndex);
+			Object[] row = getRow(rowIndex);			
 			if (row == null) {
 				return null;
 			}
@@ -310,6 +309,17 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 
 	public List getPropertiesNames() {
 		return propertiesNames;
+	}
+
+	public void removeRow(Map keyValues) throws FinderException { 		
+		for (int i=0; i<data.size(); i++) {
+			if (keyValues.equals(getObjectAt(i))) {
+				data.remove(i);
+				rowCount--;
+				if (totalSize != STILL_NO_OBTAINED) totalSize--; 
+				return;
+			}
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.model.*;
+import org.openxava.tab.impl.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -18,13 +19,14 @@ public class DeleteAction extends ViewDetailAction {
 		setIncrement(0);
 	}
 	
-	public void execute() throws Exception { 
+	public void execute() throws Exception {
 		if (getView().isKeyEditable()) {
 			addError("no_delete_not_exists");
 			return;
 		}
 		Map keyValues = getView().getKeyValues();
 		MapFacade.remove(getModelName(), keyValues);
+		commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)
 		resetDescriptionsCache();
 		addMessage("object_deleted", getModelName());
 		getView().clear();
@@ -36,8 +38,8 @@ public class DeleteAction extends ViewDetailAction {
 			removeSelected(keyValues);
 			selected = true;
 		}
-		else getTab().reset();		 		
-		super.execute(); // viewDetail
+		else getTab().cutOutRow(keyValues); 
+		super.execute(); 
 		if (isNoElementsInList()) {
 			if (
 				(!selected && getTab().getTotalSize() > 0) ||

@@ -10,6 +10,7 @@ import javax.sql.*;
 import javax.xml.parsers.*;
 
 import org.apache.commons.logging.*;
+import org.hibernate.*;
 import org.openxava.component.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;

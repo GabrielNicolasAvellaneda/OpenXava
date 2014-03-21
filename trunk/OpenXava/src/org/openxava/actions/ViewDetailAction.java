@@ -6,6 +6,7 @@ import javax.inject.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.tab.*;
+import org.openxava.tab.impl.*;
 import org.openxava.util.*;
 
 /**
@@ -35,7 +36,7 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		return getMainTab() != null ? getMainTab() : super.getTab();
 	}
 
-	public void execute() throws Exception {			
+	public void execute() throws Exception {
 		getView().setModelName(model); 
 		setAtListBegin(false);
 		setNoElementsInList(false);				
@@ -61,7 +62,6 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 				if (l.size() == index) key = null;	// last element
 				else key = (Map)l.get(index);	
 			}
-			
 		}
 		else{	// no hay seleccionados o hay fila específica
 			if (increment < 0 && row == 0) {
@@ -85,7 +85,6 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		if (key != null) {			
 			getView().setValues(key);									
 		}	
-				
 	}
 	
 	public int getRow() {

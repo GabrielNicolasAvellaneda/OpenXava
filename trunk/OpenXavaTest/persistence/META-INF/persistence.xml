@@ -19,7 +19,7 @@
             <property name="hibernate.current_session_context_class" 
                     value="com.autobizlogic.abl.session.LogicThreadLocalSessionContext"/>
             <property name="hibernate.jdbc.factory_class" 
-            		value="org.hibernate.jdbc.NonBatchingBatcherFactory"/>                                                                                                                                                                                          
+            		value="org.hibernate.jdbc.NonBatchingBatcherFactory"/>
         </properties>
     </persistence-unit>      
                         

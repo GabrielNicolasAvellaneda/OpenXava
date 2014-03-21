@@ -17,10 +17,11 @@ public class RemoveElementFromCollectionAction extends CollectionElementViewBase
 	
 	
 	public void execute() throws Exception {
-		try {											
-			if (!getCollectionElementView().getKeyValuesWithValue().isEmpty()) {
+		try {			
+			if (!getCollectionElementView().getKeyValuesWithValue().isEmpty()) {				
 				validateMinimum();
-				MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), getCollectionElementView().getKeyValues());
+				MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), getCollectionElementView().getKeyValues());				
+				commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)
 				if (isEntityReferencesCollection()) {
 					addMessage("association_removed", getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
 				}

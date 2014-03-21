@@ -1,11 +1,10 @@
 package org.openxava.tab.impl;
 
 import java.rmi.*;
+import java.util.*;
 
 import javax.ejb.*;
 import javax.swing.event.*;
-
-
 
 import org.openxava.util.*;
 
@@ -89,6 +88,10 @@ public class XTableModelDecoratorBase
 
 	public Number getSum(String property) throws RemoteException { 
 		return impl.getSum(property);		
+	}
+		
+	public void removeRow(Map keyValues) throws FinderException { 
+		impl.removeRow(keyValues);	
 	}
 	
 }
