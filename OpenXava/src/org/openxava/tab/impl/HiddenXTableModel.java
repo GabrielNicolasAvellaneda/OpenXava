@@ -22,7 +22,6 @@ public class HiddenXTableModel extends XTableModelDecoratorBase {
 
   private int [] indexes;
   private int columnCount;
-  
 
   /**
    * @param toDecorate  <tt>TableModel</tt> to decorate hidden columns
@@ -81,5 +80,5 @@ public class HiddenXTableModel extends XTableModelDecoratorBase {
   private int toOriginalColumn(int visibleColumn) {
   	return indexes[visibleColumn];
   }
-  
+    
 }

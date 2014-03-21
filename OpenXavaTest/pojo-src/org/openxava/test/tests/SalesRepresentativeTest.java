@@ -103,6 +103,7 @@ public class SalesRepresentativeTest extends ModuleTestBase{
 	private void removeData() throws Exception {
 		XPersistence.getManager().createQuery("delete from SalesRepresentative")
 				.executeUpdate();
+		XPersistence.commit(); 
 	}
 	
 }

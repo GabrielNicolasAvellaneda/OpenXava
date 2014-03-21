@@ -41,7 +41,7 @@ public class TreeViewNoDefaultPathTest extends TreeViewTestBase {
 		assertValueInTreeViewIgnoreCase("treeItemTwos", 6, "SUBITEM 1 OF 3");
 	}
 	
-	public void testTreeCRUD() throws Exception {
+	public void testTreeCRUD() throws Exception { 
 		execute("Mode.detailAndFirst");
 		// Test simple Save
 		execute("TreeView.new", "viewObject=xava_view_treeItemTwos");

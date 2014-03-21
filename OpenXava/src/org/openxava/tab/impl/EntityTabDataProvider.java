@@ -26,7 +26,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	private String componentName;
 	private IConnectionProvider connectionProvider;	
 		
-	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes /*, Collection tabConverters*/) throws RemoteException {			
+	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes /*, Collection tabConverters*/) throws RemoteException {
 		DataChunk tv = null;
 		try {
 			tv = tabProvider.nextChunk();
@@ -65,7 +65,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_calculate_properties_error"));
 		}
-							
+
 		return tv;
 	}
 	
@@ -82,7 +82,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		return connectionProvider;		
 	}	
 
-	private Object[] doCalculations(String modelName, Object[] row, Collection tabCalculators, Map keyIndexes, List propertiesNames) throws XavaException {		
+	private Object[] doCalculations(String modelName, Object[] row, Collection tabCalculators, Map keyIndexes, List propertiesNames) throws XavaException {
 		Object entity = null;
 		Iterator itCalculators = tabCalculators.iterator();
 		while (itCalculators.hasNext()) {

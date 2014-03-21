@@ -180,7 +180,7 @@
 		<collection-view collection="deliveries" view="InInvoice" read-only="true"/>
  
 		<members>
-			year, number, date, paid;
+			year, number, date, paid, detailsCount;
 			<group name="discounts">
 				customerDiscount, customerTypeDiscount, yearDiscount;
 			</group>;	

@@ -28,7 +28,7 @@ import org.openxava.util.*;
 @IdClass(InvoiceKey.class)
 @Views({	
 	@View(members=			
-		"year, number, date, paid;" +		
+		"year, number, date, paid, detailsCount;" + // detailsCount is useful for testing READ COMMITED (with HSQLDB 2)
 		"discounts [" +
 		"	customerDiscount, customerTypeDiscount, yearDiscount;" +
 		"];" +
@@ -319,7 +319,7 @@ public class Invoice {
 			}
 			catch (Exception ex) {				
 			}
-		}				
+		}
 	}
 	
 	@Depends("amountsSum")

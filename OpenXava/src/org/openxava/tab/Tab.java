@@ -355,7 +355,7 @@ public class Tab implements java.io.Serializable {
 	
 	private IXTableModel createTableModel() throws Exception {
 		IXTableModel tableModel = null;
-		EntityTab tab = EntityTabFactory.create(getMetaTab()); 
+		EntityTab tab = EntityTabFactory.create(getMetaTab());
 		usesConverters = tab.usesConverters();
 		tab.search(getCondition(), getKey());		
 		tableModel = tab.getTable();
@@ -2097,6 +2097,16 @@ public class Tab implements java.io.Serializable {
 
 	public boolean isIgnorePageRowCount() {
 		return ignorePageRowCount;
+	}
+
+	public void cutOutRow(Map keyValues) throws XavaException {
+		try {
+			((HiddenXTableModel) getTableModel()).removeRow(keyValues);
+		}
+		catch (Exception ex) {
+			log.error(XavaResources.getString("cut_out_row_error"), ex);
+			throw new XavaException("cut_out_row_error"); 
+		}
 	}
 
 }

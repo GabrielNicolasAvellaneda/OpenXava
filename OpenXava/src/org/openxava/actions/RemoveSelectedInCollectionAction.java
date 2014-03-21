@@ -26,6 +26,7 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 					Map values = (Map) it.next();
 					removeElement(values);
 				}
+				commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)
 				
 				if (isEntityReferencesCollection() && !getCollectionElementView().getMetaCollection().isOrphanRemoval()) { 
 					addMessage("association_removed", getCollectionElementView().getModelName(), 

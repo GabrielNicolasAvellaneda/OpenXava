@@ -49,7 +49,7 @@ public class ColorM1Test extends ModuleTestBase {
 		assertExists("property2Sub1");
 		reload();				
 		execute("ReturnPreviousModule.return");		
-		assertExists("property2");		
+		assertExists("property2"); 		
 		execute("ReturnPreviousModule.return");		
 		assertExists("property1");		
 	}

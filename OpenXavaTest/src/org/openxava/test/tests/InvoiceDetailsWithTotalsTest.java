@@ -67,7 +67,7 @@ public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
 		assertEquals("", header.asText());
 	}
 		
-	public void testFrameTotalsUpdated() throws Exception {
+	public void testFrameTotalsUpdated() throws Exception { 
 		execute("CRUD.new");
 		execute("CRUD.search");
 		setValue("year", "2004");

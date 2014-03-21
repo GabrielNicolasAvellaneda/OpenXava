@@ -84,8 +84,9 @@ public class Carrier {
 	@Condition(
 		"${warehouse.zoneNumber} = ${this.warehouse.zoneNumber} AND " + 
 		"${warehouse.number} = ${this.warehouse.number} AND " +
-		"NOT (${number} = ${this.number})"
+		"NOT (${number} = ${this.number})"		
 	)
+	@OrderBy("number") 
 	@Editor(forViews="FellowsNames", value="CarriersNames")
 	public Collection<Carrier> getFellowCarriers() { 
 		// At the moment you must write a code that returns the same result
@@ -94,7 +95,8 @@ public class Carrier {
 		Query query = XPersistence.getManager().createQuery("from Carrier c where " +
 			"c.warehouse.zoneNumber = :zone AND " + 
 			"c.warehouse.number = :warehouseNumber AND " + 
-			"NOT (c.number = :number) ");
+			"NOT (c.number = :number) " +
+			"order by c.number");  
 		query.setParameter("zone", getWarehouse().getZoneNumber());
 		query.setParameter("warehouseNumber", getWarehouse().getNumber());
 		query.setParameter("number",  getNumber());

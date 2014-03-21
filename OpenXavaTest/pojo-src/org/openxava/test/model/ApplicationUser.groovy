@@ -15,8 +15,6 @@ import org.openxava.model.*
  * 
  * It also allows testing UniqueConstraint on a single column.   
  * 
- * tmp ¿Poner en wiki? 
- *
  * @author Jeromy Altuna
  */
 @Entity

@@ -51,7 +51,7 @@ public class CallBackLogTest extends ModuleTestBase {
 		setValue("testName", "CREATE_TEST");
 		setValue("callbacks", "ERROR_ON_POST_PERSIST");
 		execute("CRUD.save");
-		assertErrorsCount(1);
+		assertErrorsCount(1); 
 		execute("Mode.list");
 		assertListRowCount(0);
 	}

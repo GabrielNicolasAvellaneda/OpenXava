@@ -14,6 +14,7 @@ public class ConversionFactorTest extends ModuleTestBase {
 		super.setUp();
 		XPersistence.getManager().createQuery("delete from ConversionFactor")
 				.executeUpdate();
+		XPersistence.commit(); 
 	}
 	
 	public void testDigits() throws Exception { 

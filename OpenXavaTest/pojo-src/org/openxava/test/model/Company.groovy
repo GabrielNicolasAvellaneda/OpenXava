@@ -13,7 +13,10 @@ import javax.persistence.*;
 class Company extends Nameable {
 		
 	@OneToMany(mappedBy="company", cascade=CascadeType.REMOVE)
-	@DetailAction("Company.saveBuildingFailing") 
+	@DetailActions([
+		@DetailAction("Company.saveBuildingFailing"),
+		@DetailAction("Company.failTrasactionInBuilding")
+	])	
 	Collection<Building> buildings
 	
 	@ReferenceView("Simple")

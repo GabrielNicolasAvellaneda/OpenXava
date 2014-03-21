@@ -53,7 +53,7 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 				nr = rs.getInt(1);
 			}
 			ps.close();
-			return nr+1;			
+			return nr+1;
 		}
 		catch (Exception ex) {
 			log.error(XavaResources.getString("next_integer_calculator_warning"),ex);

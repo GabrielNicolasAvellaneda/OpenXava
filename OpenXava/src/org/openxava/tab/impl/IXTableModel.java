@@ -1,6 +1,7 @@
 package org.openxava.tab.impl;
 
 import java.rmi.*;
+import java.util.*;
 
 import javax.ejb.*;
 
@@ -20,7 +21,13 @@ public interface IXTableModel extends IObjectTableModel, IRefreshTableModel {
 	Object getObjectAt(int rowIndex) throws FinderException;
 	// Included in IRefreshTableModel, but by CORBA whims
 	void refresh() throws TabException;
+	
 	void removeAllRows();
+	
+	/**
+	 * @since 5.0
+	 */
+	void removeRow(Map keyValues) throws FinderException; 
   
 	/**
 	 * Total count of objects represented by this table model. <p>

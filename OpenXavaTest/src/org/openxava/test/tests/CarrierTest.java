@@ -12,7 +12,7 @@ public class CarrierTest extends CarrierTestBase {
 	public CarrierTest(String testName) {
 		super(testName, "Carrier");		
 	}	
-		
+	
 	public void testRowActions() throws Exception {
 		execute("List.orderBy", "property=number"); 		
 		assertListRowCount(5);

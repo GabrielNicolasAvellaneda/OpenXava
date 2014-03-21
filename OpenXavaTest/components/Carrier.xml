@@ -32,6 +32,7 @@
 				${warehouse.number} = ${this.warehouse.number} AND 
 				NOT (${number} = ${this.number})
 			</condition>
+			<order>${number}</order>
 		</collection>
 		
 		<!-- The same that 'fellowCarriers' but implemented with a calculator -->
