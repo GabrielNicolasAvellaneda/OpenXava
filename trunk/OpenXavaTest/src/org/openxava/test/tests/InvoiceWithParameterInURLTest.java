@@ -42,7 +42,7 @@ public class InvoiceWithParameterInURLTest extends ModuleTestBase {
 	}
 	
 	public void testParametersInURL() throws Exception {
-		assertListRowCount(1); // Only one Invoice from 2002
+		assertListRowCount(1); // Only one Invoice from 2002 
 		execute("List.filter");
 		assertListRowCount(1);
 	}

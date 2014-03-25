@@ -13,7 +13,7 @@ class FilterBySubfamilyAndYearTest extends ModuleTestBase {
 	}
 	
 	void testTransientClassInheritance() {
-		assertExists "year"
+		assertExists "year" 
 		assertExists "subfamily.number"		
 	}
 		

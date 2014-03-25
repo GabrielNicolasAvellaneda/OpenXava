@@ -1,5 +1,6 @@
 package org.openxava.test.tests;
 
+import org.apache.commons.lang.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -24,23 +25,9 @@ class ApplicantTest extends ModuleTestBase {
 		assertValue "platform", "MULTIPLATFORM"		 
 	}
 	
-	void testWithNoHtmlHead() { 
+	void testHtmlHeadNotDuplicated() {
 		String html = getHtmlPage().getWebResponse().getContentAsString()
-		assertTrue html.contains("html>")
-		assertTrue html.contains("<head>")
-		assertTrue html.contains("</head>")
-		assertTrue html.contains("<body")
-		assertTrue html.contains("</body>")
-		assertTrue html.contains("</html>")
-		urlParameters = "htmlHead=false"
-		resetModule()
-		html = getHtmlPage().getWebResponse().getContentAsString()
-		assertFalse html.contains("html>")
-		assertFalse html.contains("<head>")
-		assertFalse html.contains("</head>")
-		assertFalse html.contains("<body")
-		assertFalse html.contains("</body>")
-		assertFalse html.contains("</html>")
+		assertEquals 1, StringUtils.countMatches(html, "<head>")
 	}
 	
 	@Override

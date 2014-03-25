@@ -642,15 +642,8 @@
 	</target>
 
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
-		<copy todir="../${project}/web/xava" overwrite="true">
-			<fileset dir="../OpenXava/web" excludes="WEB-INF/**,style/custom.css"/>
-		</copy>
-		<copy todir="../${project}/web/xava/style" overwrite="false">
-			<fileset file="../OpenXava/web/style/custom.css"/>
-		</copy>
-		<copy todir="../${project}/web/WEB-INF" overwrite="true">
-			<fileset dir="../OpenXava/web/WEB-INF"/>
-		</copy>
+		<antcall target="copyWeb"/>
+		<antcall target="copyAddons"/>
 		<antcall target="createWebXml"/>
 		<antcall target="filter"/>
 		<antcall target="createEditorsJS"/>
@@ -945,15 +938,8 @@
 	-->
 	<target name="updateOX">
 		<antcall target="copyDTDs"/>
-		<copy todir="../${project}/web/xava" overwrite="true" >
-			<fileset dir="../OpenXava/web" excludes="WEB-INF/**,style/custom.css"/>
-		</copy>
-		<copy todir="../${project}/web/xava/style" overwrite="false">
-			<fileset file="../OpenXava/web/style/custom.css"/>
-		</copy>
-		<copy todir="../${project}/web/WEB-INF" overwrite="true">
-			<fileset dir="../OpenXava/web/WEB-INF"/>
-		</copy>
+		<antcall target="copyWeb"/>
+		<antcall target="copyAddons"/>
 		<antcall target="createWebXml"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
 		<!-- Delete the old Hibernate jars (used until v4m5) -->
@@ -993,6 +979,27 @@
 		<delete file="../${project}/web/xava/images/hide-filter.gif"/>
 		<delete file="../${project}/web/xava/style/ipad/images/customize.gif"/>
 		<delete file="../${project}/web/xava/style/ipad/images/hide-filter.gif"/>
+	</target>
+	
+	<target name="copyWeb">
+		<copy todir="../${project}/web/xava" overwrite="true" >
+			<fileset dir="../OpenXava/web" excludes="WEB-INF/**,style/custom.css"/>
+		</copy>
+		<copy todir="../${project}/web/xava/style" overwrite="false">
+			<fileset file="../OpenXava/web/style/custom.css"/>
+		</copy>
+		<copy todir="../${project}/web/WEB-INF" overwrite="true">
+			<fileset dir="../OpenXava/web/WEB-INF"/>
+		</copy>
+	</target>
+
+	<target name="copyAddons">
+		<copy todir="../${project}/web" overwrite="true" failonerror="false">
+			<fileset dir="../OpenXava/addons/web"/>
+		</copy>
+		<copy todir="../${project}/properties" overwrite="false" failonerror="false">
+			<fileset dir="../OpenXava/addons/properties-templates"/>
+		</copy>						
 	</target>
 
 	<target name="defineHibernateTool">

@@ -36,7 +36,7 @@ public class IssueWebTest extends ModuleTestBase {
 		// let's get locale es - español for companyA
 		newParameters="?schema=companya&locale=es";
 		resetModule();
-		assertLabelInList(1, "Descripción");
+		assertLabelInList(1, "Descripción"); 
 		
 		// let's test language / country
 		newParameters="?schema=companya&locale=es_DO";

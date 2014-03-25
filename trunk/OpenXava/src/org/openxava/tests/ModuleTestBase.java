@@ -562,7 +562,7 @@ public class ModuleTestBase extends TestCase {
 			return "http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/" + application + "/" + folder + module + ".psml";
 		}
 		else {
-			return "http://" + getHost() + ":" + getPort() + "/" + application + "/modules/" + module; 
+			return "http://" + getHost() + ":" + getPort() + "/" + application + "/modules/" + module + "?modulesLimit=0";
 		}
 	}
 	
@@ -675,9 +675,10 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private HtmlAnchor getAnchorForAction(String action, String arguments) {
-		String moduleMarkForAnchor = "executeAction('" + application + "', '" + module + "'";		
+		String moduleMarkForAnchor = "executeAction('" + application + "', '" + module + "'";
+		
 		for (Iterator it = page.getAnchors().iterator(); it.hasNext(); ) {			
-			HtmlAnchor anchor = (HtmlAnchor) it.next();			
+			HtmlAnchor anchor = (HtmlAnchor) it.next();
 			if (arguments != null) { // 'List.viewDetail', 'row=0'				
 				if (
 					(
