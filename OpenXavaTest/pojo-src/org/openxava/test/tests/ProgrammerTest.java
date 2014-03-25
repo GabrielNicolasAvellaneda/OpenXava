@@ -47,7 +47,7 @@ public class ProgrammerTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		setModel("JavaProgrammer");  
 		assertValue("name", "JAVI");
-		assertCollectionRowCount("experiences", 0);
+		assertCollectionRowCount("experiences", 0); 
 		execute("Collection.new", "viewObject=xava_view_experiences");
 		assertExists("name");
 		assertExists("description");

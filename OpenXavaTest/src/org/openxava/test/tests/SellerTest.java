@@ -64,7 +64,7 @@ public class SellerTest extends ModuleTestBase {
 		for (int i=0; i<c; i++) {
 			String type = getValueInCollection("customers", i, "type");			
 			if ("Steady".equals(type)) {				
-				assertRowStyleInCollection("customers", i, "row-highlight");				
+				assertRowStyleInCollection("customers", i, "row-highlight"); 				
 				found = true;
 			}
 			else {

@@ -10,7 +10,8 @@ import org.openxava.annotations.*;
  */
 
 @Entity
-@View(name="SimplestProgrammer") 
+@View(name="SimplestProgrammer")
+@Tab(defaultOrder="name desc")
 public class Experience extends Nameable {
 	
 	@ManyToOne

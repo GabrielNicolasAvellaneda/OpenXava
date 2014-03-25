@@ -54,7 +54,7 @@ class ExperienceTest extends ModuleTestBase {
 		execute "Mode.list"
 		assertListRowCount 2
 		execute "Mode.detailAndFirst"
-		assertValue "name", "SICAL"
+		assertValue "name", "SICAL" 
 		assertValue "programmer.name", "JUANJO" 
 		assertNotExists "programmer.favouriteFramework"
 		execute "Navigation.next"
