@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Module navigation: Left searchable menu with all modules and top menu with recently used modules.   	 
+- Login/​logout functionality.  	 
+- New look and feel.
 - AccessTracking removed from OpenXava distribution.
 - Fix: Members inside @NoFrame are not aligned with the outside members. 
 - Performance of delete action in detail mode action improved.
