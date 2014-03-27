@@ -30,7 +30,7 @@ public class Maps {
 		if (m == null)
 			return null;
 		try {
-			return (Map) Objects.clone(m);
+			return (Map) XObjects.clone(m); 
 		}
 		catch (CloneNotSupportedException ex) {
 			return manualClone(m);

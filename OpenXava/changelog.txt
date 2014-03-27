@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Objects class from org.openxava.util removed, you can use XObjects instead.
 - Module navigation: Left searchable menu with all modules and top menu with recently used modules.   	 
 - Login/​logout functionality.  	 
 - New look and feel.
