@@ -115,7 +115,7 @@ public class Is {
 
 	private static Integer enumToInteger(Object theEnum) {
 		try {
-			return (Integer) Objects.execute(theEnum, "ordinal");
+			return (Integer) XObjects.execute(theEnum, "ordinal"); 
 		}
 		catch (Exception ex) {
 			throw new XavaException("enum_to_integer_error");
