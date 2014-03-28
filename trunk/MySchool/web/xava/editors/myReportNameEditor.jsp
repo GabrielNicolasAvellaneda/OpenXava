@@ -27,42 +27,37 @@ boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel() || "true".equalsIgnoreCase(request.getParameter("readOnlyAsLabel"));
 org.openxava.session.MyReport report = (org.openxava.session.MyReport) view.getModel();
 
-java.lang.Boolean fromAdminReportsAction = (java.lang.Boolean) context.get(request, "xava_fromAdminReportsAction");
-String[] adminUserDescriptions = report.getAllNamesAdminUser();
+String[] sharedDescriptions = report.getAllNamesSharedUser();
 String[] currentUserDescription = report.getAllNamesCurrentUser();
-String sufix = !fromAdminReportsAction ? Labels.get("adminReportSufix") : "";
+String suffix = Labels.get("sharedReportSuffix");
 if (!editable) {
 %>
 <select id="<%=propertyKey%>" name="<%=propertyKey%>" tabindex="1" class=<%=style.getEditor()%> <%=script%> title="<%=title%>">	
 <%	
-	
 	// current user
-	if (!fromAdminReportsAction){
-		for (int i=0; i<currentUserDescription.length; i++) {
-			String selected = "";
-			String description = currentUserDescription[i];		
-			if (Is.equalAsStringIgnoreCase(fvalue, description)) {
-				selected = "selected"; 
-			} 		
-	%>
-		<option value="<%=description%>" <%=selected%>><%=description%></option>
-	<%
-		} // del for currentUserDescription
-	} // if !fromAdminReportsAction
-	
-	// admin user
-	for (int i=0; i<adminUserDescriptions.length; i++) {
+	for (int i=0; i<currentUserDescription.length; i++) {
 		String selected = "";
-		String description = adminUserDescriptions[i];
-		String descriptionKey = description + MyReport.ADMIN_REPORT;
-		if (!fvalue.endsWith(MyReport.ADMIN_REPORT)) fvalue = fvalue + MyReport.ADMIN_REPORT;
-		if (Is.equalAsStringIgnoreCase(fvalue, descriptionKey)) {
+		String description = currentUserDescription[i];
+		if (Is.equalAsStringIgnoreCase(fvalue, description)) {
 			selected = "selected"; 
 		} 		
 	%>
-	<option value="<%=descriptionKey%>" <%=selected%>><%=description%> <%=sufix%></option>
+		<option value="<%=description%>" <%=selected%>><%=description%></option>
 	<%
-	} // del for adminUserDescription
+	}
+	
+	// shared reports
+	for (int i=0; i<sharedDescriptions.length; i++){
+		String selected = "";
+		String description = sharedDescriptions[i];
+		String descriptionKey = description + MyReport.SHARED_REPORT;
+		if (Is.equalAsStringIgnoreCase(fvalue, descriptionKey)) {
+			selected = "selected"; 
+		}
+	%>
+		<option value="<%=descriptionKey%>" <%=selected%>><%=description%> <%=suffix%></option>
+	<%
+	} 
 %>
 </select>
 <input type="hidden" name="<%=propertyKey%>__DESCRIPTION__" value="<%=fvalue%>">
