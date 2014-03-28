@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.0beta (2014-3-28)
+----------------------------
+- MiEscuela project removed from distribution.
+- New renderer engine to layout the user interface.
 - Objects class from org.openxava.util removed, you can use XObjects instead.
 - Module navigation: Left searchable menu with all modules and top menu with recently used modules.   	 
 - Login/​logout functionality.  	 
