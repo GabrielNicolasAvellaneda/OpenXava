@@ -3,38 +3,39 @@ Change Log for OpenXava project
 
 OpenXava 5.0beta (2014-3-28)
 ----------------------------
-- MiEscuela project removed from distribution.
-- New renderer engine to layout the user interface.
-- Objects class from org.openxava.util removed, you can use XObjects instead.
-- Module navigation: Left searchable menu with all modules and top menu with recently used modules.   	 
-- Login/​logout functionality.  	 
 - New look and feel.
-- AccessTracking removed from OpenXava distribution.
-- Fix: Members inside @NoFrame are not aligned with the outside members. 
-- Performance of delete action in detail mode action improved.
-- Improved behavior with READ COMMITED isolation level.
-- New commit() and rollback() methods in BaseAction.
+- Login/​logout functionality.  	 
+- Module navigation: Left searchable menu with all modules and top menu with recently used modules.   	 
+- New renderer engine to layout the user interface.
 - The user can share a report of 'My reports' with all other users.
-- DWR upgraded to 2.0.10.
+- Dropped Java 5 support, from now on Java 6 or better is required.
+- Dropped WebSphere 6.1 and WebSphere Portal 6.1 support.
+- Dropped Tomcat 5.5 support.
 - Groovy upgraded to 2.2.2.
+- JasperReports upgraded to 5.5.1.
+- DWR upgraded to 2.0.10.
 - JSTL upgraded to 1.2 using Apache Standard Taglibs 1.2.1.
 - JavaMail upgraded to 1.5.1.
-- Fix: Double border when using .ox-frame in the CSS with new renderer.
-- Fix: Totals in collections frames are not shown with the new renderer.
-- JasperReports upgraded to 5.5.1.
 - Upgrade of commons libraries to: beanutils 1.8.0, logging 1.1.1, digester 2.1, codec 1.9, fileupload 1.3.1, io 2.4, lang 2.6, validator 1.4.0.
 - Added Commons Lang3 3.2.1 library.
 - Removed jakarta-oro library, only used by older commons-validator.
 - Upgrade to Servlet 2.5 and JSP 2.1.
-- Dropped Tomcat 5.5 support.
 - ejb.jar and jpa.jar added to WEB-INF/lib to facilitate deploying in Tomcat. 
-- Dropped Java 5 support, from now on Java 6 or better is required.
-- Dropped WebSphere 6.1 and WebSphere Portal 6.1 support.
+- Tomcat 7 included in distribution.
+- MiEscuela project removed from distribution.
+- AccessTracking removed from OpenXava distribution.
+- Objects class from org.openxava.util removed, you can use XObjects instead.
+- Performance of delete action in detail mode action improved.
+- Improved behavior with READ COMMITED isolation level.
+- New commit() and rollback() methods in BaseAction.
 - Methods Is.emptyString() and Is.emptyStringAll() allow infinite number of arguments.
 - clearCondition() method removed from ModuleTestBase.
+- Fix: Double border when using .ox-frame in the CSS with new renderer.
+- Fix: Totals in collections frames are not shown with the new renderer.
 - Fix: assertListRowCount() method from ModuleTestBase fails when the value of summationInList property is false.
 - Fix: Subcontrollers fails in split mode.
-- Fix: Incorrect encoding in emails sent by Emails class.  
+- Fix: Incorrect encoding in emails sent by Emails class.
+- Fix: Members inside @NoFrame are not aligned with the outside members. 
 
 OpenXava 4.9.1 (2014-2-3)
 -------------------------
