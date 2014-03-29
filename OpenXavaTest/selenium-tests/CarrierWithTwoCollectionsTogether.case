@@ -53,12 +53,12 @@
 </tr>
 <tr>
 	<td>storeElementWidth</td>
-	<td>css=.portlet-content</td>
+	<td>css=.ox-layout-content</td>
 	<td>width</td>
 </tr>
 <tr>
 	<td>storeElementPositionLeft</td>
-	<td>css=.portlet-content</td>
+	<td>css=.ox-layout-content</td>
 	<td>left</td>
 </tr>
 <tr>
@@ -104,7 +104,17 @@
 <!--within the container-->
 <tr>
 	<td>echo</td>
-	<td>This test will ALWAYS fail, since the table has a bigger value. Manual visual must be performed</td>
+	<td>This test will ALWAYS fail,</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>since the table has a bigger value.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>Human Visual check must be performed</td>
 	<td></td>
 </tr>
 <tr>

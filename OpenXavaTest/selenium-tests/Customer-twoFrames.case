@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>waitForTitle</td>
-	<td>OpenXavaTest - Customers management</td>
+	<td>OpenXavaTest - Customers</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,12 +33,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>css=td.portlet-msg-success</td>
+	<td>css=div.ox-message-box</td>
 	<td>OnChangeVoidAction executed</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>css=td.portlet-msg-success</td>
+	<td>css=div.ox-message-box</td>
 	<td>OnChangeVoidAction executed</td>
 </tr>
 <tr>

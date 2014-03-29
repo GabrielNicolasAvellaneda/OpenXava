@@ -52,6 +52,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>css=img[alt=&quot; - Sum&quot;]</td>
+	<td>present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${present}&quot; != &quot;true&quot;</td>
+	<td>afterShowSum</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=img[alt=&quot; - Sum&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterShowSum</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>//div[@id='ox_OpenXavaTest_InvoiceDetailsWithTotals__collection_details___']/table/tbody/tr[2]/td/table/tbody/tr/td[2]</td>
 	<td>There are 2 records in list</td>
@@ -63,23 +88,28 @@
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.liferay-xava-cell-wrapper &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col0 &gt; nobr</td>
+	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col0 &gt; nobr</td>
 	<td>expectedDate</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.liferay-xava-cell-wrapper &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col2 &gt; nobr</td>
+	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col2 &gt; nobr</td>
 	<td>expectedUnitPrice</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.liferay-xava-cell-wrapper &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col3 &gt; nobr</td>
+	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col3 &gt; nobr</td>
 	<td>expectedQuantity</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.liferay-xava-cell-wrapper &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col4 &gt; nobr</td>
+	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col4 &gt; nobr</td>
 	<td>expectedSubtotal</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//table[@id='ox_OpenXavaTest_InvoiceDetailsWithTotals__details']/tbody/tr[6]/td[7]/div</td>
+	<td>expectedVat</td>
 </tr>
 <tr>
 	<td>storeText</td>
@@ -139,6 +169,16 @@
 <tr>
 	<td>pause</td>
 	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=img[alt=&quot; - Remove column sum&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>

@@ -28,8 +28,18 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>1000</td>
+	<td>2000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>link=Data</td>
+	<td>present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${present}&quot; != &quot;true&quot;</td>
+	<td>afterLinkData</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -39,6 +49,11 @@
 <tr>
 	<td>pause</td>
 	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterLinkData</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,12 +69,12 @@
 <!--Test Data Section-->
 <tr>
 	<td>assertText</td>
-	<td>css=td &gt; span.portlet-title</td>
+	<td>id=ox_OpenXavaTest_CarrierWithSections__label_drivingLicence</td>
 	<td>Driving licence</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='ox_OpenXavaTest_CarrierWithSections__sections_xava_view']/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[3]/td/table/tbody/tr/td/table/tbody/tr/td/div/div/table/tbody/tr/td/span</td>
+	<td>id=ox_OpenXavaTest_CarrierWithSections__label_warehouse</td>
 	<td>Warehouse</td>
 </tr>
 <tr>
@@ -163,7 +178,6 @@
 	<td>link=Data</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
