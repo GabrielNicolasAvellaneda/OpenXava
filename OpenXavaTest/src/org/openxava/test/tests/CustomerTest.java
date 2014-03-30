@@ -730,4 +730,14 @@ public class CustomerTest extends ModuleTestBase {
 		
 	}
 	
+	public void testDescriptionValidValuesEditor() throws Exception {
+		execute("CRUD.new");
+		assertValue("type", "0");
+		setValue("type", "1");
+		assertValue("type", "1");
+		setValue("type", "2");
+		assertValue("type", "2");
+	}
+			
+
 }

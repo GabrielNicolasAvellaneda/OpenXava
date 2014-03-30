@@ -23,7 +23,7 @@ if (validValuesProperty.hasValidValues()) {
 			value = ((Number) ovalue).intValue();
 		}
 		else { // An object of enum type
-			value = ((Integer) org.openxava.util.Objects.execute(ovalue, "ordinal")).intValue();
+			value = ((Integer) org.openxava.util.XObjects.execute(ovalue, "ordinal")).intValue();
 		}
 	}
 	int labelIndex = p != validValuesProperty && validValuesProperty.getMetaModel().isAnnotatedEJB3()?value - 1:value; 
