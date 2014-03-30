@@ -84,6 +84,36 @@
 </tr>
 <tr>
 	<td>storeElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_CarrierWithSections__label_drivingLicence</td>
+	<td>drivingLicenceLeft</td>
+</tr>
+<tr>
+	<td>storeElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_CarrierWithSections__label_warehouse</td>
+	<td>warehouseLeft</td>
+</tr>
+<tr>
+	<td>storeElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_CarrierWithSections__label_key</td>
+	<td>keyLeft</td>
+</tr>
+<tr>
+	<td>assertEval</td>
+	<td>${drivingLicenceLeft} &lt;= 50</td>
+	<td>true</td>
+</tr>
+<tr>
+	<td>assertEval</td>
+	<td>${warehouseLeft} &lt;= 50</td>
+	<td>true</td>
+</tr>
+<tr>
+	<td>assertEval</td>
+	<td>${keyLeft} &lt;= 70</td>
+	<td>true</td>
+</tr>
+<tr>
+	<td>storeElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CarrierWithSections__drivingLicence___type</td>
 	<td>left</td>
 </tr>

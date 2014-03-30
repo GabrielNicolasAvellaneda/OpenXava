@@ -1176,14 +1176,59 @@ public class Style {
 		return 8;
 	}
 	
-	
 	/**
 	 * @param width Width of the table container.
 	 * @param sibling If true this frame is a sibling (to the right) frame.
 	 * @return String representing the decoration of the frame.
-	 * @since 5.0.0
+	 * @since 5.0
 	 */
 	public String getFrameHeaderStartDecoration(int width, boolean sibling) {
-		return getFrameHeaderStartDecoration(width);
+		StringBuffer returnValue = new StringBuffer(getFrameHeaderStartDecoration(width));
+		// This is a heuristic approach to have subclasses of Style working without changes, 
+		// but it should be implemented in the subclass itself.
+		// The implementation should take into consideration the state of the sibling parameter.
+		if (sibling) {
+			if (!replacedFrameHeaderClass(returnValue, "'")) {
+				if (!replacedFrameHeaderClass(returnValue, "'", " ")) {
+					if (!replacedFrameHeaderClass(returnValue, "\"")) {
+						replacedFrameHeaderClass(returnValue, "\"", " ");
+					}
+				}
+			}
+		}
+		return returnValue.toString();
+	}
+
+	/**
+	 * Determines if the html content has a class attribute with the getFrame() code and replace its content
+	 * with getFrame() getFrameSibling combination.
+	 * @param html Html text to be manipulated.
+	 * @param delimiterChars Characters used as left most delimiter for the class attribute content.
+	 * @return True if the html text contains the class attribute with the getFrame() code and was updated.
+	 * @since 5.0
+	 */
+	private boolean replacedFrameHeaderClass(StringBuffer html, String delimiterChars) {
+		return replacedFrameHeaderClass(html, delimiterChars, delimiterChars);
+	}
+
+	/**
+	 * Determines if the html content has a class attribute with the getFrame() code and replace its content
+	 * with getFrame() getFrameSibling combination.
+	 * @param html Html text to be manipulated.
+	 * @param starDelimiter Characters used as left most delimiter for the class attribute content.
+	 * @param endDelimiter Characters used as right most delimiter for the class attribute content.
+	 * @return True if the html text contains the class attribute with the getFrame() code and was updated.
+	 * @since 5.0
+	 */
+	private boolean replacedFrameHeaderClass(StringBuffer html, String startDelimiter, String endDelimiter) {
+		boolean returnValue = false;
+		String toLookFor = "class=" + startDelimiter + getFrame() + endDelimiter;
+		if (html.toString().contains(toLookFor)) {
+			String replacedString = html.toString().replace("class=" + startDelimiter + getFrame() + endDelimiter, "class=" + startDelimiter + getFrame() + " " + getFrameSibling() + endDelimiter);
+			html.delete(0, html.length());
+			html.append(replacedString);
+			returnValue = true;
+		}
+		return returnValue;
 	}
 }
