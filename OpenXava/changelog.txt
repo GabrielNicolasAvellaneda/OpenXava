@@ -1,8 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
-OpenXava 5.0beta (2014-3-28)
-----------------------------
+- New NoCustomizeList controller for disabling list customization to a specific module.
 - New look and feel.
 - Login/​logout functionality.  	 
 - Module navigation: Left searchable menu with all modules and top menu with recently used modules.   	 

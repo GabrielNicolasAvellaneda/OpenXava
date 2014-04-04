@@ -319,6 +319,13 @@ here that you want to override.
 				
 	</controller>
 	
+	<controller name="NoCustomizeList">
+        <action name="disableCustomizeList" mode="list"
+                hidden="true" on-init="true"
+                class="org.openxava.actions.DisableCustomizeListAction">
+        </action>
+	</controller>
+	
 	<controller name="Search">  
 		<action name="search" class="org.openxava.actions.SearchDialogAction"/> 
 		<action name="cancel" class="org.openxava.actions.CancelDialogAction"/> 
