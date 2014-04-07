@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Using module.jsp to execute modules from browser is no longer supported.
 - New NoCustomizeList controller for disabling list customization to a specific module.
 - New look and feel.
 - Login/​logout functionality.  	 
