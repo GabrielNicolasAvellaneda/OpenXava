@@ -127,7 +127,7 @@ public class XavaPreferences {
 
 	public String getStyleClass() {
 		return getProperties().getProperty("styleClass",
-				"com.openxava.naviox.style.NaviOXStyle").trim(); 
+				"com.openxava.naviox.web.NaviOXStyle").trim();
 	}
 
 	public String getStyleCSS() {
