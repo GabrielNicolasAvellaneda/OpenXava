@@ -7,6 +7,12 @@ Put here your own style
 	color: #FF0000;
 }
 
+/* To have less height for rows 
+.ox-list-pair, .ox-list-odd {  
+	height: 20px;
+}
+*/
+
 /* 
 body {
 	font-size: 9px;
