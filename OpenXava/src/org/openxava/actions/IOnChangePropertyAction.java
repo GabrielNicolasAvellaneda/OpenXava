@@ -13,7 +13,6 @@ public interface IOnChangePropertyAction extends IAction {
 	
 	void setNewValue(Object value);
 	
-	// tmp doc y wiki
 	void setView(View view);
 
 }

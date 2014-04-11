@@ -18,7 +18,7 @@ public class TreeViewDefaultPathTest extends TreeViewTestBase {
 	public void testIfActionsPresent() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
-		assertAction("TreeView.new");
+		assertAction("TreeView.new"); 
 		assertAction("TreeView.removeSelected");
 		assertAction("Print.generatePdf"); 
 		assertAction("Print.generateExcel");

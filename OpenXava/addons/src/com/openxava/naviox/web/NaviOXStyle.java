@@ -13,7 +13,7 @@ public class NaviOXStyle extends Style {
 	
 	private static NaviOXStyle instance = null;
 
-	protected NaviOXStyle() {
+	public NaviOXStyle() {
 	}
 	
 	protected String getJQueryCss() { 

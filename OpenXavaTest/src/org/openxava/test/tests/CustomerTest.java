@@ -314,7 +314,7 @@ public class CustomerTest extends ModuleTestBase {
 		setValue("name", "PEPE");
 		assertValue("type", usesAnnotatedPOJO()?"0":"1");
 		setValue("name", "JAVI");
-		assertValue("type", usesAnnotatedPOJO()?"1":"2");		
+		assertValue("type", usesAnnotatedPOJO()?"1":"2"); 		
 	}	
 		
 	

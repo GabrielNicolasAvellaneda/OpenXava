@@ -1707,6 +1707,15 @@ public class AnnotatedClassParser {
 				}
 			}
 			
+			// Collapsed
+			if (element.isAnnotationPresent(Collapsed.class)) {						
+				Collapsed collapsed = element.getAnnotation(Collapsed.class);
+				if (isForView(metaView, collapsed.forViews(), collapsed.notForViews())) {
+					collectionView.setCollapsed(true);
+					mustAddMetaView = true;				
+				}
+			}
+			
 			if (mustAddMetaView) {				
 				metaView.addMetaViewCollection(collectionView);
 			}
@@ -2119,6 +2128,15 @@ public class AnnotatedClassParser {
 						referenceView.setSearchListCondition(searchListCondition.value());
 						mustAddMetaView = true;
 					}
+				}
+			}
+			
+			// Collapsed
+			if (element.isAnnotationPresent(Collapsed.class)) {						
+				Collapsed collapsed = element.getAnnotation(Collapsed.class);
+				if (isForView(metaView, collapsed.forViews(), collapsed.notForViews())) {
+					referenceView.setCollapsed(true);
+					mustAddMetaView = true;				
 				}
 			}
 			

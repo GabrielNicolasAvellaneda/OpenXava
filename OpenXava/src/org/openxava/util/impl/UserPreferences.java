@@ -41,7 +41,7 @@ public class UserPreferences extends AbstractPreferences {
 			preferences = new UserPreferences(null, "", userName);						
 			preferences.syncSpi();						
 			preferencesByUser.put(userName, preferences);
-		}
+		}		
 		return preferences;
 	}
 		

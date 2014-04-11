@@ -168,7 +168,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 			write(getStyle().getFrameTitleEndDecoration());
 			write(getStyle().getFrameActionsStartDecoration());
-				String frameId = Ids.decorate(getRequest(), "frame_group_" + getView().getPropertyPrefix() + element.getName());
+				String frameId = Ids.decorate(getRequest(), "frame_" + getView().getPropertyPrefix() + element.getName());
 				String frameActionsURL = "frameActions.jsp?frameId=" + frameId + 
 					"&closed=" + getView().isFrameClosed(frameId);
 				includeJspPage(frameActionsURL);
