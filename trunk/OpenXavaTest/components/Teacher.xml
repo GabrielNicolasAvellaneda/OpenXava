@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Teacher">
+
+	<entity>
+		<property name="name" type="String" required="true"/>
+		<reference name="school"/>			  
+	</entity>
+	
+	<view>
+		<reference-view reference="school" collapsed="true"/>
+	</view>
+	
+	<transient/>	
+				
+</component>
+

@@ -22,7 +22,7 @@ public class ServiceTest extends ModuleTestBase {
 		setValue("family", "1");		
 		assertFocusOn("detail.subfamily");
 		setValue("detail.subfamily", "1");
-		assertFocusOn("detail.type");
+		assertFocusOn("detail.type"); 
 	}
 	
 	

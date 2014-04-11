@@ -7,7 +7,6 @@ import javax.inject.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.validator.*;
-import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -111,16 +110,6 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 					addError(message, bean);					
 				}
 			}					
-		}
-	}
-	
-	private void validateMaximum(int elementsToAdd) throws ValidationException, XavaException{
-		MetaCollection metaCollection = getMetaCollection();
-		int maximum = metaCollection.getMaximum();
-		if(maximum > 0 && (getCollectionElementView().getCollectionSize() + elementsToAdd) > maximum){
-			Messages errors = new Messages();
-			errors.add("maximum_elements", new Integer(maximum), metaCollection.getName(), metaCollection.getMetaModel().getName());
-			throw new ValidationException(errors);
 		}
 	}
 	

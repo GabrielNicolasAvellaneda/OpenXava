@@ -19,6 +19,7 @@ public class MetaMemberView {
 	private Collection alwaysEnabledActionsNames;
 	private String editor;
 	private String searchListCondition;
+	private boolean collapsed;
 	
 	
 	
@@ -50,4 +51,11 @@ public class MetaMemberView {
 		return searchListCondition;
 	}		
 	
+	public boolean isCollapsed() {
+		return collapsed;
+	}
+
+	public void setCollapsed(boolean collapsed) {
+		this.collapsed = collapsed;
+	}
 }

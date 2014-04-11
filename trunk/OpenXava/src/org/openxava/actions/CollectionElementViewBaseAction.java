@@ -2,6 +2,7 @@ package org.openxava.actions;
 
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
+import org.openxava.validators.ValidationException;
 import org.openxava.view.*;
 
 /**
@@ -54,6 +55,30 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	/**@Since 4.9.1*/ 
 	protected MetaCollection getMetaCollection() throws ElementNotFoundException, XavaException {
 		return getCollectionElementView().getParent().getMetaModel().getMetaCollection(getCollectionElementView().getMemberName());
+	}
+	
+	protected void validateMinimum(int elementsToRemove) throws ValidationException, XavaException {
+		MetaCollection metaCollection = getMetaCollection();
+		int minimum = metaCollection.getMinimum();
+		if(minimum > 0) {
+			if(getCollectionElementView().getCollectionSize() - elementsToRemove < minimum) {
+				Messages errors = new Messages();
+				errors.add("minimum_elements", new Integer(minimum), minimum == 1?"element":"elements",	metaCollection.getName());				
+				throw new ValidationException(errors);
+			}
+		}
+	}
+	
+	protected void validateMaximum(int elementsToAdd) throws ValidationException, XavaException {
+		MetaCollection metaCollection = getMetaCollection();
+		int maximum = metaCollection.getMaximum();
+		if(maximum > 0) { 
+			if(getCollectionElementView().getCollectionSize() + elementsToAdd > maximum) {
+				Messages errors = new Messages();
+				errors.add("maximum_elements", new Integer(maximum), metaCollection.getName(), metaCollection.getMetaModel().getName());
+				throw new ValidationException(errors);
+			}	
+		}
 	}
 	
 	protected boolean isEntityReferencesCollection() throws XavaException {

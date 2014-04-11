@@ -879,7 +879,12 @@ public class View implements java.io.Serializable {
 					Collection actions = new ArrayList(actionsRowNames);
 					actions.addAll(newView.getDefaultRowActionsForCollections());
 					newView.setActionsNamesRow(actions);
-				}				
+				}		
+				
+				if (metaCollectionView.isCollapsed()) {
+					String frameId= getFrameId(member.getName());
+					if (!isFrameStatusStored(frameId)) setCollapsed(member.getName(), true);
+				}
 			}
 			else {
 				newView.setCollectionEditable(isEditable()); 				
@@ -895,6 +900,11 @@ public class View implements java.io.Serializable {
 				
 				if (newView.isRepresentsEntityReference()) {
 					newView.setRepresentsAggregate(metaReferenceView.isAsAggregate());
+				}
+				
+				if (metaReferenceView.isCollapsed()) {
+					String frameId= getFrameId(member.getName());
+					if (!isFrameStatusStored(frameId)) setCollapsed(member.getName(), true);
 				}
 			}			
 		}
@@ -1884,7 +1894,7 @@ public class View implements java.io.Serializable {
 								if (calculator instanceof IJDBCCalculator) {
 									((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
 								}		
-								trySetValue(p.getName(), calculator.calculate());  
+								trySetValue(p.getName(), calculator.calculate()); 
 								alreadyPut.add(p.getName());
 							}					
 						}
@@ -4156,7 +4166,7 @@ public class View implements java.io.Serializable {
 		return member instanceof MetaProperty && !member.equals(PropertiesSeparator.INSTANCE) && !(member instanceof MetaViewAction);
 	}
 	
-	private boolean isGroup() {
+	private boolean isGroup() {  
 		return group;
 	}
 	private void setGroup(boolean group) {
@@ -5003,7 +5013,32 @@ public class View implements java.io.Serializable {
 		return getMetaView().getLabelStyleForReference(ref);
 	}
 	
-	public void setFrameClosed(String frameId, boolean frameClosed) { 
+	public void setCollapsed(String name, boolean collapsed) { 
+		String frameId= getFrameId(name);
+		setFrameClosed(frameId, collapsed);
+	}
+	
+	public boolean isCollapsed(String name) {
+		String frameId= getFrameId(name);
+		return isFrameClosed(frameId);
+	}
+	
+	private String getFrameId(String name) {   		
+		return Ids.decorate(getRequest(), "frame_" + getPropertyPrefix() + name);
+	}
+	
+	private boolean isFrameStatusStored(String frameId) { 
+		try {
+			String[] prefsKeys= getRoot().getPreferences().keys();			
+			return Arrays.asList(prefsKeys).contains(FRAME_CLOSED + frameId);
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("impossible_load_frame_status"),ex);
+			return false;
+		}
+	}
+	
+	public void setFrameClosed(String frameId, boolean frameClosed) {
 		try {
 			getRoot().getPreferences().putBoolean(
 				FRAME_CLOSED + frameId, 
@@ -5017,7 +5052,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public boolean isFrameClosed(String frameId) { 
-		try {
+		try {			
 			return getRoot().getPreferences().getBoolean(
 				FRAME_CLOSED + frameId, false 				
 			);

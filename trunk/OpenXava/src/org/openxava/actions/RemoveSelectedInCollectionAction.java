@@ -3,8 +3,6 @@ package org.openxava.actions;
 import java.util.*;
 
 import org.openxava.model.MapFacade;
-import org.openxava.model.meta.*;
-import org.openxava.util.*;
 import org.openxava.validators.ValidationException;
 
 /**
@@ -51,15 +49,5 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 	protected void removeElement(Map values) throws Exception {
 		MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), values);
 	}
-	
-	private void validateMinimum(int elementsToRemove) throws ValidationException, XavaException{
-		MetaCollection metaCollection = getMetaCollection();
-		int minimum = metaCollection.getMinimum();
-		if(minimum > 0 && (getCollectionElementView().getCollectionSize() - elementsToRemove) < minimum){
-			Messages errors = new Messages();
-			errors.add("minimum_elements", new Integer(minimum), minimum == 1?"element":"elements",	metaCollection.getName());				
-			throw new ValidationException(errors);
-		}
-	}
-	
+		
 }

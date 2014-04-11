@@ -13,6 +13,27 @@ class ExamTest extends ModuleTestBase {
 		super(testName, "Exam")
 	}
 	
+	void testCreateExamWithAtLeastOneQuestion(){
+		assertListRowCount 0
+		execute "CRUD.new"
+		setValue "name", "ADMISSION"
+		execute "CRUD.save"
+		assertError "It's required at least 1 Element in Questioning"
+		execute "Collection.new", "viewObject=xava_view_questioning"
+		setValue "name", "QUESTION 1"
+		execute "Collection.save"
+		assertMessagesCount 2
+		assertMessage "Exam created successfully"
+		assertMessage "Question created successfully"
+		execute "Mode.list"
+		assertListRowCount 1
+		execute "Mode.detailAndFirst"
+		assertValue "name", "ADMISSION"
+		assertValueInCollection "questioning", 0, "name", "QUESTION 1"
+		execute "CRUD.delete"
+		assertMessage "Exam deleted successfully"
+	}
+	
 	void testRemoveElementsFromQuestioningAndLeaveAtLeastOneQuestion(){
 		assertListRowCount 0
 		execute "CRUD.new"

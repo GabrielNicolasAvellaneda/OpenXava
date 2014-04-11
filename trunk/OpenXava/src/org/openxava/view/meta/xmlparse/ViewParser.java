@@ -190,6 +190,7 @@ public class ViewParser extends XmlElementsNames {
 		a.setReferenceName(el.getAttribute(xreference[lang]));
 		a.setViewName(el.getAttribute(xview[lang]));
 		a.setReadOnly(ParserUtil.getAttributeBoolean(el, xread_only[lang]));
+		a.setCollapsed(ParserUtil.getAttributeBoolean(el, xcollapsed[lang]));
 		a.setAsAggregate(ParserUtil.getAttributeBoolean(el, xas_aggregate[lang]));
 		a.setEditor(el.getAttribute(xeditor[lang]));
 		if (!Is.emptyString(el.getAttribute(xframe[lang]))) {
@@ -217,6 +218,7 @@ public class ViewParser extends XmlElementsNames {
 		MetaCollectionView a = new MetaCollectionView();
 		a.setCollectionName(el.getAttribute(xcollection[lang]));		
 		a.setViewName(el.getAttribute(xview[lang]));
+		a.setCollapsed(ParserUtil.getAttributeBoolean(el, xcollapsed[lang])); 
 		a.setReadOnly(ParserUtil.getAttributeBoolean(el, xread_only[lang]));		
 		a.setEditOnly(ParserUtil.getAttributeBoolean(el, xedit_only[lang]));
 		a.setEditor(el.getAttribute(xeditor[lang]));

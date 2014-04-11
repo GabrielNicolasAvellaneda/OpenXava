@@ -203,4 +203,5 @@ public class XmlElementsNames {
 	protected final static String [] xin_each_row = { "in-each-row", "en-cada-fila" };
 	protected final static String [] xfor_tab = { "for-tab", "para-tab" };
 	protected final static String [] xsubcontroller = { "subcontroller", "subcontrolador"}; 
+	protected final static String [] xcollapsed = { "collapsed", "plegada"}; 
 }

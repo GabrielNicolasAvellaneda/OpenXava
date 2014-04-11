@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- New is/setCollapsed() methods in View to close a frame of a reference or collection programmatically.
+- @Collapsed annotation to initiate collections and references with the frame closed. Also allowed in XML components. 
+- Added validateMinimum() and validateMaximum() to CollectionElementViewBaseAction. 
 - Using module.jsp to execute modules from browser is no longer supported.
 - New NoCustomizeList controller for disabling list customization to a specific module.
 - New look and feel.
@@ -35,7 +38,8 @@ Change Log for OpenXava project
 - Fix: assertListRowCount() method from ModuleTestBase fails when the value of summationInList property is false.
 - Fix: Subcontrollers fails in split mode.
 - Fix: Incorrect encoding in emails sent by Emails class.
-- Fix: Members inside @NoFrame are not aligned with the outside members. 
+- Fix: Members inside @NoFrame are not aligned with the outside members.
+- Fix: Incorrect default size for java.lang.Boolean. 
 
 OpenXava 4.9.1 (2014-2-3)
 -------------------------

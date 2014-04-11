@@ -31,7 +31,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			getView().setKeyEditable(false); // To mark as saved
 		}
 		saveCollectionElement(containerKey);
-		commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)		
+		commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example) 
 		getView().setKeyEditable(false); // To mark as saved
 		getCollectionElementView().setCollectionEditingRow(-1);
 		getCollectionElementView().clear();
@@ -45,19 +45,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	protected Map getValuesToSave() throws Exception {
 		return getCollectionElementView().getValues();		
 	}
-	
-	private void validateMaximum() throws ValidationException, XavaException {
-		MetaCollection metaCollection = getMetaCollection();
-		int maximum = metaCollection.getMaximum(); 
-		if (maximum > 0) {
-			if (getCollectionElementView().getCollectionSize() >= maximum) {
-				Messages errors = new Messages();
-				errors.add("maximum_elements", new Integer(maximum), metaCollection.getName(), metaCollection.getMetaModel().getName());
-				throw new ValidationException(errors);
-			}
-		}		
-	}
-	
+		
 	/**
 	 * Saves the collection or aggregate.
 	 * @param containerKey 
@@ -84,14 +72,14 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}
 		else {
 			// Entity reference used in the standard way
-			validateMaximum(); 
+			validateMaximum(1); 
 			associateEntity(getCollectionElementView().getKeyValues());
 			addMessage("entity_associated" , getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
 		}
 	}
 	
 	private void create(Map values, boolean isEntity) throws CreateException {
-		validateMaximum();
+		validateMaximum(1);
 		MapFacade.create(getCollectionElementView().getModelName(), values);
 		addMessage(isEntity?"entity_created_and_associated":"aggregate_created", 
 			getCollectionElementView().getModelName(), 

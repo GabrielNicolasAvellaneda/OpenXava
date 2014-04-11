@@ -68,6 +68,7 @@
   vista CDATA #IMPLIED
   solo-lectura (true|false) "false"
   marco (true|false) "true"
+  plegada (true|false) "false"
   crear (true|false) "true"
   modificar (true|false) "true"  
   buscar (true|false) "true"
@@ -114,6 +115,7 @@
   vista CDATA #IMPLIED
   solo-lectura (true|false) "false"
   solo-edicion (true|false) "false"
+  plegada (true|false) "false"
   crear-referencia (true|false) "true"  
   modificar-referencia (true|false) "true"  
   como-agregado (true|false) "true"

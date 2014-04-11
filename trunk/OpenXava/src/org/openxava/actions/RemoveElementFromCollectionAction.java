@@ -3,8 +3,6 @@ package org.openxava.actions;
 
 
 import org.openxava.model.*;
-import org.openxava.model.meta.*;
-import org.openxava.util.*;
 import org.openxava.validators.*;
 
 /**
@@ -17,11 +15,11 @@ public class RemoveElementFromCollectionAction extends CollectionElementViewBase
 	
 	
 	public void execute() throws Exception {
-		try {			
-			if (!getCollectionElementView().getKeyValuesWithValue().isEmpty()) {				
-				validateMinimum();
-				MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), getCollectionElementView().getKeyValues());				
-				commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)
+		try {											
+			if (!getCollectionElementView().getKeyValuesWithValue().isEmpty()) {
+				validateMinimum(1);
+				MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), getCollectionElementView().getKeyValues());
+				commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example) 
 				if (isEntityReferencesCollection()) {
 					addMessage("association_removed", getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
 				}
@@ -39,13 +37,4 @@ public class RemoveElementFromCollectionAction extends CollectionElementViewBase
 		}				
 	}
 	
-	private void validateMinimum() throws ValidationException, XavaException{ 
-		MetaCollection metaCollection = getMetaCollection();
-		int minimum = metaCollection.getMinimum();
-		if(minimum > 0 && (getCollectionElementView().getCollectionSize()) <= minimum){
-			Messages errors = new Messages();
-			errors.add("minimum_elements", new Integer(minimum), minimum == 1?"element":"elements",	metaCollection.getName());				
-			throw new ValidationException(errors);
-		}	
-	}		
 }
