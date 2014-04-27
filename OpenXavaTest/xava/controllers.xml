@@ -1111,4 +1111,11 @@
 			class="org.openxava.test.actions.GoDescriptionAction"/>
 	</controller>
 	
+	<controller name="Movie">
+		<extends controller="Typical" />
+		<action name="printDatasheet" mode="detail" takes-long="true" image="pdf.gif" 
+			class="org.openxava.test.actions.MovieReportAction">
+			<set value="pdf" property="format" />
+		</action>
+	</controller>	
 </controllers>
