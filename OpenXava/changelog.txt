@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Several reports in one PDF with the new JasperConcatReportBaseAction.
 - New is/setCollapsed() methods in View to close a frame of a reference or collection programmatically.
 - @Collapsed annotation to initiate collections and references with the frame closed. Also allowed in XML components. 
 - Added validateMinimum() and validateMaximum() to CollectionElementViewBaseAction. 
