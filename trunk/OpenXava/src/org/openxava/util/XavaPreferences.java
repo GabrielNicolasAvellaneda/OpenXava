@@ -505,4 +505,14 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("filterOnChange", "true").trim());
 	}
 	
+	/** @since 5.0 */
+	public String getFilePersistorClass() {
+		return getProperties().getProperty("filePersistorClass","org.openxava.web.editors.FileSystemPersistor").trim();
+	}
+	
+	/** @since 5.0 */
+	public String getPathOxFiles() {
+		String path = getProperties().getProperty("pathOxFiles");
+		return path != null ? path : System.getProperty("user.home") + System.getProperty("file.separator") + "oxfiles";
+	}
 }

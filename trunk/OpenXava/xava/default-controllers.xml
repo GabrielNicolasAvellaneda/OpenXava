@@ -30,6 +30,7 @@ here that you want to override.
 	<object name="xava_treeViewNodeFullPath" class="java.lang.String" />
 	<object name="xava_liferayLibrary" class="org.openxava.session.LiferayLibrary"/>					
 	<object name="xava_metaActionsInList" class="java.util.Collection"/>
+	<object name="xava_newFileProperty" class="java.lang.String" />
 	
 	<controller name="Typical">
 		<extends controller="Navigation"/>
@@ -595,5 +596,16 @@ here that you want to override.
 			class="org.openxava.actions.LoadLiferayDocumentAction">			
 		</action>	
 	</controller>	
-
+	
+	<controller name="AttachedFiles">
+		<action name="change" class="org.openxava.actions.ChangeFileAction"
+			image="upload.gif" />
+		<action name="delete" confirm="true" class="org.openxava.actions.DeleteFileAction" 
+			image="delete-file.gif" />
+	</controller>
+	
+	<controller name="UploadFile">
+		<action name="uploadFile" class="org.openxava.actions.UploadFileAction" />
+		<action name="cancel" class="org.openxava.actions.CancelAction" />
+	</controller>
 </controllers>

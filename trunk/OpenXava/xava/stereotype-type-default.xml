@@ -36,5 +36,7 @@
 	<for stereotype="EMAIL_LIST" type="String"/>
 	<for stereotype="LISTA_EMAIL" type="String"/>
 	<for stereotype="MAC" type="String"/>
-				
+	<for stereotype="FILE" type="String"/>
+	<for stereotype="ARCHIVO" type="String"/>
+					
 </stereotype-type-default>

@@ -35,7 +35,7 @@ public class MetaModuleFactory {
 
 	private static void createDefaultMetaModules(MetaApplication app) {
 		for (String className: AnnotatedClassParser.getManagedClassNames()) {
-			if (className.endsWith(".GalleryImage")) continue;
+			if (className.endsWith(".GalleryImage") || className.endsWith(".AttachedFile")) continue;
 			if (isEmbeddable(className)) continue;
 			app.getMetaModule(Strings.lastToken(className, "."));
 		}		
