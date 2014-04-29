@@ -223,5 +223,10 @@
 	<editor url="myReportColumnDescriptionsListValueEditor.jsp">
 		<for-model-property model="MyReportColumn" property="descriptionsListValue" />	
 	</editor>	
-												
+	
+	<editor name="AttachedFile" url="attachedFileEditor.jsp">		
+		<list-formatter class="org.openxava.formatters.FileListFormatter" />
+		<for-stereotype stereotype="FILE" />
+		<for-stereotype stereotype="ARCHIVO" />
+	</editor>												
 </editors>

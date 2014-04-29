@@ -60,5 +60,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/ejb.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jta.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/mime-util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
