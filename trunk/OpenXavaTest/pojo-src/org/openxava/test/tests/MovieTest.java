@@ -1,7 +1,5 @@
 package org.openxava.test.tests;
 
-import java.net.*;
-
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -26,6 +24,7 @@ public class MovieTest extends ModuleTestBase {
 		assertNoErrors();
 		assertContentTypeForPopup("application/pdf");
 		assertTrue(getPopupPDFAsText().indexOf("FORREST GUMP")>=0);
+		assertTrue(getPopupPDFPageCount() == 3);
 	}
 	
 	public void testClickOnFileInListMode() throws Exception {
@@ -81,16 +80,12 @@ public class MovieTest extends ModuleTestBase {
 	}	
 		
 	private String getUrlToFile() {
-		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();
 		String href = null;
-		for(HtmlAnchor anchor : page.getAnchors()) {
+		for(HtmlAnchor anchor : getHtmlPage().getAnchors()) {
 			if(anchor.getHrefAttribute().indexOf("/xava/xfile?application=") >= 0) {
 				href = anchor.getHrefAttribute(); break;
 			}
 		}		
-		if(href == null) return null;
-		URL url = page.getWebResponse().getWebRequest().getUrl();
-		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
-		return urlPrefix + href;
+		return "http://" + getHost() + ":" + getPort() + href;
 	}
 }
