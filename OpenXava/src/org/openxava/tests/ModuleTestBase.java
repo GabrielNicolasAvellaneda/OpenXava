@@ -75,7 +75,8 @@ public class ModuleTestBase extends TestCase {
 	private BrowserVersion browserVersion;
 	private String previousModule;
 	private String popupPDFAsText; 
-	private String [] popupPDFLines; 
+	private String [] popupPDFLines;
+	private int popupPDFPageCount;
 	
 	static {		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
@@ -756,6 +757,7 @@ public class ModuleTestBase extends TestCase {
 		
 		popupPDFAsText = null; 
 		popupPDFLines = null; 
+		popupPDFPageCount = -1;
 	}
 	
 	private boolean pageLoaded() throws Exception { 
@@ -987,7 +989,22 @@ public class ModuleTestBase extends TestCase {
 	protected void printPopupPDFAsText() throws Exception { 
 		log.debug(getPopupPDFAsText());		
 	}
-
+	
+	/**
+	 * Number of pages of the PDF in the popup window
+	 *  
+	 * @since 5.0 
+	 */
+	protected int getPopupPDFPageCount() throws Exception {
+		if(popupPDFPageCount == -1) {
+			InputStream is = getPopupPage(-1).getWebResponse().getContentAsStream();
+			PDDocument doc = PDDocument.load(is);
+			popupPDFPageCount = doc.getNumberOfPages();
+			doc.close();
+			is.close();
+		}
+		return popupPDFPageCount;
+	}
 	
 	/**
 	 * The specified line as text of PDF in the popup window.
