@@ -643,7 +643,7 @@
 
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
 		<antcall target="copyWeb"/>
-		<antcall target="copyAddons"/>
+		<antcall target="installAddons"/>
 		<antcall target="createWebXml"/>
 		<antcall target="filter"/>
 		<antcall target="createEditorsJS"/>
@@ -939,7 +939,7 @@
 	<target name="updateOX">
 		<antcall target="copyDTDs"/>
 		<antcall target="copyWeb"/>
-		<antcall target="copyAddons"/>
+		<antcall target="installAddons"/>
 		<antcall target="createWebXml"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
 		<!-- Delete the old Hibernate jars (used until v4m5) -->
@@ -993,13 +993,19 @@
 		</copy>
 	</target>
 
-	<target name="copyAddons">
-		<copy todir="../${project}/web" overwrite="true" failonerror="false">
-			<fileset dir="../OpenXava/addons/web"/>
+	<target name="installAddons">
+		<copy todir="../${project}/web" overwrite="true">
+			<fileset dir="../Addons/web"/>
 		</copy>
-		<copy todir="../${project}/properties" overwrite="false" failonerror="false">
-			<fileset dir="../OpenXava/addons/properties-templates"/>
-		</copy>						
+		<copy todir="../${project}/properties">
+			<fileset dir="../Addons/properties-templates">
+				<present present="srconly" targetdir="../${project}/properties" />
+			</fileset>
+		</copy>
+		<copy todir="../${project}/src" overwrite="true" failonerror="false">
+			<fileset dir="../Addons/src-to-copy"/>
+		</copy>		
+		<jar jarfile="../${project}/web/WEB-INF/lib/addons.jar" basedir="../Addons/bin"/>		
 	</target>
 
 	<target name="defineHibernateTool">
