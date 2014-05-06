@@ -63,6 +63,7 @@
   view CDATA #IMPLIED
   read-only (true|false) "false"
   frame (true|false) "true"
+  collapsed (true|false) "false"
   create (true|false) "true"
   modify (true|false) "true"
   search (true|false) "true"
@@ -109,6 +110,7 @@
   view CDATA #IMPLIED
   read-only (true|false) "false"
   edit-only (true|false) "false"
+  collapsed (true|false) "false"
   create-reference (true|false) "true"
   modify-reference (true|false) "true"
   as-aggregate (true|false) "false"

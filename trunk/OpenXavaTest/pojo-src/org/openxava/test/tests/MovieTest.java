@@ -9,7 +9,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 /**  
  * @author Jeromy Altuna
  */
-public class MovieTest extends ModuleTestBase {
+public class MovieTest extends ModuleTestBase { 
 	
 	public MovieTest(String testName) {
 		super(testName, "Movie");
