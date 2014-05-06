@@ -4,6 +4,5 @@
 <wb-resource deploy-path="/" source-path="/src"/>
 <wb-resource deploy-path="/" source-path="/i18n"/>
 <wb-resource deploy-path="/" source-path="/java5-src"/>
-        <wb-resource deploy-path="/" source-path="/addons/src"/>
 </wb-module>
 </project-modules>
