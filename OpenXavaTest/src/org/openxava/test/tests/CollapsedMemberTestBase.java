@@ -7,7 +7,6 @@ import org.openxava.tests.*;
 import org.openxava.util.*;
 
 import com.gargoylesoftware.htmlunit.html.*;
-import com.openxava.naviox.util.*;
 
 /**
  * This test case verifies the @Collapsed annotation applied to 
@@ -39,7 +38,7 @@ public abstract class CollapsedMemberTestBase extends ModuleTestBase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		Users.setCurrent(NaviOXPreferences.getInstance().getAutologinUser());
+		Users.setCurrent("admin"); // Must match with autologinUser of naviox.properties
 		
 		//Resets the user preferences before loading the module for the first time.
 		//That's why this must be done before calling setUp() method.

@@ -8,7 +8,7 @@ package org.openxava.test.tests;
  * @author Paco Valsera
  *
  */
-public class TeacherTest extends CollapsedMemberTestBase {
+public class TeacherTest extends CollapsedMemberTestBase { 
 	
 	public TeacherTest(String testName) { 
 		super(testName, "Teacher", "school");				
