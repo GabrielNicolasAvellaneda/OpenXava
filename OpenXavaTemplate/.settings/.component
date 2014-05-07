@@ -10,6 +10,9 @@
 	<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/OpenXava/OpenXava">
 		<dependency-type>uses</dependency-type>
 	</dependent-module>	
+    <dependent-module archiveName="Addons.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Addons/Addons">
+        <dependency-type>uses</dependency-type>
+    </dependent-module>		
 	<property name="context-root" value="@project@"/>
 	<property name="java-output-path" value="/build/classes/"/>
 </wb-module>
