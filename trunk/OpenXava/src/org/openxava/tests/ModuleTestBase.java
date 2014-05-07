@@ -154,7 +154,7 @@ public class ModuleTestBase extends TestCase {
 			page = (HtmlPage) client.getPage(getModuleURL()); 
 			resetForm();
 		}
-		else {
+		else if (isJetspeed2Enabled()) { 
 			// JetSpeed 2
 			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/");
 			resetLoginForm();			
@@ -164,6 +164,17 @@ public class ModuleTestBase extends TestCase {
 			page = (HtmlPage) button.click();			
 			page = (HtmlPage) client.getPage(getModuleURL()); 
 			resetForm();
+		}
+		else {
+			// NaviOX, the built-in OpenXava login mechanism
+			String originalModule = module;
+			selectModuleInPage("SignIn");
+			setValue("user", user);
+			setValue("password", password);
+			execute("SignIn.signIn");
+			assertNoErrors();
+			assertTrue(getHtml().contains("Sign out (" + user + ")"));
+			selectModuleInPage(originalModule);		
 		}
 	}
 	
@@ -457,9 +468,14 @@ public class ModuleTestBase extends TestCase {
 			// Liferay 
 			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/c/portal/logout?referer=/c");			
 		}
-		else { 
+		else if (isJetspeed2Enabled()) { 
 			// Jetspeed 2
 			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
+		}
+		else {
+			// NaviOX, the build-it login mechanism of OpenXava
+			getHtmlPage().getAnchorByHref("/NaviOX/naviox/signOut.jsp").click();
+			reload();
 		}
 	}
 	
