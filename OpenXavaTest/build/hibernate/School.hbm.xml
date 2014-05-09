@@ -7,17 +7,20 @@
 <hibernate-mapping package="org.openxava.test.model">
 
   <class 
-  	name="Report" schema="XAVATEST" 
-  	table="REPORT"> 	
-		<id name="oid" column="OID" access="field" type='java.lang.String' length='50'> 
+  	name="School" 
+  	table="School"> 	
+		<id name="oid" column="oid" access="field" type='java.lang.String' length='50'> 
 			<generator class="org.openxava.hibernate.impl.DefaultValueIdentifierGenerator">
 				<param name="property">oid</param>
 			</generator> 
 		</id> 
 		<property name="name" access="field" type='java.lang.String' length='50'>  
-			<column name="NAME"  />
-		</property> 
-		<many-to-one name="ranges" column="RANGES_OID" class="org.openxava.test.model.Ranges"   access="field"/> 
+			<column name="name"  />
+		</property>  
+		<set name="teachers" order-by="OID"  >
+			<key column="SCHOOL_OID"/>
+			<one-to-many class="Teacher"/>
+		</set> 
   </class>
 
 </hibernate-mapping>
