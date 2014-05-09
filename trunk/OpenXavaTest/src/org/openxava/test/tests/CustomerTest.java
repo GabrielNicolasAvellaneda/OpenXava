@@ -730,13 +730,13 @@ public class CustomerTest extends ModuleTestBase {
 		
 	}
 	
-	public void testDescriptionValidValuesEditor() throws Exception {
+	public void testDescriptionValidValuesEditor() throws Exception { 
 		execute("CRUD.new");
-		assertValue("type", "0");
-		setValue("type", "1");
-		assertValue("type", "1");
-		setValue("type", "2");
-		assertValue("type", "2");
+		assertValue("type", usesAnnotatedPOJO()?"0":"1");
+		setValue("type", usesAnnotatedPOJO()?"1":"2");
+		assertValue("type", usesAnnotatedPOJO()?"1":"2");
+		setValue("type", usesAnnotatedPOJO()?"2":"3");
+		assertValue("type", usesAnnotatedPOJO()?"2":"3");		
 	}
 			
 
