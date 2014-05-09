@@ -43,7 +43,7 @@ public class ServiceTest extends ModuleTestBase {
 		execute("Collection.save");		
 		assertNoErrors();
 		
-		assertCollectionRowCount("additionalDetails", 2);
+		assertCollectionRowCount("additionalDetails", 2); 
 		execute("Collection.edit", "row=0,viewObject=xava_view_section0_additionalDetails");
 		execute("Collection.remove");		
 		assertNoErrors();
@@ -174,7 +174,7 @@ public class ServiceTest extends ModuleTestBase {
 		execute("Mode.list");
 		setConditionValues(new String[] { "", "junit"} );
 		execute("List.filter");
-		assertListRowCount(2);
+		assertListRowCount(2); 
 		
 		execute("List.viewDetail", "row=0");
 		assertValue("description", "JUNIT_1");

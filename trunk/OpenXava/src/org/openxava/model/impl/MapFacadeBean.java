@@ -1074,44 +1074,40 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new XavaException("collection_type_not_supported", collectionType);
 		}		
 		while (enumeration.hasMoreElements()) {
-			Object object = enumeration.nextElement();			
+			Object object = enumeration.nextElement();
 			result.add(getValues(metaModel, object, memberNames));
 		}
 		return result;
 	}
 
 
-	private Object instanceAggregate(MetaAggregateForReference metaAggregate, Map values)
+	private Object instanceAggregate(MetaAggregate metaAggregate, Map values) 
 		throws ValidationException, XavaException, RemoteException {
 		try {
-			Object object = Class.forName(metaAggregate.getBeanClass()).newInstance();
+			Object object = metaAggregate.getPropertiesClass().newInstance(); 
 			PropertiesManager man = new PropertiesManager(object);			
 			removeViewProperties(metaAggregate, values);
 			removeCalculatedFields(metaAggregate, values); 
 			values = convertSubmapsInObject(metaAggregate, values, false); 
 			man.executeSets(values);
 			return object;
-		} catch (ClassNotFoundException ex) {
-			log.error(ex.getMessage(), ex);
-			rollback();
-			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
 		} catch (IllegalAccessException ex) {			
 			log.error(ex.getMessage(), ex);
 			rollback();
-			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
+			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getPropertiesClass().getName())); 
 		} catch (InstantiationException ex) {
 			log.error(ex.getMessage(), ex);
 			rollback();
-			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
+			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getPropertiesClass().getName())); 
 		} catch (InvocationTargetException ex) {
 			throwsValidationException(
-				ex, XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage()));
+				ex, XavaResources.getString("assign_values_error", metaAggregate.getPropertiesClass().getName(), ex.getLocalizedMessage())); 
 			rollback();
 			throw new RemoteException(); // Never
 		} catch (PropertiesManagerException ex) {
 			log.error(ex.getMessage(), ex);
 			rollback();
-			throw new RemoteException(XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage()));
+			throw new RemoteException(XavaResources.getString("assign_values_error", metaAggregate.getPropertiesClass().getName(), ex.getLocalizedMessage())); 
 		}
 	}
 
@@ -1155,6 +1151,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (XavaException ex) {
 			throw ex;
 		}
+	}
+	
+	private Collection mapsToElements(MetaCollection metaCollection, Collection<Map> collectionValues) throws RemoteException { 
+		MetaReference r = metaCollection.getMetaReference();
+		Collection result = new ArrayList();
+		for (Map elementValues: collectionValues) {
+			result.add(instanceAggregate((MetaAggregate) r.getMetaModelReferenced(), elementValues));
+		}	
+		return result;
 	}
 
 	private Object findAssociatedEntity(MetaModel metaEntity, Map values) 
@@ -1596,11 +1601,19 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				}
 				else if (metaModel.containsMetaReference(memberName)) {
 					if (excludeContainerReference && memberName.equals(metaModel.getContainerReference())) continue; 
-					MetaReference ref = metaModel.getMetaReference(memberName);					
 					value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());
 				}
 				else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
 					value = en.getValue();
+				}
+				else if (metaModel.containsMetaCollection(memberName)) {
+					MetaCollection collection = metaModel.getMetaCollection(memberName);
+					if (collection.isElementCollection()) {
+						value = mapsToElements(collection, (Collection<Map>) en.getValue());
+					}
+					else {
+						throw new XavaException("mapfacade_only_element_collections", memberName, metaModel.getName()); 
+					}
 				}
 				else {				
 					throw new XavaException("member_not_found", memberName, metaModel.getName());

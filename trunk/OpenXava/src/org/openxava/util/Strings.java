@@ -636,11 +636,31 @@ public class Strings {
 	 * @return If string if null or have no tokens returns empty string.
 	 */		
 	public static String noFirstToken(String string, String delim) {
+		return noFirstToken(string, delim, true);
+	}
+	
+	
+	/**
+	 * All string but without first token. <p>
+	 * 
+	 * Does not include the delim.
+	 *  
+	 * @return If string if null or have no tokens returns empty string.
+	 */		
+	public static String noFirstTokenWithoutFirstDelim(String string, String delim) { 
+		return noFirstToken(string, delim, false);
+	}
+
+	
+	private static String noFirstToken(String string, String delim, boolean delimIncluded) { 
 		if (string == null) return "";
 		int idx = string.indexOf(delim);
-		if (idx < 0) return "";
+		if (!delimIncluded) idx++;
+		if (idx < 0 || idx >= string.length()) return "";		
+		 
 		return string.substring(idx);
 	}
+
 
 	
 	/**

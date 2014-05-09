@@ -194,11 +194,11 @@ public class View implements java.io.Serializable {
 	private Map collectionTotals; 
 	private int collectionTotalsCount = -1;
 	private Collection<MetaProperty> recalculatedMetaProperties;
-	private List collectionValues; 
+	private List<Map> collectionValues;  
 	private Map<String, Collection<String>> changedActionsByProperty = null; 
 	private Collection propertiesWithChangedActions;
 	private Object model;
-	private List sections; 
+	private List sections;
 	
 	// firstLevel is the root view that receives the request 
 	// usually match with getRoot(), but not always. For example,
@@ -401,7 +401,7 @@ public class View implements java.io.Serializable {
 	 * you have to use <code>setValues</code> or <code>setValue</code>.<br>
 	 */
 	public Map getValues() throws XavaException {			
-		return Maps.recursiveClone(getValues(false)); 
+		return Maps.recursiveClone(getValues(false));
 	}
 
 	/**
@@ -432,8 +432,12 @@ public class View implements java.io.Serializable {
 			while (it.hasNext()) { 
 				Map.Entry en = (Map.Entry) it.next(); 
 				View v = (View) en.getValue();
-				if (v.isRepresentsCollection()) continue; 
-				if (!onlyKeyFromSubviews && (all || v.isRepresentsAggregate())) {					
+				if (v.isRepresentsCollection()) {
+					if (v.getMetaCollection().isElementCollection()) {
+						values.put(en.getKey(), v.getCollectionValues());  
+					}
+				}
+				else if (!onlyKeyFromSubviews && (all || v.isRepresentsAggregate())) {					
 					values.put(en.getKey(), v.getValues(all, onlyKeyFromSubviews));					
 				} 
 				else {  					
@@ -676,14 +680,41 @@ public class View implements java.io.Serializable {
 			} 			
 		} 
 		else {						
-			String subview = name.substring(0, idx);			
+			String subviewName = name.substring(0, idx);			
 			String member = name.substring(idx+1);
-			return getSubview(subview).getValue(member, recalculatingValues);
+			View subview = getSubview(subviewName);
+			if (subview.isRepresentsElementCollection()) { 	
+				int elementIndex = Integer.parseInt(Strings.firstToken(member, "."));
+				List collectionValues = subview.getCollectionValues();
+				if (elementIndex >= collectionValues.size()) return null; 
+				Map element = (Map) collectionValues.get(elementIndex);
+				String collectionMember = Strings.noFirstTokenWithoutFirstDelim(member, ".");
+				return Maps.getValueFromQualifiedName(element, collectionMember);
+			}
+			else {
+				return subview.getValue(member, recalculatingValues);
+			}
 		}		
 	}
 	
 
 	/**
+	 * A value from the property name.
+	 * 
+	 * The property name can be simple:
+	 * <pre>
+	 * getValue("name");
+	 * </pre>
+	 * or qualified:
+	 * <pre>
+	 * getValue("customer.name");
+	 * </pre>
+	 * Even you can obtain a single value from an element collection (since v5.0):
+	 * <pre>
+	 * getValue("details.3.quantity");
+	 * </pre>
+	 * In this case you use the index for the collection after the collection name,
+	 * in the case of out of range a null is returned. 
 	 * 
 	 * @param name  Qualified properties are allowed
 	 */	
@@ -1074,9 +1105,9 @@ public class View implements java.io.Serializable {
 				if (!subview.isRepresentsCollection()) {
 					subview.setValues((Map)value);										
 				}
-				else {						
-					throw new XavaException("no_set_collection_value_error", name);
-				}					
+				else {
+					subview.collectionValues = (List) value; 
+				}		
 			}
 			else { 					
 				if (values == null) values = new HashMap();					
@@ -1289,7 +1320,10 @@ public class View implements java.io.Serializable {
 				membersNames.put(m.getName(), getSubview(m.getName()).createMembersNames(hiddenIncluded));
 			}
 			else if (m instanceof MetaCollection) { 					
-				// The collections are obtained from the collection view, this allows to load collections on demmand.
+				if (((MetaCollection) m).isElementCollection()) {
+					membersNames.put(m.getName(), getSubview(m.getName()).createElementCollectionMembersNames());
+				}
+				// The entity collections are obtained from the collection view, this allows to load collections on demmand
 			}				
 			else if (m instanceof MetaGroup) { 
 				membersNames.putAll(getGroupView(m.getName()).createMembersNames(hiddenIncluded));
@@ -1302,6 +1336,14 @@ public class View implements java.io.Serializable {
 			}
 		}			
 		return membersNames; 	
+	}
+	
+	private Map createElementCollectionMembersNames() { 
+		Map membersNames = new HashMap();
+		for (MetaProperty p: getMetaPropertiesList()) {
+			membersNames.put(p.getName(), null);
+		}
+		return Maps.plainToTree(membersNames);
 	}
 
 	/**
@@ -1402,10 +1444,11 @@ public class View implements java.io.Serializable {
 	 * The values only include the displayed data in the row.<br>
 	 * @return  Of type <tt>Map</tt>. Never null.
 	 */	
-	public List getCollectionValues() throws XavaException {		
+	public List getCollectionValues() throws XavaException {
 		if (collectionValues == null) { 			
-			assertRepresentsCollection("getCollectionValues()");			
-			if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) {				
+			assertRepresentsCollection("getCollectionValues()");
+			if (getMetaCollection().isElementCollection()) collectionValues = Collections.EMPTY_LIST; 
+			else if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) {				
 				// If calculated we obtain the data directly from the model object
 				Map mapMembersNames = new HashMap();
 				mapMembersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));
@@ -1837,6 +1880,7 @@ public class View implements java.io.Serializable {
 			rootModelName = null;
 		}
 
+		collectionValues = null; 
 		collectionTotals = null;
 		setIdFocusProperty(null);
 		setFocusCurrentId(null); 
@@ -2120,14 +2164,21 @@ public class View implements java.io.Serializable {
 	public boolean isEditable(String member) throws XavaException {		
 		int idx = member.indexOf('.'); 
 		if (idx >= 0) {
-			String reference = member.substring(0, idx);
+			String compoundMember = member.substring(0, idx); 
 			String submember = member.substring(idx + 1);
 			try {
-				return getSubview(reference).isEditable(submember);
+				return getSubview(compoundMember).isEditable(submember);
 			}
 			catch (ElementNotFoundException ex) {
+				if (getMetaModel().containsMetaCollection(compoundMember)) { 
+					MetaModel referencedModel = getMetaModel().getMetaCollection(compoundMember).getMetaReference().getMetaModelReferenced();
+					String collectionMember = Strings.noFirstTokenWithoutFirstDelim(submember, ".");
+					MetaProperty p = referencedModel.getMetaProperty(collectionMember);
+					if (collectionMember.contains(".")) return p.isKey(); 
+					return true; 
+				}
 				// Maybe a custom JSP view wants access to a property not showed in default view
-				MetaModel referencedModel = getMetaModel().getMetaReference(reference).getMetaModelReferenced(); 				
+				MetaModel referencedModel = getMetaModel().getMetaReference(compoundMember).getMetaModelReferenced(); 				
 				return (referencedModel instanceof MetaAggregate) ||
 					referencedModel.isKey(submember);
 			}			
@@ -2251,11 +2302,11 @@ public class View implements java.io.Serializable {
 		groupsViews = null;
 	}
 	
-	public void assignValuesToWebView() {		
+	public void assignValuesToWebView() {
 		assignValuesToWebView("", true); 		
 	}
 		
-	private void assignValuesToWebView(String qualifier, boolean firstLevel) { 
+	private void assignValuesToWebView(String qualifier, boolean firstLevel) {
 		try {		
 			this.firstLevel = firstLevel; 
 			formattedProperties = null; 
@@ -2338,10 +2389,16 @@ public class View implements java.io.Serializable {
 				}					
 			}
 			
-			else if (m instanceof MetaCollection) {					
-				MetaCollection collec = (MetaCollection) m;
-				View subview = getSubview(collec.getName());					 					
-				subview.assignValuesToWebView(qualifier + collec.getName() + ".", false);
+			else if (m instanceof MetaCollection) {
+				MetaCollection collec = (MetaCollection) m;				
+				View subview = getSubview(collec.getName());					 	
+				String collectionQualifier = qualifier + collec.getName() + ".";
+				if (((MetaCollection) m).isElementCollection()) {
+					subview.assignValuesToElementCollection(collectionQualifier);
+				}
+				else {
+					subview.assignValuesToWebView(collectionQualifier, false);					
+				}
 			}
 			else if (m instanceof MetaGroup) {					
 				MetaGroup group = (MetaGroup) m;
@@ -2351,6 +2408,27 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
+	private void assignValuesToElementCollection(String qualifier) { 
+		collectionValues = new ArrayList();		
+		for (int i=0; ;i++) {
+			boolean containsReferences = false;
+			Map element = new HashMap();
+			for (MetaProperty p: getMetaPropertiesList()) {	
+				String propertyKey= qualifier + i + "." + p.getName();				
+				String [] results = getRequest().getParameterValues(propertyKey);
+				if (results == null) continue;
+				Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
+				element.put(p.getName(), value);
+				if (p.getName().contains(".")) containsReferences = true;
+			}
+			
+			if (element.isEmpty()) break;
+			if (Maps.isEmpty(element)) continue;
+			if (containsReferences) element = Maps.plainToTree(element);
+			collectionValues.add(element);
+		}				
+	}
+
 	private boolean isNeededToVerifyHasBeenFormatted(MetaProperty p) { 
 		// This code can be improved using a property in editors.xml for mark
 		// if it's needed to verify the formatted		
@@ -2413,7 +2491,7 @@ public class View implements java.io.Serializable {
 		subview.refreshDescriptionsLists = false;
 	}
 	
-	public boolean throwsPropertyChanged(MetaProperty p) {			
+	public boolean throwsPropertyChanged(MetaProperty p) {
 		try {									
 			if (hasDependentsProperties(p) && 
 				!(isSubview() && isRepresentsEntityReference() && !displayAsDescriptionsList())) 
@@ -2531,9 +2609,14 @@ public class View implements java.io.Serializable {
 	}
 	
 
-	private void propertyChanged(String propertyId) {
+	private void propertyChanged(String propertyId) { 
 		try {														
-			String name = Ids.undecorate(propertyId);			
+			String name = Ids.undecorate(propertyId);
+			if (isRepresentsElementCollection()) {
+				collectionEditingRow = Integer.parseInt(Strings.firstToken(name, ".")); 
+				setValues(collectionValues.get(collectionEditingRow));
+				name = Strings.noFirstTokenWithoutFirstDelim(name, ".");
+			}
 			if (name.endsWith("__KEY__")) {
 				String refName = name.substring(0, name.length() - 7);
 				MetaModel referencedModel = null;
@@ -2562,7 +2645,7 @@ public class View implements java.io.Serializable {
 				subview.propertyChanged(propertyName);
 				try {
 					MetaProperty changedProperty = subview.getMetaView().getMetaProperty(propertyName); 
-					propertyChanged(changedProperty, name);
+					propertyChanged(changedProperty, name); 
 				}
 				catch (ElementNotFoundException ex) {
 				}
@@ -2577,10 +2660,10 @@ public class View implements java.io.Serializable {
 					changedProperty = getMetaModel().getMetaProperty(name);					
 					if (!(changedProperty.isKey() && changedProperty.isHidden())) throw ex;
 				}	
-				propertyChanged(changedProperty, name);				
+				propertyChanged(changedProperty, name);	 			
 				if (getParent() != null) {					
 					String qualifiedName = Is.emptyString(getMemberName())?name:(getMemberName() + "." + name);
-					getParent().propertyChanged(changedProperty, qualifiedName);
+					getParent().propertyChanged(changedProperty, qualifiedName); 
 				}
 			}		
 		}
@@ -2593,7 +2676,7 @@ public class View implements java.io.Serializable {
 		}				 		 		
 	}
 	
-	private void propertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) {
+	private void propertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) { 
 		try {			
 			tryPropertyChanged(changedProperty, changedPropertyQualifiedName);
 		}
@@ -2603,7 +2686,7 @@ public class View implements java.io.Serializable {
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {
+	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception { 
 		if (!isOnlyThrowsOnChange()) {			
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
@@ -2626,10 +2709,10 @@ public class View implements java.io.Serializable {
 					(hasSearchMemberKeys() && isLastPropertyMarkedAsSearch(changedPropertyQualifiedName)) // Explicit search key 
 					)
 				) {								
-				if (!searchingObject) { // To avoid recursive infinites loops				
+				if (!searchingObject) { // To avoid recursive infinite loops				
 					try {
 						searchingObject = true;						
-						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());						
+						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());
 						executeOnChangeAction(changedPropertyQualifiedName, action);
 						// If the changed property is not the key, for example, if we have a hidden
 						//   key and we are using a search key (or simply the first displayed property),
@@ -2639,7 +2722,8 @@ public class View implements java.io.Serializable {
 							String id = (String) getMetaModel().getKeyPropertiesNames().iterator().next();
 							propertyChanged(id);
 						}	
-						refreshCollections(); 
+						refreshCollections();
+						moveViewValuesToCollectionValues(); 
 					}
 					finally {
 						searchingObject = false;				 
@@ -2656,7 +2740,7 @@ public class View implements java.io.Serializable {
 			while (itGroups.hasNext()) {
 				View v = (View) itGroups.next();
 				try {
-					v.tryPropertyChanged(changedProperty, changedPropertyQualifiedName);					
+					v.tryPropertyChanged(changedProperty, changedPropertyQualifiedName); 					
 				}
 				catch (ElementNotFoundException ex) {
 					// The common case of a qualified property  whose
@@ -2668,9 +2752,20 @@ public class View implements java.io.Serializable {
 		if (hasSections()) {			
 			int count = getSections().size();
 			for (int i = 0; i < count; i++) {
-				getSectionView(i).propertyChanged(changedProperty, changedPropertyQualifiedName);				
+				getSectionView(i).propertyChanged(changedProperty, changedPropertyQualifiedName); 				
 			}			
 		}
+	}
+
+	private void moveViewValuesToCollectionValues() { 
+		if (!isRepresentsElementCollection()) {
+			View parent = getParent();
+			if (parent == null) return;
+			parent.moveViewValuesToCollectionValues();
+			return;
+		}
+		collectionValues.set(collectionEditingRow, getAllValues());
+		refreshCollection(); 
 	}
 
 	private void executeOnChangeAction(String changedPropertyQualifiedName, IOnChangePropertyAction action) 
@@ -3060,7 +3155,15 @@ public class View implements java.io.Serializable {
 			}
 			catch (ElementNotFoundException ex) {
 				// Maybe a custom JSP view wants access to a property not showed in default view
-				return getMetaModel().getMetaReference(reference).getMetaModelReferenced().getMetaProperty(member); 
+				try {
+					return getMetaModel().getMetaReference(reference).getMetaModelReferenced().getMetaProperty(member);
+				}
+				catch (ElementNotFoundException ex2) {
+					if (!getMetaModel().containsMetaCollection(reference)) throw ex2;
+					// From element collection
+					String collectionMember = Strings.noFirstTokenWithoutFirstDelim(member, ".");
+					return getMetaModel().getMetaCollection(reference).getMetaReference().getMetaModelReferenced().getMetaProperty(collectionMember);
+				}		
 			}
 		}
 		try {
@@ -3447,7 +3550,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public boolean isLastSearchKey(MetaProperty p) throws XavaException {				
-		return isLastSearchKey(p, isEditableImpl(p), isKeyEditable()); 
+		return isLastSearchKey(p, isEditableImpl(p), isKeyEditable());
 	}
 	
 	private boolean isLastSearchKey(MetaProperty p, boolean editable, boolean keyEditable) throws XavaException {		
@@ -3457,6 +3560,12 @@ public class View implements java.io.Serializable {
 			(editable && isLastKeyProperty(p)) || // with key visible
 			(isFirstPropertyAndViewHasNoKeys(p) && keyEditable); // with key hidden 		
 	}
+	
+	private boolean isRepresentsElementCollection() {  
+		return isRepresentsCollection() && getMetaCollection().isElementCollection();
+	}
+	
+	
 		
 	private String getLastSearchKeyName() {
 		for (Iterator it = getMetaPropertiesIncludingGroups().iterator(); it.hasNext();) {
@@ -3912,9 +4021,13 @@ public class View implements java.io.Serializable {
 			return getDisplaySizeForProperty(getMetaView().getMetaProperty(propertyName));
 		} 
 		else {						
-			String subview = propertyName.substring(0, idx);			
+			String subviewName = propertyName.substring(0, idx);			
 			String member = propertyName.substring(idx+1);
-			return getSubview(subview).getDisplaySizeForProperty(member);
+			View subview = getSubview(subviewName);
+			if (subview.isRepresentsElementCollection()) { 
+				member = Strings.noFirstTokenWithoutFirstDelim(member, ".");
+			}
+			return subview.getDisplaySizeForProperty(member);
 		}				
 	}
 	
@@ -4734,7 +4847,8 @@ public class View implements java.io.Serializable {
 		this.mustRefreshCollection = true;
 	}
 	
-	public void resetCollectionsCache() { 
+	public void resetCollectionsCache() {		
+		if (isRepresentsElementCollection()) return; // If it's a element collection there are no subviews
 		collectionValues = null; 
 		
 		if (hasSections()) { 

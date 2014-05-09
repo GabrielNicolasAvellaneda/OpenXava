@@ -25,6 +25,7 @@ public class MetaWebEditors {
 	private static Map editorsByTabModel; 
 	private static MetaEditor editorForReferences;
 	private static MetaEditor editorForCollections;
+	private static MetaEditor editorForElementCollections; 
 	private static MetaEditor editorForTabs; 
 	
 	
@@ -253,13 +254,13 @@ public class MetaWebEditors {
 		return r;
 	}
 	
-	public static MetaEditor getMetaEditorFor(MetaCollection col) throws ElementNotFoundException, XavaException { 							
+	public static MetaEditor getMetaEditorFor(MetaCollection col) throws ElementNotFoundException, XavaException {
 		MetaEditor r = (MetaEditor) getMetaEditorForCollectionModel(col.getMetaReference().getReferencedModelName());		
-		if (r == null) {	
-			if (editorForCollections == null) {
-				throw new ElementNotFoundException("editor_for_collections_required"); 
+		if (r == null) {
+			r = col.isElementCollection()?editorForElementCollections:editorForCollections;
+			if (r == null) {
+				throw new ElementNotFoundException(col.isElementCollection()?"editor_for_element_collections_required":"editor_for_collections_required");  
 			}
-			return editorForCollections; 
 		}		
 		return r;
 	}
@@ -290,6 +291,10 @@ public class MetaWebEditors {
 	public static void addMetaEditorForCollections(MetaEditor editor) {  
 		editorForCollections = editor; 		
 	}
+	
+	public static void addMetaEditorForElementCollections(MetaEditor editor) {   
+		editorForElementCollections = editor; 		
+	}	
 	
 	public static void addMetaEditorForTabs(MetaEditor editor) {   
 		editorForTabs = editor; 		

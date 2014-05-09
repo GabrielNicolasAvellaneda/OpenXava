@@ -26,6 +26,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private String order;
 	private String inverseCollection;  
 	private boolean orphanRemoval; 
+	private boolean elementCollection; 
 	
 	private MetaReference metaReference;
 	private Collection metaCalculatorsPostRemove;
@@ -332,6 +333,14 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
 	public boolean hasInverseCollection() { 
 		return !Is.emptyString(inverseCollection);
+	}
+
+	public boolean isElementCollection() {
+		return elementCollection;
+	}
+
+	public void setElementCollection(boolean elementCollection) {
+		this.elementCollection = elementCollection;
 	}
 
 }

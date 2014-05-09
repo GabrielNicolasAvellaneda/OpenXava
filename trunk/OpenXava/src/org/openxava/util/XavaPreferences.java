@@ -482,12 +482,12 @@ public class XavaPreferences {
 
 	/** @since 4.5 */
 	public String getLayoutParser() {
-		return getProperties().getProperty("layoutParser", "org.openxava.web.layout.impl.DefaultLayoutParser");  
+		return getProperties().getProperty("layoutParser", "org.openxava.web.layout.impl.DefaultLayoutParser");
 	}
 
 	/** @since 4.5 */
 	public String getLayoutPainter() {
-		return getProperties().getProperty("layoutPainter", "org.openxava.web.layout.impl.DefaultLayoutPainter"); 
+		return getProperties().getProperty("layoutPainter", "org.openxava.web.layout.impl.DefaultLayoutPainter");
 	}
 
 	/** @since 4.6 */
@@ -511,7 +511,7 @@ public class XavaPreferences {
 	}
 	
 	/** @since 5.0 */
-	public String getPathOxFiles() {
+	public String getPathOxFiles() { 
 		String path = getProperties().getProperty("pathOxFiles");
 		return path != null ? path : System.getProperty("user.home") + System.getProperty("file.separator") + "oxfiles";
 	}

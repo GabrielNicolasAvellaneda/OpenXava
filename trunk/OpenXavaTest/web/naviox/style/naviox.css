@@ -545,6 +545,10 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	background: #FFFFD6;
 }
 
+.ox-element-collection .ox-list-pair:hover, .ox-element-collection .ox-list-odd:hover {
+	background: inherit;
+}
+
 .selected-row {
 	background: #FFFFCC;
 }

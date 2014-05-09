@@ -535,6 +535,14 @@ public class Style {
 	public String getListTitleWrapper() {
 		return "";
 	}
+	
+	/**
+	 * 
+	 * @since 5.0
+	 */
+	public String getElementCollection() { 
+		return "ox-element-collection";
+	}
 
 	/** 
 	 * @since 4.4 
