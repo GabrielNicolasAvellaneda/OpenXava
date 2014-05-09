@@ -24,6 +24,10 @@
 		<for-collections/>
 	</editor>
 	
+	<editor name="ElementCollection" url="elementCollectionEditor.jsp">
+		<for-element-collections/>
+	</editor>	
+	
 	<editor name="TextField" url="textEditor.jsp">
 		<for-type type="java.lang.String" />
 		<for-type type="java.math.BigDecimal" />
@@ -223,10 +227,11 @@
 	<editor url="myReportColumnDescriptionsListValueEditor.jsp">
 		<for-model-property model="MyReportColumn" property="descriptionsListValue" />	
 	</editor>	
-	
+												
 	<editor name="AttachedFile" url="attachedFileEditor.jsp">		
 		<list-formatter class="org.openxava.formatters.FileListFormatter" />
 		<for-stereotype stereotype="FILE" />
 		<for-stereotype stereotype="ARCHIVO" />
-	</editor>												
+	</editor>								
+					
 </editors>

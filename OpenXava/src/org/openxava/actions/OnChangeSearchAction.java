@@ -9,7 +9,7 @@ package org.openxava.actions;
 public class OnChangeSearchAction extends OnChangePropertyBaseAction {
 	
 	public void execute() throws Exception {
-		getView().findObject(getChangedMetaProperty());		
+		getView().findObject(getChangedMetaProperty());
 	}
 
 }

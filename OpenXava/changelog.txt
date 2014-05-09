@@ -1,7 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- New method noFirstTokenWithoutFirstDelim() in Strings.
 - New Addons project added to distribution to contain extended features outside of the OpenXava core.
+- New getPopupPDFPageCount() method in ModuleTestBase.
+- New stereotype FILE for attached files, it can store the files in DB or file system.
 - Several reports in one PDF with the new JasperConcatReportBaseAction.
 - New is/setCollapsed() methods in View to close a frame of a reference or collection programmatically.
 - @Collapsed annotation to initiate collections and references with the frame closed. Also allowed in XML components. 

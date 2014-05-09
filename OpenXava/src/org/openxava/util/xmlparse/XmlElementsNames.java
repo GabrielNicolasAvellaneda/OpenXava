@@ -192,6 +192,7 @@ public class XmlElementsNames {
 	protected final static String [] xfor_references= { "for-references", "para-referencias" };
 	protected final static String [] xfor_collection= { "for-collection", "para-coleccion" }; 
 	protected final static String [] xfor_collections= { "for-collections", "para-colecciones" }; 
+	protected final static String [] xfor_element_collections= { "for-element-collections", "para-colecciones-elementos" }; 
 	protected final static String [] xformula= { "formula", "formula" };
 	protected final static String [] xlist_formatter = { "list-formatter", "formateador-lista" }; 
 	protected final static String [] xsearch_list_condition = { "search-list-condition", "condicion-lista-busqueda" };

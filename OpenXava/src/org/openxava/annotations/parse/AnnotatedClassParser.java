@@ -1284,6 +1284,10 @@ public class AnnotatedClassParser {
 			collection.setInverseCollection(manyToMany.mappedBy());
 			// For the rest ManyToMany collections are processed as calculated one
 		}
+		else if (element.isAnnotationPresent(ElementCollection.class)) {
+			collection.setElementCollection(true);
+			addAggregateForCollection(collection.getMetaModel(), getClassNameFor(collection.getMetaReference().getReferencedModelName()), null);
+		}
 		else if (element.isAnnotationPresent(Condition.class)) {			
 			collection.setMetaCalculator(null); 
 		}		

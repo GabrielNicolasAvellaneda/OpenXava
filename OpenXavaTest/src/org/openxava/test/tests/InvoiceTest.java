@@ -333,7 +333,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("columns", 6, 2, "Yes");
 
 		execute("MyReport.editColumn", "row=6,viewObject=xava_view_columns");
-		assertExists("booleanValue");
+		assertExists("booleanValue"); 
 		assertNotExists("dateValue");
 		assertNotExists("comparator");
 		assertNotExists("value");
