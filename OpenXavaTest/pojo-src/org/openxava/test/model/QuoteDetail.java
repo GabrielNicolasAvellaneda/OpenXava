@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 /**
  * 
  * @author Javier Paniza 
@@ -17,12 +19,18 @@ public class QuoteDetail {
 	private Product product;
 	
 	private BigDecimal unitPrice;
+	
+	private int quantity;
 	 	
 	private Date availabilityDate;
 		
 	@Column(length=30)
 	private String remarks;
 	
+	@Depends("unitPrice, quantity")
+	public BigDecimal getAmount() {
+		return getUnitPrice().multiply(new BigDecimal(getQuantity()));
+	}
 
 	public String getRemarks() {
 		return remarks;
@@ -54,6 +62,14 @@ public class QuoteDetail {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }
