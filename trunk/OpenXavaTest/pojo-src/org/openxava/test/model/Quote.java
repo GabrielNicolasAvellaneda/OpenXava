@@ -30,9 +30,9 @@ public class Quote extends Identifiable {
 	private Customer customer;
 	
 	@ElementCollection
-	@ListProperties("product.number, product.description, unitPrice, availabilityDate, remarks")
+	@ListProperties("product.number, product.description, unitPrice, quantity, amount, availabilityDate, remarks")
 	private Collection<QuoteDetail> details;
-
+	
 	public int getYear() {
 		return year;
 	}

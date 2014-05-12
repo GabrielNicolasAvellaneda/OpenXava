@@ -2160,28 +2160,23 @@ public class View implements java.io.Serializable {
 			return false;
 		}		
 	}
-
+	
 	public boolean isEditable(String member) throws XavaException {		
 		int idx = member.indexOf('.'); 
 		if (idx >= 0) {
 			String compoundMember = member.substring(0, idx); 
 			String submember = member.substring(idx + 1);
 			try {
-				return getSubview(compoundMember).isEditable(submember);
+				View subview = getSubview(compoundMember);
+				if (subview.isRepresentsElementCollection()) submember = Strings.noFirstTokenWithoutFirstDelim(submember, ".");
+				return subview.isEditable(submember);
 			}
 			catch (ElementNotFoundException ex) {
-				if (getMetaModel().containsMetaCollection(compoundMember)) { 
-					MetaModel referencedModel = getMetaModel().getMetaCollection(compoundMember).getMetaReference().getMetaModelReferenced();
-					String collectionMember = Strings.noFirstTokenWithoutFirstDelim(submember, ".");
-					MetaProperty p = referencedModel.getMetaProperty(collectionMember);
-					if (collectionMember.contains(".")) return p.isKey(); 
-					return true; 
-				}
 				// Maybe a custom JSP view wants access to a property not showed in default view
 				MetaModel referencedModel = getMetaModel().getMetaReference(compoundMember).getMetaModelReferenced(); 				
 				return (referencedModel instanceof MetaAggregate) ||
 					referencedModel.isKey(submember);
-			}			
+			}		
 		}			
 		return isEditable(getMetaView().getMetaProperty(member));
 	}
@@ -2613,9 +2608,15 @@ public class View implements java.io.Serializable {
 		try {														
 			String name = Ids.undecorate(propertyId);
 			if (isRepresentsElementCollection()) {
-				collectionEditingRow = Integer.parseInt(Strings.firstToken(name, ".")); 
-				setValues(collectionValues.get(collectionEditingRow));
-				name = Strings.noFirstTokenWithoutFirstDelim(name, ".");
+				try {
+					// When the format is "0.name" thrown from a cell of the collection UI
+					collectionEditingRow = Integer.parseInt(Strings.firstToken(name, ".")); 
+					setValues(collectionValues.get(collectionEditingRow));
+					name = Strings.noFirstTokenWithoutFirstDelim(name, ".");
+				}
+				catch (NumberFormatException ex) { 
+					// When the format is "name" thrown from other action, depends, etc. using the underlaying View
+				}
 			}
 			if (name.endsWith("__KEY__")) {
 				String refName = name.substring(0, name.length() - 7);
@@ -2687,19 +2688,25 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception { 
-		if (!isOnlyThrowsOnChange()) {			
+		if (!isOnlyThrowsOnChange()) {
+			boolean calculationDone = false; 
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();				
 				if (dependsOn(pr, changedProperty, changedPropertyQualifiedName)) {
 					if (pr.hasCalculator()) {						
-						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);											
+						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);
+						calculationDone = true;
 					}
 					if (pr.hasDefaultValueCalculator() && isEmptyValue(getValue(pr.getName()))) {					
-						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.createDefaultValueCalculator(), errors, messages);					
+						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.createDefaultValueCalculator(), errors, messages);
+						calculationDone = true;
 					}					
 				}
-			}						
+			}			
+			if (calculationDone && isRepresentsElementCollection()) { 
+				moveViewValuesToCollectionValues();
+			}
 			   
 			if (hasToSearchOnChangeIfSubview && isSubview() && isRepresentsEntityReference() && !isGroup() && !displayAsDescriptionsList() && 
 					( 	
