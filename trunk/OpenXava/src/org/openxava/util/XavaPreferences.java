@@ -511,8 +511,8 @@ public class XavaPreferences {
 	}
 	
 	/** @since 5.0 */
-	public String getPathOxFiles() { 
-		String path = getProperties().getProperty("pathOxFiles");
+	public String getFilesPath() { 
+		String path = getProperties().getProperty("filesPath");
 		return path != null ? path : System.getProperty("user.home") + System.getProperty("file.separator") + "oxfiles";
 	}
 }

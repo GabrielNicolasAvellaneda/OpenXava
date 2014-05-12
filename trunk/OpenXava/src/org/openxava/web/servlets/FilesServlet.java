@@ -1,5 +1,7 @@
 package org.openxava.web.servlets;
 
+import static org.apache.commons.lang.SystemUtils.*;
+
 import java.io.*;
 
 import javax.servlet.*;
@@ -8,11 +10,10 @@ import javax.servlet.http.*;
 import org.apache.commons.logging.*;
 import org.openxava.util.*;
 import org.openxava.web.editors.*;
-import org.openxava.web.editors.AttachedFile;
 
 import eu.medsea.mimeutil.*;
-
 /**
+ * 
  * @author Jeromy Altuna
  */
 @SuppressWarnings("serial")
@@ -28,8 +29,9 @@ public class FilesServlet extends HttpServlet {
 			
 			if (!Is.emptyString(fileId)) {
 				AttachedFile file = FilePersistorFactory.getInstance().find(fileId);
-
-				MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.OpendesktopMimeDetector");
+				
+				registerMimeDetector();
+				
 				MimeType mimeType = MimeUtil.getMostSpecificMimeType(MimeUtil.getMimeTypes(file.getName()));
 				String mime = mimeType.getMediaType() + "/" + mimeType.getSubType();
 								
@@ -40,13 +42,31 @@ public class FilesServlet extends HttpServlet {
 				response.setContentType(mime);
 				response.setHeader("Content-Disposition", "inline; filename=\""	+ file.getName() + "\"");
 				response.getOutputStream().write(file.getData());
-
-				MimeUtil.unregisterMimeDetector("eu.medsea.mimeutil.detector.OpendesktopMimeDetector");
+				
+				unregisterMimeDetector();
 			}
 
 		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new ServletException(XavaResources.getString("attached_file_error"));
 		}
-	}	
+	}
+
+	private static void registerMimeDetector() {
+		if(IS_OS_UNIX)
+			MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.OpendesktopMimeDetector");
+		else if (IS_OS_WINDOWS)
+			MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.WindowsRegistryMimeDetector");
+		else 
+			MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
+	}
+	
+	private static void unregisterMimeDetector() {
+		if(IS_OS_UNIX)
+			MimeUtil.unregisterMimeDetector("eu.medsea.mimeutil.detector.OpendesktopMimeDetector");
+		else if (IS_OS_WINDOWS)
+			MimeUtil.unregisterMimeDetector("eu.medsea.mimeutil.detector.WindowsRegistryMimeDetector");
+		else 
+			MimeUtil.unregisterMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
+	}
 }

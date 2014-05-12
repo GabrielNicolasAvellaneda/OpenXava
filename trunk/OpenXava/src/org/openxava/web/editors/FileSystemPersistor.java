@@ -17,7 +17,7 @@ import org.openxava.util.*;
 public class FileSystemPersistor implements IFilePersistor {
 	
 	private static final String SEPARATOR     = "_OX_";
-	private static final java.io.File PARENT  = new java.io.File(XavaPreferences.getInstance().getPathOxFiles());
+	private static final java.io.File PARENT  = new java.io.File(XavaPreferences.getInstance().getFilesPath());
 	
 	private static Log log = LogFactory.getLog(FileSystemPersistor.class);
 	
