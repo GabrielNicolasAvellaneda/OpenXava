@@ -1331,14 +1331,32 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	protected String getValueInCollection(String collection, int row, String name) throws Exception {
+		String elementCollectionPropertyName = collection + "." + row + "." + name;
+		if (hasElementByName(elementCollectionPropertyName)) return getValue(elementCollectionPropertyName);
 		int column = getPropertiesList(collection).indexOf(name); 
 		return getValueInCollection(collection, row, column);
 	}
 
-	private List getPropertiesList(String collection) throws Exception {
+	/**
+	 * @since 5.0 
+	 */
+	protected void setValueInCollection(String collection, int row, String name, String value) throws Exception {
+		String elementCollectionPropertyName = collection + "." + row + "." + name;
+		if (!hasElementByName(elementCollectionPropertyName)) throw new XavaException("setValueInCollection_only_for_element_collections"); 
+		setValue(elementCollectionPropertyName, value);
+	}
+	
+	/**
+	 * @since 5.0 
+	 */
+	protected void setValueInCollection(String collection, int row, int column, String value) throws Exception {
+		setValueInCollection(collection, row, getPropertiesList(collection).get(column), value);
+	}
+	
+	private List<String> getPropertiesList(String collection) throws Exception {
 		collection = getCollectionPrefix() + collection;
 		MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(collection);
-		List propertiesList = metaCollectionView==null?null:metaCollectionView.getPropertiesListNames();
+		List<String> propertiesList = metaCollectionView==null?null:metaCollectionView.getPropertiesListNames();
 		if (propertiesList == null || propertiesList.isEmpty()) propertiesList = getMetaModel().getMetaCollection(collection).getMetaReference().getMetaModelReferenced().getPropertiesNamesWithoutHiddenNorTransient();
 		return removePropertySuffix(propertiesList);
 	}	
@@ -1363,6 +1381,14 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected String getValueInCollection(String collection, int row, int column) throws Exception {
+		try {
+			String name = getPropertiesList(collection).get(column); 
+			String elementCollectionPropertyName = collection + "." + row + "." + name;
+			if (hasElementByName(elementCollectionPropertyName)) return getValue(elementCollectionPropertyName);
+		}
+		catch (org.openxava.util.ElementNotFoundException ex) {
+			// Because sometimes is needed to explore collections not contained in the module model
+		}
 		return getTableCellInCollection(collection, row, column).asText().trim();
 	}
 	
@@ -1464,11 +1490,21 @@ public class ModuleTestBase extends TestCase {
 		HtmlTable table = getTable(collection, XavaResources.getString("collection_not_displayed"));
 		int count = 0;
 		for (HtmlTableRow row: table.getRows()) {
-			if (!Is.emptyString(row.getId()) && !row.getId().equals("nodata") && !row.getId().contains("_list_filter_")) count++; 
+			if (!Is.emptyString(row.getId()) && !row.getId().equals("nodata") && !row.getId().contains("_list_filter_")) {
+				if (isDisplayed(row)) count++;
+				else count--; // In this way we discount the empty row in element collection just above the hidden one
+			}
 		}
 		return count;
 	}
 	
+	// Because HtmlElement.isDisplayed only works when CSS is active
+	private boolean isDisplayed(HtmlElement element) { 
+		String style = element.getAttribute("style");
+		if (style == null) return true;
+		return !(style.contains("display: none") || style.contains("display:none")); // Enough for our cases
+	}
+
 	/**
 	 * Row count displayed with data. <p>
 	 * Excludes heading and footing, and not displayed data (but cached). 

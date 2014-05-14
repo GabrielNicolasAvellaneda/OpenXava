@@ -1880,6 +1880,7 @@ public class View implements java.io.Serializable {
 			rootModelName = null;
 		}
 
+		if (isRepresentsElementCollection() && (collectionValues != null && !collectionValues.isEmpty())) refreshCollection();
 		collectionValues = null; 
 		collectionTotals = null;
 		setIdFocusProperty(null);
