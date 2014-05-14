@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New method setValueInCollection() in ModuleTestBase to test element collections.
 - New method noFirstTokenWithoutFirstDelim() in Strings.
 - New Addons project added to distribution to contain extended features outside of the OpenXava core.
 - New getPopupPDFPageCount() method in ModuleTestBase.
