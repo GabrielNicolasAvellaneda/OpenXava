@@ -894,23 +894,13 @@ public class AnnotatedClassParser {
 		}
 		else if (element.isAnnotationPresent(javax.validation.constraints.Digits.class)) {
 			javax.validation.constraints.Digits digits = element.getAnnotation(javax.validation.constraints.Digits.class);
-			if (digits.fraction() > 0) {
-				property.setSize(digits.integer() + 1 + digits.fraction());
-				property.setScale(digits.fraction());
-			}
-			else {
-				property.setSize(digits.integer());
-			}
+			property.setSize(digits.integer() + 1 + digits.fraction());
+			property.setScale(digits.fraction());
 		}		
 		else if (element.isAnnotationPresent(org.hibernate.validator.Digits.class)) {
 			org.hibernate.validator.Digits digits = element.getAnnotation(org.hibernate.validator.Digits.class);
-			if (digits.fractionalDigits() > 0) {
-				property.setSize(digits.integerDigits() + 1 + digits.fractionalDigits());
-				property.setScale(digits.fractionalDigits());
-			}
-			else {
-				property.setSize(digits.integerDigits());
-			}
+			property.setSize(digits.integerDigits() + 1 + digits.fractionalDigits());
+			property.setScale(digits.fractionalDigits());
 		}
 				
 		// required

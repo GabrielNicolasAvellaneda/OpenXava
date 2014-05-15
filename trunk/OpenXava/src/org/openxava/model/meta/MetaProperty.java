@@ -17,11 +17,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.calculators.ICalculator;
 import org.openxava.calculators.IHibernateIdGeneratorCalculator;
-import org.openxava.component.MetaComponent;
 import org.openxava.mapping.ModelMapping;
 import org.openxava.mapping.PropertyMapping;
 import org.openxava.model.IModel;
-import org.openxava.tab.meta.MetaTab;
 import org.openxava.util.*;
 import org.openxava.util.meta.MetaSet;
 import org.openxava.util.meta.MetaSetsContainer;
@@ -29,8 +27,6 @@ import org.openxava.validators.*;
 import org.openxava.validators.meta.MetaValidator;
 import org.openxava.validators.meta.MetaValidatorFor;
 import org.openxava.validators.meta.MetaValidators;
-import org.openxava.view.meta.MetaDescriptionsList;
-import org.openxava.view.meta.MetaView;
 
 /**
  * @author Javier Paniza; modified by Radoslaw OStrzycki, Newitech Sp. z o.o.
@@ -45,7 +41,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private Collection onlyOnCreateValidators;
 	private Class type;
 	private int size;
-	private int scale = 0;	
+	private Integer scale;
 	private boolean required;
 	private boolean hidden;
 	private boolean version; 
@@ -309,10 +305,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * @author Radoslaw Ostrzycki, Newitech Sp. z o.o. ; based on Javier's code for size
 	 */
 	public int getScale() throws XavaException {
-		if (scale == 0) {
+		if (scale == null) { 
 			if (!Is.emptyString(getStereotype())) {				
 				try {					
-					scale = DefaultSize.scaleForStereotype(getStereotype());					
+					scale = DefaultSize.scaleForStereotype(getStereotype());
 					return scale;
 				}
 				catch (ElementNotFoundException ex) {
@@ -1010,7 +1006,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			if (BigDecimal.class.isAssignableFrom(type)) {
 				NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
-				numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);				
+				numberFormat.setMaximumFractionDigits(getScale());
+				numberFormat.setMinimumFractionDigits(getScale());
 				return numberFormat.format(value);				
 			}
 			if (java.sql.Time.class.isAssignableFrom(type)) { 

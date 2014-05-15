@@ -1036,7 +1036,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertListRowCount(2); // We suppose that there are 2 invoices of month 1 of year 2004				
 	}
 	
-	public void testFilterByBoolean() throws Exception {
+	public void testFilterByBoolean() throws Exception { 
 		int total = Invoice.findAll().size();		
 		int paidOnes = Invoice.findPaidOnes().size();		
 		int notPaidOnes = Invoice.findNotPaidOnes().size();
@@ -1198,7 +1198,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("customer.name", customerName);				
 	}
 	
-	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {     		
+	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {      		
 		// Create
 		execute("CRUD.new");					
 		assertExists("customer.number");
@@ -1345,7 +1345,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValueInCollection("details", 2, 5, getProductUnitPriceMultiplyBy("20"));
 				
 		execute("Sections.change", "activeSection=2");		
-		assertValue("vatPercentage", "23");
+		assertValue("vatPercentage", "23.0"); 
 		
 		// Edit line
 		execute("Sections.change", "activeSection=1");		
@@ -1513,7 +1513,7 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	
-	public void testValidationOnSaveAggregateAndModelValidatorReceivesReferenceAndCalculatedProperty() throws Exception { 		
+	public void testValidationOnSaveAggregateAndModelValidatorReceivesReferenceAndCalculatedProperty() throws Exception {  		
 		// Create
 		execute("CRUD.new");						
 		assertExists("customer.number");

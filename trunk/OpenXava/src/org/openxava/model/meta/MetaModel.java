@@ -1363,6 +1363,29 @@ abstract public class MetaModel extends MetaElement {
 						referencedModel.fillPOJO(referencedObject, (Map) en.getValue());
 					}
 				}
+				else if (containsMetaCollection((String)en.getKey())) {
+					if (en.getValue() == null) { 
+						pm.executeSet((String)en.getKey(), null);
+						continue;
+					}
+					MetaModel referencedModel = getMetaCollection((String)en.getKey()).getMetaReference().getMetaModelReferenced();
+					Object referencedObject = pm.executeGet((String)en.getKey());
+					
+					Collection collection = null;
+					if (referencedObject == null) {
+						collection = new ArrayList(); // It will fail with Sets						
+					}
+					else {
+						collection = (Collection) referencedModel;
+						collection.clear();
+					}					
+					
+					Collection<Map> collectionValues = (Collection<Map>) en.getValue();
+					for (Map elementValues: collectionValues) {
+						collection.add(referencedModel.toPOJO(elementValues));
+					}							
+					pm.executeSet((String)en.getKey(), collection);
+				}
 				else {
 					if (isViewProperty((String)en.getKey())) continue;
 					MetaProperty property = getMetaProperty((String)en.getKey());

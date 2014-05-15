@@ -7,7 +7,7 @@ import org.openxava.tests.*;
  * @author Javier Paniza
  */
 
-public class InvoiceNoSectionsTest extends ModuleTestBase {
+public class InvoiceNoSectionsTest extends ModuleTestBase { 
 	
 	public InvoiceNoSectionsTest(String testName) {
 		super(testName, "InvoiceNoSections");		
@@ -21,9 +21,9 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		execute("Search.search");
 		// Defined by developer
 		assertCollectionRowCount("details", 2);
-		assertValueInCollection("details", 0, "product.unitPrice", "11");
-		assertValueInCollection("details", 1, "product.unitPrice", "20");
-		assertTotalInCollection("details", "product.unitPrice", "31"); 
+		assertValueInCollection("details", 0, "product.unitPrice", "11.00");
+		assertValueInCollection("details", 1, "product.unitPrice", "20.00");
+		assertTotalInCollection("details", "product.unitPrice", "31.00");		
 				
 		// Defined by the user
 		execute("List.removeColumnSum", "property=product.unitPrice,collection=details");
@@ -49,7 +49,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		execute("List.customize", "collection=details");
 		execute("List.addColumns", "collection=details");
 		execute("AddColumns.restoreDefault");
-		assertTotalInCollection("details", "product.unitPrice", "31");
+		assertTotalInCollection("details", "product.unitPrice", "31.00"); 
 		assertTotalInCollection("details", "quantity", "");
 		
 		resetModule();
@@ -58,7 +58,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		setValue("year", "2004");
 		setValue("number", "9");
 		execute("Search.search");
-		assertTotalInCollection("details", "product.unitPrice", "31");
+		assertTotalInCollection("details", "product.unitPrice", "31.00"); 
 		assertTotalInCollection("details", "quantity", "");
 	}
 	
@@ -75,7 +75,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		assertValueInCollection("details", 1, "quantity", "5");
 		assertValueInCollection("details", 1, "amount", "60.00");
 		assertValue("amountsSum", "110.00");
-		assertValue("vatPercentage", "13");
+		assertValue("vatPercentage", "13.0"); 
 		assertValue("vat", "14.30");
 		assertValue("total", "124.30");
 		
@@ -91,7 +91,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		assertValueInCollection("details", 1, "quantity", "5");
 		assertValueInCollection("details", 1, "amount", "60.00");
 		assertValue("amountsSum", "120.00");
-		assertValue("vatPercentage", "14");
+		assertValue("vatPercentage", "14.0"); 
 		assertValue("vat", "16.80");
 		assertValue("total", "136.80");		
 		
@@ -104,7 +104,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		assertValueInCollection("details", 1, "quantity", "5");
 		assertValueInCollection("details", 1, "amount", "60.00");
 		assertValue("amountsSum", "110.00");
-		assertValue("vatPercentage", "14");
+		assertValue("vatPercentage", "14.0"); 
 		assertValue("vat", "15.40");
 		assertValue("total", "125.40");		
 	}

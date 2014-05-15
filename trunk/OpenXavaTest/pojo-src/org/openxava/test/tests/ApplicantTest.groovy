@@ -1,7 +1,5 @@
 package org.openxava.test.tests;
 
-import java.util.*;
-
 import org.apache.commons.lang.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
