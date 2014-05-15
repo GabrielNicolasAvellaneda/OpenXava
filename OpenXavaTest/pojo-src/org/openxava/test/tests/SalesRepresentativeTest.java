@@ -12,7 +12,7 @@ import org.openxava.tests.ModuleTestBase;
  * @author Federico Alcantara
  *
  */
-public class SalesRepresentativeTest extends ModuleTestBase{ 
+public class SalesRepresentativeTest extends ModuleTestBase{  
 	public SalesRepresentativeTest(String nameTest) {
 		super(nameTest, "SalesRepresentative");
 	}
@@ -59,7 +59,7 @@ public class SalesRepresentativeTest extends ModuleTestBase{
 		// let's read in detail mode
 		execute("Mode.detailAndFirst");
 		assertValue("repEmployeeNumber", "1");
-		assertValue("repCommissionRate", "3");
+		assertValue("repCommissionRate", "3.00"); 
 		assertValue("person.personFirstName", "JOHN");
 		assertValue("person.personLastName", "DOE");
 		assertValue("person.phoneNumber.phoneAreaCode", "305");
@@ -76,7 +76,7 @@ public class SalesRepresentativeTest extends ModuleTestBase{
 		setValue("repEmployeeNumber", "1");
 		execute("CRUD.refresh");
 		assertValue("repEmployeeNumber", "1");
-		assertValue("repCommissionRate", "3");
+		assertValue("repCommissionRate", "3.00"); 
 		assertValue("person.personFirstName", "JANE");
 		assertValue("person.personLastName", "DOE");
 		assertValue("person.phoneNumber.phoneAreaCode", "305");

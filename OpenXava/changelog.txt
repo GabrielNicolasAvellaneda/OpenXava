@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Scale defined in default-size.xml is ignored when formatting.
+- Fix: Scale definition from @Column and @Digits is ignored when formatting.
+- When @Digits is specified default scale is ignored even if fraction is not specified.
 - New method setValueInCollection() in ModuleTestBase to test element collections.
 - New method noFirstTokenWithoutFirstDelim() in Strings.
 - New Addons project added to distribution to contain extended features outside of the OpenXava core.

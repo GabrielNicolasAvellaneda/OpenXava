@@ -1389,6 +1389,9 @@ public class ModuleTestBase extends TestCase {
 		catch (org.openxava.util.ElementNotFoundException ex) {
 			// Because sometimes is needed to explore collections not contained in the module model
 		}
+		catch (IndexOutOfBoundsException ex) {
+			// Because sometimes is needed to explore collections not contained in the module model
+		}
 		return getTableCellInCollection(collection, row, column).asText().trim();
 	}
 	

@@ -27,6 +27,7 @@ public class QuoteDetail {
 	@Column(length=30)
 	private String remarks;
 	
+	@Column(precision=10, scale=2)
 	@Depends("unitPrice, quantity")
 	public BigDecimal getAmount() {
 		return getUnitPrice().multiply(new BigDecimal(getQuantity()));

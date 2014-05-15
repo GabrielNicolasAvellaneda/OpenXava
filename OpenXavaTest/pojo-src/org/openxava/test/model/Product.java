@@ -3,8 +3,8 @@ package org.openxava.test.model;
 import java.math.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
-import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.test.actions.*;
 import org.openxava.test.calculators.*;
@@ -60,7 +60,7 @@ import org.openxava.test.validators.*;
 })
 
 @Tab(properties = "number, description, unitPrice, unitPriceInPesetas") 
-public class Product {
+public class Product { 
 	
 	@Id @Column(length=10) 
 	private long number;
@@ -114,7 +114,7 @@ public class Product {
 	private String remarks;
 
 	@Depends("unitPrice")  
-	@Max(9999999999L) 	
+	@Digits(integer=10, fraction=0) 
 	public BigDecimal getUnitPriceInPesetas() {
 		if (unitPrice == null) return null;
 		return unitPrice.multiply(new BigDecimal("166.386")).setScale(0, BigDecimal.ROUND_HALF_UP);

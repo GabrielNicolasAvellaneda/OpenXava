@@ -2,7 +2,7 @@ package org.openxava.test.tests
 
 import org.openxava.tests.*;
 
-class MiniOrderTest extends ModuleTestBase {
+class MiniOrderTest extends ModuleTestBase { 
 	
 	MiniOrderTest(String testName) {
 		super(testName, "MiniOrder")		
@@ -19,7 +19,7 @@ class MiniOrderTest extends ModuleTestBase {
 		assertValue "number", ""
 		setValue "number", "66"
 		execute "CRUD.refresh"
-		assertValue "amount", "6"
+		assertValue "amount", "6.00" 
 		
 		// Delete
 		execute "CRUD.delete"

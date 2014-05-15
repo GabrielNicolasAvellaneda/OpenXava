@@ -214,7 +214,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	
-	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception {   
+	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception {    
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");		
 		assertDialog();
@@ -259,7 +259,7 @@ public class DeliveryTest extends ModuleTestBase {
 		setValue("number", "66");
 		execute("CRUD.refresh");
 		execute("Sections.change", "activeSection=2");
-		assertValue("vatPercentage", "17");
+		assertValue("vatPercentage", "17.0"); 
 		execute("CRUD.delete");
 		assertMessage("Invoice deleted successfully");
 	}

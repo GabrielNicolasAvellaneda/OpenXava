@@ -8,7 +8,7 @@ import org.openxava.test.model.*;
  * @author Javier Paniza
  */
 
-public class ProductWithSectionTest extends ProductTest {
+public class ProductWithSectionTest extends ProductTest { 
 		
 	public ProductWithSectionTest(String testName) {
 		super(testName, "ProductWithSection");		

@@ -1544,12 +1544,17 @@ public class View implements java.io.Serializable {
 				collectionTotals = Collections.EMPTY_MAP;
 			}
 			else {
-				try	{		
-					collectionTotals = MapFacade.getValues(getParent().getModelName(), key, memberNames);
+				try	{
+					if (isRepresentsElementCollection()) {
+						collectionTotals = MapFacade.getValues(getParent().getModelName(), getParent().getTransientPOJO(), memberNames);
+					}
+					else {
+						collectionTotals = MapFacade.getValues(getParent().getModelName(), key, memberNames);
+					}
 				}
 				catch (javax.ejb.ObjectNotFoundException ex) {
 					collectionTotals = Collections.EMPTY_MAP;
-				}
+				}				
 			}
 		}
 		return collectionTotals;
@@ -2959,7 +2964,7 @@ public class View implements java.io.Serializable {
 	 */
 	private Object getPOJO() throws XavaException, ObjectNotFoundException, RemoteException, FinderException {
 		if (isKeyEditable()) {		
-			return getMetaModel().toPOJO(getParentIfSectionOrGroup().getAllValues());		
+			return getTransientPOJO();
 		}
 		else {
 			Object pojo = MapFacade.findEntity(getModelName(), getParentIfSectionOrGroup().getKeyValues());
@@ -2967,6 +2972,12 @@ public class View implements java.io.Serializable {
 			return pojo;			
 		}
 	}
+	
+	private Object getTransientPOJO() {
+		return getMetaModel().toPOJO(getParentIfSectionOrGroup().getAllValues());
+	}
+	
+	
 		
 	/** 
 	 * The model object attached to this view using {@link #setModel(Object model)}. <p>

@@ -9,7 +9,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class ProductTest extends ModuleTestBase {
+public class ProductTest extends ModuleTestBase { 
 	
 	private String [] detailActions = {
 		"Navigation.previous",
@@ -92,7 +92,7 @@ public class ProductTest extends ModuleTestBase {
 		assertValueInCollection("columns", 2, 4, "Yes");
 		execute("MyReport.generatePdf");
 		assertPopupPDFLinesCount(12); // There are 7 products
-		assertPopupPDFLine(10, "629"); // The sum of the 7 product, if the price of some product has been changed you have to change this value
+		assertPopupPDFLine(10, "629.00"); // The sum of the 7 product, if the price of some product has been changed you have to change this value
 
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 2, 4, "Yes");
@@ -271,7 +271,7 @@ public class ProductTest extends ModuleTestBase {
 		assertValue("unitPriceInPesetas", "16,639");		
 	}
 	
-	public void testCalculatedDefaultValueDependent() throws Exception {
+	public void testCalculatedDefaultValueDependent() throws Exception { 
 		assertActions(listActions);				
 		execute("CRUD.new");
 		assertActions(detailActions);	
@@ -280,12 +280,12 @@ public class ProductTest extends ModuleTestBase {
 		assertValue("unitPriceInPesetas", "");	
 		
 		setValue("familyNumber", "2");
-		assertValue("unitPrice", "20");
+		assertValue("unitPrice", "20.00");
 		assertValue("unitPriceInPesetas", "3,328");
 		
 		// It is not change because unitPrice already has value
 		setValue("familyNumber", "1");
-		assertValue("unitPrice", "20");
+		assertValue("unitPrice", "20.00");
 		assertValue("unitPriceInPesetas", "3,328");
 				
 		// Test again		
@@ -295,11 +295,11 @@ public class ProductTest extends ModuleTestBase {
 		// No it is changed because unitPrice has not value, hence
 		// default value is calculated
 		setValue("familyNumber", "1");
-		assertValue("unitPrice", "10");
+		assertValue("unitPrice", "10.00"); 
 		assertValue("unitPriceInPesetas", "1,664");		
 	}
 	
-	public void testConsultWithCalculatedValuesAndByDefault() throws Exception {
+	public void testConsultWithCalculatedValuesAndByDefault() throws Exception { 
 		assertActions(listActions);
 		
 		execute("CRUD.new");
@@ -308,7 +308,7 @@ public class ProductTest extends ModuleTestBase {
 		execute("CRUD.refresh");
 						
 		assertValue("familyNumber", "1"); 
-		assertValue("unitPrice", "11");
+		assertValue("unitPrice", "11.00"); 
 		assertValue("unitPriceInPesetas", "1,830");		
 	}
 	
@@ -379,10 +379,10 @@ public class ProductTest extends ModuleTestBase {
 	}
 	
 
-	public void testCalculatedInListMode() throws Exception {		
+	public void testCalculatedInListMode() throws Exception {	 	
 		assertActions(listActions);
 		assertValueInList(1, "number", "2");
-		assertValueInList(1, "unitPrice", "20");
+		assertValueInList(1, "unitPrice", "20.00"); 
 		assertValueInList(1, "unitPriceInPesetas", "3,328");			
 	}
 	
@@ -422,12 +422,12 @@ public class ProductTest extends ModuleTestBase {
 		assertEditable("unitPrice");		
 	}
 								
-	public void testOnChangeDependentsOfPropertyWithDefaultValue() throws Exception {
+	public void testOnChangeDependentsOfPropertyWithDefaultValue() throws Exception { 
 		execute("CRUD.new");
 		assertValue("unitPrice","");
 		assertValue("remarks", "");		
 		setValue("familyNumber", "1");		
-		assertValue("unitPrice","10");
+		assertValue("unitPrice","10.00"); 
 		assertValue("remarks", "The price is 10");				
 	}
 	
