@@ -1342,7 +1342,7 @@ public class ModuleTestBase extends TestCase {
 	 */
 	protected void setValueInCollection(String collection, int row, String name, String value) throws Exception {
 		String elementCollectionPropertyName = collection + "." + row + "." + name;
-		if (!hasElementByName(elementCollectionPropertyName)) throw new XavaException("setValueInCollection_only_for_element_collections"); 
+		if (!hasElementByName(elementCollectionPropertyName)) throw new XavaException("method_only_for_element_collections", "setValueInCollection()"); 
 		setValue(elementCollectionPropertyName, value);
 	}
 	
@@ -1621,11 +1621,17 @@ public class ModuleTestBase extends TestCase {
 	
 	private void assertTotalInList(String tableId, String message, int row, int column, String total) throws Exception { 
 		HtmlTable table = getTable(tableId, message);
-		int rowInTable = table.getRowCount() - getTotalsRowCount(table) + row; 		
+		int rowInTable = table.getRowCount() - getTotalsRowCount(table) + row; 
+		column = isElementCollection(table)?column+1:column+2;
 		assertEquals(XavaResources.getString("total_not_match", new Integer(column)), total,   
-			table.getCellAt(rowInTable, column+2).asText().trim());
+				table.getCellAt(rowInTable, column).asText().trim());		
 	}		
 	
+	private boolean isElementCollection(HtmlTable table) { 
+		HtmlElement container = (HtmlElement) table.getParentNode().getParentNode();
+		return Style.getInstance().getElementCollection().equals(container.getAttribute("class"));
+	}
+
 	private int getTotalsRowCount(HtmlTable table) { 
 		int count = 0;
 		for (int i=table.getRowCount() - 1; table.getRow(i).getId().equals("") && i >=0; i--) count++;		
@@ -2087,6 +2093,46 @@ public class ModuleTestBase extends TestCase {
 		String v = getValue(name + EDITABLE_SUFIX);		
 		assertTrue(name + " " + message, value.equals(v)); 		
 	}
+	
+	/**
+	 * @since 5.0 
+	 */
+	protected void assertEditableInCollection(String collection, int row, String name) throws Exception {
+		assertEditableInCollection(collection, row, name, "true");
+	}
+	
+	/**
+	 * @since 5.0 
+	 */
+	protected void assertNoEditableInCollection(String collection, int row, String name) throws Exception {
+		assertEditableInCollection(collection, row, name, "false");
+	}
+	
+	/**
+	 * @since 5.0 
+	 */
+	protected void assertEditableInCollection(String collection, int row, int column) throws Exception {
+		assertEditableInCollection(collection, row, getPropertiesList(collection).get(column), "true");
+	}
+	
+	/**
+	 * @since 5.0 
+	 */
+	protected void assertNoEditableInCollection(String collection, int row, int column) throws Exception {
+		assertEditableInCollection(collection, row, getPropertiesList(collection).get(column), "false");
+	}
+	
+	private void assertEditableInCollection(String collection, int row, String name, String editable) throws Exception {
+		String elementCollectionPropertyName = collection + "." + row + "." + name;
+		if (hasElementByName(elementCollectionPropertyName)) {
+			assertEditable(elementCollectionPropertyName, editable, XavaResources.getString(editable.equals("true")?"must_be_editable":"must_not_be_editable")); 
+		}
+		else {
+			throw new XavaException("method_only_for_element_collections", "assertEditableInCollection()/assertNoEditableInCollection()");
+		}
+	}
+
+	
 	
 	protected void assertListTitle(String expectedTitle) throws Exception {
 		HtmlElement element = null;
