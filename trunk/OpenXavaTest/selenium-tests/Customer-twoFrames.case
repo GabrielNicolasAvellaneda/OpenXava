@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>storeElementPositionLeft</td>
-	<td>xpath=//div[@id='ox_OpenXavaTest_Customer__frame_group_alternateSellercontent']/..</td>
+	<td>xpath=//div[@id='ox_OpenXavaTest_Customer__frame_alternateSellercontent']/..</td>
 	<td>leftSecond</td>
 </tr>
 <tr>
