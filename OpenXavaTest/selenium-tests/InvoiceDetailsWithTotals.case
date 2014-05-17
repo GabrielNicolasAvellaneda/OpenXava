@@ -52,6 +52,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
 	<td>css=img[alt=&quot; - Sum&quot;]</td>
 	<td>present</td>

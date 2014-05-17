@@ -108,7 +108,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @see org.openxava.web.layout.ILayoutPainter#beginGroup(org.openxava.web.layout.LayoutElement)
 	 */
 	public void beginGroup(ILayoutGroupBeginElement element) {
-		beginFrame(element);
+		beginFrame(element, "group_");
 	}
 
 	/**
@@ -118,12 +118,16 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	public void endGroup(ILayoutGroupEndElement element) {
 		endFrame(element);
 	}
+	
+	public void beginFrame(ILayoutFrameBeginElement element) {
+		beginFrame(element, "");
+	}
 
 	/**
 	 * Creates the frame. This implementation uses the same style as the original OX design.
 	 * @see org.openxava.web.layout.ILayoutPainter#beginFrame(org.openxava.web.layout.LayoutElement)
 	 */
-	public void beginFrame(ILayoutFrameBeginElement element) {
+	public void beginFrame(ILayoutFrameBeginElement element, String suffix) {
 		// Frame should occupy as many columns as needed. 
 		// In this design each column is 2 TD wide.
 		// However if this frame is the only one in the row
@@ -168,7 +172,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 			write(getStyle().getFrameTitleEndDecoration());
 			write(getStyle().getFrameActionsStartDecoration());
-				String frameId = Ids.decorate(getRequest(), "frame_" + getView().getPropertyPrefix() + element.getName());
+				String frameId = Ids.decorate(getRequest(), "frame_" + suffix + getView().getPropertyPrefix() + element.getName());
 				String frameActionsURL = "frameActions.jsp?frameId=" + frameId + 
 					"&closed=" + getView().isFrameClosed(frameId);
 				includeJspPage(frameActionsURL);
