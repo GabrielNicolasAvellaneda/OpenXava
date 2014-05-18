@@ -34,34 +34,43 @@
 <tr>
 	<td>storeElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CustomerDemo__label_address___street</td>
-	<td>left</td>
+	<td>labelLeft</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${labelLeft} + 14 + 3</td>
+	<td>dataLeft</td>
 </tr>
 <tr>
 	<td>assertElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CustomerDemo__address___street</td>
-	<td>${left}</td>
+	<td>${dataLeft}</td>
 </tr>
 <tr>
 	<td>assertElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CustomerDemo__label_address___city</td>
-	<td>${left}</td>
+	<td>${labelLeft}</td>
 </tr>
 <tr>
 	<td>assertElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CustomerDemo__address___city</td>
-	<td>${left}</td>
+	<td>${dataLeft}</td>
 </tr>
 <tr>
 	<td>storeElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CustomerDemo__label_address___state</td>
-	<td>left</td>
+	<td>labelLeft</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${labelLeft} + 14 + 3</td>
+	<td>dataLeft</td>
 </tr>
 <tr>
 	<td>assertElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CustomerDemo__address___state___id</td>
-	<td>${left}</td>
+	<td>${dataLeft}</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

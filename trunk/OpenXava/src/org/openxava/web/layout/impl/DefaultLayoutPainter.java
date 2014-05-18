@@ -375,6 +375,8 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 					+ "&composite=false"
 					+ "&descriptionsList=" + element.isDisplayAsDescriptionsList()
 					+ "&viewObject=" + view.getViewObject(); 
+			
+			displayPropertyIcons(element);
 			includeJspPage(editorURL);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -419,6 +421,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		initiatePropertyElement(element);
 		beginPropertyLabel(element);
 		processPropertyElement(element);
+
+		displayPropertyIcons(element);
+		
 		attributes.put(ATTR_ID, Ids.decorate(getRequest(), "editor_"
 				+ element.getPropertyPrefix() + element.getName()));
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
@@ -439,7 +444,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		}
 		editorTag.setPageContext(getPageContext());
 		editorTag.setThrowPropertyChanged(element.isThrowPropertyChanged());
-		
+
 		try {
 			editorTag.doStartTag();
 		} catch (JspException e) {
@@ -576,36 +581,8 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 					element.getLabel() != null ? element.getLabel() + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
 			label = label.replaceAll(" ", LayoutJspKeys.CHAR_SPACE);
 			write(label);
-			String img = "";
-			if (!element.isDisplayAsDescriptionsList()) {
-				if (element.isKey()) {
-					img = "key.gif";
-				} else if (element.isRequired()) {
-					if (element.isEditable()) { // No need to mark it as required, since the user can not change it anyway
-						img = "required.gif";
-					}
-				}
-			} else if (element.isRequired()) {
-				img = "required.gif";
-			}
 			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
-			if (!Is.emptyString(img)) {
-				attributes.clear();
-				attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
-				write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
-				write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
-			}
-			attributes.clear();
-			attributes.put(ATTR_ID, Ids.decorate(getRequest(), "error_image_" + element.getQualifiedName()));
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
-				if (getErrors().memberHas(element.getMetaMember())) {
-					attributes.clear();
-					attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/error.gif");
-					write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
-					write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
-				}
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
-
+			
 			if (smallLabelPainted) {
 				write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
 				write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
@@ -613,9 +590,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				attributes.clear();
 				attributes.put(ATTR_STYLE, "text-align:left");
 				write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
-			} else {
-				// Left spacer
-				beginPropertySpacer(element);
 			}
 		}
 	}
@@ -678,7 +652,44 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		beginPropertyDataAddActions(element, isSearch, isCreateNew, isModify);
 	}
 	
-	
+	/**
+	 * Displays the icons associated with the property.
+	 * @param element Element to be assess.
+	 */
+	private void displayPropertyIcons(ILayoutPropertyBeginElement element) {
+		String img = "property_no_icon.gif";
+		if (!element.isDisplayAsDescriptionsList()) {
+			if (element.isKey()) {
+				img = "key.gif";
+			} else if (element.isRequired()) {
+				if (element.isEditable()) { // No need to mark it as required, since the user can not change it anyway
+					img = "required.gif";
+				}
+			}
+		} else if (element.isRequired()) {
+			img = "required.gif";
+		}
+		if (!Is.emptyString(img)) {
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN));
+				attributes.clear();
+				attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
+				write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
+		}
+		attributes.clear();
+		attributes.put(ATTR_ID, Ids.decorate(getRequest(), "error_image_" + element.getQualifiedName()));
+		write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
+			if (getErrors().memberHas(element.getMetaMember())) {
+				attributes.clear();
+				attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/error.gif");
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
+				write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
+			}
+		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
+
+	}
+ 	
 	/**
 	 * Starts a TD properly (with column span if needed).
 	 */

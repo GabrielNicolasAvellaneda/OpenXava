@@ -102,6 +102,7 @@
 <!--Because collection table is at full length,-->
 <!--but visually cropped-->
 <!--within the container-->
+<!--as it should be-->
 <tr>
 	<td>echo</td>
 	<td>This test will ALWAYS fail,</td>
