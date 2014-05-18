@@ -22,21 +22,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_InvoiceAmounts__CRUD___new</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>id=ox_OpenXavaTest_InvoiceAmounts__CRUD___new</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>id=ox_OpenXavaTest_InvoiceAmounts__CRUD___new</td>
 	<td></td>
@@ -47,6 +32,11 @@
 	<td></td>
 </tr>
 <!--Store Columns Position-->
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
 <tr>
 	<td>storeElementPositionLeft</td>
 	<td>name=ox_OpenXavaTest_InvoiceAmounts__customerDiscount</td>
