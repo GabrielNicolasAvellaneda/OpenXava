@@ -381,7 +381,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		finalizePropertyElement(element);
+		finalizePropertyElement(element, false);
 	}
 	
 	/**
@@ -410,7 +410,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		includeJspPage(editorURL);
 		
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
-		finalizePropertyElement(element);
+		finalizePropertyElement(element, false);
 	}
 	
 	/**
@@ -456,7 +456,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 		beginPropertyDataAddPropertyActions(element);
 		
-		finalizePropertyElement(element);
+		finalizePropertyElement(element, true);
 	}
 	
 	/**
@@ -507,10 +507,12 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * Ends wrapping a property element.
 	 * @param element Current property element.
 	 */
-	private void finalizePropertyElement(ILayoutPropertyBeginElement element) {
+	private void finalizePropertyElement(ILayoutPropertyBeginElement element, boolean closeFirst) {
 		if (!firstCellPainted) {
 			closeSmallLabel();
-			closeFirstPropertyElement(element);
+			if (closeFirst) {
+				closeFirstPropertyElement(element);
+			}
 		}
 		// Mark first cell painted
 		firstCellPainted = true;

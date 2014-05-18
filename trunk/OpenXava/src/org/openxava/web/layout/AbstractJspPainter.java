@@ -55,6 +55,12 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 						getLogMessage().append(StringUtils.repeat("  ", level))
 								.append(tag)
 								.append('\n');
+						
+						// ******
+						// Enable this vvv line for displaying log while generating the jsp.
+						// log.info(StringUtils.repeat("  ", level) + tag + '\n');
+						// ******
+						
 						if (difBrackets > 0) {
 							level += difBrackets;
 						}
@@ -79,6 +85,10 @@ public abstract class AbstractJspPainter extends AbstractBasePainter {
 				getLogMessage().append(StringUtils.repeat("  ", level))
 						.append(page)
 						.append('\n');
+				// ******
+				// Enable this vvv line for displaying log while generating the jsp.
+				// log.info(StringUtils.repeat("  ", level) + page + '\n');
+				// ******
 			}
 		} catch (ServletException e) {
 			log.error(e.getMessage(), e);
