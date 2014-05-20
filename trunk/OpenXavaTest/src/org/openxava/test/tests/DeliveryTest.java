@@ -1,22 +1,32 @@
 package org.openxava.test.tests;
 
-import java.text.*;
-import java.util.*;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
-import javax.persistence.*;
+import javax.persistence.Query;
 
-import org.apache.commons.logging.*;
-import org.openxava.jpa.*;
-import org.openxava.test.model.*;
-import org.openxava.tests.*;
-import org.openxava.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.jpa.XPersistence;
+import org.openxava.test.model.DeliveryType;
+import org.openxava.test.model.Shipment;
+import org.openxava.tests.ModuleTestBase;
+import org.openxava.util.Is;
 
-import com.gargoylesoftware.htmlunit.html.*;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
+import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 
 /**
  * @author Javier Paniza
  */
 
+/**
+ * @author federico
+ *
+ */
 public class DeliveryTest extends ModuleTestBase {
 
 	private static Log log = LogFactory.getLog(DeliveryTest.class);
@@ -1324,4 +1334,27 @@ public class DeliveryTest extends ModuleTestBase {
 		assertFalse(s.contains("display: none") || s.contains("display:none")); 
 	}
 	
+	
+	/**
+	 * Test for Bug #429
+	 * 
+	 * @throws Exception
+	 */
+	public void testFrameAndGroupIds() throws Exception {
+		execute("CRUD.new");
+		HtmlElement groupContent = getHtmlPage().getElementById("ox_OpenXavaTest_Delivery__frame_group_deliveryDatacontent");
+		HtmlElement groupHide = getHtmlPage().getElementById("ox_OpenXavaTest_Delivery__frame_group_deliveryDatahide");
+		HtmlElement groupShow = getHtmlPage().getElementById("ox_OpenXavaTest_Delivery__frame_group_deliveryDatashow");
+		assertNotNull("Frame named: ox_OpenXavaTest_Delivery__frame_group_deliveryDatacontent must exists ", groupContent);
+		assertNotNull("Frame named: ox_OpenXavaTest_Delivery__frame_group_deliveryDatahide must exists ", groupHide);
+		assertNotNull("Frame named: ox_OpenXavaTest_Delivery__frame_group_deliveryDatashow must exists ", groupShow);
+
+		HtmlElement frameContent = getHtmlPage().getElementById("ox_OpenXavaTest_Delivery__frame_invoicecontent");
+		HtmlElement frameHide = getHtmlPage().getElementById("ox_OpenXavaTest_Delivery__frame_invoicehide");
+		HtmlElement frameShow = getHtmlPage().getElementById("ox_OpenXavaTest_Delivery__frame_invoiceshow");
+		assertNotNull("Frame named: ox_OpenXavaTest_Delivery__frame_invoicecontent must exists ", frameContent);
+		assertNotNull("Frame named: ox_OpenXavaTest_Delivery__frame_invoicehide must exists ", frameHide);
+		assertNotNull("Frame named: ox_OpenXavaTest_Delivery__frame_invoiceshow must exists ", frameShow);
+
+	}
 }

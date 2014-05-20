@@ -87,7 +87,8 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 		} else {
 			if (viewFullWidthFrames(element.getView())
-					&& element.getMaxFramesCount() > 0) {
+					//&& element.getMaxFramesCount() > 0 // Removed for simple properties bug #
+					) {
 				attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);
 			}
 		}
@@ -153,10 +154,8 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			attributes.put(ATTR_COLSPAN, columnSpan.toString());
 		}
 		boolean sibling = false;
-		//attributes.put(ATTR_CLASS, getStyle().getFrame());
 		if (getRow().getMaxFramesCount() > 1) {
 			if (element.getPosition() > 0) {
-				//attributes.put(ATTR_CLASS, getStyle().getFrame() + " " + getStyle().getFrameSibling());
 				sibling = true;
 			}
 		}
