@@ -11,6 +11,7 @@
 <thead>
 <tr><td rowspan="1" colspan="3">DeliveryGroupAndReference</td></tr>
 </thead><tbody>
+<!--For bug #429-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/Delivery</td>

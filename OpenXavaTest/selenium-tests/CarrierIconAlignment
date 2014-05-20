@@ -11,6 +11,7 @@
 <thead>
 <tr><td rowspan="1" colspan="3">CarrierIconAlignment</td></tr>
 </thead><tbody>
+<!--For Bug #431-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/Carrier</td>
@@ -46,7 +47,6 @@
 	<td>//div[@id='ox_OpenXavaTest_Carrier__view']/table/tbody/tr/td/table/tbody/tr[5]/td[2]/span/img</td>
 	<td>${iconLeft}</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

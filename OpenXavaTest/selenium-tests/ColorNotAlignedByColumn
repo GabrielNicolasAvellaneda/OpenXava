@@ -11,6 +11,7 @@
 <thead>
 <tr><td rowspan="1" colspan="3">ColorNotAlignedByColumn</td></tr>
 </thead><tbody>
+<!--For bug #430-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/Color</td>
@@ -66,7 +67,6 @@
 	<td>(${leftPosition3} - ${leftPosition}) &gt;= 320</td>
 	<td>true</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
