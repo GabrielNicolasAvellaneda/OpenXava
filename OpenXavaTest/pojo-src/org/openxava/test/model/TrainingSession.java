@@ -3,6 +3,7 @@ package org.openxava.test.model;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.openxava.annotations.*;
 
@@ -20,7 +21,7 @@ public class TrainingSession {
 	private int kms;
 	
 	private Date date;
-
+	
 	public String getDescription() {
 		return description;
 	}

@@ -96,7 +96,11 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		if (c.size() < getMinimum()) {
 			String idElements = getMinimum() == 1?"element":"elements";
 			errors.add("minimum_elements", new Integer(getMinimum()), idElements, getName());
-		}						
+		}	
+		else if (getMaximum() > 0 && c.size() > getMaximum()) {
+			String idElements = getMaximum() == 1?"element":"elements";
+			errors.add("maximum_elements", new Integer(getMaximum()), idElements, getName());			
+		}			
 	}
 	
 	/**

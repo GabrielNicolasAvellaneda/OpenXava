@@ -18,7 +18,6 @@ public class TrainingTest extends ModuleTestBase {
 		assertListRowCount(0);
 		execute("CRUD.new");
 		assertDateEditor();
-		setValue("sportsman.id", "4028819617a634cc0117a63750af0002");
 		setValue("description", "JUNIT TRAINING");
 		assertCollectionRowCount("sessions", 0); 
 		setValueInCollection("sessions", 0, "description", "RUNNING IN THE STREET"); 

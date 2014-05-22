@@ -25,11 +25,11 @@ import org.openxava.test.actions.*;
 		"telephone, email;" +
 		"website;" +
 		"address;" +
-		"city;" +
+		"city;" +		
 		"seller [" +  
 		"	seller; " +
 		"	relationWithSeller;" +
-		"]" +
+		"]" +		
 		"alternateSeller;" +		
 		"deliveryPlaces;" +
 		"remarks" 	
