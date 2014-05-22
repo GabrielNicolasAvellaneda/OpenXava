@@ -18,6 +18,7 @@ public class Training extends Identifiable {
 	@Required @Column(length=40)
 	private String description;
 	
+	@javax.validation.constraints.Size(min=1, max=3) 
 	@ElementCollection
 	private Collection<TrainingSession> sessions;
 	
