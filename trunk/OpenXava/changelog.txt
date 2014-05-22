@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Top field with little margin on top with the new renderer.
+- Fix: Html id for frames not correct for references with new renderer.
+- Fix: Properties aligned by column when it should not in the new renderer.
+- Fix: Property icons are not aligned correctly with the new renderer. 
 - Fix: Scale defined in default-size.xml is ignored when formatting.
 - Fix: Scale definition from @Column and @Digits is ignored when formatting.
 - When @Digits is specified default scale is ignored even if fraction is not specified.

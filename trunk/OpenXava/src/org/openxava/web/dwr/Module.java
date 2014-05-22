@@ -226,10 +226,10 @@ public class Module extends DWRBase {
 		}
 				
 		for (Iterator it = getChangedParts(values).entrySet().iterator(); it.hasNext(); ) {
-			Map.Entry changedPart = (Map.Entry) it.next();			
+			Map.Entry changedPart = (Map.Entry) it.next();
 			changedParts.put(changedPart.getKey(),
 				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected, deselected, additionalParameters)	
-			);			
+			);
 		}	
 		if (!manager.isListMode()) {			
 			result.setFocusPropertyId(getView().getFocusPropertyId());
@@ -313,7 +313,7 @@ public class Module extends DWRBase {
 				fillChangedCollections(result);
 				fillChangedSections(result);
 				fillChangedErrorImages(result);
-				fillChangedLabels(result); 
+				fillChangedLabels(result);
 			}
 			
 			if (manager.isSplitMode() && 

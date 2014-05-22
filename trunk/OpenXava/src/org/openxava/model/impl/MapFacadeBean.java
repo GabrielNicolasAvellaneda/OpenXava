@@ -6,8 +6,10 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.lang3.*;
 import org.apache.commons.logging.*;
 import org.hibernate.Hibernate;
+import org.hibernate.validator.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.model.*;
@@ -29,6 +31,7 @@ import org.openxava.validators.meta.*;
 public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	private static Log log = LogFactory.getLog(MapFacadeBean.class);
+	private static javax.validation.ValidatorFactory validatorFactory; 
 	private javax.ejb.SessionContext sessionContext = null;
 	private final static long serialVersionUID = 3206093459760846163L;
 	
@@ -1153,13 +1156,52 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private Collection mapsToElements(MetaCollection metaCollection, Collection<Map> collectionValues) throws RemoteException { 
+	private Collection mapsToElements(MetaCollection metaCollection, Collection<Map> collectionValues) throws RemoteException {
 		MetaReference r = metaCollection.getMetaReference();
 		Collection result = new ArrayList();
 		for (Map elementValues: collectionValues) {
 			result.add(instanceAggregate((MetaAggregate) r.getMetaModelReferenced(), elementValues));
-		}	
+		}		
 		return result;
+	}
+	
+	private void validateElements(Collection elements) { 
+		validateElementsWithBeanValidation(elements);
+		validateElementsWithHibernateValidator(elements);		
+	}
+
+	private void validateElementsWithBeanValidation(Collection elements) {
+		javax.validation.Validator validator = getValidatorFactory().getValidator();
+		Set<javax.validation.ConstraintViolation<?>> allViolations = new HashSet<javax.validation.ConstraintViolation<?>>(); 		
+		for (Object e: elements) {
+			Set<javax.validation.ConstraintViolation<Object>> violations = validator.validate(e);
+			allViolations.addAll(violations);
+		}
+		if (!allViolations.isEmpty()) {
+			throw new javax.validation.ConstraintViolationException(allViolations);
+		}
+	}
+	
+	private void validateElementsWithHibernateValidator(Collection elements) { 
+		InvalidValue [] allInvalidValues = null;
+		ClassValidator validator = null;
+		for (Object e: elements) {
+			if (validator == null) validator = new ClassValidator( e.getClass() ); 
+			InvalidValue [] invalidValues =  validator.getInvalidValues(e);
+			if (invalidValues.length > 0) {
+				allInvalidValues = ArrayUtils.addAll(allInvalidValues, invalidValues);
+			}
+		}
+		if (allInvalidValues != null && allInvalidValues.length > 0) {			
+			throw new org.hibernate.validator.InvalidStateException(allInvalidValues);
+		}		
+	}
+	
+	private javax.validation.ValidatorFactory getValidatorFactory() { 
+		if (validatorFactory == null) {
+			validatorFactory = javax.validation.Validation.buildDefaultValidatorFactory(); 
+		}
+		return validatorFactory;	
 	}
 
 	private Object findAssociatedEntity(MetaModel metaEntity, Map values) 
@@ -1346,8 +1388,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						}
 						
 				} else if (metaModel.containsMetaCollection(memberName)) {
-					// It never happens this way 
-					metaModel.getMetaCollection(memberName).validate(errors, values, null, null);
+					MetaCollection metaCollection = metaModel.getMetaCollection(memberName);
+					if (metaCollection.isElementCollection()) {
+						metaCollection.validate(errors, values, null, null);
+						MetaModel elementMetaModel = metaCollection.getMetaReference().getMetaModelReferenced();
+						Collection collection = (Collection) values;
+						for (Object e: collection) {
+							validate(errors, elementMetaModel, (Map) e, null, null, creating); 
+						}	
+					}
 				} else if (metaModel.containsMetaPropertyView(memberName)) { 										
 					metaModel.getMetaPropertyView(memberName).validate(errors, values, creating);									
 				} else {					
@@ -1475,15 +1524,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	private void validateCollections(Messages errors, MetaModel metaModel)  
-		throws XavaException {						
+		throws XavaException {		
 		for (MetaCollection collection: metaModel.getMetaCollections()) {			 
-			if (collection.getMinimum() > 0) {				
+			if (!collection.isElementCollection() && collection.getMinimum() > 0) { 			 
 				int minimum = collection.getMinimum(); 
 				errors.add("minimum_elements", minimum, minimum == 1?"element":"elements", collection.getName()); 
 			}
-		}
+		}		
 	}
-
 				
 	private Object findEntity(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException { 		
 		return getPersistenceProvider().find(metaModel, keyValues);
@@ -1609,7 +1657,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				else if (metaModel.containsMetaCollection(memberName)) {
 					MetaCollection collection = metaModel.getMetaCollection(memberName);
 					if (collection.isElementCollection()) {
-						value = mapsToElements(collection, (Collection<Map>) en.getValue());
+						Collection elementValues = mapsToElements(collection, (Collection<Map>) en.getValue());
+						validateElements(elementValues); // To execute Bean Validation and Hibernate Validator 
+							// because they are no executed by default in element collection, 
+							// unless you use @Valid even so it's only valid for Bean Validation.
+						value = elementValues;
 					}
 					else {
 						throw new XavaException("mapfacade_only_element_collections", memberName, metaModel.getName()); 

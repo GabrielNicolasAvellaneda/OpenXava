@@ -14,25 +14,13 @@ import org.openxava.model.*;
 
 @Entity
 public class Training extends Identifiable {
-	
-	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@DescriptionsList
-	private Human sportsman;
-	
+		
 	@Required @Column(length=40)
 	private String description;
 	
 	@ElementCollection
 	private Collection<TrainingSession> sessions;
 	
-	public Human getSportsman() {
-		return sportsman;
-	}
-
-	public void setSportsman(Human sportsman) {
-		this.sportsman = sportsman;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -47,6 +35,6 @@ public class Training extends Identifiable {
 
 	public void setSessions(Collection<TrainingSession> sessions) {
 		this.sessions = sessions;
-	}
+	}	
 
 }
