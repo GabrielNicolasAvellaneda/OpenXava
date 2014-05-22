@@ -4,7 +4,7 @@ import java.math.*;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Size;
 
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
@@ -31,6 +31,7 @@ public class Quote extends Identifiable {
 	@ReferenceView("Simplest")
 	private Customer customer;
 	
+	@org.hibernate.validator.Size(min=1, max=3) 
 	@ElementCollection
 	@ListProperties("product.number, product.description, unitPrice, quantity, amount[quote.amountsSum, quote.taxes, quote.total], availabilityDate, remarks")
 	private Collection<QuoteDetail> details;	

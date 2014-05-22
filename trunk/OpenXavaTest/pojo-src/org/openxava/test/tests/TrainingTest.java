@@ -20,6 +20,9 @@ public class TrainingTest extends ModuleTestBase {
 		assertDateEditor();
 		setValue("description", "JUNIT TRAINING");
 		assertCollectionRowCount("sessions", 0); 
+		execute("CRUD.save");
+		assertError("It's required at least 1 Element in Sessions");
+		assertErrorsCount(1);
 		setValueInCollection("sessions", 0, "description", "RUNNING IN THE STREET"); 
 		assertCollectionRowCount("sessions", 1);
 		assertValueInCollection("sessions", 1, "description", "");  
@@ -87,7 +90,28 @@ public class TrainingTest extends ModuleTestBase {
 		assertValueInCollection("sessions", 2, "description", ""); 
 		assertValueInCollection("sessions", 2, "kms", "");
 		assertValueInCollection("sessions", 2, "date", "");
-				
+		
+		setValueInCollection("sessions", 2, "description", ""); 
+		setValueInCollection("sessions", 2, "kms", "2");
+		execute("CRUD.save");
+		assertError("Value for Description in Training session is required");
+
+		setValueInCollection("sessions", 2, "description", "THE LAST SESSION"); 
+		setValueInCollection("sessions", 2, "kms", "1");
+		execute("CRUD.save");
+		assertError("1 is not a valid value for Kms of Training session: must be greater than or equal to 2");
+
+		setValueInCollection("sessions", 2, "kms", "51");
+		execute("CRUD.save");
+		assertError("51 is not a valid value for Kms of Training session: debe ser menor o igual a 50");
+		
+		setValueInCollection("sessions", 2, "kms", "3");
+		setValueInCollection("sessions", 3, "description", "THE LAST SESSION"); 
+		setValueInCollection("sessions", 3, "kms", "4");
+		execute("CRUD.save");		 
+		assertError("More than 3 items in Elements of Sessions are not allowed");
+		assertErrorsCount(1);
+		
 		execute("CRUD.delete");
 		assertNoErrors();
 	}

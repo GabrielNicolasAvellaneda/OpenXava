@@ -3,8 +3,6 @@ package org.openxava.test.model;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
 import org.openxava.annotations.*;
 
 /**
@@ -18,6 +16,8 @@ public class TrainingSession {
 	@Column(length=30) @Required
 	private String description;
 	
+	@javax.validation.constraints.Min(2) 
+	@org.hibernate.validator.Max(50)
 	private int kms;
 	
 	private Date date;
