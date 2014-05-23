@@ -119,13 +119,12 @@ public class Messages implements java.io.Serializable {
 			for (int i = 0; i < argv.length; i++) {
 				Object v = argv[i];
 				if (v instanceof String) {					
-					if (v.toString().startsWith("'") && v.toString().endsWith("'")) {
-					
+					if (v.toString().startsWith("'") && v.toString().endsWith("'")) {					
 						result[i] = v.toString().substring(1, v.toString().length() - 1);
 					}
 					else{					
 						try {
-							try {		
+							try {
 								result[i] = Labels.removeUnderlined(Labels.get((String)v, locale));
 							}
 							catch (MissingResourceException ex) {

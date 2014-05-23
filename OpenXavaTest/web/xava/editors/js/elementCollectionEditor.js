@@ -17,3 +17,9 @@ elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	var table = currentRow.parent().parent(); 
 	$(table).append(newRow);
 }
+
+elementCollectionEditor.removeRow = function(element, rowIndex) { 
+	var currentRow = $(element).parent().parent().parent().parent();
+	currentRow.find("input").val("");
+	currentRow.hide();
+}

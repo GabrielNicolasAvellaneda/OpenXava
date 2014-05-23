@@ -79,7 +79,11 @@ for (int f=0; f < rowCount; f++) {
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid; <%=newRowStyle%>">
 <td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
 <nobr>
-<xava:action action="CRUD.delete" argv='<%="row="+f + ",viewObject="+viewName%>'/>
+<a title='<xava:message key="remove_row"/>' href="javascript:void(0)"> 
+	<img 		 
+		src='<%=request.getContextPath()%>/xava/images/delete.gif'
+		border='0' align='middle' onclick="elementCollectionEditor.removeRow(this, <%=f%>)"/>
+</a>
 </nobr>
 </td>
 <%
