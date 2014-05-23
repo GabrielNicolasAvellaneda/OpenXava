@@ -2,6 +2,8 @@ package org.openxava.test.tests;
 
 import org.openxava.tests.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 
 
 /**
@@ -114,6 +116,48 @@ public class TrainingTest extends ModuleTestBase {
 		
 		execute("CRUD.delete");
 		assertNoErrors();
+	}
+	
+	public void testRemoveRowInElementCollection() throws Exception {
+		getWebClient().setCssEnabled(true);
+		assertListRowCount(0);
+		execute("CRUD.new");		
+		setValue("description", "JUNIT TRAINING");
+		setValueInCollection("sessions", 0, "description", "ONE"); 
+		setValueInCollection("sessions", 0, "kms", "11");
+		setValueInCollection("sessions", 1, "description", "TWO"); 
+		setValueInCollection("sessions", 1, "kms", "12");
+		setValueInCollection("sessions", 2, "description", "THREE"); 
+		setValueInCollection("sessions", 2, "kms", "13");		
+		execute("CRUD.save");
+		
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertCollectionRowCount("sessions", 3);
+		assertValueInCollection("sessions", 0, "description", "ONE"); 
+		assertValueInCollection("sessions", 0, "kms", "11");
+		assertValueInCollection("sessions", 1, "description", "TWO"); 
+		assertValueInCollection("sessions", 1, "kms", "12");
+		assertValueInCollection("sessions", 2, "description", "THREE"); 
+		assertValueInCollection("sessions", 2, "kms", "13");		
+		
+		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___1");
+		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
+		assertTrue(row.isDisplayed());
+		removeIcon.click();
+		assertTrue(!row.isDisplayed());
+		
+		execute("CRUD.save");		
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertCollectionRowCount("sessions", 2);
+		assertValueInCollection("sessions", 0, "description", "ONE"); 
+		assertValueInCollection("sessions", 0, "kms", "11");
+		assertValueInCollection("sessions", 1, "description", "THREE"); 
+		assertValueInCollection("sessions", 1, "kms", "13");	
+
+		execute("CRUD.delete");
+		assertNoErrors();		
 	}
 
 	private void assertDateEditor() throws Exception {
