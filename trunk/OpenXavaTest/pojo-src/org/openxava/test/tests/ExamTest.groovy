@@ -18,7 +18,7 @@ class ExamTest extends ModuleTestBase {
 		execute "CRUD.new"
 		setValue "name", "ADMISSION"
 		execute "CRUD.save"
-		assertError "It's required at least 1 Element in Questioning"
+		assertError "It's required at least 1 element in Questioning of Exam"
 		execute "Collection.new", "viewObject=xava_view_questioning"
 		setValue "name", "QUESTION 1"
 		execute "Collection.save"
@@ -50,7 +50,7 @@ class ExamTest extends ModuleTestBase {
 		
 		checkAllCollection "questioning"
 		execute "Collection.removeSelected", "viewObject=xava_view_questioning"
-		assertError "It's required at least 1 Element in Questioning" 
+		assertError "It's required at least 1 element in Questioning of Exam" 
 		uncheckRowCollection "questioning", 0
 		uncheckRowCollection "questioning", 1
 		execute "Collection.removeSelected", "viewObject=xava_view_questioning"
@@ -61,10 +61,10 @@ class ExamTest extends ModuleTestBase {
 		assertMessage "Question deleted from database"
 		assertCollectionRowCount "questioning", 1
 		execute "Collection.removeSelected", "row=0,viewObject=xava_view_questioning"
-		assertError "It's required at least 1 Element in Questioning"
+		assertError "It's required at least 1 element in Questioning of Exam"
 		execute "Collection.edit", "row=0,viewObject=xava_view_questioning"
 		execute "Collection.remove"
-		assertError "It's required at least 1 Element in Questioning"
+		assertError "It's required at least 1 element in Questioning of Exam"
 		execute "Collection.hideDetail"
 		assertCollectionRowCount "questioning", 1
 		

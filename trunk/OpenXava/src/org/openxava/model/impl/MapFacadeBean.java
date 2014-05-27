@@ -1528,7 +1528,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		for (MetaCollection collection: metaModel.getMetaCollections()) {			 
 			if (!collection.isElementCollection() && collection.getMinimum() > 0) { 			 
 				int minimum = collection.getMinimum(); 
-				errors.add("minimum_elements", minimum, minimum == 1?"element":"elements", collection.getName()); 
+				String elements = XavaResources.getString(minimum == 1?"element":"elements");
+				errors.add("minimum_elements", minimum, "'" + elements + "'", collection.getName(), collection.getMetaModel().getName());
 			}
 		}		
 	}

@@ -23,7 +23,7 @@ public class TrainingTest extends ModuleTestBase {
 		setValue("description", "JUNIT TRAINING");
 		assertCollectionRowCount("sessions", 0); 
 		execute("CRUD.save");
-		assertError("It's required at least 1 Element in Sessions");
+		assertError("It's required at least 1 element in Sessions of Training");
 		assertErrorsCount(1);
 		setValueInCollection("sessions", 0, "description", "RUNNING IN THE STREET"); 
 		assertCollectionRowCount("sessions", 1);
@@ -111,7 +111,7 @@ public class TrainingTest extends ModuleTestBase {
 		setValueInCollection("sessions", 3, "description", "THE LAST SESSION"); 
 		setValueInCollection("sessions", 3, "kms", "4");
 		execute("CRUD.save");		 
-		assertError("More than 3 items in Elements of Sessions are not allowed");
+		assertError("More than 3 items in Sessions of Training are not allowed");
 		assertErrorsCount(1);
 		
 		execute("CRUD.delete");
