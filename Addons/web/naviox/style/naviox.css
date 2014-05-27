@@ -844,3 +844,8 @@ div.ox-subcontroller table{
 .row-highlight A.row-highlight {
 	font-weight: bold;
 }
+
+.small-label {
+	padding-left: 4px;
+	padding-bottom: 2px;
+}

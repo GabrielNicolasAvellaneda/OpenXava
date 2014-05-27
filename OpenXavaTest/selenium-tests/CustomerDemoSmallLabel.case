@@ -38,7 +38,7 @@
 </tr>
 <tr>
 	<td>storeEval</td>
-	<td>${labelLeft} + 14 + 3</td>
+	<td>${labelLeft} + 3</td>
 	<td>dataLeft</td>
 </tr>
 <tr>
@@ -63,12 +63,48 @@
 </tr>
 <tr>
 	<td>storeEval</td>
-	<td>${labelLeft} + 14 + 3</td>
+	<td>${labelLeft}&nbsp;&nbsp;+ 3</td>
 	<td>dataLeft</td>
 </tr>
 <tr>
 	<td>assertElementPositionLeft</td>
 	<td>id=ox_OpenXavaTest_CustomerDemo__address___state___id</td>
+	<td>${dataLeft}</td>
+</tr>
+<!--Tests on multiple rows-->
+<tr>
+	<td>open</td>
+	<td>/OpenXavaTest/modules/Color</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>OpenXavaTest - Color</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ox_OpenXavaTest_Color__CRUD___new</td>
+	<td>${dataLeft}</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_Color__number</td>
+	<td>dataLeft</td>
+</tr>
+<tr>
+	<td>assertElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_Color__name</td>
+	<td>${dataLeft}</td>
+</tr>
+<tr>
+	<td>assertElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_Color__hexValue</td>
 	<td>${dataLeft}</td>
 </tr>
 </tbody></table>
