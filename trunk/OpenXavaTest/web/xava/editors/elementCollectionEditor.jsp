@@ -73,13 +73,14 @@ for (int f=0; f < rowCount; f++) {
 	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();
 	String idRow = Ids.decorate(request, propertyPrefix) + f;	
 	String events=f%2==0?style.getListPairEvents():style.getListOddEvents();
-	String newRowStyle = f== rowCount - 1?"display: none;":"";
+	String newRowStyle = f == rowCount - 1?"display: none;":"";
 	String lastRowEvent = f >= rowCount - 2?"onchange='elementCollectionEditor.onChangeRow(this, "+  f + ")'":"";
+	String removeStyle = f >= rowCount - 2?"style='visibility:hidden;'":"";
 %>
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid; <%=newRowStyle%>">
 <td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
 <nobr>
-<a title='<xava:message key="remove_row"/>' href="javascript:void(0)"> 
+ <a title='<xava:message key="remove_row"/>' href="javascript:void(0)" <%=removeStyle%>>
 	<img 		 
 		src='<%=request.getContextPath()%>/xava/images/delete.gif'
 		border='0' align='middle' onclick="elementCollectionEditor.removeRow(this, <%=f%>)"/>
