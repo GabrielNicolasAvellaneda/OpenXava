@@ -123,10 +123,21 @@ public class TrainingTest extends ModuleTestBase {
 		assertListRowCount(0);
 		execute("CRUD.new");		
 		setValue("description", "JUNIT TRAINING");
-		setValueInCollection("sessions", 0, "description", "ONE"); 
+		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___0");
+		HtmlElement removeLink = row.getElementsByTagName("a").get(0);
+		assertTrue(!removeLink.isDisplayed());
+		setValueInCollection("sessions", 0, "description", "ONE");
+		assertTrue(removeLink.isDisplayed());
 		setValueInCollection("sessions", 0, "kms", "11");
-		setValueInCollection("sessions", 1, "description", "TWO"); 
+		row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___1");
+		removeLink = row.getElementsByTagName("a").get(0);
+		assertTrue(!removeLink.isDisplayed());		
+		setValueInCollection("sessions", 1, "description", "TWO");
+		assertTrue(removeLink.isDisplayed());
 		setValueInCollection("sessions", 1, "kms", "12");
+		row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___2");
+		removeLink = row.getElementsByTagName("a").get(0);
+		assertTrue(!removeLink.isDisplayed());
 		setValueInCollection("sessions", 2, "description", "THREE"); 
 		setValueInCollection("sessions", 2, "kms", "13");		
 		execute("CRUD.save");
@@ -141,7 +152,7 @@ public class TrainingTest extends ModuleTestBase {
 		assertValueInCollection("sessions", 2, "description", "THREE"); 
 		assertValueInCollection("sessions", 2, "kms", "13");		
 		
-		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___1");
+		row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___1");
 		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
 		assertTrue(row.isDisplayed());
 		removeIcon.click();
