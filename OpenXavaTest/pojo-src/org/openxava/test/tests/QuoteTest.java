@@ -25,7 +25,7 @@ public class QuoteTest extends ModuleTestBase {
 		
 		assertCollectionRowCount("details", 0);
 		execute("CRUD.save");
-		assertError("It's required at least 1 Element in Details");
+		assertError("It's required at least 1 element in Details of Quote");
 		assertErrorsCount(1);
 		
 		assertEditableInCollection("details", 0, 0);
@@ -100,7 +100,7 @@ public class QuoteTest extends ModuleTestBase {
 		setValueInCollection("details", 3, "unitPrice", "300.00");
 		setValueInCollection("details", 3, "quantity", "3");
 		execute("CRUD.save");
-		assertError("More than 3 items in Elements of Details are not allowed");
+		assertError("More than 3 items in Details of Quote are not allowed");		
 		assertErrorsCount(1);
 		
 		execute("CRUD.delete");

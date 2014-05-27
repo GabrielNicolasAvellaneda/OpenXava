@@ -23,7 +23,7 @@ class HunterTest extends ModuleTestBase {
 		execute "CRUD.new"
 		setValue "name", "HUNTER 1"
 		execute "CRUD.save"
-		assertError "It's required at least 1 Element in Hounds"
+		assertError "It's required at least 1 element in Hounds of Hunter"
 		execute "Collection.add", "viewObject=xava_view_hounds"
 		execute 'AddToCollection.add', 'row=0'
 		assertMessagesCount 2

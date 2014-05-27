@@ -124,12 +124,7 @@ public class Messages implements java.io.Serializable {
 					}
 					else{					
 						try {
-							try {
-								result[i] = Labels.removeUnderlined(Labels.get((String)v, locale));
-							}
-							catch (MissingResourceException ex) {
-								result[i] = getMessage((String) v, locale); 
-							}
+							result[i] = Labels.removeUnderlined(Labels.get((String)v, locale));
 						}
 						catch (Exception ex) {
 							result[i] = v;

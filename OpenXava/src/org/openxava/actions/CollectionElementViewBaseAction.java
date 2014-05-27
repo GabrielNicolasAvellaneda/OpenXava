@@ -63,7 +63,8 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 		if(minimum > 0) {
 			if(getCollectionElementView().getCollectionSize() - elementsToRemove < minimum) {
 				Messages errors = new Messages();
-				errors.add("minimum_elements", new Integer(minimum), minimum == 1?"element":"elements",	metaCollection.getName());				
+				String elements = XavaResources.getString(minimum == 1?"element":"elements");
+				errors.add("minimum_elements", new Integer(minimum), "'" + elements + "'",	metaCollection.getName(), metaCollection.getMetaModel().getName());
 				throw new ValidationException(errors);
 			}
 		}
