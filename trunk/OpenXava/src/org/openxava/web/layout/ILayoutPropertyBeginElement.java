@@ -130,6 +130,17 @@ public interface ILayoutPropertyBeginElement extends ILayoutElement {
 	void setLabelFormat(Integer labelFormat);
 	
 	/**
+	 * @return Current label style. Can be null or empty.
+	 */
+	String getLabelStyle();
+	
+	/**
+	 * Sets the style to use on labels.
+	 * @param labelStyle New Label style
+	 */
+	void setLabelStyle(String labelStyle);
+	
+	/**
 	 * 
 	 * @return True if the property has property changed triggers.
 	 */

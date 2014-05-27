@@ -375,6 +375,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 					+ "&descriptionsList=" + element.isDisplayAsDescriptionsList()
 					+ "&viewObject=" + view.getViewObject(); 
 			
+			beginPropertyLabelSmall(element);
 			displayPropertyIcons(element);
 			includeJspPage(editorURL);
 		} catch (Exception e) {
@@ -420,6 +421,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		initiatePropertyElement(element);
 		beginPropertyLabel(element);
 		processPropertyElement(element);
+		beginPropertyLabelSmall(element);
 
 		displayPropertyIcons(element);
 		
@@ -478,13 +480,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 		}
 		if (isSmallLabel(element)) {
-			attributes.clear();
-			attributes.put(ATTR_STYLE, "margin-left:" + getStyle().getPropertyLeftMargin() + "px");
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
-			attributes.clear();
-			attributes.put(ATTR_STYLE, "text-align:left");
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
 			smallLabelPainted = true;
 		}
 	}
@@ -496,9 +491,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	private void processPropertyElement(ILayoutPropertyBeginElement element) {
 		// Data. There is no end TD tag this one is closed by the end column method.
 		if (!firstCellPainted) {
-			if (!smallLabelPainted) {
-				closeFirstPropertyElement(element);
-			}
+			closeFirstPropertyElement(element);
 		}
 	}
 	
@@ -545,9 +538,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	private void closeSmallLabel() {
 		if (smallLabelPainted) {
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
 			smallLabelPainted = false;
 		}
 	}
@@ -557,42 +547,76 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @param element Representing cell element.
 	 */
 	protected void beginPropertyLabel(ILayoutPropertyBeginElement element) {
+		if (smallLabelPainted) {
+			beginPropertyLabel(element, "");
+		} else {
+			beginPropertyLabel(element, element.getLabel());
+		}
+	}
+	
+	/**
+	 * Display the given label. It only prints it if the label is printable.
+	 * @param element Element containing the property attributes.
+	 */
+	protected void beginPropertyLabelSmall(ILayoutPropertyBeginElement element) {
+		if (smallLabelPainted) {
+			String img = "property_no_icon.gif";
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN));
+			attributes.clear();
+			attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
+			beginPropertyLabel(element, element.getLabel());
+			write("<br />");
+		}
+	}
+	
+	/**
+	 * Display the given label. It only prints it if the label is printable.
+	 * @param element Element containing the property attributes.
+	 * @param sentLabel Label to print, might be a blank or null value.
+	 */
+	protected void beginPropertyLabel(ILayoutPropertyBeginElement element, String sentLabel) {
 		if (isLabelShown(element)) {
 			if (!smallLabelPainted) {
 				// Left spacer
 				beginPropertySpacer(element);
 			}
-
 			attributes.clear();
-			if (element.getMetaProperty() == null ||
-					element.getLabelFormat() != LabelFormatType.SMALL.ordinal()) {
-				attributes.put(ATTR_CLASS, getStyle().getLabel() + " " + getStyle().getLayoutLabelCell());
-			} else if (smallLabelPainted) {
-				attributes.put(ATTR_CLASS, getStyle().getSmallLabel() + " " + getStyle().getLayoutLabelCell());
-			}
-			if (!element.isDisplayAsDescriptionsList()) {
-				attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
-						+ element.getName()));
-			} else {
-				attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
-						+ element.getReferenceForDescriptionsList()));
-			}
-			write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
-			String label = element.getLabelFormat() != LabelFormatType.NO_LABEL.ordinal() &&
-					element.getLabel() != null ? element.getLabel() + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
-			label = label.replaceAll(" ", LayoutJspKeys.CHAR_SPACE);
-			write(label);
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
-			
-			if (smallLabelPainted) {
-				write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
-				write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
-				write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
-				attributes.clear();
-				attributes.put(ATTR_STYLE, "text-align:left");
-				write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+			if (!Is.emptyString(sentLabel)) {
+				StringBuffer classAttribute = new StringBuffer("");
+				if (element.getMetaProperty() == null ||
+						element.getLabelFormat() != LabelFormatType.SMALL.ordinal()) {
+					classAttribute.append(getStyle().getLabel()) 
+						.append(' ');
+				} else if (smallLabelPainted && !Is.emptyString(sentLabel)) {
+					classAttribute.append(getStyle().getSmallLabel())
+						.append(' ');
+				}
+				classAttribute.append(getStyle().getLayoutLabelCell())
+					.append(' ');
+				if (!element.isDisplayAsDescriptionsList()) {
+					attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
+							+ element.getName()));
+				} else {
+					attributes.put(ATTR_ID, Ids.decorate(getRequest(), "label_" + element.getPropertyPrefix() 
+							+ element.getReferenceForDescriptionsList()));
+				}
+				if (!Is.emptyString(element.getLabelStyle())) {
+					classAttribute.append(element.getLabelStyle())
+						.append(' ');
+				}
+				attributes.put(ATTR_CLASS, classAttribute.toString());
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
+				String label = element.getLabelFormat() != LabelFormatType.NO_LABEL.ordinal() &&
+						sentLabel != null ? sentLabel + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
+				label = label.replaceAll(" ", LayoutJspKeys.CHAR_SPACE);
+				write(label);
+				write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 			}
 		}
+
 	}
 	
 	/**

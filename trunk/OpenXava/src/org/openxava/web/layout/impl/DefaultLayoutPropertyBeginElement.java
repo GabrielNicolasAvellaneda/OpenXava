@@ -37,6 +37,7 @@ public class DefaultLayoutPropertyBeginElement extends LayoutBaseElement
 	private String label;
 	private String searchAction;
 	private int labelFormat;
+	private String labelStyle;
 	private String propertyKey;
 	private String propertyPrefix = "";
 	private String referenceForDescriptionsList;
@@ -206,6 +207,14 @@ public class DefaultLayoutPropertyBeginElement extends LayoutBaseElement
 	 */
 	public void setLabelFormat(Integer labelFormat) {
 		this.labelFormat = labelFormat; 
+	}
+
+	public String getLabelStyle() {
+		return labelStyle;
+	}
+
+	public void setLabelStyle(String labelStyle) {
+		this.labelStyle = labelStyle;
 	}
 
 	/**
