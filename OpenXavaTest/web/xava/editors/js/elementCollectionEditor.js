@@ -1,7 +1,7 @@
 if (elementCollectionEditor == null) var elementCollectionEditor = {};
 
 elementCollectionEditor.onChangeRow = function(element, rowIndex) {  	
-	var currentRow = $(element).parent().parent().parent();
+	var currentRow = $(element).parent().parent(); 
 	var nextRow = currentRow.next();
 	if (nextRow.is(':visible')) return;			
 	var newRow = nextRow.clone();

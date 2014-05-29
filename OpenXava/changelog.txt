@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Look and feel of date editor improved.
 - Fix: Error messages for @Size in collections show 'Element' in English always, even if English is not used.
 - Fix: Top field with little margin on top with the new renderer.
 - Fix: Html id for frames not correct for references with new renderer.

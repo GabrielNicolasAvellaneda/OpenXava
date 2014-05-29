@@ -549,6 +549,14 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	background: inherit;
 }
 
+.ox-element-collection input[type="text"] {
+	width: 100%; 
+	box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	height: 30px;
+}
+
 .selected-row {
 	background: #FFFFCC;
 }
@@ -845,7 +853,7 @@ div.ox-subcontroller table{
 	font-weight: bold;
 }
 
-.small-label {
-	padding-left: 4px;
-	padding-bottom: 2px;
+.small-label { 
+	padding-left: 6px;
+	margin-bottom: 2px;
 }

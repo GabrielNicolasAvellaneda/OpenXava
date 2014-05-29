@@ -42,7 +42,7 @@ public class QuoteDetail {
 	}
 
 	public BigDecimal getUnitPrice() {
-		return unitPrice;
+		return unitPrice; 
 	}
 
 	public void setUnitPrice(BigDecimal unitPrice) {

@@ -98,11 +98,11 @@ for (int f=0; f < rowCount; f++) {
 		boolean throwPropertyChanged = subview.throwsPropertyChanged(p.getName()); 
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
+		<div class="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>" <%=lastRowEvent%>>
 		<%if (resizeColumns) {%><nobr><%}%>
-		<span <%=lastRowEvent%>> 
 		<xava:editor property="<%=propertyName%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
-		</span>
-	 	<%if (resizeColumns) {%></nobr><%}%>	 
+	 	<%if (resizeColumns) {%></nobr><%}%>
+		</div>
 	</td>		
 <%
 	}
