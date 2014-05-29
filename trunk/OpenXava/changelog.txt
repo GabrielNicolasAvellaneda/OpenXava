@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: The @LabelStyle annotation is not supported with the new renderer.
 - Look and feel of date editor improved.
 - Fix: Error messages for @Size in collections show 'Element' in English always, even if English is not used.
 - Fix: Top field with little margin on top with the new renderer.
