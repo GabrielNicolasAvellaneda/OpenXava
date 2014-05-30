@@ -557,6 +557,10 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	height: 30px;
 }
 
+.ox-element-collection .ox-list-pair, .ox-element-collection .ox-list-odd {
+	border-bottom-style: hidden; 
+}
+
 .selected-row {
 	background: #FFFFCC;
 }
