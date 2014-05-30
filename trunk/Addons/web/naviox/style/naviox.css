@@ -557,6 +557,10 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	height: 30px;
 }
 
+.ox-element-collection .ox-list-pair, .ox-element-collection .ox-list-odd {
+	border-bottom-style: hidden; 
+}
+
 .selected-row {
 	background: #FFFFCC;
 }
@@ -853,7 +857,7 @@ div.ox-subcontroller table{
 	font-weight: bold;
 }
 
-.small-label {
+.small-label { 
 	padding-left: 6px;
-	padding-bottom: 2px;
+	margin-bottom: 2px;
 }

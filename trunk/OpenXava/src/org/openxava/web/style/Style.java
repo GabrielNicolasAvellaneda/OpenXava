@@ -95,7 +95,7 @@ public class Style {
 				instance.cssFile = XavaPreferences.getInstance().getStyleCSS();
 			}
 			catch (Exception ex) {
-				log.warn(XavaResources.getString("default_style_warning"), ex); 					
+				log.warn(XavaResources.getString("default_style_warning", ex.getClass().getName()  + ": " + ex.getMessage()));
 				instance = new Style();
 				instance.cssFile = "default.css";
 			}			
