@@ -4,7 +4,6 @@ import java.math.*;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
@@ -16,6 +15,7 @@ import org.openxava.model.*;
  */
 
 @Entity
+@View(members="year, number, date; customer; details")
 public class Quote extends Identifiable {
 		
 	@Column(length=4) @Required
@@ -33,7 +33,7 @@ public class Quote extends Identifiable {
 	
 	@org.hibernate.validator.Size(min=1, max=3) 
 	@ElementCollection
-	@ListProperties("product.number, product.description, unitPrice, quantity, amount[quote.amountsSum, quote.taxes, quote.total], availabilityDate, remarks")
+	@ListProperties("product.number, product.description, unitPrice, quantity, amount[quote.amountsSum, quote.taxes, quote.total]")
 	private Collection<QuoteDetail> details;	
 	
 	public BigDecimal getAmountsSum() {
