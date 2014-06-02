@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: View broken on reload if the module is inside a HTML table.
+- Fix: Simple property after group without ; does not layout correctly.
+- Fix: A reference with @NoFrame inside a group produces an ugly layout.
 - @ElementCollection of JPA 2 supported.
 - Collections editable at cell mode, like a spreadsheet, available for @ElementCollection. 
 - All collection elements and the container entity are persisted at once, available for @ElementCollection.

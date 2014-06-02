@@ -53,6 +53,13 @@ public class CustomerTest extends ModuleTestBase {
 		this.section = section?"_section0":"";		
 	}
 	
+	public void testReloadModuleInsideHtml() throws Exception { // NaviOX with a special group combination, address with a group for city 		
+		execute("CRUD.new");
+		assertAction("EditableOnOff.setOn"); 
+		reload();
+		assertAction("EditableOnOff.setOn"); 		
+	}
+	
 	public void testPdfReportInNestedCollection() throws Exception { 
 		execute("CRUD.new");
 		setValue("number", "4");
