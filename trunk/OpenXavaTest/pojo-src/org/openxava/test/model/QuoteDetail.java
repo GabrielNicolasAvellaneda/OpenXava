@@ -21,24 +21,11 @@ public class QuoteDetail {
 	private BigDecimal unitPrice;
 	
 	private int quantity;
-	 	
-	private Date availabilityDate;
-		
-	@Column(length=30)
-	private String remarks;
-	
+	 		
 	@Column(precision=10, scale=2)
 	@Depends("unitPrice, quantity")
 	public BigDecimal getAmount() {
 		return getUnitPrice().multiply(new BigDecimal(getQuantity()));
-	}
-
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
 	}
 
 	public BigDecimal getUnitPrice() {
@@ -47,14 +34,6 @@ public class QuoteDetail {
 
 	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
-	}
-
-	public Date getAvailabilityDate() {
-		return availabilityDate;
-	}
-
-	public void setAvailabilityDate(Date availabilityDate) {
-		this.availabilityDate = availabilityDate;
 	}
 
 	public Product getProduct() {
