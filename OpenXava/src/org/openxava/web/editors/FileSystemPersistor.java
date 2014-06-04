@@ -29,7 +29,7 @@ public class FileSystemPersistor implements IFilePersistor {
 							      PARENT.getAbsolutePath()));
 		 }catch(Exception ex) {
 			 log.error(ex.getMessage(), ex);
-			 throw new RuntimeException("file_system_persistor_error");
+			 new RuntimeException("file_system_persistor_error");
 		 }		 
 	}	
 	
