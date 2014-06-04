@@ -14,10 +14,10 @@
 		<for-model-property model="Module" property="application" />						
 	</editor>
 	
-	<editor url="../../naviox/editors/actionsEditor.jsp" frame="true">
-		<for-model-property model="ModuleRights" property="excludedActions" />	
+	<editor url="../../naviox/editors/actionsEditor.jsp" frame="true">			
 		<formatter class="com.openxava.naviox.formatters.ArrayAsStringFormatter" />	
 		<list-formatter class="com.openxava.naviox.formatters.ActionsListFormatter" />
+		<for-model-property model="ModuleRights" property="excludedActions" />
 	</editor>
 	
 </editors>
