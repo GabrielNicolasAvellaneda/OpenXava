@@ -38,7 +38,5 @@
 	<for stereotype="MAC" type="String"/>
 	<for stereotype="FILE" type="String"/>
 	<for stereotype="ARCHIVO" type="String"/>
-	<for stereotype="FILES_LIBRARY" type="String"/>
-	<for stereotype="LIBRERIA_ARCHIVOS" type="String"/>
 					
 </stereotype-type-default>
