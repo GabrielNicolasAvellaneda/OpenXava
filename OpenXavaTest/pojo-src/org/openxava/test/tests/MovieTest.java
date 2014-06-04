@@ -1,20 +1,15 @@
 package org.openxava.test.tests;
 
-import java.util.*;
-
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 
-/** 
- * @author Jeromy Altuna
- */
 public class MovieTest extends ModuleTestBase {
 	
 	private static final String MIME_UNKNOWN = "application/octet-stream";
-	
+
 	public MovieTest(String testName) {
 		super(testName, "Movie");
 	}
@@ -33,7 +28,7 @@ public class MovieTest extends ModuleTestBase {
 	
 	public void testClickOnFileInListMode() throws Exception {
 		assertListRowCount(1);
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(getUrlToFile()).getWebResponse();
 		assertTrue(response.getContentType().equals("video/webm") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 	}
@@ -42,26 +37,26 @@ public class MovieTest extends ModuleTestBase {
 		assertListRowCount(1);
 		execute("Mode.detailAndFirst");
 		assertValue("title", "FORREST GUMP");
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(getUrlToFile()).getWebResponse();
 		assertTrue(response.getContentType().equals("video/webm") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 	}
 	
 	public void testAddFile() throws Exception {
 		addFile();
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(getUrlToFile()).getWebResponse();
 		assertTrue(response.getContentType().equals("text/html") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 	}
 	
 	public void testChangeFile() throws Exception {
 		addFile();
-		execute("AttachedFile.choose", "newFileProperty=trailer");
+		execute("AttachedFiles.change", "newFileProperty=trailer");
 		String filepath = System.getProperty("user.dir") + "/reports/Film.jrxml";
 		setFileValue("newFile", filepath);
 		execute("UploadFile.uploadFile");
 		assertNoErrors();
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(getUrlToFile()).getWebResponse();
 		assertTrue(response.getContentType().equals("application/docbook+xml") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 	}
@@ -69,44 +64,16 @@ public class MovieTest extends ModuleTestBase {
 	public void testDeleteFile() throws Exception {
 		addFile();
 		assertTrue("Trailer has no value", !Is.emptyString(getValue("trailer")));
-		assertAction("AttachedFile.delete");
-		execute("AttachedFile.delete", "newFileProperty=trailer");
+		assertAction("AttachedFiles.delete");
+		execute("AttachedFiles.delete", "newFileProperty=trailer");
 		assertNoErrors();
 		assertTrue("Trailer has value", Is.emptyString(getValue("trailer")));
 	}
 	
-	public void testFilesLibrary() throws Exception {
-		assertListRowCount(1);
-		execute("Mode.detailAndFirst");
-		assertTrue("At least 4 files", countFiles() == 4);	
-		
-		//Adding one file
-		execute("Library.choose", "newLibraryProperty=scripts");
-		assertDialogTitle("Select files to attach");
-		String filepath  = System.getProperty("user.dir") + "/reports/Corporation.html";
-		setFileValue("newFile", filepath);
-		execute("UploadFileIntoLibrary.uploadFile");
-		assertMessage("File added to the library");
-		assertTrue("At least 5 files", countFiles() == 5);
-		
-		//Display file
-		String url = getUrlToFile(4);
-		WebResponse response = getWebClient().getPage(url).getWebResponse();
-		assertTrue(response.getContentType().equals("text/html") || 
-				   response.getContentType().equals(MIME_UNKNOWN));
-		changeModule("Movie");
-		
-		//Removing the file
-		assertAction("Library.remove");
-		execute("Library.remove", url.split("&")[2]);
-		assertNoErrors();
-		assertTrue("At least 4 files", countFiles() == 4);		
-	}
-	
 	private void addFile() throws Exception {
 		execute("CRUD.new");
-		assertAction("AttachedFile.choose");
-		execute("AttachedFile.choose", "newFileProperty=trailer");
+		assertAction("AttachedFiles.change");
+		execute("AttachedFiles.change", "newFileProperty=trailer");
 		assertNoErrors();
 		assertAction("UploadFile.uploadFile");
 		String filepath = System.getProperty("user.dir") + "/reports/Corporation.html";
@@ -115,23 +82,13 @@ public class MovieTest extends ModuleTestBase {
 		assertNoErrors();
 	}	
 		
-	private String getUrlToFile(int index) {
-		String href = getFileAnchors().get(index).getHrefAttribute();
+	private String getUrlToFile() {
+		String href = null;
+		for(HtmlAnchor anchor : getHtmlPage().getAnchors()) {
+			if(anchor.getHrefAttribute().indexOf("/xava/xfile?application=") >= 0) {
+				href = anchor.getHrefAttribute(); break;
+			}
+		}		
 		return "http://" + getHost() + ":" + getPort() + href;
-	}
-	
-	private int countFiles() {
-		return getFileAnchors().size();
-	}
-	
-	private List<HtmlAnchor> getFileAnchors() {
-		List<HtmlAnchor> anchors = getHtmlPage().getAnchors();
-		for(Iterator<HtmlAnchor> it = anchors.iterator(); it.hasNext(); ) {
-			HtmlAnchor anchor = it.next();
-			if(!(anchor.getHrefAttribute().indexOf("/xava/xfile?application=") >=0)) {
-				it.remove();
-			}			
-		}
-		return anchors;
-	}
+	}	
 }
