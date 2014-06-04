@@ -9,9 +9,9 @@ import org.openxava.util.*;
 import org.openxava.web.editors.*;
 
 /**
- * Logic of UploadFile.uploadFile action in default-controllers.xml <p>
+ * Logic of action UploadFile.uploadFile in default-controllers.xml <p>
  * 
- * Instance {@link org.openxava.web.editors.AttachedFile} object and stores it in a file container. <p>
+ * Instance {@link org.openxava.web.editors.AttachedFile} object and stores it in a file container<p>
  * 
  * @author Jeromy Altuna
  */
@@ -22,8 +22,7 @@ public class UploadFileAction extends ViewBaseAction implements INavigationActio
 	
 	@Inject
 	private String newFileProperty;
-	
-	@Override
+		
 	public void execute() throws Exception {
 		Iterator<?> it = getFileItems().iterator();
 		while (it.hasNext()) {
@@ -44,18 +43,16 @@ public class UploadFileAction extends ViewBaseAction implements INavigationActio
 	public List getFileItems() {
 		return fileItems;
 	}
-	
-	@Override @SuppressWarnings("rawtypes")
+
+	@SuppressWarnings("rawtypes")
 	public void setFileItems(List fileItems) {
 		this.fileItems = fileItems; 
 	}
-	
-	@Override
+
 	public String[] getNextControllers() throws Exception {
 		return PREVIOUS_CONTROLLERS;
 	}
-	
-	@Override
+
 	public String getCustomView() throws Exception {
 		return PREVIOUS_VIEW;
 	}
