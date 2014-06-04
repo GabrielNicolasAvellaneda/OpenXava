@@ -826,8 +826,7 @@ div.ox-subcontroller table{
 
 #sign_in_box {
 	float: right; 
-	/* tmp padding: 20px 0px 25px 15px; */
-	padding: 20px 0px 25px 20px; /* tmp */
+	padding: 20px 0px 25px 20px; 
 	margin: 30px 60px 20px 20px; 	
 	background: #F1F1F1; 
 }
@@ -836,7 +835,6 @@ div.ox-subcontroller table{
 	padding-left: 7px;
 }
 
-/* tmp ini */
 #sign_in_box .ox-layout-data-cell img {
 	display: none;
 }
@@ -844,8 +842,6 @@ div.ox-subcontroller table{
 #sign_in_box .small-label { 
 	padding-left: 3px;
 }
-
-/* tmp fin */
 
 #first_steps {
 	font-size: 16px; 
