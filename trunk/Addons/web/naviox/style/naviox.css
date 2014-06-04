@@ -826,13 +826,21 @@ div.ox-subcontroller table{
 
 #sign_in_box {
 	float: right; 
-	padding: 20px 0px 25px 15px;
-	margin: 30px 60px 20px 20px;
+	padding: 20px 0px 25px 20px; 
+	margin: 30px 60px 20px 20px; 	
 	background: #F1F1F1; 
 }
 
 #sign_in_box .ox-bottom-buttons {
 	padding-left: 7px;
+}
+
+#sign_in_box .ox-layout-data-cell img {
+	display: none;
+}
+
+#sign_in_box .small-label { 
+	padding-left: 3px;
 }
 
 #first_steps {
