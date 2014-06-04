@@ -233,5 +233,9 @@
 		<for-stereotype stereotype="FILE" />
 		<for-stereotype stereotype="ARCHIVO" />
 	</editor>								
-					
+	
+	<editor name="Library" url="libraryEditor.jsp" always-reload="true">
+		<for-stereotype stereotype="FILES_LIBRARY"/>
+		<for-stereotype stereotype="LIBRERIA_ARCHIVOS"/>
+	</editor>				
 </editors>

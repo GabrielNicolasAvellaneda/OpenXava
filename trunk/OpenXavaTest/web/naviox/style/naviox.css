@@ -861,3 +861,16 @@ div.ox-subcontroller table{
 	padding-left: 6px;
 	margin-bottom: 2px;
 }
+
+.bold-label {
+	font-weight:bold;
+}
+
+.italic-label {
+	font-style:italic; 
+}
+
+.reverse-label {
+	color: white;
+	background-color: black;
+}
