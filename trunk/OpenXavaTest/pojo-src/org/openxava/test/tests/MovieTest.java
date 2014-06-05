@@ -6,6 +6,11 @@ import org.openxava.util.*;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 
+/**
+ * 
+ * @author Jeromy Altuna
+ */
+
 public class MovieTest extends ModuleTestBase {
 	
 	private static final String MIME_UNKNOWN = "application/octet-stream";
