@@ -48,7 +48,6 @@ OpenXava 5.0 (2014-6-9)
 - New commit() and rollback() methods in BaseAction.
 - Methods Is.emptyString() and Is.emptyStringAll() allow infinite number of arguments.
 - clearCondition() method removed from ModuleTestBase.
-- Fix: The @LabelStyle annotation is not supported with the new renderer.
 - Fix: Double border when using .ox-frame in the CSS with new renderer.
 - Fix: Totals in collections frames are not shown with the new renderer.
 - Fix: assertListRowCount() method from ModuleTestBase fails when the value of summationInList property is false.
