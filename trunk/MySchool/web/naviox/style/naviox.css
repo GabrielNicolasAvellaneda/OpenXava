@@ -545,6 +545,22 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	background: #FFFFD6;
 }
 
+.ox-element-collection .ox-list-pair:hover, .ox-element-collection .ox-list-odd:hover {
+	background: inherit;
+}
+
+.ox-element-collection input[type="text"] {
+	width: 100%; 
+	box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	height: 30px;
+}
+
+.ox-element-collection .ox-list-pair, .ox-element-collection .ox-list-odd {
+	border-bottom-style: hidden; 
+}
+
 .selected-row {
 	background: #FFFFCC;
 }
@@ -810,13 +826,21 @@ div.ox-subcontroller table{
 
 #sign_in_box {
 	float: right; 
-	padding: 20px 0px 25px 15px;
-	margin: 30px 60px 20px 20px;
+	padding: 20px 0px 25px 22px;  
+	margin: 30px 60px 20px 20px; 
 	background: #F1F1F1; 
 }
 
 #sign_in_box .ox-bottom-buttons {
-	padding-left: 7px;
+	padding-left: 2px;
+}
+
+#sign_in_box .ox-detail {
+	margin-left: -10px;	
+}
+
+#sign_in_box .small-label { 
+	padding-left: 7px; 
 }
 
 #first_steps {
@@ -839,4 +863,22 @@ div.ox-subcontroller table{
 
 .row-highlight A.row-highlight {
 	font-weight: bold;
+}
+
+.small-label { 
+	padding-left: 6px;
+	margin-bottom: 2px;
+}
+
+.bold-label {
+	font-weight:bold;
+}
+
+.italic-label {
+	font-style:italic; 
+}
+
+.reverse-label {
+	color: white;
+	background-color: black;
 }

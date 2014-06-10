@@ -29,9 +29,7 @@ if (!Is.emptyString(fvalue)) file = FilePersistorFactory.getInstance().find(fval
 	&nbsp;
 	<span valign='middle'>
 		<xava:image action='AttachedFiles.change' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
-		<xava:link  action='AttachedFiles.change' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>		
-		&nbsp;&nbsp;
+		&nbsp;
 		<xava:image action='AttachedFiles.delete' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
-	   	<xava:link  action='AttachedFiles.delete' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/> 
 	</span>
 <% } %>	
