@@ -132,7 +132,7 @@
 			As in many legate databases designed by COBOL/RPG programmers -->
 		<sql classpath="lib/hsqldb.jar"
 		    driver="org.hsqldb.jdbcDriver"
-		    url="jdbc:hsqldb:hsql://localhost:1666"
+		    url="jdbc:hsqldb:hsql://localhost:1555"
 		    userid="sa"
 		    password=""
 		>
