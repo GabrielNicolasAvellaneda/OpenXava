@@ -39,8 +39,14 @@ public class ModuleManager implements java.io.Serializable {
 		MetaControllers.setContext(MetaControllers.WEB);
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
 		setVersionInfo();
-		log.info("OpenXava " + getVersion() + " (" + getVersionDate() + ")");
+		log.info(getProduct() + " " + getVersion() + " (" + getVersionDate() + ")");
 	}
+	
+	static private String product;
+
+	final static public String getProduct() {
+		return product;
+	}	
 
 	static private String version;
 
@@ -53,12 +59,13 @@ public class ModuleManager implements java.io.Serializable {
 	final static private String getVersionDate() {
 		return versionDate;
 	}
-
+	
 	static private void setVersionInfo() {
 		try {
 			Properties properties = new Properties();
 			properties.load(ModuleManager.class
 					.getResourceAsStream("/xava-version.properties"));
+			product = properties.getProperty("product", "OpenXava"); 
 			version = properties.getProperty("version", "UNKNOW");
 			versionDate = properties.getProperty("date", "UNKNOW");
 		} catch (Exception ex) {
