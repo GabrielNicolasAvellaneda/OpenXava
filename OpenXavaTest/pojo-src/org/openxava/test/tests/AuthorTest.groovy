@@ -62,15 +62,23 @@ class AuthorTest extends ModuleTestBase {
 	}
 	
 
-	void testCollectionViewWithGroup() {
+	void testCollectionViewWithGroup_getMapValuesFromList() {
 		assertLabelInList(0, "Author")
 		assertValueInList(1, 0, "MIGUEL DE CERVANTES")
 		execute("List.viewDetail", "row=1")
 		assertCollectionRowCount("humans", 1)
+
+		execute "Author.showAllAuthors", "viewObject=xava_view_humans"
+		assertMessage "PEPE, MALE"
+		checkRowCollection "humans", 0
+		execute "Author.showSelectedAuthors", "viewObject=xava_view_humans"
+		assertMessage "PEPE, MALE"
+		
 		execute("Collection.view", "row=0,viewObject=xava_view_humans")
 		assertNoErrors()
 		assertDialog()
 	}
+ 
 	
 	void testCustomMessageWithBeanValidationJSR303() {
 		execute "CRUD.new"
