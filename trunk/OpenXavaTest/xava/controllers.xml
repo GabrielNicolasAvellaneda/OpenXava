@@ -33,6 +33,10 @@
 
 	<controller name="Author">	
 		<extends controller="Typical"/>		
+		<action name="showAllAuthors" hidden="true"
+			class="org.openxava.test.actions.ShowAllAuthorsAction" />
+		<action name="showSelectedAuthors" hidden="true"
+			class="org.openxava.test.actions.ShowSelectedAuthorsAction" />							
         <action name="searchAuthor" hidden="true"
 			class="org.openxava.test.actions.SearchAuthorAction" />
 		<action name="showAddSuffix" mode="detail" 

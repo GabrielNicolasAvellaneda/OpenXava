@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: View.getCollectionSelectedValues() and CollectionBaseAction.getMapsSelectedValues() do not return all displayed values.
 - Fix: Totals are not recalculated with element collections sometimes.
 
 OpenXava 5.0 (2014-6-9)

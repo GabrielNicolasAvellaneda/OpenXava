@@ -1647,7 +1647,7 @@ public class View implements java.io.Serializable {
 		else { 
 			// If not calculated we obtain the data from the Tab
 			Map[] selectedKeys = getCollectionTab().getSelectedKeys();
-			return selectedKeys == null ? Collections.EMPTY_LIST : Arrays.asList(selectedKeys);
+			return selectedKeys == null ? Collections.EMPTY_LIST : getCollectionValues(selectedKeys);
 		}
 	}
 

@@ -19,6 +19,10 @@ public class Author {
 
 	@OneToMany(mappedBy="favoriteAuthor")
 	@CollectionView(value="WithGroup")
+	@ListActions({
+		@ListAction("Author.showAllAuthors"),
+		@ListAction("Author.showSelectedAuthors")
+	})
 	private Collection<Human> humans;
 
 	public String getAuthor() {
