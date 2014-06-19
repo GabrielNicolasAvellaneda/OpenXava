@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Totals are not recalculated with element collections sometimes.
+
 OpenXava 5.0 (2014-6-9)
 -----------------------
 - New look and feel.
