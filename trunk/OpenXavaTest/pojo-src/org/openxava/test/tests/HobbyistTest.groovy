@@ -22,7 +22,7 @@ class HobbyistTest extends ModuleTestBase {
 		assertCollectionRowCount "hobbies", 1
 		assertValueInCollection "hobbies", 0, 0, name
 		execute "Collection.removeSelected", "row=0,viewObject=xava_view_hobbies"
-		assertCollectionRowCount "hobbies", 0
+		assertCollectionRowCount "hobbies", 0 
 	}
 	
 

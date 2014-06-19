@@ -223,7 +223,7 @@ public class SellerTest extends ModuleTestBase {
 	
 	public void testOnChangeListDescriptionReferenceWithStringSingleKey() throws Exception {
 		execute("CRUD.new");
-		setValue("level.id", "A");
+		setValue("level.id", "A"); 
 		assertNoErrors();
 		setValue("level.id", "");
 		assertNoErrors();

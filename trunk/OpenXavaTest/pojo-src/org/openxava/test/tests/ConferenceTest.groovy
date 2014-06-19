@@ -14,7 +14,7 @@ class ConferenceTest extends ModuleTestBase {
 	
 	void testEmbeddedCollectionsOfSameType() {
 		execute "CRUD.new"
-		setValue "name", "THE OPENXAVA CONFERENCE"
+		setValue "name", "THE OPENXAVA CONFERENCE" 
 		
 		assertCollectionRowCount "mainTracks", 0
 		execute "Collection.new", "viewObject=xava_view_mainTracks"

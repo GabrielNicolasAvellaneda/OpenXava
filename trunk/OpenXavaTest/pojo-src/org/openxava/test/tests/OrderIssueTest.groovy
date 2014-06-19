@@ -28,7 +28,7 @@ class OrderIssueTest extends ModuleTestBase {
 	
 	void testSearchKeyReferenceMustBeEditable() { 
 		execute "Mode.detailAndFirst"
-		assertAction "Reference.search"
+		assertAction "Reference.search" 
 		assertEditable "order.year"
 		assertEditable "order.number"				
 		assertNoEditable "order.date"
