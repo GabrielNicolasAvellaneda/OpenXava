@@ -317,7 +317,7 @@ public class AJAXTest extends ModuleTestBase {
 				"frame_deliveryPlacesheader, " + 
 				"messages");
 		execute("List.filter", "collection=deliveryPlaces");
-		assertLoadedParts("errors, collection_deliveryPlaces., " +
+		assertLoadedParts("errors, collection_deliveryPlaces., " + 
 				"frame_deliveryPlacesheader, " + 
 				"messages");
 		execute("Collection.new", "viewObject=xava_view_deliveryPlaces");

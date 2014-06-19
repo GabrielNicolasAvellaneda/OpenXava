@@ -76,7 +76,7 @@ class AuthorTest extends ModuleTestBase {
 		execute "CRUD.new"
 		setValue "author", "PEPE"
 		execute "CRUD.save"
-		assertError "Sorry, but PEPE is not a good name for an author"
+		assertError "Sorry, but PEPE is not a good name for an author"  
 	}
 
 }

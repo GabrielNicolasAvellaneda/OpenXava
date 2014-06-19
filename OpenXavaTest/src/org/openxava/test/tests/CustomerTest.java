@@ -108,7 +108,7 @@ public class CustomerTest extends ModuleTestBase {
 	
 	public void testChangeLabelProgrammatic() throws Exception {
 		execute("CRUD.new");
-		assertLabel("name", "Name");
+		assertLabel("name", "Name"); 
 		execute("Customer.changeNameLabel");
 		assertLabel("name", "Malnom");
 		
@@ -136,7 +136,7 @@ public class CustomerTest extends ModuleTestBase {
 
 		// Restoring the list
 		execute("List.addColumns");
-		execute("AddColumns.restoreDefault");
+		execute("AddColumns.restoreDefault"); 
 		assertNoErrors();
 	}
 	
@@ -631,7 +631,7 @@ public class CustomerTest extends ModuleTestBase {
 		closeDialog(); 
 				
 		// Search
-		execute("CRUD.new");
+		execute("CRUD.new"); 
 		assertCollectionRowCount("deliveryPlaces", 0);
 		setValue("number", "66");
 		execute("CRUD.refresh");

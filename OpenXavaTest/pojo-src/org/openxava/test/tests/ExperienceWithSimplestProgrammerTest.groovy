@@ -27,7 +27,7 @@ class ExperienceWithSimplestProgrammerTest extends ModuleTestBase {
 		execute "Reference.search", "keyProperty=programmer.name"
 		execute "List.orderBy", "property=name"
 		execute "ReferenceSearch.choose", "row=2"
-		assertValue "programmer.name", "JUANJO"
+		assertValue "programmer.name", "JUANJO" 
 		assertNotExists "programmer.sex"
 		assertNotExists "programmer.favouriteFramework"
 		

@@ -26,7 +26,7 @@ class WorkOrderTest extends ModuleTestBase {
 		assertCollectionRowCount "details", 1
 		assertValueInCollection "details", 0, 0, "JUNIT DETAIL"
 		closeDialog()
-		assertValue "year", "2011"
+		assertValue "year", "2011" 
 		assertValue "number", "66"
 		assertCollectionRowCount "requisitions", 1
 		assertValueInCollection "requisitions", 0, 0, "JUNIT REQUISITION"

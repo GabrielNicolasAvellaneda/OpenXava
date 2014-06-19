@@ -51,7 +51,7 @@ class OrphanageTest extends ModuleTestBase {
 		assertEquals 3, Orphan.count()
 		assertCollectionRowCount "orphans", 3
 		execute "Collection.removeSelected", "row=2,viewObject=xava_view_orphanage_orphans"
-		assertCollectionRowCount "orphans", 2
+		assertCollectionRowCount "orphans", 2 
 		assertEquals 2, Orphan.count()
 		assertMessage "Orphan deleted from database"
 	}

@@ -1053,7 +1053,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setConditionComparators(paidComparators);
 		setConditionValues(paidConditions);
 		// execute("List.filter"); // Not needed because filterOnChange=true 
-		assertListRowCount(paidOnes);
+		assertListRowCount(paidOnes); 
 		
 		String [] notPaidComparatos = { "=", "=", "=", "<>"};
 		String [] notPaidConditions = { " ", " ", " ", "true" }; // For dark reasons it is necessary to leave a blank space so it runs.
@@ -1564,7 +1564,7 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		// Delete
 		execute("CRUD.delete");		
-		assertMessage("Invoice deleted successfully");
+		assertMessage("Invoice deleted successfully"); 
 	}
 	
 	

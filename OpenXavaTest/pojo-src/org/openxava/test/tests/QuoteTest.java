@@ -103,6 +103,18 @@ public class QuoteTest extends ModuleTestBase {
 		assertError("More than 3 items in Details of Quote are not allowed");		
 		assertErrorsCount(1);
 		
+		execute("CRUD.new");
+		setValueInCollection("details", 0, "unitPrice", "100");
+		setValueInCollection("details", 0, "quantity", "2");
+		assertValueInCollection("details", 0, "amount", "200.00");
+		
+		assertTotalInCollection("details", 0, "amount", "200.00");
+		assertTotalInCollection("details", 1, "amount",  "42.00");
+		assertTotalInCollection("details", 2, "amount", "242.00");
+		
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");		
+		
 		execute("CRUD.delete");
 		assertNoErrors();
 	}

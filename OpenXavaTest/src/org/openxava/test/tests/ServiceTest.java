@@ -66,7 +66,7 @@ public class ServiceTest extends ModuleTestBase {
 			{ "2" , "HARDWARE" },
 			{ "3" , "SERVICIOS" }
 		};
-		assertValidValues("family", familyValues);
+		assertValidValues("family", familyValues); 
 		assertValidValues("detail.subfamily", empty);
 		assertValidValues("detail.type", empty);
 		
@@ -160,7 +160,7 @@ public class ServiceTest extends ModuleTestBase {
 		assertValueInList(0, 1, "1");
 		assertValueInList(0, 2, "Primer servicio");
 		execute("ReferenceSearch.choose", "row=0");
-		assertValue("invoice.year", "2007");
+		assertValue("invoice.year", "2007"); 
 		assertValue("invoice.number", "1");	
 		assertValue("invoice.amount", "790.00");
 		assertValue("invoice.description", "Primer servicio");	
