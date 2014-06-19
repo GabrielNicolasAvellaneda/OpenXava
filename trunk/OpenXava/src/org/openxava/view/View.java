@@ -1515,7 +1515,7 @@ public class View implements java.io.Serializable {
 	/**
 	 * @since 4.3
 	 */	
-	public Object getCollectionTotal(String qualifiedPropertyName, int index) {  
+	public Object getCollectionTotal(String qualifiedPropertyName, int index) {   
 		assertRepresentsCollection("getCollectionTotal()");
 		try {
 			List<String> totalProperties = getTotalProperties().get(qualifiedPropertyName); 
@@ -1539,22 +1539,22 @@ public class View implements java.io.Serializable {
 					memberNames.put(removeTotalPropertyPrefix(property), null);
 				}				
 			}						
-			Map key = getParent().getKeyValues();			
-			if (hasNull(key)) {
-				collectionTotals = Collections.EMPTY_MAP;
+			if (isRepresentsElementCollection()) {
+				collectionTotals = MapFacade.getValues(getParent().getModelName(), getParent().getTransientPOJO(), memberNames);
 			}
 			else {
-				try	{
-					if (isRepresentsElementCollection()) {
-						collectionTotals = MapFacade.getValues(getParent().getModelName(), getParent().getTransientPOJO(), memberNames);
-					}
-					else {
+				Map key = getParent().getKeyValues();
+				if (hasNull(key)) {
+					collectionTotals = Collections.EMPTY_MAP;
+				}
+				else {
+					try {
 						collectionTotals = MapFacade.getValues(getParent().getModelName(), key, memberNames);
 					}
+					catch (javax.ejb.ObjectNotFoundException ex) {
+						collectionTotals = Collections.EMPTY_MAP;
+					}				
 				}
-				catch (javax.ejb.ObjectNotFoundException ex) {
-					collectionTotals = Collections.EMPTY_MAP;
-				}				
 			}
 		}
 		return collectionTotals;
