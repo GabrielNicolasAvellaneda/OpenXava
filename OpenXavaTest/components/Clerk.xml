@@ -14,7 +14,7 @@
 		<property name="name" type="String"
 			size="40" required="true"/>			
 		<!-- We test the two: java.sql.Time and TIME stereotype --> 	
-		<property name="arrivalTime" type="java.sql.Time"/> 
+		<property name="arrivalTime" type="java.sql.Time" label="The arrival time"/> 
 		<property name="endingTime" stereotype="TIME"/> 
 		
 		<!-- For testing a String stored in a binary field in database --> 

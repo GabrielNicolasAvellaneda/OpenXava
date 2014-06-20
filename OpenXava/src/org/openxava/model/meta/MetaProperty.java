@@ -64,7 +64,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private String label;
 	
 	public String getLabel(Locale locale) {
-		return Is.emptyString(label)?super.getLabel(locale):label;
+		return Is.emptyString(label) || Labels.exists(getLabelId(), locale)?super.getLabel(locale):label;
 	}
 		
 	public void setLabel(String newLabel) {

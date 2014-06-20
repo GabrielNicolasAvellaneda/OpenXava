@@ -34,9 +34,10 @@ public class ClerkTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testTimeStereotypeAndSqlTimeAndStringAsByteArrayInDB() throws Exception {
+	public void testTimeStereotypeAndSqlTimeAndStringAsByteArrayInDB_i18nOverXmlLabeInXmlComponents() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
+		assertLabel("arrivalTime", "Arrival time"); // Only has sense in XML components
 		String time = getCurrentTime();
 		setValue("arrivalTime", time);
 		setValue("endingTime", time);
