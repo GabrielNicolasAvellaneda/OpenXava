@@ -34,7 +34,9 @@ public class TransportCharge {
 	})
 	*/
 	@ReferenceView("MoreSections")
-	@DescriptionsList(forViews="WithDescriptionsList") 
+	@DescriptionsList(forViews="WithDescriptionsList",
+		descriptionProperties="description, date", 
+		condition="${invoice.year} = 2004") 
 	private Delivery delivery;
 	
 	@Stereotype("MONEY") @Required
