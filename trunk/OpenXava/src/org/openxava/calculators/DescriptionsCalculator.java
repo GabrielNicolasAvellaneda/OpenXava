@@ -21,15 +21,12 @@ import org.apache.commons.logging.LogFactory;
 import org.openxava.component.MetaComponent;
 import org.openxava.filters.FilterException;
 import org.openxava.filters.IFilter;
-import org.openxava.model.meta.MetaModel;
+import org.openxava.model.meta.*;
 import org.openxava.tab.impl.EntityTabFactory;
 import org.openxava.tab.impl.EntityTab;
 import org.openxava.tab.meta.MetaTab;
-import org.openxava.util.Is;
-import org.openxava.util.KeyAndDescription;
-import org.openxava.util.KeyAndDescriptionComparator;
-import org.openxava.util.Strings;
-import org.openxava.util.XavaException;
+import org.openxava.util.*;
+import org.openxava.web.*;
 
 /**
  * It obtain a description collection. <p>
@@ -126,10 +123,11 @@ public class DescriptionsCalculator implements ICalculator {
 				el.setKey(table.getValueAt(i, iKey++));
 			}
 			StringBuffer value = new StringBuffer();
-			int columnCount = table.getColumnCount() - hiddenPropertiesCount; 
+			int columnCount = table.getColumnCount() - hiddenPropertiesCount;
+			List<MetaProperty> metaProperties = getMetaTab().getMetaProperties(); 
 			for (int j=iKey; j<columnCount; j++) {
-				value.append(table.getValueAt(i, j));
-				if (j < table.getColumnCount() - 1) value.append(' ');
+				if (value.length() > 0) value.append(' ');
+				value.append(metaProperties.get(j).format(table.getValueAt(i, j), Locales.getCurrent()));
 			}
 			el.setDescription(value.toString());
 			el.setShowCode(true);

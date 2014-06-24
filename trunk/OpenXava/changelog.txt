@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Dates in descriptions list not well formatted, really it used just toString() for all data types.
 - Fix: Property label definition in XML components take preference over i18n files.
 - Fix: View.getCollectionSelectedValues() and CollectionBaseAction.getMapsSelectedValues() do not return all displayed values.
 - Fix: Totals are not recalculated with element collections sometimes.
