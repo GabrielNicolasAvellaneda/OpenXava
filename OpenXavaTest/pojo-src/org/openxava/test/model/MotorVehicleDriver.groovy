@@ -12,7 +12,8 @@ import org.openxava.model.*;
  */
 
 @Entity
-class MotorVehicleDriver extends Identifiable{
+@Tab(baseCondition="e.class = MotorVehicleDriver")
+class MotorVehicleDriver extends Identifiable {
 	
 	@Required
 	@Column(length = 40)

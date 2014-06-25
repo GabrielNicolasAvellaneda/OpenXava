@@ -12,7 +12,11 @@ import org.openxava.model.*;
  */
 
 @Entity
-class MotorVehicle extends Identifiable{
+class MotorVehicle {
+	
+	@Hidden
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	int id
 	
 	@Required
 	@Column(length = 15)
