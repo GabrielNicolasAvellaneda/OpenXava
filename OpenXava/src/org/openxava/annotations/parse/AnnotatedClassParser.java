@@ -2488,13 +2488,14 @@ public class AnnotatedClassParser {
 				// When no database connection is available, no session factory can
 				// be created, but sometimes (maybe from junit test, or code generation)  
 				// it's needed to parse the entities anyways, then we'll
-				// try to obtain managed classes without hibernate
-				
-				// We always have to print the stack trace of ex, because the error can
-				// be other than no connection, then the developer needs info for debug
-				log.warn(XavaResources.getString("managed_classes_not_from_hibernate"), ex);
+				// try to obtain managed classes without hibernate								
+				if (XavaPreferences.getInstance().isJPAPersistence()) { // If we work with Hibernate + XML components it's normal not to have a persistence.xml
+					// We always have to print the stack trace of ex, because the error can
+					// be other than no connection, then the developer needs info for debug
+					log.warn(XavaResources.getString("managed_classes_not_from_hibernate"), ex);
+				}
 				managedClassNames = obtainManagedClassNamesFromFileClassPath();
-				if (managedClassNames.isEmpty()) {
+				if (managedClassNames.isEmpty() && XavaPreferences.getInstance().isJPAPersistence()) { // If we work with Hibernate + XML components it's normal not to have JPA entities
 					managedClassNames = null;
 					if (ex instanceof RuntimeException) throw (RuntimeException) ex;
 					else throw new RuntimeException(ex);

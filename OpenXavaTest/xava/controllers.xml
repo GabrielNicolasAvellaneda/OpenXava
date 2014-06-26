@@ -309,7 +309,7 @@
 		</action>
 		<action name="reportBySubfamily" 
 			class="org.openxava.test.actions.GoFamilyProductsReportAction"/>			
-	</controller>
+	</controller>	
 	
 	<controller name="Product3">	
 		<action name="changeFamily" mode="detail" class="org.openxava.test.actions.SetPropertyValueNotifyingAction">				

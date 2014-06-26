@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: XML component applications without persistence.xml does not start with OpenXava 5. 
+- Fix: @AssertTrue fails with @Id and @GeneratedValue(strategy=GenerationType.AUTO) used in an embedded collection.
+- Fix: GROOVY_DSL_SUPPORT problem compiling with Eclipse in some machines.
 - Fix: Dates in descriptions list not well formatted, really it used just toString() for all data types.
 - Fix: Property label definition in XML components take preference over i18n files.
 - Fix: View.getCollectionSelectedValues() and CollectionBaseAction.getMapsSelectedValues() do not return all displayed values.
