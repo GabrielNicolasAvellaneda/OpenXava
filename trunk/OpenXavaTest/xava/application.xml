@@ -8,7 +8,7 @@
 		<model name="CustomerContactPerson"/>
 		<view name="CustomerAsAggregate3Levels"/>
 		<controller name="Typical"/>
-	</module>		<module name="CustomerCardList">		<model name="Customer"/>		<tab name="Cards"/>		<controller name="Typical"/>	</module>			<module name="CommunityEditableMembers">		<model name="Community"/>		<view name="EditableMembers"/>		<controller name="Typical"/>	</module>				<module name="StateHibernate">
+	</module>		<module name="CustomerCardList">		<model name="Customer"/>		<tab name="Cards"/>		<controller name="Typical"/>	</module>		<module name="CommunityEditableMembers">		<model name="Community"/>		<view name="EditableMembers"/>		<controller name="Typical"/>	</module>				<module name="StateHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>
 		<controller name="StateHibernate"/>
@@ -234,7 +234,7 @@
 		<model name="Invoice"/>
 		<view name="CustomerAsAggregateWithDeliveryPlaces"/>
 		<controller name="Typical"/>			
-	</module>			<module name="InvoiceWithParameterInURL">		<model name="Invoice"/>		<tab name="YearParameter"/>				<controller name="Typical"/>						</module>		<module name="Invoice3Ascending">		<model name="Invoice3"/>		<tab name="Ascending"/>				<controller name="Typical"/>						</module>				<module name="InvoiceTypicalNewOnInit">		<model name="Invoice"/>		<view name="Simple"/>		<controller name="TypicalNewOnInit"/>						</module>							<module name="CurrentInvoices" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Current" />		<controller name="Typical"/>			</module>		<module name="CurrentInvoicesSelect" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="CurrentSelect" />		<controller name="Typical"/>			</module>		<module name="Invoice2002" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="DefaultYear" />		<controller name="Typical"/>				<controller name="Invoice2002"/>			</module>
+	</module>			<module name="InvoiceWithParameterInURL">		<model name="Invoice"/>		<tab name="YearParameter"/>				<controller name="Typical"/>						</module>		<module name="Invoice3Ascending">		<model name="Invoice3"/>		<tab name="Ascending"/>				<controller name="Typical"/>						</module>		<module name="InvoiceTypicalNewOnInit">		<model name="Invoice"/>		<view name="Simple"/>		<controller name="TypicalNewOnInit"/>						</module>							<module name="CurrentInvoices" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Current" />		<controller name="Typical"/>			</module>		<module name="CurrentInvoicesSelect" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="CurrentSelect" />		<controller name="Typical"/>			</module>		<module name="Invoice2002" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="DefaultYear" />		<controller name="Typical"/>				<controller name="Invoice2002"/>			</module>
 	
 	<module name="Invoice2004" folder="invoicing.variations">
 		<env-var name="XAVATEST_DEFAULT_YEAR" value="2004"/>		
