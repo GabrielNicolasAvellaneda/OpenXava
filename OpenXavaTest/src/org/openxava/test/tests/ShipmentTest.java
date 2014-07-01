@@ -17,6 +17,38 @@ public class ShipmentTest extends ModuleTestBase {
 		super(testName, "Shipment");		
 	}
 	
+	public void testDateTimeCombinedSpanishFormat() throws Exception { 
+		setLocale("es");
+		execute("Mode.detailAndFirst");
+		setValue("time", "30/6/14");
+		execute("CRUD.save");
+		assertValue("time", "");
+		execute("Navigation.first");
+		assertValue("time", "30/06/2014 00:00");
+
+		setValue("time", "30/6/14 13:30");
+		execute("CRUD.save");
+		assertValue("time", "");
+		execute("Navigation.first");
+		assertValue("time", "30/06/2014 13:30");
+		
+		setValue("time", "30/6/2014");
+		execute("CRUD.save");
+		assertValue("time", "");
+		execute("Navigation.first");
+		assertValue("time", "30/06/2014 00:00");
+
+		setValue("time", "30/6/2014 13:30");
+		execute("CRUD.save");
+		assertValue("time", "");
+		execute("Navigation.first");
+		assertValue("time", "30/06/2014 13:30");		
+		
+		setValue("time", "");
+		execute("CRUD.save");
+		assertNoErrors();
+	}
+	
 	public void testCreateReferenceFromCreatingReference() throws Exception { 
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=CustomerContactPerson,keyProperty=xava.Shipment.customerContactPerson.name");

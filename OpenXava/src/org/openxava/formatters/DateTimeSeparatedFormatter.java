@@ -8,29 +8,14 @@ import org.openxava.util.*;
 
 /**
  * Date and time formatter with multilocale support. <p>
- * 
- * Although it does some refinement in Spanish case, it support formatting
- * on locale basis.<br>
- * 
- * @author Jos� Luis Santiago
+ *  
+ * @author Jose Luis Santiago
  * @author Javier Paniza
  */
 
-public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
+public class DateTimeSeparatedFormatter extends DateTimeBaseFormatter implements IMultipleValuesFormatter {
 	
-	private static DateFormat spanishDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	
-	private static DateFormat [] spanishDateTimeFormats = {
-		new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"),
-		new SimpleDateFormat("dd/MM/yyyy HH:mm"),
-		new SimpleDateFormat("ddMMyyyy HH:mm"),
-		new SimpleDateFormat("ddMMyyyy HH:mm:ss"),
-		new SimpleDateFormat("dd.MM.yyyy HH:mm"),		
-		new SimpleDateFormat("dd.MM.yyyy HH:mm:ss"),		
-		new SimpleDateFormat("dd/MM/yyyy"),		
-		new SimpleDateFormat("ddMMyyyy"),		
-		new SimpleDateFormat("dd.MM.yyyy")
-	};	
+	private static DateFormat extendedDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public String [] format(HttpServletRequest request, Object date) throws Exception {	
         String[] result = new String[2];
@@ -45,7 +30,6 @@ public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
 	public Object parse(HttpServletRequest request, String [] strings) throws Exception {		
 		if( strings == null || strings.length < 2 ) return null;
 		if( Is.emptyString(strings[0])) return null;
-		if( Is.emptyString(strings[1])) return null;
 	
 		String fDate = strings[0];
 		String fTime = strings[1];
@@ -69,14 +53,12 @@ public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
 	}
 	
 	private DateFormat getDateFormat() {
-		if ("es".equals(Locales.getCurrent().getLanguage()) || 
-				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateFormat;
+		if (isExtendedFormat()) return extendedDateFormat;		
 		return DateFormat.getDateInstance(DateFormat.SHORT, Locales.getCurrent());		
 	}
 	
 	private DateFormat[] getDateTimeFormats() {
-		if ("es".equals(Locales.getCurrent().getLanguage()) || 
-				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateTimeFormats;				
+		if (isExtendedFormat()) return getExtendedDateTimeFormats();		
 		return new DateFormat [] { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locales.getCurrent() ) };
 	}
 	
