@@ -10,28 +10,14 @@ import org.openxava.util.*;
 /**
  * Date/Time (combined) formatter with multilocale support. <p>
  *
- * Although it does some refinement in Spanish case, it support formatting
- * on locale basis.<br>
- *
  * @author Peter Smith
+ * @author Javier Paniza
  */
 
-public class DateTimeCombinedFormatter implements IFormatter {
+public class DateTimeCombinedFormatter extends DateTimeBaseFormatter implements IFormatter {
 
-	private static DateFormat spanishDateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-	private static DateFormat [] spanishDateTimeFormats = {
-		spanishDateTimeFormat,
-		new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"),
-		new SimpleDateFormat("dd/MM/yyyy HH:mm"),
-		new SimpleDateFormat("ddMMyyyy HH:mm"),
-		new SimpleDateFormat("ddMMyyyy HH:mm:ss"),
-		new SimpleDateFormat("dd.MM.yyyy HH:mm"),		
-		new SimpleDateFormat("dd.MM.yyyy HH:mm:ss"),		
-		new SimpleDateFormat("dd/MM/yyyy"),		
-		new SimpleDateFormat("ddMMyyyy"),		
-		new SimpleDateFormat("dd.MM.yyyy")	};
-
+	private static DateFormat extendedDateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	
 	public String format(HttpServletRequest request, Object date) {
 		if (date == null) return "";
 		if (Dates.getYear((java.util.Date)date) < 2) return "";
@@ -56,14 +42,12 @@ public class DateTimeCombinedFormatter implements IFormatter {
 	}
 
 	private DateFormat getDateTimeFormat() {
-		if ("es".equals(Locales.getCurrent().getLanguage()) ||
-				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateTimeFormat;
+		if (isExtendedFormat()) return extendedDateTimeFormat;		
 		return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locales.getCurrent());
 	}
 
 	private DateFormat[] getDateTimeFormats() {
-		if ("es".equals(Locales.getCurrent().getLanguage()) || 
-				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateTimeFormats;
+		if (isExtendedFormat()) return getExtendedDateTimeFormats();
 		return new DateFormat [] { getDateTimeFormat() };
 	}
 

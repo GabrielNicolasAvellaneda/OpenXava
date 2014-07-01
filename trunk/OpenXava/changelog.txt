@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Date format in editors with date and time improved for Catalonian and French.
+- Fix: In DateTimeSeparatedCalendar editor when the time is not specified the value is null, even if the date exists.
+- Fix: Entering 2 digits for year in editors with date and time creates a date of first century. 
 - Fix: XML component applications without persistence.xml does not start with OpenXava 5. 
 - Fix: @AssertTrue fails with @Id and @GeneratedValue(strategy=GenerationType.AUTO) used in an embedded collection.
 - Fix: GROOVY_DSL_SUPPORT problem compiling with Eclipse in some machines.
