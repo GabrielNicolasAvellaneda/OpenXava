@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Two collections in the same row are wrapped with a very ugly frame.
 - Date format in editors with date and time improved for Catalonian and French.
 - Fix: In DateTimeSeparatedCalendar editor when the time is not specified the value is null, even if the date exists.
 - Fix: Entering 2 digits for year in editors with date and time creates a date of first century. 

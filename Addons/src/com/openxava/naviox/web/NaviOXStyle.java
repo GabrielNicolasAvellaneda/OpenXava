@@ -85,7 +85,9 @@ public class NaviOXStyle extends Style {
 		r.append("><tr><td>");
 		r.append("<div ");
 		r.append(" class='");
-		r.append(getFrame());
+		if (width != 0) { // For several collections in a row
+			r.append(getFrame());
+		}
 		if (sibling) {
 			r.append(" ");
 			r.append(getFrameSibling());
