@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Focus navigation improved for list filter fields.
+- Fix: When focus lost with tab key from a date field in the list filter part of the date field is hidden. 
 - Fix: Two collections in the same row are wrapped with a very ugly frame.
 - Date format in editors with date and time improved for Catalonian and French.
 - Fix: In DateTimeSeparatedCalendar editor when the time is not specified the value is null, even if the date exists.
