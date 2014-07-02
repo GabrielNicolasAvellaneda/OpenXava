@@ -855,11 +855,12 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			if (element.isFirst()) {
 				style.append("float:left; margin:0px;");
 			} else {
-				style.append("float:right; margin-left:" + getStyle().getPropertyLeftMargin() + "px;");
+				style.append("float:left; margin-left:" + getStyle().getPropertyLeftMargin() + "px;");
 			}
-			style.append("overflow: auto; display: block; border: 1px solid black; width: ")
-					.append(percent.intValue() - 1)
+			style.append("overflow: auto; display: block; width: ")
+					.append(percent.intValue() - 4)
 					.append('%');
+			attributes.put(ATTR_CLASS, getStyle().getFrame());
 			attributes.put(ATTR_STYLE, style.toString());
 		} else {
 			attributes.put(ATTR_STYLE, ATTRVAL_STYLE_WIDTH_100P);

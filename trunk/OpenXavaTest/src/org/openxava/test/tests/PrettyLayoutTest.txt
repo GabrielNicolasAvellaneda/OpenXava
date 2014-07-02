@@ -15,4 +15,5 @@ at least the next cases:
 - A section with only a property (enmarcable and not enmarcable) inside Liferay
  		with more portlets below. The frame of the OX portlet mustn't wrap all other portlets.
 - Product5FamilyFromSubfamily: The properties in the group must be in the same line
+- CarrierWithCollectionsTogether: The two collections in the same row. Not nested frames.
 	

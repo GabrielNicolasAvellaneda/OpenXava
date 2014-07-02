@@ -559,7 +559,9 @@ public class Style {
 		StringBuffer r = new StringBuffer();
 		r.append("<table ");
 		r.append(" class='");
-		r.append(getFrame());
+		if (width != 0) { // For several collections in the same row 
+			r.append(getFrame());
+		}
 		r.append("' style='float:left;margin-right:4px;");
 		if (width != 0) {
 			r.append("width:");
