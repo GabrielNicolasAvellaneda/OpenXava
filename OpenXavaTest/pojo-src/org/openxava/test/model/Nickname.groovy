@@ -17,6 +17,7 @@ import org.openxava.model.*
  */
 
 @Entity
+@View(name="OnlyNickname", members="nickname")
 @Table(
 	uniqueConstraints=[
 			@UniqueConstraint(name="not_repeat_nickname", 
