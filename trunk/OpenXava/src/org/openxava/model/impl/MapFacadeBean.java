@@ -5,6 +5,7 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.persistence.*;
 
 import org.apache.commons.lang3.*;
 import org.apache.commons.logging.*;
@@ -770,6 +771,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (ObjectNotFoundException ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_error", metaModel.getName());
+		} catch (PersistenceException ex) {
+			log.error(ex.getMessage(), ex);
+			// For preserving the cause exception. If ex.getCause() is not a 
+			// org.hibernate.exception.ConstraintViolationException then the  
+			// create_error message is used
+			throw new PersistenceException(XavaResources.getString("create_error", metaModel.getName()), 
+					                       ex.getCause());
 		}
 	}
 
@@ -1686,6 +1694,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (ElementNotFoundException ex) {			
 			rollback();
 			throw new RemoteException(XavaResources.getString("model_not_found", modelName));
+		} catch (PersistenceException ex) {
+			rollback();
+			throw ex;
 		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			rollback();
