@@ -1210,6 +1210,14 @@ public class Style {
 	}
 
 	/**
+	 * @since 5.0.1
+	 * @return Style class for inner error image.
+	 */
+	public String getErrorImage() {
+		return "ox-error-image";
+	}
+	
+	/**
 	 * Determines if the html content has a class attribute with the getFrame() code and replace its content
 	 * with getFrame() getFrameSibling combination.
 	 * @param html Html text to be manipulated.

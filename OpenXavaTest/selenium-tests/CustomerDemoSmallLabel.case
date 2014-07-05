@@ -11,6 +11,8 @@
 <thead>
 <tr><td rowspan="1" colspan="3">CustomerDemoSmallLabel</td></tr>
 </thead><tbody>
+<!--For Bug #356-->
+<!--For bug #430-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/CustomerDemo</td>
@@ -38,13 +40,8 @@
 </tr>
 <tr>
 	<td>storeEval</td>
-	<td>${labelLeft} + 3</td>
+	<td>${labelLeft}&nbsp;&nbsp;+ 3</td>
 	<td>dataLeft</td>
-</tr>
-<tr>
-	<td>assertElementPositionLeft</td>
-	<td>id=ox_OpenXavaTest_CustomerDemo__address___street</td>
-	<td>${dataLeft}</td>
 </tr>
 <tr>
 	<td>assertElementPositionLeft</td>
@@ -71,6 +68,111 @@
 	<td>id=ox_OpenXavaTest_CustomerDemo__address___state___id</td>
 	<td>${dataLeft}</td>
 </tr>
+<!--*******************-->
+<!--For Bug #445-->
+<!--Validate Icon alignment-->
+<!--Required and Key icons-->
+<!--MUST be aligned-->
+<!--and closer to content-->
+<!--   Number key icon-->
+<tr>
+	<td>storeElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__icon_key_number</td>
+	<td>iconLeftPosition</td>
+</tr>
+<tr>
+	<td>assertElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__icon_required_type</td>
+	<td>${iconLeftPosition}</td>
+</tr>
+<tr>
+	<td>assertElementPositionLeft</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__icon_required_name</td>
+	<td>${iconLeftPosition}</td>
+</tr>
+<!--BUT in small labels-->
+<!--Required and Key icons-->
+<!--NEXT to the label-->
+<!--NOT aside to content-->
+<tr>
+	<td>storeElementPositionTop</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__label_address___street</td>
+	<td>labelTop</td>
+</tr>
+<tr>
+	<td>assertElementPositionTop</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__label_address___zipCode</td>
+	<td>${labelTop}</td>
+</tr>
+<tr>
+	<td>storeElementPositionTop</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__icon_required_address___street</td>
+	<td>labelTop</td>
+</tr>
+<tr>
+	<td>assertElementPositionTop</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__icon_required_address___zipCode</td>
+	<td>${labelTop}</td>
+</tr>
+<!--*******************-->
+<!--ERROR Icon Behavior-->
+<tr>
+	<td>click</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__CRUD___save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.ox-message-box</td>
+	<td>Value for Zip code in Address is required</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.ox-message-box</td>
+	<td>Value for Zip code in Address is required</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#ox_OpenXavaTest_CustomerDemo__error_image_Customer___number &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#ox_OpenXavaTest_CustomerDemo__error_image_Customer___name &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#ox_OpenXavaTest_CustomerDemo__error_image_Address___street &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#ox_OpenXavaTest_CustomerDemo__error_image_Address___zipCode &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#ox_OpenXavaTest_CustomerDemo__error_image_Address___city &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPositionTop</td>
+	<td>id=ox_OpenXavaTest_CustomerDemo__icon_required_address___street</td>
+	<td>labelTop</td>
+</tr>
+<!--  error icon is smaller-->
+<tr>
+	<td>storeEval</td>
+	<td>${labelTop}&nbsp;&nbsp;+ 4</td>
+	<td>labelTop</td>
+</tr>
+<tr>
+	<td>assertElementPositionTop</td>
+	<td>css=#ox_OpenXavaTest_CustomerDemo__error_image_Address___zipCode &gt; img</td>
+	<td>${labelTop}</td>
+</tr>
+<!--*******************-->
 <!--Tests on multiple rows-->
 <tr>
 	<td>open</td>
