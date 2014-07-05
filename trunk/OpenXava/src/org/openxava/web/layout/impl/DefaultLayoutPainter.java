@@ -537,8 +537,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		attributes.put(ATTR_CLASS, getStyle().getLayoutDataCell());
 		StringBuffer style = new StringBuffer("");
 		if (width > 0) {
-			style.append("width:" + width.toString() + "%");
+			style.append("width:" + width.toString() + "%;");
 		}
+		style.append("white-space:nowrap;");
 		if (style.length() > 0) {
 			attributes.put(ATTR_STYLE, style.toString());
 		}
