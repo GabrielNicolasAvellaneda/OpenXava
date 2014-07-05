@@ -349,8 +349,11 @@ public class Module extends DWRBase {
 		}
 			
 		Messages errors = (Messages) request.getAttribute("errors");
-		
-		String imageHTML = "html:<img src='" + request.getContextPath() +"/xava/images/error.gif'/>";
+		String errorImageClass = "";
+		if (!Is.emptyString(Style.getInstance().getErrorImage())) {
+			errorImageClass = "class='" + Style.getInstance().getErrorImage() + "' ";
+		}
+		String imageHTML = "html:<img " + errorImageClass  + "src='" + request.getContextPath() +"/xava/images/error.gif'/>";
 		if (!errors.isEmpty()) {
 			View view = getView();
 			Collection members = new HashSet();
