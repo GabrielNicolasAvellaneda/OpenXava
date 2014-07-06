@@ -11,6 +11,28 @@
 <thead>
 <tr><td rowspan="1" colspan="3">InvoiceAmounts</td></tr>
 </thead><tbody>
+<!--Liferay Aware-->
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${liferay}&quot;!=&quot;true&quot;</td>
+	<td>afterOpenInvoiceAmounts</td>
+</tr>
+<tr>
+	<td>lrToPage</td>
+	<td>/web/guest/</td>
+	<td>InvoiceAmounts</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>afterLRPageInvoiceAmounts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterOpenInvoiceAmounts</td>
+	<td></td>
+</tr>
+<!--Non Liferay-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/InvoiceAmounts</td>
@@ -19,6 +41,11 @@
 <tr>
 	<td>waitForTitle</td>
 	<td>OpenXavaTest - Invoice amounts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterLRPageInvoiceAmounts</td>
 	<td></td>
 </tr>
 <tr>
