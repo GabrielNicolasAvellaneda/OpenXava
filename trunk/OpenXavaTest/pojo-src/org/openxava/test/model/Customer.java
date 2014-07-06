@@ -150,6 +150,10 @@ import org.openxava.test.actions.*;
 	
 	@View( name="Demo", members="number; type; name; photo; address; seller"),
 	
+	@View( name="NotAligned", members="number, type, name; telephone, email, website"),
+
+	@View( name="Aligned", members="#number, type, name; telephone, email, website"),
+
 	@View( name="Intermediate", members="number")
 	
 })

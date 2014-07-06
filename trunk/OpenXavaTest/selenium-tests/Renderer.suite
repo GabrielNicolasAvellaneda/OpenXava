@@ -17,6 +17,10 @@
 <tr><td><a href="CarrierWithTwoSections.case">CarrierWithTwoSections</a></td></tr>
 <tr><td><a href="Customer-twoFrames.case">Customer-twoFrames</a></td></tr>
 <tr><td><a href="CustomerDemoSmallLabel.case">CustomerDemoSmallLabel</a></td></tr>
+<tr><td><a href="CustomerSmallLabel.case">CustomerSmallLabel</a></td></tr>
+<tr><td><a href="CustomerAlignment.case">CustomerAlignment</a></td></tr>
+<tr><td><a href="aligned-by-column-tests/CustomerAligned.case">CustomerAligned</a></td></tr>
+<tr><td><a href="CustomerNotAligned_FALSE_state.case">CustomerNotAligned_FALSE_state</a></td></tr>
 <tr><td><a href="InvoiceDetailsWithTotals.case">InvoiceDetailsWithTotals</a></td></tr>
 <tr><td><a href="DeliveryGroupAndReference">DeliveryGroupAndReference</a></td></tr>
 <tr><td><a href="CarrierIconAlignment">CarrierIconAlignment</a></td></tr>

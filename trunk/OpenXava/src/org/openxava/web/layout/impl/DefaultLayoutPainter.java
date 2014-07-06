@@ -359,7 +359,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	private void beginReferenceData(ILayoutPropertyBeginElement element) {
 		initiatePropertyElement(element);
-		beginPropertyLabel(element);
+		beginPropertyLabelNormal(element);
 		processPropertyElement(element);
 		ModuleContext context = (ModuleContext) getPageContext().getSession().getAttribute("context");
 		View view = (View)context.get(getRequest(), element.getViewObject());
@@ -426,7 +426,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	protected void beginPropertyData(ILayoutPropertyBeginElement element) {
 		initiatePropertyElement(element);
-		beginPropertyLabel(element);
+		beginPropertyLabelNormal(element);
 		processPropertyElement(element);
 		beginPropertyLabelSmall(element);
 
@@ -470,7 +470,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 
 		beginPropertyDataAddPropertyActions(element);
 		
-		finalizePropertyElement(element, true);
+		finalizePropertyElement(element, false);
 	}
 	
 	/**
@@ -480,6 +480,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	private void initiatePropertyElement(ILayoutPropertyBeginElement element) {
 		Integer width =  getMaxColumnsOnView() > 0 ? 50 / getMaxColumnsOnView() : 0;
 		width = 0;
+		smallLabelPainted = isSmallLabel(element);
 		if (!firstCellPainted) {
 			attributes.clear();
 			attributes.put(ATTR_CLASS, getStyle().getLabel() + " " + getStyle().getLayoutLabelCell());
@@ -491,9 +492,20 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			attributes.put(ATTR_STYLE, style.toString());
 			attributes.put("valign", "center");
 			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+			// If it is a small label and it is the first, the tag must be inmediately closed.
+			if (smallLabelPainted) {
+				style.append("padding-left:0px;");
+				attributes.put(ATTR_STYLE, style.toString());
+				write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+				write(LayoutJspUtils.INSTANCE.startTag(TAG_TD, attributes));
+			}
 		}
-		if (isSmallLabel(element)) {
-			smallLabelPainted = true;
+		if (smallLabelPainted) {
+			attributes.clear();
+			attributes.put(ATTR_STYLE, "display:inline-table; vertical-align:middle");
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TABLE, attributes));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
 		}
 	}
 	
@@ -503,7 +515,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 */
 	private void processPropertyElement(ILayoutPropertyBeginElement element) {
 		// Data. There is no end TD tag this one is closed by the end column method.
-		if (!firstCellPainted) {
+		if (!firstCellPainted && !smallLabelPainted) {
 			closeFirstPropertyElement(element);
 		}
 	}
@@ -513,6 +525,11 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * @param element Current property element.
 	 */
 	private void finalizePropertyElement(ILayoutPropertyBeginElement element, boolean closeFirst) {
+		if (smallLabelPainted) {
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TABLE));
+		}
 		if (!firstCellPainted) {
 			closeSmallLabel();
 			if (closeFirst) {
@@ -560,10 +577,8 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 	 * Paints the cell label.
 	 * @param element Representing cell element.
 	 */
-	protected void beginPropertyLabel(ILayoutPropertyBeginElement element) {
-		if (smallLabelPainted) {
-			beginPropertyLabel(element, "");
-		} else {
+	protected void beginPropertyLabelNormal(ILayoutPropertyBeginElement element) {
+		if (!smallLabelPainted) {
 			beginPropertyLabel(element, element.getLabel());
 		}
 	}
@@ -576,12 +591,14 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		if (smallLabelPainted) {
 			displayPropertyNoIcon(element);
 			
-			write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 			beginPropertyLabel(element, element.getLabel());
 			
 			displayPropertyIcons(element);
 			displayPropertyErrorIcon(element);
-			write("<br />");
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TD));
+			write(LayoutJspUtils.INSTANCE.endTag(TAG_TR));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TR));
+			write(LayoutJspUtils.INSTANCE.startTag(TAG_TD));
 		}
 	}
 	
@@ -603,7 +620,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 						element.getLabelFormat() != LabelFormatType.SMALL.ordinal()) {
 					classAttribute.append(getStyle().getLabel()) 
 						.append(' ');
-				} else if (smallLabelPainted && !Is.emptyString(sentLabel)) {
+				} else if (smallLabelPainted) {
 					classAttribute.append(getStyle().getSmallLabel())
 						.append(' ');
 				}
@@ -617,6 +634,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 						.append(' ');
 				}
 				attributes.put(ATTR_CLASS, classAttribute.toString());
+				attributes.put(ATTR_STYLE, "vertical-align:middle");
 				write(LayoutJspUtils.INSTANCE.startTag(TAG_SPAN, attributes));
 				String label = element.getLabelFormat() != LabelFormatType.NO_LABEL.ordinal() &&
 						sentLabel != null ? sentLabel + LayoutJspKeys.CHAR_SPACE : LayoutJspKeys.CHAR_SPACE;
@@ -701,7 +719,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		attributes.put(ATTR_SRC, getRequest().getContextPath() + "/xava/images/" + img);
 		write(LayoutJspUtils.INSTANCE.startTag(TAG_IMG, attributes));
 		write(LayoutJspUtils.INSTANCE.endTag(TAG_IMG));
-	write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
+		write(LayoutJspUtils.INSTANCE.endTag(TAG_SPAN));
 
 	}
 	
@@ -777,7 +795,6 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 			if (columnSpan > 0) {
 				columnSpan = calculateTdSpan(columnSpan);
 				columnSpan = columnSpan + 1;
-				//attributes.put(ATTR_COLSPAN, columnSpan.toString());
 				getRow().setRowCurrentColumnsCount(getMaxColumnsOnView()); // No td to add.
 			}
 		}
