@@ -11,6 +11,28 @@
 <thead>
 <tr><td rowspan="1" colspan="3">InvoiceDetailsWithTotals</td></tr>
 </thead><tbody>
+<!--Liferay Aware-->
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${liferay}&quot;!=&quot;true&quot;</td>
+	<td>afterOpenInvoiceDetailsWithTotals</td>
+</tr>
+<tr>
+	<td>lrToPage</td>
+	<td>/web/guest/</td>
+	<td>InvoiceDetailsWithTotals</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>afterLRPageInvoiceDetailsWithTotals</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterOpenInvoiceDetailsWithTotals</td>
+	<td></td>
+</tr>
+<!--Non Liferay-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/InvoiceDetailsWithTotals</td>
@@ -19,6 +41,11 @@
 <tr>
 	<td>waitForTitle</td>
 	<td>OpenXavaTest - Invoice details with totals</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterLRPageInvoiceDetailsWithTotals</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,37 +120,32 @@
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col0 &gt; nobr</td>
+	<td>css=#ox_OpenXavaTest_InvoiceDetailsWithTotals__xava_collectionTab_details_1 + tr td:nth-of-type(3) div nobr</td>
 	<td>expectedDate</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col2 &gt; nobr</td>
+	<td>css=#ox_OpenXavaTest_InvoiceDetailsWithTotals__xava_collectionTab_details_1 + tr td:nth-of-type(5) div nobr</td>
 	<td>expectedUnitPrice</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col3 &gt; nobr</td>
+	<td>css=#ox_OpenXavaTest_InvoiceDetailsWithTotals__xava_collectionTab_details_1 + tr td:nth-of-type(6) div nobr</td>
 	<td>expectedQuantity</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>css=td.ox-total-cell &gt; div.ox_OpenXavaTest_InvoiceDetailsWithTotals__details_col4 &gt; nobr</td>
+	<td>css=#ox_OpenXavaTest_InvoiceDetailsWithTotals__xava_collectionTab_details_1 + tr td:nth-of-type(7) div nobr</td>
 	<td>expectedSubtotal</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>//table[@id='ox_OpenXavaTest_InvoiceDetailsWithTotals__details']/tbody/tr[6]/td[7]/div</td>
+	<td>css=#ox_OpenXavaTest_InvoiceDetailsWithTotals__xava_collectionTab_details_1 + tr + tr td:nth-of-type(7) div</td>
 	<td>expectedVat</td>
 </tr>
 <tr>
 	<td>storeText</td>
-	<td>//table[@id='ox_OpenXavaTest_InvoiceDetailsWithTotals__details']/tbody/tr[6]/td[7]/div</td>
-	<td>expectedVat</td>
-</tr>
-<tr>
-	<td>storeText</td>
-	<td>//table[@id='ox_OpenXavaTest_InvoiceDetailsWithTotals__details']/tbody/tr[7]/td[7]/div</td>
+	<td>css=#ox_OpenXavaTest_InvoiceDetailsWithTotals__xava_collectionTab_details_1 + tr + tr + tr td:nth-of-type(7) div</td>
 	<td>expectedTotal</td>
 </tr>
 <tr>

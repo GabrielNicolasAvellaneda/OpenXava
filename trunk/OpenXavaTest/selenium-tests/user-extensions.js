@@ -121,7 +121,11 @@ Selenium.prototype.doLrLogout = function() {
 
 /* goto page*/
 Selenium.prototype.doLrToPage = function(locator, value) {
-    selenium.runningVars.nextCommands.unshift(new SeleniumCommand("open", "/en/group/" + selenium.lrConvertToLink(locator) + "/" + selenium.lrConvertToLink(value), ""));
+	var newLocator = selenium.lrConvertToLink(locator);
+	if (locator.length == 0 || locator.charAt(0) != '/') {
+		newLocator = "/en/group/" + newLocator;
+	}
+    selenium.runningVars.nextCommands.unshift(new SeleniumCommand("open", newLocator + selenium.lrConvertToLink(value), ""));
     selenium.runningVars.nextCommands.unshift(new SeleniumCommand("waitForPageToLoad", "", ""));
 }
 

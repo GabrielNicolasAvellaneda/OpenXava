@@ -13,6 +13,28 @@
 </thead><tbody>
 <!--For Bug #356-->
 <!--For bug #430-->
+<!--Liferay Aware-->
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${liferay}&quot;!=&quot;true&quot;</td>
+	<td>afterOpenCustomerDemo</td>
+</tr>
+<tr>
+	<td>lrToPage</td>
+	<td>/web/guest/</td>
+	<td>CustomerDemo</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>afterLRPageCustomerDemo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterOpenCustomerDemo</td>
+	<td></td>
+</tr>
+<!--Non Liferay-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/CustomerDemo</td>
@@ -21,6 +43,11 @@
 <tr>
 	<td>waitForTitle</td>
 	<td>OpenXavaTest - Customer demo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterLRPageCustomerDemo</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,14 +149,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>css=div.ox-message-box</td>
+	<td>waitForTextPresent</td>
 	<td>Value for Zip code in Address is required</td>
+	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>css=div.ox-message-box</td>
+	<td>assertTextPresent</td>
 	<td>Value for Zip code in Address is required</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -174,6 +201,28 @@
 </tr>
 <!--*******************-->
 <!--Tests on multiple rows-->
+<!--Liferay Aware-->
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${liferay}&quot;!=&quot;true&quot;</td>
+	<td>afterOpenColor</td>
+</tr>
+<tr>
+	<td>lrToPage</td>
+	<td>/web/guest/</td>
+	<td>Color</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>afterLRPageColor</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterOpenColor</td>
+	<td></td>
+</tr>
+<!--Non Liferay-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/Color</td>
@@ -185,9 +234,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>afterLRPageColor</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=ox_OpenXavaTest_Color__CRUD___new</td>
-	<td>${dataLeft}</td>
+	<td></td>
 </tr>
 <tr>
 	<td>pause</td>

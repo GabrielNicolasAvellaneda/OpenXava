@@ -11,6 +11,28 @@
 <thead>
 <tr><td rowspan="1" colspan="3">Product5FamilyFromSubfamily</td></tr>
 </thead><tbody>
+<!--Liferay Aware-->
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${liferay}&quot;!=&quot;true&quot;</td>
+	<td>afterOpenProduct5FamilyFromSubfamily</td>
+</tr>
+<tr>
+	<td>lrToPage</td>
+	<td>/web/guest/</td>
+	<td>Product5FamilyFromSubfamily</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>afterLRPageProduct5FamilyFromSubfamily</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterOpenProduct5FamilyFromSubfamily</td>
+	<td></td>
+</tr>
+<!--Non Liferay-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/Product5FamilyFromSubfamily</td>
@@ -19,6 +41,11 @@
 <tr>
 	<td>waitForTitle</td>
 	<td>OpenXavaTest - Product 5 family from subfamily</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterLRPageProduct5FamilyFromSubfamily</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +78,6 @@
 	<td>id=ox_OpenXavaTest_Product5FamilyFromSubfamily__description</td>
 	<td>${row1}</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

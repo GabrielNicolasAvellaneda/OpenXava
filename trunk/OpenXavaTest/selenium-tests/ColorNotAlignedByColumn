@@ -12,6 +12,28 @@
 <tr><td rowspan="1" colspan="3">ColorNotAlignedByColumn</td></tr>
 </thead><tbody>
 <!--For bug #430-->
+<!--Liferay Aware-->
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${liferay}&quot;!=&quot;true&quot;</td>
+	<td>afterOpenColor</td>
+</tr>
+<tr>
+	<td>lrToPage</td>
+	<td>/web/guest/</td>
+	<td>Color</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>afterLRPageColor</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterOpenColor</td>
+	<td></td>
+</tr>
+<!--Non Liferay-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/Color</td>
@@ -20,6 +42,11 @@
 <tr>
 	<td>waitForTitle</td>
 	<td>OpenXavaTest - Color</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterLRPageColor</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,7 +81,7 @@
 </tr>
 <tr>
 	<td>assertEval</td>
-	<td>(${leftPosition2} - ${leftPosition}) &gt;=150</td>
+	<td>(${leftPosition2} - ${leftPosition}) &gt;=145</td>
 	<td>true</td>
 </tr>
 <tr>
@@ -64,7 +91,7 @@
 </tr>
 <tr>
 	<td>assertEval</td>
-	<td>(${leftPosition3} - ${leftPosition}) &gt;= 320</td>
+	<td>(${leftPosition3} - ${leftPosition}) &gt;= 310</td>
 	<td>true</td>
 </tr>
 </tbody></table>

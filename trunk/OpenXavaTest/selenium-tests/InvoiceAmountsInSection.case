@@ -11,6 +11,28 @@
 <thead>
 <tr><td rowspan="1" colspan="3">InvoiceAmountsInSection</td></tr>
 </thead><tbody>
+<!--Liferay Aware-->
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${liferay}&quot;!=&quot;true&quot;</td>
+	<td>afterOpenInvoiceAmountsInSection</td>
+</tr>
+<tr>
+	<td>lrToPage</td>
+	<td>/web/guest/</td>
+	<td>InvoiceAmountsInSection</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>afterLRPageInvoiceAmountsInSection</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterOpenInvoiceAmountsInSection</td>
+	<td></td>
+</tr>
+<!--Non Liferay-->
 <tr>
 	<td>open</td>
 	<td>/OpenXavaTest/modules/InvoiceAmountsInSection</td>
@@ -19,6 +41,11 @@
 <tr>
 	<td>waitForTitle</td>
 	<td>OpenXavaTest - Invoice amounts in section</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>afterLRPageInvoiceAmountsInSection</td>
 	<td></td>
 </tr>
 <tr>
