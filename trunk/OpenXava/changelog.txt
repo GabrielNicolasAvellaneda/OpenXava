@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Labels placed incorrectly in properties not in the first column.
+- Fix: Incorrect properties alignment in some cases. 
+- Fix: Icons in properties with label format SMALL are shown on left instead on top.
+. Fix: Too much space between UI elements.
+- Fix: Unique constraint custom message is not displayed with embedded classes.
 - Focus navigation improved for list filter fields.
 - Fix: When focus lost with tab key from a date field in the list filter part of the date field is hidden. 
 - Fix: Two collections in the same row are wrapped with a very ugly frame.

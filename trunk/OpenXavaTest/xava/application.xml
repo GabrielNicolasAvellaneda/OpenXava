@@ -158,7 +158,7 @@
 		<view name="CustomersAsAggregate"/>
 		<controller name="Typical"/>		
 	</module>	
-		<module name="Customer" folder="invoicing.variations">			<model name="Customer"/>		<controller name="Typical"/>	</module>		<module name="CustomerSimple" folder="invoicing.variations">	
+		<module name="CustomerSimple" folder="invoicing.variations">	
 		<model name="Customer"/>
 		<view name="SimpleStateAsForm"/>
 		<controller name="Typical"/>
