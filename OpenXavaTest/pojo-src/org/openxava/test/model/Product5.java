@@ -128,6 +128,12 @@ public class Product5 {
 	}
 
 	public void setDescription(String description) {
+		if (description.contains("OPENXAVA")) {
+			throw new org.openxava.validators.ValidationException("openxava_not_saleable"); 
+		}
+		if (description.contains("ECLIPSE")) {
+			throw new javax.validation.ValidationException("eclipse_not_saleable"); 
+		}
 		this.description = description;
 	}
 

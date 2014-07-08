@@ -681,7 +681,7 @@ public class ModuleManager implements java.io.Serializable {
 		} else if (ex instanceof InvalidStateException) {
 			manageInvalidStateException(metaAction, errors, messages,
 					(InvalidStateException) ex);
-			doRollback();
+			doRollback();	
 		} else if (ex instanceof javax.persistence.PersistenceException) {
 			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException
 					&& ((org.hibernate.exception.ConstraintViolationException) ex
@@ -696,6 +696,10 @@ public class ModuleManager implements java.io.Serializable {
 				manageRegularException(metaAction, errors, messages, ex);
 			}
 			doRollback();
+		} else if (ex instanceof javax.validation.ValidationException) {	
+			errors.add(ex.getMessage());
+			messages.removeAll();
+			doRollback();			
 		} else {
 			manageRegularException(metaAction, errors, messages, ex);
 			doRollback();

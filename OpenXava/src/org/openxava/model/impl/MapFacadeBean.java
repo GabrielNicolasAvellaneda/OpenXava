@@ -63,8 +63,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
-		}
-		
+		}		
 	}	
 	
 	public void commit(UserInfo userInfo) {

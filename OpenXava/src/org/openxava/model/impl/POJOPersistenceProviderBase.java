@@ -159,17 +159,25 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			persist(object);			
 			return object;
 		}
-		catch (RuntimeException ex) {  
-			if (ex.getCause() instanceof ValidationException) {
-				throw (ValidationException) ex.getCause();
-			}
+		catch (RuntimeException ex) {
+			throwValidationExceptionIfNeeded(ex); 
 			throw ex;
 		}
 		catch (Exception ex) {
+			throwValidationExceptionIfNeeded(ex); 
 			log.error(ex.getMessage(), ex);
 			throw new CreateException(XavaResources.getString(
 					"create_persistent_error", metaModel.getName(), ex.getMessage()));
 		}
+	}
+	
+	private void throwValidationExceptionIfNeeded(Exception ex) throws ValidationException { 
+		if (ex.getCause() instanceof ValidationException) {
+			throw (ValidationException) ex.getCause();
+		}	
+		if (ex.getCause() instanceof javax.validation.ValidationException) {
+			throw (javax.validation.ValidationException) ex.getCause();				
+		}		
 	}
 			
 	private void removeCalculatedOnCreateValues(MetaModel metaModel, Map values) throws XavaException { 

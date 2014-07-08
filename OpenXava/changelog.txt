@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Message of ValidationException from setter not shown to the user on create.
 - Fix: Labels placed incorrectly in properties not in the first column.
 - Fix: Incorrect properties alignment in some cases. 
 - Fix: Icons in properties with label format SMALL are shown on left instead on top.
