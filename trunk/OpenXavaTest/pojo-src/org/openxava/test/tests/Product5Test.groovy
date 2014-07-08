@@ -12,6 +12,23 @@ class Product5Test extends ModuleTestBase {
 		super(testName, "Product5")		
 	}
 	
+	void testValidationFromSetterOnCreate() { 
+		execute "CRUD.new"
+		setValue "number", "666"
+		setValue "description", "OPENXAVA"
+		setValue "family", "2"
+		setValue "subfamily.number", "12"
+		setValue "unitPrice", "300"
+		execute "CRUD.save"
+		assertError "You cannot sell OpenXava"
+		assertErrorsCount 1
+		setValue "description", "ECLIPSE"
+		execute "CRUD.save"
+		assertError "You cannot sell Eclipse"
+		assertErrorsCount 1
+	}
+
+	
 	// This case can be only reproduced in custom dialog with Product5 (in other Product it works)
 	void testDialogActionsAreNotLost() {  
 		execute "ExtendedPrint.myReports"
