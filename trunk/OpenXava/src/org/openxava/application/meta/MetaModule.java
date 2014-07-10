@@ -85,15 +85,19 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	
 	protected String getLabel(Locale locale, String id) {
 		String moduleId = id + ".module";
-		if (Labels.exists(moduleId)) return super.getLabel(locale, moduleId);
+		if (Labels.existsExact(moduleId, locale)) return super.getLabel(locale, moduleId); 
+		moduleId = getName() + ".module"; 
+		if (Labels.existsExact(moduleId, locale)) return super.getLabel(locale, moduleId); 		
 		return super.getLabel(locale, id);
 	}
 		
 	public String getDescription(Locale locale, String id) {
 		String moduleId = id + ".module[description]";
-		if (Labels.exists(moduleId)) return Labels.get(moduleId, locale);
+		if (Labels.existsExact(moduleId, locale)) return Labels.get(moduleId, locale); 
+		moduleId = getName() + ".module[description]";
+		if (Labels.existsExact(moduleId, locale)) return Labels.get(moduleId, locale); 		
 		return super.getDescription(locale, id);
-	}
+	}		
 	
 
 	public String getModeControllerName() {

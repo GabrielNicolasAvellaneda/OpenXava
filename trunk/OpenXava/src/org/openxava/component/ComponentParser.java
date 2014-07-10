@@ -47,6 +47,7 @@ class ComponentParser extends ParserBase {
 			return parser.parse(name);		
 		}
 		catch (Exception ex) {
+			log.error(XavaResources.getString("annotated_class_parse_error", name, ex.getMessage()), ex); 
 			if (ex instanceof RuntimeException) throw (RuntimeException) ex;
 			else throw new RuntimeException(ex);
 		}				

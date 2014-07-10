@@ -24,12 +24,14 @@ class ApplicantTest extends ModuleTestBase {
 		resetModule()
 		
 		assertModulesCount 15
+		assertFirstModuleInMenu "Abstract wall", "Abstract wall" // Not in i18n, to test a case 
 
 		HtmlElement searchBox = htmlPage.getHtmlElementById("search_modules_text")
 		searchBox.type "ca"
 		assertEquals "ca", searchBox.getAttribute("value")
 		webClient.waitForBackgroundJavaScriptStartingBefore 10000
 		assertModulesCount 15
+		assertFirstModuleInMenu "Academic years", "Academic years management"  
 		
 		HtmlAnchor loadMoreModules = htmlPage.getHtmlElementById("more_modules").getParentNode()
 		loadMoreModules.click();
@@ -47,7 +49,14 @@ class ApplicantTest extends ModuleTestBase {
 		assertTrue getModulesCount() > 300 
 	}
 
-	
+	private assertFirstModuleInMenu(String expectedName, String expectedDescription) {
+		HtmlElement module = htmlPage.getElementById("modules_list_popup").getElementsByAttribute("div", "class", "module-row ").getAt(0)
+		HtmlElement moduleName = module.getElementsByAttribute("div", "class", "module-name").getAt(0)
+		assertEquals expectedName, moduleName.asText()
+		HtmlElement moduleDescription = module.getElementsByAttribute("div", "class", "module-description").getAt(0)
+		assertEquals expectedDescription, moduleDescription.asText()
+	}
+
 	void testPolymorphicReferenceFromBaseClass() {
 		execute "Mode.detailAndFirst"
 		assertNoErrors()
