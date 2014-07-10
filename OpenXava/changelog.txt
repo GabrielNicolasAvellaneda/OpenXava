@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+
+- Fix: Module as key in i18n labels file breaks the name and module description resolution for all modules. 
+- Some new common use labels to be used in applications.
 - Fix: Message of ValidationException from setter not shown to the user on create.
 - Fix: Labels placed incorrectly in properties not in the first column.
 - Fix: Incorrect properties alignment in some cases. 
