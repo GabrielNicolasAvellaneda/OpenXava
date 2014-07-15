@@ -1,6 +1,30 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.0.1 (2014-7-14)
+--------------------------
+- Focus navigation improved for list filter fields.
+- Date format in editors with date and time improved for Catalonian and French.
+- Some new common use labels to be used in applications.
+- Fix: Module as key in i18n labels file breaks the name and module description resolution for all modules. 
+- Fix: Message of ValidationException from setter not shown to the user on create.
+- Fix: Labels placed incorrectly in properties not in the first column.
+- Fix: Incorrect properties alignment in some cases. 
+- Fix: Icons in properties with label format SMALL are shown on left instead on top.
+- Fix: Too much space between UI elements.
+- Fix: Unique constraint custom message is not displayed with embedded classes.
+- Fix: When focus lost with tab key from a date field in the list filter part of the date field is hidden. 
+- Fix: Two collections in the same row are wrapped with a very ugly frame.
+- Fix: In DateTimeSeparatedCalendar editor when the time is not specified the value is null, even if the date exists.
+- Fix: Entering 2 digits for year in editors with date and time creates a date of first century. 
+- Fix: XML component applications without persistence.xml does not start with OpenXava 5. 
+- Fix: @AssertTrue fails with @Id and @GeneratedValue(strategy=GenerationType.AUTO) used in an embedded collection.
+- Fix: GROOVY_DSL_SUPPORT problem compiling with Eclipse in some machines.
+- Fix: Dates in descriptions list not well formatted, really it used just toString() for all data types.
+- Fix: Property label definition in XML components takes preference over i18n files.
+- Fix: View.getCollectionSelectedValues() and CollectionBaseAction.getMapsSelectedValues() do not return all displayed column values.
+- Fix: Totals are not recalculated with element collections sometimes.
+
 OpenXava 5.0 (2014-6-9)
 -----------------------
 - New look and feel.
