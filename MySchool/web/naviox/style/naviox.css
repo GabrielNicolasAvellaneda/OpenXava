@@ -787,6 +787,10 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	-webkit-box-shadow: none;	
 }
 
+.ox-error-image {
+	border-left: 2px solid transparent;	
+}
+
 div.ox-subcontroller table{
 	width: 100%;
 }

@@ -391,7 +391,7 @@ TD.list-title {
 }
 
 .ox-label { 
-	text-align: right; 
+	text-align: left; 
 }
 
 .ox-frame-totals {
@@ -417,7 +417,7 @@ TD.list-title {
 		
 /* ---------- Styling for Default Layout Painter ---------- */
 .ox-layout-label-cell {
-	text-align:right;
+	text-align:left;
 }
 
 .ox-layout-data-cell {
