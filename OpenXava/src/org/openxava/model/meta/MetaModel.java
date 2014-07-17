@@ -83,6 +83,55 @@ abstract public class MetaModel extends MetaElement {
 	private Collection metaReferencesKey;
 	private Collection metaReferencesKeyAndSearchKey;
 	
+	private interface IKeyTester { 
+		boolean isKey(MetaProperty property);
+		boolean isKey(MetaReference reference);
+	}
+	private static IKeyTester keyTester = new IKeyTester() {
+		
+		public boolean isKey(MetaProperty property) {
+			return property.isKey();
+		}
+		
+		public boolean isKey(MetaReference reference) {
+			return reference.isKey();
+		}
+		
+	};
+	private static IKeyTester searchKeyTester = new IKeyTester() {
+		
+		public boolean isKey(MetaProperty property) {
+			return property.isSearchKey();
+		}
+		
+		public boolean isKey(MetaReference reference) {
+			return reference.isSearchKey();
+		}
+		
+	};
+	private static IKeyTester keyOrSearchKeyTester = new IKeyTester() {
+		
+		public boolean isKey(MetaProperty property) {
+			return property.isKey() || property.isSearchKey();
+		}
+		
+		public boolean isKey(MetaReference reference) {
+			return reference.isKey() || reference.isSearchKey();
+		}
+		
+	};
+	private static IKeyTester hiddenKeyTester = new IKeyTester() {
+		
+		public boolean isKey(MetaProperty property) {
+			return property.isKey() && property.isHidden();
+		}
+		
+		public boolean isKey(MetaReference reference) {
+			return reference.isKey() && reference.isHidden();
+		}
+		
+	};
+	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
 	 * @return of type MetaModel
@@ -1147,13 +1196,20 @@ abstract public class MetaModel extends MetaElement {
 	 * @param values  Not null
 	 * @return Not null
 	 */
-	public Map extractKeyValues(Map values)
-		throws XavaException {
+	public Map extractKeyValues(Map values) throws XavaException {
+		return extractKeyValues(keyTester, values); 
+	}
+	
+	public Map extractSearchKeyValues(Map values) throws XavaException { 
+		return extractKeyValues(searchKeyTester, values);
+	}
+	
+	private Map extractKeyValues(IKeyTester keyTester, Map values) throws XavaException { 
 		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
 			String name = (String) it.next();
-			if (isKey(name)) {
+			if (isKey(keyTester, name)) {
 				if (isReference(name) && getMetaReference(name).isAggregate()) { // @EmbeddedId case  
 					return (Map) values.get(name);
 				}
@@ -1163,15 +1219,15 @@ abstract public class MetaModel extends MetaElement {
 			}
 		}
 		return result;
-	}
+	}	
 	
-	public boolean isKeyOrSearchKey(String name) throws XavaException {		
+	private boolean isKey(IKeyTester keyTester, String name) throws XavaException {   		
 		try { 					
-			return getMetaProperty(name).isKey() || getMetaProperty(name).isSearchKey();
+			return keyTester.isKey(getMetaProperty(name));
 		}
 		catch (ElementNotFoundException ex) {					
 			try {
-				return getMetaReference(name).isKey() || getMetaReference(name).isSearchKey();
+				return keyTester.isKey(getMetaReference(name));
 			}
 			catch (ElementNotFoundException ex2) {
 				return false; // If is Metacollection, does no exist or is of another type
@@ -1179,34 +1235,18 @@ abstract public class MetaModel extends MetaElement {
 		}				
 	}
 	
-	public boolean isKey(String name) throws XavaException {		
-		try { 					
-			return getMetaProperty(name).isKey();
-		}
-		catch (ElementNotFoundException ex) {					
-			try {
-				return getMetaReference(name).isKey();
-			}
-			catch (ElementNotFoundException ex2) {
-				return false; // If is Metacollection, does no exist or is of another type
-			}			
-		}				
+
+	
+	public boolean isKeyOrSearchKey(String name) throws XavaException {
+		return isKey(keyOrSearchKeyTester, name);
 	}
 	
-	public boolean isHiddenKey(String name) throws XavaException {		
-		try { 					
-			MetaProperty pr = getMetaProperty(name); 
-			return pr.isKey() && pr.isHidden();		
-		}
-		catch (ElementNotFoundException ex) {					
-			try {
-				MetaReference ref = getMetaReference(name); 
-				return ref.isKey() && ref.isHidden();
-			}
-			catch (ElementNotFoundException ex2) {
-				return false; // If is Metacollection, does no exist or is of another type
-			}			
-		}				
+	public boolean isKey(String name) throws XavaException {
+		return isKey(keyTester, name);
+	}
+	
+	public boolean isHiddenKey(String name) throws XavaException {
+		return isKey(hiddenKeyTester, name); 
 	}
 	
 	public boolean isVersion(String name) throws XavaException {

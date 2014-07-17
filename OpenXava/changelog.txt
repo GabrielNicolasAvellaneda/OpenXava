@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Searching references by @SearchKey properties in element collections.
+- Some new common use labels to be used in applications.
+
 OpenXava 5.0.1 (2014-7-14)
 --------------------------
 - Focus navigation improved for list filter fields.
