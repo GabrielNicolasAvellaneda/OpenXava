@@ -1213,13 +1213,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 
 	private Object findAssociatedEntity(MetaModel metaEntity, Map values) 
 		throws FinderException, XavaException, RemoteException {
-		Map keyValues = extractKeyValues(metaEntity, values);		
-		return findEntity(metaEntity.getQualifiedName(), keyValues); 
-	}
-
-	private Map extractKeyValues(MetaModel metaModel, Map values)
-		throws XavaException {
-		return metaModel.extractKeyValues(values);
+		Map keyValues = metaEntity.extractKeyValues(values);
+		if (Maps.isEmpty(keyValues)) {
+			return findEntityByAnyProperty(metaEntity, metaEntity.extractSearchKeyValues(values));
+		}
+		else {
+			return findEntity(metaEntity.getQualifiedName(), keyValues);
+		}
 	}
 
 	private void removeKeyFields(MetaModel metaModel, Map values)
