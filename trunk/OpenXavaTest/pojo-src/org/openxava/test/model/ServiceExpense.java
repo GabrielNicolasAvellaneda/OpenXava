@@ -25,8 +25,8 @@ public class ServiceExpense {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList
-	private Receptionist receptionist;
-
+	private Receptionist receptionist; 
+	
 	public ServiceInvoice getInvoice() {
 		return invoice;
 	}

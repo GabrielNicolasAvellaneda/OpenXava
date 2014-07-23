@@ -657,7 +657,7 @@ public class View implements java.io.Serializable {
 	/**
 	 * @param recalculatingValues If true reobtain values from views, groups and sections.
 	 */
-	private Object getValue(String name, boolean recalculatingValues) throws XavaException {		
+	private Object getValue(String name, boolean recalculatingValues) throws XavaException {
 		int idx = name.indexOf('.');		
 		if (idx < 0) { 						
 			if (!getMembersNamesWithoutSections().contains(name) && (hiddenMembers == null || !hiddenMembers.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {
@@ -1011,10 +1011,20 @@ public class View implements java.io.Serializable {
 					log.warn(XavaResources.getString("sum_not_in_calculated_collections", view.getMemberName(), name));
 				}
 			}
-			MetaProperty metaProperty = view.getMetaModel().getMetaProperty(name);			
+			String qualifiedName = null;
+			if (view.getMetaModel().containsMetaReference(name)) {
+				MetaModel referencedModel = view.getMetaModel().getMetaReference(name).getMetaModelReferenced();
+				String keyProperty = referencedModel.getAllKeyPropertiesNames().iterator().next();
+				qualifiedName = name;
+				name = name + "." + keyProperty;				
+			}
+			MetaProperty metaProperty = view.getMetaModel().getMetaProperty(name);
 			if (name.indexOf('.') >= 0) { 
 				metaProperty = metaProperty.cloneMetaProperty();
-				metaProperty.setName(name);				
+				metaProperty.setName(name);		
+				if (qualifiedName != null) {
+					metaProperty.setQualifiedName(qualifiedName); // The qualifiedName is used to obtain the label in collections 
+				}												// so we use the label of the reference 
 			}				
 			metas.add(metaProperty);		
 		}
@@ -3203,7 +3213,15 @@ public class View implements java.io.Serializable {
 		if (idx >= 0) {
 			String reference = name.substring(0, idx);
 			String member = name.substring(idx + 1);
-			return getSubview(reference).getMetaReference(member);
+			try { 
+				return getSubview(reference).getMetaReference(member);
+			}
+			catch (ElementNotFoundException ex) {
+				if (!getMetaModel().containsMetaCollection(reference)) throw ex;
+				// From element collection
+				String collectionMember = Strings.noFirstTokenWithoutFirstDelim(member, ".");
+				return getMetaModel().getMetaCollection(reference).getMetaReference().getMetaModelReferenced().getMetaReference(collectionMember);
+			}
 		}				
 		return getMetaModel().getMetaReference(name);
 	}
@@ -3270,7 +3288,7 @@ public class View implements java.io.Serializable {
 			MetaProperty p = ((MetaProperty) it.next()).cloneMetaProperty();
 			String prefix = Is.empty(getParent().getMetaModel().getName()) ? 
 				getMetaModel().getMetaComponent().getName() :
-				getParent().getMetaModel().getName();
+				getParent().getMetaModel().getName();				
 			p.setLabelId(prefix + "." + getMemberName() + "." + p.getName());
 			newList.add(p);
 		}

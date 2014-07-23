@@ -139,7 +139,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	public String getQualifiedLabel(Locale locale) throws XavaException {
 		if (!Is.emptyString(label)) return label; 
 		String labelId = getId();
-		if (Labels.existsExact(labelId, locale)) {			
+		if (Labels.existsExact(labelId, locale)) {
 			return getLabel(locale);
 		}
 		if (isTabLabel(labelId)) {
