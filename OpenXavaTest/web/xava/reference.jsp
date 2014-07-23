@@ -76,7 +76,7 @@ if (keys.size() == 1) {
 	keyProperty = keys.iterator().next().toString();
 	propertyKey = Ids.decorate(request, referenceKey + "." + keyProperty);
 	if (!composite) { 
-		Map values = (Map) view.getValue(ref.getName());	
+		Map values = (Map) view.getValue(ref.getName());
 		values = values == null?java.util.Collections.EMPTY_MAP:values;
 		Object value = values.get(keyProperty);
 		String valueKey = propertyKey + ".value";

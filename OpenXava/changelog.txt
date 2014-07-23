@@ -1,8 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- Support for @DescriptionsList references in element collections.
+- Fix: ModuleTestBase.assertLabelInList() does not work with element collections.
+- Fix: The xava:descriptionsList JSP tag only works from some folders. 
+- Fix: Editor resizing in element collections only works for text input fields.
 - Searching references by @SearchKey properties in element collections.
-- Some new common use labels to be used in applications.
+- Some new common use labels to be used in applications. 
 
 OpenXava 5.0.1 (2014-7-14)
 --------------------------

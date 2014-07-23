@@ -1615,8 +1615,11 @@ public class ModuleTestBase extends TestCase {
 	
 	
 	private void assertLabelInList(String tableId, String message, int column, String label) throws Exception {
+		HtmlTable table = getTable(tableId, message);
+		int increment = table.getCellAt(0, 1).asXml().contains("type=\"checkbox\"")
+			|| table.getCellAt(0, 0).asXml().contains("customize.png")?2:1;		
 		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, 
-				getTable(tableId, message).getCellAt(0, column+2).asText().trim());
+				table.getCellAt(0, column+increment).asText().trim());
 	}
 	
 	private void assertTotalInList(String tableId, String message, int row, int column, String total) throws Exception { 

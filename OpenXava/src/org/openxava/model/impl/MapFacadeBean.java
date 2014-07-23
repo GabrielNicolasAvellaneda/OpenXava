@@ -1210,7 +1210,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 		return validatorFactory;	
 	}
-
+	
 	private Object findAssociatedEntity(MetaModel metaEntity, Map values) 
 		throws FinderException, XavaException, RemoteException {
 		Map keyValues = metaEntity.extractKeyValues(values);
