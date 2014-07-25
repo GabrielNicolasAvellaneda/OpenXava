@@ -99,13 +99,9 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		catch (FinderException ex) {
 			throw ex;
 		}
-		catch (PersistenceException ex) {
+		catch (RuntimeException ex) {
 			log.error(ex.getMessage(), ex);
-			// For preserving the cause exception. If ex.getCause() is not a 
-			// org.hibernate.exception.ConstraintViolationException then the  
-			// find_error message is used
-			throw new PersistenceException(
-					XavaResources.getString("find_error", metaModel.getName()), ex.getCause());
+			throw ex;
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

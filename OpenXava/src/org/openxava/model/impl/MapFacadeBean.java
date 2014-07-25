@@ -770,13 +770,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (ObjectNotFoundException ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_error", metaModel.getName());
-		} catch (PersistenceException ex) {
+		} catch (RuntimeException ex) {
 			log.error(ex.getMessage(), ex);
-			// For preserving the cause exception. If ex.getCause() is not a 
-			// org.hibernate.exception.ConstraintViolationException then the  
-			// create_error message is used
-			throw new PersistenceException(XavaResources.getString("create_error", metaModel.getName()), 
-					                       ex.getCause());
+			throw ex;
 		}
 	}
 
@@ -1693,7 +1689,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (ElementNotFoundException ex) {			
 			rollback();
 			throw new RemoteException(XavaResources.getString("model_not_found", modelName));
-		} catch (PersistenceException ex) {
+		} catch (RuntimeException ex) {
 			rollback();
 			throw ex;
 		} catch (Exception ex) {
