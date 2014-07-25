@@ -81,6 +81,7 @@ import org.openxava.web.meta.MetaEditor;
 
 public class View implements java.io.Serializable {
 	
+	private static final String COMPOSITE_KEY_SUFFIX = "__KEY__";
 	private final static String COLUMN_WIDTH = "collectionColumnWidth.";
 	private final static String FRAME_CLOSED = "frameClosed.";
 	private final static String COLLECTION_VIEW_ACTION = "Collection.view"; 
@@ -1016,7 +1017,7 @@ public class View implements java.io.Serializable {
 				MetaModel referencedModel = view.getMetaModel().getMetaReference(name).getMetaModelReferenced();
 				String keyProperty = referencedModel.getAllKeyPropertiesNames().iterator().next();
 				qualifiedName = name;
-				name = name + "." + keyProperty;				
+				name = name + "." + keyProperty;
 			}
 			MetaProperty metaProperty = view.getMetaModel().getMetaProperty(name);
 			if (name.indexOf('.') >= 0) { 
@@ -2389,7 +2390,7 @@ public class View implements java.io.Serializable {
 			}
 			else if (m instanceof MetaReference) {					
 				MetaReference ref = (MetaReference) m;
-				String key = qualifier + ref.getName() + "__KEY__";
+				String key = qualifier + ref.getName() + COMPOSITE_KEY_SUFFIX;
 				String value = getRequest().getParameter(key);				
 				if (value == null) {												
 					View subview = getSubview(ref.getName());						
@@ -2424,9 +2425,20 @@ public class View implements java.io.Serializable {
 		for (int i=0; ;i++) {
 			boolean containsReferences = false;
 			Map element = new HashMap();
-			for (MetaProperty p: getMetaPropertiesList()) {	
+			for (MetaProperty p: getMetaPropertiesList()) {
 				String propertyKey= qualifier + i + "." + p.getName();				
 				String [] results = getRequest().getParameterValues(propertyKey);
+				if (results == null && p.isKey()) {
+					String refName = Strings.noLastTokenWithoutLastDelim(p.getName(), ".");
+					propertyKey= qualifier + i + "." + refName + COMPOSITE_KEY_SUFFIX;
+					results = getRequest().getParameterValues(propertyKey);
+					if (results != null) {
+						MetaReference ref = getMetaModel().getMetaReference(refName); 
+						fillReferenceValues(element, ref, results[0], null, ref.getName() + ".");
+						containsReferences = true;
+						continue;
+					}
+				}
 				if (results == null) continue;
 				Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
 				element.put(p.getName(), value);
@@ -2475,24 +2487,8 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {
-		MetaModel metaModel = ref.getMetaModelReferenced(); 
-		Class keyClass = metaModel.getPOJOClass(); 
-		if (!value.startsWith("[")) value = "";
-		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");
-		Map referenceValues = new HashMap();
-		for (String propertyName: metaModel.getAllKeyPropertiesNames()) {
-			MetaProperty p = metaModel.getMetaProperty(propertyName);			 													
-			Object propertyValue = null;
-			if (st.hasMoreTokens()) { // if not then null is assumed. This is a case of empty value
-				String stringPropertyValue = st.nextToken();
-				propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors(), getViewName());									
-			}			
-			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
-			if (WebEditors.mustToFormat(p, getViewName())) {				
-				getRequest().setAttribute(valueKey, propertyValue);				
-				referenceValues.put(propertyName, propertyValue); 				
-			}									
-		}
+		Map referenceValues = new HashMap();  
+		fillReferenceValues(referenceValues, ref, value, qualifier, null); 
 		View subview = getSubview(ref.getName());		
 		if (subview.values == null) subview.values = new HashMap();
 		subview.values.putAll(Maps.plainToTree(referenceValues)); 		
@@ -2500,6 +2496,27 @@ public class View implements java.io.Serializable {
 		subview.oldKeyEditable = subview.keyEditable; 
 		subview.oldEditable = subview.editable;
 		subview.refreshDescriptionsLists = false;
+	}
+
+	private void fillReferenceValues(Map referenceValues, MetaReference ref, String value, String qualifier, String propertyPrefix) {
+		MetaModel metaModel = ref.getMetaModelReferenced();
+		if (!value.startsWith("[")) value = "";
+		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");
+		for (String propertyName: metaModel.getAllKeyPropertiesNames()) {
+			MetaProperty p = metaModel.getMetaProperty(propertyName);			 													
+			Object propertyValue = null;
+			if (st.hasMoreTokens()) { // if not then null is assumed. This is a case of empty value
+				String stringPropertyValue = st.nextToken();
+				propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors(), getViewName());									
+			}			
+			if (WebEditors.mustToFormat(p, getViewName())) {				
+				if (qualifier != null) { 
+					String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value"; 
+					getRequest().setAttribute(valueKey, propertyValue);
+				}
+				referenceValues.put(propertyPrefix==null?propertyName:propertyPrefix + propertyName, propertyValue);
+			}									
+		}
 	}
 	
 	public boolean throwsPropertyChanged(MetaProperty p) {
@@ -2634,7 +2651,7 @@ public class View implements java.io.Serializable {
 					// When the format is "name" thrown from other action, depends, etc. using the underlaying View
 				}
 			}
-			if (name.endsWith("__KEY__")) {
+			if (name.endsWith(COMPOSITE_KEY_SUFFIX)) {
 				String refName = name.substring(0, name.length() - 7);
 				MetaModel referencedModel = null;
 				try {
@@ -3441,17 +3458,28 @@ public class View implements java.io.Serializable {
 		return getMetaView().getMetaDescriptionList(ref) != null;				
 	}
 	
-	public String getDescriptionPropertyInDescriptionsList(MetaReference ref) throws XavaException {		
-		MetaDescriptionsList metaDescriptionList = getMetaView().getMetaDescriptionList(ref);
-		if (metaDescriptionList != null) return metaDescriptionList.getDescriptionPropertyName();
-		return getMetaView().createMetaDescriptionList(ref).getDescriptionPropertyName(); 		
+	public String getDescriptionPropertyInDescriptionsList(MetaReference ref) throws XavaException {
+		MetaDescriptionsList metaDescriptionList = getMetaDescriptionList(ref);
+		if (metaDescriptionList != null) return metaDescriptionList.getDescriptionPropertyName();		
+		return getMetaView().createMetaDescriptionList(ref).getDescriptionPropertyName();
 	}
 	
-	public String getDescriptionPropertiesInDescriptionsList(MetaReference ref) throws XavaException {		
-		MetaDescriptionsList metaDescriptionList = getMetaView().getMetaDescriptionList(ref);
+	public String getDescriptionPropertiesInDescriptionsList(MetaReference ref) throws XavaException { 		
+		MetaDescriptionsList metaDescriptionList = getMetaDescriptionList(ref); 
 		if (metaDescriptionList != null) return metaDescriptionList.getDescriptionPropertiesNames();
 		return getMetaView().createMetaDescriptionList(ref).getDescriptionPropertiesNames();			
-	}	
+	}
+	
+	private MetaDescriptionsList getMetaDescriptionList(MetaReference ref) { 
+		String refName = ref.getName();
+		int idx = refName.indexOf('.');
+		if (idx < 0) return getMetaView().getMetaDescriptionList(ref);
+		String subviewName = refName.substring(0, idx);
+		String member = refName.substring(idx+1);		
+		View subview = getSubview(subviewName);
+		if (subview.isRepresentsElementCollection()) member = Strings.noFirstTokenWithoutFirstDelim(member, ".");
+		return subview.getMetaDescriptionList(subview.getMetaReference(member));
+	}
 	
 	public boolean throwsReferenceChanged(MetaReference ref) throws XavaException {		
 		if (getDepends().contains(ref.getName())) return true;
