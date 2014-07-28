@@ -2428,17 +2428,26 @@ public class View implements java.io.Serializable {
 			for (MetaProperty p: getMetaPropertiesList()) {
 				String propertyKey= qualifier + i + "." + p.getName();				
 				String [] results = getRequest().getParameterValues(propertyKey);
-				if (results == null && p.isKey()) {
+				if (results == null && p.getName().contains(".")) {
 					String refName = Strings.noLastTokenWithoutLastDelim(p.getName(), ".");
-					propertyKey= qualifier + i + "." + refName + COMPOSITE_KEY_SUFFIX;
-					results = getRequest().getParameterValues(propertyKey);
-					if (results != null) {
-						MetaReference ref = getMetaModel().getMetaReference(refName); 
-						fillReferenceValues(element, ref, results[0], null, ref.getName() + ".");
-						containsReferences = true;
-						continue;
+					if (p.getMetaModel().getAllKeyPropertiesNames().size() > 1) {						
+						propertyKey= qualifier + i + "." + refName + COMPOSITE_KEY_SUFFIX;
+						results = getRequest().getParameterValues(propertyKey);
+						if (results != null) {
+							MetaReference ref = getMetaModel().getMetaReference(refName); 
+							fillReferenceValues(element, ref, results[0], null, ref.getName() + ".");
+							containsReferences = true;
+							continue;
+						}
 					}
-				}
+					else {
+						String firstKeyProperty = p.getMetaModel().getAllKeyPropertiesNames().iterator().next();
+						propertyKey= qualifier + i + "." + refName + "." + firstKeyProperty;
+						results = getRequest().getParameterValues(propertyKey);
+						p = p.getMetaModel().getMetaProperty(firstKeyProperty).cloneMetaProperty();
+						p.setName(refName + "." + p.getName());
+					}
+				}				
 				if (results == null) continue;
 				Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
 				element.put(p.getName(), value);
