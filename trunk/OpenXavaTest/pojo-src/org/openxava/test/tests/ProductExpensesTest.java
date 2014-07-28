@@ -13,7 +13,7 @@ public class ProductExpensesTest extends ModuleTestBase {
 		super(testName, "ProductExpenses");		
 	}
 		
-	public void testSeachKeysEnumsAndDescriptionsListInElementCollection() throws Exception { 
+	public void testDescriptionsListInElementCollection() throws Exception { 
 		execute("CRUD.new");
 		setValue("description", "JUNIT EXPENSES");
 		
@@ -30,18 +30,46 @@ public class ProductExpensesTest extends ModuleTestBase {
 			{ "[.1.2011.]", "2011 1" }			
 		};		
 		assertValidValues("expenses.0.invoice.KEY", invoiceValidValues);
+		String [][] productValidValues = {
+			{ "", "" },
+			{ "4", "CUATRE" },
+			{ "2", "IBM ESERVER ISERIES 270" },
+			{ "1", "MULTAS DE TRAFICO" },
+			{ "5", "PROVAX" },
+			{ "6", "SEIS" },
+			{ "7", "SIETE" },
+			{ "3", "XAVA" }
+		};		
+		assertValidValues("expenses.0.product.number", productValidValues);
+
+		String [][] carrierValidValues = {
+			{ "", "" },
+			{ "4", "CUATRO" },
+			{ "5", "Cinco" },
+			{ "2", "DOS" },
+			{ "3", "TRES" },
+			{ "1", "UNO" }
+		};		
+		assertValidValues("expenses.0.carrier.number", carrierValidValues);		
+		
 		setValue("expenses.0.invoice.KEY", "[.1.2002.]");
+		setValue("expenses.0.product.number", "4"); 
+		setValue("expenses.0.carrier.number", "3"); 
 				
 		execute("CRUD.save");
 		
 		assertValue("description", "");
 		assertValue("expenses.0.invoice.KEY", "");
+		assertValue("expenses.0.product.number", ""); 
+		assertValue("expenses.0.carrier.number", ""); 		
 		
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
 
 		assertValue("description", "JUNIT EXPENSES");
 		assertValue("expenses.0.invoice.KEY", "[.1.2002.]");
+		assertValue("expenses.0.product.number", "4"); 
+		assertValue("expenses.0.carrier.number", "3"); 		
 		
 		execute("CRUD.delete");
 		assertNoErrors();
