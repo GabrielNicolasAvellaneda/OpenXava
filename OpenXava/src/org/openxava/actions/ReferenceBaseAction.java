@@ -54,6 +54,12 @@ public class ReferenceBaseAction extends ViewBaseAction {
 
 	private ViewInfo createSubview(View view, String memberName) throws XavaException {
 		if (memberName.endsWith("__KEY__")) memberName = memberName.substring(0, memberName.length() - 7);
+		if (view.isRepresentsElementCollection()) {
+			int idx = memberName.indexOf('.');
+			int row = Integer.parseInt(memberName.substring(0, idx)); 
+			memberName = memberName.substring(idx + 1);
+			view.setCollectionEditingRow(row);
+		}
 		int idx = memberName.indexOf('.'); 
 		if (idx < 0) {
 			return new ViewInfo(view.getSubview(memberName), memberName, view); 

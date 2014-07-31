@@ -1625,7 +1625,17 @@ public class ModuleTestBase extends TestCase {
 	private void assertTotalInList(String tableId, String message, int row, int column, String total) throws Exception { 
 		HtmlTable table = getTable(tableId, message);
 		int rowInTable = table.getRowCount() - getTotalsRowCount(table) + row; 
-		column = isElementCollection(table)?column+1:column+2;
+		if (isElementCollection(table)) {
+			column++;
+			int i=1;
+			HtmlTableCell cell = table.getCellAt(0, i++);
+			while (cell != null) {
+				String value = cell.asText().trim();
+				if (Is.emptyString(value)) column++;
+				cell = table.getCellAt(0, i++);
+			} 
+		}
+		else column+=2;
 		assertEquals(XavaResources.getString("total_not_match", new Integer(column)), total,   
 				table.getCellAt(rowInTable, column).asText().trim());		
 	}		
