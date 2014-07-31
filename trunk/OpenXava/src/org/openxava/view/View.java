@@ -2813,7 +2813,8 @@ public class View implements java.io.Serializable {
 			parent.moveViewValuesToCollectionValues();
 			return;
 		}
-		collectionValues.set(collectionEditingRow, getAllValues());
+		if (collectionEditingRow == collectionValues.size()) collectionValues.add(collectionEditingRow, getAllValues());
+		else collectionValues.set(collectionEditingRow, getAllValues());
 		refreshCollection(); 
 	}
 
@@ -3635,7 +3636,7 @@ public class View implements java.io.Serializable {
 			(isFirstPropertyAndViewHasNoKeys(p) && keyEditable); // with key hidden 		
 	}
 	
-	private boolean isRepresentsElementCollection() {  
+	public boolean isRepresentsElementCollection() {   
 		return isRepresentsCollection() && getMetaCollection().isElementCollection();
 	}
 	

@@ -44,7 +44,9 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 1, "amount",  "42.00");
 		assertTotalInCollection("details", 2, "amount", "242.00");
 		
-		setValueInCollection("details", 1, "product.number", "2");
+		execute("Reference.search", "keyProperty=details.1.product.number");
+		execute("ReferenceSearch.choose", "row=1");
+		assertValueInCollection("details", 1, "product.number", "2");
 		assertValueInCollection("details", 1, "product.description", "IBM ESERVER ISERIES 270");
 		setValueInCollection("details", 1, "unitPrice", "7000");
 		setValueInCollection("details", 1, "quantity", "1");
@@ -92,6 +94,11 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 0, "amount", "14,200.00");
 		assertTotalInCollection("details", 1, "amount",  "2,982.00");
 		assertTotalInCollection("details", 2, "amount", "17,182.00");
+		
+		execute("Reference.search", "keyProperty=details.0.product.number");
+		execute("ReferenceSearch.choose", "row=3");
+		assertValueInCollection("details", 0, "product.number", "4");		
+		assertValueInCollection("details", 0, "product.description", "CUATRE");
 		
 		setValueInCollection("details", 2, "product.number", "3");
 		setValueInCollection("details", 2, "unitPrice", "300.00");

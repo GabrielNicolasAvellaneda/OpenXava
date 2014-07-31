@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Search action for references available in element collections.
+- @SearchListCondition supported for references in embeddable classes of element collections.
+- @SearchAction supported for references in embeddable classes of element collections.
+- French messages improved.
 - Support for @DescriptionsList references in element collections.
 - Fix: ModuleTestBase.assertLabelInList() does not work with element collections.
 - Fix: The xava:descriptionsList JSP tag only works from some folders. 

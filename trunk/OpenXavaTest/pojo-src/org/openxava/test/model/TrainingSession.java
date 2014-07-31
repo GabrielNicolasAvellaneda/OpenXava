@@ -17,7 +17,7 @@ public class TrainingSession {
 	private String description;
 	
 	@javax.validation.constraints.Min(2) 
-	@org.hibernate.validator.Max(50)
+	@org.hibernate.validator.Max(50)	
 	private int kms;
 	
 	private Date date;
