@@ -15,7 +15,7 @@ MetaApplication metaApplication = MetaApplications.getMetaApplication(applicatio
 
 <table style="margin: 20px">
 <tr>
-	<td><img src="../naviox/images/point1.png" class="feature-image"/></td> 
+	<td><img src="../naviox/images/point1.png" class="feature-image"/></td>
 	<td><xava:message key="welcome_point1"/></td>
 </tr>
 <tr>

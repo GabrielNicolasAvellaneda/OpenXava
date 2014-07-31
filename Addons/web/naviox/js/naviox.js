@@ -81,7 +81,7 @@ naviox.goBack = function(folderOid) {
 
 naviox.refreshModulesList = function(modulesList) { 
 	if (modulesList == null) {
-		alert("Error refreshing current folder"); 
+		window.location=openxava.location=".." 
 		return;
 	}
 	$('#modules_list_core').html(modulesList);
@@ -91,7 +91,7 @@ naviox.refreshModulesList = function(modulesList) {
 
 naviox.refreshSearchModulesList = function(modulesList) { 
 	if (modulesList == null) {
-		alert("Error searching"); 
+		window.location=openxava.location=".."
 		return;
 	}
 	$('#modules_list_core').html(modulesList);
@@ -101,7 +101,7 @@ naviox.refreshSearchModulesList = function(modulesList) {
 
 naviox.refreshFolderModulesList = function(modulesList) {
 	if (modulesList == null) {
-		alert("Error going to folder"); 
+		window.location=openxava.location=".."
 		return;
 	}
 	$('#modules_list_content').append("<td></td>"); 
@@ -120,7 +120,7 @@ naviox.refreshFolderModulesList = function(modulesList) {
 
 naviox.refreshFolderBackModulesList = function(modulesList) {
 	if (modulesList == null) {
-		alert("Error going folder"); 
+		window.location=openxava.location="..";
 		return;
 	}
 	$('#modules_list_content').prepend("<td></td>"); 

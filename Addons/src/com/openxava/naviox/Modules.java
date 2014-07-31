@@ -30,22 +30,21 @@ public class Modules implements Serializable {
 	private List<MetaModule> bookmarkModules = null; 
 	
 	private MetaModule current; 
-	
-	static {
+
+	public static void init(String applicationName) {
+		MetaModuleFactory.setApplication(applicationName);
 		DB.init();
-		createFirstStepsModule();
+		createFirstStepsModule(applicationName);  
 	}	
 	
-	private static void createFirstStepsModule() { 
-		for (Object oapp: MetaApplications.getMetaApplications()) {
-			MetaApplication app = (MetaApplication) oapp;
-			MetaModule firstStepsModule = new MetaModule();
-			firstStepsModule.setName(FIRST_STEPS); 
-			firstStepsModule.setModelName("SignIn"); // The model does not matter
-			firstStepsModule.setWebViewURL("/naviox/firstSteps.jsp");
-			firstStepsModule.setModeControllerName("Void");
-			app.addMetaModule(firstStepsModule);
-		}		
+	private static void createFirstStepsModule(String applicationName) {
+		MetaApplication app = MetaApplications.getMetaApplication(applicationName);
+		MetaModule firstStepsModule = new MetaModule();
+		firstStepsModule.setName(FIRST_STEPS); 
+		firstStepsModule.setModelName("SignIn"); // The model does not matter
+		firstStepsModule.setWebViewURL("/naviox/firstSteps.jsp");
+		firstStepsModule.setModeControllerName("Void");
+		app.addMetaModule(firstStepsModule);		
 	}
 	
 	public void reset() {
