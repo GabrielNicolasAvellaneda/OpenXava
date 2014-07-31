@@ -15,19 +15,17 @@ import org.openxava.util.*;
 
 public class MetaModuleFactory {
 	
+	private static String application; 
+
 	public static MetaModule create(String application, String module) {		
 		return MetaApplications.getMetaApplication(application).getMetaModule(module);				
 	}
 	
 	public static List<MetaModule> createAll() {
-		List<MetaModule> result = new ArrayList<MetaModule>();
-		for (Object oapp: MetaApplications.getMetaApplications()) {
-			MetaApplication app = (MetaApplication) oapp;
-			createDefaultMetaModules(app);
-			createAdditionalMetaModules(app); 
-			result.addAll(app.getMetaModules());
-		}
-		return result;
+		MetaApplication app = MetaApplications.getMetaApplication(application);
+		createDefaultMetaModules(app);
+		createAdditionalMetaModules(app); 
+		return new ArrayList<MetaModule>(app.getMetaModules());
 	}
 
 	private static void createDefaultMetaModules(MetaApplication app) {
@@ -52,6 +50,14 @@ public class MetaModuleFactory {
 		catch (ClassNotFoundException e) {
 			return false;
 		}		
+	}
+
+	public static String getApplication() {  
+		return application;
+	}	
+	
+	public static void setApplication(String newApplication) { 
+		application = newApplication;
 	}
 
 }

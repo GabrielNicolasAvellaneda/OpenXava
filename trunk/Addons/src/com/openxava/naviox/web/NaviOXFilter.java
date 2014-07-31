@@ -20,7 +20,8 @@ import com.openxava.naviox.util.*;
  */
 public class NaviOXFilter implements Filter {
 	
-	public void init(FilterConfig cfg) throws ServletException {	
+	public void init(FilterConfig cfg) throws ServletException {
+		Modules.init(cfg.getServletContext().getContextPath().substring(1)); 
 	}
 
 
