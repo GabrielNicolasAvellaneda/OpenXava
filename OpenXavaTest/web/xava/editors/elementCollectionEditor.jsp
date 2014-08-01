@@ -58,7 +58,7 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 		<%if (resizeColumns) {%></nobr><%}%>
 		</div>
 	</th>
-	<% if (p.isKey()) { %>
+	<% if (subview.isLastSearchKey(p.getName())) { %>
 	<th></th>
 	<% } %>
 <%
@@ -98,7 +98,7 @@ for (int f=0; f < rowCount; f++) {
 		int columnWidth = subview.getCollectionColumnWidth(columnIndex);
 		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
 		String referenceName = null;
-		String searchAction = null; 
+		String searchAction = null;
 		if (p.getName().contains(".")) {
 			String refName = org.openxava.util.Strings.noLastTokenWithoutLastDelim(p.getName(), ".");
 			if (subview.displayAsDescriptionsList(subview.getMetaReference(refName))) {
@@ -122,7 +122,7 @@ for (int f=0; f < rowCount; f++) {
 	 	<%if (resizeColumns) {%></nobr><%}%>
 		</div>
 	</td>		
-	<% if (p.isKey()) { %>
+	<% if (subview.isLastSearchKey(p.getName())) {	%>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-left: 3px; padding-right: 0px;">
 		<xava:action action='<%=searchAction%>' argv='<%="keyProperty="+propertyName%>'/> 								
 	</td>

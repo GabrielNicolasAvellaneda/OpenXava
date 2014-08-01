@@ -3616,24 +3616,31 @@ public class View implements java.io.Serializable {
 	
 	public boolean isLastSearchKey(String propertyName) throws XavaException {
 		try {
-			return isLastSearchKey(getMetaModel().getMetaProperty(propertyName));
+			int idx = propertyName.indexOf('.'); 
+			if (idx >= 0) {
+				String reference = propertyName.substring(0, idx);
+				String member = propertyName.substring(idx + 1);
+				return getSubview(reference).isLastSearchKey(member);
+			}				
+			return isLastSearchKey(getMetaView().getMetaProperty(propertyName));
 		}
 		catch (ElementNotFoundException ex) {
 			// Maybe a view property
 			return false;
-		}
+		}			
 	}
-
-	public boolean isLastSearchKey(MetaProperty p) throws XavaException {				
+	
+	public boolean isLastSearchKey(MetaProperty p) throws XavaException {
 		return isLastSearchKey(p, isEditableImpl(p), isKeyEditable());
 	}
 	
 	private boolean isLastSearchKey(MetaProperty p, boolean editable, boolean keyEditable) throws XavaException {		
 		if (!isRepresentsEntityReference()) return false;
-		if (hasSearchMemberKeys()) return isLastPropertyMarkedAsSearchKey(p); // explicit search key
+		if (displayAsDescriptionsList()) return false; 
+		if (hasSearchMemberKeys())	return isLastPropertyMarkedAsSearchKey(p); // explicit search key
 		return 
 			(editable && isLastKeyProperty(p)) || // with key visible
-			(isFirstPropertyAndViewHasNoKeys(p) && keyEditable); // with key hidden 		
+			(isFirstPropertyAndViewHasNoKeys(p) && keyEditable); // with key hidden
 	}
 	
 	public boolean isRepresentsElementCollection() {   
