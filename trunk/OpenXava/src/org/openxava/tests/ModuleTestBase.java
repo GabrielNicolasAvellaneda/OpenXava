@@ -1616,29 +1616,33 @@ public class ModuleTestBase extends TestCase {
 	
 	private void assertLabelInList(String tableId, String message, int column, String label) throws Exception {
 		HtmlTable table = getTable(tableId, message);
-		int increment = table.getCellAt(0, 1).asXml().contains("type=\"checkbox\"")
-			|| table.getCellAt(0, 0).asXml().contains("customize.png")?2:1;		
+		int increment = getRowIncrement(table, column); 
 		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, 
 				table.getCellAt(0, column+increment).asText().trim());
 	}
 	
 	private void assertTotalInList(String tableId, String message, int row, int column, String total) throws Exception { 
 		HtmlTable table = getTable(tableId, message);
-		int rowInTable = table.getRowCount() - getTotalsRowCount(table) + row; 
-		if (isElementCollection(table)) {
-			column++;
-			int i=1;
-			HtmlTableCell cell = table.getCellAt(0, i++);
-			while (cell != null) {
-				String value = cell.asText().trim();
-				if (Is.emptyString(value)) column++;
-				cell = table.getCellAt(0, i++);
-			} 
-		}
-		else column+=2;
+		int rowInTable = table.getRowCount() - getTotalsRowCount(table) + row;
+		column+=getRowIncrement(table, column); 
 		assertEquals(XavaResources.getString("total_not_match", new Integer(column)), total,   
 				table.getCellAt(rowInTable, column).asText().trim());		
 	}		
+	
+	private int getRowIncrement(HtmlTable table, int originalColumn) {
+		int increment = table.getCellAt(0, 1).asXml().contains("type=\"checkbox\"")
+				|| table.getCellAt(0, 0).asXml().contains("customize.png")?2:1;
+		if (isElementCollection(table)) {
+			int i=1;
+			HtmlTableCell cell = table.getCellAt(0, i++);
+			while (cell != null && i < originalColumn + increment) {
+				String value = cell.asText().trim();
+				if (Is.emptyString(value)) increment++;
+				cell = table.getCellAt(0, i++);
+			} 
+		}
+		return increment;
+	}
 	
 	private boolean isElementCollection(HtmlTable table) { 
 		HtmlElement container = (HtmlElement) table.getParentNode().getParentNode();
@@ -2065,6 +2069,27 @@ public class ModuleTestBase extends TestCase {
 			metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
 		}
 		return metaModule;
+	}
+	
+	
+	/**
+	 *
+	 * @since 5.1
+	 */
+	protected void assertValidValuesInCollection(String collection, int row, String name, String [][] values) throws Exception { 
+		String elementCollectionPropertyName = collection + "." + row + "." + name;
+		if (!hasElementByName(elementCollectionPropertyName)) throw new XavaException("method_only_for_element_collections", "assertValidValuesInCollection()");
+		assertValidValues(elementCollectionPropertyName, values);
+	}
+
+	/**
+	 *
+	 * @since 5.1
+	 */	
+	protected void assertValidValuesCountInCollection(String collection, int row, String name, int count) throws Exception { 
+		String elementCollectionPropertyName = collection + "." + row + "." + name;
+		if (!hasElementByName(elementCollectionPropertyName)) throw new XavaException("method_only_for_element_collections", "assertValidValuesCountInCollection()");
+		assertValidValuesCount(elementCollectionPropertyName, count);		
 	}
 
 	protected void assertValidValues(String name, String [][] values) throws Exception { 

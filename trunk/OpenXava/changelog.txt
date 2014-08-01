@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New assertValidValuesCountInCollection() and assertValidValuesInCollection() methods in ModuleTestBase.
 - Search action for references available in element collections.
 - @SearchListCondition supported for references in embeddable classes of element collections.
 - @SearchAction supported for references in embeddable classes of element collections.

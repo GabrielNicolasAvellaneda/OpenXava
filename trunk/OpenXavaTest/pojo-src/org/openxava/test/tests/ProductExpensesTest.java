@@ -29,7 +29,7 @@ public class ProductExpensesTest extends ModuleTestBase {
 			{ "[.1.2009.]", "2009 1" },
 			{ "[.1.2011.]", "2011 1" }			
 		};		
-		assertValidValues("expenses.0.invoice.KEY", invoiceValidValues);
+		assertValidValuesInCollection("expenses", 0, "invoice.KEY", invoiceValidValues);
 		String [][] productValidValues = {
 			{ "", "" },
 			{ "4", "CUATRE" },
@@ -40,7 +40,7 @@ public class ProductExpensesTest extends ModuleTestBase {
 			{ "7", "SIETE" },
 			{ "3", "XAVA" }
 		};		
-		assertValidValues("expenses.0.product.number", productValidValues);
+		assertValidValuesInCollection("expenses", 0, "product.number", productValidValues);
 
 		String [][] carrierValidValues = {
 			{ "", "" },
@@ -50,26 +50,26 @@ public class ProductExpensesTest extends ModuleTestBase {
 			{ "3", "TRES" },
 			{ "1", "UNO" }
 		};		
-		assertValidValues("expenses.0.carrier.number", carrierValidValues);		
+		assertValidValuesInCollection("expenses", 0, "carrier.number", carrierValidValues);		
 		
-		setValue("expenses.0.invoice.KEY", "[.1.2002.]");
-		setValue("expenses.0.product.number", "4"); 
-		setValue("expenses.0.carrier.number", "3"); 
+		setValueInCollection("expenses", 0, "invoice.KEY", "[.1.2002.]");
+		setValueInCollection("expenses", 0, "product.number", "4"); 
+		setValueInCollection("expenses", 0, "carrier.number", "3"); 
 				
 		execute("CRUD.save");
 		
 		assertValue("description", "");
-		assertValue("expenses.0.invoice.KEY", "");
-		assertValue("expenses.0.product.number", ""); 
-		assertValue("expenses.0.carrier.number", ""); 		
+		assertValueInCollection("expenses", 0, "invoice.KEY", "");
+		assertValueInCollection("expenses", 0, "product.number", ""); 
+		assertValueInCollection("expenses", 0, "carrier.number", ""); 		
 		
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
 
 		assertValue("description", "JUNIT EXPENSES");
-		assertValue("expenses.0.invoice.KEY", "[.1.2002.]");
-		assertValue("expenses.0.product.number", "4"); 
-		assertValue("expenses.0.carrier.number", "3"); 		
+		assertValueInCollection("expenses", 0, "invoice.KEY", "[.1.2002.]");
+		assertValueInCollection("expenses", 0, "product.number", "4"); 
+		assertValueInCollection("expenses", 0, "carrier.number", "3"); 		
 		
 		execute("CRUD.delete");
 		assertNoErrors();

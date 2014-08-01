@@ -38,7 +38,7 @@ for (int c = 0; it.hasNext(); c++) {
 	<td style="<%=style.getTotalEmptyCellStyle()%>"/>
 	<%		
 	}	
-	if (elementCollection && p.isKey()) {
+	if (elementCollection && subview.isLastSearchKey(p.getName())) { 
 	%>
 	<td style="<%=style.getTotalEmptyCellStyle()%>"/>	
 	<%	
