@@ -46,7 +46,7 @@ String styleOverflow = org.openxava.web.Lists.getOverflow(browser, subview.getMe
 	// Heading
 Iterator it = subview.getMetaPropertiesList().iterator();
 for (int columnIndex=0; it.hasNext(); columnIndex++) {
-	MetaProperty p = (MetaProperty) it.next();
+	MetaProperty p = (MetaProperty) it.next();	
 	String label = p.getQualifiedLabel(request);
 	int columnWidth = subview.getCollectionColumnWidth(columnIndex);
 	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
@@ -58,6 +58,9 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 		<%if (resizeColumns) {%></nobr><%}%>
 		</div>
 	</th>
+	<% if (subview.isLastSearchKey(p.getName())) { %>
+	<th></th>
+	<% } %>
 <%
 	}
 %>
@@ -93,17 +96,37 @@ for (int f=0; f < rowCount; f++) {
 		MetaProperty p = (MetaProperty) it.next();
 		String cellStyle = style.getListCellStyle();
 		int columnWidth = subview.getCollectionColumnWidth(columnIndex);
-		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px"; 
+		String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
+		String referenceName = null;
+		String searchAction = null;
+		if (p.getName().contains(".")) {
+			String refName = org.openxava.util.Strings.noLastTokenWithoutLastDelim(p.getName(), ".");
+			if (subview.displayAsDescriptionsList(subview.getMetaReference(refName))) {
+				referenceName = collectionName + "." + f + "." + refName;
+			}
+			else {
+				searchAction = subview.getSubview(refName).getSearchAction();
+			}
+		}
 		String propertyName = collectionName + "." + f + "." + p.getName();
 		boolean throwPropertyChanged = subview.throwsPropertyChanged(p.getName()); 
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
 		<div class="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>" <%=lastRowEvent%>>
 		<%if (resizeColumns) {%><nobr><%}%>
+		<% if (referenceName != null) { %>
+		<xava:descriptionsList reference="<%=referenceName%>"/>
+		<% } else { %>
 		<xava:editor property="<%=propertyName%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
+		<% } %>
 	 	<%if (resizeColumns) {%></nobr><%}%>
 		</div>
 	</td>		
+	<% if (subview.isLastSearchKey(p.getName())) {	%>
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-left: 3px; padding-right: 0px;">
+		<xava:action action='<%=searchAction%>' argv='<%="keyProperty="+propertyName%>'/> 								
+	</td>
+	<% } %>
 <%
 	}
 }

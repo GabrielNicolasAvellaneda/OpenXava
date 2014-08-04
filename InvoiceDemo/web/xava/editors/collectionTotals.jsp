@@ -1,4 +1,5 @@
 <% 
+boolean elementCollection = subview.isRepresentsElementCollection(); 
 int additionalTotalsCount = subview.getCollectionTotalsCount();
 for (int i=0; i<additionalTotalsCount; i++) {
 %>
@@ -37,6 +38,11 @@ for (int c = 0; it.hasNext(); c++) {
 	<td style="<%=style.getTotalEmptyCellStyle()%>"/>
 	<%		
 	}	
+	if (elementCollection && subview.isLastSearchKey(p.getName())) { 
+	%>
+	<td style="<%=style.getTotalEmptyCellStyle()%>"/>	
+	<%	
+	}
 }
 %>
 </tr>

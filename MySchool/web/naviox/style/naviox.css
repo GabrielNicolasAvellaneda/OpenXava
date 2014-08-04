@@ -549,13 +549,14 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	background: inherit;
 }
 
-.ox-element-collection input[type="text"] {
+.ox-element-collection .editor {
 	width: 100%; 
 	box-sizing: border-box; 
 	-moz-box-sizing: border-box; 
 	-webkit-box-sizing: border-box;
 	height: 30px;
 }
+
 
 .ox-element-collection .ox-list-pair, .ox-element-collection .ox-list-odd {
 	border-bottom-style: hidden; 
