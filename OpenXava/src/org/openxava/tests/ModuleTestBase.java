@@ -473,8 +473,8 @@ public class ModuleTestBase extends TestCase {
 			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
 		}
 		else {
-			// NaviOX, the build-it login mechanism of OpenXava
-			getHtmlPage().getAnchorByHref("/NaviOX/naviox/signOut.jsp").click();
+			// NaviOX, the built-in login mechanism of OpenXava
+			getHtmlPage().getAnchorByHref("/" + application + "/naviox/signOut.jsp").click(); 
 			reload();
 		}
 	}

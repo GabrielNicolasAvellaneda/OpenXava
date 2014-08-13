@@ -41,8 +41,9 @@ public class Module extends DWRBase {
 	private String module;
 	private ModuleManager manager;
 	private boolean firstRequest;
+	private String baseFolder = null;
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, String [] deselected, Boolean firstRequest) throws Exception {
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, String [] deselected, Boolean firstRequest, String baseFolder) throws Exception { 
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module);
@@ -53,6 +54,7 @@ public class Module extends DWRBase {
 			this.application = application;
 			this.module = module;
 			this.firstRequest = firstRequest==null?false:firstRequest;
+			this.baseFolder = baseFolder==null?"/xava/":"/" + baseFolder + "/"; 
 			checkSecurity(request, application, module);
 			setPageReloadedLastTime(false);
 			Users.setCurrent(request);
@@ -194,7 +196,7 @@ public class Module extends DWRBase {
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {
-		request(request, response, application, module, null, null, null, null, null, false);  		
+		request(request, response, application, module, null, null, null, null, null, false, null);   		
 		memorizeLastMessages();
 		manager.setResetFormPostNeeded(true);
 	}
@@ -494,8 +496,8 @@ public class Module extends DWRBase {
 		return result.toString();
 	}
 
-	private static String getURIPrefix() {		
-		return isPortlet()?"/WEB-INF/jsp/xava/":"/xava/";
+	private String getURIPrefix() { 
+		return isPortlet()?"/WEB-INF/jsp" + baseFolder:baseFolder;
 	}
 	
 	private void put(Map result, String key, Object value) {
@@ -504,7 +506,6 @@ public class Module extends DWRBase {
 	
 	private String decorateId(String name) { 
 		return Ids.decorate(application, module, name);
-		// return Ids.decorate(application, module, name).replaceAll("\\.", "\\\\.");
 	}
 	
 	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected, String[] deselected) throws UnsupportedEncodingException {
