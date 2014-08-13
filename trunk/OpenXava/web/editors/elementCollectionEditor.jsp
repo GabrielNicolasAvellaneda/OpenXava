@@ -35,7 +35,7 @@ String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
 String styleOverflow = org.openxava.web.Lists.getOverflow(browser, subview.getMetaPropertiesList());
 %>
-<div class="<%=style.getElementCollection()%>">  
+<div class="<%=style.getElementCollection()%>">
 <% if (resizeColumns && scrollSupported) { %> 
 <div class="<xava:id name='collection_scroll'/>" style="<%=styleOverflow%>">
 <% } %>
@@ -50,8 +50,21 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 	String label = p.getQualifiedLabel(request);
 	int columnWidth = subview.getCollectionColumnWidth(columnIndex);
 	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
+	String headerId = "";
+	String defaultValue = "";	
+	if (p.hasDefaultValueCalculator()) {			
+		if (org.openxava.web.WebEditors.mustToFormat(p, subview.getViewName())) { 
+			Object value = subview.getValue(p.getName());
+			Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, p, value, errors, subview.getViewName(), false);			
+			if (fvalue instanceof String) { // We don't support arrays by now
+				defaultValue = "data-default-value='" + fvalue + "'";
+				String id = Ids.decorate(request, collectionName + ".H." + p.getName());			
+				headerId = "id='" + id + "'";
+			}
+		}
+	}
 %>
-	<th class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
+	<th <%=headerId%> <%=defaultValue%> class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
 		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):(""))%>" style="overflow: hidden; <%=width%>" >
 		<%if (resizeColumns) {%><nobr><%}%>
 		<%=label%>&nbsp;
@@ -109,7 +122,7 @@ for (int f=0; f < rowCount; f++) {
 			}
 		}
 		String propertyName = collectionName + "." + f + "." + p.getName();
-		boolean throwPropertyChanged = subview.throwsPropertyChanged(p.getName()); 
+		boolean throwPropertyChanged = subview.throwsPropertyChanged(p.getName());
 %>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-right: 0px">
 		<div class="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" style="overflow: hidden; <%=width%>" <%=lastRowEvent%>>

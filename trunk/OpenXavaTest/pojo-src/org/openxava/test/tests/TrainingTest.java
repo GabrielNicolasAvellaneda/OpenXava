@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import java.text.*;
+
 import org.openxava.tests.*;
 
 import com.gargoylesoftware.htmlunit.html.*;
@@ -21,20 +23,27 @@ public class TrainingTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertDateEditor();
 		setValue("description", "JUNIT TRAINING");
-		assertCollectionRowCount("sessions", 0); 
+		assertCollectionRowCount("sessions", 0);
+		assertValueInCollection("sessions", 0, "description", "");  
+		assertValueInCollection("sessions", 0, "kms", "");
+		assertValueInCollection("sessions", 0, "date", "");				
 		execute("CRUD.save");
 		assertError("It's required at least 1 element in Sessions of Training");
 		assertErrorsCount(1);
-		setValueInCollection("sessions", 0, "description", "RUNNING IN THE STREET"); 
+		String currentDate = DateFormat.getDateInstance(DateFormat.SHORT).format(new java.util.Date()); 
+		assertValueInCollection("sessions", 0, "date", "");  
+		setValueInCollection("sessions", 0, "description", "RUNNING IN THE STREET");
+		assertValueInCollection("sessions", 0, "date", currentDate);  
 		assertCollectionRowCount("sessions", 1);
 		assertValueInCollection("sessions", 1, "description", "");  
 		assertValueInCollection("sessions", 1, "kms", "");
 		assertValueInCollection("sessions", 1, "date", "");		
 		setValueInCollection("sessions", 0, "kms", "5");
 		assertCollectionRowCount("sessions", 1);
-		setValueInCollection("sessions", 0, "date", "1/1/14");
 		assertCollectionRowCount("sessions", 1);
+		assertValueInCollection("sessions", 1, "date", ""); 
 		setValueInCollection("sessions", 1, "description", "CORRIENDO EN LA CALLE");
+		assertValueInCollection("sessions", 1, "date", currentDate);  
 		assertCollectionRowCount("sessions", 2);
 		assertValueInCollection("sessions", 2, "description", ""); 
 		assertValueInCollection("sessions", 2, "kms", "");
@@ -62,7 +71,7 @@ public class TrainingTest extends ModuleTestBase {
 		assertCollectionRowCount("sessions", 3);
 		assertValueInCollection("sessions", 0, "description", "RUNNING IN THE STREET"); 
 		assertValueInCollection("sessions", 0, 1, "5");
-		assertValueInCollection("sessions", 0, "date", "1/1/14");
+		assertValueInCollection("sessions", 0, "date", currentDate);  
 		assertValueInCollection("sessions", 1, "description", "CORRIENDO EN LA CALLE");
 		assertValueInCollection("sessions", 1, "kms", "7");
 		assertValueInCollection("sessions", 1, "date", "2/1/14");
@@ -85,7 +94,7 @@ public class TrainingTest extends ModuleTestBase {
 		assertCollectionRowCount("sessions", 2);
 		assertValueInCollection("sessions", 0, "description", "RUNNING IN THE STREET"); 
 		assertValueInCollection("sessions", 0, 1, "5");
-		assertValueInCollection("sessions", 0, "date", "1/1/14");
+		assertValueInCollection("sessions", 0, "date", currentDate);  
 		assertValueInCollection("sessions", 1, "description", "WALKING"); 
 		assertValueInCollection("sessions", 1, "kms", "3");
 		assertValueInCollection("sessions", 1, "date", "3/1/14");		
