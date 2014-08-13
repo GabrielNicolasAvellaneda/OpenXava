@@ -1943,7 +1943,7 @@ public class View implements java.io.Serializable {
 			Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());			
 			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());			
 			if (!properties.isEmpty()) {		
-				Map membersNames = getMembersNamesImpl();				
+				Map membersNames = getMembersNamesImpl();
 				Iterator it = properties.iterator();
 				Collection alreadyPut = new ArrayList();				
 				while (it.hasNext()) {
@@ -1955,7 +1955,7 @@ public class View implements java.io.Serializable {
 								if (calculator instanceof IJDBCCalculator) {
 									((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
 								}		
-								trySetValue(p.getName(), calculator.calculate()); 
+								trySetValue(p.getName(), calculator.calculate());
 								alreadyPut.add(p.getName());
 							}					
 						}
@@ -1993,7 +1993,8 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getSubviews().values().iterator();			
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
-				if (subview.isRepresentsCollection()) continue;
+				if (subview.isRepresentsElementCollection()) subview.calculateDefaultValues(false);
+				else if (subview.isRepresentsCollection()) continue;
 				if (subview.isRepresentsAggregate()) { 
 					subview.calculateDefaultValues(false);
 				}

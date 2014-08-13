@@ -3,7 +3,9 @@ package org.openxava.test.model;
 import java.util.*;
 
 import javax.persistence.*;
+
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 
 /**
  * 
@@ -20,6 +22,7 @@ public class TrainingSession {
 	@org.hibernate.validator.Max(50)	
 	private int kms;
 	
+	@DefaultValueCalculator(CurrentDateCalculator.class) 
 	private Date date;
 	
 	public String getDescription() {

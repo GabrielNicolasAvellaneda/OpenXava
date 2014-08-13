@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- @DefaultValueCalculator support in @ElementCollection. 
 - FirstSteps content changed.
 - New assertValidValuesCountInCollection() and assertValidValuesInCollection() methods in ModuleTestBase.
 - Search action for references available in element collections.
