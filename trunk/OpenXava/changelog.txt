@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: ModuleTestBase.logout() with the built-in security.
 - @DefaultValueCalculator support in @ElementCollection. 
 - FirstSteps content changed.
 - New assertValidValuesCountInCollection() and assertValidValuesInCollection() methods in ModuleTestBase.

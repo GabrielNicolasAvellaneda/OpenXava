@@ -2,8 +2,6 @@ package org.openxava.web.style;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +36,6 @@ public class Style {
 	private static Style portalInstance = null;
 	@SuppressWarnings("rawtypes")
 	private static Collection styleClasses; 
-	private static Map<String, Style> stylesByBrowser = new HashMap<String, Style>(); 
 	private Collection<String> additionalCssFiles; 
 	private String cssFile; 
 	private boolean insidePortal; 
@@ -51,40 +48,36 @@ public class Style {
 	 * @since 4.2
 	 */	
 	public static Style getInstance(HttpServletRequest request) {
-		if (portalInstance != null) return portalInstance;
 		return getInstanceForBrowser(request);
 	}
 	
 	/**
 	 * @since 4.2
 	 */
-	private static Style getInstanceForBrowser(HttpServletRequest request) { 
+	private static Style getInstanceForBrowser(HttpServletRequest request) {
 		String browser = request.getHeader("user-agent"); 
-		Style instance = stylesByBrowser.get(browser);
-		if (instance == null) {
-			try {
-				for (Object styleClass: getStyleClasses()) {
-					try {
-						Style style = (Style) Class.forName((String) styleClass).newInstance();
-						if (style.isForBrowse(browser)) {
-							instance = style;							
-							break;
-						}
-					}
-					catch (Exception ex) {
-						log.warn(XavaResources.getString("style_for_browser_warning", browser), ex);
+		Style instance = null; 
+		try {
+			for (Object styleClass: getStyleClasses()) {
+				try {
+					Style style = (Style) Class.forName((String) styleClass).newInstance();
+					if (style.isForBrowse(browser)) {
+						instance = style;							
+						break;
 					}
 				}
-				if (instance == null) instance = getInstance();
-				instance.setBrowser(browser);
-				stylesByBrowser.put(browser, instance);				
+				catch (Exception ex) {
+					log.warn(XavaResources.getString("style_for_browser_warning", browser), ex);
+				}
 			}
-			catch (Exception ex) {
-				log.warn(XavaResources.getString("style_for_browser_warning", browser), ex); 					
-				instance = getInstance();
-				instance.setBrowser(browser);
-			}			
-		}		
+			if (instance == null) instance = portalInstance == null?getInstance():portalInstance;  
+			instance.setBrowser(browser);
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("style_for_browser_warning", browser), ex); 					
+			instance = portalInstance == null?getInstance():portalInstance; 
+			instance.setBrowser(browser);
+		}			
 		return instance; 
 	}
 	
