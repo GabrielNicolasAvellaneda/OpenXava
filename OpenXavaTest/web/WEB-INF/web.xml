@@ -80,7 +80,12 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 	</servlet>
 	<servlet>
 		<servlet-name>phone</servlet-name>
+		<!-- tmp 
 		<servlet-class>com.openxava.phone.PhoneServlet</servlet-class>
+		-->
+		<!-- tmp ini -->
+		<servlet-class>com.openxava.phone.web.PhoneServlet</servlet-class>
+		<!-- tmp fin -->
 	</servlet>	
 	<servlet>
 		<servlet-name>dwrInvoker</servlet-name>
