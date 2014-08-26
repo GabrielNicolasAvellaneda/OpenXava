@@ -1,7 +1,9 @@
 package org.openxava.actions;
 
 /**
- * Logic of action AttachedFiles.delete in default-controllers.xml
+ * Logic of AttachedFile.delete action in default-controllers.xml. <p> 
+ * 
+ * It does not remove the file from the file container. <p>
  * 
  * @author Jeromy Altuna
  */

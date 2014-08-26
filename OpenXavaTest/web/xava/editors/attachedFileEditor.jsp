@@ -26,10 +26,17 @@ if (!Is.emptyString(fvalue)) file = FilePersistorFactory.getInstance().find(fval
 </a>
 	
 <% if (editable) { %>
-	&nbsp;
-	<span valign='middle'>
-		<xava:image action='AttachedFiles.change' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
-		&nbsp;
-		<xava:image action='AttachedFiles.delete' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
-	</span>
+	<% if(file != null) { %>
+	   		&nbsp;
+			<span valign='middle'>
+				<xava:image action='AttachedFile.delete' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>	
+				&nbsp;
+				<xava:image action='AttachedFile.choose' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
+			</span>	
+	<%} else {%>
+			<span valign='middle'>
+				<xava:image action='AttachedFile.choose' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
+				<xava:link  action='AttachedFile.choose' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
+			</span>
+	<% } %>
 <% } %>	

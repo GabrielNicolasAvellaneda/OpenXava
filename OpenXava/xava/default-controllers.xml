@@ -597,11 +597,11 @@ here that you want to override.
 		</action>	
 	</controller>	
 	
-	<controller name="AttachedFiles">
-		<action name="change" class="org.openxava.actions.ChangeFileAction"
+	<controller name="AttachedFile">
+		<action name="choose" class="org.openxava.actions.ChooseFileAction"
 			image="upload.gif" />
-		<action name="delete" confirm="true" class="org.openxava.actions.DeleteFileAction" 
-			image="delete-file.gif" />
+		<action name="delete" class="org.openxava.actions.DeleteFileAction" 
+			image="delete-file.gif" confirm="true" />
 	</controller>
 	
 	<controller name="UploadFile">

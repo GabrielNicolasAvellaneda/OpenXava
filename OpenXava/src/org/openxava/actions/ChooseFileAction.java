@@ -3,11 +3,11 @@ package org.openxava.actions;
 import javax.inject.*;
 
 /**
- * Logic of action AttachedFiles.change in default-controllers.xml
+ * Logic of AttachedFile.choose action in default-controllers.xml. <p>
  * 
  * @author Jeromy Altuna
  */
-public class ChangeFileAction extends ViewBaseAction implements ILoadFileAction {
+public class ChooseFileAction extends ViewBaseAction implements ILoadFileAction {
 	
 	@Inject
 	private String newFileProperty;	
@@ -21,7 +21,7 @@ public class ChangeFileAction extends ViewBaseAction implements ILoadFileAction 
 	}
 
 	public String getCustomView() throws Exception {
-		return "xava/editors/changeFile";
+		return "xava/editors/chooseFile";
 	}
 
 	public boolean isLoadFile() {

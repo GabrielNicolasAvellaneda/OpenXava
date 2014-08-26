@@ -56,7 +56,7 @@ public class MovieTest extends ModuleTestBase {
 	
 	public void testChangeFile() throws Exception {
 		addFile();
-		execute("AttachedFiles.change", "newFileProperty=trailer");
+		execute("AttachedFile.choose", "newFileProperty=trailer");
 		String filepath = System.getProperty("user.dir") + "/reports/Film.jrxml";
 		setFileValue("newFile", filepath);
 		execute("UploadFile.uploadFile");
@@ -69,16 +69,16 @@ public class MovieTest extends ModuleTestBase {
 	public void testDeleteFile() throws Exception {
 		addFile();
 		assertTrue("Trailer has no value", !Is.emptyString(getValue("trailer")));
-		assertAction("AttachedFiles.delete");
-		execute("AttachedFiles.delete", "newFileProperty=trailer");
+		assertAction("AttachedFile.delete");
+		execute("AttachedFile.delete", "newFileProperty=trailer");
 		assertNoErrors();
 		assertTrue("Trailer has value", Is.emptyString(getValue("trailer")));
 	}
 	
 	private void addFile() throws Exception {
 		execute("CRUD.new");
-		assertAction("AttachedFiles.change");
-		execute("AttachedFiles.change", "newFileProperty=trailer");
+		assertAction("AttachedFile.choose");
+		execute("AttachedFile.choose", "newFileProperty=trailer");
 		assertNoErrors();
 		assertAction("UploadFile.uploadFile");
 		String filepath = System.getProperty("user.dir") + "/reports/Corporation.html";
