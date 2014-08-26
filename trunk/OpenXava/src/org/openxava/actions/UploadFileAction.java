@@ -9,13 +9,16 @@ import org.openxava.util.*;
 import org.openxava.web.editors.*;
 
 /**
- * Logic of action UploadFile.uploadFile in default-controllers.xml <p>
+ * Logic of UploadFile.uploadFile action in default-controllers.xml. <p>
  * 
- * Instance {@link org.openxava.web.editors.AttachedFile} object and stores it in a file container<p>
+ * Instance {@link org.openxava.web.editors.AttachedFile} object and stores it 
+ * in a file container. <p>
  * 
  * @author Jeromy Altuna
  */
-public class UploadFileAction extends ViewBaseAction implements INavigationAction, IProcessLoadedFileAction {
+public class UploadFileAction extends ViewBaseAction implements INavigationAction, 
+																IProcessLoadedFileAction 
+{
 	
 	@SuppressWarnings("rawtypes")
 	private List fileItems;
