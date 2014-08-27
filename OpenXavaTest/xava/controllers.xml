@@ -1121,5 +1121,13 @@
 			class="org.openxava.test.actions.MovieReportAction">
 			<set value="pdf" property="format" />
 		</action>
-	</controller>	
+	</controller>
+	
+	<controller name="AttachedFile">
+  		<action name="choose" class="org.openxava.test.actions.ChooseFileAction" 
+  			image="upload.gif" />
+		<action name="delete" class="org.openxava.test.actions.RemoveFileAction" 
+			image="delete-file.gif" confirm="true" />
+  	</controller>
+  		
 </controllers>

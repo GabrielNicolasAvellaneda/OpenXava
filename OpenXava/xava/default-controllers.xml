@@ -31,7 +31,8 @@ here that you want to override.
 	<object name="xava_liferayLibrary" class="org.openxava.session.LiferayLibrary"/>					
 	<object name="xava_metaActionsInList" class="java.util.Collection"/>
 	<object name="xava_newFileProperty" class="java.lang.String" />
-	
+	<object name="xava_newLibraryProperty" class="java.lang.String" />
+		
 	<controller name="Typical">
 		<extends controller="Navigation"/>
 		<extends controller="CRUD"/>
@@ -608,4 +609,17 @@ here that you want to override.
 		<action name="uploadFile" class="org.openxava.actions.UploadFileAction" />
 		<action name="cancel" class="org.openxava.actions.CancelAction" />
 	</controller>
+	
+	<controller name="Library"> 
+		<action name="add" class="org.openxava.actions.AddFileToLibraryAction" 
+			image="upload.gif" />
+		<action name="remove" class="org.openxava.actions.RemoveFileFromLibraryAction" 
+			image="delete-file.gif" confirm="true" />	
+	</controller>
+	
+	<controller name="UploadFileIntoLibrary">
+		<action name="uploadFile" class="org.openxava.actions.UploadFileIntoLibraryAction" />
+		<action name="cancel" class="org.openxava.actions.CancelAction" />
+	</controller>
+	
 </controllers>

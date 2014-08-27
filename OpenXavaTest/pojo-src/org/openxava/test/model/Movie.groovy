@@ -8,11 +8,11 @@ import org.openxava.model.*
 
 /**
  * Model to test concatenated reports using {@link org.openxava.test.actions.MovieReportAction}
- * and to test FILE stereotype
+ * and to test stereotypes FILE and FILES_LIBRARY.
  * 
  * @author Jeromy Altuna
  */
-@Entity
+@Entity			
 class Movie extends Identifiable {
 
 	String title
@@ -23,6 +23,10 @@ class Movie extends Identifiable {
 	@Stereotype("FILE")
 	@Column(length=32)
 	String trailer
+	
+	@Stereotype("FILES_LIBRARY")
+	@Column(length=32)	
+	String scripts
 	
 	@Stereotype("IMAGES_GALLERY")
 	@Column(length=32)
