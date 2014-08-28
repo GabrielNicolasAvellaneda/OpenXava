@@ -3,6 +3,7 @@ package org.openxava.test.model;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.test.calculators.*;
 
 /**
  * 
@@ -10,34 +11,26 @@ import org.openxava.annotations.*;
  */
 
 @Embeddable
-public class ProductExpense {
+public class ProductExpense2 { 
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@DescriptionsList	
+	private Carrier carrier;
+
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList(descriptionProperties="year, number")
+	@DefaultValueCalculator(DefaultInvoiceCalculator.class) 		
 	private Invoice invoice;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList 
-	private Family2 family;	
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList(
-		depends="family",
-		condition="${family.number} = ?"
-	)
-	private Subfamily2 subfamily;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList
-	private Product product;	
-
-	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList	
 	@DefaultValueCalculator( 
 		value=org.openxava.calculators.IntegerCalculator.class,
-		properties={ @PropertyValue(name="value", value="3") }		
+		properties={ @PropertyValue(name="value", value="2") }		
 	)	
-	private Carrier carrier;
+	private Product product;	
+
 
 	public Invoice getInvoice() {
 		return invoice;
@@ -45,22 +38,6 @@ public class ProductExpense {
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
-	}
-
-	public Family2 getFamily() {
-		return family;
-	}
-
-	public void setFamily(Family2 family) {
-		this.family = family;
-	}
-
-	public Subfamily2 getSubfamily() {
-		return subfamily;
-	}
-
-	public void setSubfamily(Subfamily2 subfamily) {
-		this.subfamily = subfamily;
 	}
 
 	public Product getProduct() {

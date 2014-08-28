@@ -12,7 +12,7 @@ public class IntegerCalculator implements ICalculator {
 	private int value;
 	
 	
-	public Object calculate() throws Exception {		
+	public Object calculate() throws Exception {
 		return new Integer(value);
 	}
 

@@ -9,7 +9,7 @@ import org.openxava.test.model.*;
 public class DefaultWarehouseCalculator implements ICalculator {
 
 	public Object calculate() throws Exception {
-		Warehouse key = new Warehouse();
+		Warehouse key = new Warehouse(); 
 		key.setNumber(4);
 		key.setZoneNumber(4);
 		return key;

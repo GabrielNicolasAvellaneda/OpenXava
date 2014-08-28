@@ -52,10 +52,11 @@ public class ProductExpensesTest extends ModuleTestBase {
 		};		
 		assertValidValuesInCollection("expenses", 0, "carrier.number", carrierValidValues);		
 		
+		assertValueInCollection("expenses", 0, "carrier.number", ""); 
 		setValueInCollection("expenses", 0, "invoice.KEY", "[.1.2002.]");
+		assertValueInCollection("expenses", 0, "carrier.number", "3"); 
 		setValueInCollection("expenses", 0, "product.number", "4"); 
-		setValueInCollection("expenses", 0, "carrier.number", "3"); 
-				
+						
 		execute("CRUD.save");
 		
 		assertValue("description", "");

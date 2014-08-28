@@ -231,7 +231,7 @@ public class Invoice {
 	@NewAction(forViews="NotAllActionsInDetails", value="")
 	@RemoveAction(forViews="NotAllActionsInDetails", value="")
 	@RemoveSelectedAction(forViews="NotAllActionsInDetails", value="")
-	private Collection<InvoiceDetail> details;
+	private Collection<InvoiceDetail> details = new ArrayList<InvoiceDetail>(); 
 	
 	@OneToMany (mappedBy="invoice")
 	@CollectionView(forViews="DEFAULT, Deliveries", value="InInvoice")
@@ -337,6 +337,7 @@ public class Invoice {
 	
 	@Stereotype("MONEY") @Depends("customer.number, paid")
 	public BigDecimal getCustomerDiscount() {
+		if (customer == null) return new BigDecimal("0.00");  
 		if (paid) return new BigDecimal("77");
 		if (customer.getNumber() == 1) return new BigDecimal("11.50");
 		if (customer.getNumber() == 2) return new BigDecimal("22.75");
@@ -345,10 +346,11 @@ public class Invoice {
 	
 	@Stereotype("MONEY")
 	public BigDecimal getCustomerTypeDiscount() {
+		if (customer == null) return new BigDecimal("0.00"); 
 		Customer.Type type = customer.getType(); 
 		if (type == Customer.Type.STEADY) return new BigDecimal("20.00");
 		if (type == Customer.Type.SPECIAL) return new BigDecimal("30.00");
-		return new BigDecimal("00.00");		
+		return new BigDecimal("0.00"); 
 	}
 	
 	@Stereotype("MONEY")

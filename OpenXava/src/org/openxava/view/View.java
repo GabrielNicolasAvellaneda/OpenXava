@@ -68,8 +68,7 @@ import org.openxava.view.meta.MetaReferenceView;
 import org.openxava.view.meta.MetaView;
 import org.openxava.view.meta.MetaViewAction;
 import org.openxava.view.meta.PropertiesSeparator;
-import org.openxava.web.Ids;
-import org.openxava.web.WebEditors;
+import org.openxava.web.*;
 import org.openxava.web.meta.MetaEditor;
 
 /**
@@ -80,8 +79,7 @@ import org.openxava.web.meta.MetaEditor;
  */
 
 public class View implements java.io.Serializable {
-	
-	private static final String COMPOSITE_KEY_SUFFIX = "__KEY__";
+		
 	private final static String COLUMN_WIDTH = "collectionColumnWidth.";
 	private final static String FRAME_CLOSED = "frameClosed.";
 	private final static String COLLECTION_VIEW_ACTION = "Collection.view"; 
@@ -1942,7 +1940,7 @@ public class View implements java.io.Serializable {
 		try {					
 			Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());			
 			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());			
-			if (!properties.isEmpty()) {		
+			if (!properties.isEmpty()) {
 				Map membersNames = getMembersNamesImpl();
 				Iterator it = properties.iterator();
 				Collection alreadyPut = new ArrayList();				
@@ -1964,12 +1962,13 @@ public class View implements java.io.Serializable {
 							getErrors().add("calculate_default_value_error", p.getName());
 						}				 
 					}
-				}				
+				}			
+				
 				if (!alreadyPut.isEmpty()) {
 					Iterator itAlreadyPut = alreadyPut.iterator();					
 					boolean hasNext = itAlreadyPut.hasNext(); 
 					while (hasNext) {												 
-						String propertyName = (String) itAlreadyPut.next();						 
+						String propertyName = (String) itAlreadyPut.next();
 						try {
 							hasToSearchOnChangeIfSubview = false;
 							propertyChanged(propertyName);							
@@ -1979,9 +1978,9 @@ public class View implements java.io.Serializable {
 						}						
 						hasNext = itAlreadyPut.hasNext(); // Loop in this way to bypass a bug in Websphere 5.0.2.9 JDK						
 					}					
-				}
+				}								
 			}
-								
+				
 			// On change events					
 			Iterator itOnChangeProperties = getMetaView().getPropertiesNamesThrowOnChange().iterator();			
 			while (itOnChangeProperties.hasNext()) {
@@ -1995,7 +1994,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) itSubviews.next();
 				if (subview.isRepresentsElementCollection()) subview.calculateDefaultValues(false);
 				else if (subview.isRepresentsCollection()) continue;
-				if (subview.isRepresentsAggregate()) { 
+				else if (subview.isRepresentsAggregate()) { 
 					subview.calculateDefaultValues(false);
 				}
 				else { // Reference to entity
@@ -2016,10 +2015,10 @@ public class View implements java.io.Serializable {
 				for (int i = 0; i < count; i++) {
 					getSectionView(i).calculateDefaultValues(false);
 				}	
-			}			
+			}
 			
 			// References			
-			Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();					
+			Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();				
 			if (!references.isEmpty()) {		
 				Map membersNames = getMembersNamesImpl();		
 				Iterator it = references.iterator();
@@ -2059,8 +2058,9 @@ public class View implements java.io.Serializable {
 					while (hasNext) {
 						String propertyName = (String) itAlreadyPut.next();										
 						try {
-							hasToSearchOnChangeIfSubview = false;							
-							propertyChanged(propertyName);							
+							hasToSearchOnChangeIfSubview = false;
+							propertyChanged(propertyName);
+							
 						}
 						finally {
 							hasToSearchOnChangeIfSubview = true;						
@@ -2075,7 +2075,7 @@ public class View implements java.io.Serializable {
 				getRoot().registeringExecutedActions = false;		
 				resetExecutedActions();
 			}			
-		}				
+		}
 	}
 
 	private void resetExecutedActions() {		
@@ -2391,7 +2391,7 @@ public class View implements java.io.Serializable {
 			}
 			else if (m instanceof MetaReference) {					
 				MetaReference ref = (MetaReference) m;
-				String key = qualifier + ref.getName() + COMPOSITE_KEY_SUFFIX;
+				String key = qualifier + ref.getName() + DescriptionsLists.COMPOSITE_KEY_SUFFIX;
 				String value = getRequest().getParameter(key);				
 				if (value == null) {												
 					View subview = getSubview(ref.getName());						
@@ -2432,7 +2432,7 @@ public class View implements java.io.Serializable {
 				if (results == null && p.getName().contains(".")) {
 					String refName = Strings.noLastTokenWithoutLastDelim(p.getName(), ".");
 					if (p.getMetaModel().getAllKeyPropertiesNames().size() > 1) {						
-						propertyKey= qualifier + i + "." + refName + COMPOSITE_KEY_SUFFIX;
+						propertyKey= qualifier + i + "." + refName + DescriptionsLists.COMPOSITE_KEY_SUFFIX; 
 						results = getRequest().getParameterValues(propertyKey);
 						if (results != null) {
 							MetaReference ref = getMetaModel().getMetaReference(refName); 
@@ -2648,7 +2648,7 @@ public class View implements java.io.Serializable {
 	
 
 	private void propertyChanged(String propertyId) { 
-		try {														
+		try {								
 			String name = Ids.undecorate(propertyId);
 			if (isRepresentsElementCollection()) {
 				try {
@@ -2661,7 +2661,7 @@ public class View implements java.io.Serializable {
 					// When the format is "name" thrown from other action, depends, etc. using the underlaying View
 				}
 			}
-			if (name.endsWith(COMPOSITE_KEY_SUFFIX)) {
+			if (name.endsWith(DescriptionsLists.COMPOSITE_KEY_SUFFIX)) {
 				String refName = name.substring(0, name.length() - 7);
 				MetaModel referencedModel = null;
 				try {
@@ -2730,7 +2730,7 @@ public class View implements java.io.Serializable {
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception { 
+	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {
 		if (!isOnlyThrowsOnChange()) {
 			boolean calculationDone = false; 
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
@@ -2747,7 +2747,7 @@ public class View implements java.io.Serializable {
 					}					
 				}
 			}			
-			if (calculationDone && isRepresentsElementCollection()) { 
+			if (calculationDone && isRepresentsElementCollection()) {
 				moveViewValuesToCollectionValues();
 			}
 			   
@@ -2758,7 +2758,7 @@ public class View implements java.io.Serializable {
 					(isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key 
 					(hasSearchMemberKeys() && isLastPropertyMarkedAsSearch(changedPropertyQualifiedName)) // Explicit search key 
 					)
-				) {								
+				) {
 				if (!searchingObject) { // To avoid recursive infinite loops				
 					try {
 						searchingObject = true;						
@@ -2799,7 +2799,7 @@ public class View implements java.io.Serializable {
 				}
 			}		
 		}			
-		if (hasSections()) {			
+		if (hasSections()) {
 			int count = getSections().size();
 			for (int i = 0; i < count; i++) {
 				getSectionView(i).propertyChanged(changedProperty, changedPropertyQualifiedName); 				
@@ -2814,6 +2814,7 @@ public class View implements java.io.Serializable {
 			parent.moveViewValuesToCollectionValues();
 			return;
 		}
+		if (collectionValues == null) return; 
 		if (collectionEditingRow == collectionValues.size()) collectionValues.add(collectionEditingRow, getAllValues());
 		else collectionValues.set(collectionEditingRow, getAllValues());
 		refreshCollection(); 

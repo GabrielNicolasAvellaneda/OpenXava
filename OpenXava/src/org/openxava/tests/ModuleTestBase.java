@@ -660,7 +660,7 @@ public class ModuleTestBase extends TestCase {
 	 * OX for HTML elements.
 	 */
 	protected String decorateId(String name) {
-		name = Strings.change(name, ".KEY", "__KEY__");
+		name = Strings.change(name, ".KEY", DescriptionsLists.COMPOSITE_KEY_SUFFIX);
 		return Ids.decorate(application, module, name);
 	}
 
