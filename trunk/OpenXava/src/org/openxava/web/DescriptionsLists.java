@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
  */
 public class DescriptionsLists {
 	
+	public static final String COMPOSITE_KEY_SUFFIX = "__KEY__"; 
+	
 	public static void resetDescriptionsCache(HttpSession session) {
 		Enumeration e = session.getAttributeNames();
 		while (e.hasMoreElements()) {

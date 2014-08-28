@@ -12,6 +12,8 @@
 <%@page import="org.openxava.util.XavaPreferences"%>
 <%@page import="org.openxava.view.View"%>
 <%@page import="org.openxava.model.meta.MetaProperty"%>
+<%@page import="org.openxava.model.meta.MetaReference"%> 
+<%@page import="org.openxava.web.DescriptionsLists"%> 
 <%@page import="org.openxava.web.WebEditors"%>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -50,21 +52,41 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 	String label = p.getQualifiedLabel(request);
 	int columnWidth = subview.getCollectionColumnWidth(columnIndex);
 	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
+	MetaReference ref = null;	
+	if (p.getName().contains(".")) {
+		String refName = org.openxava.util.Strings.noLastTokenWithoutLastDelim(p.getName(), ".");
+		ref = subview.getMetaReference(refName);
+	}
 	String headerId = "";
-	String defaultValue = "";	
-	if (p.hasDefaultValueCalculator()) {			
-		if (org.openxava.web.WebEditors.mustToFormat(p, subview.getViewName())) { 
-			Object value = subview.getValue(p.getName());
-			Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, p, value, errors, subview.getViewName(), false);			
-			if (fvalue instanceof String) { // We don't support arrays by now
-				defaultValue = "data-default-value='" + fvalue + "'";
-				String id = Ids.decorate(request, collectionName + ".H." + p.getName());			
-				headerId = "id='" + id + "'";
-			}
+	String dataDefaultValue = "";	
+	if (p.hasDefaultValueCalculator() || ref != null && ref.hasDefaultValueCalculator()) { 
+		Object defaultValue = null; 
+		String propertyId = null; 
+		if (ref != null && subview.displayAsDescriptionsList(ref) && ref.getMetaModelReferenced().getAllKeyPropertiesNames().size() > 1) { 
+			java.util.Map refValues = subview.getSubview(ref.getName()).getValues();  
+			defaultValue = p.getMetaModel().toString(refValues);
+			propertyId = ref.getName() + DescriptionsLists.COMPOSITE_KEY_SUFFIX;
+		}
+		else {
+			if (ref != null && subview.displayAsDescriptionsList(ref) && !p.isKey()) {
+				MetaProperty key = (MetaProperty) p.getMetaModel().getMetaPropertiesKey().iterator().next();
+				p = key.cloneMetaProperty();
+				p.setName(ref.getName() + "." + key.getName());
+			}		
+			if (org.openxava.web.WebEditors.mustToFormat(p, subview.getViewName())) { 
+				Object value = subview.getValue(p.getName());
+				defaultValue = org.openxava.web.WebEditors.formatToStringOrArray(request, p, value, errors, subview.getViewName(), false);
+				propertyId = p.getName();
+			}		
+		}
+		if (defaultValue instanceof String) { // We don't support arrays by now
+			dataDefaultValue = "data-default-value='" + defaultValue + "'";
+			String id = Ids.decorate(request, collectionName + ".H." + propertyId);			
+			headerId = "id='" + id + "'";
 		}
 	}
 %>
-	<th <%=headerId%> <%=defaultValue%> class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
+	<th <%=headerId%> <%=dataDefaultValue%> class=<%=style.getListHeaderCell()%> style="padding-right: 0px">
 		<div id="<xava:id name='<%=idCollection%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):(""))%>" style="overflow: hidden; <%=width%>" >
 		<%if (resizeColumns) {%><nobr><%}%>
 		<%=label%>&nbsp;

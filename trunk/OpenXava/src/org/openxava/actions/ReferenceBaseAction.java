@@ -4,6 +4,7 @@ import javax.inject.*;
 
 import org.openxava.util.*;
 import org.openxava.view.*;
+import org.openxava.web.*;
 
 /**
  * @author Javier Paniza
@@ -53,7 +54,7 @@ public class ReferenceBaseAction extends ViewBaseAction {
 	}
 
 	private ViewInfo createSubview(View view, String memberName) throws XavaException {
-		if (memberName.endsWith("__KEY__")) memberName = memberName.substring(0, memberName.length() - 7);
+		if (memberName.endsWith(DescriptionsLists.COMPOSITE_KEY_SUFFIX)) memberName = memberName.substring(0, memberName.length() - 7);
 		if (view.isRepresentsElementCollection()) {
 			int idx = memberName.indexOf('.');
 			int row = Integer.parseInt(memberName.substring(0, idx)); 
