@@ -173,7 +173,6 @@ public class ModuleTestBase extends TestCase {
 			setValue("password", password);
 			execute("SignIn.signIn");
 			assertNoErrors();
-			assertTrue(getHtml().contains("Sign out (" + user + ")"));
 			selectModuleInPage(originalModule);		
 		}
 	}
