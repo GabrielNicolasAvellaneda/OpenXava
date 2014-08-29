@@ -169,7 +169,8 @@ public class Modules implements Serializable {
 		try {
 			if (request.getRequestURI().contains("module.jsp")) return false;
 			if (!(request.getRequestURI().startsWith(request.getContextPath() + "/m/") ||
-					request.getRequestURI().startsWith(request.getContextPath() + "/modules/"))) return true;					
+					request.getRequestURI().startsWith(request.getContextPath() + "/p/") || 
+					request.getRequestURI().startsWith(request.getContextPath() + "/modules/"))) return true;
 			String [] uri = request.getRequestURI().split("/");
 			if (uri.length < 4) return false;			
 			return isModuleAuthorized(MetaModuleFactory.create(uri[1], uri[3]));
