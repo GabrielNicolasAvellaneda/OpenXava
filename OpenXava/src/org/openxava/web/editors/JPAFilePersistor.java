@@ -37,7 +37,8 @@ public class JPAFilePersistor implements IFilePersistor {
 	 */
 	@Override
 	public void removeLibrary(String libraryId) {
-		Query query = getManager().createQuery("delete from AttachedFile f where f.libraryId = :libraryId");
+		Query query = getManager().createQuery("delete from AttachedFile f where "
+											 + "f.libraryId = :libraryId");
 		query.setParameter("libraryId", libraryId);
 		query.executeUpdate();
 		commit();
@@ -49,7 +50,10 @@ public class JPAFilePersistor implements IFilePersistor {
 	@Override
 	public Collection<AttachedFile> findLibrary(String libraryId) {
 		TypedQuery<AttachedFile> query = getManager().createQuery(
-										"from AttachedFile f where f.libraryId = :libraryId", AttachedFile.class);
+											   "from AttachedFile f "
+											 + "where f.libraryId = :libraryId "
+											 + "order by f.id asc", 
+											 	AttachedFile.class);
 		query.setParameter("libraryId", libraryId);
 		return query.getResultList();		
 	}

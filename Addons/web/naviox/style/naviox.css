@@ -887,3 +887,9 @@ div.ox-subcontroller table{
 	color: white;
 	background-color: black;
 }
+
+.ox-attached-file {
+	color: #5755D2;
+	font-size: 1.02em;
+	text-decoration: none;
+}

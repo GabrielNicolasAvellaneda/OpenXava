@@ -14,7 +14,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 public class MovieTest extends ModuleTestBase {
 	
 	private static final String MIME_UNKNOWN = "application/octet-stream";
-
+	
 	public MovieTest(String testName) {
 		super(testName, "Movie");
 	}
@@ -79,30 +79,30 @@ public class MovieTest extends ModuleTestBase {
 		assertTrue("Trailer has value", Is.emptyString(getValue("trailer")));
 	}
 	
-	public void testFilesLibrary() throws Exception {
+	public void testFileset() throws Exception {
 		assertListRowCount(1);
 		execute("Mode.detailAndFirst");
 		assertTrue("At least 4 files", countFiles() == 4);	
 		
 		//Adding one file
-		execute("Library.add", "newLibraryProperty=scripts");
+		execute("AttachedFiles.add", "newFilesetProperty=scripts");
 		assertDialogTitle("Add files");
 		String filepath  = System.getProperty("user.dir") + "/reports/Corporation.html";
 		setFileValue("newFile", filepath);
-		execute("UploadFileIntoLibrary.uploadFile");
-		assertMessage("File added to the library");
+		execute("UploadFileIntoFileset.uploadFile");
+		assertMessage("File added to Scripts");
 		assertTrue("At least 5 files", countFiles() == 5);
 		
 		//Display file
-		String url = getUrlToFile(1); 
+		String url = getUrlToFile(4);
 		WebResponse response = getWebClient().getPage(url).getWebResponse();
 		assertTrue(response.getContentType().equals("text/html") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 		changeModule("Movie");
 		
 		//Removing the file
-		assertAction("Library.remove");
-		execute("Library.remove", url.split("&")[2]);
+		assertAction("AttachedFiles.remove");
+		execute("AttachedFiles.remove", url.split("&")[2]);
 		assertNoErrors();
 		assertTrue("At least 4 files", countFiles() == 4);		
 	}
@@ -139,3 +139,4 @@ public class MovieTest extends ModuleTestBase {
 		return anchors;
 	}
 }
+
