@@ -4,9 +4,10 @@ import javax.servlet.http.*;
 
 import org.openxava.util.*;
 import org.openxava.web.editors.*;
+import org.openxava.web.style.*;
 
 /**
- * For stereotypes FILE and ARCHIVO in list mode <p>
+ * For stereotypes FILE and ARCHIVO in list mode. <p>
  * 
  * @author Jeromy Altuna
  */
@@ -16,10 +17,18 @@ public class FileListFormatter implements IFormatter {
 		if(Is.empty(object)) return "";
 		AttachedFile file = FilePersistorFactory.getInstance().find((String) object);
 		if(file != null) {
-			return String.format(
-				"<a href='%s/xava/xfile?application=%s&module=%s&fileId=%s&dif=%d' target='_blank'>%s</a>",				
-				request.getContextPath(), request.getParameter("application"), request.getParameter("module"), 
-				file.getId(), System.currentTimeMillis(), file.getName());
+			return new StringBuilder("<a href='").append(request.getContextPath())
+				.append("/xava/xfile?application=")
+				.append(request.getParameter("application"))
+				.append("&module=").append(request.getParameter("module"))
+				.append("&fileId=").append(file.getId())
+			    .append("&dif=") .append(System.currentTimeMillis())
+			    .append("'target='_blank'>")
+			    .append("<span class=\"")
+			    .append(Style.getInstance().getAttachedFile())
+			    .append("\">").append(file.getName()).append("</span>")
+			    .append("</a>") 
+			    .toString();			
 		}
 		return "";
 	}

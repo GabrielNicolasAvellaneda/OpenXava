@@ -9,11 +9,11 @@ import org.openxava.util.*;
 import org.openxava.web.editors.*;
 
 /**
- * Logic of UploadFileIntoLibrary.uploadFile in default-controllers.xml. <p>
+ * Logic of UploadFileIntoFileset.uploadFile action in default-controllers.xml. <p>
  * 
  * @author Jeromy Altuna
  */
-public class UploadFileIntoLibraryAction extends ViewBaseAction 
+public class UploadFileIntoFilesetAction extends    ViewBaseAction 
 										 implements INavigationAction, 
 										 			IProcessLoadedFileAction 
 {
@@ -22,11 +22,11 @@ public class UploadFileIntoLibraryAction extends ViewBaseAction
 	private List fileItems;
 	
 	@Inject
-	private String newLibraryProperty;
+	private String newFilesetProperty;
 	
 	@Override
 	public void execute() throws Exception {
-		String libraryId = getPreviousView().getValueString(newLibraryProperty);
+		String libraryId = getPreviousView().getValueString(newFilesetProperty);
 		Iterator<?> it = fileItems.iterator();		
 		int counter = 0;
 		while(it.hasNext()) {
@@ -40,8 +40,9 @@ public class UploadFileIntoLibraryAction extends ViewBaseAction
 				counter++;
 			}
 		}
-		if(counter == 1) addMessage("file_add_to_library");
-		else if(counter > 1) addMessage("files_add_to_library", counter);
+		if(counter == 1) addMessage("file_added_to_fileset", newFilesetProperty);
+		else if(counter > 1) addMessage("files_added_to_fileset", 
+										newFilesetProperty, counter);
 		closeDialog();
 	}
 	

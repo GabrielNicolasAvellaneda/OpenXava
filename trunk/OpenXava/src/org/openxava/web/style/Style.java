@@ -1242,4 +1242,12 @@ public class Style {
 		}
 		return returnValue;
 	}
+	
+	/**
+	 * @since  5.1
+	 * @return Style class for attached files.
+	 */
+	public String getAttachedFile() {
+		return "ox-attached-file";
+	}
 }

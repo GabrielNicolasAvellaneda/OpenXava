@@ -1125,9 +1125,9 @@
 	
 	<controller name="AttachedFile">
   		<action name="choose" class="org.openxava.test.actions.ChooseFileAction" 
-  			image="upload.gif" />
+  			image="attach.gif" />
 		<action name="delete" class="org.openxava.test.actions.RemoveFileAction" 
-			image="delete-file.gif" confirm="true" />
+			image="delete.gif" confirm="true" />
   	</controller>
   		
 </controllers>

@@ -31,7 +31,7 @@ here that you want to override.
 	<object name="xava_liferayLibrary" class="org.openxava.session.LiferayLibrary"/>					
 	<object name="xava_metaActionsInList" class="java.util.Collection"/>
 	<object name="xava_newFileProperty" class="java.lang.String" />
-	<object name="xava_newLibraryProperty" class="java.lang.String" />
+	<object name="xava_newFilesetProperty" class="java.lang.String" />
 		
 	<controller name="Typical">
 		<extends controller="Navigation"/>
@@ -600,9 +600,9 @@ here that you want to override.
 	
 	<controller name="AttachedFile">
 		<action name="choose" class="org.openxava.actions.ChooseFileAction"
-			image="upload.gif" />
+			image="attach.gif" />
 		<action name="delete" class="org.openxava.actions.DeleteFileAction" 
-			image="delete-file.gif" confirm="true" />
+			image="delete.gif" confirm="true" />
 	</controller>
 	
 	<controller name="UploadFile">
@@ -610,15 +610,15 @@ here that you want to override.
 		<action name="cancel" class="org.openxava.actions.CancelAction" />
 	</controller>
 	
-	<controller name="Library"> 
-		<action name="add" class="org.openxava.actions.AddFileToLibraryAction" 
-			image="upload.gif" />
-		<action name="remove" class="org.openxava.actions.RemoveFileFromLibraryAction" 
-			image="delete-file.gif" confirm="true" />	
+	<controller name="AttachedFiles"> 
+		<action name="add" class="org.openxava.actions.AddFileToFilesetAction" 
+			image="attach.gif" />
+		<action name="remove" class="org.openxava.actions.RemoveFileFromFilesetAction" 
+			image="delete.gif" confirm="true" />	
 	</controller>
 	
-	<controller name="UploadFileIntoLibrary">
-		<action name="uploadFile" class="org.openxava.actions.UploadFileIntoLibraryAction" />
+	<controller name="UploadFileIntoFileset">
+		<action name="uploadFile" class="org.openxava.actions.UploadFileIntoFilesetAction" />
 		<action name="cancel" class="org.openxava.actions.CancelAction" />
 	</controller>
 	

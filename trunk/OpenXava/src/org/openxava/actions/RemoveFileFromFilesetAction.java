@@ -3,13 +3,13 @@ package org.openxava.actions;
 import org.openxava.web.editors.*;
 
 /**
- * Logic of Library.remove in default-controllers.xml. <p>
+ * Logic of AttachedFiles.remove in default-controllers.xml. <p>
  * 
  * It remove the file of the file container. <p>
  * 
  * @author Jeromy Altuna
  */
-public class RemoveFileFromLibraryAction extends ViewBaseAction {
+public class RemoveFileFromFilesetAction extends ViewBaseAction {
 	
 	private String fileId;
 	
