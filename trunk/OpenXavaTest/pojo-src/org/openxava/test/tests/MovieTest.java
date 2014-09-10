@@ -94,7 +94,7 @@ public class MovieTest extends ModuleTestBase {
 		assertTrue("At least 5 files", countFiles() == 5);
 		
 		//Display file
-		String url = getUrlToFile(4);
+		String url = getUrlToFile(1); 
 		WebResponse response = getWebClient().getPage(url).getWebResponse();
 		assertTrue(response.getContentType().equals("text/html") || 
 				   response.getContentType().equals(MIME_UNKNOWN));

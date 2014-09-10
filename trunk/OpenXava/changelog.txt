@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New stereotype FILES for attaching several files to an entity.
 - Fix: ModuleTestBase.logout() with the built-in security.
 - @DefaultValueCalculator support in @ElementCollection. 
 - FirstSteps content changed.
