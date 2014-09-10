@@ -19,7 +19,7 @@ public class ProductExpenses extends Identifiable {
 	private String description;
 	
 	@ElementCollection
-	@ListProperties("invoice, product.description, carrier.number") 
+	@ListProperties("invoice, product.description, carrier.number, family, subfamily")
 	private Collection<ProductExpense> expenses;
 
 	public String getDescription() {

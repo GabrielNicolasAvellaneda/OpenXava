@@ -979,6 +979,8 @@
 		<delete file="../${project}/web/xava/images/hide-filter.gif"/>
 		<delete file="../${project}/web/xava/style/ipad/images/customize.gif"/>
 		<delete file="../${project}/web/xava/style/ipad/images/hide-filter.gif"/>
+		<delete file="../${project}/web/xava/images/delete-file.gif"/>
+		<delete file="../${project}/web/xava/images/upload.gif"/>
 	</target>
 	
 	<target name="copyWeb">

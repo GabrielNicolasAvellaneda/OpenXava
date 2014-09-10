@@ -2647,7 +2647,7 @@ public class View implements java.io.Serializable {
 	}
 	
 
-	private void propertyChanged(String propertyId) { 
+	private void propertyChanged(String propertyId) {
 		try {								
 			String name = Ids.undecorate(propertyId);
 			if (isRepresentsElementCollection()) {
@@ -3340,7 +3340,7 @@ public class View implements java.io.Serializable {
 	/**	  
 	 * @param propertiesList Properties names comma separated
 	 */
-	public Collection getPropertiesNamesFromPropertiesList(String propertiesList) throws XavaException {		
+	public Collection getPropertiesNamesFromPropertiesList(String propertiesList) throws XavaException {
 		if (Is.emptyString(propertiesList)) return Collections.EMPTY_LIST;
 		StringTokenizer st = new StringTokenizer(propertiesList, ", ");
 		Collection r = new ArrayList();
@@ -3467,53 +3467,78 @@ public class View implements java.io.Serializable {
 	}
 
 	public boolean displayAsDescriptionsList(MetaReference ref) throws XavaException {		
-		return getMetaView().getMetaDescriptionList(ref) != null;				
+		return getMetaDescriptionsList(ref) != null;  
 	}
 	
 	public String getDescriptionPropertyInDescriptionsList(MetaReference ref) throws XavaException {
-		MetaDescriptionsList metaDescriptionList = getMetaDescriptionList(ref);
+		MetaDescriptionsList metaDescriptionList = getMetaDescriptionsList(ref);
 		if (metaDescriptionList != null) return metaDescriptionList.getDescriptionPropertyName();		
 		return getMetaView().createMetaDescriptionList(ref).getDescriptionPropertyName();
 	}
 	
 	public String getDescriptionPropertiesInDescriptionsList(MetaReference ref) throws XavaException { 		
-		MetaDescriptionsList metaDescriptionList = getMetaDescriptionList(ref); 
+		MetaDescriptionsList metaDescriptionList = getMetaDescriptionsList(ref); 
 		if (metaDescriptionList != null) return metaDescriptionList.getDescriptionPropertiesNames();
 		return getMetaView().createMetaDescriptionList(ref).getDescriptionPropertiesNames();			
 	}
 	
-	private MetaDescriptionsList getMetaDescriptionList(MetaReference ref) { 
+	private MetaDescriptionsList getMetaDescriptionsList(MetaReference ref) { 
+		MetaView view = getMetaView(ref);
+		if (ref.getName().contains(".")) {
+			ref = ref.cloneMetaReference();
+			ref.setName(Strings.lastToken(ref.getName(), "."));
+		}
+		return view.getMetaDescriptionList(ref);
+	}
+	
+	private MetaView getMetaView(MetaReference ref) {   
 		String refName = ref.getName();
 		int idx = refName.indexOf('.');
-		if (idx < 0) return getMetaView().getMetaDescriptionList(ref);
+		if (idx < 0) return getMetaView();
 		String subviewName = refName.substring(0, idx);
 		String member = refName.substring(idx+1);		
 		View subview = getSubview(subviewName);
 		if (subview.isRepresentsElementCollection()) member = Strings.noFirstTokenWithoutFirstDelim(member, ".");
-		return subview.getMetaDescriptionList(subview.getMetaReference(member));
+		return subview.getMetaView(subview.getMetaReference(member));
 	}
 	
-	public boolean throwsReferenceChanged(MetaReference ref) throws XavaException {		
-		if (getDepends().contains(ref.getName())) return true;
+	public boolean throwsReferenceChanged(MetaReference ref) throws XavaException {
+		String refName = ref.getName(); 
+		int idx = refName.indexOf('.');
+		if (idx >= 0) {
+			if (isRepresentsElementCollection()) {
+				refName = Strings.noFirstTokenWithoutFirstDelim(refName, ".");
+			}
+			else {
+				String subviewName = refName.substring(0, idx);
+				String memberName = refName.substring(idx+1);
+				View subview = getSubview(subviewName);
+				MetaReference member = ref.cloneMetaReference();
+				member.setName(memberName);
+				return subview.throwsReferenceChanged(member);
+			}
+		}
+		
+		if (getDepends().contains(refName)) return true;
 		Iterator itKeys = ref.getMetaModelReferenced().getKeyPropertiesNames().iterator();
 		while (itKeys.hasNext()) {			
 			String propertyKey = (String) itKeys.next();
-			String refName = ref.getName() + "." + propertyKey;
-			if (getMetaView().hasOnChangeAction(refName)) {
+			String propertyName = refName + "." + propertyKey;
+			if (getMetaView().hasOnChangeAction(propertyName)) {
 				return true;
 			}
 			
 			Iterator itProperties = getRoot().getMetaPropertiesQualified().iterator();
 			while (itProperties.hasNext()) {
 				MetaProperty p = (MetaProperty) itProperties.next();
-				if (p.getPropertyNamesThatIDepend().contains(refName)) return true;				
+				if (p.getPropertyNamesThatIDepend().contains(propertyName)) return true;				
 			}
 			
 			MetaProperty p = ref.getMetaModelReferenced().getMetaProperty(propertyKey).cloneMetaProperty();
-			p.setName(refName);
+			p.setName(propertyName);
 			if (hasDependentsProperties(p)) return true;			
 		}
-		return false;					
+		return false;
 	}
 		
 	private Collection getDepends() throws XavaException {
@@ -3538,23 +3563,40 @@ public class View implements java.io.Serializable {
 	}
 	
 	public String getParameterValuesPropertiesInDescriptionsList(MetaReference ref) throws XavaException {
-		return ref.getParameterValuesPropertiesInDescriptionsList(getMetaView());
+		if (ref.getName().contains(".")) {
+			MetaReference unqualifiedRef = ref.cloneMetaReference();
+			unqualifiedRef.setName(Strings.lastToken(ref.getName(), "."));
+			String prefix = Strings.noLastToken(ref.getName(), ".");
+			StringBuffer sb = new StringBuffer();
+			StringTokenizer st = new StringTokenizer(unqualifiedRef.getParameterValuesPropertiesInDescriptionsList(getMetaView(ref)), ", ");
+			while (st.hasMoreTokens()) {
+				String property = st.nextToken();
+				if (sb.length() > 0) sb.append(",");
+				sb.append(prefix + property);
+			}
+			return sb.toString();
+		}	
+		else {
+			return ref.getParameterValuesPropertiesInDescriptionsList(getMetaView());
+		} 
 	}	
+	
+	
 
-	public String getConditionInDescriptionsList(MetaReference ref) throws XavaException {		
-		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
+	public String getConditionInDescriptionsList(MetaReference ref) throws XavaException {
+		MetaDescriptionsList descriptionsList = getMetaDescriptionsList(ref); 
 		if (descriptionsList == null) return "";
 		return descriptionsList.getCondition();
 	}
 	
 	public String getOrderInDescriptionsList(MetaReference ref) throws XavaException {		
-		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
+		MetaDescriptionsList descriptionsList = getMetaDescriptionsList(ref);  
 		if (descriptionsList == null) return "";
 		return descriptionsList.getOrder();				
 	}		
 		
 	public boolean isOrderByKeyInDescriptionsList(MetaReference ref) throws XavaException {
-		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
+		MetaDescriptionsList descriptionsList = getMetaDescriptionsList(ref);  
 		if (descriptionsList == null) return false;
 		return descriptionsList.isOrderByKey();
 	}
@@ -4707,7 +4749,7 @@ public class View implements java.io.Serializable {
 
 	private MetaDescriptionsList getMetaDescriptionsList() { 
 		MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());
-		MetaDescriptionsList descriptionsList = getParent().getMetaView().getMetaDescriptionList(ref);
+		MetaDescriptionsList descriptionsList = getParent().getMetaDescriptionsList(ref);  
 		return descriptionsList;
 	}
 	
@@ -4806,7 +4848,19 @@ public class View implements java.io.Serializable {
 					!isHidden(subview.getMemberName()))  
 				{
 					result.put(getPropertyPrefix() + subview.getMemberName(), this);
-				}				
+				}		
+				else if (subview.isRepresentsElementCollection()) {
+					for (Object member: subview.getMetaMembers()) {
+						if (member instanceof MetaReference) {
+							MetaReference ref = (MetaReference) member;
+							MetaDescriptionsList descriptionsList = subview.getMetaDescriptionsList(ref);
+							if (descriptionsList != null && !Is.emptyString(descriptionsList.getDepends())) {
+								result.put(getPropertyPrefix() + subview.getMemberName(), this);
+								continue; 
+							}
+						}
+					}
+				}
 				subview.fillChangedCollections(result);				
 			}
 		}

@@ -15,18 +15,7 @@ public class ProductExpense {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList(descriptionProperties="year, number")
 	private Invoice invoice;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList 
-	private Family2 family;	
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList(
-		depends="family",
-		condition="${family.number} = ?"
-	)
-	private Subfamily2 subfamily;
-	
+		
 	@ManyToOne(fetch=FetchType.LAZY)
 	@DescriptionsList
 	private Product product;	
@@ -38,6 +27,18 @@ public class ProductExpense {
 		properties={ @PropertyValue(name="value", value="3") }		
 	)	
 	private Carrier carrier;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@DescriptionsList 
+	private Family2 family;	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@DescriptionsList(
+		depends="family",
+		condition="${family.number} = ?"
+	)
+	private Subfamily2 subfamily;
+
 
 	public Invoice getInvoice() {
 		return invoice;
@@ -45,22 +46,6 @@ public class ProductExpense {
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
-	}
-
-	public Family2 getFamily() {
-		return family;
-	}
-
-	public void setFamily(Family2 family) {
-		this.family = family;
-	}
-
-	public Subfamily2 getSubfamily() {
-		return subfamily;
-	}
-
-	public void setSubfamily(Subfamily2 subfamily) {
-		this.subfamily = subfamily;
 	}
 
 	public Product getProduct() {
@@ -79,6 +64,20 @@ public class ProductExpense {
 		this.carrier = carrier;
 	}
 	
-	
-	
+	public Family2 getFamily() {
+		return family;
+	}
+
+	public void setFamily(Family2 family) {
+		this.family = family;
+	}
+
+	public Subfamily2 getSubfamily() {
+		return subfamily;
+	}
+
+	public void setSubfamily(Subfamily2 subfamily) {
+		this.subfamily = subfamily;
+	}
+		
 }
