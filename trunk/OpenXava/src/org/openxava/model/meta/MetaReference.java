@@ -186,6 +186,14 @@ public class MetaReference extends MetaMember implements Cloneable {
 		return metaCalculatorDefaultValue != null;
 	}
 	
+	/**
+	 * 
+	 * @since 5.1
+	 */
+	public boolean hasNotDependentDefaultValueCalculator() {
+		return metaCalculatorDefaultValue != null && !metaCalculatorDefaultValue.isDependent();
+	}
+	
 	public String toString() {		
 		return "MetaReference:" + getId();
 	}

@@ -59,7 +59,7 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 	}
 	String headerId = "";
 	String dataDefaultValue = "";	
-	if (p.hasDefaultValueCalculator() || ref != null && ref.hasDefaultValueCalculator()) { 
+	if (p.hasNotDependentDefaultValueCalculator() || ref != null && ref.hasNotDependentDefaultValueCalculator()) { 	
 		Object defaultValue = null; 
 		String propertyId = null; 
 		if (ref != null && subview.displayAsDescriptionsList(ref) && ref.getMetaModelReferenced().getAllKeyPropertiesNames().size() > 1) { 

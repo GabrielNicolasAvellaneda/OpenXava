@@ -5,6 +5,7 @@ import java.math.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.test.calculators.*;
 
 /**
  * 
@@ -17,6 +18,12 @@ public class QuoteDetail {
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	private Product product;
 	
+	@DefaultValueCalculator( 
+		value=UnitPriceCalculator.class,
+		properties=@PropertyValue(
+			name="productNumber",
+			from="product.number")
+	)
 	private BigDecimal unitPrice;
 	
 	private int quantity;

@@ -283,17 +283,6 @@ public class ProductTest extends ModuleTestBase {
 		assertValue("unitPrice", "20.00");
 		assertValue("unitPriceInPesetas", "3,328");
 		
-		// It is not change because unitPrice already has value
-		setValue("familyNumber", "1");
-		assertValue("unitPrice", "20.00");
-		assertValue("unitPriceInPesetas", "3,328");
-				
-		// Test again		
-		setValue("familyNumber", "2");		
-		setValue("unitPrice", "");
-		
-		// No it is changed because unitPrice has not value, hence
-		// default value is calculated
 		setValue("familyNumber", "1");
 		assertValue("unitPrice", "10.00"); 
 		assertValue("unitPriceInPesetas", "1,664");		
