@@ -50,9 +50,8 @@ public class JPAFilePersistor implements IFilePersistor {
 	@Override
 	public Collection<AttachedFile> findLibrary(String libraryId) {
 		TypedQuery<AttachedFile> query = getManager().createQuery(
-											   "from AttachedFile f "
-											 + "where f.libraryId = :libraryId "
-											 + "order by f.id asc", 
+											   "from AttachedFile f " +
+											   "where f.libraryId = :libraryId", 
 											 	AttachedFile.class);
 		query.setParameter("libraryId", libraryId);
 		return query.getResultList();		
