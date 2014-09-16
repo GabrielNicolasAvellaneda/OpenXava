@@ -33,7 +33,8 @@ public class MovieTest extends ModuleTestBase {
 	
 	public void testClickOnFileInListMode() throws Exception {
 		assertListRowCount(1);
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(
+				    getUrlToFile("Forrest Gump Trailer.webm")).getWebResponse();
 		assertTrue(response.getContentType().equals("video/webm") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 	}
@@ -42,14 +43,16 @@ public class MovieTest extends ModuleTestBase {
 		assertListRowCount(1);
 		execute("Mode.detailAndFirst");
 		assertValue("title", "FORREST GUMP");
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(
+				    getUrlToFile("Forrest Gump Trailer.webm")).getWebResponse();
 		assertTrue(response.getContentType().equals("video/webm") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 	}
 	
 	public void testAddFile() throws Exception {
 		addFile();
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(
+				             getUrlToFile("Corporation.html")).getWebResponse();
 		assertTrue(response.getContentType().equals("text/html") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 		changeModule("Movie");
@@ -63,7 +66,8 @@ public class MovieTest extends ModuleTestBase {
 		setFileValue("newFile", filepath);
 		execute("UploadFile.uploadFile");
 		assertNoErrors();
-		WebResponse response = getWebClient().getPage(getUrlToFile(0)).getWebResponse();
+		WebResponse response = getWebClient().getPage(
+				                   getUrlToFile("Film.jrxml")).getWebResponse();
 		assertTrue(response.getContentType().equals("application/docbook+xml") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
 		changeModule("Movie");
@@ -94,7 +98,7 @@ public class MovieTest extends ModuleTestBase {
 		assertTrue("At least 5 files", countFiles() == 5);
 		
 		//Display file
-		String url = getUrlToFile(1); 
+		String url = getUrlToFile("Corporation.html"); 
 		WebResponse response = getWebClient().getPage(url).getWebResponse();
 		assertTrue(response.getContentType().equals("text/html") || 
 				   response.getContentType().equals(MIME_UNKNOWN));
@@ -119,8 +123,8 @@ public class MovieTest extends ModuleTestBase {
 		assertNoErrors();
 	}	
 		
-	private String getUrlToFile(int index) {
-		String href = getFileAnchors().get(index).getHrefAttribute();
+	private String getUrlToFile(String filename) {
+		String href = getFileAnchors().get(filename).getHrefAttribute();
 		return "http://" + getHost() + ":" + getPort() + href;
 	}
 	
@@ -128,15 +132,16 @@ public class MovieTest extends ModuleTestBase {
 		return getFileAnchors().size();
 	}
 	
-	private List<HtmlAnchor> getFileAnchors() {
-		List<HtmlAnchor> anchors = getHtmlPage().getAnchors();
-		for(Iterator<HtmlAnchor> it = anchors.iterator(); it.hasNext(); ) {
-			HtmlAnchor anchor = it.next();
-			if(!(anchor.getHrefAttribute().indexOf("/xava/xfile?application=") >=0)) {
-				it.remove();
-			}			
-		}
+	private Map<String, HtmlAnchor> getFileAnchors() {
+		Map<String, HtmlAnchor> anchors = new HashMap<String, HtmlAnchor>(); 
+		
+		for(HtmlAnchor anchor : getHtmlPage().getAnchors()) {
+			if(anchor.getHrefAttribute()
+					 .indexOf("/xava/xfile?application=") >= 0)
+			{
+				anchors.put(anchor.getTextContent().trim(), anchor);
+			}
+		}		
 		return anchors;
 	}
 }
-
