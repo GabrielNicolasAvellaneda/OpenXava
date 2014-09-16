@@ -6,6 +6,8 @@
 <%@ page import="org.openxava.web.editors.FilePersistorFactory"%>
 <%@ page import="org.openxava.web.editors.AttachedFile"%>
 
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
 <%
 String propertyKey = request.getParameter("propertyKey");
 String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
@@ -21,15 +23,22 @@ if (!Is.emptyString(fvalue)) file = FilePersistorFactory.getInstance().find(fval
 %>
 <a href='<%=request.getContextPath()%>/xava/xfile?application=<%=applicationName%>&module=<%=module%>&fileId=<%=fvalue%>&dif=<%=dif%>' target="_blank" tabindex="1">
 	<% if ( file != null ) { %>
-		<%=file.getName()%>
+		<span class="<%=style.getAttachedFile()%>"><%=file.getName()%></span>
 	<% } %>
 </a>
 	
 <% if (editable) { %>
-	&nbsp;
-	<span valign='middle'>
-		<xava:image action='AttachedFiles.change' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
-		&nbsp;
-		<xava:image action='AttachedFiles.delete' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
-	</span>
+	<% if(file != null) { %>
+	   		&nbsp;
+			<span valign='middle'>
+				<xava:image action='AttachedFile.delete' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>	
+				&nbsp;
+				<xava:image action='AttachedFile.choose' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
+			</span>	
+	<%} else {%>
+			<span valign='middle'>
+				<xava:image action='AttachedFile.choose' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
+				<xava:link  action='AttachedFile.choose' argv='<%="newFileProperty="+Ids.undecorate(propertyKey)%>'/>
+			</span>
+	<% } %>
 <% } %>	
