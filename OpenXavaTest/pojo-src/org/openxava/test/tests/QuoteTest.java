@@ -36,6 +36,7 @@ public class QuoteTest extends ModuleTestBase {
 
 		setValueInCollection("details", 0, "product.number", "1");
 		assertValueInCollection("details", 0, "product.description", "MULTAS DE TRAFICO");
+		assertValueInCollection("details", 0, "unitPrice", "11.00");		
 		setValueInCollection("details", 0, "unitPrice", "100");
 		setValueInCollection("details", 0, "quantity", "2");
 		assertValueInCollection("details", 0, "amount", "200.00");
@@ -48,6 +49,7 @@ public class QuoteTest extends ModuleTestBase {
 		execute("ReferenceSearch.choose", "row=1");
 		assertValueInCollection("details", 1, "product.number", "2");
 		assertValueInCollection("details", 1, "product.description", "IBM ESERVER ISERIES 270");
+		assertValueInCollection("details", 1, "unitPrice", "20.00");		
 		setValueInCollection("details", 1, "unitPrice", "7000");
 		setValueInCollection("details", 1, "quantity", "1");
 		assertValueInCollection("details", 1, "amount", "7,000.00");
@@ -124,6 +126,49 @@ public class QuoteTest extends ModuleTestBase {
 		
 		execute("CRUD.delete");
 		assertNoErrors();
+	}
+	
+	public void testDependentDefaultValueCalculatorInElementCollection() throws Exception { 
+		execute("CRUD.new");		
+
+		setValueInCollection("details", 0, "product.number", "1");
+		assertValueInCollection("details", 0, "unitPrice", "11.00");		
+		setValueInCollection("details", 0, "quantity", "2");
+		assertValueInCollection("details", 0, "amount", "22.00");
+		
+		assertTotalInCollection("details", 0, "amount", "22.00");
+		assertTotalInCollection("details", 1, "amount",  "4.62");
+		assertTotalInCollection("details", 2, "amount", "26.62");
+		
+		execute("Reference.search", "keyProperty=details.1.product.number");
+		execute("ReferenceSearch.choose", "row=1");
+		assertValueInCollection("details", 1, "product.number", "2");
+		assertValueInCollection("details", 1, "unitPrice", "20.00");		
+		setValueInCollection("details", 1, "quantity", "3");
+		assertValueInCollection("details", 1, "amount", "60.00");
+		
+		assertTotalInCollection("details", 0, "amount", "82.00");
+		assertTotalInCollection("details", 1, "amount", "17.22");
+		assertTotalInCollection("details", 2, "amount", "99.22");
+
+		
+		setValueInCollection("details", 0, "product.number", "2");
+		assertValueInCollection("details", 0, "unitPrice", "20.00");		
+		assertValueInCollection("details", 0, "amount", "40.00");
+		
+		assertTotalInCollection("details", 0, "amount", "100.00");
+		assertTotalInCollection("details", 1, "amount",  "21.00");
+		assertTotalInCollection("details", 2, "amount", "121.00");
+		
+		execute("Reference.search", "keyProperty=details.1.product.number");
+		execute("ReferenceSearch.choose", "row=0");
+		assertValueInCollection("details", 1, "product.number", "1");
+		assertValueInCollection("details", 1, "unitPrice", "11.00");		
+		assertValueInCollection("details", 1, "amount", "33.00");
+		
+		assertTotalInCollection("details", 0, "amount", "73.00");
+		assertTotalInCollection("details", 1, "amount", "15.33");
+		assertTotalInCollection("details", 2, "amount", "88.33");		
 	}
 		
 }

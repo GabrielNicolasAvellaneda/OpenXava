@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- @DefaultValueCalculator is executed each time that the properties in @PropertyValue(from) change.
+- Fix: @DefaultValueCalculator with dependent properties is executed twice sometimes.
 - New stereotype FILES for attaching several files to an entity.
 - Fix: ModuleTestBase.logout() with the built-in security.
 - @DefaultValueCalculator support in @ElementCollection. 

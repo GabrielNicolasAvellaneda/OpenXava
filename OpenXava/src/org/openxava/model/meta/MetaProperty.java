@@ -413,6 +413,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 5.1
+	 */
+	public boolean hasNotDependentDefaultValueCalculator() {
+		return metaCalculatorDefaultValue != null && !metaCalculatorDefaultValue.isDependent();
+	}
 
 	public boolean hasDefaultValueCalculator() {		
 		return metaCalculatorDefaultValue != null;

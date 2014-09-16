@@ -73,4 +73,17 @@ public class MetaSetsContainer implements Serializable {
 		throw new ElementNotFoundException("not_value_from_other_property", propertyNameFrom);
 	}
 
+	/**
+	 * Depends on other properties.
+	 * 
+	 * @since 5.1
+	 */
+	public boolean isDependent() {
+		boolean notDependent = true;
+		if (!containsMetaSets()) notDependent = true; 
+		else if (containsMetaSetsWithoutValue()) notDependent = false;
+		return !notDependent;
+	}
+
+
 }

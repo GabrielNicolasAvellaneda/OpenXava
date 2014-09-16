@@ -30,6 +30,12 @@
 		<action name="edit" image="photo.gif" hidden="true"
 			class="org.openxava.test.actions.EditGalleryNoDialogAction"/>			
 	</controller>
+	
+	<controller name="Quote">	
+		<extends controller="Typical"/>
+		<action name="resetUnitPriceCalculator" class="org.openxava.test.actions.ResetUnitPriceCalculatorAction"
+			hidden="true" on-each-request="true"/>
+	</controller>		
 
 	<controller name="Author">	
 		<extends controller="Typical"/>		

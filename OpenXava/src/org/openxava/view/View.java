@@ -610,10 +610,11 @@ public class View implements java.io.Serializable {
 	/**
 	 * Set the values and throws are events associated to the changed values. 
 	 */
-	public void setValuesNotifying(Map values) throws XavaException {		
+	public void setValuesNotifying(Map values) throws XavaException {			 
 		getRoot().registeringExecutedActions = true;			
 		try {
-			setValues(values); 
+			moveCollectionValuesToViewValues(); 
+			setValues(values); 			
 			notifying(values);
 		}
 		finally {
@@ -621,6 +622,22 @@ public class View implements java.io.Serializable {
 			resetExecutedActions();			
 		}				
 	}
+	
+	private void moveCollectionValuesToViewValues() {  
+		if (!isRepresentsElementCollection()) {
+			View parent = getParent();
+			if (parent == null) return;
+			parent.moveCollectionValuesToViewValues();
+			return;
+		}
+		if (collectionValues == null) return;		
+		if (collectionValues.size() == collectionEditingRow) {
+			if (values != null) values.clear();
+		}
+		else setValues(collectionValues.get(collectionEditingRow)); 		
+	}
+	
+	
 
 	private void notifying(Map values) throws XavaException {
 		Iterator it = Maps.treeToPlain(values).keySet().iterator(); 
@@ -1066,7 +1083,7 @@ public class View implements java.io.Serializable {
 	 * 
 	 * @param name Can be qualified	 
 	 */
-	public void setValueNotifying(String name, Object value) throws ElementNotFoundException, XavaException {		
+	public void setValueNotifying(String name, Object value) throws ElementNotFoundException, XavaException {
 		setValue(name, value);			
 		propertyChanged(name);		
 	}
@@ -2421,7 +2438,7 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	private void assignValuesToElementCollection(String qualifier) { 
+	private void assignValuesToElementCollection(String qualifier) {
 		collectionValues = new ArrayList();		
 		for (int i=0; ;i++) {
 			boolean containsReferences = false;
@@ -2459,7 +2476,7 @@ public class View implements java.io.Serializable {
 			if (Maps.isEmpty(element)) continue;
 			if (containsReferences) element = Maps.plainToTree(element);
 			collectionValues.add(element);
-		}				
+		}						
 	}
 
 	private boolean isNeededToVerifyHasBeenFormatted(MetaProperty p) { 
@@ -2653,11 +2670,11 @@ public class View implements java.io.Serializable {
 			if (isRepresentsElementCollection()) {
 				try {
 					// When the format is "0.name" thrown from a cell of the collection UI
-					collectionEditingRow = Integer.parseInt(Strings.firstToken(name, ".")); 
+					collectionEditingRow = Integer.parseInt(Strings.firstToken(name, "."));
 					setValues(collectionValues.get(collectionEditingRow));
 					name = Strings.noFirstTokenWithoutFirstDelim(name, ".");
 				}
-				catch (NumberFormatException ex) { 
+				catch (NumberFormatException ex) {
 					// When the format is "name" thrown from other action, depends, etc. using the underlaying View
 				}
 			}
@@ -2682,19 +2699,13 @@ public class View implements java.io.Serializable {
 				return;								
 			}
 			int idxDot = name.indexOf('.');			
-			if (idxDot >= 0) { // it's qualified				
+			if (idxDot >= 0) { // it's qualified
 				String subviewName = name.substring(0, idxDot);	
 				String propertyName = name.substring(idxDot + 1);
 				View subview = getSubview(subviewName);				
 				subview.propertyChanged(propertyName);
-				try {
-					MetaProperty changedProperty = subview.getMetaView().getMetaProperty(propertyName); 
-					propertyChanged(changedProperty, name); 
-				}
-				catch (ElementNotFoundException ex) {
-				}
 			}
-			else {	
+			else {
 				MetaProperty changedProperty = null;
 				try {					
 					changedProperty = getMetaView().getMetaProperty(name);
@@ -2709,7 +2720,7 @@ public class View implements java.io.Serializable {
 					String qualifiedName = Is.emptyString(getMemberName())?name:(getMemberName() + "." + name);
 					getParent().propertyChanged(changedProperty, qualifiedName); 
 				}
-			}		
+			}
 		}
 		catch (ElementNotFoundException ex) {
 			// So that sections that do not have all the properties do not throw exceptions
@@ -2741,16 +2752,17 @@ public class View implements java.io.Serializable {
 						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);
 						calculationDone = true;
 					}
-					if (pr.hasDefaultValueCalculator() && isEmptyValue(getValue(pr.getName()))) {					
+					if (pr.hasDefaultValueCalculator()) {					
 						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.createDefaultValueCalculator(), errors, messages);
 						calculationDone = true;
 					}					
 				}
-			}			
+			}
 			if (calculationDone && isRepresentsElementCollection()) {
 				moveViewValuesToCollectionValues();
 			}
-			   
+
+			
 			if (hasToSearchOnChangeIfSubview && isSubview() && isRepresentsEntityReference() && !isGroup() && !displayAsDescriptionsList() && 
 					( 	
 					(getLastPropertyKeyName().equals(changedProperty.getName()) && getMetaPropertiesIncludingGroups().contains(changedProperty)) || // Visible keys
@@ -2761,7 +2773,7 @@ public class View implements java.io.Serializable {
 				) {
 				if (!searchingObject) { // To avoid recursive infinite loops				
 					try {
-						searchingObject = true;						
+						searchingObject = true;												
 						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());
 						executeOnChangeAction(changedPropertyQualifiedName, action);
 						// If the changed property is not the key, for example, if we have a hidden
@@ -2798,7 +2810,7 @@ public class View implements java.io.Serializable {
 					// or main view)
 				}
 			}		
-		}			
+		}
 		if (hasSections()) {
 			int count = getSections().size();
 			for (int i = 0; i < count; i++) {
@@ -2814,7 +2826,7 @@ public class View implements java.io.Serializable {
 			parent.moveViewValuesToCollectionValues();
 			return;
 		}
-		if (collectionValues == null) return; 
+		if (collectionValues == null) return;
 		if (collectionEditingRow == collectionValues.size()) collectionValues.add(collectionEditingRow, getAllValues());
 		else collectionValues.set(collectionEditingRow, getAllValues());
 		refreshCollection(); 
@@ -2973,7 +2985,7 @@ public class View implements java.io.Serializable {
 			Object old = getValue(metaProperty.getName());
 			if (!Is.equal(old, newValue)) {				
 				setValueNotifying(metaProperty.getName(), newValue);
-			}			
+			}
 			addRecalculatedProperty(metaProperty); 
 		}
 		catch (Exception ex) {
@@ -4318,7 +4330,7 @@ public class View implements java.io.Serializable {
 		this.viewCollectionElementAction = viewCollectionElementAction;
 	}	
 
-	public void recalculateProperties() {		
+	public void recalculateProperties() {
 		try {												
 			Map names = getCalculatedPropertiesNames();
 			if (!names.isEmpty()) {				
