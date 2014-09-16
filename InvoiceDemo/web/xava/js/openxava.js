@@ -29,6 +29,7 @@ openxava.ajaxRequest = function(application, module, firstRequest) {
 			openxava.getSelectedValues(application, module),
 			openxava.deselected,
 			firstRequest,
+			openxava.baseFolder, 
 			openxava.refreshPage);	
 	$(window).unbind('resize');
 	openxava.deselected = [];

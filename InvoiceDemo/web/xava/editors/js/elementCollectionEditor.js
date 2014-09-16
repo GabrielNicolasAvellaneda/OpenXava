@@ -1,6 +1,6 @@
 if (elementCollectionEditor == null) var elementCollectionEditor = {};
 
-elementCollectionEditor.onChangeRow = function(element, rowIndex) {  	
+elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	var currentRow = $(element).parent().parent(); 
 	var nextRow = currentRow.next();
 	if (nextRow.is(':visible')) return;			
@@ -13,10 +13,20 @@ elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	token2 = ", " + (rowIndex + 2) + ")";
 	newRowHtml = newRowHtml.replace(token1, token2);
 	newRow.html(newRowHtml);
+	var table = currentRow.parent().parent();	
+	elementCollectionEditor.setDefaultValues(table, rowIndex); 
 	nextRow.show();
-	var table = currentRow.parent().parent(); 
 	$(table).append(newRow);
 	currentRow.children().first().find("a").css('visibility', 'visible');
+}
+
+elementCollectionEditor.setDefaultValues = function(table, rowIndex) { 
+	var header = table.children().first().children().first(); 
+	header.children("[id!='']").each(function() {
+		var headerId = $( this ).attr("id");
+		var inputId = headerId.replace(new RegExp("__H", "g"), "__" + rowIndex);
+		$("#" + inputId).attr("value", $( this ).attr("data-default-value"));
+	});
 }
 
 elementCollectionEditor.removeRow = function(element, rowIndex) { 

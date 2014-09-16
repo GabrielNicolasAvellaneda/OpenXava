@@ -35,6 +35,10 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 		<filter-name>naviox</filter-name>
 		<servlet-name>module</servlet-name>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>naviox</filter-name>
+		<servlet-name>phone</servlet-name>
+	</filter-mapping>	
 			
 	
 	
@@ -78,6 +82,10 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 		<servlet-name>naviox</servlet-name>
 		<servlet-class>com.openxava.naviox.web.NaviOXServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>phone</servlet-name>
+		<servlet-class>com.openxava.phone.web.PhoneServlet</servlet-class>
+	</servlet>	
 	<servlet>
 		<servlet-name>dwrInvoker</servlet-name>
 		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>    
@@ -141,6 +149,10 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 	<servlet-mapping>
 		<servlet-name>naviox</servlet-name>
 		<url-pattern>/m/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>phone</servlet-name>
+		<url-pattern>/p/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwrInvoker</servlet-name>

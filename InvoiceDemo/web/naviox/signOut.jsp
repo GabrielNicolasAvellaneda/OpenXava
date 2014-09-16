@@ -1,7 +1,7 @@
 <%@page import="org.openxava.controller.ModuleManager"%>
 
 <%
-session.invalidate(); 
+session.invalidate();
 %>
 
 <script type="text/javascript">

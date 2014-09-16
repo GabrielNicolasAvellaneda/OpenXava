@@ -37,7 +37,7 @@ public class Invoice extends Identifiable {
 	private Customer customer;
 	
 	@ElementCollection
-	@ListProperties("product.number, product.description, product.unitPrice, quantity, amount[invoice.sum, invoice.vat, invoice.total]")
+	@ListProperties("product.number, product.description, unitPrice, quantity, amount[invoice.sum, invoice.vat, invoice.total]")
 	private Collection<InvoiceDetail> details;
 	
 	@Stereotype("TEXT_AREA")

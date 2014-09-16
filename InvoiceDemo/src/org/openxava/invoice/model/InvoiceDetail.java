@@ -1,21 +1,34 @@
 package org.openxava.invoice.model;
 
 import java.math.*;
+
 import javax.persistence.*;
+
 import org.openxava.annotations.*;
+import org.openxava.invoice.calculators.*;
 
 @Embeddable
 public class InvoiceDetail {
 		
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
 	private Product product;
+
+	@Required 
+	@DefaultValueCalculator(  
+		value=UnitPriceCalculator.class,
+		properties=@PropertyValue(
+			name="productNumber",
+			from="product.number")
+	)
+	private BigDecimal unitPrice;
 		
 	@Required
 	private int quantity;
 	
-	@Depends("product.unitPrice, quantity")
+
+	@Depends("unitPrice, quantity") 
 	public BigDecimal getAmount() {
-		return new BigDecimal(getQuantity()).multiply(getProduct().getUnitPrice());
+		return new BigDecimal(getQuantity()).multiply(getUnitPrice()); 
 	}
 
 	public Product getProduct() {
@@ -32,6 +45,14 @@ public class InvoiceDetail {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public BigDecimal getUnitPrice() {
+		return unitPrice == null?new BigDecimal("0.00"):unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 	
 }
