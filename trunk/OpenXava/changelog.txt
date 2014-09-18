@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- @OnChangeSearch supported for references in embeddable classes of element collections.
+- @OnChange supported in embeddable classes of element collections. 
 - @DefaultValueCalculator is executed each time that the properties in @PropertyValue(from) change.
 - Fix: @DefaultValueCalculator with dependent properties is executed twice sometimes.
 - New stereotype FILES for attaching several files to an entity.
