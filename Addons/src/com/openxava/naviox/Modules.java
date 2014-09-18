@@ -168,6 +168,7 @@ public class Modules implements Serializable {
 	public boolean isModuleAuthorized(HttpServletRequest request) {
 		try {
 			if (request.getRequestURI().contains("module.jsp")) return false;
+			if (Users.getCurrent() == null && request.getRequestURI().contains("/phone/")) return false; 
 			if (!(request.getRequestURI().startsWith(request.getContextPath() + "/m/") ||
 					request.getRequestURI().startsWith(request.getContextPath() + "/p/") || 
 					request.getRequestURI().startsWith(request.getContextPath() + "/modules/"))) return true;
