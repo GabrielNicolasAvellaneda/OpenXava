@@ -1,12 +1,15 @@
 package com.openxava.naviox.web;
 
 import java.io.*;
+import java.util.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.openxava.util.*;
 import org.openxava.web.style.*;
+
+import com.openxava.phone.web.*;
 
 /**
  * 
@@ -20,8 +23,8 @@ public class NaviOXServlet extends HttpServlet {
 			response.getWriter().print(XavaResources.getString(request, "module_name_missing"));
 			return;
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher(
-			"/naviox/index.jsp?application=" + uri[1] + "&module=" + uri[3]);
+		String url = Browsers.isMobile(request)?"/p/" + uri[3]:"/naviox/index.jsp?application=" + uri[1] + "&module=" + uri[3];
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);		
 		
 		Style.setPotalInstance(NaviOXStyle.getInstance()); // We manage style in NaviOX as in the portal case, to override the style defined in xava.properties and by device 
 		dispatcher.forward(request, response);

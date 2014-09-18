@@ -81,7 +81,7 @@ naviox.goBack = function(folderOid) {
 
 naviox.refreshModulesList = function(modulesList) { 
 	if (modulesList == null) {
-		window.location=openxava.location=".." 
+		window.location=openxava.location="..";
 		return;
 	}
 	$('#modules_list_core').html(modulesList);
@@ -91,7 +91,7 @@ naviox.refreshModulesList = function(modulesList) {
 
 naviox.refreshSearchModulesList = function(modulesList) { 
 	if (modulesList == null) {
-		window.location=openxava.location=".."
+		window.location=openxava.location="..";
 		return;
 	}
 	$('#modules_list_core').html(modulesList);
@@ -105,7 +105,10 @@ naviox.refreshFolderModulesList = function(modulesList) {
 		return;
 	}
 	$('#modules_list_content').append("<td></td>"); 
-	$('#modules_list_content').children().last().html(modulesList);	
+	$('#modules_list_content').children().last().html(modulesList);
+	
+	$('.modules-list-header').width($(window).width()); 
+	
 	var box = $('#modules_list_box');
     box.animate({
     		left: -box.outerWidth() / 2
@@ -113,7 +116,8 @@ naviox.refreshFolderModulesList = function(modulesList) {
     	function() {
     		$('#modules_list_content').children().first().remove();
     		box.css("left", "0");
-    		naviox.watchSearch(); 
+    		naviox.watchSearch();
+    		$('.modules-list-header').css("width", "100%"); 
     	}
     );
 }
@@ -127,12 +131,16 @@ naviox.refreshFolderBackModulesList = function(modulesList) {
 	var box = $('#modules_list_box');
 	box.css("left", "-" + box.outerWidth() + "px");
 	$('#modules_list_content').children().first().html(modulesList);
+
+	$('.modules-list-header').width($(window).width()); 
+		
     box.animate({
     		left: 0 
     	},    	
     	function() {
     		$('#modules_list_content').children().last().remove();
     		naviox.watchSearch(); 
+    		$('.modules-list-header').css("width", "100%"); 
     	}
     );    
 }

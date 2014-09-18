@@ -61,7 +61,7 @@ public class NaviOXFilter implements Filter {
 				chain.doFilter(secureRequest, response);
 			}
 			else {
-				String base = secureRequest.getRequestURI().split("/")[2];
+				char base = secureRequest.getRequestURI().split("/")[2].charAt(0)=='p'?'p':'m'; 
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/" + base + "/SignIn?originalURI=" + secureRequest.getRequestURI()); 
 				dispatcher.forward(request, response);
 			}
