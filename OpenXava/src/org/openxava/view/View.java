@@ -1100,7 +1100,8 @@ public class View implements java.io.Serializable {
 		if (!trySetValue(name, value)) {
 			String viewName = getViewName() == null?"":"'" + getViewName() + "'";
 			throw new XavaException("member_not_found_in_view", "'" + name + "'", viewName, "'" + getModelName() + "'");
-		}		
+		}
+		moveViewValuesToCollectionValues(); 
 	}	
 				
 	/**
