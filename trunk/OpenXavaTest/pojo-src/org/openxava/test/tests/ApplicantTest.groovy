@@ -36,7 +36,7 @@ class ApplicantTest extends ModuleTestBase {
 		HtmlAnchor loadMoreModules = htmlPage.getHtmlElementById("more_modules").getParentNode()
 		loadMoreModules.click();
 		webClient.waitForBackgroundJavaScriptStartingBefore 10000
-		assertModulesCount 17 // We have to adjust this when we add new modules that content "ca"
+		assertModulesCount 19 // We have to adjust this when we add new modules that content "ca"
 		
 		searchBox.type " \b"
 		assertEquals "", searchBox.getAttribute("value")
