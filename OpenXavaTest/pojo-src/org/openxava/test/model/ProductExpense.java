@@ -29,7 +29,7 @@ public class ProductExpense {
 	private Carrier carrier;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@DescriptionsList 
+	@DescriptionsList
 	private Family2 family;	
 	
 	@ManyToOne(fetch=FetchType.LAZY)

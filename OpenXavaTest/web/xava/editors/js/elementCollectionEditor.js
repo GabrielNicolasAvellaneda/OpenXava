@@ -24,8 +24,8 @@ elementCollectionEditor.setDefaultValues = function(table, rowIndex) {
 	var header = table.children().first().children().first(); 
 	header.children("[id!='']").each(function() {
 		var headerId = $( this ).attr("id");
-		var inputId = headerId.replace(new RegExp("__H", "g"), "__" + rowIndex);
-		$("#" + inputId).attr("value", $( this ).attr("data-default-value"));
+		var inputName = headerId.replace(new RegExp("__H", "g"), "__" + rowIndex);
+		$("[name='" + inputName + "']").attr("value", $( this ).attr("data-default-value")); 
 	});
 }
 

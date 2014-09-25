@@ -53,7 +53,7 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
-	public void testFilterDescriptionsListAndEnumLetterType_myReportConditionWithDescriptionsListAndValidValues() throws Exception { 		
+	public void testFilterDescriptionsListAndEnumLetterType_myReportConditionWithDescriptionsListAndValidValues() throws Exception {
 		assertLabelInList(3, "Description of Type");
 		assertLabelInList(7, "Distance");
 		if (usesAnnotatedPOJO()) { 
@@ -69,7 +69,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValueInList(0, 2, "1");
 		assertValueInList(1, 0, "2004");
 		assertValueInList(1, 1, "10");
-		assertValueInList(1, 2, "1");		
+		assertValueInList(1, 2, "1");
 		
 		execute("ExtendedPrint.myReports");
 		assertValueInCollection("columns", 3, 0, "Description of Type");
@@ -80,14 +80,14 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNotExists("value");
 		assertNotExists("dateValue");
 		assertNotExists("booleanValue");
-		assertNotExists("validValuesValue"); 
-		assertExists("descriptionsListValue"); 
+		assertNotExists("validValuesValue");
+		assertExists("descriptionsListValue");
 		assertExists("order");
-		assertDescriptionValue("descriptionsListValue", "FACTURABLE MODIFIED"); 
+		assertDescriptionValue("descriptionsListValue", "FACTURABLE MODIFIED");
 		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 3, 0, "Description of Type");
 		assertValueInCollection("columns", 3, 1, "=");
-		assertValueInCollection("columns", 3, 2, "FACTURABLE MODIFIED");		
+		assertValueInCollection("columns", 3, 2, "FACTURABLE MODIFIED");
 		
 		assertValueInCollection("columns", 7, 0, "Distance");
 		assertValueInCollection("columns", 7, 1, "=");
@@ -104,7 +104,7 @@ public class DeliveryTest extends ModuleTestBase {
 		execute("MyReport.saveColumn");
 		assertValueInCollection("columns", 7, 0, "Distance");
 		assertValueInCollection("columns", 7, 1, "=");
-		assertValueInCollection("columns", 7, 2, "Nachional"); 
+		assertValueInCollection("columns", 7, 2, "Nachional");
 	}
 	
 	public void testFocusOnlyInEditors() throws Exception {

@@ -1332,7 +1332,7 @@ public class ModuleTestBase extends TestCase {
 	protected String getValueInCollection(String collection, int row, String name) throws Exception {
 		String elementCollectionPropertyName = collection + "." + row + "." + name;
 		if (hasElementByName(elementCollectionPropertyName)) return getValue(elementCollectionPropertyName);
-		int column = getPropertiesList(collection).indexOf(name); 
+		int column = getPropertiesList(collection).indexOf(name);
 		return getValueInCollection(collection, row, column);
 	}
 
@@ -1397,8 +1397,18 @@ public class ModuleTestBase extends TestCase {
 	private HtmlTableCell getTableCellInCollection(String collection, int row, int column) throws Exception {		
 		HtmlTable table = getTable(collection, "collection_not_displayed");
 		row = collectionHasFilterHeader(table)?row + 2:row + 1;
-		int increment = hasLinks(table.getCellAt(row, 0)) || hasLinks(table.getCellAt(0, 0))?2:1;
-		return table.getCellAt(row, column + increment);		
+		return table.getCellAt(row, column + getColumnIncrement(table));
+	}
+
+	private int getColumnIncrement(HtmlTable table) { 
+		int increment = 0;
+		for (int i=0;;i++) {
+			HtmlTableCell cell = table.getCellAt(0, i);
+			if (cell == null) break;
+			if (!(Is.emptyString(cell.asText()) || cell.asXml().contains("<input type=\"checkbox\""))) break;
+			increment++;
+		}
+		return increment;
 	}
 	
 	private boolean hasLinks(HtmlElement element) {
@@ -2165,7 +2175,7 @@ public class ModuleTestBase extends TestCase {
 			assertEditable(elementCollectionPropertyName, editable, XavaResources.getString(editable.equals("true")?"must_be_editable":"must_not_be_editable")); 
 		}
 		else {
-			throw new XavaException("method_only_for_element_collections", "assertEditableInCollection()/assertNoEditableInCollection()");
+			assertTrue(XavaResources.getString("must_be_editable"), editable.equals("false"));
 		}
 	}
 

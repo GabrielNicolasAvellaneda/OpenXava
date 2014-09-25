@@ -13,11 +13,18 @@ import org.openxava.model.*;
  */
 
 @Entity
+@Views({
+	@View(name="DetailsReadOnly"),
+	@View(name="DetailsEditOnly")
+})
 public class Reallocation extends Identifiable {
 	
 	@Column(length=40) @Required
 	private String description;
 	
+	
+	@ReadOnly(forViews="DetailsReadOnly") 
+	@EditOnly(forViews="DetailsEditOnly") 
 	@ElementCollection
 	@ListProperties("place, product.number, product.description, product.unitPrice")
 	private Collection<ReallocationDetail> details;

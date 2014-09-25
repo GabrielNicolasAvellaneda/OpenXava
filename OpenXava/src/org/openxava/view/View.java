@@ -206,7 +206,8 @@ public class View implements java.io.Serializable {
 	// it continues being a subview.
 	private boolean firstLevel;
 
-	private String rootModelName;  
+	private String rootModelName;
+	private Map defaultValues;   
 		
 	public View() {
 		oid = nextOid++;
@@ -518,6 +519,21 @@ public class View implements java.io.Serializable {
 		if (modelChanged) refresh(); 		
 	}
 	
+	private void initDefaultValues() {
+		if (!isRepresentsElementCollection()) return;
+		reset();
+		defaultValues = Maps.treeToPlain(getAllValues());
+		clear();
+	}
+
+	/**
+	 * 
+	 * @since 5.1
+	 */
+	public Object getDefaultValueInElementCollection(String qualifiedPropertyName) { 
+		return defaultValues.get(qualifiedPropertyName);
+	}
+	
 	private void setValues(Map map, boolean closeCollections) throws XavaException { 
 		if (values == null) values = new HashMap();
 		else values.clear();
@@ -613,7 +629,7 @@ public class View implements java.io.Serializable {
 	public void setValuesNotifying(Map values) throws XavaException {			 
 		getRoot().registeringExecutedActions = true;			
 		try {
-			moveCollectionValuesToViewValues(); 
+			moveCollectionValuesToViewValues();
 			setValues(values); 			
 			notifying(values);
 		}
@@ -833,7 +849,7 @@ public class View implements java.io.Serializable {
 		}
 		else if (member instanceof MetaCollection) {
 			ref = ((MetaCollection) member).getMetaReference();
-			newView.setRepresentsCollection(true);						
+			newView.setRepresentsCollection(true);					
 		}
 		else { // MetaGroup			
 			newView.setModelName(getModelName());			 
@@ -955,6 +971,7 @@ public class View implements java.io.Serializable {
 				}
 			}			
 		}
+		newView.initDefaultValues(); 
 		subviews.put(member.getName(), newView);
 	} 
 	 
@@ -1096,12 +1113,12 @@ public class View implements java.io.Serializable {
 	 * @param name Can be qualified	 
 	 * @exception XavaException  If name is not a displayed member of this view.
 	 */
-	public void setValue(String name, Object value) throws XavaException {		
+	public void setValue(String name, Object value) throws XavaException {
 		if (!trySetValue(name, value)) {
 			String viewName = getViewName() == null?"":"'" + getViewName() + "'";
 			throw new XavaException("member_not_found_in_view", "'" + name + "'", viewName, "'" + getModelName() + "'");
 		}
-		moveViewValuesToCollectionValues(); 
+		moveViewValuesToCollectionValues();
 	}	
 				
 	/**
@@ -2445,7 +2462,7 @@ public class View implements java.io.Serializable {
 			boolean containsReferences = false;
 			Map element = new HashMap();
 			for (MetaProperty p: getMetaPropertiesList()) {
-				String propertyKey= qualifier + i + "." + p.getName();				
+				String propertyKey= qualifier + i + "." + p.getName();
 				String [] results = getRequest().getParameterValues(propertyKey);
 				if (results == null && p.getName().contains(".")) {
 					String refName = Strings.noLastTokenWithoutLastDelim(p.getName(), ".");
@@ -2829,7 +2846,7 @@ public class View implements java.io.Serializable {
 		}
 		if (collectionValues == null) return;
 		if (collectionEditingRow == collectionValues.size()) collectionValues.add(collectionEditingRow, getAllValues());
-		else collectionValues.set(collectionEditingRow, getAllValues());
+		else collectionValues.set(collectionEditingRow, getAllValues());		
 		refreshCollection(); 
 	}
 
