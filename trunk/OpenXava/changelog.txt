@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- @NoSearch supported for references in embeddable classes of element collections.
 - @ReadOnly and @EditOnly supported for @ElementCollection.
 - Methods assertEditableInCollection and assertNoEditableInCollection of ModuleTestBase work for any type of collection.
 - @OnChangeSearch supported for references in embeddable classes of element collections.

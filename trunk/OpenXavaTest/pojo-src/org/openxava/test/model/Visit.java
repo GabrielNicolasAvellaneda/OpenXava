@@ -30,6 +30,7 @@ public class Visit {
 
 	@OnChangeSearch(OnChangeSearchVisitCarrierAction.class)
 	@ManyToOne(fetch=FetchType.LAZY)
+	@NoSearch 
 	private Carrier carrier;
 	
 

@@ -15,8 +15,10 @@ public class RouteTest extends ModuleTestBase {
 		super(testName, "Route");		
 	}
 	
-	public void testOnChangeInElementCollection() throws Exception {
-		execute("CRUD.new");		
+	public void testOnChangeInElementCollection_NoSearchInElementCollection() throws Exception {
+		execute("CRUD.new");
+		
+		assertNoAction("Reference.search", "keyProperty=visits.0.carrier.number"); 
 		
 		setValueInCollection("visits", 0, "km", "11");
 		assertValueInCollection("visits", 0, "description", "VISIT KM 11");
