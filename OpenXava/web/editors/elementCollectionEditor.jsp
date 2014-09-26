@@ -95,7 +95,7 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 		<%if (resizeColumns) {%></nobr><%}%>
 		</div>
 	</th>
-	<% if (subview.isLastSearchKey(p.getName())) { %>
+	<% if (ref != null && subview.isSearchForReference(ref) && subview.isLastSearchKey(p.getName())) { %>
 	<th></th>
 	<% } %>
 <%
@@ -144,8 +144,9 @@ for (int f=0; f < rowCount; f++) {
 			if (subview.displayAsDescriptionsList(subview.getMetaReference(refName))) {
 				referenceName = collectionName + "." + f + "." + refName;
 			}
-			else {
-				searchAction = subview.getSubview(refName).getSearchAction();
+			else { 			
+				View refView = subview.getSubview(refName);
+				if (refView.isSearch()) searchAction = refView.getSearchAction();
 			}
 		}
 		String propertyName = collectionName + "." + f + "." + p.getName();
@@ -169,7 +170,7 @@ for (int f=0; f < rowCount; f++) {
 	 	<%if (resizeColumns) {%></nobr><%}%>
 		</div>
 	</td>		
-	<% if (subview.isLastSearchKey(p.getName())) {	%>
+	<% if (searchAction != null && subview.isLastSearchKey(p.getName())) {	%>
 	<td class="<%=cssCellClass%>" style="<%=cellStyle%>; padding-left: 3px; padding-right: 0px;">
 		<xava:action action='<%=searchAction%>' argv='<%="keyProperty="+propertyName%>'/> 								
 	</td>
