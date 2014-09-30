@@ -510,7 +510,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	-webkit-box-shadow: 0px -3px 4px #CCCCCC;	
 }
 
-.ox-list-header th, .ox-list-subheader th, .ox-list-pair td, .ox-list-odd td  {
+.ox-list-header th, .ox-list-subheader th, .ox-list-pair td, .ox-list-odd td, .ox-total-row td  { 
 	padding-left: 15px;
 }
 
@@ -672,6 +672,19 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 .ox-collection-list-actions {
 	border-left: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;
+}
+
+.ox-total-capable-cell { 
+	text-align: right;
+}
+
+.ox-total-row td { 
+	vertical-align: top;
+	padding-top: 5px;	
+}
+
+.ox-total-label-cell { 
+	font-weight: bold;
 }
 
 .ie .ox-collection-list-actions {

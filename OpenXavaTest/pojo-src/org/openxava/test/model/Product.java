@@ -108,7 +108,7 @@ public class Product {
 	@OnChange(forViews="DEFAULT, WithSection",
 		value=OnChangeProductUnitPriceAction.class
 	)	
-	private BigDecimal unitPrice; 
+	private BigDecimal unitPrice;
 		
 	@Stereotype("MEMO")
 	private String remarks;

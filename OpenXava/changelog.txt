@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Look and feel for totals in lists and collections improved.
+- Fix: Not numeric totals are not well aligned.
+- Fix: Totals are not well aligned after column resizes.
+- Fix: Summation icon in list not correctly aligned.
 - @NoSearch supported for references in embeddable classes of element collections.
 - @ReadOnly and @EditOnly supported for @ElementCollection.
 - Methods assertEditableInCollection and assertNoEditableInCollection of ModuleTestBase work for any type of collection.
