@@ -18,17 +18,18 @@ for (int c = 0; it.hasNext(); c++) {
 	if (subview.hasCollectionTotal(i, c)) {
 		String ftotal = WebEditors.format(request, p, subview.getCollectionTotal(i, c), errors, view.getViewName(), true);		
 	%> 	
-	<td class="<%=style.getTotalCell()%>" style="<%=cellStyle%>">
-	<div class=" <xava:id name='<%=idCollection%>'/>_col<%=c%>" style="overflow: hidden;">	
+	<td class="<%=style.getTotalCell()%>" style="<%=cellStyle%>">	
+	<div class=" <xava:id name='<%=idCollection%>'/>_col<%=c%>" style="overflow: hidden; ">
+	<nobr> 
 	<%=ftotal%>&nbsp;
 	</nobr>	
 	</div>	
-	</td>
+	</td>	
 	<%	
 	}
 	else if (subview.hasCollectionTotal(i, c + 1)) { 
 	%>
-	<td style="<%=style.getTotalLabelCellStyle()%>">	
+	<td class="<%=style.getTotalLabelCell()%>" style="<%=style.getTotalLabelCellStyle()%>">
 		<%=subview.getCollectionTotalLabel(i, c + 1)%>&nbsp;
 	</td>
 	<%	

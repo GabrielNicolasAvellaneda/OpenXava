@@ -1091,6 +1091,15 @@ public class Style {
 		return "ox-total-cell"; 
 	}
 
+	/**
+	 * 
+	 * @since 5.1
+	 */
+	public String getTotalLabelCell() { 
+		return "ox-total-label-cell"; 
+	}
+
+
 	public String getTotalCapableCell() {
 		return "ox-total-capable-cell"; 
 	}
