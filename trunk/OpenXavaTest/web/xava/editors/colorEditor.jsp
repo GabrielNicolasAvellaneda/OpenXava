@@ -13,9 +13,9 @@ for (int c=0; it.hasNext() && c < 3; c++) {
 	Color color = (Color) it.next();
 	String checked = value.equals(color.getNumber())?"checked='checked'":"";
 %>	
-
-<span style="font-weight: bold; color: #<%=color.getHexValue()%>; vertical-align: bottom"> 
-	<input name="<%=propertyKey%>" value="<%=color.getNumber()%>" type="radio" <%=checked%> tabindex="1" />
+<input name="<%=propertyKey%>" value="<%=color.getNumber()%>" type="radio" <%=checked%> 
+	tabindex="1" style="vertical-align: text-top;"/>
+<span style="font-weight: bold; color: #<%=color.getHexValue()%>; vertical-align: -10%;"> 	
 	<%=color.getName()%>
 </span>
 <%
