@@ -313,6 +313,7 @@ public class Module extends DWRBase {
 			else {
 				fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);
 				fillChangedCollections(result);
+				fillChangedCollectionsTotals(result); 
 				fillChangedSections(result);
 				fillChangedErrorImages(result);
 				fillChangedLabels(result);
@@ -380,17 +381,36 @@ public class Module extends DWRBase {
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			String qualifiedName = (String) en.getKey();
-			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);			
+			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
 			View containerView = (View) en.getValue();
 			MetaModel metaModel = containerView.getMetaModel();
-			if (metaModel.containsMetaReference(name)) {		
+			boolean isReference = metaModel.containsMetaReference(name);
+			boolean isInsideElementCollection = false;
+			if (qualifiedName.contains(":")) {
+				isInsideElementCollection = true;
+				name = qualifiedName.substring(qualifiedName.lastIndexOf(':') + 1);
+				qualifiedName = qualifiedName.replace(":", "");
+				try {
+					containerView.getMetaReference(name);
+					isReference = true;
+				}
+				catch (ElementNotFoundException ex) {
+					isReference = false;
+				}
+			}
+			if (isReference) { 
 				String referenceKey = decorateId(qualifiedName); 
-				request.setAttribute(referenceKey, containerView.getMetaReference(name));
+				MetaReference metaReference = containerView.getMetaReference(name);
+				if (isInsideElementCollection) {
+					metaReference = metaReference.cloneMetaReference();
+					metaReference.setName(name);
+				}
+				request.setAttribute(referenceKey, metaReference);
 				put(result, "reference_editor_" + qualifiedName,   
 					"reference.jsp?referenceKey=" + referenceKey + 
 					"&onlyEditor=true&viewObject=" + containerView.getViewObject());
 			}
-			else {				
+			else {
 				put(result, "editor_" + qualifiedName, 
 					"editorWrapper.jsp?propertyName=" + name + 
 					"&editable=" + containerView.isEditable(name) +
@@ -431,6 +451,27 @@ public class Module extends DWRBase {
 				"&propertyPrefix=" + containerView.getPropertyPrefix());									
 		}
 	}
+	
+	private void fillChangedCollectionsTotals(Map result) { 
+		View view = getView();			
+		Collection changedCollections = view.getChangedCollectionsTotals().entrySet(); 		
+		for (Iterator it = changedCollections.iterator(); it.hasNext(); ) {
+			Map.Entry en = (Map.Entry) it.next();
+			String [] key = ((String) en.getKey()).split(":");
+			String qualifiedName = key[0];
+			String row = key[1];
+			String column = key[2];
+			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
+			View containerView = (View) en.getValue();			
+			put(result, "collection_total_" + row + "_" + column + "_" + qualifiedName + ".", 
+				"editors/collectionTotal.jsp?collectionName=" + name + 
+				"&viewObject=" + containerView.getViewObject() +
+				"&row=" + row +
+				"&column=" + column +
+				"&propertyPrefix=" + containerView.getPropertyPrefix());  									
+		}
+	}
+
 	
 	private void fillChangedSections(Map result) {
 		View view = getView();			
@@ -492,7 +533,7 @@ public class Module extends DWRBase {
 		result.append("&module=");
 		result.append(module);
 		addValuesQueryString(result, values, multipleValues, selected, deselected);
-		if (!Is.emptyString(additionalParameters)) result.append(additionalParameters);		
+		if (!Is.emptyString(additionalParameters)) result.append(additionalParameters);
 		return result.toString();
 	}
 

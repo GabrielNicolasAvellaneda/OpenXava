@@ -1660,7 +1660,7 @@ public class ModuleTestBase extends TestCase {
 
 	private int getTotalsRowCount(HtmlTable table) { 
 		int count = 0;
-		for (int i=table.getRowCount() - 1; table.getRow(i).getId().equals("") && i >=0; i--) count++;		
+		for (int i=table.getRowCount() - 1; table.getRow(i).getId().equals("") && i >=0; i--) count++;
 		return count;
 	}
 

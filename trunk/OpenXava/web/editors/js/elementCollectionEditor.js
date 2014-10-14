@@ -16,7 +16,7 @@ elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	var table = currentRow.parent().parent();	
 	elementCollectionEditor.setDefaultValues(table, rowIndex); 
 	nextRow.show();
-	$(table).append(newRow);
+	$(nextRow).after(newRow);
 	currentRow.children().first().find("a").css('visibility', 'visible');
 }
 

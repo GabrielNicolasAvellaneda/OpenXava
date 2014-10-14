@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+
+- Reference data fetching in element collections optimized. 
+- Improving AJAX behavior for element collection, with x10 improvement in responsiveness.
 - Look and feel for totals in lists and collections improved.
 - Fix: Not numeric totals are not well aligned.
 - Fix: Totals are not well aligned after column resizes.
