@@ -16,6 +16,7 @@ import org.openxava.model.*;
 
 @Entity
 @View(members="year, number, date; customer; details")
+@Tab(defaultOrder="${year} desc") 
 public class Quote extends Identifiable {
 		
 	@Column(length=4) @Required

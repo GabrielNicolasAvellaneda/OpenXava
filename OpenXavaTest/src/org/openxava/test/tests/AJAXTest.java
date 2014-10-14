@@ -27,6 +27,69 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
+	public void testElementCollections() throws Exception { 
+		if (!usesAnnotatedPOJO()) return;
+		changeModule("Quote");
+		execute("Mode.detailAndFirst");
+		assertValue("year", "2014"); // This one ...
+		assertValue("number", "1");  // ... has 3 details
+		setValueInCollection("details", 0, "quantity", "61");		
+		assertLoadedParts(
+			"editor_details.0.amount," +
+			"collection_total_0_4_details.," +
+			"collection_total_1_4_details.," +
+			"collection_total_2_4_details.," +	
+			"errors, messages");
+		setValueInCollection("details", 1, "product.number", "1");
+		assertLoadedParts(
+			"editor_details.1.product.description," + 
+			"editor_details.1.unitPrice," + 
+			"editor_details.1.amount," +
+			"collection_total_0_4_details.," +
+			"collection_total_1_4_details.," +
+			"collection_total_2_4_details.," +				
+			"errors, messages");
+		setValueInCollection("details", 2, "quantity", "61");		
+		assertLoadedParts(
+			"editor_details.2.amount," +
+			"collection_total_0_4_details.," +
+			"collection_total_1_4_details.," +
+			"collection_total_2_4_details.," +								
+			"errors, messages");
+		setValue("customer.number", "2"); // To test that the collection is not affected
+		assertLoadedParts(
+			"editor_customer.name," +
+			"errors, messages");
+		assertValueInCollection("details", 1, "product.number", "1");
+		assertValueInCollection("details", 1, "unitPrice", "11.00");
+		setValueInCollection("details", 1, "product.number", "5");
+		assertValueInCollection("details", 1, "unitPrice", "11.00"); // Because product 5 has the same unit price than 1
+		assertLoadedParts(
+			"editor_details.1.product.description," +
+			"errors, messages");
+	}
+	
+	public void testDescriptionsListInElementCollections() throws Exception { 
+		if (!usesAnnotatedPOJO()) return;
+		changeModule("ProductExpenses");
+		execute("CRUD.new");
+		setValueInCollection("expenses", 0, "family.number", "1");
+		assertLoadedParts(
+			"reference_editor_expenses.0.subfamily," + 
+			"errors, messages");
+	}
+	
+	public void testReferencesInElementCollections() throws Exception { 
+		if (!usesAnnotatedPOJO()) return;
+		changeModule("Route");
+		execute("CRUD.new");
+		setValueInCollection("visits", 0, "customer.number", "1");
+		assertLoadedParts(
+			"editor_visits.0.customer.name," + 
+			"editor_visits.0.description," +
+			"errors, messages");
+	}
+		
 	public void testNotDuplicateDivOnLoadCollection() throws Exception { 
 		changeModule("Seller");
 		execute("Mode.detailAndFirst");

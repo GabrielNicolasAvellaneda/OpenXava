@@ -15,11 +15,10 @@ public class QuoteTest extends ModuleTestBase {
 	}
 	
 	public void testElementCollection() throws Exception {
-		assertListRowCount(0);
 		execute("CRUD.new");		
-		setValue("year", "2014");
+		setValue("year", "2015");
 		setValue("number", "66");
-		setValue("date", "1/1/14");
+		setValue("date", "1/1/15");
 		setValue("customer.number", "1");
 		assertValue("customer.name", "Javi");
 		
@@ -66,11 +65,11 @@ public class QuoteTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 0);
 		
 		execute("Mode.list");
-		execute("Mode.detailAndFirst");
+		execute("Mode.detailAndFirst");		
 		
-		assertValue("year", "2014");
+		assertValue("year", "2015");
 		assertValue("number", "66");
-		assertValue("date", "1/1/14");
+		assertValue("date", "1/1/15");
 		assertValue("customer.number", "1");
 		
 		assertCollectionRowCount("details", 2);
@@ -122,7 +121,9 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 2, "amount", "242.00");
 		
 		execute("Mode.list");
-		execute("Mode.detailAndFirst");		
+		execute("Mode.detailAndFirst");
+		assertValue("year", "2015");
+		assertValue("number", "66");		
 		
 		execute("CRUD.delete");
 		assertNoErrors();

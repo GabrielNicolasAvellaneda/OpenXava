@@ -165,7 +165,9 @@ for (int f=0; f < rowCount; f++) {
 		<% } else if (referenceName != null) { %>
 		<xava:descriptionsList reference="<%=referenceName%>"/>
 		<% } else { %>
+		<span id="<xava:id name='<%="editor_" + view.getPropertyPrefix() + propertyName%>'/>">
 		<xava:editor property="<%=propertyName%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
+		</span>
 		<% } %>		
 	 	<%if (resizeColumns) {%></nobr><%}%>
 		</div>
@@ -180,7 +182,7 @@ for (int f=0; f < rowCount; f++) {
 }
 %>
 </tr>
-<%@ include file="collectionTotals.jsp" %>
+<jsp:include page="collectionTotals.jsp" />
 </table>
 <% if (resizeColumns && scrollSupported) { %>
 </div>
