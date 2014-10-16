@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * A group of <code>@{@link CollectionView}</code> associated to the same collection. <p>
  * 
- * Applies to collections.<p>
+ * Applies to @OneToMany/@ManyToMany collections.<p>
  * 
  * It allows to define a value different for <code>@{@link CollectionView}</code> in each view.<br>
  * Example:

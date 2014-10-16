@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * The final user cannot create new objects of the referenced type from here. <p>
  * 
- * Applies to references and collections.<p>
+ * Applies to references and @OneToMany/@ManyToMany collections.<p>
  * 
  * Example:
  * <pre>

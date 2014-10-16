@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * The view of the referenced object (each collection element) which is used to
  * display the detail. <p>
  * 
- * Applies to collections.<br> 
+ * Applies to @OneToMany/@ManyToMany collections.<br> 
  * By default the default view is used.<br>
  * Example:
  * <pre>

@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * The final user cannot modify the current referenced object from here. <p>
  * 
- * Applies to references and collections. <p>
+ * Applies to references and @OneToMany/@ManyToMany collections. <p>
  * 
  * Example:
  * <pre>

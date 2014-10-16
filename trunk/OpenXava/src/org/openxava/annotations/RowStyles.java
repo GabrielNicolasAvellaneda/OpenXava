@@ -14,6 +14,7 @@ import java.lang.annotation.*;
  * &nbsp;&nbsp;&nbsp;@RowStyle(forViews="Complete", style="highlight", property="type", value="steady") 	
  * &nbsp;})
  * </pre>
+ * It does not work for @ElementCollection.
  *
  * @author Javier Paniza
  */

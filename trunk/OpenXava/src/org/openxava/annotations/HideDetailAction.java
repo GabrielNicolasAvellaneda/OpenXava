@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * In a collection it allows you to define your custom action to hide 
  * the detail view. <p> 
  * 
- * Applies to collections.<p>
+ * Applies to @OneToMany/@ManyToMany collections.<p>
  * 
  * This is the action executed on click in 'Close' link.
  * Example:

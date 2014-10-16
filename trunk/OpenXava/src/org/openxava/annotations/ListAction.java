@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * In collections to add actions in list mode; usually actions which scope is
  * the entire collection. <p>
  * 
- * Applies to collections.<p>
+ * Applies to @OneToMany/@ManyToMany collections.<p>
  * 
  * Example:
  * <pre>

@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * In collections to add an action in each row, but not in the collection button bar. <p>
  * 
- * Applies to collections.<p>
+ * Applies to @OneToMany/@ManyToMany collections.<p>
  * 
  * Example:
  * <pre>

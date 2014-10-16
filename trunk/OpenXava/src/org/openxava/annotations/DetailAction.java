@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * In collection view to add actions in detail mode, usually actions which scope
  * is the detail that is being edited. <p>
  * 
- * Applies to collections.<p>
+ * Applies to @OneToMany/@ManyToMany collections.<p>
  * 
  * Example:
  * <pre>

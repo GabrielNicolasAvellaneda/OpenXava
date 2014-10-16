@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * With <code>@Tree</code> you can instruct OpenXava to visualize collections 
  * as a tree instead of a list. <p> 
  * 
- * Applies to collections.
+ * Applies to @OneToMany/@ManyToMany collections.
  * 
  * Example:
  * <pre>

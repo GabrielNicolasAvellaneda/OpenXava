@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * Allows to define a custom action to save the collection element. <p> 
  * 
- * Applies to collections. <p>
+ * Applies to @OneToMany/@ManyToMany collections. <p>
  * 
  * This is the action executed on click in 'Save detail' link.<br>
  * Example:
