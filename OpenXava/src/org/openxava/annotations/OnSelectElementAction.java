@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Allows to define an action to be executed when an element of the collection is
  * selected or unselected.<p> 
  * 
- * Applies to collections. <p>
+ * Applies to @OneToMany/@ManyToMany collections. <p>
  * 
  * This action is executed on click on the checkbox of a row of the collection.<br>
  * Example:

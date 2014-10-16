@@ -26,6 +26,7 @@ import java.lang.annotation.*;
  * you can define more.<br>
  * You can note as property 'type' is also listed in ListProperties, that is
  * you must use properties displayed in User Interface.<br>
+ * It doesn't work with @ElementCollection.<br>
  * 
  * @author Javier Paniza
  */

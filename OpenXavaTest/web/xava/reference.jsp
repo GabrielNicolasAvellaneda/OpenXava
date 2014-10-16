@@ -147,7 +147,7 @@ if (descriptionsList) {
 		else {
 			condition = metaTab.getBaseCondition() + " AND " + condition;
 		}
-	}
+	}	
 %>
 	<jsp:include page="editors/descriptionsEditor.jsp">
 		<jsp:param name="script" value="<%=script%>"/>

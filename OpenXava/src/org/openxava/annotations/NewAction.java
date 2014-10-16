@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * Allows you to define your custom action to start
  * adding a new element to a collection. <p>
  * 
- * Applies to collections. <p>
+ * Applies to @OneToMany/@ManyToMany collections. <p>
  * 
  * This is the action executed on click in 'Add' link.<br>
  * Example:

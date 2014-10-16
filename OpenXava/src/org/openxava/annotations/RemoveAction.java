@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * Allows to define a custom action to remove the element from the collection. 
  * 
- * Applies to collections. <p>
+ * Applies to @OneToMany/@ManyToMany collections. <p>
  * 
  * This is the action executed on click in 'Remove detail 'link.<br>
  * Example:

@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * Allows to define your a custom action to remove the selected elements 
  * from the collection. <p>
  *  
- * Applies to collections. <p>
+ * Applies to @OneToMany/@ManyToMany collections. <p>
  * 
  * This is the action executed when a
  * user select some rows and then click in 'Remove selected' link.<br>

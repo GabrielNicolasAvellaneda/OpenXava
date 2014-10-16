@@ -1,7 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
-
+- Showing messages in log for annotation misuse in element collection.
+- Java 8 support.
 - Reference data fetching in element collections optimized. 
 - Improving AJAX behavior for element collection, with x10 improvement in responsiveness.
 - Look and feel for totals in lists and collections improved.

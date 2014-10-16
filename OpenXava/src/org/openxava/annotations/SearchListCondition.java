@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * This one differs from @Condition that it does not affect
  * the collection list, it only affects the list of selectable items. <p>
  * 
- * Applies to collections and references. <p>
+ * Applies to references and @OneToMany/@ManyToMany collections. <p>
  * 
  * Example:
  * <pre>

@@ -3,7 +3,7 @@ package org.openxava.annotations;
 /**
  * A group of <code>@{@link Tree}</code> associated to the same collection. <p>
  * 
- * Applies to collections.<p>
+ * Applies to @OneToMany/@ManyToMany collections.<p>
  * 
  * It allows to define a value different for <code>@{@link Tree}</code> in each view.<br>
  * Example:

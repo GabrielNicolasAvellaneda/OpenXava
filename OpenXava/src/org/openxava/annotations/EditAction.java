@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * Allows you to define your custom action to view a collection element. <p> 
  * 
- * Applies to collections.<p>
+ * Applies to @OneToMany/@ManyToMany collections.<p>
  * 
  * This is the action showed in each row, if the collection is read only.<br>
  * Example:

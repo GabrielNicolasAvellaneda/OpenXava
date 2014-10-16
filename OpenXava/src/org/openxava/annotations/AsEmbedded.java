@@ -23,7 +23,7 @@ import java.lang.annotation.*;
  * &nbsp;private Seller seller;
  * </pre>
  * 
- * <h4>Applied to collections</h4> 
+ * <h4>Applied to @OneToMany/@ManyToMany collections</h4> 
  * By default the collections with CascadeType.REMOVE allow the users to create 
  * and to edit elements, while the other collections allows only to choose existing 
  * entities to add to (or remove from) the collection. If you put <code>@{@link AsEmbedded}</code>

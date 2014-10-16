@@ -1717,7 +1717,33 @@ public class AnnotatedClassParser {
 		} 			
 		
 		
-		// No applicable
+		// Not applicable
+		if (collection.isElementCollection()) {			
+			Class [] onlyForCollectionAnnotations = {
+				CollectionView.class, CollectionViews.class,
+				RowStyle.class, RowStyles.class, 
+				EditAction.class, EditActions.class, 
+				ViewAction.class, ViewActions.class, 
+				NewAction.class, NewActions.class, 
+				SaveAction.class, SaveActions.class, 
+				HideDetailAction.class, HideDetailActions.class, 
+				RemoveAction.class, RemoveActions.class, 
+				RemoveSelectedAction.class, RemoveSelectedActions.class, 
+				ListAction.class, ListActions.class, 
+				RowAction.class, RowActions.class, 
+				DetailAction.class, DetailActions.class, 
+				OnSelectElementAction.class, OnSelectElementActions.class, 
+				Tree.class, Trees.class 					
+			};
+			notApply(element, collection.getName(), onlyForCollectionAnnotations, "@OneToMany/@ManyToMany collections");			
+			Class [] forReferencesAndCollectionAnnotations = {
+				NoCreate.class, 
+				NoModify.class, 
+				AsEmbedded.class, 
+				SearchListCondition.class, SearchListConditions.class 
+			};
+			notApply(element, collection.getName(), forReferencesAndCollectionAnnotations, "references & @OneToMany/@ManyToMany collections");
+		}
 		if (element.isAnnotationPresent(Action.class)) {
 			notApply(collection.getName(), Action.class, "properties & references");
 		}
@@ -1800,6 +1826,15 @@ public class AnnotatedClassParser {
 		}		
 		if (element.isAnnotationPresent(LabelStyle.class)) {
 			notApply(collection.getName(), LabelStyle.class, "properties & references");
+		}
+	}
+
+
+	private void notApply(AnnotatedElement element, String name, Class[] annotations, String validMemberTypes) { 
+		for (Class annotation: annotations) {
+			if (element.isAnnotationPresent(annotation)) {
+				notApply(name, annotation, validMemberTypes);
+			}
 		}
 	}
 

@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * A group of <code>@{@link SearchListCondition}</code> associated to the same reference or collection. <p>
  * 
- * Applies to collections and references.
+ * Applies to references and @OneToMany/@ManyToMany collections. <p>
  * 
  * It allows to define a value different for <code>@{@link SearchListCondition}</code> 
  * in each view.<br>
