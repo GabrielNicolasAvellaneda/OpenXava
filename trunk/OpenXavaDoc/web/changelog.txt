@@ -1,6 +1,39 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.1 (2014-10-21)
+-------------------------
+- @NoSearch supported for references in embeddable classes of element collections.
+- @ReadOnly and @EditOnly supported for @ElementCollection.
+- @OnChangeSearch supported for references in embeddable classes of element collections.
+- @OnChange supported in embeddable classes of element collections.
+- @SearchListCondition supported for references in embeddable classes of element collections.
+- @SearchAction supported for references in embeddable classes of element collections.
+- Search action for references available in element collections.
+- Support for @DescriptionsList references in element collections, including dependent ones. 
+- @DefaultValueCalculator support in @ElementCollection.
+- Improving AJAX behavior for element collection, with x10 improvement in responsiveness.
+- Reference data fetching in element collections optimized.
+- Searching references by @SearchKey properties in element collections.
+- New stereotype FILES for attaching several files to an entity.
+- @DefaultValueCalculator is executed each time that the properties in @PropertyValue(from) change.
+- Look and feel for totals in lists and collections improved.
+- Java 8 support.
+- FirstSteps content changed.
+- French messages improved.
+- Showing messages in log for annotation misuse in element collection.
+- Methods assertEditableInCollection() and assertNoEditableInCollection() of ModuleTestBase work for any type of collection.
+- New assertValidValuesCountInCollection() and assertValidValuesInCollection() methods in ModuleTestBase.
+- Some new common use labels to be used in applications.
+- Fix: Not numeric totals are not well aligned.
+- Fix: Totals are not well aligned after column resizes.
+- Fix: Summation icon in list not correctly aligned.
+- Fix: ModuleTestBase.assertLabelInList() does not work with element collections.
+- Fix: The xava:descriptionsList JSP tag only works from some folders. 
+- Fix: Editor resizing in element collections only works for text input fields.
+- Fix: ModuleTestBase.logout() fails with the built-in security.
+- Fix: @DefaultValueCalculator with dependent properties is executed twice sometimes.
+
 OpenXava 5.0.1 (2014-7-14)
 --------------------------
 - Focus navigation improved for list filter fields.
