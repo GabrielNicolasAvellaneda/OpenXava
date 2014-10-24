@@ -230,7 +230,7 @@ public class Invoice {
 	@EditOnly(forViews="OnlyEditDetails, DetailsWithTotals") 
 	@NewAction(forViews="NotAllActionsInDetails", value="")
 	@RemoveAction(forViews="NotAllActionsInDetails", value="")
-	@RemoveSelectedAction(forViews="NotAllActionsInDetails", value="")
+	@RemoveSelectedAction(forViews="NotAllActionsInDetails", value="")	
 	private Collection<InvoiceDetail> details = new ArrayList<InvoiceDetail>(); 
 	
 	@OneToMany (mappedBy="invoice")
