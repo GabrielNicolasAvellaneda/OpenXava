@@ -163,9 +163,12 @@ public class TrainingTest extends ModuleTestBase {
 		
 		row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___1");
 		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
-		assertTrue(row.isDisplayed());
 		removeIcon.click();
-		assertTrue(!row.isDisplayed());
+		assertCollectionRowCount("sessions", 2);
+		assertValueInCollection("sessions", 0, "description", "ONE"); 
+		assertValueInCollection("sessions", 0, "kms", "11");
+		assertValueInCollection("sessions", 1, "description", "THREE"); 
+		assertValueInCollection("sessions", 1, "kms", "13");				
 		
 		execute("CRUD.save");		
 		execute("Mode.list");

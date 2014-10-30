@@ -115,7 +115,10 @@ for (int f=0; f < rowCount; f++) {
 	String events=f%2==0?style.getListPairEvents():style.getListOddEvents();
 	String newRowStyle = subview.isCollectionEditable() && f == rowCount - 1?"display: none;":"";
 	String lastRowEvent = subview.isCollectionEditable() && f >= rowCount - 2?"onchange='elementCollectionEditor.onChangeRow(this, "+  f + ")'":"";
-	String removeStyle = subview.isCollectionEditable() && f >= rowCount - 2?"style='visibility:hidden;'":"";	
+	String removeStyle = subview.isCollectionEditable() && f >= rowCount - 2?"style='visibility:hidden;'":"";
+	String app = request.getParameter("application");
+	String module = request.getParameter("module");
+	boolean hasTotals = subview.getCollectionTotalsCount() > 0;
 %>
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid; <%=newRowStyle%>">
 <% if (subview.isCollectionEditable()) { %>
@@ -124,7 +127,7 @@ for (int f=0; f < rowCount; f++) {
 	 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)" <%=removeStyle%>>
 		<img 		 
 			src='<%=request.getContextPath()%>/xava/images/delete.gif'
-			border='0' align='middle' onclick="elementCollectionEditor.removeRow(this, <%=f%>)"/>
+			border='0' align='middle' onclick="elementCollectionEditor.removeRow('<%=app%>', '<%=module%>', this, <%=f%>, <%=hasTotals%>)"/>
 	</a>
 	</nobr>
 	</td>

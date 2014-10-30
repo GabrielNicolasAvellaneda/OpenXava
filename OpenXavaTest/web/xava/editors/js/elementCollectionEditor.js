@@ -29,8 +29,22 @@ elementCollectionEditor.setDefaultValues = function(table, rowIndex) {
 	});
 }
 
-elementCollectionEditor.removeRow = function(element, rowIndex) { 
+elementCollectionEditor.removeRow = function(application, module, element, rowIndex, hasTotals) { 
 	var currentRow = $(element).parent().parent().parent().parent();
-	currentRow.find("input").val("");
-	currentRow.hide();
+	var nextRow = currentRow.next();
+	currentRow.remove();
+	elementCollectionEditor.renumber(nextRow, rowIndex);
+	if (hasTotals) {
+		openxava.executeAction(application, module, "", false, "ElementCollection.refreshTotals");
+	}	
+}
+
+elementCollectionEditor.renumber = function(row, rowIndex) { 
+	if (!$(row).is(":visible")) return; 		
+	var token1 = new RegExp("__" + (rowIndex + 1), "g");
+	var token2 = "__" + rowIndex;
+	row.attr("id", row.attr("id").replace(token1, token2));
+	var rowHtml = row.html().replace(token1, token2);
+	row.html(rowHtml);
+	elementCollectionEditor.renumber(row.next(), rowIndex + 1);
 }

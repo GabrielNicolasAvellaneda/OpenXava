@@ -2401,7 +2401,7 @@ public class View implements java.io.Serializable {
 		assignValuesToWebView("", true); 		
 	}
 		
-	private void assignValuesToWebView(String qualifier, boolean firstLevel) {
+	private void assignValuesToWebView(String qualifier, boolean firstLevel) {		
 		try {		
 			this.firstLevel = firstLevel; 
 			formattedProperties = null; 
@@ -2423,7 +2423,8 @@ public class View implements java.io.Serializable {
 			oldEditable = editable;
 			changedLabels = null;
 			refreshDescriptionsLists = false;
-			oldNotEditableMembersNames = notEditableMembersNames==null?null:new HashSet(notEditableMembersNames);  
+			oldNotEditableMembersNames = notEditableMembersNames==null?null:new HashSet(notEditableMembersNames);
+			
 						
 			if (hasSections()) { 								
 				View section = getSectionView(getActiveSection());
@@ -2441,15 +2442,16 @@ public class View implements java.io.Serializable {
 						resetExecutedActions();						
 					}						
 				}			
-			}				
+			}
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			getErrors().add("system_error");
 		}
 	}
-
-	private void assignValuesToMembers(String qualifier, Collection members) { 
+	
+	
+	private void assignValuesToMembers(String qualifier, Collection members) {
 		for (Object m: members) { 					
 			if (isMetaProperty(m)) {
 				MetaProperty p = (MetaProperty) m;
@@ -2468,9 +2470,9 @@ public class View implements java.io.Serializable {
 							formattedProperties.add(p.getName()); 
 						}
 					}
-				}											
+				}						
 			}
-			else if (m instanceof MetaReference) {					
+			else if (m instanceof MetaReference) {
 				MetaReference ref = (MetaReference) m;
 				String key = qualifier + ref.getName() + DescriptionsLists.COMPOSITE_KEY_SUFFIX;
 				String value = getRequest().getParameter(key);				
@@ -2484,27 +2486,28 @@ public class View implements java.io.Serializable {
 			}
 			
 			else if (m instanceof MetaCollection) {
-				MetaCollection collec = (MetaCollection) m;				
-				View subview = getSubview(collec.getName());					 	
+				MetaCollection collec = (MetaCollection) m;
+				View subview = getSubview(collec.getName());
 				String collectionQualifier = qualifier + collec.getName() + ".";
 				if (((MetaCollection) m).isElementCollection()) {
 					subview.assignValuesToElementCollection(collectionQualifier);
 				}
 				else {
-					subview.assignValuesToWebView(collectionQualifier, false);					
+					subview.assignValuesToWebView(collectionQualifier, false);
 				}
 			}
-			else if (m instanceof MetaGroup) {					
+			else if (m instanceof MetaGroup) {
 				MetaGroup group = (MetaGroup) m;
 				View subview = getGroupView(group.getName());
-				subview.assignValuesToWebView(qualifier, false);					 																									
+				subview.assignValuesToWebView(qualifier, false);
 			}
 		}
 	}
 	
 	private void assignValuesToElementCollection(String qualifier) {
+		int oldCount = collectionValues == null?0:collectionValues.size(); 
 		collectionValues = new ArrayList();		
-		mustRefreshCollection = false; 
+		mustRefreshCollection = false;
 		for (int i=0; ;i++) {
 			boolean containsReferences = false;
 			Map element = new HashMap();
@@ -2545,7 +2548,10 @@ public class View implements java.io.Serializable {
 		setCollectionEditionRowFromChangedProperty();
 		oldCollectionTotals = collectionTotals; 
 		moveCollectionValuesToViewValues();
-		setOldStateInElementCollection();
+		if (collectionValues.size() != oldCount) {
+			collectionTotals = null; 
+		}
+		setOldStateInElementCollection();		
 	}
 
 	private void setCollectionEditionRowFromChangedProperty() {  

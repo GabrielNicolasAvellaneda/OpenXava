@@ -2,6 +2,8 @@ package org.openxava.test.tests;
 
 import org.openxava.tests.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 
 
 /**
@@ -170,6 +172,31 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 0, "amount", "73.00");
 		assertTotalInCollection("details", 1, "amount", "15.33");
 		assertTotalInCollection("details", 2, "amount", "88.33");		
+	}
+	
+	public void testRemovingRowUpdatesTotals() throws Exception {  
+		execute("Mode.detailAndFirst");
+		assertValue("year", "2014"); // This one ...
+		assertValue("number", "1");  // ... has 3 details
+		assertTotalInCollection("details", 0, "amount", "162.00");
+		assertTotalInCollection("details", 1, "amount",  "34.02");
+		assertTotalInCollection("details", 2, "amount", "196.02");
+		
+		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Quote__details___1");
+		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
+		removeIcon.click();		
+		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
+		
+		assertTotalInCollection("details", 0, "amount", "102.00");
+		assertTotalInCollection("details", 1, "amount",  "21.42");
+		assertTotalInCollection("details", 2, "amount", "123.42");
+		
+		
+		setValueInCollection("details", 1, "quantity", "5");
+		assertValueInCollection("details", 1, "amount", "100.00");
+		assertTotalInCollection("details", 0, "amount", "122.00");
+		assertTotalInCollection("details", 1, "amount",  "25.62");
+		assertTotalInCollection("details", 2, "amount", "147.62");
 	}
 		
 }

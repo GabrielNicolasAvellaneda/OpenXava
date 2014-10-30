@@ -461,6 +461,11 @@ here that you want to override.
 											
 	</controller>
 	
+	<controller name="ElementCollection">	
+		<action name="refreshTotals" hidden="true"
+			class="org.openxava.actions.EmptyAction"/>	
+	</controller>						
+	
 	<!-- 
 	These actions are optional to use with ManyToMany collection, they are
 	not added by default. That is, you have to use @ListAction("ManyToMany.new")
