@@ -67,6 +67,16 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts(
 			"editor_details.1.product.description," +
 			"errors, messages");
+		
+		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Quote__details___1");
+		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
+		removeIcon.click();		
+		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
+		assertLoadedParts(
+			"collection_total_0_4_details.," +
+			"collection_total_1_4_details.," +
+			"collection_total_2_4_details.," +								
+			"errors, messages");		
 	}
 	
 	public void testDescriptionsListInElementCollections() throws Exception { 
@@ -78,6 +88,19 @@ public class AJAXTest extends ModuleTestBase {
 			"reference_editor_expenses.0.subfamily," + 
 			"errors, messages");
 	}
+	
+	public void testRemoveRowInElementCollections() throws Exception {  
+		if (!usesAnnotatedPOJO()) return;
+		changeModule("Reallocation");
+		execute("Mode.detailAndFirst");
+		assertLoadedParts("core");
+		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Reallocation__details___1");
+		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
+		removeIcon.click();		
+		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
+		assertLoadedParts("core"); // No AJAX call at all			
+	}
+
 	
 	public void testReferencesInElementCollections() throws Exception { 
 		if (!usesAnnotatedPOJO()) return;

@@ -35,7 +35,7 @@
 		<extends controller="Typical"/>
 		<action name="resetUnitPriceCalculator" class="org.openxava.test.actions.ResetUnitPriceCalculatorAction"
 			hidden="true" on-each-request="true"/>
-	</controller>		
+	</controller>
 
 	<controller name="Author">	
 		<extends controller="Typical"/>		

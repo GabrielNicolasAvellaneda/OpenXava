@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Totals in element collections are not recalculated after removing a row.
+- Fix: After removing a line from an element collection events and calculated properties does not work in the collection. 
+- Fix: Reloading page after removing a line from an element collection leaves a blank line.
 - Some new common use labels to be used in applications.
 
 OpenXava 5.1 (2014-10-21)
