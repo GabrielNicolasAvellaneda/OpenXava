@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Style for selected row hides the line separator.
 - Fix: Totals in element collections are not recalculated after removing a row.
 - Fix: After removing a line from an element collection events and calculated properties does not work in the collection. 
 - Fix: Reloading page after removing a line from an element collection leaves a blank line.
@@ -37,6 +38,7 @@ OpenXava 5.1 (2014-10-21)
 - Fix: The xava:descriptionsList JSP tag only works from some folders. 
 - Fix: Editor resizing in element collections only works for text input fields.
 - Fix: ModuleTestBase.logout() fails with the built-in security.
+- Fix: ModuleTestBase.login() fails with a language other than English.
 - Fix: @DefaultValueCalculator with dependent properties is executed twice sometimes.
 
 OpenXava 5.0.1 (2014-7-14)

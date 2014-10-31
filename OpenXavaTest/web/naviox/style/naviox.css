@@ -532,7 +532,6 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-list-pair, .ox-list-odd {
-	position: relative; 
 	height: 35px;
 	border-bottom-color: #EBEBEB !important;
 }
