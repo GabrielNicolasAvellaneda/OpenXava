@@ -99,9 +99,11 @@ if (manager.isButtonBarVisible()) {
 			%>
 			<span class="<%=style.getActive()%>">
 				<a href="javascript:void(0)" class="<%=style.getButtonBarModeButton()%>">
+					<div class="<%=style.getButtonBarActiveModeButtonContent()%>">
 					&nbsp;&nbsp;
 					<%=action.getLabel(request)%>
 					&nbsp;&nbsp;
+					</div>
 				</a>
 			</span>			
 			<%

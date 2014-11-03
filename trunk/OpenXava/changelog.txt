@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Visual defect in links for changing mode.
+- Fix: Help link too close to mode links.
 - Fix: Style for selected row hides the line separator.
 - Fix: Totals in element collections are not recalculated after removing a row.
 - Fix: After removing a line from an element collection events and calculated properties does not work in the collection. 

@@ -378,6 +378,14 @@ public class Style {
 	public String getButtonBarModeButton() {		
 		return "ox-button-bar-mode-button"; 
 	}
+
+	/**
+	 * 
+	 * @since 5.1.1
+	 */
+	public String getButtonBarActiveModeButtonContent() { 		
+		return "ox-button-bar-active-mode-button-content"; 
+	}
 		
 	/**
 	 * 
