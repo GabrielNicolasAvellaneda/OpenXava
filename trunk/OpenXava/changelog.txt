@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Many actions on bottom of the view are ugly.
 - Fix: Visual defect in links for changing mode.
 - Fix: Help link too close to mode links.
 - Fix: Style for selected row hides the line separator.
