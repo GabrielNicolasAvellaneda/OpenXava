@@ -346,7 +346,6 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus
 	height: 10px;
 }
 
-
 .ox-button-bar, .ox-collection-list-actions {
 	background: #F5F5F5;
 	padding: 10px;
@@ -387,7 +386,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus
 	outline: none; 
 }
 
-input[type="button"], .ipad input[type="button"]:hover, A#show_modules { 
+input[type="button"], .ipad input[type="button"]:hover, A#show_modules {
 	background: #F5F5F5;
 	border: 1px solid #C6C6C6;
 	padding: 10px;
@@ -403,6 +402,16 @@ input[type="button"], .ipad input[type="button"]:hover, A#show_modules {
 	box-shadow: 0px 1px 2px #CCCCCC; 
 	-moz-box-shadow: 0px 1px 2px #CCCCCC; 
 	-webkit-box-shadow: 0px 1px 2px #CCCCCC;
+}
+
+input[type="button"], .ipad input[type="button"]:hover {
+	margin-bottom: 8px;
+}
+
+.ui-dialog input[type="button"], .ui-dialog .ipad input[type="button"]:hover,
+#sign_in_box input[type="button"], #sign_in_box .ipad input[type="button"]:hover
+{
+	margin-bottom: 0px;
 }
 
 A#show_modules  { 
@@ -518,7 +527,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	padding-right: 0px;
 }
 
-.ox-button-bar-active-mode-button-content { /* tmp */ 
+.ox-button-bar-active-mode-button-content {  
 	background: white;  
 	height: 36px;
 }
@@ -712,8 +721,8 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-bottom-buttons {
-	margin-left: 3px;
 	margin-right: 15px; /* To adjust collections width */
+	margin-left: 14px;
 }
 
 .ui-dialog .ox-bottom-buttons {
@@ -859,10 +868,6 @@ div.ox-subcontroller table{
 	padding: 20px 0px 25px 22px;  
 	margin: 30px 60px 20px 20px; 
 	background: #F1F1F1; 
-}
-
-#sign_in_box .ox-bottom-buttons {
-	padding-left: 2px;
 }
 
 #sign_in_box .ox-detail {
