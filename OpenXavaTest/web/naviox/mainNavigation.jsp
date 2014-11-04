@@ -9,11 +9,11 @@
 
 <jsp:useBean id="modules" class="com.openxava.naviox.Modules" scope="session"/>
 
-<div id="main_navigation_left">
-<nobr>
 <% if (modules.hasModules()) { %>
 <a id="show_modules" href=""><xava:message key="all_modules"/></a>
 <% } %>
+<div id="main_navigation_left">
+<nobr>
 
 <% 
 for (Iterator it= modules.getTopModules().iterator(); it.hasNext();) {
