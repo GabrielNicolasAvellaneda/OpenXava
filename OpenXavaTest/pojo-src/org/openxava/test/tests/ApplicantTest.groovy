@@ -27,8 +27,8 @@ class ApplicantTest extends ModuleTestBase {
 		assertFirstModuleInMenu "Abstract wall", "Abstract wall" // Not in i18n, to test a case 
 
 		HtmlElement searchBox = htmlPage.getHtmlElementById("search_modules_text")
-		searchBox.type "ca"
-		assertEquals "ca", searchBox.getAttribute("value")
+		searchBox.type "CA"
+		assertEquals "CA", searchBox.getAttribute("value")
 		webClient.waitForBackgroundJavaScriptStartingBefore 10000
 		assertModulesCount 15
 		assertFirstModuleInMenu "Academic years", "Academic years management"  
