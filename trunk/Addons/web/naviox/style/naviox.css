@@ -7,7 +7,7 @@ body {
 	background: white ;
 	font-size: 12px;
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 }
 
 body, .ui-dialog {
@@ -79,7 +79,11 @@ a:hover {
 #main_navigation_left { 
 	position: absolute; 
 	top: 10px; 
-	left: 10px;
+	left: 65px;
+	overflow: hidden;
+	width: calc(100% - 65px);
+	width: -moz-calc(100% - 65px);
+	width: -webkit-calc(100% - 65px);	
 }
 
 #main_navigation_right { 
