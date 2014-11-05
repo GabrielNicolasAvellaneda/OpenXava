@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Top bar module links displaced when the page is customized adding content on top.
 - Fix: Module search does not work with uppercase letters. 
 - Fix: Ugly horizontal scrollbar when there are many modules in top menu.
 - Fix: Many actions on bottom of the view are ugly.

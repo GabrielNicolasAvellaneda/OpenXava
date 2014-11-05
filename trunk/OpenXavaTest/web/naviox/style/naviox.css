@@ -77,22 +77,35 @@ a:hover {
 }
 
 #main_navigation_left { 
-	position: absolute; 
-	top: 10px; 
-	left: 65px;
+	position: relative;
+	top: -14px;   
 	overflow: hidden;
-	width: calc(100% - 65px);
-	width: -moz-calc(100% - 65px);
-	width: -webkit-calc(100% - 65px);	
+	width: calc(100% - 50px);
+	width: -moz-calc(100% - 50px);
+	width: -webkit-calc(100% - 50px);	
 }
 
-#main_navigation_right { 
-	position: absolute; 
-	top: 10px; 
-	right: 0px; 
+.main-navigation-left-without-all-modules { 
+	left: -5px;
+}
+
+.main-navigation-left-with-all-modules { 
+	left: 50px;
+}
+
+
+#main_navigation_right {
+	float: right;
+	position: relative; 
+	top: -29px; 
+	right: 0px;	
 	padding-left: 20px; 
 }
 
+.ie #main_navigation_right { 
+	top: -27px;
+}
+	
 #main_navigation_right_bridge1 { 
 	background-color: rgba(0, 0, 0, 0.2);
 }
@@ -101,9 +114,12 @@ a:hover {
 	background-color: rgba(0, 0, 0, 0.6);
 }
 
+#main_navigation_right_content A { 
+	padding-right: 0px;
+}
+
 #main_navigation_right_content { 
 	background-color: black;
-	padding-right: 5px;
 	padding-left: 15px; 
 }
 
