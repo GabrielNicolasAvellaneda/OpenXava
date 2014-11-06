@@ -94,12 +94,13 @@ a:hover {
 }
 
 
-#main_navigation_right {
-	float: right;
+#main_navigation_right {	
+	float: right; 
 	position: relative; 
 	top: -29px; 
-	right: 0px;	
-	padding-left: 20px; 
+	right: 0px; 	
+	padding-left: 20px;
+	margin-bottom: -29px;
 }
 
 .ie #main_navigation_right { 
