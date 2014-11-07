@@ -127,6 +127,8 @@ public class Tab implements java.io.Serializable {
 	private boolean conditionJustCleared;
 	private Map<String, String> labels;  
 	
+	private Messages errors; 
+	
 	public List<MetaProperty> getMetaProperties() { 
 		if (metaProperties == null) {
 			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;				
@@ -333,10 +335,10 @@ public class Tab implements java.io.Serializable {
 	 * 
 	 * Suitable for UI.
 	 */
-	public IXTableModel getTableModel() {		
+	public IXTableModel getTableModel() { 		
 		if (tableModel == null) {
 			try {
-				tableModel = createTableModel();			
+				tableModel = createTableModel();
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
@@ -476,7 +478,11 @@ public class Tab implements java.io.Serializable {
 						metaPropertiesKey.add(metaProperty);						
 					}					
 				}
-				else if (!Is.emptyString(this.conditionValues[i])) {					
+				else if (!Is.emptyString(this.conditionValues[i])) {
+					if (p.isNumber() && !Strings.isNumeric(this.conditionValues[i])) {
+						errors.add("filter_parameter_numeric", p.getName());							
+						return "1 = 0";
+					}
 					if (firstCondition) firstCondition = false;
 					else sb.append(" and ");
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();										 
@@ -770,8 +776,8 @@ public class Tab implements java.io.Serializable {
 			for (int i = indexIncrement; i < key.length; i++) {
 				MetaProperty p = (MetaProperty) metaPropertiesKey.get(i - indexIncrement);
 				// If has a converter, apply
-												
-				if (p != null && p.getMapping().hasConverter()) { 
+							
+				if (p != null && p.getMapping().hasConverter()) {
 					try {	
 						key[i] = p.getMapping().getConverter().toDB(key[i]);
 					}
@@ -785,7 +791,7 @@ public class Tab implements java.io.Serializable {
 				}
 			}									
 		}
-				
+		
 		return key;
 	}
 
@@ -2107,6 +2113,14 @@ public class Tab implements java.io.Serializable {
 			log.error(XavaResources.getString("cut_out_row_error"), ex);
 			throw new XavaException("cut_out_row_error"); 
 		}
+	}
+
+	public Messages getErrors() {
+		return errors;
+	}
+
+	public void setErrors(Messages errors) {
+		this.errors = errors;
 	}
 
 }
