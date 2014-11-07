@@ -232,7 +232,14 @@ public class Module extends DWRBase {
 			changedParts.put(changedPart.getKey(),
 				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected, deselected, additionalParameters)	
 			);
-		}	
+		}
+		// We tried the errors again because errors could be produced and added when rendering JSPs
+		Messages errors = (Messages) request.getAttribute("errors");
+		if (errors.contains() && changedParts.get("errors") == null) {
+			put(changedParts, "errors",
+				getURIAsString("errors.jsp", values, multipleValues, selected, deselected, additionalParameters)	
+			);
+		}
 		if (!manager.isListMode()) {			
 			result.setFocusPropertyId(getView().getFocusPropertyId());
 		}		

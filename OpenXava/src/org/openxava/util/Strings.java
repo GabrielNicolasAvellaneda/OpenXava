@@ -20,6 +20,20 @@ public class Strings {
 	private final static Pattern XSS_PATTERN = Pattern.compile(XSS_REGEXP_PATTERN);
 	private static Map separatorsBySpaces;
 	
+	
+	/**
+	 * The space, comma, dot, + and - are considered as numeric. 
+	 * 
+	 * @since 5.1.1
+	 */
+	public static boolean isNumeric(CharSequence string) { 
+		int length = string.length();
+		for (int i=0; i<length; i++) {
+			if ("0123456789 .,-+".indexOf(string.charAt(i)) < 0) return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * Changes \n, \r and \t by space. <p>
 	 * 

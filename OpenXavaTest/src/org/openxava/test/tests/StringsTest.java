@@ -20,4 +20,16 @@ public class StringsTest extends TestCase {
 		assertEquals("Total VAT in invoice", Strings.javaIdentifierToNaturalLabel("totalVATinInvoice"));
 	}
 
+	public void testIsNumeric() throws Exception { 
+		assertTrue(Strings.isNumeric("1"));
+		assertTrue(Strings.isNumeric("1.0")); 
+		assertTrue(Strings.isNumeric("1,0"));
+		assertTrue(Strings.isNumeric(" 1,0"));
+		assertFalse(Strings.isNumeric("1,a0"));	
+		assertTrue(Strings.isNumeric("+1,0")); 
+		assertTrue(Strings.isNumeric("-1,0"));
+		assertFalse(Strings.isNumeric("#1,0")); 
+	}
+
+
 }
