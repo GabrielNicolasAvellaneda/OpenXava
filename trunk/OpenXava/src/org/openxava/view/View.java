@@ -5459,7 +5459,7 @@ public class View implements java.io.Serializable {
 	private boolean isFrameStatusStored(String frameId) { 
 		try {
 			String[] prefsKeys= getRoot().getPreferences().keys();			
-			return Arrays.asList(prefsKeys).contains(FRAME_CLOSED + frameId);
+			return Arrays.asList(prefsKeys).contains(getFrameKey(frameId));
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("impossible_load_frame_status"),ex);
@@ -5467,12 +5467,21 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
+	/**
+	 * @since 5.1.1
+	 */
+	private String getFrameKey(String frameId) {
+		String key = FRAME_CLOSED + frameId;
+		if(key.length() > Preferences.MAX_NAME_LENGTH) {
+			key = FRAME_CLOSED + frameId.hashCode();
+		}
+		return key;
+	}
+	
 	public void setFrameClosed(String frameId, boolean frameClosed) {
 		try {
-			getRoot().getPreferences().putBoolean(
-				FRAME_CLOSED + frameId, 
-				frameClosed
-			);
+			getRoot().getPreferences().putBoolean(getFrameKey(frameId), 
+												  frameClosed);
 			getRoot().getPreferences().flush();
 		}
 		catch (Exception ex) {
@@ -5482,9 +5491,8 @@ public class View implements java.io.Serializable {
 	
 	public boolean isFrameClosed(String frameId) { 
 		try {			
-			return getRoot().getPreferences().getBoolean(
-				FRAME_CLOSED + frameId, false 				
-			);
+			return getRoot().getPreferences().getBoolean(getFrameKey(frameId), 
+														 false);
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("impossible_load_frame_status"),ex);
