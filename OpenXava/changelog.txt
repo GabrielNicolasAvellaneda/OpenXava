@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Look & feel for progress bar of takes-long actions does not match the new OpenXava 5 style.
+- Fix: Progress bar is not shown when a takes-long action is called from a dialog.
+- Fix: The state of a frame is not stored if its name is too long.
 - Fix: Entering alphabetic values for filtering numeric data in list generates a generic system error.
 - New isNumeric() method in Strings utility class.
 - Fix: Top bar module links displaced when the page is customized adding content on top.

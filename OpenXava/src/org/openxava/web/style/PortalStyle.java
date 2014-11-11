@@ -196,10 +196,6 @@ public class PortalStyle extends Style {
 		return "portlet-msg-alert";
 	}	
 	
-	public String getProcessing() { 
-		return "processing";
-	}
-			
 	public String getButton() {
 		return "portlet-form-button";
 	}

@@ -44,6 +44,13 @@ public class NaviOXStyle extends Style {
 		return "naviox/images/loading.gif"; 
 	}
 	
+	/**
+	 * @since 5.1.1
+	 */
+	public String getProcessingImage() { 
+		return "naviox/images/processing.gif"; 
+	}
+	
 	public String getMinimizeImage() {
 		return "naviox/images/minimize.gif"; 
 	}

@@ -50,6 +50,24 @@ a:hover {
 	left: 45%
 }
 
+#xava_processing_layer {
+	position:absolute;
+	right: calc(50% - 120px);
+	top: calc(50% - 120px);	
+	z-index: 999999999;
+	background: white;
+	padding: 30px;
+	font-weight: bold;
+	text-align: center; 	
+}
+#xava_processing_layer img {
+	margin-top: 5px;
+}
+
+.ie #xava_processing_layer { 
+	border: 1px solid #C6C6C6;	
+}
+
 #main_navigation {
 	z-index: 999999999;
 	background: black;
@@ -641,7 +659,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	margin: 0px 30px 0px 10px;  
 }
 
-.ox-frame, #sign_in_box {
+.ox-frame, #sign_in_box { 
 	margin-bottom: 5px;
 	padding: 10px 10px 3px 10px; 
 	border-radius: 7px;
@@ -755,7 +773,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	margin: 0px 10px 0px 0px;
 }
 
-.ui-dialog {
+.ui-dialog, #xava_processing_layer {  
 	box-shadow: 0px 0px 40px #000; 
 	-moz-box-shadow: 0px 0px 40px #000; 
 	-webkit-box-shadow: 0px 0px 40px #000;

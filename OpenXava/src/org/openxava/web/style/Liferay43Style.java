@@ -193,11 +193,6 @@ public class Liferay43Style extends PortalStyle {
 		return "";
 	}
 	
-	
-	public String getProcessing() { 
-		return "processing";
-	}
-			
 	public String getButton() {
 		return ""; 
 	}
