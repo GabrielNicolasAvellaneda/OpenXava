@@ -11,7 +11,7 @@ class SaveElementInCollectionAbortingTransactionAction extends SaveElementInColl
 	
 	void execute() {
 		XPersistence.manager.transaction.setRollbackOnly()
-		super.execute()		
+		super.execute()
 	}
 
 }

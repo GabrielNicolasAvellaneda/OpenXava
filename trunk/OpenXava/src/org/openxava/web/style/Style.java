@@ -723,10 +723,6 @@ public class Style {
 		return "";
 	}	
 	
-	public String getProcessing() { 
-		return "processing";
-	}
-			
 	public String getButton() {
 		return "portlet-form-button";
 	}
@@ -859,6 +855,13 @@ public class Style {
 	
 	public String getLoadingImage() {
 		return getImagesFolder() +  "/loading.gif";
+	}
+	
+	/**
+	 * @since 5.1.1
+	 */
+	public String getProcessingImage() {
+		return getImagesFolder() +  "/processing.gif";
 	}	
 	
 	/**

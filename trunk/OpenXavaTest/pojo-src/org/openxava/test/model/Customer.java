@@ -32,7 +32,7 @@ import org.openxava.test.actions.*;
 		"]" +		
 		"alternateSeller;" +		
 		"deliveryPlaces;" +
-		"remarks" 	
+		"remarks"
 	),
 	
 	@View(name = "FramesOnSameRow", members= 	
@@ -215,7 +215,7 @@ public class Customer implements IWithName {
 		
 	@Stereotype("MEMO") @Column(length=400)	
 	private String remarks;
-	
+		
 	@Embedded
 	@ReferenceViews({
 		@ReferenceView(forViews="SimpleStateAsForm", value="StateAsForm"),

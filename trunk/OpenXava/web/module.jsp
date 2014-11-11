@@ -208,16 +208,10 @@ if (manager.isResetFormPostNeeded()) {
 	<input id="<xava:id name='view_member'/>" type="hidden" value=""/>
 		
 	<%-- Layer for progress bar --%>
-	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none; z-index: 9999'>
-	<table cellspacing='0'>
-	   <tr class='<%=style.getProcessing()%>'>
-	       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
-	           <%=XavaResources.getString(request, "processing")%><br/>
-	           <img src='<%=contextPath%>/xava/images/processing.gif' name='xava_processingImage'/>
-	       </td>
-	   </tr>
-	</table>
-	</div>	 
+	<div id='xava_processing_layer' style='display:none;'>
+		<%=XavaResources.getString(request, "processing")%><br/>
+		<img src='<%=contextPath%>/<%=style.getProcessingImage()%>'/>
+	</div>	
 	<%=style.getCoreStartDecoration()%>
 	<div id="<xava:id name='core'/>" style="display: inline;" class="<%=style.getModule()%>">
 		<%			
