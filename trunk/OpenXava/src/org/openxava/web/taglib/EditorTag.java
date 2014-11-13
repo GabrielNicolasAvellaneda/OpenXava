@@ -47,7 +47,7 @@ public class EditorTag extends TagSupport {
 			if (viewObjectSet) {
 				viewObject = getViewObject();
 			}
-			viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
+			viewObject = (viewObject == null || viewObject.equals("") || viewObject.equals("null"))?"xava_view":viewObject; 
 			View view = (View) context.get(request, viewObject);
 
 			MetaProperty metaProperty = view.getMetaProperty(property); 
