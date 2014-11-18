@@ -271,8 +271,9 @@ if (manager.isResetFormPostNeeded()) {
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
 		openxava.selectedRowClass = '<%=style.getSelectedRow()%>';
 		openxava.currentRowClass = '<%=style.getCurrentRow()%>';
-		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';	
-		openxava.collectionWidthRatio = <%=style.getCollectionWidthRatio()%>;
+		openxava.currentRowCellClass = '<%=style.getCurrentRowCell()%>';
+		openxava.listAdjustment = <%=style.getListAdjustment()%>;
+		openxava.collectionAdjustment = <%=style.getCollectionAdjustment()%>;
 		openxava.closeDialogOnEscape = <%=browser != null && browser.indexOf("Firefox") >= 0 ? "false":"true"%>;		  
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0 ? "tr"
 					: "Br"%>';

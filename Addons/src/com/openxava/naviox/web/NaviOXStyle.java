@@ -77,14 +77,41 @@ public class NaviOXStyle extends Style {
 		return "";		
 	}
 	
+	
+	
 	public String getFrameHeaderStartDecoration(int width) {
 		return getFrameHeaderStartDecoration(width, false);  		
 	}
 	
+	/**
+	 * @since 5.1.1
+	 */
+	public double getListAdjustment() { 
+		return 17;		
+	}
+	
+	/**
+	 * @since 5.1.1
+	 */
+	public double getCollectionAdjustment() { 
+		return -40;		
+	}
+
+	/**
+	 * @since 5.1.1
+	 */		
+	public String getCollectionFrameHeaderStartDecoration(int width) { 
+		return getFrameHeaderStartDecoration(width, false, true);  		
+	}
+	
 	public String getFrameHeaderStartDecoration(int width, boolean sibling) { 
+		return getFrameHeaderStartDecoration(width, sibling, false);
+	}
+	
+	private String getFrameHeaderStartDecoration(int width, boolean sibling, boolean collection) { 
 		StringBuffer r = new StringBuffer();
-		r.append("<table style='float:left;margin-right: 25px'"); 
-		if (width != 0) {
+		r.append("<table style='float:left;'"); 
+		if (width != 0 && !collection) {		
 			r.append(" width='");
 			r.append(width);
 			r.append("%'");
@@ -92,7 +119,7 @@ public class NaviOXStyle extends Style {
 		r.append("><tr><td>");
 		r.append("<div ");
 		r.append(" class='");
-		if (width != 0) { // For several collections in a row
+		if (!(width > 0 && width < 100)) { // For several collections in a row	
 			r.append(getFrame());
 		}
 		if (sibling) {
@@ -100,7 +127,10 @@ public class NaviOXStyle extends Style {
 			r.append(getFrameSibling());
 		}
 		r.append("' style='margin-right:4px;");
-		if (!sibling) r.append("width: 98%;");
+		if (!sibling) {
+			if (collection) r.append("width: calc(100% - 15px);");
+			else r.append("width: calc(100% - 20px);"); 
+		}
 		r.append("'");
 		r.append(getFrameSpacing());
 		r.append(">");
@@ -109,9 +139,8 @@ public class NaviOXStyle extends Style {
 		r.append("'>");		
 		r.append("\n");						
 		return r.toString();
-
 	}
-	
+		
 	public String getFrameTitleStartDecoration() {
 		StringBuffer r = new StringBuffer();
 		r.append("<span ");

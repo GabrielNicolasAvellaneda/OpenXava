@@ -122,11 +122,21 @@ public class Style {
 	}
 	
 	/**
+	 * Pixels to add/substract from list width to a correct adjustament.
 	 * 
-	 * @since 4.8
+	 * @since 5.1.1
 	 */
-	public double getCollectionWidthRatio() { 
-		return 0.95;		
+	public double getListAdjustment() { 
+		return 0;		
+	}
+	
+	/**
+	 * Pixels to add/substract from list width to a correct adjustament.
+	 * 
+	 * @since 5.1.1
+	 */
+	public double getCollectionAdjustment() { 
+		return -20;		
 	}
 	
 
@@ -555,6 +565,15 @@ public class Style {
 	public String getFrameHeaderStartDecoration() {
 		return getFrameHeaderStartDecoration(0); 
 	}
+	
+	/**
+	 * 
+	 * @since 5.1.1
+	 */
+	public String getCollectionFrameHeaderStartDecoration(int width) { 
+		return getFrameHeaderStartDecoration(width, false);  		
+	}
+
 
 	public String getFrameHeaderStartDecoration(int width) {  
 		StringBuffer r = new StringBuffer();

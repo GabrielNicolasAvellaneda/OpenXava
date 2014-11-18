@@ -37,7 +37,7 @@ import org.openxava.util.*;
 		"details { details }" +			
 		"amounts { amountsSum; vatPercentage; vat }" +
 		"deliveries { deliveries }"		
-	),	
+	),
 	@View(name="NoSections", members=
 		"year, number, date;" +		
 		"customer;" +		
@@ -45,7 +45,7 @@ import org.openxava.util.*;
 		"amountsSum;" +
 		"vatPercentage, vat;" +
 		"total"	
-	),	
+	),		
 	@View(name="ActiveYear", extendsView="NoSections"),
 	@View(name="Simple", members="year, number, date, yearDiscount;"),
 	@View(name="NestedSections", members=
@@ -194,7 +194,7 @@ public class Invoice {
 	private int number;
 		
 	@Required
-	@DefaultValueCalculator(CurrentDateCalculator.class)	
+	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
 	
 	@Digits(integerDigits=2, fractionalDigits=1) 

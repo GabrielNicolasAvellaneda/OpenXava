@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Collections do not fill all the available width and the wasted space grows when resizing.
+- Fix: The list does not fill all the available width with the new OpenXava 5 style.
 - Fix: Look & feel for progress bar of takes-long actions does not match the new OpenXava 5 style.
 - Fix: Progress bar is not shown when a takes-long action is called from a dialog.
 - Fix: The state of a frame is not stored if its name is too long.

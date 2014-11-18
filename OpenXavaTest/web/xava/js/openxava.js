@@ -297,19 +297,19 @@ openxava.initLists = function(application, module) {
 			Tab.setColumnWidth(event.target.id, $(event.target).width());
 		}
 	});				
-	openxava.setListsSize(application, module, "list", 1);	
-	openxava.setListsSize(application, module, "collection", openxava.collectionWidthRatio);	
+	openxava.setListsSize(application, module, "list", openxava.listAdjustment); 
+	openxava.setListsSize(application, module, "collection", openxava.collectionAdjustment); 
 }
 
-openxava.setListsSize = function(application, module, type, percentage) {	
+openxava.setListsSize = function(application, module, type, adjustment) {
 	var buttonBar = $('#' + openxava.decorateId(application, module, "bottom_buttons"));
 	var scrollId = '.' + openxava.decorateId(application, module, type + "_scroll");
 	$(scrollId).width(50); 	  
-	$(scrollId).width(buttonBar.width() * percentage);  
+	$(scrollId).width(buttonBar.outerWidth() + adjustment); 
 	$(window).resize(function() {
 		$(scrollId).width(50); 
-		$(scrollId).width(buttonBar.width() * percentage);
-	});			
+		$(scrollId).width(buttonBar.outerWidth() + adjustment); 		
+	});
 }
 
 openxava.addEditorDestroyFunction = function(destroyFunction) { 

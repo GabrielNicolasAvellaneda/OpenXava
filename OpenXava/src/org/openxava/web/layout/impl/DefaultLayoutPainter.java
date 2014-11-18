@@ -916,10 +916,9 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				propertyPrefix + element.getMetaCollection().getName() + ".";
 		String collectionId = Ids.decorate(getRequest(), "collection_" + collectionPrefix);
 		attributes.clear();
-		boolean multipleElements = false;
+		int percent = 100; 
 		if (getRow().getMaxFramesCount() > 1) {
-			multipleElements = true;
-			Float percent = 100f / getRow().getMaxFramesCount();
+			percent = 100 / getRow().getMaxFramesCount(); 
 			StringBuffer style = new StringBuffer("");
 			if (element.isFirst()) {
 				style.append("float:left; margin:0px;");
@@ -927,7 +926,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 				style.append("float:left; margin-left:" + getStyle().getPropertyLeftMargin() + "px;");
 			}
 			style.append("overflow: auto; display: block; width: ")
-					.append(percent.intValue() - 4)
+					.append(percent - 4)
 					.append('%');
 			attributes.put(ATTR_CLASS, getStyle().getFrame());
 			attributes.put(ATTR_STYLE, style.toString());
@@ -936,7 +935,7 @@ public class DefaultLayoutPainter extends AbstractJspPainter {
 		}
 		startTd();
 		if (element.hasFrame()) {
-			write(getStyle().getFrameHeaderStartDecoration(multipleElements ? 0: 100));
+			write(getStyle().getCollectionFrameHeaderStartDecoration(percent)); 
 			write(getStyle().getFrameTitleStartDecoration());
 			write(element.getLabel());
 			String frameId = Ids.decorate(getRequest(), "frame_" + element.getView().getPropertyPrefix() + element.getMetaCollection().getName());
