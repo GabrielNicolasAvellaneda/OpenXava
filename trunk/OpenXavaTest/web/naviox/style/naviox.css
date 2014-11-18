@@ -652,7 +652,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-detail {
-	margin: 0px 10px 0px 10px; 
+	margin: 0px 10px 0px 7px;  
 }
 
 #sign_in_box .ox-detail { 
@@ -672,7 +672,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-frame-sibling { 
-    padding-left: 15px;
+   padding-left: 15px; 
 }
 
 .ox-frame-title {
@@ -760,17 +760,29 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-bottom-buttons {
-	margin-right: 15px; /* To adjust collections width */
-	margin-left: 14px;
+	padding-left: 11px;
+	margin-right: 17px;
 }
 
 .ui-dialog .ox-bottom-buttons {
-	margin-left: 39px; /* To adjust collections width */
 	margin-right: 0px;
+	margin-left: 1px; /* To adjust list and collections width */
+}
+
+.ui-dialog .ox-view {
+	overflow-x: hidden; /* To avoid scrollbar in list inside dialog  */
+}
+
+.ui-dialog .ox-view { 
+	margin-right: 2px; 
+}
+
+.ox-list-info-detail { 
+	padding-right: 20px;
 }
  
 .ui-dialog .ox-detail {
-	margin: 0px 10px 0px 0px;
+	margin: 0px 0px 0px 0px; 
 }
 
 .ui-dialog, #xava_processing_layer {  
@@ -786,10 +798,6 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 .ui-dialog-titlebar {
 	border-style: none !important;
 	background: white !important;
-}
-
-.ui-dialog .ox-bottom-buttons {
-	margin-right: 5px; 
 }
 
 .ox-message-box {

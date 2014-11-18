@@ -103,4 +103,13 @@ public class Liferay6Style extends Liferay51Style {
 		return getTotalCellAlignStyle() + ";border-bottom-style:hidden;border-left-style:hidden;border-right-style:hidden;"; 
 	}	
 	
+	/**
+	 * Pixels to add/substract from list width to a correct adjustament.
+	 * 
+	 * @since 5.1.1
+	 */
+	public double getCollectionAdjustment() { 
+		return -40;		
+	}
+	
 }
