@@ -1,5 +1,8 @@
 package org.openxava.test.tests;
 
+import java.io.*;
+import java.net.*;
+
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -30,13 +33,14 @@ public class PhoneServletTest extends ModuleTestBase {
 		client.setThrowExceptionOnFailingStatusCode(false); 
 		client.setThrowExceptionOnScriptError(false); 
 
-		HtmlPage page = (HtmlPage) client.getPage(getModuleURL());
+		assertNoMobileUI(client, "http://" + getHost() + ":" + getPort() + "/OpenXavaTest/p/" + MODULE);
+		assertNoMobileUI(client, "http://" + getHost() + ":" + getPort() + "/OpenXavaTest/phone"); 		
+	}
+
+	private void assertNoMobileUI(WebClient client, String url) throws Exception {
+		HtmlPage page = (HtmlPage) client.getPage(url);
 		String html = page.asXml();		
 		assertTrue(html.indexOf("Mobile User Interface only available in")>=0);
 	}
-	
-	protected String getModuleURL() throws XavaException {
-		return "http://" + getHost() + ":" + getPort() + "/OpenXavaTest/p/" + MODULE;
-	}
-	
+		
 }
