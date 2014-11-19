@@ -12,17 +12,11 @@
 			class="com.openxava.naviox.actions.SignInAction"/>
 			
 	</controller>		
-	
+
 	<controller name="User">
 		<extends controller="Typical"/>
-		<action name="save" mode="detail"
-			by-default="if-possible"
-			class="com.openxava.naviox.actions.SaveUserAction"
-			image="save.gif"
-			keystroke="Control S"/>			
-		
 	</controller>
-
+	
 	<controller name="Module">
 		<extends controller="Typical"/>
 	</controller>
