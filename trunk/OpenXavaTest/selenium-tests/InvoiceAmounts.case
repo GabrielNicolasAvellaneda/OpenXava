@@ -35,7 +35,7 @@
 <!--Non Liferay-->
 <tr>
 	<td>open</td>
-	<td>/OpenXavaTest/modules/InvoiceAmounts</td>
+	<td>/OpenXavaTest/m/InvoiceAmounts</td>
 	<td></td>
 </tr>
 <tr>

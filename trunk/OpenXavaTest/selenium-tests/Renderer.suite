@@ -22,11 +22,17 @@
 <tr><td><a href="aligned-by-column-tests/CustomerAligned.case">CustomerAligned</a></td></tr>
 <tr><td><a href="CustomerNotAligned_FALSE_state.case">CustomerNotAligned_FALSE_state</a></td></tr>
 <tr><td><a href="InvoiceDetailsWithTotals.case">InvoiceDetailsWithTotals</a></td></tr>
-<tr><td><a href="DeliveryGroupAndReference">DeliveryGroupAndReference</a></td></tr>
-<tr><td><a href="CarrierIconAlignment">CarrierIconAlignment</a></td></tr>
+<tr><td><a href="DeliveryGroupAndReference.case">DeliveryGroupAndReference</a></td></tr>
+<tr><td><a href="CarrierIconAlignment.case">CarrierIconAlignment</a></td></tr>
 <tr><td><a href="ColorNotAlignedByColumn">ColorNotAlignedByColumn</a></td></tr>
+<tr><td><a href="VehicleTooMuchSpace.case">VehicleTooMuchSpace</a></td></tr>
+<tr><td><a href="FurnitureSetWithRequiredDescriptionsList.case">FurnitureSetWithRequiredDescriptionsList</a></td></tr>
 <tr><td><a href="CarrierComplexSimpleTopPosition.case">CarrierComplexSimpleTopPosition</a></td></tr>
 <tr><td><a href="CarrierWithTwoCollectionsTogether.case">CarrierWithTwoCollectionsTogether</a></td></tr>
+<tr><td><a href="aligned-by-column-tests/Readme.case">Readme for test Aligned by Columns</a></td></tr>
+<tr><td><a href="aligned-by-column-tests/CustomerAligned.case">CustomerAligned</a></td></tr>
+<tr><td><a href="aligned-by-column-tests/CustomerNotAligned_TRUE_state.case">CustomerNotAligned_TRUE_state</a></td></tr>
+<tr><td><a href="aligned-by-column-tests/EndOfTest.case">End of Test Aligned by Columns</a></td></tr>
 </tbody></table>
 </body>
 </html>

@@ -4,24 +4,18 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:8080/" />
-<title>Readme for test Aligned by Columns</title>
+<title>End of Test Aligned by Columns</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Readme for test Aligned by Columns</td></tr>
+<tr><td rowspan="1" colspan="3">End of Test Aligned by Columns</td></tr>
 </thead><tbody>
-<!--These following tests are to be run with -->
-<!--alignedByColumns set to true in xava.properties-->
+<!--End of Tests for aligned by columns-->
 <tr>
 	<td>storeEval</td>
-	<td>confirm('Turn off the server and set the alignedByColumns setting to true. Press cancel if you do not want to continue. Press ok when you are ready')</td>
-	<td>continue</td>
-</tr>
-<tr>
-	<td>assertEval</td>
-	<td>${continue}</td>
-	<td>true</td>
+	<td>alert('Remember to set alignedByColumn property back to false.')</td>
+	<td>noEval</td>
 </tr>
 
 </tbody></table>

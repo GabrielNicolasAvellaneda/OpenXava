@@ -125,29 +125,19 @@
 </tr>
 <!--******************-->
 <!--THIS SEGMENT-->
-<!--WILL ALWAYS FAIL!!!-->
+<!--REQUIRES HUMAN VALIDATION-->
 <!--Because collection table is at full length,-->
 <!--but visually cropped-->
 <!--within the container-->
 <!--as it should be-->
 <tr>
-	<td>echo</td>
-	<td>This test will ALWAYS fail,</td>
-	<td></td>
+	<td>storeEval</td>
+	<td>confirm('Human check REQUIRED. Is the collection within the bounderies of its container? Press OK if true, cancel otherwise. The collection table should be fully created, but visually bounded by the container.');</td>
+	<td>okey</td>
 </tr>
 <tr>
-	<td>echo</td>
-	<td>since the table has a bigger value.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>echo</td>
-	<td>Human Visual check must be performed</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyEval</td>
-	<td>${collectionSize} &lt;= ${viewSize}</td>
+	<td>assertEval</td>
+	<td>${okey}</td>
 	<td>true</td>
 </tr>
 <!--******************-->

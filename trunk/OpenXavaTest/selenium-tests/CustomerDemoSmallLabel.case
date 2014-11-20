@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>600</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForTextPresent</td>
 	<td>Value for Zip code in Address is required</td>
 	<td></td>
@@ -245,7 +250,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>1000</td>
+	<td>2000</td>
 	<td></td>
 </tr>
 <tr>

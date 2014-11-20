@@ -69,7 +69,8 @@ public class MovieTest extends ModuleTestBase {
 		WebResponse response = getWebClient().getPage(
 				                   getUrlToFile("Film.jrxml")).getWebResponse();
 		assertTrue(response.getContentType().equals("application/docbook+xml") || 
-				   response.getContentType().equals(MIME_UNKNOWN));
+	            	response.getContentType().equals("application/x-docbook+xml") ||
+	            	response.getContentType().equals(MIME_UNKNOWN));
 		changeModule("Movie");
 		execute("AttachedFile.delete", "newFileProperty=trailer");
 	}

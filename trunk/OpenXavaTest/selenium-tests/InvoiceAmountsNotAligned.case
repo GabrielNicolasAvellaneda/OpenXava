@@ -35,7 +35,7 @@
 <!--Non Liferay-->
 <tr>
 	<td>open</td>
-	<td>/OpenXavaTest/modules/InvoiceAmountsNotAligned</td>
+	<td>/OpenXavaTest/m/InvoiceAmountsNotAligned</td>
 	<td></td>
 </tr>
 <tr>
