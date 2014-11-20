@@ -16,9 +16,8 @@
 <!--a liferay installation-->
 <!--and set up-->
 <!--the appropriate-->
-<!--pages as tests require-->
-<!--Liferay MUST BE-->
-<!--RUNNING!!!-->
+<!--pages as tests require that-->
+<!--Liferay IS UP AND RUNNING!!!-->
 <tr>
 	<td>open</td>
 	<td>/</td>

@@ -135,9 +135,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPositionTop</td>
+	<td>storeElementPositionTop</td>
 	<td>id=ox_OpenXavaTest_CustomerNotAligned__type</td>
-	<td>${top1}</td>
+	<td>elementTop</td>
+</tr>
+<tr>
+	<td>assertEval</td>
+	<td>(${top1} - ${elementTop}) &lt;= 1</td>
+	<td>true</td>
 </tr>
 <!--Rule out overlaps-->
 <tr>

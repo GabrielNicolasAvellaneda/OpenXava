@@ -35,7 +35,7 @@
 <!--Non Liferay-->
 <tr>
 	<td>open</td>
-	<td>/OpenXavaTest/modules/InvoiceAmountsInSection</td>
+	<td>/OpenXavaTest/m/InvoiceAmountsInSection</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,21 +46,6 @@
 <tr>
 	<td>label</td>
 	<td>afterLRPageInvoiceAmountsInSection</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_InvoiceAmountsInSection__CRUD___new</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>id=ox_OpenXavaTest_InvoiceAmountsInSection__CRUD___new</td>
 	<td></td>
 </tr>
 <tr>

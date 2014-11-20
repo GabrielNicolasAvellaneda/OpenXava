@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForNotValue</td>
 	<td>id=ox_OpenXavaTest_InvoiceDetailsWithTotals__year</td>
 	<td></td>

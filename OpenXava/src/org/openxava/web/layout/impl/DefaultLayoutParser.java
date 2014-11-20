@@ -150,7 +150,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 		MetaView metaView = view.getMetaView();
 		boolean alignedByColumn = (metaView == null ? false : metaView.isAlignedByColumns());
 
-		parseMetamembers(view.getMetaMembers(), view, false, true, inputPropertyPrefix, alignedByColumn, 0, "");
+		parseMetamembers(view.getMetaMembers(), view, false, true, inputPropertyPrefix, alignedByColumn, 0, "", null);
 		addLayoutElement(createEndViewMarker(view));
 		if (currentView.isRepresentsSection() && 
 				currentView.getMaxFramesCount() == 1 &&
@@ -193,18 +193,22 @@ public class DefaultLayoutParser implements ILayoutParser {
 
 
 	/**
-	 * Parses each meta member in order to get a hint of the view to display.
-	 * 
-	 * @param metaMembers. Metamembers to processed.
-	 * @param view. View to be processed.
-	 * @param descriptionsList. True if the meta property is a descriptionsList
-	 * @param isGrouped. True if this parsing should be treated as a group.
-	 * 
+	 * Parses members to create the ui elements equivalent to the view.
+	 * @param metaMembers Meta members to be parsed
+	 * @param view View containing the members.
+	 * @param isDescriptionsList True if processing a descriptions list.
+	 * @param isGrouped True if part of a group.
+	 * @param inputPropertyPrefix Property prefix.
+	 * @param alignedByColumn True if is aligned by column.
+	 * @param labelFormatForDescriptionsList Label format for descriptions list.
+	 * @param labelStyleForDescriptionsList Label Style for descriptions list.
+	 * @param metaReference Associated meta reference. Might be null.
 	 */
 	@SuppressWarnings("rawtypes")
 	protected void parseMetamembers(Collection metaMembers, View view, boolean isDescriptionsList, boolean isGrouped,
 			String inputPropertyPrefix, boolean alignedByColumn, int labelFormatForDescriptionsList, 
-			String labelStyleForDescriptionsList) {
+			String labelStyleForDescriptionsList,
+			MetaReference metaReference) {
 		boolean displayAsDescriptionsList = isDescriptionsList;
 		boolean frameOnSameColumn = false;
 		int frameStartingRowIndex = -1;
@@ -221,26 +225,27 @@ public class DefaultLayoutParser implements ILayoutParser {
 		  			rowIndex = frameStartingRowIndex;
 		  		}
 
+		  		ILayoutElement beforeLast = elements.size() > 1 ? elements.get(elements.size() - 2) : null;
+				ILayoutElement last = elements.size() > 0 ? elements.get(elements.size() - 1) : null;
+				MetaViewAction action = (m instanceof MetaViewAction) ? (MetaViewAction) m : null;
+
+				boolean createPropertyOnSameColumn = (action != null || !alignedByColumn) && !currentMustStartRow() && currentRowStarted()
+						&& (last instanceof ILayoutColumnEndElement) && (beforeLast instanceof ILayoutPropertyEndElement);
+				
 				if (m instanceof MetaProperty) {					
 					MetaProperty p = (MetaProperty) m;
+					if (isDescriptionsList && metaReference != null) {
+						p.setRequired(metaReference.isRequired());
+					}
 					if (view.isHidden(p.getName())) {
 						continue;
 					}
-					ILayoutElement beforeLast = elements.size() > 1 ? elements.get(elements.size() - 2) : null;
-					ILayoutElement last = elements.size() > 0 ? elements.get(elements.size() - 1) : null;
-					MetaViewAction action = (p instanceof MetaViewAction) ? (MetaViewAction) p : null;
-
+					
 					boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());
 					
-					boolean createPropertyOnSameColumn = (action != null || !alignedByColumn) && !currentMustStartRow() && currentRowStarted()
-							&& (last instanceof ILayoutColumnEndElement) && (beforeLast instanceof ILayoutPropertyEndElement);
-
 					setEditable(view.isEditable(p));
 					if (createPropertyOnSameColumn) {
-						Integer currentColumn = containersColumnCountStack.pop() + 1;
-						containersColumnCountStack.push(currentColumn);
-						elements.remove(elements.size() - 1);
-						groupLevel++;
+						prepareForProperyOnSameColumn();
 					} else {
 						addLayoutElement(createBeginColumnMarker(view));
 					}
@@ -275,7 +280,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 					}
 					try {
 						View subView = view.getSubview(ref.getName());
-						subView.setPropertyPrefix(view.getPropertyPrefix() + ref.getName() + ".");
+						subView.setPropertyPrefix(inputPropertyPrefix + ref.getName() + ".");
 						subView.setViewObject(getViewObject(view) + "_" + ref.getName());
 						boolean isReferenceAsDescriptionsList = view.displayAsDescriptionsList(ref);
 						MetaEditor metaEditor = WebEditors.getMetaEditorFor(ref, view.getViewName());
@@ -294,10 +299,15 @@ public class DefaultLayoutParser implements ILayoutParser {
 						
 						groupLabel = ref.getLabel();
 							if (isReferenceAsDescriptionsList && subView.getMetaMembers().isEmpty()) {
-								addLayoutElement(createBeginColumnMarker(view));
+								if (createPropertyOnSameColumn) {
+									prepareForProperyOnSameColumn();
+								} else {
+									addLayoutElement(createBeginColumnMarker(view));
+								}
 								addLayoutElement(createBeginPropertyMarker(ref, isReferenceAsDescriptionsList, false, subView,
 										subView.getPropertyPrefix(), view.getLabelFormatForReference(ref), 
 										view.getLabelStyleForReference(ref)));
+								addLayoutElement(createEndPropertyMarker(view));
 								addLayoutElement(createEndColumnMarker(view));
 							} else {
 								if ("referenceEditor.jsp".equalsIgnoreCase(metaEditor.getUrl())) {
@@ -310,7 +320,8 @@ public class DefaultLayoutParser implements ILayoutParser {
 											|| (!currentRowStarted() && currentMustStartRow()),
 											subView.getPropertyPrefix(), referenceAlignedByColumns,
 											view.getLabelFormatForReference(ref),
-											view.getLabelStyleForReference(ref));
+											view.getLabelStyleForReference(ref),
+											ref);
 								} else { // uses it owns reference editor
 									addLayoutElement(createBeginColumnMarker(view));
 									addLayoutElement(createBeginReferenceMarker(ref, isReferenceAsDescriptionsList, false, view,
@@ -346,7 +357,7 @@ public class DefaultLayoutParser implements ILayoutParser {
 			  		addLayoutElement(createBeginGroupMarker(group, subView, groupLabel));
 					parseMetamembers(group.getMetaView().getMetaMembers(), subView, false, true,
 							subView.getPropertyPrefix(), group.getMetaView().isAlignedByColumns(),
-							0, "");
+							0, "", null);
 					if (rowIndex > frameMaxEndingRowIndex) {
 						frameMaxEndingRowIndex = rowIndex;
 					}
@@ -391,6 +402,13 @@ public class DefaultLayoutParser implements ILayoutParser {
 
 	}
 
+	private void prepareForProperyOnSameColumn() {
+		Integer currentColumn = containersColumnCountStack.pop() + 1;
+		containersColumnCountStack.push(currentColumn);
+		elements.remove(elements.size() - 1);
+		groupLevel++;
+	}
+	
 	/**
 	 * Method to get the viewObject of a view.
 	 * 
