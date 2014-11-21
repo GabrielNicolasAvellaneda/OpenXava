@@ -11,6 +11,16 @@ public class WebSpherePortal8Style extends PortalStyle {
 	protected WebSpherePortal8Style() {
 	}
 	
+	/**
+	 * Pixels to add/substract from list width to a correct adjustament.
+	 * 
+	 * @since 5.1.1
+	 */
+	public double getCollectionAdjustment() {  
+		return -60;		
+	}
+
+	
 	public static Style getInstance() {
 		if (instance == null) {
 			instance = new WebSpherePortal8Style();
