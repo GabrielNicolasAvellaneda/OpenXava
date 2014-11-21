@@ -124,7 +124,6 @@ public class XavaPortlet extends GenericPortlet {
 			
 			request.getPortletSession().setAttribute("xava.portal.userinfo", user, PortletSession.APPLICATION_SCOPE);
 		}
-				
 		
 		
 		/*
@@ -153,7 +152,6 @@ public class XavaPortlet extends GenericPortlet {
 //				 Do nothing and assume that the headers will be resolved normally
 			}
 		}
-		
 		
 		PortletContext context = getPortletContext();
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);		
