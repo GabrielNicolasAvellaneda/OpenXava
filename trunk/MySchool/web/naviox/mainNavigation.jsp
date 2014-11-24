@@ -9,12 +9,18 @@
 
 <jsp:useBean id="modules" class="com.openxava.naviox.Modules" scope="session"/>
 
-<div id="main_navigation_left">
-<nobr>
 <% if (modules.hasModules()) { %>
-<a id="show_modules" href=""><xava:message key="all_modules"/></a>
+<a id="show_modules" href=""><xava:message key="all_modules"/></a>	
 <% } %>
 
+<%
+String allModulesClass = modules.hasModules()?"main-navigation-left-with-all-modules":"main-navigation-left-without-all-modules";
+%>
+
+&nbsp; 
+<div id="main_navigation_left" class="<%=allModulesClass%>">
+<nobr>
+&nbsp; 
 <% 
 for (Iterator it= modules.getTopModules().iterator(); it.hasNext();) {
 	MetaModule module = (MetaModule) it.next();

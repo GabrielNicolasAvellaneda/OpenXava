@@ -7,7 +7,7 @@ body {
 	background: white ;
 	font-size: 12px;
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 }
 
 body, .ui-dialog {
@@ -50,6 +50,24 @@ a:hover {
 	left: 45%
 }
 
+#xava_processing_layer {
+	position:absolute;
+	right: calc(50% - 120px);
+	top: calc(50% - 120px);	
+	z-index: 999999999;
+	background: white;
+	padding: 30px;
+	font-weight: bold;
+	text-align: center; 	
+}
+#xava_processing_layer img {
+	margin-top: 5px;
+}
+
+.ie #xava_processing_layer { 
+	border: 1px solid #C6C6C6;	
+}
+
 #main_navigation {
 	z-index: 999999999;
 	background: black;
@@ -77,18 +95,36 @@ a:hover {
 }
 
 #main_navigation_left { 
-	position: absolute; 
-	top: 10px; 
-	left: 10px;
+	position: relative;
+	top: -14px;   
+	overflow: hidden;
+	width: calc(100% - 50px);
+	width: -moz-calc(100% - 50px);
+	width: -webkit-calc(100% - 50px);	
 }
 
-#main_navigation_right { 
-	position: absolute; 
-	top: 10px; 
-	right: 0px; 
-	padding-left: 20px; 
+.main-navigation-left-without-all-modules { 
+	left: -5px;
 }
 
+.main-navigation-left-with-all-modules { 
+	left: 50px;
+}
+
+
+#main_navigation_right {	
+	float: right; 
+	position: relative; 
+	top: -29px; 
+	right: 0px; 	
+	padding-left: 20px;
+	margin-bottom: -29px;
+}
+
+.ie #main_navigation_right { 
+	top: -27px;
+}
+	
 #main_navigation_right_bridge1 { 
 	background-color: rgba(0, 0, 0, 0.2);
 }
@@ -97,9 +133,12 @@ a:hover {
 	background-color: rgba(0, 0, 0, 0.6);
 }
 
+#main_navigation_right_content A { 
+	padding-right: 0px;
+}
+
 #main_navigation_right_content { 
 	background-color: black;
-	padding-right: 5px;
 	padding-left: 15px; 
 }
 
@@ -346,7 +385,6 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus
 	height: 10px;
 }
 
-
 .ox-button-bar, .ox-collection-list-actions {
 	background: #F5F5F5;
 	padding: 10px;
@@ -379,11 +417,15 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus
 	-webkit-box-shadow: 0px 1px 2px #CCCCCC;
 }
 
+.ox-button-bar-mode-button { 
+	border: none;
+}
+
 .ox-button-bar a:focus { 
 	outline: none; 
 }
 
-input[type="button"], .ipad input[type="button"]:hover, A#show_modules { 
+input[type="button"], .ipad input[type="button"]:hover, A#show_modules {
 	background: #F5F5F5;
 	border: 1px solid #C6C6C6;
 	padding: 10px;
@@ -399,6 +441,16 @@ input[type="button"], .ipad input[type="button"]:hover, A#show_modules {
 	box-shadow: 0px 1px 2px #CCCCCC; 
 	-moz-box-shadow: 0px 1px 2px #CCCCCC; 
 	-webkit-box-shadow: 0px 1px 2px #CCCCCC;
+}
+
+input[type="button"], .ipad input[type="button"]:hover {
+	margin-bottom: 8px;
+}
+
+.ui-dialog input[type="button"], .ui-dialog .ipad input[type="button"]:hover,
+#sign_in_box input[type="button"], #sign_in_box .ipad input[type="button"]:hover
+{
+	margin-bottom: 0px;
 }
 
 A#show_modules  { 
@@ -504,10 +556,19 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	border-style: none;
 	height: 28px;
 	background: white;
-	color: #191919;
+	color: #191919;	
 	box-shadow: 0px -3px 4px #CCCCCC; 
-	-moz-box-shadow: 0px -5px 4px #CCCCCC; 
-	-webkit-box-shadow: 0px -3px 4px #CCCCCC;	
+	-moz-box-shadow: 0px -3px 4px #CCCCCC;  
+	-webkit-box-shadow: 0px -3px 4px #CCCCCC;
+}
+
+.ox-active .ox-button-bar-mode-button { 
+	padding-right: 0px;
+}
+
+.ox-button-bar-active-mode-button-content {  
+	background: white;  
+	height: 36px;
 }
 
 .ox-list-header th, .ox-list-subheader th, .ox-list-pair td, .ox-list-odd td, .ox-total-row td  { 
@@ -532,7 +593,6 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-list-pair, .ox-list-odd {
-	position: relative; 
 	height: 35px;
 	border-bottom-color: #EBEBEB !important;
 }
@@ -592,14 +652,14 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-detail {
-	margin: 0px 10px 0px 10px; 
+	margin: 0px 10px 0px 7px;  
 }
 
 #sign_in_box .ox-detail { 
 	margin: 0px 30px 0px 10px;  
 }
 
-.ox-frame, #sign_in_box {
+.ox-frame, #sign_in_box { 
 	margin-bottom: 5px;
 	padding: 10px 10px 3px 10px; 
 	border-radius: 7px;
@@ -612,7 +672,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-frame-sibling { 
-    padding-left: 15px;
+   padding-left: 15px; 
 }
 
 .ox-frame-title {
@@ -700,20 +760,32 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-bottom-buttons {
-	margin-left: 3px;
-	margin-right: 15px; /* To adjust collections width */
+	padding-left: 11px;
+	margin-right: 17px;
 }
 
 .ui-dialog .ox-bottom-buttons {
-	margin-left: 39px; /* To adjust collections width */
 	margin-right: 0px;
+	margin-left: 1px; /* To adjust list and collections width */
+}
+
+.ui-dialog .ox-view {
+	overflow-x: hidden; /* To avoid scrollbar in list inside dialog  */
+}
+
+.ui-dialog .ox-view { 
+	margin-right: 2px; 
+}
+
+.ox-list-info-detail { 
+	padding-right: 20px;
 }
  
 .ui-dialog .ox-detail {
-	margin: 0px 10px 0px 0px;
+	margin: 0px 0px 0px 0px; 
 }
 
-.ui-dialog {
+.ui-dialog, #xava_processing_layer {  
 	box-shadow: 0px 0px 40px #000; 
 	-moz-box-shadow: 0px 0px 40px #000; 
 	-webkit-box-shadow: 0px 0px 40px #000;
@@ -726,10 +798,6 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 .ui-dialog-titlebar {
 	border-style: none !important;
 	background: white !important;
-}
-
-.ui-dialog .ox-bottom-buttons {
-	margin-right: 5px; 
 }
 
 .ox-message-box {
@@ -849,10 +917,6 @@ div.ox-subcontroller table{
 	background: #F1F1F1; 
 }
 
-#sign_in_box .ox-bottom-buttons {
-	padding-left: 2px;
-}
-
 #sign_in_box .ox-detail {
 	margin-left: -10px;	
 }
@@ -905,4 +969,8 @@ div.ox-subcontroller table{
 	color: #5755D2;
 	font-size: 1.02em;
 	text-decoration: none;
+}
+
+.ox-help { 
+	margin-left: 5px;
 }

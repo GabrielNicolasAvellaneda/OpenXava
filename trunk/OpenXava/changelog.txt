@@ -1,7 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
-
+OpenXava 5.1.1 (2014-11-24)
+---------------------------
+- New isNumeric() method in Strings utility class.
+- Some new common use labels to be used in applications.
 - Fix: It does not work with WebSphere Portal (broken since v5.0).
 - Fix: Required icon is not shown for descriptions lists. 
 - Fix: Too much space between UI elements when a descriptionLists is located after the first column.
@@ -12,7 +15,6 @@ Change Log for OpenXava project
 - Fix: Progress bar is not shown when a takes-long action is called from a dialog.
 - Fix: The state of a frame is not stored if its name is too long.
 - Fix: Entering alphabetic values for filtering numeric data in list generates a generic system error.
-- New isNumeric() method in Strings utility class.
 - Fix: Top bar module links displaced when the page is customized adding content on top.
 - Fix: Module search does not work with uppercase letters. 
 - Fix: Ugly horizontal scrollbar when there are many modules in top menu.
@@ -21,9 +23,8 @@ Change Log for OpenXava project
 - Fix: Help link too close to mode links.
 - Fix: Style for selected row hides the line separator.
 - Fix: Totals in element collections are not recalculated after removing a row.
-- Fix: After removing a line from an element collection events and calculated properties does not work in the collection. 
+- Fix: After removing a line from an element collection events and calculated properties do not work in the collection. 
 - Fix: Reloading page after removing a line from an element collection leaves a blank line.
-- Some new common use labels to be used in applications.
 
 OpenXava 5.1 (2014-10-21)
 -------------------------
