@@ -255,7 +255,7 @@ while (it.hasNext()) {
 		boolean isDate = java.util.Date.class.isAssignableFrom(property.getType()) && !property.getType().equals(java.sql.Time.class);
 		boolean isTimestamp = java.sql.Timestamp.class.isAssignableFrom(property.getType()); 
 		String editorURLDescriptionsList = WebEditors.getEditorURLDescriptionsList(tab.getTabName(), tab.getModelName(), Ids.decorate(request, property.getQualifiedName()), iConditionValues, prefix, property.getQualifiedName(), property.getName());
-		int maxLength = 100; 
+		int maxLength = 100; 		
 		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String valueTo= conditionValuesTo==null?"":conditionValuesTo[iConditionValues];

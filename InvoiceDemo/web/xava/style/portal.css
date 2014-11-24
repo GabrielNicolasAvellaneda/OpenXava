@@ -136,11 +136,17 @@ TD.frame {
 	font-size: 10pt;
 }
 
-.processing {
+#xava_processing_layer {
+	position:absolute;
+	right: calc(50% - 120px);
+	top: 50%;	
 	font-weight: normal; 
 	background: #eeeeee;
+	z-index: 999999999;
+	line-height:1.4;
+	padding:25px 80px;
+	border:2px solid #000;
 }
-
 
 .jetspeed2-list-info, TR.jetspeed2-list-info, TD.jetspeed2-list-info {
 	font-size: x-small;

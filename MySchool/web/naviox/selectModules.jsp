@@ -9,8 +9,7 @@
 
 <%
 String searchWord = request.getParameter("searchWord");
-if (searchWord != null) searchWord.toLowerCase();
-else searchWord = ""; 
+searchWord = searchWord == null?"":searchWord.toLowerCase(); 
 Collection modulesList = null;
 boolean bookmarkModules = false;
 %>
@@ -28,7 +27,8 @@ for (Iterator it= modulesList.iterator(); it.hasNext();) {
 	MetaModule module = (MetaModule) it.next();
 	String selected = module.getName().equals(modules.getCurrent())?"selected":""; 
 	String label = module.getLabel(request.getLocale()); 
-	String description = module.getDescription(request.getLocale()); 
+	String description = module.getDescription(request.getLocale());
+	
 	if (!Is.emptyString(searchWord) && !label.toLowerCase().contains(searchWord) && !description.toLowerCase().toLowerCase().contains(searchWord)) continue;  
 	counter++;
 %>	
