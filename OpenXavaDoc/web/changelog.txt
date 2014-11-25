@@ -1,6 +1,31 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.1.1 (2014-11-24)
+---------------------------
+- New isNumeric() method in Strings utility class.
+- Some new common use labels to be used in applications.
+- Fix: It does not work with WebSphere Portal (broken since v5.0).
+- Fix: Required icon is not shown for descriptions lists. 
+- Fix: Too much space between UI elements when a descriptionLists is located after the first column.
+- Fix: Accessing to an application from a mobile device shows a resource not found page.
+- Fix: Collections do not fill all the available width and the wasted space grows when resizing.
+- Fix: The list does not fill all the available width with the new OpenXava 5 style.
+- Fix: Look & feel for progress bar of takes-long actions does not match the new OpenXava 5 style.
+- Fix: Progress bar is not shown when a takes-long action is called from a dialog.
+- Fix: The state of a frame is not stored if its name is too long.
+- Fix: Entering alphabetic values for filtering numeric data in list generates a generic system error.
+- Fix: Top bar module links displaced when the page is customized adding content on top.
+- Fix: Module search does not work with uppercase letters. 
+- Fix: Ugly horizontal scrollbar when there are many modules in top menu.
+- Fix: Many actions on bottom of the view are ugly.
+- Fix: Visual defect in links for changing mode.
+- Fix: Help link too close to mode links.
+- Fix: Style for selected row hides the line separator.
+- Fix: Totals in element collections are not recalculated after removing a row.
+- Fix: After removing a line from an element collection events and calculated properties do not work in the collection. 
+- Fix: Reloading page after removing a line from an element collection leaves a blank line.
+
 OpenXava 5.1 (2014-10-21)
 -------------------------
 - @NoSearch supported for references in embeddable classes of element collections.
@@ -32,6 +57,7 @@ OpenXava 5.1 (2014-10-21)
 - Fix: The xava:descriptionsList JSP tag only works from some folders. 
 - Fix: Editor resizing in element collections only works for text input fields.
 - Fix: ModuleTestBase.logout() fails with the built-in security.
+- Fix: ModuleTestBase.login() fails with a language other than English.
 - Fix: @DefaultValueCalculator with dependent properties is executed twice sometimes.
 
 OpenXava 5.0.1 (2014-7-14)
