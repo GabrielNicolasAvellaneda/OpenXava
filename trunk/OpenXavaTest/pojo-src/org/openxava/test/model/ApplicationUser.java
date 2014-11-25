@@ -1,9 +1,11 @@
-package org.openxava.test.model
+package org.openxava.test.model;
+
+import java.util.*;
 
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
-import org.openxava.model.*
+import org.openxava.model.*;
 
 /**
  * To test @UniqueConstraint in @SecondaryTable. These
@@ -20,29 +22,70 @@ import org.openxava.model.*
 @Entity
 @SecondaryTable(
 	name="APPLICATIONUSER_INFO",
-	uniqueConstraints=[
+	uniqueConstraints={
 		@UniqueConstraint(name="not_repeat_user_info",
-			columnNames=["name", "birthdate", "sex"])
-	]
+			columnNames={"name", "birthdate", "sex"})
+	}
 )
-class ApplicationUser extends Identifiable {
+public class ApplicationUser extends Identifiable {
 	
 	//For testing constraint on a single column.
 	@Required
 	@Column(length=8, unique=true) 
-	String nic 
+	private String nic; 
 	
 	@Column(length=40, table="APPLICATIONUSER_INFO")
-	String name
+	private String name;
 	
 	@Column(length=40, table="APPLICATIONUSER_INFO")
-	Date birthdate
+	private Date birthdate;
 	
 	@Column(table="APPLICATIONUSER_INFO")
 	@Enumerated(EnumType.STRING)
-	Sex sex
+	private Sex sex;
 	public enum Sex { MALE, FEMALE }
 	
 	@OneToMany(mappedBy="user", cascade=CascadeType.REMOVE)
-	Collection<Nickname> nicknames = new ArrayList<>()		
+	private Collection<Nickname> nicknames = new ArrayList<Nickname>();
+
+	public String getNic() {
+		return nic;
+	}
+
+	public void setNic(String nic) {
+		this.nic = nic;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public Sex getSex() {
+		return sex;
+	}
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
+
+	public Collection<Nickname> getNicknames() {
+		return nicknames;
+	}
+
+	public void setNicknames(Collection<Nickname> nicknames) {
+		this.nicknames = nicknames;
+	}
+	
 }

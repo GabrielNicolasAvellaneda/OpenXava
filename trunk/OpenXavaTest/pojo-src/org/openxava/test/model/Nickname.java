@@ -1,9 +1,9 @@
-package org.openxava.test.model
+package org.openxava.test.model;
 
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
-import org.openxava.model.*
+import org.openxava.model.*;
 
 /**
  * To test @UniqueConstraint in @Table. These unique 
@@ -19,15 +19,31 @@ import org.openxava.model.*
 @Entity
 @View(name="OnlyNickname", members="nickname")
 @Table(
-	uniqueConstraints=[
+	uniqueConstraints={
 			@UniqueConstraint(name="not_repeat_nickname", 
-				columnNames=["nickname"])
-])
-class Nickname extends Identifiable {
+				columnNames={"nickname"})
+})
+public class Nickname extends Identifiable {
 	
 	@Required
-	String nickname
+	private String nickname;
 	
 	@ManyToOne
-	ApplicationUser user	
+	private ApplicationUser user;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public ApplicationUser getUser() {
+		return user;
+	}
+
+	public void setUser(ApplicationUser user) {
+		this.user = user;
+	}	
 }
