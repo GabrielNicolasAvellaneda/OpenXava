@@ -8,12 +8,13 @@ import org.openxava.tab.*;
  * @author Javier Paniza
  */
 
-public class RestoreDefaultColumnsAction extends BaseAction implements INavigationAction, IChangeModeAction  { 
+public class RestoreDefaultColumnsAction extends ViewBaseAction implements INavigationAction, IChangeModeAction  {
 
 	private Tab tab;	
 
 	public void execute() throws Exception {		
-		getTab().restoreDefaultProperties();		
+		getTab().restoreDefaultProperties();
+		closeDialog(); 
 	}
 	
 	public Tab getTab() {

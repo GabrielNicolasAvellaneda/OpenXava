@@ -197,7 +197,7 @@ public class Customer implements IWithName {
 		value=org.openxava.calculators.IntegerCalculator.class,
 		properties={ @PropertyValue(name="value", value="0") }		
 	)
-	@Editor(forViews="TypeWithRadioButton", value="ValidValuesRadioButton")
+	@Editor(forViews="TypeWithRadioButton", value="ValidValuesRadioButton")	
 	private Type type;
 	public enum Type { NORMAL, STEADY, SPECIAL };
 	

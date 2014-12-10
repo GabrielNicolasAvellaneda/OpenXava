@@ -24,7 +24,7 @@
 			<set property="nextModule" value="ShowSeller"/>
 			<set property="reinit" value="true"/>
 		</action>	
-	</controller>
+	</controller>	
 	
 	<controller name="GalleryNoDialog">		
 		<action name="edit" image="photo.gif" hidden="true"
@@ -472,9 +472,6 @@
 		<action name="changeTab" mode="list"
 			class="org.openxava.test.actions.ChangeInvoiceTabAction"/>	
 		
-		<action name="setAddColumnsPageRowCountTo10" mode="list"
-			class="org.openxava.test.actions.SetAddColumnsPageRowCountTo10Action"/>	
-		
 		<action name="viewCustomer" mode="detail"
 			class="org.openxava.test.actions.ViewCustomerFromInvoiceAction"/>
 			
@@ -769,7 +766,7 @@
 		<action name="translateName" hidden="true"
 			in-each-row="true"
 			class="org.openxava.test.actions.TranslateCarrierNameAction">
-		</action>		
+		</action>
 		
 		<action name="allToEnglish" hidden="true"
 			class="org.openxava.test.actions.TranslateCarrierNameAction">

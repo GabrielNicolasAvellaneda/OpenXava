@@ -1408,6 +1408,7 @@ public class ModuleTestBase extends TestCase {
 			if (!(Is.emptyString(cell.asText()) || cell.asXml().contains("<input type=\"checkbox\""))) break;
 			increment++;
 		}
+		if (increment == 0 && table.getId().contains("xavaPropertiesList")) return 2;
 		return increment;
 	}
 	

@@ -16,6 +16,7 @@ import org.openxava.application.meta.*;
 public class Labels {
 
 	private static Log log = LogFactory.getLog(Labels.class);
+	private static Map<String, String> labels = new HashMap<String, String>(); 
 	
 	/**
 	 * On any error returns the sent <code>id</code> with the first letter in uppercase.
@@ -44,7 +45,17 @@ public class Labels {
 		return get(id, locale, false);
 	}
 	
-	private static String get(String id, Locale locale, boolean qualified) {
+	private static String get(String id, Locale locale, boolean qualified) { 
+		String key = id + "::" + locale + "::" + qualified;
+		String label = labels.get(key);
+		if (label == null) {
+			label = getWithoutCache(id, locale, qualified);
+			labels.put(key, label);
+		}
+		return label;
+	}
+	
+	private static String getWithoutCache(String id, Locale locale, boolean qualified) { 
 		try {
 			return getImpl(id, locale, qualified);
 		}

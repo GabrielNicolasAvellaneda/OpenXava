@@ -67,7 +67,6 @@ public class Tab implements java.io.Serializable {
 	private final static int MAX_PAGE_ROW_COUNT = 20; 
 	
 	private int pageRowCount = XavaPreferences.getInstance().getPageRowCount();
-	private int addColumnsPageRowCount = XavaPreferences.getInstance().getAddColumnsPageRowCount();
 	private Object [] titleArguments;
 	private List metaPropertiesNotCalculated;
 	private ReferenceMapping referencesCollectionMapping;
@@ -87,8 +86,6 @@ public class Tab implements java.io.Serializable {
 	private Object[] conditionValuesToWhere;
 	private List<MetaProperty> metaProperties; 
 	private int page = 1;
-	private int addColumnsPage = 1; 
-	private int addColumnsLastPage; 
 	private boolean notResetNextTime = false;
 	private int initialIndex;	 			
 	private transient IXTableModel tableModel;	
@@ -101,7 +98,6 @@ public class Tab implements java.io.Serializable {
 	private boolean customize;
 	private String titleId = null;	
 	private boolean notResetPageNextTime;
-	private boolean sortRemainingProperties;
 	private boolean rowsHidden;
 	private IFilter filter; 
 	private Map styles;
@@ -126,6 +122,7 @@ public class Tab implements java.io.Serializable {
 	private List<Map> selectedKeys;
 	private boolean conditionJustCleared;
 	private Map<String, String> labels;  
+	private boolean columnsToAddUntilSecondLevel = true; 
 	
 	private Messages errors; 
 	
@@ -148,9 +145,9 @@ public class Tab implements java.io.Serializable {
 	}
 
 	private List getRemainingPropertiesNames() throws XavaException {
-		if (isSortRemainingProperties()) {
-			List result = new ArrayList(getMetaTab().getRemainingPropertiesNames());
-			Collections.sort(result);
+		if (isColumnsToAddUntilSecondLevel()) {
+			List result = getMetaTab().getRemainingPropertiesNamesUntilSecondLevel();
+			columnsToAddUntilSecondLevel = getMetaTab().getRemainingPropertiesNames().size() != result.size();
 			return result;
 		}
 		else {
@@ -158,13 +155,32 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 	
-	public Collection getColumnsToAdd() throws XavaException { 
-		List remainingPropertiesNames = getRemainingPropertiesNames();
-		int begin = (getAddColumnsPage() - 1) * getAddColumnsPageRowCount();
-		addColumnsLastPage = (remainingPropertiesNames.size() - 1) / getAddColumnsPageRowCount() + 1;
-		int end = begin + getAddColumnsPageRowCount();
-		if (end > remainingPropertiesNames.size()) end = remainingPropertiesNames.size();
-		return remainingPropertiesNames.subList(begin, end);
+	/**
+	 * @since 5.2
+	 */
+	public boolean isColumnsToAddUntilSecondLevel() {  		
+		return columnsToAddUntilSecondLevel;
+	}
+	/**
+	 * @since 5.2
+	 */
+	public void setColumnsToAddUntilSecondLevel(boolean columnsToAddUntilSecondLevel) { 
+		this.columnsToAddUntilSecondLevel = columnsToAddUntilSecondLevel;
+	}
+	
+	public Collection getColumnsToAdd() throws XavaException {
+		List result = new ArrayList(getRemainingPropertiesNames());
+		
+		Collections.sort(result, new Comparator<String>() {
+			
+			private Locale currentLocale = Locales.getCurrent();
+
+			public int compare(String a, String b) {
+				return Labels.getQualified(a, currentLocale).compareToIgnoreCase(Labels.getQualified(b, currentLocale));				
+			}
+			
+		});
+		return result;
 	}
 	
 	public List getMetaPropertiesNotCalculated() throws XavaException {
@@ -1003,21 +1019,7 @@ public class Tab implements java.io.Serializable {
 	public int getLastPage() {		
 		return (tableModel.getRowCount() - 1) / getPageRowCount() + 1;
 	}
-	
-	public int getAddColumnsLastPage() {
-		return addColumnsLastPage; 		
-	}
-	
-	public int getAddColumnsPage() { 
-		return addColumnsPage;
-	}
-	
-	public void goAddColumnsPage(int page) {
-		if (page < 1) addColumnsPage = 1;
-		else if (page > getAddColumnsLastPage()) addColumnsPage = getAddColumnsLastPage();
-		else addColumnsPage = page;
-	}
-	
+		
 	public void pageBack() {
 		if (page < 1) page = 1;		
 		goPage(page-1);		
@@ -1685,13 +1687,6 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 		
-	public boolean isSortRemainingProperties() {
-		return sortRemainingProperties;
-	}
-	public void setSortRemainingProperties(boolean sortRemainingProperties) {
-		this.sortRemainingProperties = sortRemainingProperties;
-	}
-		
 	public Map[] getSelectedKeys(){
 		if (selectedKeys == null || selectedKeys.isEmpty()) return new Map[0];
 		return selectedKeys.toArray(new Map[selectedKeys.size()]);
@@ -1833,14 +1828,6 @@ public class Tab implements java.io.Serializable {
 	
 	public String toString() {
 		return "Tab:" + oid;
-	}
-
-	public int getAddColumnsPageRowCount() {
-		return addColumnsPageRowCount;
-	}
-
-	public void setAddColumnsPageRowCount(int addColumnsPageRowCount) {
-		this.addColumnsPageRowCount = addColumnsPageRowCount;
 	}
 
 	public void deselectAll() {

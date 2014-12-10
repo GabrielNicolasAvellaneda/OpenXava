@@ -8,16 +8,25 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
-public class AddColumnsAction extends BaseAction implements INavigationAction, IChangeModeAction {
+public class AddColumnsAction extends ViewBaseAction implements INavigationAction, IChangeModeAction {
+	
+	private String property;  
 	
 	@Inject @Named("xava_customizingTab")
 	private Tab tab;
 	
 	
 	public void execute() throws Exception {
-		if (!XavaPreferences.getInstance().isCustomizeList()) return; 
-		String [] values = getRequest().getParameterValues("selectedProperties");
-		getTab().addProperties(Arrays.asList(values));		
+		if (!XavaPreferences.getInstance().isCustomizeList()) return;
+		if (property == null) {
+			String [] values = getRequest().getParameterValues("selectedProperties");
+			getTab().addProperties(Arrays.asList(values));
+		}
+		else {
+			getTab().addProperties(Arrays.asList(property));
+
+		}
+		closeDialog();
 	}
 
 	public Tab getTab() {
@@ -38,4 +47,13 @@ public class AddColumnsAction extends BaseAction implements INavigationAction, I
 	public String getNextMode() {
 		return PREVIOUS_MODE;
 	}
+
+	public String getProperty() {
+		return property;
+	}
+
+	public void setProperty(String property) {
+		this.property = property;
+	}
+
 }
