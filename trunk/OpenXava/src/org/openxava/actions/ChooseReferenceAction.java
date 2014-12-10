@@ -38,7 +38,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 		}		
 		getReferenceSubview().setValuesNotifying(key);
 		getTab().setModelName(getPreviousView().getModelName());
-		closeDialog(); 
+		closeDialog();
 	}
 
 	public Tab getTab() {

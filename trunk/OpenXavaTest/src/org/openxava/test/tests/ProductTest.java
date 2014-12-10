@@ -104,36 +104,7 @@ public class ProductTest extends ModuleTestBase {
 		
 		assertPopupPDFLinesCount(11); // There are 7 products, but now without the summation
 	}
-	
-		
-	public void testCustomizeList_sortProperties() throws Exception {
-		execute("List.customize");
-		execute("List.addColumns");
-		
-		assertCollectionRowCount("xavaPropertiesList", 5);
-		assertValueInCollection("xavaPropertiesList",  0, 0, "photos");
-		assertValueInCollection("xavaPropertiesList",  1, 0, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  2, 0, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  3, 0, "remarks");
-		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouseKey");
-		
-		 
-		execute("AddColumns.sort");						
-		assertValueInCollection("xavaPropertiesList",  0, 0, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  1, 0, "photos");
-		assertValueInCollection("xavaPropertiesList",  2, 0, "remarks");
-		assertValueInCollection("xavaPropertiesList",  3, 0, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouseKey");
-		
-		execute("AddColumns.sort"); // A second time, unsort it
-		assertValueInCollection("xavaPropertiesList",  0, 0, "photos");
-		assertValueInCollection("xavaPropertiesList",  1, 0, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  2, 0, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  3, 0, "remarks");
-		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouseKey");
-		
-	}
-		
+			
 	public void testFiltersInDescriptionsEditor() throws Exception {
 		execute("CRUD.new");
 		execute("Product.setLimitZoneTo1"); 

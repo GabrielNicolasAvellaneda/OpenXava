@@ -31,7 +31,6 @@ public class XavaPreferences {
 	private int maxSizeForTextEditor;
 	private Level javaLoggingLevel;
 	private Level hibernateJavaLoggingLevel;
-	private int addColumnsPageRowCount;
 	private int pageRowCount;
 	private int defaultLabelFormat = -1;
 
@@ -253,14 +252,6 @@ public class XavaPreferences {
 					"pageRowCount", "10"));
 		}
 		return pageRowCount;
-	}
-
-	public int getAddColumnsPageRowCount() {
-		if (addColumnsPageRowCount == 0) {
-			addColumnsPageRowCount = Integer.parseInt(getProperties()
-					.getProperty("addColumnsPageRowCount", "100"));
-		}
-		return addColumnsPageRowCount;
 	}
 
 	public void setDuplicateComponentWarnings(boolean duplicateComponentWarnings) {

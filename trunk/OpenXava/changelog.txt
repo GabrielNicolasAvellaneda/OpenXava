@@ -1,6 +1,14 @@
 Change Log for OpenXava project
 ===============================
 
+- The list for adding columns to a list is shown inside a dialog.
+- The list for adding columns to a list no longer uses pagination, but a scrollbar.
+- The list for adding columns to a list shows only until second level properties at first, and all properties on demand.
+- The list for adding columns to a list is ordered by the localized column labels of the properties.
+- The list for adding columns to a list no longer shows the internal properties names.
+- Frame spacing when several frames in a row adjusted. 
+- Performance improvement for label resolution.
+ 
 OpenXava 5.1.1 (2014-11-24)
 ---------------------------
 - New isNumeric() method in Strings utility class.

@@ -78,16 +78,14 @@ public class CarrierTest extends CarrierTestBase {
 		
 		// Add columns
 		execute("List.addColumns", "collection=fellowCarriers");
+		assertNoAction("AddColumns.showMoreColumns"); // Because has not more than second level properties
 		assertCollectionRowCount("xavaPropertiesList", 6);
-		execute("AddColumns.sort");				
-		assertValueInCollection("xavaPropertiesList",  0, 0, "drivingLicence.description");
-		assertValueInCollection("xavaPropertiesList",  0, 1, "Description of Driving licence");
-		assertValueInCollection("xavaPropertiesList",  1, 0, "drivingLicence.level");
-		assertValueInCollection("xavaPropertiesList",  1, 1, "Level of Driving licence");
-		assertValueInCollection("xavaPropertiesList",  2, 0, "drivingLicence.type");
-		assertValueInCollection("xavaPropertiesList",  3, 0, "warehouse.name");
-		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouse.number");
-		assertValueInCollection("xavaPropertiesList",  5, 0, "warehouse.zoneNumber");
+		assertValueInCollection("xavaPropertiesList",  0, 0, "Description of Driving licence");
+		assertValueInCollection("xavaPropertiesList",  1, 0, "Level of Driving licence");
+		assertValueInCollection("xavaPropertiesList",  2, 0, "Name of Warehouse");
+		assertValueInCollection("xavaPropertiesList",  3, 0, "Type of Driving licence");
+		assertValueInCollection("xavaPropertiesList",  4, 0, "Warehouse number");
+		assertValueInCollection("xavaPropertiesList",  5, 0, "Zone of Warehouse"); 
 		checkRow("selectedProperties", "warehouse.name");		
  		execute("AddColumns.addColumns");
 
@@ -97,7 +95,7 @@ public class CarrierTest extends CarrierTestBase {
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Remarks");				
 		assertLabelInCollection("fellowCarriers", 4, "Name of Warehouse");
- 		
+		 		
 		// Other customizations
 		execute("List.moveColumnToLeft", "columnIndex=4,collection=fellowCarriers");
 		assertLabelInCollection("fellowCarriers", 0, "Number");
@@ -112,6 +110,16 @@ public class CarrierTest extends CarrierTestBase {
 		assertLabelInCollection("fellowCarriers", 1, "Name");
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Name of Warehouse");
+		
+		// Adding clicking in row
+		execute("List.addColumns", "collection=fellowCarriers");
+		execute("AddColumns.addColumn", "property=warehouse.number");
+		assertCollectionColumnCount("fellowCarriers", 5);
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
+		assertLabelInCollection("fellowCarriers", 3, "Name of Warehouse");
+		assertLabelInCollection("fellowCarriers", 4, "Warehouse number");
 		
 		// Restoring		
 		execute("List.addColumns", "collection=fellowCarriers");

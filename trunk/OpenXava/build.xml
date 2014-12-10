@@ -969,6 +969,7 @@
 		<delete file="../${project}/web/xava/comparatorsCombo.jsp"/>
 		<delete file="../${project}/web/xava/comparatorsDescriptionsList.jsp"/>
 		<delete file="../${project}/web/xava/comparatorsValidValuesCombo.jsp"/>
+		<delete file="../${project}/web/xava/addColumns.jsp"/> 
 		<!-- Delete renamed JSPs -->
 		<delete file="../${project}/web/xava/editors/customReportNameEditor.jsp"/>
 		<delete file="../${project}/web/xava/editors/customReportColumnNameEditor.jsp"/>

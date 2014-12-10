@@ -112,13 +112,14 @@ openxava.refreshPage = function(result) {
 				break;
 			}			
 		}  
-		if (result.showDialog){	
+		if (result.showDialog){
+			openxava.initBeforeShowDialog(); 
 			dialog.attr("application", result.application);
 			dialog.attr("module", result.module);
 			dialog.dialog('option', 'title', result.dialogTitle);
 			dialog.dialog('option', 'width', 'auto');
 			dialog.dialog('option', 'width', dialog.parent().width());
-			dialog.dialog('option', 'height', 'auto');			
+			dialog.dialog('option', 'height', 'auto');
 			dialog.dialog('option', 'position', 'center' );
 			dialog.dialog('option', 'zIndex', 99999 );
 			dialog.dialog('open');
@@ -166,11 +167,15 @@ openxava.initUI = function(application, module, currentRow) {
 		openxava.initEditors(); 
 	}
 	openxava.initSelectedRows();
-	openxava.initCurrentRow(application, module, currentRow);	
+	openxava.initCurrentRow(application, module, currentRow);
 }
 
 openxava.initStrokeActions = function(application, module) { 
 	Module.getStrokeActions(application, module, openxava.setStrokeActions);
+}
+
+openxava.initBeforeShowDialog = function() { 
+	$("#xava_add_columns").css("max-height", $(window).height() * 0.7); 
 }
 
 openxava.selectRows = function(application, module, selectedRows) { 
@@ -298,7 +303,7 @@ openxava.initLists = function(application, module) {
 		}
 	});				
 	openxava.setListsSize(application, module, "list", openxava.listAdjustment); 
-	openxava.setListsSize(application, module, "collection", openxava.collectionAdjustment); 
+	openxava.setListsSize(application, module, "collection", openxava.collectionAdjustment);
 }
 
 openxava.setListsSize = function(application, module, type, adjustment) {

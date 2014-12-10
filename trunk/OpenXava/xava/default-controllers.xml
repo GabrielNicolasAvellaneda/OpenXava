@@ -223,31 +223,7 @@ here that you want to override.
 			mode="list"			image="previous_page.gif"/>									<action name="goPage"			class="org.openxava.actions.GoPageAction"			keystroke="Control I"			hidden="true"
 			mode="list"/>							<action name="goNextPage"			class="org.openxava.actions.GoNextPageAction"			keystroke="Control S"			hidden="true"
 			mode="list"			image="next_page.gif"/>			
-		
-		<action name="goAddColumnsPreviousPage"
-			class="org.openxava.actions.GoAddColumnsPageAction"
-			keystroke="Control A"
-			hidden="true"
-			mode="list"
-			image="previous_page.gif">
-			<set property="increment" value="-1"/>
-		</action>
-		
-		<action name="goAddColumnsPage"
-			class="org.openxava.actions.GoAddColumnsPageAction"
-			keystroke="Control I"
-			hidden="true"
-			mode="list"/>				
-		
-		<action name="goAddColumnsNextPage"
-			class="org.openxava.actions.GoAddColumnsPageAction"
-			keystroke="Control S"
-			hidden="true"
-			mode="list"
-			image="next_page.gif">	
-			<set property="increment" value="1"/>
-		</action>																								
-		
+				
 		<action name="orderBy"
 			class="org.openxava.actions.OrderByAction"
 			hidden="true"
@@ -332,17 +308,20 @@ here that you want to override.
 		<action name="search" class="org.openxava.actions.SearchDialogAction"/> 
 		<action name="cancel" class="org.openxava.actions.CancelDialogAction"/> 
 	</controller>
-	
-	<controller name="AddColumns">
-		<action name="sort" class="org.openxava.actions.SortColumnsAction" image="sort.gif"/>			
-		<action name="addColumns" class="org.openxava.actions.AddColumnsAction"/>
-		<!--  We left the use-object in order to test action-property attribute -->
+		
+	<controller name="AddColumns"> 					
+		<action name="addColumns" class="org.openxava.actions.AddColumnsAction"/>		
 		<action name="restoreDefault" class="org.openxava.actions.RestoreDefaultColumnsAction">
+			<!--  We left the use-object in order to test action-property attribute -->
 			<use-object name="xava_customizingTab" action-property="tab"/>			
 		</action>			
-		<action name="cancel"
-			class="org.openxava.actions.CancelInListAction"/>		
-	</controller>			<controller name="Navigation">
+		<action name="cancel" 
+			class="org.openxava.actions.CancelFromCustomListAction"/>		
+		<action name="showMoreColumns" class="org.openxava.actions.ShowMoreColumnsAction" hidden="true"/>
+		<action name="addColumn" mode="NONE"
+			class="org.openxava.actions.AddColumnsAction"/>							
+	</controller>				
+			<controller name="Navigation">
 		<action name="first" mode="detail"
 			image="home.gif"
 			class="org.openxava.actions.ViewDetailAction"

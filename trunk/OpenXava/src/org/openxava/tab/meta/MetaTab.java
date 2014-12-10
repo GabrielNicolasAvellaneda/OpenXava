@@ -714,6 +714,16 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		result.removeAll(getPropertiesNames());
 		return result;
 	}
+	
+	/**
+	 * @since 5.2
+	 */
+	public List getRemainingPropertiesNamesUntilSecondLevel() throws XavaException {  
+		List result = new ArrayList(getMetaModel().getRecursiveQualifiedPropertiesNamesUntilSecondLevel());
+		result.removeAll(getPropertiesNames());
+		return result;
+	}
+
 
 	public void addMetaRowStyle(MetaRowStyle style) {
 		if (rowStyles == null) rowStyles = new ArrayList();
