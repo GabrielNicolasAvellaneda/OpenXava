@@ -95,7 +95,6 @@ public class Tab implements java.io.Serializable {
 	private boolean metaTabCloned = false;
 	private boolean titleVisible = false;
 	private List metaPropertiesKey;
-	private boolean customize;
 	private String titleId = null;	
 	private boolean notResetPageNextTime;
 	private boolean rowsHidden;
@@ -1509,14 +1508,6 @@ public class Tab implements java.io.Serializable {
 	/** @since 4m5 */
 	public void setResizeColumns(boolean resizeColumns) { 
 		this.resizeColumns = resizeColumns;
-	}
-	
-	 	
-	public boolean isCustomize() {
-		return customize;
-	}
-	public void setCustomize(boolean customize) {
-		this.customize = customize;
 	}
 	
 	public String getTitleId() {

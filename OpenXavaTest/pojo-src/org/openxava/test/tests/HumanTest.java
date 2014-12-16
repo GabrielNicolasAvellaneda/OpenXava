@@ -177,5 +177,41 @@ public class HumanTest extends ModuleTestBase {
 		s = select.getAttribute("style");
 		assertFalse(s.contains("display: none") || s.contains("display:none")); 
 	}
+	
+	public void testEnableDisableCustomizeList() throws Exception { 
+		getWebClient().setCssEnabled(true);
+		HtmlAnchor addColumns = getForm().getElementById("ox_OpenXavaTest_Human__List___addColumns");
+		HtmlAnchor moveColumnToLeft0 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToLeft', 'columnIndex=0')");
+		HtmlAnchor moveColumnToRight0 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToRight', 'columnIndex=0')");
+		HtmlAnchor removeColumn0 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.removeColumn', 'columnIndex=0')");
+		HtmlAnchor moveColumnToLeft1 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToLeft', 'columnIndex=1')");
+		HtmlAnchor moveColumnToRight1 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToRight', 'columnIndex=1')");
+		HtmlAnchor removeColumn1 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.removeColumn', 'columnIndex=1')");
+		assertFalse(addColumns.isDisplayed());
+		assertFalse(moveColumnToLeft0.isDisplayed());		
+		assertFalse(moveColumnToRight0.isDisplayed());
+		assertFalse(removeColumn0.isDisplayed());
+		assertFalse(moveColumnToLeft1.isDisplayed());		
+		assertFalse(moveColumnToRight1.isDisplayed());
+		assertFalse(removeColumn1.isDisplayed());		
+		HtmlAnchor customize = getForm().getElementById("ox_OpenXavaTest_Human__customize_list");
+		customize.click();
+		assertTrue(addColumns.isDisplayed());
+		assertTrue(moveColumnToLeft0.isDisplayed());		
+		assertTrue(moveColumnToRight0.isDisplayed());
+		assertTrue(removeColumn0.isDisplayed());
+		assertTrue(moveColumnToLeft1.isDisplayed());		
+		assertTrue(moveColumnToRight1.isDisplayed());
+		assertTrue(removeColumn1.isDisplayed());		
+		customize.click();
+		Thread.sleep(3000); // It needs time to fade out 
+		assertFalse(addColumns.isDisplayed());
+		assertFalse(moveColumnToLeft0.isDisplayed());		
+		assertFalse(moveColumnToRight0.isDisplayed());
+		assertFalse(removeColumn0.isDisplayed());
+		assertFalse(moveColumnToLeft1.isDisplayed());		
+		assertFalse(moveColumnToRight1.isDisplayed());
+		assertFalse(removeColumn1.isDisplayed());		
+	}
 				
 }

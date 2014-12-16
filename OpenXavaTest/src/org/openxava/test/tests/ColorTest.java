@@ -75,7 +75,6 @@ public class ColorTest extends ModuleTestBase {
 	
 	public void testSubcontrollerOnChangeControllers() throws Exception{
 		assertAction("ColorSub.firstAction");
-		execute("List.customize");
 		execute("List.addColumns");
 		assertNoAction("ColorSub.firstAction");
 	}

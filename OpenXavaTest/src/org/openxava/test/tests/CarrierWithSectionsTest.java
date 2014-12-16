@@ -664,7 +664,6 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		String [] defaultActions = {
 			"List.hideRows",
 			"List.filter",
-			"List.customize",
 			"List.orderBy",
 			"List.viewDetail",
 			"List.sumColumn",
@@ -686,7 +685,6 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		String [] printActions = {
 			"List.hideRows",
 			"List.filter",
-			"List.customize",
 			"List.orderBy",
 			"List.viewDetail",
 			"List.sumColumn",
@@ -702,7 +700,6 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		String [] typicalActions = {
 			"List.hideRows",
 			"List.filter",
-			"List.customize",
 			"List.orderBy",
 			"List.viewDetail",
 			"List.sumColumn", 

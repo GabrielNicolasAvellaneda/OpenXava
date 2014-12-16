@@ -33,7 +33,6 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 			"Mode.split",
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize", 			
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are alwasy present
 		};		
@@ -59,7 +58,6 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 			"Collection.edit",
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize", 			
 			"List.sumColumn",
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are alwasy present			

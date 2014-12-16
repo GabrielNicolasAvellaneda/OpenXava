@@ -37,7 +37,6 @@ public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
 		
 		execute("Navigation.previous");
 		
-		execute("List.customize", "collection=details");
 		execute("List.removeColumn", "columnIndex=2,collection=details");
 		
 		assertTotalInCollection("details", 1, 3,   "400.00");

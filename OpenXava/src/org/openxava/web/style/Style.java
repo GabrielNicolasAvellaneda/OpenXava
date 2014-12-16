@@ -299,6 +299,14 @@ public class Style {
 		return "show-filter.gif";
 	}
 	
+	/**
+	 * 
+	 * @since 5.2
+	 */
+	public String getCustomizeList() { 
+		return "customize.png";
+	}
+	
 	/** 
 	 * 
 	 * @since 4.9

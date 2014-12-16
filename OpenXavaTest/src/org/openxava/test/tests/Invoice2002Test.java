@@ -19,7 +19,6 @@ public class Invoice2002Test extends ModuleTestBase {
 		"Mode.detailAndFirst",
 		"Mode.split", 
 		"List.filter",
-		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
 		"List.hideRows",
@@ -49,7 +48,6 @@ public class Invoice2002Test extends ModuleTestBase {
 	
 	public void testCustomizeListWithFilterAndBaseCondition() throws Exception {
 		assertValueInList(0, 0, "2002");
-		execute("List.customize");
 		execute("List.moveColumnToRight", "columnIndex=0");
 		assertValueInList(0, 1, "2002");		
 		// Restoring

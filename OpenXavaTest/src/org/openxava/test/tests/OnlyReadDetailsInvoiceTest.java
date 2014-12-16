@@ -31,8 +31,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Mode.list",
 			"Mode.split",
 			"List.filter", 
-			"List.orderBy", 
-			"List.customize", 			
+			"List.orderBy", 		
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are alwasy present						
 		};		
@@ -58,7 +57,6 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Collection.view",
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize",
 			"List.sumColumn",
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are always present						

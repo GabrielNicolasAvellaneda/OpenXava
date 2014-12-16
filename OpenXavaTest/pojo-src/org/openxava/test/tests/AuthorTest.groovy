@@ -18,7 +18,6 @@ class AuthorTest extends ModuleTestBase {
 		setConditionValues (["J"])
 		execute "List.filter"
 		assertListRowCount 1
-		execute "List.customize"
 		execute "List.removeColumn", "columnIndex=1"
 		assertListRowCount 1
 		assertListColumnCount 1

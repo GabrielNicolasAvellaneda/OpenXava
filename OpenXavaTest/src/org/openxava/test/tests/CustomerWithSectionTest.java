@@ -23,34 +23,11 @@ public class CustomerWithSectionTest extends CustomerTest {
 		"List.filter",
 		"List.orderBy",
 		"List.viewDetail",
-		"List.customize",
+		"List.customize", // It does not exist since 5.2, we put here to verify that ModuleTestBase ignore it 
 		"List.hideRows",
 		"Customer.hideSellerInList",
 		"Customer.showSellerInList"
 	};
-
-	private String [] listCustomizeActions = {
-		"Print.generatePdf",
-		"Print.generateExcel",
-		"ExtendedPrint.myReports",
-		"CRUD.new",
-		"CRUD.deleteSelected",
-		"CRUD.deleteRow",
-		"Mode.detailAndFirst",
-		"Mode.split",
-		"List.filter",
-		"List.orderBy",
-		"List.viewDetail",
-		"List.customize",
-		"List.addColumns",
-		"List.moveColumnToLeft",
-		"List.moveColumnToRight",
-		"List.removeColumn",
-		"List.hideRows",
-		"Customer.hideSellerInList",
-		"Customer.showSellerInList"
-	};
-	
 
 	public CustomerWithSectionTest(String testName) {
 		super(testName, "CustomerWithSection", true);		
@@ -373,7 +350,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("CRUD.new");
 		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");
 		assertListColumnCount(3);
-		execute("List.customize");
 		execute("List.addColumns");
 		execute("AddColumns.restoreDefault");
 		assertListColumnCount(3); // To test that it's still is the tab of sellers, not the customer's one
@@ -506,18 +482,21 @@ public class CustomerWithSectionTest extends CustomerTest {
 	
 	public void testShowHideFilterInList() throws Exception { 
 		getWebClient().setCssEnabled(true);
-		assertFalse(hasElementById("show_filter_list"));
-		assertFalse(hasElementById("hide_filter_list"));		
+		assertFalse(getElementById("show_filter_list").isDisplayed());
+		assertFalse(getElementById("hide_filter_list").isDisplayed());
 		assertTrue(getElementById("list_filter_list").isDisplayed());
-		execute("List.customize");				
+		HtmlElement customize = getElementById("customize_list");
+		customize.click();		
 		assertFalse(getElementById("show_filter_list").isDisplayed());
 		assertTrue(getElementById("hide_filter_list").isDisplayed());
 		assertTrue(getElementById("list_filter_list").isDisplayed());
 		getElementById("hide_filter_list").click();
+		Thread.sleep(500); 
 		assertTrue(getElementById("show_filter_list").isDisplayed());
 		assertFalse(getElementById("hide_filter_list").isDisplayed());
 		assertFalse(getElementById("list_filter_list").isDisplayed());
 		getElementById("show_filter_list").click();
+		Thread.sleep(500); 
 		assertFalse(getElementById("show_filter_list").isDisplayed());
 		assertTrue(getElementById("hide_filter_list").isDisplayed());
 		assertTrue(getElementById("list_filter_list").isDisplayed());
@@ -547,8 +526,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 	
 	private void doTestCustomizeList_moveAndRemove() throws Exception {
 		assertActions(listActions);
-		execute("List.customize");		
-		assertActions(listCustomizeActions);
 
 		assertListColumnCount(7);
 		assertLabelInList(0, "Name");
@@ -660,13 +637,11 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInList(0, 4, state); 
 		assertValueInList(0, 5, site);
 						
-		execute("List.customize");
 		assertActions(listActions);
 	}
 	
 	private void doTestCustomizeList_generatePDF() throws Exception {
 		// Trusts in that testCustomizeList_moveAndRemove is executed before
-		execute("List.customize");
 		assertListColumnCount(6);
 		execute("List.removeColumn", "columnIndex=3");
 		assertNoErrors();
@@ -678,7 +653,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 		
 	private void doTestRestoreColumns_addRemoveTabColumnsDynamically() throws Exception { 
 		// Restoring initial tab setup
-		execute("List.customize");
 		execute("List.addColumns");							
 		execute("AddColumns.restoreDefault");		
 		// End restoring
@@ -738,7 +712,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public void testCustomizeList_addAndResetModule() throws Exception {   
 		assertListColumnCount(7);
 		String value = getValueInList(0, 0);
-		execute("List.customize");
 		execute("List.addColumns");		
 		checkRow("selectedProperties", "number"); 		
 		execute("AddColumns.addColumns");
@@ -749,7 +722,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertListColumnCount(8);
 		assertValueInList(0, 0, value);
 		
-		execute("List.customize");
 		execute("List.removeColumn", "columnIndex=7");
 		assertListColumnCount(7);
 	}

@@ -51,7 +51,6 @@ public class CarrierTest extends CarrierTestBase {
 		assertLabelInCollection("fellowCarriers", 3, "Calculated");
 		
 		// Customize the collection
-		execute("List.customize", "collection=fellowCarriers");
 		execute("List.moveColumnToRight", "columnIndex=2,collection=fellowCarriers");
 		assertNoErrors();
 		
@@ -183,7 +182,6 @@ public class CarrierTest extends CarrierTestBase {
 	}
 	
 	private void customizeList() throws Exception { 
-		execute("List.customize");
 		execute("List.addColumns");
 		checkRow("selectedProperties", "drivingLicence.type");
 		execute("AddColumns.addColumns");

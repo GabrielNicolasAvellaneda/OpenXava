@@ -91,7 +91,6 @@ class Product5Test extends ModuleTestBase {
 	void testCollectionWithLongNameStoresPreferences() { 
 		execute "CRUD.new"
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
-		execute "List.customize", "collection=productDetailsSupplierContactDetails"
 		execute "List.removeColumn", "columnIndex=1,collection=productDetailsSupplierContactDetails"
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 1
 		
@@ -99,7 +98,6 @@ class Product5Test extends ModuleTestBase {
 		
 		execute "CRUD.new"
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 1
-		execute "List.customize", "collection=productDetailsSupplierContactDetails"
 		execute "List.addColumns", "collection=productDetailsSupplierContactDetails"
 		execute "AddColumns.restoreDefault"
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2 
@@ -116,7 +114,7 @@ class Product5Test extends ModuleTestBase {
 			'CRUD.new', 'CRUD.deleteRow', 'CRUD.deleteSelected',
 			'Print.generatePdf', 'Print.generateExcel',
 			'List.filter', 'List.sumColumn', 'List.orderBy', 'List.hideRows',
-			'List.viewDetail', 'List.customize',
+			'List.viewDetail', 
 			'Mode.detailAndFirst', 'Mode.split',
 			'ExtendedPrint.myReports',
 			'Product5.goB'
@@ -128,7 +126,7 @@ class Product5Test extends ModuleTestBase {
 			"Mode.list", "Mode.split",
 			"GalleryNoDialog.edit", "List.filter", "Print.generatePdf", 
 			"Collection.removeSelected", "List.orderBy", "Collection.new", 
-			"Reference.createNew", "Reference.modify", "Print.generateExcel", "List.customize",
+			"Reference.createNew", "Reference.modify", "Print.generateExcel", 
 			"Product5.seeInitial"
 		]
 		String[] galleryActions =

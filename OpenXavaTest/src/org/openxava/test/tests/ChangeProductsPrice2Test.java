@@ -22,7 +22,6 @@ public class ChangeProductsPrice2Test extends ModuleTestBase {
 		"Mode.detailAndFirst",
 		"Mode.split",
 		"List.filter",
-		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
 		"List.hideRows",
