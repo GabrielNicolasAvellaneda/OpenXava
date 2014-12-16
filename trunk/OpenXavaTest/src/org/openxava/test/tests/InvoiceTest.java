@@ -716,7 +716,6 @@ public class InvoiceTest extends ModuleTestBase {
 		assertLabelInList(6, "Paid");
 		assertLabelInList(7, "Importance");
 		
-		execute("List.customize");
 		execute("List.addColumns");
 		assertCollectionRowCount("xavaPropertiesList", 21); 		
 		assertValueInCollection("xavaPropertiesList",  0, 0, "City of Customer");
@@ -821,7 +820,6 @@ public class InvoiceTest extends ModuleTestBase {
 		assertLabelInList(6, "Paid");
 		assertLabelInList(7, "Importance");
 		
-		execute("List.customize");
 		execute("List.addColumns");
 		
 		assertCollectionRowCount("xavaPropertiesList", 21); 		
@@ -921,7 +919,6 @@ public class InvoiceTest extends ModuleTestBase {
 				
 		
 		// Restoring, for next time that test execute
-		execute("List.customize");
 		execute("List.removeColumn","columnIndex=9");
 		execute("List.removeColumn","columnIndex=8");
 		
@@ -1647,7 +1644,6 @@ public class InvoiceTest extends ModuleTestBase {
 			"Print.generateExcel", // In collection
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize",
 			"List.sumColumn",
 			"InvoicePrint.printPdfNewAfter", 
 			"Invoice.hideCustomer",

@@ -114,17 +114,23 @@ if (tab.isTitleVisible()) {
 <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">  
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
+<nobr>
 	<% if (tab.isCustomizeAllowed()) { %>
-	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
+	<a  id="<xava:id name='<%="customize_" + id%>'/>" href="javascript:openxava.customizeList('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%="customize_" + id%>')" title="<xava:message key='customize_list'/>"><img align='absmiddle' 
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getCustomizeList()%>' border='0' /></a>			
 	<%
-		if (tab.isCustomize()) {
+		if (tab.isCustomizeAllowed()) { 
 	%>
+	<span class="<xava:id name='<%="customize_" + id%>'/>" style="display: none;">
 	<a id="<xava:id name='<%="show_filter_" + id%>'/>" style="display: <%=displayFilterButton%>" href="javascript:openxava.setFilterVisible('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>', true)" title="<xava:message key='show_filters'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
 		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getShowFilterImage()%>' border='0' /></a>	
-	<xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><%
+	<xava:image action="List.addColumns" argv="<%=collectionArgv%>"/>
+	</span>	
+	<%
 		}
 	} 
 	%>
+</nobr>
 </th>
 <th class="<%=style.getListHeaderCell()%>" width="5">
 	<%
@@ -154,10 +160,15 @@ while (it.hasNext()) {
 	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
 %>
 <th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" >
+<nobr>
 <div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):("")) %>" style="overflow: hidden; <%=width%>" > 
 <%
-	if (tab.isCustomize()) {
-%><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><%
+	if (tab.isCustomizeAllowed()) {
+%>
+<span class="<xava:id name='<%="customize_" + id%>'/>" style="display: none;">  
+<xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
+</span>
+<%
 	}
 %>
 <%
@@ -203,14 +214,17 @@ while (it.hasNext()) {
 <%
 		}
 		   
-		   if (tab.isCustomize()) {
+		   if (tab.isCustomizeAllowed()) {
 	%>
+	<span class="<xava:id name='<%="customize_" + id%>'/>" style="display: none;">
 	<xava:image action="List.moveColumnToRight" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
 	<xava:image action="List.removeColumn" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
+	</span>
 <%
 	}
 %>
 </div> 
+</nobr>
 </th>
 <%
 	columnIndex++;
@@ -223,9 +237,11 @@ while (it.hasNext()) {
 <tr id="<xava:id name='<%="list_filter_" + id%>'/>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
 <th class="<%=style.getFilterCell()%> <%=style.getListSubheaderCell()%>">
 
-	<% if (tab.isCustomize()) { %>
+	<% if (tab.isCustomizeAllowed()) { %>
+	<span class="<xava:id name='<%="customize_" + id%>'/>" style="display: none;">
 	<a id="<xava:id name='<%="hide_filter_" + id%>'/>" href="javascript:openxava.setFilterVisible('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>', false)" title="<xava:message key='hide_filters'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>"  
-		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getHideFilterImage()%>' border='0' style='vertical-align:text-top;'/></a> 
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getHideFilterImage()%>' border='0' style='vertical-align:text-top;'/></a>
+	</span>	 
 	<% } %>		
 
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>

@@ -479,9 +479,23 @@ openxava.limitLength = function(ev, max) {
 openxava.setFilterVisible = function(application, module, id, tabObject, visible) { 
     var filter = openxava.getElementById(application, module, "list_filter_" + id); 
     var link = openxava.getElementById(application, module, "show_filter_" + id);
-	filter.style.display = visible?'':'none';
-	link.style.display = visible?'none':''; 
+    if (visible) {
+    	$(filter).fadeIn();
+    	$(link).fadeOut();
+    }
+    else {
+    	$(filter).fadeOut();
+    	$(link).fadeIn();    	
+    }
 	Tab.setFilterVisible(application, module, visible, tabObject);
+}
+
+openxava.customizeList = function(application, module, id) { 	
+	var customizeControlsClass = openxava.decorateId(application, module, id);	
+	$("." + customizeControlsClass).each(function() {
+		if ($(this).is(":visible")) $(this).fadeOut();
+		else $(this).fadeIn(2000);
+	});
 }
 
 openxava.setPageRowCount = function(application, module, collection, select) {	

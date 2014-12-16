@@ -15,7 +15,6 @@ public class WarehouseSpecialNewTest extends ModuleTestBase {
 	}
 	
 	public void testExecutingOnChangeActionDoesNotClosePersistentSession_noCustomizeList() throws Exception {
-		assertNoAction("List.customize");
 		execute("WarehouseSpecialNew.new");
 		assertNoErrors();
 		assertMessagesCount(2);

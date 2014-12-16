@@ -238,13 +238,6 @@ here that you want to override.
 				<action name="deselectRows"			class="org.openxava.actions.DeselectRowsAction"			hidden="true"
 			mode="list">					</action>	
 						
-		<action name="customize"
-			class="org.openxava.actions.CustomizeListAction"
-			hidden="true"
-			mode="list"
-			image="customize.png">		
-		</action>
-		
 		<action name="moveColumnToLeft"
 			class="org.openxava.actions.MoveColumnToLeftAction"
 			hidden="true"

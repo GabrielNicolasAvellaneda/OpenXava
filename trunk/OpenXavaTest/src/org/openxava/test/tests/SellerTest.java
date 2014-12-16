@@ -216,7 +216,6 @@ public class SellerTest extends ModuleTestBase {
 	}
 	
 	public void testCustomizeListSupportsRecursiveReferences() throws Exception {
-		execute("List.customize");
 		execute("List.addColumns");
 		assertAction("AddColumns.addColumns");
 	}

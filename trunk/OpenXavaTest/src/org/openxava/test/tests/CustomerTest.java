@@ -36,7 +36,6 @@ public class CustomerTest extends ModuleTestBase {
 		"List.filter",
 		"List.orderBy",
 		"List.viewDetail",
-		"List.customize",
 		"List.hideRows",
 		"Customer.hideSellerInList",
 		"Customer.showSellerInList"
@@ -126,7 +125,6 @@ public class CustomerTest extends ModuleTestBase {
 		assertListRowCount(3); // We rely in that there are 3 customer of Valencia
 		
 		// To sure that it works after customizing list
-		execute("List.customize");
 		execute("List.removeColumn", "columnIndex=5");
 
 		setConditionValues(totalCondition);		

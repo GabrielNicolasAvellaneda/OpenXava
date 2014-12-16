@@ -46,7 +46,6 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		assertTotalInCollection("details", "quantity", "8");
 		
 		// Restore initial values
-		execute("List.customize", "collection=details");
 		execute("List.addColumns", "collection=details");
 		execute("AddColumns.restoreDefault");
 		assertTotalInCollection("details", "product.unitPrice", "31.00"); 

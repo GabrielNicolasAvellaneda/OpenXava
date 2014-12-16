@@ -59,7 +59,9 @@ public class ModuleTestBase extends TestCase {
 	private static String liferayURL;	
 	private static String host;
 	private static String port;
-	private static int loginFormIndex = -1; 
+	private static int loginFormIndex = -1;
+	private static Collection excludedActions;  
+	private static Collection ignoredActions; 
 	private String locale;
 	private MetaModule metaModule;
 	private MetaModel metaModel;
@@ -1271,11 +1273,36 @@ public class ModuleTestBase extends TestCase {
 		for (Iterator it = hiddens.iterator(); it.hasNext(); ) {
 			HtmlInput input = (HtmlInput) it.next();
 			if (!input.getNameAttribute().startsWith(Ids.decorate(application, module, ACTION_PREFIX))) continue;
-			actions.add(removeActionPrefix(input.getNameAttribute()));			
+			String actionName = removeActionPrefix(input.getNameAttribute());
+			if (!getExcludedActions().contains(actionName)) {  
+				actions.add(removeActionPrefix(input.getNameAttribute()));
+			}
 		}								
 		return actions;				
 	}
 			
+	private static Collection getExcludedActions() { 
+		if (excludedActions == null) {
+			excludedActions = new ArrayList();
+			// The next actions are always available since 5.2. We do this to avoid migration work for developers
+			excludedActions.add("List.removeColumn");
+			excludedActions.add("List.moveColumnToRight");
+			excludedActions.add("List.moveColumnToLeft");
+			excludedActions.add("List.addColumns");
+		}
+		return excludedActions;
+	}
+	
+	private static Collection getIgnoredActions() { 
+		if (ignoredActions == null) {
+			ignoredActions = new ArrayList();
+			// The next actions is no longer available since 5.2. We do this to avoid migration work for developers
+			ignoredActions.add("List.customize");
+		}
+		return ignoredActions;
+	}
+
+
 	protected void assertActions(String [] expectedActions) throws Exception {
 		Collection actionsInForm = getActions();		
 		Collection left = new ArrayList();		
@@ -1285,7 +1312,9 @@ public class ModuleTestBase extends TestCase {
 				actionsInForm.remove(expectedAction);
 			}
 			else {
-				left.add(expectedAction);
+				if (!getIgnoredActions().contains(expectedAction)) { 
+					left.add(expectedAction);
+				}
 			}				
 		}			
 
