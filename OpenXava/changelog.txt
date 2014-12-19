@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Removing a column from a list is done instantly and with a fade effect.
+- Fix: After removing a column from a list the filter data is gone.
+- List customization icons are hidden automatically after executing any action.
 - Using JavaScript to show/hide the list customization icons, without an AJAX request.
 - Fade effect to show/hide the filter part of the list and the customization icons. 
 - The list for adding columns to a list is shown inside a dialog.

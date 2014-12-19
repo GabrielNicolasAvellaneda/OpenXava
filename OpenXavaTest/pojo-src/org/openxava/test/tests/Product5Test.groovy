@@ -6,7 +6,7 @@ import org.openxava.tests.*;
  * @author Javier Paniza
  */
 
-class Product5Test extends ModuleTestBase {
+class Product5Test extends CustomizeListTestBase { 
 	
 	Product5Test(String testName) {
 		super(testName, "Product5")		
@@ -91,7 +91,7 @@ class Product5Test extends ModuleTestBase {
 	void testCollectionWithLongNameStoresPreferences() { 
 		execute "CRUD.new"
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
-		execute "List.removeColumn", "columnIndex=1,collection=productDetailsSupplierContactDetails"
+		removeColumn "productDetailsSupplierContactDetails", 1 
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 1
 		
 		resetModule()

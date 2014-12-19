@@ -3,6 +3,8 @@ package org.openxava.test.tests;
 import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 /**
  * @author Javier Paniza
  */
@@ -102,8 +104,8 @@ public class CarrierTest extends CarrierTestBase {
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Name of Warehouse");
 		assertLabelInCollection("fellowCarriers", 4, "Remarks");
-				
-		execute("List.removeColumn", "columnIndex=4,collection=fellowCarriers");
+						
+		removeColumn("fellowCarriers", 4); 
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");

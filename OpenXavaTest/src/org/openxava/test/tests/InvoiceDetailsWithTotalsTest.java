@@ -8,7 +8,7 @@ import com.gargoylesoftware.htmlunit.html.*;
  * @author Javier Paniza
  */
 
-public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
+public class InvoiceDetailsWithTotalsTest extends CustomizeListTestBase { 
 	
 	public InvoiceDetailsWithTotalsTest(String testName) {
 		super(testName, "InvoiceDetailsWithTotals");		
@@ -37,7 +37,7 @@ public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
 		
 		execute("Navigation.previous");
 		
-		execute("List.removeColumn", "columnIndex=2,collection=details");
+		removeColumn("details", 2); 
 		
 		assertTotalInCollection("details", 1, 3,   "400.00");
 		assertTotalInCollection("details", 2, 3, "2,900.00");		
@@ -45,7 +45,7 @@ public class InvoiceDetailsWithTotalsTest extends ModuleTestBase {
 		execute("Print.generatePdf", "viewObject=xava_view_details"); 
 		assertContentTypeForPopup("application/pdf");
 		
-		execute("List.removeColumn", "columnIndex=3,collection=details");
+		removeColumn("details", 3);
 		assertTotalInCollection("details", "deliveryDate", "12/15/10");			
 	}
 	

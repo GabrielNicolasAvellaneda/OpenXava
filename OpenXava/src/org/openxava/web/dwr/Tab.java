@@ -22,6 +22,13 @@ public class Tab extends DWRBase {
 		tab.setFilterVisible(filterVisible);
 	}
 	
+	public static void removeProperty(HttpServletRequest request, String application, String module, String property, String tabObject) {  
+		checkSecurity(request, application, module);
+		Users.setCurrent(request);
+		org.openxava.tab.Tab tab = getTab(request, application, module, tabObject);
+		tab.removeProperty(property);
+	}
+	
 	public static void setColumnWidth(HttpServletRequest request, String columnId, int width) { 
 		try {
 			String [] id = columnId.split("_+");
