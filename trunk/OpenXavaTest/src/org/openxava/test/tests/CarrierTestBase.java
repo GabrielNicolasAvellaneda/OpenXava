@@ -9,7 +9,7 @@ import org.openxava.tests.*;
  * @author Javier Paniza
  */
 
-abstract public class CarrierTestBase extends ModuleTestBase {
+abstract public class CarrierTestBase extends CustomizeListTestBase { 
 	
 	public CarrierTestBase(String testName, String moduleName) {
 		super(testName, moduleName);		

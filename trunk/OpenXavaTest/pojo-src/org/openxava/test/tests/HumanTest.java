@@ -183,10 +183,10 @@ public class HumanTest extends ModuleTestBase {
 		HtmlAnchor addColumns = getForm().getElementById("ox_OpenXavaTest_Human__List___addColumns");
 		HtmlAnchor moveColumnToLeft0 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToLeft', 'columnIndex=0')");
 		HtmlAnchor moveColumnToRight0 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToRight', 'columnIndex=0')");
-		HtmlAnchor removeColumn0 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.removeColumn', 'columnIndex=0')");
+		HtmlAnchor removeColumn0 = getHtmlPage().getAnchorByHref("javascript:openxava.removeColumn('OpenXavaTest', 'Human', 'ox_OpenXavaTest_Human__list_col0', 'xava_tab')"); 
 		HtmlAnchor moveColumnToLeft1 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToLeft', 'columnIndex=1')");
 		HtmlAnchor moveColumnToRight1 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.moveColumnToRight', 'columnIndex=1')");
-		HtmlAnchor removeColumn1 = getHtmlPage().getAnchorByHref("javascript:openxava.executeAction('OpenXavaTest', 'Human', '', false, 'List.removeColumn', 'columnIndex=1')");
+		HtmlAnchor removeColumn1 = getHtmlPage().getAnchorByHref("javascript:openxava.removeColumn('OpenXavaTest', 'Human', 'ox_OpenXavaTest_Human__list_col1', 'xava_tab')"); 
 		assertFalse(addColumns.isDisplayed());
 		assertFalse(moveColumnToLeft0.isDisplayed());		
 		assertFalse(moveColumnToRight0.isDisplayed());

@@ -7,7 +7,6 @@ import javax.persistence.NoResultException;
 import org.openxava.model.meta.MetaModel;
 import org.openxava.test.model.Customer;
 import org.openxava.test.model.Warehouse;
-import org.openxava.tests.ModuleTestBase;
 import org.openxava.util.Is;
 import org.openxava.util.Strings;
 
@@ -20,7 +19,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * @author Javier Paniza
  */
 
-public class CustomerTest extends ModuleTestBase {
+public class CustomerTest extends CustomizeListTestBase { 
 	
 	private String section;		
 
@@ -125,7 +124,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertListRowCount(3); // We rely in that there are 3 customer of Valencia
 		
 		// To sure that it works after customizing list
-		execute("List.removeColumn", "columnIndex=5");
+		removeColumn(5); 
 
 		setConditionValues(totalCondition);		
 		execute("List.filter");

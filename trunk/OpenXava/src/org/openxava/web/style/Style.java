@@ -303,9 +303,17 @@ public class Style {
 	 * 
 	 * @since 5.2
 	 */
-	public String getCustomizeList() { 
+	public String getCustomizeListImage() {  
 		return "customize.png";
 	}
+	
+	/**
+	 * 
+	 * @since 5.2
+	 */
+	public String getRemoveColumnImage() {  
+		return "remove.gif";
+	}	
 	
 	/** 
 	 * 

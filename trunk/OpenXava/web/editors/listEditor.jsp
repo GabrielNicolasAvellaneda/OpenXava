@@ -117,7 +117,7 @@ if (tab.isTitleVisible()) {
 <nobr>
 	<% if (tab.isCustomizeAllowed()) { %>
 	<a  id="<xava:id name='<%="customize_" + id%>'/>" href="javascript:openxava.customizeList('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%="customize_" + id%>')" title="<xava:message key='customize_list'/>"><img align='absmiddle' 
-		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getCustomizeList()%>' border='0' /></a>			
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getCustomizeListImage()%>' border='0' /></a>			
 	<%
 		if (tab.isCustomizeAllowed()) { 
 	%>
@@ -159,9 +159,9 @@ while (it.hasNext()) {
 	int columnWidth = tab.getColumnWidth(columnIndex);
 	String width = columnWidth<0 || !resizeColumns?"":"width: " + columnWidth + "px";
 %>
-<th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" >
+<th class="<%=style.getListHeaderCell()%>" style="<%=align%>; padding-right: 0px" data-property="<%=property.getQualifiedName()%>">
 <nobr>
-<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):("")) %>" style="overflow: hidden; <%=width%>" > 
+<div id="<xava:id name='<%=id%>'/>_col<%=columnIndex%>" class="<%=((resizeColumns)?("xava_resizable"):("")) %>" style="overflow: hidden; <%=width%>" >
 <%
 	if (tab.isCustomizeAllowed()) {
 %>
@@ -218,7 +218,8 @@ while (it.hasNext()) {
 	%>
 	<span class="<xava:id name='<%="customize_" + id%>'/>" style="display: none;">
 	<xava:image action="List.moveColumnToRight" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
-	<xava:image action="List.removeColumn" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
+	<a href="javascript:openxava.removeColumn('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<xava:id name='<%=id%>'/>_col<%=columnIndex%>', '<%=tabObject%>')" title="<xava:message key='remove_column'/>"><img align='absmiddle' 
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getRemoveColumnImage()%>' border='0' /></a>			
 	</span>
 <%
 	}
@@ -348,7 +349,9 @@ while (it.hasNext()) {
 	}
 	else {
 %>
-<th class=<%=style.getListSubheaderCell()%>></th>
+<th class=<%=style.getListSubheaderCell()%>>
+	<div class="<xava:id name='<%=id%>'/>_col<%=columnIndex%>"/>
+</th>
 <%
 	}
 	columnIndex++; 
@@ -435,7 +438,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 			</div>
 		</xava:link>
 		<% } else { %>		
-		<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">	
+		<div title="<%=title%>" class="<xava:id name='tipable'/> <xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
 			<%if (resizeColumns) {%><nobr><%}%>
 			<%=fvalue%>&nbsp;
 			<%if (resizeColumns) {%></nobr><%}%>
@@ -519,18 +522,18 @@ for (int c=0; c<model.getColumnCount(); c++) {
 		String ftotal = WebEditors.format(request, p, tab.getTotal(i, c), errors, view.getViewName(), true);
 	%> 	
 	<td class="<%=style.getTotalCell()%>" style="<%=cellStyle%>">
-	<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
-	<nobr>
-	<%=ftotal%>&nbsp;
-	</nobr>	
-	</div>	
+		<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
+			<nobr>
+			<%=ftotal%>&nbsp;
+			</nobr>	
+		</div>	
 	</td>	
 	<%	
 	}
 	else if (tab.hasTotal(i, c + 1)) { 
 	%>
 	<td class="<%=style.getTotalLabelCell()%>" style="<%=style.getTotalLabelCellStyle()%>">
-		<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">
+		<div class="<xava:id name='<%=id%>'/>_col<%=c%>" style="overflow: hidden; <%=width%>">		
 		<%=tab.getTotalLabel(i, c + 1)%>&nbsp;
 		</div>
 	</td>
@@ -538,7 +541,9 @@ for (int c=0; c<model.getColumnCount(); c++) {
 	}
 	else {
 	%>	 
-	<td style="<%=style.getTotalEmptyCellStyle()%>"/>
+	<td style="<%=style.getTotalEmptyCellStyle()%>">
+		<div class="<xava:id name='<%=id%>'/>_col<%=c%>"/>
+	</td>
 	<%		
 	}	
 }

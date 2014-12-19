@@ -10,7 +10,6 @@ import javax.rmi.*;
 import org.openxava.jpa.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.model.*;
-import org.openxava.tests.*;
 import org.openxava.util.*;
 import org.openxava.web.*;
 
@@ -22,7 +21,7 @@ import com.gargoylesoftware.htmlunit.html.*;
  * @author Javier Paniza
  */
 
-public class InvoiceTest extends ModuleTestBase {
+public class InvoiceTest extends CustomizeListTestBase { 
 	
 	private Invoice invoice;
 	private BigDecimal productUnitPriceDB;
@@ -798,10 +797,61 @@ public class InvoiceTest extends ModuleTestBase {
 		assertLabelInList(8, "City of Address of Customer");
 
 		// Restoring, for next time that test execute
-		execute("List.removeColumn","columnIndex=8");
+		removeColumn(8); 
 		assertListColumnCount(8);		
 	}
+	
+	public void testRemoveSeveralColumns() throws Exception { 
+		assertListColumnCount(8);
+		assertLabelInList(0, "Year");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Date");
+		assertLabelInList(3, "Amounts sum");
+		assertLabelInList(4, "V.A.T.");
+		assertLabelInList(5, "Details count");
+		assertLabelInList(6, "Paid");
+		assertLabelInList(7, "Importance");
 
+		removeColumn(2);
+		assertListColumnCount(7);
+		assertLabelInList(0, "Year");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Amounts sum");
+		assertLabelInList(3, "V.A.T.");
+		assertLabelInList(4, "Details count");
+		assertLabelInList(5, "Paid");
+		assertLabelInList(6, "Importance");
+		
+		removeColumn(4); // VAT, the original index is used until an ajax reload is done
+		assertListColumnCount(6);
+		assertLabelInList(0, "Year");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Amounts sum");
+		assertLabelInList(3, "Details count");
+		assertLabelInList(4, "Paid");
+		assertLabelInList(5, "Importance");
+		
+		execute("List.filter");
+		assertListColumnCount(6);
+		assertLabelInList(0, "Year");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Amounts sum");
+		assertLabelInList(3, "Details count");
+		assertLabelInList(4, "Paid");
+		assertLabelInList(5, "Importance");
+
+		execute("List.addColumns");
+		execute("AddColumns.restoreDefault");
+		assertListColumnCount(8);
+		assertLabelInList(0, "Year");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Date");
+		assertLabelInList(3, "Amounts sum");
+		assertLabelInList(4, "V.A.T.");
+		assertLabelInList(5, "Details count");
+		assertLabelInList(6, "Paid");
+		assertLabelInList(7, "Importance");		
+	}
 	
 	public void testCustomizeList() throws Exception {
 		doTestCustomizeList_addColumns();
@@ -919,8 +969,8 @@ public class InvoiceTest extends ModuleTestBase {
 				
 		
 		// Restoring, for next time that test execute
-		execute("List.removeColumn","columnIndex=9");
-		execute("List.removeColumn","columnIndex=8");
+		removeColumn(9); 
+		removeColumn(8); 		
 		
 		assertListColumnCount(8);
 		assertLabelInList(0, "Year");

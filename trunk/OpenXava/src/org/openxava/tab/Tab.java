@@ -815,7 +815,7 @@ public class Tab implements java.io.Serializable {
 			notResetNextTime = false;
 			return;
 		}		
-		tableModel = null;				
+		tableModel = null;	
 		if (!notResetPageNextTime) { 
 			notResetPageNextTime = false;
 			initialIndex = 0; 		

@@ -1285,7 +1285,6 @@ public class ModuleTestBase extends TestCase {
 		if (excludedActions == null) {
 			excludedActions = new ArrayList();
 			// The next actions are always available since 5.2. We do this to avoid migration work for developers
-			excludedActions.add("List.removeColumn");
 			excludedActions.add("List.moveColumnToRight");
 			excludedActions.add("List.moveColumnToLeft");
 			excludedActions.add("List.addColumns");
@@ -1351,7 +1350,9 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	private HtmlTableCell getTableCellInList(int row, int column) throws Exception {
-		return getTable("list", "list_not_displayed").getCellAt(row+2, column+2);
+		HtmlTable table = getTable("list", "list_not_displayed");
+		int columnIncrement = getColumnIncrement(table, column);
+		return table.getCellAt(row+2, column+columnIncrement);
 	}
 	
 	private HtmlTableRow getTableRow(String tableId, int row) throws Exception {
@@ -1521,7 +1522,11 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private int getListColumnCount(String id, String message) throws Exception {
-		return getTable(id, message).getRow(0).getCells().size() - 2;		
+		int c = 0;
+		for (HtmlTableCell cell: getTable(id, message).getRow(0).getCells()) {
+			if (cell.isDisplayed()) c++;
+		}
+		return c - 2;
 	}	
 	
 	/**
@@ -1655,7 +1660,7 @@ public class ModuleTestBase extends TestCase {
 	
 	private void assertLabelInList(String tableId, String message, int column, String label) throws Exception {
 		HtmlTable table = getTable(tableId, message);
-		int increment = getRowIncrement(table, column); 
+		int increment = getColumnIncrement(table, column); 
 		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, 
 				table.getCellAt(0, column+increment).asText().trim());
 	}
@@ -1663,12 +1668,12 @@ public class ModuleTestBase extends TestCase {
 	private void assertTotalInList(String tableId, String message, int row, int column, String total) throws Exception { 
 		HtmlTable table = getTable(tableId, message);
 		int rowInTable = table.getRowCount() - getTotalsRowCount(table) + row;
-		column+=getRowIncrement(table, column); 
+		column+=getColumnIncrement(table, column); 
 		assertEquals(XavaResources.getString("total_not_match", new Integer(column)), total,   
 				table.getCellAt(rowInTable, column).asText().trim());		
 	}		
 	
-	private int getRowIncrement(HtmlTable table, int originalColumn) {
+	private int getColumnIncrement(HtmlTable table, int originalColumn) {
 		int increment = table.getCellAt(0, 1).asXml().contains("type=\"checkbox\"")
 				|| table.getCellAt(0, 0).asXml().contains("customize.png")?2:1;
 		if (isElementCollection(table)) {
@@ -1679,7 +1684,13 @@ public class ModuleTestBase extends TestCase {
 				if (Is.emptyString(value)) increment++;
 				cell = table.getCellAt(0, i++);
 			} 
-		}
+		}		
+		int i=1;
+		HtmlTableCell cell = table.getCellAt(0, i);
+		while (cell != null && i < originalColumn + increment + 1) {			
+			if (!cell.isDisplayed()) increment++;			
+			cell = table.getCellAt(0, ++i);
+		} 
 		return increment;
 	}
 	

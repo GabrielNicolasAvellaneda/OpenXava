@@ -621,7 +621,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInList(0, 6, site);
 
 		// remove column 3
-		execute("List.removeColumn", "columnIndex=3");
+		removeColumn(3); 
 		assertNoErrors();
 		assertListColumnCount(6);
 		assertLabelInList(0, "Name");
@@ -643,7 +643,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	private void doTestCustomizeList_generatePDF() throws Exception {
 		// Trusts in that testCustomizeList_moveAndRemove is executed before
 		assertListColumnCount(6);
-		execute("List.removeColumn", "columnIndex=3");
+		removeColumn(3); 
 		assertNoErrors();
 		assertListColumnCount(5);		
 		execute("Print.generatePdf"); 
@@ -722,7 +722,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertListColumnCount(8);
 		assertValueInList(0, 0, value);
 		
-		execute("List.removeColumn", "columnIndex=7");
+		removeColumn(7); 
 		assertListColumnCount(7);
 	}
 	

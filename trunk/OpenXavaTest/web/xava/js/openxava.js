@@ -498,6 +498,15 @@ openxava.customizeList = function(application, module, id) {
 	});
 }
 
+openxava.removeColumn = function(application, module, columnId, tabObject) {  
+	$("#" + columnId).closest("th").fadeOut();
+	$("." + columnId).each(function () {
+		$(this).closest("td,th").fadeOut();  
+	});
+	var property = $("#" + columnId).closest("th").attr("data-property");
+	Tab.removeProperty(application, module, property, tabObject);
+}
+
 openxava.setPageRowCount = function(application, module, collection, select) {	
 	openxava.executeAction(application, module, '', false, "List.setPageRowCount", "rowCount=" + select.value + ",collection=" + collection)
 }
