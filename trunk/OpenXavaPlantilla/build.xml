@@ -14,7 +14,11 @@
 		<ant antfile="../OpenXava/build.xml" target="compile"/>
 	</target>	    		
 	
-	<!-- Construye y despliega la aplicación en formato .war -->	
+	<!-- 
+	Construye y despliega la aplicación en formato .war 
+	Lo despliega en el Tomcat incluido en OpenXava, para desplegar 
+	en otro lugar modifica la propiedad tomcat.dir de workspace/openxava.properties.	
+	-->	
 	<target name="desplegarWar">
 		<!-- En un directorio -->
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
@@ -22,6 +26,14 @@
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 		-->
 	</target>				
+	
+	<!-- 
+	Construye y despliega la aplicación en formato .war.
+	Deja el war en la carpeta workspace.dist/TuAplicacion.dist.
+	 -->	
+	<target name="crearWar">
+		<ant antfile="../OpenXava/build.xml" target="createWar"/>
+	</target>					
 	
 	<!--
 	Construye la aplicación en formato portlets. 
