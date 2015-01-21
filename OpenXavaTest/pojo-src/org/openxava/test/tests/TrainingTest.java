@@ -128,23 +128,23 @@ public class TrainingTest extends ModuleTestBase {
 	}
 	
 	public void testRemoveRowInElementCollection() throws Exception {
-		getWebClient().setCssEnabled(true);
+		getWebClient().getOptions().setCssEnabled(true); 
 		assertListRowCount(0);
 		execute("CRUD.new");		
 		setValue("description", "JUNIT TRAINING");
-		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___0");
+		HtmlElement row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___0"); 
 		HtmlElement removeLink = row.getElementsByTagName("a").get(0);
 		assertTrue(!removeLink.isDisplayed());
 		setValueInCollection("sessions", 0, "description", "ONE");
 		assertTrue(removeLink.isDisplayed());
 		setValueInCollection("sessions", 0, "kms", "11");
-		row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___1");
+		row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___1"); 
 		removeLink = row.getElementsByTagName("a").get(0);
 		assertTrue(!removeLink.isDisplayed());		
 		setValueInCollection("sessions", 1, "description", "TWO");
 		assertTrue(removeLink.isDisplayed());
-		setValueInCollection("sessions", 1, "kms", "12");
-		row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___2");
+		setValueInCollection("sessions", 1, "kms", "12");		
+		row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___2"); 
 		removeLink = row.getElementsByTagName("a").get(0);
 		assertTrue(!removeLink.isDisplayed());
 		setValueInCollection("sessions", 2, "description", "THREE"); 
@@ -161,7 +161,7 @@ public class TrainingTest extends ModuleTestBase {
 		assertValueInCollection("sessions", 2, "description", "THREE"); 
 		assertValueInCollection("sessions", 2, "kms", "13");		
 		
-		row = getHtmlPage().getElementById("ox_OpenXavaTest_Training__sessions___1");
+		row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___1"); 
 		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
 		removeIcon.click();
 		assertCollectionRowCount("sessions", 2);

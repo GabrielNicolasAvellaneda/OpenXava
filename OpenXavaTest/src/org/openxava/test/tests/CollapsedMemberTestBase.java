@@ -93,10 +93,10 @@ public abstract class CollapsedMemberTestBase extends ModuleTestBase {
 	private void assertFrameHtmlStatus(boolean closed) {		
 		String frameId= getFrameId();
 		
-		HtmlElement hiddenFrame= getHtmlPage().getElementById(frameId + "hide");
+		HtmlElement hiddenFrame= getHtmlPage().getHtmlElementById(frameId + "hide"); 
 		String hiddenFrameStyle= hiddenFrame.getAttribute("style");
 		
-		HtmlElement shownFrame= getHtmlPage().getElementById(frameId + "show");
+		HtmlElement shownFrame= getHtmlPage().getHtmlElementById(frameId + "show"); 
 		String shownFrameStyle= shownFrame.getAttribute("style");
 	
 		//according to frameActions.jsp

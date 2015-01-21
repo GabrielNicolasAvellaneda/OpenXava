@@ -53,7 +53,7 @@ public class CarrierTest extends CarrierTestBase {
 		assertLabelInCollection("fellowCarriers", 3, "Calculated");
 		
 		// Customize the collection
-		execute("List.moveColumnToRight", "columnIndex=2,collection=fellowCarriers");
+		moveColumn("fellowCarriers", 2, 3); 
 		assertNoErrors();
 		
 		assertCollectionColumnCount("fellowCarriers", 4);
@@ -98,7 +98,7 @@ public class CarrierTest extends CarrierTestBase {
 		assertLabelInCollection("fellowCarriers", 4, "Name of Warehouse");
 		 		
 		// Other customizations
-		execute("List.moveColumnToLeft", "columnIndex=4,collection=fellowCarriers");
+		moveColumn("fellowCarriers", 3, 4); 
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");

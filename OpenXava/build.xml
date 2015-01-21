@@ -963,6 +963,7 @@
 		<!-- Delete unused JS -->
 		<delete file="../${project}/web/xava/js/jquery.qtip.js"/>
 		<delete file="../${project}/web/xava/js/jquery.bgiframe.min.js"/>
+		<delete file="../${project}/web/xava/js/jquery.bgiframe.js"/> 
 		<delete file="../${project}/web/xava/style/liferay51/js/init_liferay.js"/>
 		<!-- Delete JSPs moved to editors folder -->
 		<delete file="../${project}/web/xava/comparatorsBooleanCombo.jsp"/>
@@ -983,6 +984,8 @@
 		<delete file="../${project}/web/xava/style/ipad/images/hide-filter.gif"/>
 		<delete file="../${project}/web/xava/images/delete-file.gif"/>
 		<delete file="../${project}/web/xava/images/upload.gif"/>
+		<delete file="../${project}/web/xava/images/move-left.gif"/>
+		<delete file="../${project}/web/xava/images/move-right.gif"/>		
 	</target>
 	
 	<target name="copyWeb">

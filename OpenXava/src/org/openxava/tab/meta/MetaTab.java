@@ -562,27 +562,15 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		resetAfterAddRemoveProperty();
 	}
 
-	public void movePropertyToRight(int index) {
-		if (propertiesNames == null)
-			return;
-		if (index >= propertiesNames.size() - 1)
-			return;
-		Object aux = propertiesNames.get(index);
-		propertiesNames.set(index, propertiesNames.get(index + 1));
-		propertiesNames.set(index + 1, aux);
+	/**
+	 * @since 5.2
+	 */
+	public void moveProperty(int from, int to) { 
+		if (propertiesNames == null) return;
+		XCollections.move(propertiesNames, from, to);
 		resetAfterAddRemoveProperty();
 	}
-
-	public void movePropertyToLeft(int index) {
-		if (propertiesNames == null)
-			return;
-		if (index <= 0)
-			return;
-		Object aux = propertiesNames.get(index);
-		propertiesNames.set(index, propertiesNames.get(index - 1));
-		propertiesNames.set(index - 1, aux);
-		resetAfterAddRemoveProperty();
-	}
+	
 
 	/**
 	 * For dynamically remove all properties to this tab

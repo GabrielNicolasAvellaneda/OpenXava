@@ -464,7 +464,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 	}
 	
 	public void testFilterByRange() throws Exception{ 
-		getWebClient().setCssEnabled(true); 
+		getWebClient().getOptions().setCssEnabled(true); 
 		
 		assertLabelInList(0, "Year");
 		assertLabelInList(2, "Date");
@@ -1116,10 +1116,11 @@ public class InvoiceTest extends CustomizeListTestBase {
 	public void testDateFormatter() throws Exception { 
 		// In order to this test works inside Liferay you have to put
 		// locale.default.request=true in portal-ext.properties
-		setLocale("es");		
+		setLocale("es");	
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
+		
 		execute("CRUD.refresh");
 		assertNoErrors();
 		String originalDate = getValue("date"); // For restore at end
@@ -1137,7 +1138,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
-		setValue("number", String.valueOf(getInvoice().getNumber()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));		
 		execute("CRUD.refresh");
 		assertNoErrors();
 		assertValue("date", "02/01/2004");
@@ -1160,23 +1161,23 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertNoErrors();
 		assertValue("date", "04/01/2004");
 		
-		setValue("date", "4/1/34"); // If current year is 2014
+		setValue("date", "4/1/35"); // If current year is 2015
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.refresh");
 		assertNoErrors();
-		assertValue("date", "04/01/2034");
+		assertValue("date", "04/01/2035");
 		
-		setValue("date", "040135"); // If current year is 2014
+		setValue("date", "040136"); // If current year is 2015
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.refresh");
 		assertNoErrors();
-		assertValue("date", "04/01/1935"); 
+		assertValue("date", "04/01/1936"); 
 		
 		setValue("date", "30/2/2008");
 		execute("CRUD.save");
@@ -2048,11 +2049,11 @@ public class InvoiceTest extends CustomizeListTestBase {
 	}
 	
 	private boolean isVisibleConditionValueTo(int number) {
-		return getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).isDisplayed();
+		return getHtmlPage().getHtmlElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).isDisplayed(); 
 	}
 	
 	private boolean isVisibleConditionValueToCalendar(int number) { 
-		DomNode node = getForm().getElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling();
+		DomNode node = getHtmlPage().getHtmlElementById(Ids.decorate("OpenXavaTest", "Invoice", "conditionValueTo___" + number)).getNextSibling(); 
 		if (!node.isDisplayed()) return false;
 		return node.toString().contains("javascript:showCalendar");
 	}
@@ -2062,7 +2063,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		String s = select.getAttribute("style");
 		assertFalse(s.contains("display: none") || s.contains("display:none"));
 		// clear condition
-		HtmlImage c = (HtmlImage) getForm().getElementById("ox_OpenXavaTest_Invoice__xava_clear_condition");
+		HtmlImage c = (HtmlImage) getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Invoice__xava_clear_condition"); 
 		c.click();
 		// 
 		select = getHtmlPage().getElementByName("ox_OpenXavaTest_Invoice__conditionComparator___3");

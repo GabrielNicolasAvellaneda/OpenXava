@@ -29,7 +29,9 @@ JSR-168 and WSRP and needed by OpenXava.
 	position: absolute;	
 }
 
-
+.xava_handle {
+	cursor: move;
+}
 
 .liferay4-selected-row td {
 	background: #BFC2E4;

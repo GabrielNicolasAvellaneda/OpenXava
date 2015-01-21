@@ -68,7 +68,7 @@ public class AJAXTest extends ModuleTestBase {
 			"editor_details.1.product.description," +
 			"errors, messages");
 		
-		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Quote__details___1");
+		HtmlElement row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Quote__details___1"); 
 		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
 		removeIcon.click();		
 		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
@@ -94,7 +94,7 @@ public class AJAXTest extends ModuleTestBase {
 		changeModule("Reallocation");
 		execute("Mode.detailAndFirst");
 		assertLoadedParts("core");
-		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Reallocation__details___1");
+		HtmlElement row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Reallocation__details___1"); 
 		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
 		removeIcon.click();		
 		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
@@ -274,7 +274,7 @@ public class AJAXTest extends ModuleTestBase {
 	public void testAlwaysReloadEditor() throws Exception { 
 		changeModule("Warehouse");
 		execute("CRUD.new");
-		HtmlElement el = getForm().getElementById("ox_OpenXavaTest_Warehouse__editor_time");		
+		HtmlElement el = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Warehouse__editor_time"); 
 		String time = el.asText().trim();		
 		execute("CRUD.new");
 		String otherTime = el.asText().trim();		

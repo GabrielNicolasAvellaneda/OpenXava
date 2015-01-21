@@ -208,7 +208,7 @@ public class FormulaTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getRequestSettings().getUrl();
+		URL url = page.getWebResponse().getWebRequest().getUrl(); 
 		
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		

@@ -29,10 +29,7 @@ public class PhoneServletTest extends ModuleTestBase {
 	}
 	
 	public void testPhoneServlet() throws Exception {
-		WebClient client = new WebClient();
-		client.setThrowExceptionOnFailingStatusCode(false); 
-		client.setThrowExceptionOnScriptError(false); 
-
+		WebClient client = new WebClient();		
 		assertNoMobileUI(client, "http://" + getHost() + ":" + getPort() + "/OpenXavaTest/p/" + MODULE);
 		assertNoMobileUI(client, "http://" + getHost() + ":" + getPort() + "/OpenXavaTest/phone"); 		
 	}

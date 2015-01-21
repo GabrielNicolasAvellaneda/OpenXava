@@ -30,7 +30,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 	}
 
 	private void assertToolTip(String property, String value) {
-		HtmlElement number = getHtmlPage().getElementById("ox_OpenXavaTest_Warehouse__" + property);		
+		HtmlElement number = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Warehouse__" + property); 
 		assertEquals(value, number.getAttribute("title"));
 	}
 	

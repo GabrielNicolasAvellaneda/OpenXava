@@ -6,6 +6,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 
 /**
  * 
+ * @since 5.2
  * @author Javier Paniza
  */
 abstract public class CustomizeListTestBase extends ModuleTestBase {
@@ -29,10 +30,30 @@ abstract public class CustomizeListTestBase extends ModuleTestBase {
 		removeColumn(collection, "xava_collectionTab_" + collection, index);
 	}
 	
+	protected void moveColumn(int from, int to) throws Exception { 
+		moveColumn("list", from, to); 
+	}
+	
+	protected void moveColumn(String collection, int from, int to) throws Exception { 
+		// This method does not work for all "from, to" combinations, at least with HtmlUnit 2.15
+		HtmlTable table = getHtmlPage().getHtmlElementById(decorateId(collection));
+		HtmlElement fromCol = table.getRow(0).getCell(from + 2);
+		HtmlElement handle = fromCol.getElementsByAttribute("img", "src", "/OpenXavaTest/xava/images/move.png").get(0);
+		handle.mouseDown();
+		HtmlElement toCol = table.getRow(0).getCell(to + 2);
+		HtmlElement elementTo = toCol.getElementsByAttribute("img", "src", "/OpenXavaTest/xava/images/remove.gif").get(0);
+		elementTo.mouseMove();
+		elementTo.mouseUp();
+		Thread.sleep(500);		
+	}
+
+	
 	private void removeColumn(String collection, String tabObject, int index) throws Exception {
-		getWebClient().setCssEnabled(true);
-		HtmlElement removeLink = getHtmlPage().getAnchorByHref(
-			"javascript:openxava.removeColumn('OpenXavaTest', '" + module + "', 'ox_OpenXavaTest_" + module + "__" + collection +"_col" + index + "', '" + tabObject + "')");
+		getWebClient().getOptions().setCssEnabled(true); 
+		HtmlTable table = getHtmlPage().getHtmlElementById(decorateId(collection));
+		HtmlElement header = table.getRow(0).getCell(index + 2);
+		HtmlElement image = header.getElementsByAttribute("img", "src", "/OpenXavaTest/xava/images/remove.gif").get(0);
+		HtmlElement removeLink = image.getEnclosingElement("a");		
 		removeLink.click();
 		Thread.sleep(500);		
 	}
