@@ -313,7 +313,15 @@ public class Style {
 	 */
 	public String getRemoveColumnImage() {  
 		return "remove.gif";
-	}	
+	}
+	
+	/**
+	 * 
+	 * @since 5.2
+	 */
+	public String getMoveColumnImage() {   
+		return "move.png";
+	}		
 	
 	/** 
 	 * 

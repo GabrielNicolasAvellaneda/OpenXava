@@ -229,7 +229,8 @@ public class CustomerTest extends CustomizeListTestBase {
 		addImage();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getRequestSettings().getUrl();
+		URL url = page.getWebResponse().getWebRequest().getUrl(); 
+		
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
 		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("photo")).get(0); 
@@ -252,7 +253,7 @@ public class CustomerTest extends CustomizeListTestBase {
 		execute("ImageEditor.deleteImage", "newImageProperty=photo");
 		assertNoErrors();
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getRequestSettings().getUrl();
+		URL url = page.getWebResponse().getWebRequest().getUrl(); 
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
 		HtmlImage image = (HtmlImage) page.getElementsByName(decorateId("photo")).get(0); 

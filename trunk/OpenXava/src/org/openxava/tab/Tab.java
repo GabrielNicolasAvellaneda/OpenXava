@@ -1446,19 +1446,16 @@ public class Tab implements java.io.Serializable {
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}	
-	
-	public void movePropertyToRight(int index) throws XavaException {		
+
+	/**
+	 *  
+	 * @since 5.2
+	 */
+	public void moveProperty(int from, int to) { 
 		cloneMetaTab();		
-		getMetaTab().movePropertyToRight(index);		
+		getMetaTab().moveProperty(from, to);		
 		resetAfterChangeProperties();
-		saveUserPreferences();
-	}
-	
-	public void movePropertyToLeft(int index) throws XavaException {
-		cloneMetaTab();
-		getMetaTab().movePropertyToLeft(index);
-		resetAfterChangeProperties();
-		saveUserPreferences();
+		saveUserPreferences();		
 	}
 		
 	public void clearProperties() throws XavaException {	

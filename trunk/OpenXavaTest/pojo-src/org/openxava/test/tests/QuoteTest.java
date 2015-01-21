@@ -182,7 +182,7 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 1, "amount",  "34.02");
 		assertTotalInCollection("details", 2, "amount", "196.02");
 		
-		HtmlElement row = getHtmlPage().getElementById("ox_OpenXavaTest_Quote__details___1");
+		HtmlElement row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Quote__details___1"); 
 		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
 		removeIcon.click();		
 		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);

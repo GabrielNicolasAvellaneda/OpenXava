@@ -42,7 +42,7 @@ public class SeveralModulesTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
-		URL url = page.getWebResponse().getRequestSettings().getUrl();
+		URL url = page.getWebResponse().getWebRequest().getUrl(); 
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 				
 		HtmlImage image = (HtmlImage) page.getElementsByName(Ids.decorate("OpenXavaTest", "Customer", "photo")).get(0);		

@@ -14,7 +14,6 @@ body, .ui-dialog {
 	font-family: Arial,Helvetica,Verdana,sans-serif !important;
 }
 
-
 img {
   border:0;
 }
@@ -66,6 +65,18 @@ a:hover {
 
 .ie #xava_processing_layer { 
 	border: 1px solid #C6C6C6;	
+}
+
+.xava_placeholder {
+	background: #F5F5F5; 
+}
+
+.xava_dropped {
+	box-shadow: 0 0 7px #CCCCCC;
+}
+
+.xava_handle {
+	cursor: move;
 }
 
 #main_navigation {
@@ -571,7 +582,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	height: 36px;
 }
 
-.ox-list-header th, .ox-list-subheader th, .ox-list-pair td, .ox-list-odd td, .ox-total-row td  { 
+.ox-list-header th, .ox-list-subheader td, .ox-list-pair td, .ox-list-odd td, .ox-total-row td  { 
 	padding-left: 15px;
 }
 
@@ -579,14 +590,10 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	text-align: left;
 }
 
-.ox-list-header a {
-	padding-left: 5px;
+.ox-list-subheader td { 
+	text-align: center;
 }
 
-.ox-list-header th:first-child a {
-	padding-left: 0px;
-	padding-right: 5px;
-}
 
 .ox-list-subheader {
 	border-bottom: 1px solid #EBEBEB;	 
@@ -671,10 +678,6 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	-webkit-box-shadow: 0px 1px 3px #CCCCCC;
 }
 
-.ox-frame-sibling { 
-   padding-left: 15px; 
-}
-
 .ox-frame-title {
 	font-weight: bold;
 	padding-bottom: 7px;
@@ -756,7 +759,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-frame-sibling {
-	margin-left: 15px;
+	margin-left: 5px;
 }
 
 .ox-bottom-buttons {
@@ -773,7 +776,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	overflow-x: hidden; /* To avoid scrollbar in list inside dialog  */
 }
 
-.ui-dialog .ox-view { 
+.ui-dialog .ox-view { 	
 	margin-right: 2px; 
 }
 
@@ -795,7 +798,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	font-size: 1em !important; 				
 }
 
-.ui-dialog-titlebar {
+.ui-dialog-titlebar, .ui-dialog-titlebar button {  
 	border-style: none !important;
 	background: white !important;
 }

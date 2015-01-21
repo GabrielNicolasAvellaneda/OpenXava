@@ -1,12 +1,10 @@
 package org.openxava.test.tests;
 
-import org.openxava.tests.*;
-
 /**
  * @author Javier Paniza
  */
 
-public class Invoice2002Test extends ModuleTestBase {
+public class Invoice2002Test extends CustomizeListTestBase {
 	
 	
 	private String [] listActions = {
@@ -48,10 +46,13 @@ public class Invoice2002Test extends ModuleTestBase {
 	
 	public void testCustomizeListWithFilterAndBaseCondition() throws Exception {
 		assertValueInList(0, 0, "2002");
-		execute("List.moveColumnToRight", "columnIndex=0");
-		assertValueInList(0, 1, "2002");		
+		moveColumn(0, 1); 
+		assertValueInList(0, 1, "2002");	
+		execute("List.filter");
+		assertValueInList(0, 1, "2002");
 		// Restoring
-		execute("List.moveColumnToLeft", "columnIndex=1");
+		execute("List.addColumns");
+		execute("AddColumns.restoreDefault");
 	}
 
 	public void testFilterWithConverterAndFilter() throws Exception {

@@ -20,12 +20,12 @@ elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	currentRow.children().first().find("a").css('visibility', 'visible');
 }
 
-elementCollectionEditor.setDefaultValues = function(table, rowIndex) { 
+elementCollectionEditor.setDefaultValues = function(table, rowIndex) {
 	var header = table.children().first().children().first(); 
-	header.children("[id!='']").each(function() {
+	header.children("[id]").each(function() { 
 		var headerId = $( this ).attr("id");
 		var inputName = headerId.replace(new RegExp("__H", "g"), "__" + rowIndex);
-		$("[name='" + inputName + "']").attr("value", $( this ).attr("data-default-value")); 
+		$("[name='" + inputName + "']").val($( this ).attr("data-default-value")); 		
 	});
 }
 

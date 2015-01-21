@@ -86,9 +86,9 @@ public class ColorTest extends ModuleTestBase {
 		closeDialog();
 		execute("Mode.detailAndFirst");
 		assertAction("ColorSub.fourAction");
-		// 
-		HtmlElement container = getHtmlPage().getDocumentElement().getElementById("ox_OpenXavaTest_Color__sc-container-ColorSub_detail");
-		HtmlElement menu = container.getElementById("ox_OpenXavaTest_Color__sc-ColorSub_detail");
+
+		HtmlElement container = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Color__sc-container-ColorSub_detail"); 
+		HtmlElement menu = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Color__sc-ColorSub_detail"); 
 		assertTrue("display:none;".equals(menu.getAttribute("style")));
 		assertTrue(container.asText().contains("My processes"));
 		assertTrue(container.asText().contains("First action from subcontroller"));

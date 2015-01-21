@@ -2,6 +2,7 @@ package org.openxava.test.tests;
 
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
+import org.openxava.util.*;
 
 import com.gargoylesoftware.htmlunit.html.*;
 
@@ -207,7 +208,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	
 	public void testForwardToJavaScript() throws Exception {  
 		execute("CRUD.new");
-		HtmlElement console = getHtmlPage().getElementById("xava_console");
+		HtmlElement console = getHtmlPage().getHtmlElementById("xava_console"); 
 		assertTrue(!console.asText().contains("[CustomerWithSection.testForwardToJavaScript()] javascript: works"));
 		setValue("website", "javascript:openxava.log('[CustomerWithSection.testForwardToJavaScript()] javascript: works');"); 
 		execute("WebURL.go", "property=website,viewObject=xava_view_section0");		
@@ -481,7 +482,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 	
 	public void testShowHideFilterInList() throws Exception { 
-		getWebClient().setCssEnabled(true);
+		getWebClient().getOptions().setCssEnabled(true); 
 		assertFalse(getElementById("show_filter_list").isDisplayed());
 		assertFalse(getElementById("hide_filter_list").isDisplayed());
 		assertTrue(getElementById("list_filter_list").isDisplayed());
@@ -516,7 +517,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		return getHtmlPage().getHtmlElementById(decorateId(id));
 	}
 	
-	public void testCustomizeList() throws Exception { 
+	public void testCustomizeList() throws Exception {
 		doTestCustomizeList_moveAndRemove();
 		tearDown();	setUp();
 		doTestCustomizeList_generatePDF();
@@ -543,99 +544,61 @@ public class CustomerWithSectionTest extends CustomerTest {
 		String sellerLevel = getValueInList(0, 4);
 		String state = getValueInList(0, 5);
 		String site = getValueInList(0, 6);
-
-		// move 2 to 3
-		execute("List.moveColumnToRight", "columnIndex=2");
-		assertNoErrors();
-		assertListColumnCount(7);
-		assertLabelInList(0, "Name");
-		assertLabelInList(1, "Type");
-		assertLabelInList(2, "City of Address");
-		assertLabelInList(3, "Seller");
-		assertLabelInList(4, "Seller level");
-		assertLabelInList(5, "State of Address"); 
-		assertLabelInList(6, "Web site");
-		assertValueInList(0, 0, name);
-		assertValueInList(0, 1, type);
-		assertValueInList(0, 2, city);
-		assertValueInList(0, 3, seller);
-		assertValueInList(0, 4, sellerLevel);
-		assertValueInList(0, 5, state);
-		assertValueInList(0, 6, site);
 		
-		// try to move 6, it is the last, do nothing
-		execute("List.moveColumnToRight", "columnIndex=6");
+		// move 0 to 2
+		moveColumn(0, 2);
 		assertNoErrors();
 		assertListColumnCount(7);
-		assertLabelInList(0, "Name");
-		assertLabelInList(1, "Type");
-		assertLabelInList(2, "City of Address");
-		assertLabelInList(3, "Seller");
-		assertLabelInList(4, "Seller level");
-		assertLabelInList(5, "State of Address"); 
-		assertLabelInList(6, "Web site");
-		assertValueInList(0, 0, name);
-		assertValueInList(0, 1, type);
-		assertValueInList(0, 2, city);
-		assertValueInList(0, 3, seller);
-		assertValueInList(0, 4, sellerLevel);
-		assertValueInList(0, 5, state);
-		assertValueInList(0, 6, site);
-		
-		// move 3 to 2
-		execute("List.moveColumnToLeft", "columnIndex=3");
-		assertNoErrors();
-		assertListColumnCount(7);
-		assertLabelInList(0, "Name");
-		assertLabelInList(1, "Type");
-		assertLabelInList(2, "Seller");
+		assertLabelInList(0, "Type");
+		assertLabelInList(1, "Seller");
+		assertLabelInList(2, "Name");
 		assertLabelInList(3, "City of Address");
 		assertLabelInList(4, "Seller level");
-		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(5, "State of Address");
 		assertLabelInList(6, "Web site");
-		assertValueInList(0, 0, name);
-		assertValueInList(0, 1, type);
-		assertValueInList(0, 2, seller);
+		assertValueInList(0, 0, type);
+		assertValueInList(0, 1, seller);
+		assertValueInList(0, 2, name);
 		assertValueInList(0, 3, city);
-		assertValueInList(0, 4, sellerLevel);
+		assertValueInList(0, 4, sellerLevel);						
 		assertValueInList(0, 5, state);
-		assertValueInList(0, 6, site);
+		assertValueInList(0, 6, site);		
 		
-		// try to move 0 to left, do nothing
-		execute("List.moveColumnToLeft", "columnIndex=0");
+		// move 2 to 4
+		moveColumn(2, 4);
 		assertNoErrors();
 		assertListColumnCount(7);
-		assertLabelInList(0, "Name");
-		assertLabelInList(1, "Type");
-		assertLabelInList(2, "Seller");
-		assertLabelInList(3, "City of Address");
-		assertLabelInList(4, "Seller level");
-		assertLabelInList(5, "State of Address"); 
+		assertLabelInList(0, "Type");
+		assertLabelInList(1, "Seller");		
+		assertLabelInList(2, "City of Address");
+		assertLabelInList(3, "Seller level");
+		assertLabelInList(4, "Name");
+		assertLabelInList(5, "State of Address");
 		assertLabelInList(6, "Web site");
-		assertValueInList(0, 0, name);
-		assertValueInList(0, 1, type);
-		assertValueInList(0, 2, seller);
-		assertValueInList(0, 3, city);
-		assertValueInList(0, 4, sellerLevel);
-		assertValueInList(0, 5, state);
-		assertValueInList(0, 6, site);
-
+		assertValueInList(0, 0, type);
+		assertValueInList(0, 1, seller);
+		assertValueInList(0, 2, city);
+		assertValueInList(0, 3, sellerLevel);
+		assertValueInList(0, 4, name);
+		assertValueInList(0, 5, state);		
+		assertValueInList(0, 6, site);		
+		
 		// remove column 3
 		removeColumn(3); 
 		assertNoErrors();
 		assertListColumnCount(6);
-		assertLabelInList(0, "Name");
-		assertLabelInList(1, "Type");		
-		assertLabelInList(2, "Seller");
-		assertLabelInList(3, "Seller level");
-		assertLabelInList(4, "State of Address"); 
+		assertLabelInList(0, "Type");
+		assertLabelInList(1, "Seller");		
+		assertLabelInList(2, "City of Address");		
+		assertLabelInList(3, "Name");
+		assertLabelInList(4, "State of Address");
 		assertLabelInList(5, "Web site");
-		assertValueInList(0, 0, name);
-		assertValueInList(0, 1, type);
-		assertValueInList(0, 2, seller);
-		assertValueInList(0, 3, sellerLevel);
-		assertValueInList(0, 4, state); 
-		assertValueInList(0, 5, site);
+		assertValueInList(0, 0, type);
+		assertValueInList(0, 1, seller);
+		assertValueInList(0, 2, city);
+		assertValueInList(0, 3, name);
+		assertValueInList(0, 4, state);
+		assertValueInList(0, 5, site);		
 						
 		assertActions(listActions);
 	}
@@ -643,6 +606,12 @@ public class CustomerWithSectionTest extends CustomerTest {
 	private void doTestCustomizeList_generatePDF() throws Exception {
 		// Trusts in that testCustomizeList_moveAndRemove is executed before
 		assertListColumnCount(6);
+		assertLabelInList(0, "Type");
+		assertLabelInList(1, "Seller");		
+		assertLabelInList(2, "City of Address");		
+		assertLabelInList(3, "Name");
+		assertLabelInList(4, "State of Address");
+		assertLabelInList(5, "Web site");
 		removeColumn(3); 
 		assertNoErrors();
 		assertListColumnCount(5);		
@@ -724,7 +693,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		
 		removeColumn(7); 
 		assertListColumnCount(7);
-	}
+	}	
 	
 	public void testRowStyle() throws Exception {
 		// When testing again a portal styleClass in xava.properties must match with

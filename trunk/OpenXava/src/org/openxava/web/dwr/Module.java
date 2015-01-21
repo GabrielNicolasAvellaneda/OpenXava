@@ -43,7 +43,7 @@ public class Module extends DWRBase {
 	private boolean firstRequest;
 	private String baseFolder = null;
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, String [] deselected, Boolean firstRequest, String baseFolder) throws Exception { 
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, String additionalParameters, Map values, Map multipleValues, String [] selected, String [] deselected, Boolean firstRequest, String baseFolder) throws Exception {
 		Result result = new Result(); 
 		result.setApplication(application); 
 		result.setModule(module);

@@ -1,6 +1,15 @@
 Change Log for OpenXava project
 ===============================
 
+- Moving columns in list with drag and drop.
+- 20% performance improvement in automated module tests. 
+- New move() method in XCollections utility class.
+- The browser property in xava-junit.properties is no longer supported.
+- HtmlUnit upgraded to 2.15.
+- jQuery UI upgraded to 1.11.2.
+- jQuery upgraded to 1.11.2.  
+- Upgraded Commons Lang3 library to 3.3.2.
+- New createWar ant task included by default in new projects.
 - Removing a column from a list is done instantly and with a fade effect.
 - Fix: After removing a column from a list the filter data is gone.
 - List customization icons are hidden automatically after executing any action.

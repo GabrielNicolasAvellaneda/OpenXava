@@ -61,5 +61,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jta.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/mime-util.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-lang3.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-websocket.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

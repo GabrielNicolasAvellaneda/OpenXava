@@ -238,20 +238,6 @@ here that you want to override.
 				<action name="deselectRows"			class="org.openxava.actions.DeselectRowsAction"			hidden="true"
 			mode="list">					</action>	
 						
-		<action name="moveColumnToLeft"
-			class="org.openxava.actions.MoveColumnToLeftAction"
-			hidden="true"
-			mode="list"
-			image="move-left.gif">	
-		</action>	
-		
-		<action name="moveColumnToRight"
-			class="org.openxava.actions.MoveColumnToRightAction"
-			hidden="true"
-			mode="list"
-			image="move-right.gif">			
-		</action>	
-		
 		<action name="addColumns"
 			class="org.openxava.actions.GoAddColumnsAction"
 			hidden="true"

@@ -139,9 +139,9 @@ public class ModuleTestBase extends TestCase {
 			setFormValue(getLiferayField("login"), user, true, false);					
 			setFormValue(getLiferayField("password"), password, true, false);
 			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getElementsByAttribute("input", "type", "submit").get(0);
-			page.getWebClient().setJavaScriptEnabled(false); // Because a bug in HtmlUnit 2.9: http://sourceforge.net/tracker/index.php?func=detail&aid=3072010&group_id=47038&atid=448266
+			client.getOptions().setJavaScriptEnabled(false); // Because a bug in HtmlUnit 2.15: http://sourceforge.net/tracker/index.php?func=detail&aid=3072010&group_id=47038&atid=448266
 			page = (HtmlPage) button.click();
-			page.getWebClient().setJavaScriptEnabled(true);
+			client.getOptions().setJavaScriptEnabled(true);
 			
 			try {
 				page.getFormByName("fm"); // If not liferay 4.1 then throws ElementNotFoundException
@@ -298,7 +298,7 @@ public class ModuleTestBase extends TestCase {
 			else if (input instanceof HtmlCheckBoxInput) {
 				return Boolean.toString(input.isChecked());
 			}
-			else {
+			else {				
 				return input.getValueAttribute();
 			}			
 		}
@@ -484,10 +484,10 @@ public class ModuleTestBase extends TestCase {
 	 * Like close navigator, open again, and reexecute the module.
 	 */
 	protected void resetModule() throws Exception {		
-		client = new WebClient(getBrowserVersion());		
-		client.setThrowExceptionOnFailingStatusCode(false); // Because some .js are missing in Liferay 4.1
-		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3
-		client.setCssEnabled(false);  
+		client = new WebClient(BrowserVersion.FIREFOX_24); 
+		client.getOptions().setThrowExceptionOnFailingStatusCode(false);
+		client.getOptions().setThrowExceptionOnScriptError(false);
+		client.getOptions().setCssEnabled(false); 
 		
 		if (getLocale() != null) {
 			client.addRequestHeader("Accept-Language", getLocale());			
@@ -530,23 +530,7 @@ public class ModuleTestBase extends TestCase {
 			resetForm();
 		}
 	}
-	
-	private BrowserVersion getBrowserVersion() {
-		if (browserVersion == null) {
-			String browser = getXavaJUnitProperty("browser", "firefox36"); 			
-			if (browser.toLowerCase().startsWith("firefox")) browserVersion = BrowserVersion.FIREFOX_3_6;
-			else if ("iexplorer8".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_8;
-			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7;
-			else if ("iexplorer6".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_6;
-			else {
-				log.warn(XavaResources.getString("unknown_browser_using_default", "Firefox 3.6")); 
-				browserVersion = BrowserVersion.FIREFOX_3_6; 
-			}
-			
-		}
-		return browserVersion;
-	}
-	
+		
 	protected void selectModuleInPage(String module) throws Exception { 
 		changeModule(application, module, false);
 	}
@@ -653,7 +637,7 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	private HtmlElement getElementById(String id) {
-		return page.getHtmlElementById(decorateId(id));
+		return page.getHtmlElementById(decorateId(id));		
 	}
 	
 	/**
@@ -725,7 +709,7 @@ public class ModuleTestBase extends TestCase {
 		element = getAnchorForAction(action, arguments);  
 		if (arguments == null && element == null) { // We try if it is a button
 			String moduleMarkForButton = "executeAction(\"" + application + "\", \"" + module + "\"";
-			HtmlElement inputElement = page.getElementById(decorateId(action));
+			HtmlElement inputElement = page.getHtmlElementById(decorateId(action)); 
 			if (inputElement instanceof HtmlInput) {
 				HtmlInput input = (HtmlInput) inputElement;
 				if ("button".equals(input.getTypeAttribute()) &&
@@ -2520,8 +2504,8 @@ public class ModuleTestBase extends TestCase {
 	protected void closeDialog() throws Exception { 
 		assertDialog();
 		HtmlElement title = (HtmlElement) getElementById(getTopDialog()).getPreviousSibling();
-		HtmlElement closeLink = title.getHtmlElementsByTagName("a").get(0);
-		page = closeLink.click();
+		HtmlElement closeButton = title.getHtmlElementsByTagName("button").get(0);
+		page = closeButton.click();		
 		resetForm();		
 	}
 	
@@ -2529,13 +2513,13 @@ public class ModuleTestBase extends TestCase {
 		int level = 0;
 		for (level = 10; level > 0; level--) {
 			try {
-				HtmlElement el = page.getElementById(Ids.decorate(application, module, "dialog" + level));
+				HtmlElement el = page.getHtmlElementById(Ids.decorate(application, module, "dialog" + level)); 
 				if (el != null && el.hasChildNodes()) break;
 			}
 			catch (ElementNotFoundException ex) {
 			}			
 		}
-		if (level == 0) return null;		
+		if (level == 0) return null;
 		return "dialog" + level;		
 	}
 
@@ -2547,10 +2531,14 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * @since 4m1
 	 */	
-	protected void assertDialogTitle(String expectedTitle) throws Exception {
-		String label = page.getElementById("ui-dialog-title-" + decorateId(getTopDialog())).asText();
+	protected void assertDialogTitle(String expectedTitle) throws Exception {		
+		HtmlElement header = (HtmlElement) page.getHtmlElementById(decorateId(getTopDialog())).getPreviousSibling();
+		HtmlElement title = header.getElementsByAttribute("span", "class", "ui-dialog-title").get(0);
+		String label = title.asText();
 		assertEquals(XavaResources.getString("unexpected_dialog_title"), expectedTitle, label); 
 	}
+	
+	
 
 	/**
 	 * This allows you testing using HtmlUnit APIs directly. <p>

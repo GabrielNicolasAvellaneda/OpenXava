@@ -74,7 +74,7 @@ public class UserWithNicknameTest extends ModuleTestBase {
 	}
 	
 	private boolean isClosedFrameInHtml() {
-		HtmlElement span = getHtmlPage().getElementById(getFrameId() + "hide");		
+		HtmlElement span = getHtmlPage().getHtmlElementById(getFrameId() + "hide"); 
 		return span.getAttribute("style").contains("display: none");	
 	}
 	

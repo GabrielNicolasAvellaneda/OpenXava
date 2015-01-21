@@ -29,9 +29,8 @@ public class VersionTest extends ModuleTestBase {
 			return;
 		}
 		WebClient client = new WebClient();
-		client.setThrowExceptionOnFailingStatusCode(false); 
-		client.setThrowExceptionOnScriptError(false); 
-
+		client.getOptions().setThrowExceptionOnFailingStatusCode(false);  
+		client.getOptions().setThrowExceptionOnScriptError(false);
 		HtmlPage page = (HtmlPage) client.getPage(getModuleURL());
 		String html = page.asXml();		
 		assertTrue(html.indexOf("The version of OpenXava is")>=0);

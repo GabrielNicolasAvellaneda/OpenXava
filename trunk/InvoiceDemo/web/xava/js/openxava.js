@@ -112,14 +112,15 @@ openxava.refreshPage = function(result) {
 				break;
 			}			
 		}  
-		if (result.showDialog){	
+		if (result.showDialog){
+			openxava.initBeforeShowDialog(); 
 			dialog.attr("application", result.application);
 			dialog.attr("module", result.module);
 			dialog.dialog('option', 'title', result.dialogTitle);
 			dialog.dialog('option', 'width', 'auto');
 			dialog.dialog('option', 'width', dialog.parent().width());
-			dialog.dialog('option', 'height', 'auto');			
-			dialog.dialog('option', 'position', 'center' );
+			dialog.dialog('option', 'height', 'auto');
+			dialog.dialog('option', 'position', { my: "center", at: "center", of: window, collision: "fit" } ); 			
 			dialog.dialog('option', 'zIndex', 99999 );
 			dialog.dialog('open');
 		}
@@ -166,11 +167,15 @@ openxava.initUI = function(application, module, currentRow) {
 		openxava.initEditors(); 
 	}
 	openxava.initSelectedRows();
-	openxava.initCurrentRow(application, module, currentRow);	
+	openxava.initCurrentRow(application, module, currentRow);
 }
 
 openxava.initStrokeActions = function(application, module) { 
 	Module.getStrokeActions(application, module, openxava.setStrokeActions);
+}
+
+openxava.initBeforeShowDialog = function() { 
+	$("#xava_add_columns").css("max-height", $(window).height() * 0.7); 
 }
 
 openxava.selectRows = function(application, module, selectedRows) { 
@@ -254,7 +259,8 @@ openxava.closeDialog = function(result) {
 	var dialog = openxava.getDialog(result.application, result.module);
 	dialog.attr("application", ""); 
 	dialog.attr("module", "");
-	dialog.dialog('close');	
+	dialog.dialog('close');
+	dialog.empty(); 
 }
 
 openxava.onCloseDialog = function(event) {  
@@ -294,11 +300,26 @@ openxava.initLists = function(application, module) {
 			$("." + event.target.id).width(newWidth);
 		},
 		stop: function(event, ui) {			
-			Tab.setColumnWidth(event.target.id, $(event.target).width());
+			Tab.setColumnWidth(event.target.id, $(event.target).closest("th").index() - 2, $(event.target).width());
 		}
 	});				
 	openxava.setListsSize(application, module, "list", openxava.listAdjustment); 
-	openxava.setListsSize(application, module, "collection", openxava.collectionAdjustment); 
+	openxava.setListsSize(application, module, "collection", openxava.collectionAdjustment);
+	$('.xava_draggable').sorttable({
+		placeholder: 'xava_placeholder',
+	    helperCells: null,
+	    items: '>:gt(1)',
+	    handle: ".xava_handle",
+	    start: function( event, ui ) {	    	
+	    	ui.helper.addClass("xava_dropped");
+	    	ui.item.startPos = ui.item.index(); 
+	    },
+	    stop: function( event, ui ) {
+	    	ui.item.css("width", "");
+	    	var tableId = $(event.target).closest("table").attr("id"); 
+	    	Tab.moveProperty(tableId, ui.item.startPos - 2, ui.item.index() - 2);
+	    }
+	});
 }
 
 openxava.setListsSize = function(application, module, type, adjustment) {
@@ -474,9 +495,32 @@ openxava.limitLength = function(ev, max) {
 openxava.setFilterVisible = function(application, module, id, tabObject, visible) { 
     var filter = openxava.getElementById(application, module, "list_filter_" + id); 
     var link = openxava.getElementById(application, module, "show_filter_" + id);
-	filter.style.display = visible?'':'none';
-	link.style.display = visible?'none':''; 
+    if (visible) {
+    	$(filter).fadeIn();
+    	$(link).fadeOut();
+    }
+    else {
+    	$(filter).fadeOut();
+    	$(link).fadeIn();    	
+    }
 	Tab.setFilterVisible(application, module, visible, tabObject);
+}
+
+openxava.customizeList = function(application, module, id) { 	
+	var customizeControlsClass = openxava.decorateId(application, module, id);	
+	$("." + customizeControlsClass).each(function() {
+		if ($(this).is(":visible")) $(this).fadeOut();
+		else $(this).fadeIn(2000);
+	});
+}
+
+openxava.removeColumn = function(application, module, columnId, tabObject) {  
+	$("#" + columnId).closest("th").fadeOut();
+	$("." + columnId).each(function () {
+		$(this).closest("td,th").fadeOut();  
+	});
+	var property = $("#" + columnId).closest("th").attr("data-property");
+	Tab.removeProperty(application, module, property, tabObject);
 }
 
 openxava.setPageRowCount = function(application, module, collection, select) {	

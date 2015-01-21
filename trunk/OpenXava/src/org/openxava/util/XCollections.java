@@ -97,4 +97,12 @@ public class XCollections {
 		return result;
 	}
 	
+	/**
+	 *  @since 5.2
+	 */
+	public static void move(List list, int from, int to) { 
+		Object fromValue = list.remove(from);		
+		list.add(to, fromValue);			
+	}
+	
 }
