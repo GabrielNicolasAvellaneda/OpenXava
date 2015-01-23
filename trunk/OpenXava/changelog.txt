@@ -1,27 +1,29 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.2 (2015-1-26)
+------------------------
 - Moving columns in list with drag and drop.
-- 20% performance improvement in automated module tests. 
-- New move() method in XCollections utility class.
-- The browser property in xava-junit.properties is no longer supported.
-- HtmlUnit upgraded to 2.15.
-- jQuery UI upgraded to 1.11.2.
-- jQuery upgraded to 1.11.2.  
-- Upgraded Commons Lang3 library to 3.3.2.
-- New createWar ant task included by default in new projects.
 - Removing a column from a list is done instantly and with a fade effect.
-- Fix: After removing a column from a list the filter data is gone.
-- List customization icons are hidden automatically after executing any action.
-- Using JavaScript to show/hide the list customization icons, without an AJAX request.
-- Fade effect to show/hide the filter part of the list and the customization icons. 
 - The list for adding columns to a list is shown inside a dialog.
 - The list for adding columns to a list no longer uses pagination, but a scrollbar.
 - The list for adding columns to a list shows only until second level properties at first, and all properties on demand.
 - The list for adding columns to a list is ordered by the localized column labels of the properties.
 - The list for adding columns to a list no longer shows the internal properties names.
+- Fade effect to show/hide the filter part of the list and the customization icons.
+- Using JavaScript to show/hide the list customization icons, without an AJAX request.
+- List customization icons are hidden automatically after executing any action.
+- 20% performance improvement in automated module tests.
+- HtmlUnit upgraded to 2.15.
+- jQuery UI upgraded to 1.11.2.
+- jQuery upgraded to 1.11.2.  
+- Upgraded Commons Lang3 library to 3.3.2. 
+- New move() method in XCollections utility class.
+- The browser property in xava-junit.properties is no longer supported.
+- New createWar ant task included by default in new projects.
 - Frame spacing when several frames in a row adjusted. 
 - Performance improvement for label resolution.
+- Fix: After removing a column from a list the filter data is gone.
  
 OpenXava 5.1.1 (2014-11-24)
 ---------------------------
@@ -1590,7 +1592,7 @@ FIXES
 - Fix: Stacktrace is shown in trace when a label is not in i18n files.
 - Fix: default value calculators do not work in collection of entities displayed as aggregates
 - Fix: Calculated properties inside a section that depend on a property on other section is not recalculated well.
-- Fix: util.Server restore XHibernate.isCmt state correctly. In order to use Server from calcultors when you use hibernate + ejb.
+- Fix: util.Server restore XHibernate.isCmt state correctly. In order to use Server from calculators when you use hibernate + ejb.
 - Fix: Javascript calendar for date fails in Liferay.
 - Fix: Actions of references do not work inside nested sections.
 - Fix: Filtering in list by java.sql.Time does not work.

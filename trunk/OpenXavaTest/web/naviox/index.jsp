@@ -22,7 +22,7 @@ String oxVersion = org.openxava.controller.ModuleManager.getVersion();
 <!DOCTYPE html>
 
 <head>
-	<title><%=modules.getCurrentModuleDescription()%></title>
+	<title><%=modules.getCurrentModuleDescription(request)%></title> 
 	<link href="<%=request.getContextPath()%>/naviox/style/naviox.css" rel="stylesheet" type="text/css">
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/dwr-engine.js?ox=<%=oxVersion%>'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Modules.js?ox=<%=oxVersion%>'></script>
@@ -58,7 +58,7 @@ String oxVersion = org.openxava.controller.ModuleManager.getVersion();
 					<jsp:include page='signIn.jsp'/>
 					<% } else { %>
 					<div id="module_description">
-						<%=modules.getCurrentModuleDescription()%>
+						<%=modules.getCurrentModuleDescription(request)%> 
 						<a href="javascript:naviox.bookmark()" title="<xava:message key='<%=modules.isCurrentBookmarked()?"unbookmark_module":"bookmark_module"%>'/>">
 							<img id="bookmark" src="<%=request.getContextPath()%>/naviox/images/bookmark-<%=modules.isCurrentBookmarked()?"on":"off"%>.png"/>
 						</a>
