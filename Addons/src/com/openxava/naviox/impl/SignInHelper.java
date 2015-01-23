@@ -7,9 +7,11 @@ import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.util.*;
+import org.openxava.view.*;
 
 import com.openxava.naviox.*;
 import com.openxava.naviox.model.*;
+import com.openxava.naviox.util.*;
 
 /**
  * 
@@ -21,6 +23,13 @@ public class SignInHelper {
 	private final static String PROPERTIES_FILE = "naviox-users.properties";
 	private static Log log = LogFactory.getLog(SignInHelper.class);
 	private static Properties users;
+	
+	public static void init(HttpServletRequest request, View view) {
+	}
+	
+	public static String refineForwardURI(HttpServletRequest request, String forwardURI) {
+		return forwardURI;
+	}	
 	
 	public static void signIn(HttpSession session, String userName) {
 		session.setAttribute("naviox.user", userName);

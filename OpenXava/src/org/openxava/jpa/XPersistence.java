@@ -210,7 +210,7 @@ public class XPersistence {
 	public static void setPersistenceUnit(String persistenceUnitName) {		
 		if (Is.emptyString(persistenceUnitName)) persistenceUnitName = XavaPreferences.getInstance().getDefaultPersistenceUnit(); 
 		Map properties = new HashMap(); 
-		properties.put(XAVA_PERSISTENCE_UNIT_KEY, persistenceUnitName);		
+		properties.put(XAVA_PERSISTENCE_UNIT_KEY, persistenceUnitName);
 		currentPersistenceUnitProperties.set(properties);
 		String defaultSchema = obtainDefaultSchemaFromPersistenceXML();
 		if (defaultSchema != null) {
@@ -227,7 +227,7 @@ public class XPersistence {
 	 * @return Not null
 	 */
 	public static Map getPersistenceUnitProperties() { 
-		Map result = (Map) currentPersistenceUnitProperties.get();
+		Map result = (Map) currentPersistenceUnitProperties.get();		
 		if (result == null) return getDefaultPersistenceUnitProperties();
 		return result;
 	}
@@ -277,7 +277,7 @@ public class XPersistence {
 	 * or EJB3 entity is mapping to a table named 'ISSUE' when OX and JPA engine
 	 * try to execute SQL they will use 'COMPANYA.ISSUE' as table name.<br>
 	 */
-	public static void setDefaultSchema(String defaultSchema) {		
+	public static void setDefaultSchema(String defaultSchema) {	
 		Map properties = new HashMap(getPersistenceUnitProperties());
 		if (Is.emptyString(defaultSchema)) properties.remove(HIBERNATE_DEFAULT_SCHEMA);
 		else properties.put(HIBERNATE_DEFAULT_SCHEMA, defaultSchema);

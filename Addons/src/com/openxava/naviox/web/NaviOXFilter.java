@@ -29,7 +29,7 @@ public class NaviOXFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
 			XPersistence.reset();
-			Initializer.init(); 
+			Initializer.init(request);
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			Modules modules = (Modules) session.getAttribute("modules");
 			if (modules == null) {
@@ -62,7 +62,10 @@ public class NaviOXFilter implements Filter {
 			}
 			else {
 				char base = secureRequest.getRequestURI().split("/")[2].charAt(0)=='p'?'p':'m'; 
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/" + base + "/SignIn?originalURI=" + secureRequest.getRequestURI()); 
+				String originalURI = secureRequest.getRequestURI();
+				String organization = Organizations.getCurrent(request);
+				if (organization != null) originalURI = originalURI.replace("/modules/", "/o/" + organization + "/m/");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/" + base + "/SignIn?originalURI=" + originalURI);
 				dispatcher.forward(request, response);
 			}
 		} 

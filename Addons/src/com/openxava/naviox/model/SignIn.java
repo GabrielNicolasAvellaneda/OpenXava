@@ -10,6 +10,7 @@ import org.openxava.annotations.*;
 
 public class SignIn {
 	
+	
 	@Column(length=30) @LabelFormat(LabelFormatType.SMALL)
 	private String user;
 
@@ -33,5 +34,5 @@ public class SignIn {
 	public String getUser() {
 		return user;
 	}
-
+	
 }

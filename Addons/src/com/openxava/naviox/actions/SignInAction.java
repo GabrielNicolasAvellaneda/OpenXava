@@ -1,6 +1,9 @@
 package com.openxava.naviox.actions;
 
+import javax.servlet.http.*;
+
 import org.openxava.actions.*;
+import org.openxava.jpa.*;
 import org.openxava.util.*;
 
 import com.openxava.naviox.*;
@@ -16,6 +19,7 @@ public class SignInAction extends ViewBaseAction implements IForwardAction {
 	private String forwardURI = null;
 
 	public void execute() throws Exception {		
+		SignInHelper.init(getRequest(), getView()); 
 		String userName = getView().getValueString("user");
 		String password = getView().getValueString("password");
 		if (Is.emptyString(userName, password)) {
@@ -41,7 +45,7 @@ public class SignInAction extends ViewBaseAction implements IForwardAction {
 				forwardURI = "/";
 			}
 		}
-		
+		forwardURI = SignInHelper.refineForwardURI(getRequest(), forwardURI); 
 	}
 	
 	public String getForwardURI() {
