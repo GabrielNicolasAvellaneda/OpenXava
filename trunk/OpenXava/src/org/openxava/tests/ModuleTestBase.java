@@ -475,8 +475,7 @@ public class ModuleTestBase extends TestCase {
 		}
 		else {
 			// NaviOX, the built-in login mechanism of OpenXava
-			getHtmlPage().getAnchorByHref("/" + application + "/naviox/signOut.jsp").click(); 
-			reload();
+			page = getHtmlPage().getAnchorByHref("/" + application + "/naviox/signOut.jsp").click();
 		}
 	}
 	

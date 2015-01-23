@@ -27,7 +27,7 @@ public class NaviOXServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);		
 		
 		Style.setPotalInstance(NaviOXStyle.getInstance()); // We manage style in NaviOX as in the portal case, to override the style defined in xava.properties and by device 
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);		
 	}
 	
 	

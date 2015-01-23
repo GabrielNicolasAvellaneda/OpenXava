@@ -97,6 +97,7 @@ public class ModuleManager implements java.io.Serializable {
 	private MetaController metaControllerMode;
 	transient private HttpSession session;
 	private static Object refiner;
+	private static Object reseter; 
 	private String viewName = null;
 	private String modeName;
 	private String nextModule;
@@ -804,10 +805,13 @@ public class ModuleManager implements java.io.Serializable {
 	/**
 	 * Init JPA and Hibernate in order to process the current request.
 	 */
-	public void resetPersistence() {
+	public void resetPersistence() throws Exception { 
 		org.openxava.hibernate.XHibernate.setCmt(false);
 		org.openxava.jpa.XPersistence.reset();
 		org.openxava.hibernate.XHibernate.reset();
+		if (reseter != null) {
+			XObjects.execute(reseter, "reset", HttpSession.class, session);
+		}
 	}
 
 	/**
@@ -820,6 +824,8 @@ public class ModuleManager implements java.io.Serializable {
 	public void commit() { // Usually after render page
 		try {
 			doCommit();
+			org.openxava.jpa.XPersistence.reset();
+			org.openxava.hibernate.XHibernate.reset();
 		} catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			doRollback();
@@ -1641,6 +1647,13 @@ public class ModuleManager implements java.io.Serializable {
 	public static void setRefiner(Object newRefiner) {
 		refiner = newRefiner;
 	}
+	
+	/**
+	 * @since 5.2
+	 */
+	public static void setReseter(Object newReseter) { 
+		reseter = newReseter;
+	}	
 
 	private void setHideDialog(boolean hideDialog) {
 		reloadAllUINeeded = dialogLevel > 0 && hideDialog;

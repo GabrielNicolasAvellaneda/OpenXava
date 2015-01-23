@@ -8,6 +8,9 @@
 			
 	<controller name="SignIn">
 	
+		<action name="init" on-init="true" hidden="true"  			
+			class="com.openxava.naviox.actions.InitSignInAction"/>
+	
 		<action name="signIn"  			
 			class="com.openxava.naviox.actions.SignInAction"/>
 			
@@ -66,5 +69,26 @@
 			class="com.openxava.naviox.actions.ChangePasswordAction"/>			
 	</controller>
 	
+	<controller name="NewOnlyInList">
+		<action  name="new" mode="list"
+			class="org.openxava.actions.NewAction"
+			image="new.gif"
+			keystroke="Control N">
+			<set property="restoreModel" value="true"/>			
+		</action>
+	</controller>
+	
+	<controller name="Organization">
+		<extends controller="Navigation"/>
+		<extends controller="NewOnlyInList"/>
+		<extends controller="Print"/>
+		
+		<action name="createNewOrganization" mode="detail" takes-long="true"
+			class="com.openxava.naviox.actions.CreateNewOrganizationAction"/>
+			
+		<action name="delete" mode="detail" confirm="true"
+			class="com.openxava.naviox.actions.DeleteOrganizationAction"/>		
+						
+	</controller>	
 	
 </controllers>

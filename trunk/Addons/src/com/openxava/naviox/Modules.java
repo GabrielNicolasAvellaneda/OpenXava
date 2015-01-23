@@ -11,6 +11,8 @@ import org.openxava.application.meta.*;
 import org.openxava.util.*;
 
 import com.openxava.naviox.impl.*;
+import com.openxava.naviox.model.*;
+import com.openxava.naviox.util.*;
 
 /**
  * 
@@ -94,11 +96,14 @@ public class Modules implements Serializable {
 		}
 	}
 	
-	public String getCurrentModuleDescription() {
+	public String getCurrentModuleDescription(HttpServletRequest request) { 
 		try {
-			return current.getMetaApplication().getLabel() + " - " +  current.getLabel();
+			String organization = Organizations.getCurrentName(request); 																				
+			String prefix = organization == null?"":organization + " - ";																				
+			return prefix + current.getMetaApplication().getLabel() + " - " +  current.getLabel(); 
 		}
 		catch (Exception ex) {
+			log.warn(XavaResources.getString("module_description_problem"), ex);			
 			return XavaResources.getString("unknow_module");
 		}
 	}
@@ -181,6 +186,12 @@ public class Modules implements Serializable {
 			return false;
 		}
 			
+	}
+	
+	public String getModuleURI(HttpServletRequest request, MetaModule module) { 
+		String organization = Organizations.getCurrent(request); 
+		String prefix = organization == null?"":"/o/" + organization;
+		return "/" + module.getMetaApplication().getName() + prefix + "/m/" + module.getName();
 	}
 	
 	boolean isModuleAuthorized(MetaModule module) {
