@@ -1,9 +1,7 @@
 package org.openxava.test.tests;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 import javax.persistence.Query;
 

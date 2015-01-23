@@ -17,7 +17,7 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 	
 	<display-name>OpenXava Application</display-name>
 	
-	 
+	@listeners.xml@ 
 
 	<!-- Addons filters begin --> 
 	<filter>
@@ -27,7 +27,7 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 	<filter-mapping>
 		<filter-name>naviox</filter-name>
 		<url-pattern>*.jsp</url-pattern>
-	</filter-mapping>
+	</filter-mapping>		
 	<filter-mapping>
 		<filter-name>naviox</filter-name>
 		<url-pattern>/modules/*</url-pattern>
@@ -40,7 +40,7 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>naviox</filter-name>
-		<servlet-name>module</servlet-name>		
+		<servlet-name>module</servlet-name>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>naviox</filter-name>
@@ -48,6 +48,8 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 	</filter-mapping>
 	<!-- Addons filters end -->		
 			
+	@filters.xml@
+	
 	<servlet>
 		<servlet-name>images</servlet-name>
 		<servlet-class>org.openxava.web.servlets.ImagesServlet</servlet-class>
@@ -91,7 +93,7 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 	<servlet>
 		<servlet-name>phone</servlet-name>
 		<servlet-class>com.openxava.phone.web.PhoneServlet</servlet-class>
-	</servlet>
+	</servlet>	
 	<servlet>
 		<servlet-name>organization</servlet-name>
 		<servlet-class>com.openxava.naviox.web.OrganizationServlet</servlet-class>
@@ -110,7 +112,7 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 		<load-on-startup>12</load-on-startup>
 	</servlet>	
 		
-	
+	@servlets.xml@
 	
 	<servlet-mapping>
 		<servlet-name>naviox</servlet-name>
