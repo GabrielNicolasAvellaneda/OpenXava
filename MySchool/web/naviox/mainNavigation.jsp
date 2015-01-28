@@ -27,7 +27,7 @@ for (Iterator it= modules.getTopModules().iterator(); it.hasNext();) {
 	if (module.getName().equals("SignIn")) continue; 
 	String selected = module.getName().equals(request.getParameter("module"))?"selected":"";
 %>		
-	<a  href="/<%=module.getMetaApplication().getName()%>/m/<%=module.getName()%>?retainOrder=true" class="<%=selected%>">
+	<a  href="<%=modules.getModuleURI(request, module)%>?retainOrder=true" class="<%=selected%>">
 		<%=module.getLabel(request.getLocale())%>
 	</a>
 	
