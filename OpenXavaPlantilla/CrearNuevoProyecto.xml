@@ -5,7 +5,7 @@
 	Simplemente pon valor a las propiedades y ejecuta la tarea crearNuevoProyecto.
 -->
 
-<project name="CrearNuevoProject" default="crearNuevoProyecto" basedir=".">
+<project name="CrearNuevoProyecto" default="crearNuevoProyecto" basedir=".">
 
 	<input addproperty="proyecto" message="¿Cuál es el nombre de tu proyecto?"/>
 	<property name="fuentedatos" value="${proyecto}DS"/>	
