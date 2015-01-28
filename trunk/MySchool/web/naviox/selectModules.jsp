@@ -28,11 +28,11 @@ for (Iterator it= modulesList.iterator(); it.hasNext();) {
 	String selected = module.getName().equals(modules.getCurrent())?"selected":""; 
 	String label = module.getLabel(request.getLocale()); 
 	String description = module.getDescription(request.getLocale());
-	
+		
 	if (!Is.emptyString(searchWord) && !label.toLowerCase().contains(searchWord) && !description.toLowerCase().toLowerCase().contains(searchWord)) continue;  
 	counter++;
-%>	
-	<a  href="/<%=module.getMetaApplication().getName()%>/m/<%=module.getName()%>">
+%>
+	<a  href="<%=modules.getModuleURI(request, module)%>">
 	<div id="<%=module.getName()%>_module" class="module-row <%=selected%>" onclick="$('#<%=module.getName()%>_loading').show()">	
 		<div class="module-name">
 			<%=label%>
