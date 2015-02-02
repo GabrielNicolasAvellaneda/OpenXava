@@ -24,6 +24,7 @@ OpenXava 5.2 (2015-1-26)
 - Frame spacing when several frames in a row adjusted. 
 - Performance improvement for label resolution.
 - Fix: After removing a column from a list the filter data is gone.
+- Fix: Test code does not work after calling ModuleTestBase.logout().
  
 OpenXava 5.1.1 (2014-11-24)
 ---------------------------
@@ -173,6 +174,7 @@ OpenXava 5.0 (2014-6-9)
 - Fix: Scale defined in default-size.xml is ignored when formatting.
 - Fix: Scale definition from @Column and @Digits is ignored when formatting.
 - Fix: The @LabelStyle annotation is not supported with the new renderer.
+- Fix: Boolean inside a group in the parent view using view inheritance fails when clicking on new from detail mode.
  
 OpenXava 4.9.1 (2014-2-3)
 -------------------------
