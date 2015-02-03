@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: A reference to parent cannot be changed in a composite structure.
+
 OpenXava 5.2 (2015-1-26)
 ------------------------
 - Moving columns in list with drag and drop.

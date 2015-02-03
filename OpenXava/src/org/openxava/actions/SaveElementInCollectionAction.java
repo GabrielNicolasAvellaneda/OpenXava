@@ -55,18 +55,18 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	protected void saveCollectionElement(Map containerKey) throws Exception {
 		if (getCollectionElementView().isEditable()) {
 			// Aggregate or entity reference used as aggregate 
-			boolean isEntity = isEntityReferencesCollection(); 			
-			Map parentKey = new HashMap();
-			MetaCollection metaCollection = getMetaCollection();
-			parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
+			boolean isEntity = isEntityReferencesCollection();
 			Map values = getValuesToSave();			
-			values.putAll(parentKey);
 			
 			try {
 				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), values);
 				addMessage(isEntity?"entity_modified":"aggregate_modified", getCollectionElementView().getModelName());
 			}
 			catch (ObjectNotFoundException ex) {
+				Map parentKey = new HashMap();
+				MetaCollection metaCollection = getMetaCollection();
+				parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
+				values.putAll(parentKey); 
 				create(values, isEntity);				
 			}		
 		}

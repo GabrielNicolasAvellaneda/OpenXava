@@ -733,7 +733,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				throw new ValidationException(validationErrors);			
 			}		
 			updateReferencedEntities(metaModel, values);			
-			Map convertedValues = convertSubmapsInObject(metaModel, values, false); 
+			Map convertedValues = convertSubmapsInObject(metaModel, values); 
 			Object newObject = null;			
 			if (metaModel.getContainerReference() == null) {
 				newObject = getPersistenceProvider().create(metaModel, convertedValues);
@@ -1094,7 +1094,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			PropertiesManager man = new PropertiesManager(object);			
 			removeViewProperties(metaAggregate, values);
 			removeCalculatedFields(metaAggregate, values); 
-			values = convertSubmapsInObject(metaAggregate, values, false); 
+			values = convertSubmapsInObject(metaAggregate, values); 
 			man.executeSets(values);
 			return object;
 		} catch (IllegalAccessException ex) {			
@@ -1333,8 +1333,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			validate(metaModel, values, keyValues, null, false);
 			removeViewProperties(metaModel, values);
 			verifyVersion(metaModel, entity, values);			 			
-			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
-			Map objects = convertSubmapsInObject(metaModel, values, true); 
+			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);
+			Map objects = convertSubmapsInObject(metaModel, values);
 			r.executeSets(objects);
 
 			// Collections are not managed			
@@ -1640,19 +1640,18 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}				
 	}
 	
-	private Map convertSubmapsInObject(MetaModel metaModel, Map values, boolean excludeContainerReference) throws ValidationException, XavaException, RemoteException { 
+	private Map convertSubmapsInObject(MetaModel metaModel, Map values) throws ValidationException, XavaException, RemoteException { 
 		Map result = new HashMap();
 		Iterator it = values.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
-			String memberName = (String) en.getKey();			
+			String memberName = (String) en.getKey();
 			if (!memberName.equals(MapFacade.MODEL_NAME)) {
 				Object value = null;
 				if (metaModel.containsMetaProperty(memberName)) {
 					value = en.getValue();
 				}
 				else if (metaModel.containsMetaReference(memberName)) {
-					if (excludeContainerReference && memberName.equals(metaModel.getContainerReference())) continue; 
 					value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());
 				}
 				else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
