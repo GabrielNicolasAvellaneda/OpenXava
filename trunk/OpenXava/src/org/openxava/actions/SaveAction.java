@@ -68,7 +68,7 @@ public class SaveAction extends ViewBaseAction {
 	}
 	
 	protected Map getValuesToSave() throws Exception {		
-		return getView().getValues();		
+		return getView().getValues();
 	}
 	
 	/**

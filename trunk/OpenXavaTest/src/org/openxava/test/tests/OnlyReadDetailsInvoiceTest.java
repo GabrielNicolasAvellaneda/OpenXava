@@ -17,7 +17,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		super(testName, "OnlyReadDetailsInvoice");		
 	}
 	
-	public void testAggregatesCollectionReadOnly() throws Exception {
+	public void testAggregatesCollectionReadOnly() throws Exception { 
 		execute("CRUD.new");
 		String [] initActions = {
 			"Navigation.previous",
