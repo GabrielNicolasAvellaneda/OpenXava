@@ -112,6 +112,27 @@ public class MovieTest extends ModuleTestBase {
 		assertTrue("At least 4 files", countFiles() == 4);		
 	}
 	
+	public void testGroupName() throws Exception {
+		String groupId = Strings.removeBlanks("data sheet");
+		
+		assertListRowCount(1);
+		execute("Mode.detailAndFirst");
+		String groupName = getHtmlPage().getElementById("ox_OpenXavaTest_Movie__label_" + groupId)
+										.asText().trim();
+		assertTrue("Incorrect group name", groupName.equals(Labels.get(groupId)));		
+	}
+	
+	public void testSectionsNames() throws Exception {
+		List<String> sn = new ArrayList<String>();
+		sn.add(Labels.get(Strings.removeBlanks("Multimedia 1")));
+		sn.add(Labels.get(Strings.removeBlanks("Multimedia 2")));
+				
+		assertListRowCount(1);
+		execute("Mode.detailAndFirst");
+		assertTrue("At most two sections", getSectionsNames().size() == 2);
+		assertTrue("Incorrect sections names", sn.removeAll(getSectionsNames()) && sn.isEmpty());
+	}
+	
 	private void addFile() throws Exception {
 		execute("CRUD.new");
 		assertAction("AttachedFile.choose");
@@ -144,5 +165,15 @@ public class MovieTest extends ModuleTestBase {
 			}
 		}		
 		return anchors;
+	}
+	
+	private List<String> getSectionsNames() {
+		List<String> sn = new ArrayList<String>();
+		for(DomElement e : getHtmlPage().getElementsByTagName("span")) {
+			if(e.getAttribute("class").equals("ox-section-tab")) {
+				sn.add(e.asText().trim());
+			}
+		}
+		return sn;
 	}
 }
