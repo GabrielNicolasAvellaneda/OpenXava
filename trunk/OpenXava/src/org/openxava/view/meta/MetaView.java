@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang3.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.IOnChangePropertyAction;
@@ -19,10 +20,7 @@ import org.openxava.model.meta.MetaMember;
 import org.openxava.model.meta.MetaModel;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.model.meta.MetaReference;
-import org.openxava.util.ElementNotFoundException;
-import org.openxava.util.Is;
-import org.openxava.util.XavaException;
-import org.openxava.util.XavaPreferences;
+import org.openxava.util.*;
 import org.openxava.util.meta.MetaElement;
 
 /**
@@ -275,6 +273,28 @@ public class MetaView extends MetaElement implements Cloneable {
 		while (it.hasNext()) {
 			((MetaView) it.next()).setModelName(this.modelName);
 		}
+	}
+	
+	/**
+	 * If {@code newName} is null or empty is replaced by {@code emptySection}. <p> 
+	 * If {@code newName} contains blanks (\n, \r, \t, \f) or whitespace are 
+	 * suppressed. <p>
+	 * 
+	 * @since 5.2.1
+	 */
+	@Override
+	public void setName(String newName) {
+		if(parent != null) { //is section
+			if(Is.emptyString(newName)) {
+				newName = "emptySection";
+				log.warn(XavaResources.getString("section_name_not_allowed", "is empty", 
+  						 newName));			
+			} else if (StringUtils.containsAny(newName, "\n\r\t\f ")) {
+				log.warn(XavaResources.getString("section_name_not_allowed", newName, 
+						(newName = Strings.removeBlanks(newName))));					
+			}
+		}
+		super.setName(newName);
 	}
 	
 	public boolean isAllMembers() {

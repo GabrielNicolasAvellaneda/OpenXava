@@ -801,5 +801,25 @@ public class Strings {
 		return Character.isUpperCase(string.charAt(0));
 	}
 
-	
+	/**
+	 * Returns the argument {@code string} without blanks (\n, \r, \t, \f) or 
+	 * whitespace. <p>
+	 * 
+	 *  If you send "my group" it returns "myGroup". <br>
+	 *  If you send "My Section" it returns "MySection". <br>
+	 * 
+	 * @param string
+	 * 		  String not null
+	 * 	 
+	 * @since 5.2.1
+	 */
+	public static String removeBlanks(String string) {
+		String [] strings = string.split("\\s+");
+		StringBuffer sb = new StringBuffer(strings[0]);
+		for(int i = 1; i < strings.length; i++) {
+			sb.append(Character.toUpperCase(strings[i].charAt(0)))
+			  .append(strings[i].substring(1)); 	
+		}
+		return sb.toString();
+	}
 }
