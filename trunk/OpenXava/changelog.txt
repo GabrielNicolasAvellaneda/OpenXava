@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+
+- Fix: Error "i.contentWindow is null" on closing a dialog with HTML_TEXT stereotype.
+- Fix: Frames for groups with blanks in their name do not open and close. 
+- Fix: Section and group names with blanks produces some misbehavior.
+- New removeBlanks() method in Strings utility class.
 - Fix: A reference to parent cannot be changed in a composite structure.
 
 OpenXava 5.2 (2015-1-26)

@@ -86,6 +86,7 @@ openxava.refreshPage = function(result) {
 		return;
 	}	
 	else {		
+		openxava.destroyEditors(); // Before closeDialog() to avoid an error on closing a dialog with a CKEditor
 		if (result.showDialog){	
 			openxava.disableElements(result);
 		}
@@ -97,7 +98,6 @@ openxava.refreshPage = function(result) {
 		if (result.showDialog || result.resizeDialog) { 
 			dialog = openxava.getDialog(result.application, result.module);
 		}
-		openxava.destroyEditors(); 
 		openxava.strokeActions = result.strokeActions;
 		var changedParts = result.changedParts;
 		for (var id in changedParts) {			
