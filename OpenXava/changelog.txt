@@ -2,6 +2,7 @@ Change Log for OpenXava project
 ===============================
 
 
+- Fix: XSS protection does not include iframe.
 - Fix: Error "i.contentWindow is null" on closing a dialog with HTML_TEXT stereotype.
 - Fix: Frames for groups with blanks in their name do not open and close. 
 - Fix: Section and group names with blanks produces some misbehavior.
