@@ -5,7 +5,7 @@
 <!-- NaviOX -->
 
 <controllers>
-			
+
 	<controller name="SignIn">
 	
 		<action name="init" on-init="true" hidden="true"  			
@@ -89,6 +89,6 @@
 		<action name="delete" mode="detail" confirm="true"
 			class="com.openxava.naviox.actions.DeleteOrganizationAction"/>		
 						
-	</controller>	
-	
+	</controller>
+		
 </controllers>
