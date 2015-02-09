@@ -66,7 +66,6 @@ public class UserWithNicknameTest extends ModuleTestBase {
 		attachFiles();				
 		execute("CRUD.delete");
 		assertNoErrors();
-		
 		removeNicknames();
 		removeFiles();		
 	}	

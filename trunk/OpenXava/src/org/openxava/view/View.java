@@ -1,5 +1,6 @@
 package org.openxava.view;
 
+import java.lang.reflect.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +19,8 @@ import java.util.prefs.Preferences;
 import javax.ejb.FinderException;
 import javax.ejb.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.jasperreports.engine.virtualization.*;
 
 import org.apache.commons.lang3.*;
 import org.apache.commons.logging.Log;
@@ -48,19 +51,7 @@ import org.openxava.model.meta.MetaModel;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.model.meta.MetaReference;
 import org.openxava.tab.Tab;
-import org.openxava.util.DataSourceConnectionProvider;
-import org.openxava.util.ElementNotFoundException;
-import org.openxava.util.Is;
-import org.openxava.util.Labels;
-import org.openxava.util.Locales;
-import org.openxava.util.Maps;
-import org.openxava.util.Messages;
-import org.openxava.util.PropertiesManager;
-import org.openxava.util.Strings;
-import org.openxava.util.Users;
-import org.openxava.util.XArrays;
-import org.openxava.util.XavaException;
-import org.openxava.util.XavaResources;
+import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.view.meta.MetaCollectionView;
 import org.openxava.view.meta.MetaDescriptionsList;
@@ -3112,7 +3103,7 @@ public class View implements java.io.Serializable {
 	/**
 	 * POJO associated to the current view. <p>
 	 */
-	private Object getPOJO() throws XavaException, ObjectNotFoundException, RemoteException, FinderException {
+	private Object getPOJO() throws Exception {
 		if (isKeyEditable()) {		
 			return getTransientPOJO();
 		}
@@ -3123,8 +3114,33 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	private Object getTransientPOJO() {
-		return getMetaModel().toPOJO(getParentIfSectionOrGroup().getAllValues());
+	private Object getTransientPOJO() throws Exception {
+		Map values = getParentIfSectionOrGroup().getAllValues();
+		Object pojo = getMetaModel().toPOJO(values);
+		loadPOJOReferences(pojo, values);
+		return pojo;
+	}
+
+	private void loadPOJOReferences(Object pojo, Map values) throws Exception	{ 
+		PropertiesManager pm = new PropertiesManager(pojo);
+		for (Object oen: values.entrySet()) {
+			Map.Entry en = (Map.Entry) oen;
+			if (en.getValue() instanceof Map) {
+				String name = (String) en.getKey();
+				Map key = (Map) en.getValue();
+				if (getMetaModel().containsMetaReference(name) && !Maps.isEmpty(key)) {
+					MetaReference ref = getMetaModel().getMetaReference(name);
+					if (!ref.isAggregate()) {
+						try {
+							Object value = MapFacade.findEntity(ref.getMetaModelReferenced().getName(), key);
+							pm.executeSet(name, value);
+						}
+						catch (ObjectNotFoundException ex) {							
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	

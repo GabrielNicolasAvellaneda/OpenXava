@@ -16,7 +16,6 @@ import org.openxava.test.actions.*;
 
 @Entity
 @Views({
-
 	@View( members= 	
 		"number;" +
 		"type;" +
@@ -34,7 +33,6 @@ import org.openxava.test.actions.*;
 		"deliveryPlaces;" +
 		"remarks"
 	),
-	
 	@View(name = "FramesOnSameRow", members= 	
 		"number;" +
 		"type;" +
@@ -51,8 +49,7 @@ import org.openxava.test.actions.*;
 		"alternateSeller;" +		
 		"deliveryPlaces;" +
 		"remarks" 	
-	),
-	
+	),	
 	@View(name = "ThreeFramesOnSameRow", members= 	
 		"number;" +
 		"type;" +
