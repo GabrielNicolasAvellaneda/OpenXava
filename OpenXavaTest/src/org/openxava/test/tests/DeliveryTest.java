@@ -351,7 +351,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertFocusOn("remarks");		
 	}
 	
-	public void testZeroValueOnChange() throws Exception { 
+	public void testZeroValueOnChange_accedingDescriptionsListDescriptionUsingGetEntity() throws Exception { 
 		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
 		execute("CRUD.new");
 		assertMessage("type=null");
@@ -360,6 +360,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("invoice.date", "1/1/02");  						
 		setValue("type.number", "0");
 		assertMessage("type=0"); // Verifies zero as value for on change action
+		assertMessage("type.description=JUNIT DELIVERY TYPE 0 CREATED"); // Obtained with getEntity()
 		deleteDeliveryType(0);
 	}
 	

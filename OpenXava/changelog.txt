@@ -1,8 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-
-- Fix: XSS protection does not include iframe.
+- Fix: View.getEntity() when creating does not load the references so combo descriptions are not available.
+- Fix: FILES stereotype fails from embedded reference.
+- Fix: XSS protection does not include iframe and window.location.
 - Fix: Error "i.contentWindow is null" on closing a dialog with HTML_TEXT stereotype.
 - Fix: Frames for groups with blanks in their name do not open and close. 
 - Fix: Section and group names with blanks produces some misbehavior.
