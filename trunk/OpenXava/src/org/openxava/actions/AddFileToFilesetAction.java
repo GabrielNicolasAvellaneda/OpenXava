@@ -2,7 +2,6 @@ package org.openxava.actions;
 
 import javax.inject.*;
 
-import org.apache.commons.lang3.*;
 import org.openxava.model.*;
 import org.openxava.util.*;
 
@@ -26,9 +25,7 @@ public class AddFileToFilesetAction extends ViewBaseAction implements
 			if(!getView().isKeyEditable()) {
 				MapFacade.setValues(getView().getModelName(), 
 									getView().getKeyValues(), 
-									ArrayUtils.toMap(new String[][] { 
-										{ getNewFilesetProperty(), libraryId }  
-									}));
+									getView().getValues());
 			}
 		}
 		showDialog();
