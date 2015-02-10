@@ -1,6 +1,5 @@
 package org.openxava.test.tests;
 
-import org.openxava.tests.*;
 import com.gargoylesoftware.htmlunit.html.*;
 
 /**
@@ -47,6 +46,9 @@ public class InvoiceDetailsWithTotalsTest extends CustomizeListTestBase {
 		
 		removeColumn("details", 3);
 		assertTotalInCollection("details", "deliveryDate", "12/15/10");			
+		
+		execute("List.addColumns", "collection=details");
+		execute("AddColumns.restoreDefault");
 	}
 	
 	public void testTotalsAndAddActionInCollectionFrame() throws Exception { 

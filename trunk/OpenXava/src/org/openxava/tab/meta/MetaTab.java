@@ -355,7 +355,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	
 	public void setDefaultPropertiesNames(String properties) {
 		this.defaultPropertiesNames = properties;
-		setPropertiesNames(properties);
+		if (areAllProperties()) setPropertiesNames(properties); 
 	}
 
 	/**
