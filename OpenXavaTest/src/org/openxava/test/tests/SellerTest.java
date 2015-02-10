@@ -4,21 +4,34 @@ import java.rmi.*;
 
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
-import org.openxava.tests.*;
-
 
 /**
  * 
  * @author Javier Paniza
  */
 
-public class SellerTest extends ModuleTestBase {
+public class SellerTest extends CustomizeListTestBase { 
 		
 	private Customer customer2;
 	private Customer customer1;
 
 	public SellerTest(String testName) {
 		super(testName, "Seller");		
+	}
+	
+	
+	public void testCollectionWithListPropertiesStoresPreferences() throws Exception {  
+		execute("CRUD.new");
+		assertCollectionColumnCount("customers", 6);
+		removeColumn("customers", 5);
+		assertCollectionColumnCount("customers", 5);
+		resetModule();
+		execute("CRUD.new");
+		assertCollectionColumnCount("customers", 5);
+		
+		execute("List.addColumns", "collection=customers");
+		execute("AddColumns.restoreDefault");
+		assertCollectionColumnCount("customers", 6);
 	}
 	
 	public void testCollectionNotCorruptListInSplitMode() throws Exception { 

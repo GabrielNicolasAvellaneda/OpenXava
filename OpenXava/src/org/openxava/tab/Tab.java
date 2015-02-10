@@ -129,7 +129,7 @@ public class Tab implements java.io.Serializable {
 		if (metaProperties == null) {
 			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;				
 			metaProperties = getMetaTab().getMetaProperties();
-			setPropertiesLabels(metaProperties); 
+			setPropertiesLabels(metaProperties);
 		}				
 		return metaProperties;
 	}
@@ -1772,7 +1772,7 @@ public class Tab implements java.io.Serializable {
 	public void setPropertiesNames(String propertiesNames) throws XavaException { 
 		cloneMetaTab();
 		getMetaTab().setPropertiesNames(propertiesNames);		
-		resetAfterChangeProperties();				
+		resetAfterChangeProperties();
 	}
 	
 	/**

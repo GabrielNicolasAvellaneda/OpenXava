@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Collection customization is not stored permanently if @ListProperties is used. 
 - Fix: DWR signature warning in log.
 - Fix: View.getEntity() when creating does not load the references so combo descriptions are not available.
 - Fix: FILES stereotype fails from embedded reference.
