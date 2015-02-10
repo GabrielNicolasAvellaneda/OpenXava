@@ -53,11 +53,11 @@ if (loadMore) {
 	<a  href="javascript:naviox.displayAllModulesList('<%=searchWord%>')">
 	<div id="more_modules" class="module-row" onclick="$('#loading_more_modules').show(); $('#load_more_modules').hide();">
 	<span id="loading_more_modules" style="display:none;">
-	<xava:message key="loading"/>
+	<xava:message key="loading"/>...
 	<img src="<%=request.getContextPath()%>/naviox/images/loading.gif" style="float: right;"/>
 	</span>
 	<span id="load_more_modules">
-	<xava:message key="load_more_modules"/>
+	<xava:message key="load_more_modules"/>...
 	</span>	
 	</div>	
 	</a>
