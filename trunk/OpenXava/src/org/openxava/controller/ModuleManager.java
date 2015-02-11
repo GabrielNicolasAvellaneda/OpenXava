@@ -1404,17 +1404,27 @@ public class ModuleManager implements java.io.Serializable {
 				getMetaActionsOnInit().iterator() });
 		while (it.hasNext()) {
 			MetaAction action = (MetaAction) it.next();
-			try {
-				if (IForwardAction.class.isAssignableFrom(Class.forName(action
-						.getClassName()))) {
-					return true;
-				}
-			} catch (Exception ex) {
-				log.warn(XavaResources.getString("is_forward_action_warning",
-						action.getQualifiedName()), ex);
-			}
+			if (isForwardAction(action)) return true; 
 		}
 		return false;
+	}
+	
+	private boolean isForwardAction(MetaAction action) { 
+		try {
+			Class actionClass = Class.forName(action.getClassName());
+			if (IForwardAction.class.isAssignableFrom(actionClass)) {
+				return true;
+			}
+			if (IChainAction.class.isAssignableFrom(actionClass)) {
+				// Because the IChainAction could chain to a IForwardAction
+				return true;
+			}
+			return false;
+		} catch (Exception ex) {
+			log.warn(XavaResources.getString("is_forward_action_warning",
+					action.getQualifiedName()), ex);
+			return false;
+		}		
 	}
 
 	public void executeOnEachRequestActions(HttpServletRequest request,
