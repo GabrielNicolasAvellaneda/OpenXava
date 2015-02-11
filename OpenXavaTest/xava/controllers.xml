@@ -1118,6 +1118,11 @@
 			class="org.openxava.test.actions.GoDescriptionAction"/>
 	</controller>
 	
+	<controller name="GoDescriptionChainingOnInit">
+		<action name="goDescription" on-init="true"
+			class="org.openxava.test.actions.ChainToGoDescriptionAction"/>
+	</controller>	
+	
 	<controller name="Movie">
 		<extends controller="Typical" />
 		<action name="printDatasheet" mode="detail" takes-long="true" image="pdf.gif" 
