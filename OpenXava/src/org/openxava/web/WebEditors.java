@@ -124,7 +124,7 @@ public class WebEditors {
 	/** 
 	 * @return If has a multiple converter return a array of string else return a string
 	 */
-	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException { 
+	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName, boolean fromList) throws XavaException {
 		return formatToStringOrArrayImpl(request, p, object, errors, viewName, fromList);
 	}
 	

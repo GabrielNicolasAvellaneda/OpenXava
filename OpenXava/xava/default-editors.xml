@@ -30,6 +30,11 @@
 	
 	<editor name="TextField" url="textEditor.jsp">
 		<for-type type="java.lang.String" />
+		<list-formatter class="org.openxava.formatters.HTMLFilterListFormatter" />		
+	</editor>	
+	
+
+	<editor name="NumericField" url="textEditor.jsp">
 		<for-type type="java.math.BigDecimal" />
 		<for-type type="java.math.BigInteger" />
 		<for-type type="int" />
@@ -42,7 +47,7 @@
 		<for-type type="java.lang.Double" />
 		<for-type type="float" /> 
 		<for-type type="java.lang.Float" />						
-	</editor>
+	</editor>		
  
 	<editor name="BooleanCheckBox" url="booleanEditor.jsp">
 		<formatter class="org.openxava.formatters.BooleanFormatter" >
