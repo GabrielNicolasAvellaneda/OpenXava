@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Dangerous JavaScript content possible in list mode by a XSS attack.
 - Fix: An IForwardAction from an IChainAction with on-init=true does not do the forward. 
 - Fix: Collection customization is not stored permanently if @ListProperties is used. 
 - Fix: DWR signature warning in log.
