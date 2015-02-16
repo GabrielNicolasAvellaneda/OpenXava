@@ -5,7 +5,6 @@ import java.util.*;
 import javax.inject.*;
 
 import org.apache.commons.logging.*;
-import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 

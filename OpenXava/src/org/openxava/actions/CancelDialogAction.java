@@ -11,7 +11,7 @@ public class CancelDialogAction extends ViewBaseAction implements IChainAction {
 	
 	private String nextAction;
 		
-	public void execute() throws Exception {		
+	public void execute() throws Exception {
 		for (MetaAction action: getManager().getMetaActions()) {
 			if (action.getClassName().equals(getClass().getName())) continue;
 			if (action.getName().equals("cancel") || 
@@ -25,7 +25,7 @@ public class CancelDialogAction extends ViewBaseAction implements IChainAction {
 				nextAction = action.getQualifiedName();
 			}
 		}				
-		if (nextAction == null) closeDialog();		
+		if (nextAction == null) closeDialog();
 	}
 	
 	public String getNextAction() throws Exception {

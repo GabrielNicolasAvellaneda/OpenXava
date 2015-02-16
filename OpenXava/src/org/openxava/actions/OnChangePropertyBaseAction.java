@@ -11,14 +11,11 @@ import org.openxava.view.*;
  */
 
 abstract public class OnChangePropertyBaseAction
-	extends BaseAction
+	extends ViewBaseAction 
 	implements IOnChangePropertyAction {
 		
 	private String changedProperty;
 	private Object newValue;
-	private View view;	
-
-	
 	
 	public Object getNewValue() {
 		return newValue;
@@ -42,7 +39,7 @@ abstract public class OnChangePropertyBaseAction
 	 * @return
 	 */
 	public View getView() {
-		return view;
+		return super.getView(); 
 	}
 
 	public void setNewValue(Object object) {
@@ -53,8 +50,9 @@ abstract public class OnChangePropertyBaseAction
 		changedProperty = string;
 	}
 
-	public void setView(View view) {
-		this.view = view;
+	protected void showView(View newView) {
+		super.showView(newView);
+		getContext().put(getManager().getApplicationName(), getManager().getModuleName(), "xava_view", newView);
 	}
-
+	
 }

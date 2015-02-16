@@ -1354,9 +1354,14 @@ public class ModuleManager implements java.io.Serializable {
 	 * to execute.jsp, init 'actionsChanged' after execute
 	 * 'assignValuesToWebView' and 'initModule'
 	 */
-	public void preInitModule() {
+	public void preInitModule(HttpServletRequest request) { 
 		actionsChanged = false;
 		actionsAddedOrRemoved = false;
+		showDialog = dialogLevel > 0 && !hasProcessRequest(request) ? true
+				: false; // When a dialog is shown and the user click in refresh
+							// in browser we'll re-open the dialog
+		hideDialog = false;
+		reloadViewNeeded = false;
 	}
 
 	public void initModule(HttpServletRequest request, Messages errors,
@@ -1380,12 +1385,7 @@ public class ModuleManager implements java.io.Serializable {
 			reloadAllUINeeded = true;
 		} else {
 			reloadAllUINeeded = false;
-		}
-		showDialog = dialogLevel > 0 && !hasProcessRequest(request) ? true
-				: false; // When a dialog is shown and the user click in refresh
-							// in browser we'll re-open the dialog
-		hideDialog = false;
-		reloadViewNeeded = false;
+		}		
 	}
 
 	public void executeBeforeEachRequestActions(HttpServletRequest request,
