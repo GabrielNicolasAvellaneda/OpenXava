@@ -1394,10 +1394,18 @@ abstract public class MetaModel extends MetaElement {
 						pm.executeSet((String)en.getKey(), null);
 						continue;
 					}
-					MetaModel referencedModel = getMetaReference((String)en.getKey()).getMetaModelReferenced();
+					MetaReference ref = getMetaReference((String)en.getKey());
+					MetaModel referencedModel = ref.getMetaModelReferenced();
 					Object referencedObject = pm.executeGet((String)en.getKey());
 					if (referencedObject == null) {
-						pm.executeSet((String)en.getKey(), referencedModel.toPOJO((Map) en.getValue()));
+						Map refValues = (Map) en.getValue();
+						if (!ref.isAggregate()) { 							 
+							Map key = referencedModel.extractKeyValues(refValues);
+							if (Maps.isEmpty(key)) {
+								continue;
+							}
+						}						
+						pm.executeSet((String)en.getKey(), referencedModel.toPOJO(refValues));
 					}
 					else {
 						referencedModel.fillPOJO(referencedObject, (Map) en.getValue());

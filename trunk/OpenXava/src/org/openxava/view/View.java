@@ -3109,7 +3109,7 @@ public class View implements java.io.Serializable {
 		}
 		else {
 			Object pojo = MapFacade.findEntity(getModelName(), getParentIfSectionOrGroup().getKeyValues());
-			getMetaModel().fillPOJO(pojo, getParentIfSectionOrGroup().getAllValues()); // fillPOJO does not get the references from DB, if we change that maybe we can remove the refreshIfManaged from getCollectionObjects()   
+			getMetaModel().fillPOJO(pojo, getParentIfSectionOrGroup().getAllValues()); // fillPOJO does not get the references from DB, if we change that maybe we can remove the refreshIfManaged from getCollectionObjects()   			
 			return pojo;			
 		}
 	}

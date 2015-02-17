@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: It is possible to add programmatically the same action several times. 
+- Fix: View.getEntity() fails when there is an empty reference in the UI. 
+- Entity from View has nulls for non-existing references, before they were empty objects.
 - Fix: Dialog is not shown from an @OnChange action. 
 - Methods showDialog(), closeDialog(), showNewView() and returnToPreviousView() available from OnChangePropertyBaseAction.
 - Fix: Dangerous JavaScript content possible in list mode by a XSS attack.

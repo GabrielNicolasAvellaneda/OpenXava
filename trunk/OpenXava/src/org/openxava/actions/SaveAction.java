@@ -18,7 +18,7 @@ public class SaveAction extends ViewBaseAction {
 	private boolean resetAfter = true;
 	private boolean refreshAfter = true; 
     
-	public void execute() throws Exception {		
+	public void execute() throws Exception {
 		try {
 			Map values = null;			
 			if (getView().isKeyEditable()) {
