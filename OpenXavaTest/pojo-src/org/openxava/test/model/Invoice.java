@@ -337,8 +337,8 @@ public class Invoice {
 	
 	@Stereotype("MONEY") @Depends("customer.number, paid")
 	public BigDecimal getCustomerDiscount() {
+		if (paid) return new BigDecimal("77"); 
 		if (customer == null) return new BigDecimal("0.00");  
-		if (paid) return new BigDecimal("77");
 		if (customer.getNumber() == 1) return new BigDecimal("11.50");
 		if (customer.getNumber() == 2) return new BigDecimal("22.75");
 		return new BigDecimal("0.25");		

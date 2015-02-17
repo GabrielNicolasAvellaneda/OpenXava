@@ -151,6 +151,7 @@ public class ModuleManager implements java.io.Serializable {
 	 * @since 4.8
 	 */
 	public void addSimpleMetaAction(MetaAction action) {
+		if (getMetaActions().contains(action)) return; 
 		getMetaActions().add(action);
 		defaultActionQualifiedName = null;
 		actionsChanged = true;

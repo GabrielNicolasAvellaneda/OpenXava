@@ -60,7 +60,18 @@
 			<set property="property" value="author"/>	
 			<set property="suffix" value=" LUCAS"/>
 		</action>			
-	</controller>	
+	</controller>
+	
+	<controller name="Applicant">	
+		<extends controller="Typical"/>		
+		<action name="showCreate" mode="detail" 
+			class="org.openxava.test.actions.ShowCreateAction"/>
+	</controller>			
+	
+	<controller name="JPACRUD">	
+		<action name="create" mode="detail" 
+			class="org.openxava.test.actions.CreateUsingJPAAction"/>
+	</controller>				
 		
 	<controller name="OrderDetail">				
         <action name="reduceQuantity" 
