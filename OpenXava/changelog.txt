@@ -104,6 +104,7 @@ OpenXava 5.1 (2014-10-21)
 - Fix: ModuleTestBase.logout() fails with the built-in security.
 - Fix: ModuleTestBase.login() fails with a language other than English.
 - Fix: @DefaultValueCalculator with dependent properties is executed twice sometimes.
+- Fix: Portlets from iPad does not work in Liferay.
 
 OpenXava 5.0.1 (2014-7-14)
 --------------------------
