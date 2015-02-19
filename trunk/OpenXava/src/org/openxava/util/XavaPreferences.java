@@ -399,7 +399,7 @@ public class XavaPreferences {
 
 	/** @since 4m5 */
 	public String getHelpPrefix() {
-		return getProperties().getProperty("helpPrefix", "").trim();
+		return getProperties().getProperty("helpPrefix", "http://openxava.wikispaces.com/help_").trim(); 
 	}
 
 	/** @since 4m5 */
@@ -439,11 +439,6 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("showLabelsForToolBarActions", "true").trim());
 	}
 	
-	/** @since 4m6 */
-	public String getDefaultHelpPrefix(){
-		return "http://openxava.wikispaces.com/help_";		
-	}
-
 	/** @since 4m6
 	 * 
 	 * If <code>true</code> it ignore accents to string arguments for conditions in list and collections. <p>

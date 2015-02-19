@@ -124,16 +124,21 @@ if (manager.isButtonBarVisible()) {
 	}	
 
 	String language = request.getLocale().getLanguage();
-	String href = XavaPreferences.getInstance().getDefaultHelpPrefix() + language;
+	String href = XavaPreferences.getInstance().getHelpPrefix(); 
+	String suffix = XavaPreferences.getInstance().getHelpSuffix(); 
 	String target = XavaPreferences.getInstance().isHelpInNewWindow() ? "_blank" : "";
-	if (!Is.empty(XavaPreferences.getInstance().getHelpPrefix())) { 
+	if (href.startsWith("http:") || href.startsWith("https:")) {
+		if (href.endsWith("_")) href = href + language;
+		if (!Is.emptyString(suffix)) href = href + suffix;
+	}
+	else {
 		href = 
 			"/" + manager.getApplicationName() + "/" + 
-			XavaPreferences.getInstance().getHelpPrefix() +
+			href +
 			manager.getModuleName() +
 			"_" + language + 
-			XavaPreferences.getInstance().getHelpSuffix();
-	} 
+			suffix;
+	} 	
 	if (style.isHelpAvailable()) {
 		String helpImage = !style.getHelpImage().startsWith("/")?request.getContextPath() + "/" + style.getHelpImage():style.getHelpImage();
 	%>

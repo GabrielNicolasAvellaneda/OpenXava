@@ -174,10 +174,15 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 2, "amount", "88.33");		
 	}
 	
-	public void testRemovingRowUpdatesTotals() throws Exception {  
+	public void testElementCollectionGetEntity_RemovingRowUpdatesTotals() throws Exception {  
 		execute("Mode.detailAndFirst");
 		assertValue("year", "2014"); // This one ...
 		assertValue("number", "1");  // ... has 3 details
+		
+		execute("Quote.showProducts");
+		assertNoErrors();
+		assertMessage("MULTAS DE TRAFICO, IBM ESERVER ISERIES 270, XAVA");
+		
 		assertTotalInCollection("details", 0, "amount", "162.00");
 		assertTotalInCollection("details", 1, "amount",  "34.02");
 		assertTotalInCollection("details", 2, "amount", "196.02");
@@ -198,5 +203,5 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 1, "amount",  "25.62");
 		assertTotalInCollection("details", 2, "amount", "147.62");
 	}
-		
+			
 }

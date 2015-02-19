@@ -2,8 +2,8 @@ package org.openxava.test.tests;
 
 import org.apache.commons.lang.*;
 import org.openxava.tests.*;
-import org.openxava.util.*;
 
+import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 
 /**
@@ -39,8 +39,17 @@ public class ApplicantTest extends ModuleTestBase {
 		String inputName = "ox_OpenXavaTest_Applicant__action___" + action.replace(".", "___"); 
 		assertEquals(expectedCount, getHtmlPage().getElementsByName(inputName).size());		
 	}
+	
+	public void assertHelp() throws Exception { 
+		try {
+			getHtmlPage().getAnchorByHref("http://openxava.wikispaces.com/help_en");
+		}
+		catch (ElementNotFoundException ex) {		
+			fail("Help link is not correct"); 
+		}
+	}
 
-	public void testModulesMenu() throws Exception { 
+	public void testModulesMenu_help() throws Exception { 
 		modulesLimit = false;
 		resetModule();
 		
@@ -67,7 +76,9 @@ public class ApplicantTest extends ModuleTestBase {
 		loadMoreModules = (HtmlAnchor) getHtmlPage().getHtmlElementById("more_modules").getParentNode();
 		loadMoreModules.click();
 		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
-		assertTrue(getModulesCount() > 300); 
+		assertTrue(getModulesCount() > 300);
+		
+		assertHelp();
 	}
 
 	private void assertFirstModuleInMenu(String expectedName, String expectedDescription) {
@@ -92,7 +103,7 @@ public class ApplicantTest extends ModuleTestBase {
 		assertEquals(1, StringUtils.countMatches(html, "<head>"));
 	}
 	
-	protected String getModuleURL() throws XavaException { 
+	protected String getModuleURL() { 
 		return modulesLimit?super.getModuleURL():"http://" + getHost() + ":" + getPort() + "/OpenXavaTest/modules/Applicant";
 	}
 	

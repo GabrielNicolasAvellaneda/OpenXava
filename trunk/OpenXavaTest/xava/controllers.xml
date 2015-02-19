@@ -33,8 +33,11 @@
 	
 	<controller name="Quote">	
 		<extends controller="Typical"/>
-		<action name="resetUnitPriceCalculator" class="org.openxava.test.actions.ResetUnitPriceCalculatorAction"
+		<action name="resetUnitPriceCalculator" 
+			class="org.openxava.test.actions.ResetUnitPriceCalculatorAction"
 			hidden="true" on-each-request="true"/>
+		<action name="showProducts" mode="detail"
+			class="org.openxava.test.actions.ShowQuoteProducsAction"/>	
 	</controller>
 
 	<controller name="Author">	

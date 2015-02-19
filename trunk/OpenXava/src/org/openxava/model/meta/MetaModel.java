@@ -1424,7 +1424,7 @@ abstract public class MetaModel extends MetaElement {
 						collection = new ArrayList(); // It will fail with Sets						
 					}
 					else {
-						collection = (Collection) referencedModel;
+						collection = (Collection) referencedObject; 
 						collection.clear();
 					}					
 					
