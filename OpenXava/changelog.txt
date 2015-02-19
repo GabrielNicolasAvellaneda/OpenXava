@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Calling getView().getEntity() when there is an element collection in the view fails. 
+- Fix: helpPrefix from xava.properties does not work for external URLs.
 - Fix: It is possible to add programmatically the same action several times. 
 - Fix: View.getEntity() fails when there is an empty reference in the UI. 
 - Entity from View has nulls for non-existing references, before they were empty objects.
@@ -193,6 +195,7 @@ OpenXava 5.0 (2014-6-9)
 - Fix: Scale definition from @Column and @Digits is ignored when formatting.
 - Fix: The @LabelStyle annotation is not supported with the new renderer.
 - Fix: Boolean inside a group in the parent view using view inheritance fails when clicking on new from detail mode.
+- Fix: When resizing dialog inside elements can go outside dialog (fixed in the new style).
  
 OpenXava 4.9.1 (2014-2-3)
 -------------------------
