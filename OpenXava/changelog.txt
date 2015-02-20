@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Several except-for-tab in tabs-default-values fails.
 - Fix: Calling getView().getEntity() when there is an element collection in the view fails. 
 - Fix: helpPrefix from xava.properties does not work for external URLs.
 - Fix: It is possible to add programmatically the same action several times. 

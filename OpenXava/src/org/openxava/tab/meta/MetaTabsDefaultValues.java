@@ -8,7 +8,7 @@ import org.openxava.util.*;
 public class MetaTabsDefaultValues {
 	
 	private static Map<String, Collection<MetaTab>> tabsForModels;
-	private static Map<String, Collection<MetaTab>> tabsExceptForModels;
+	private static Map<MetaTab, Collection<String>> tabsExceptForModels; 
 	private static Collection<MetaTab> defaultTabs; 	
 	
 	
@@ -25,9 +25,8 @@ public class MetaTabsDefaultValues {
 		if (tabsExceptForModels == null) {
 			throw new XavaException("only_from_parse", "MetaTabs._putMetaTabExceptForModel");
 		}		
-		
-		if (!tabsExceptForModels.containsKey(model)) tabsExceptForModels.put(model, new ArrayList<MetaTab>());
-		tabsExceptForModels.get(model).add(tab);
+		if (!tabsExceptForModels.containsKey(tab)) tabsExceptForModels.put(tab, new ArrayList<String>());
+		tabsExceptForModels.get(tab).add(model);		
 	}
 	
 	public static void _addDefaultMetaTab(MetaTab tab) throws XavaException {
@@ -39,7 +38,7 @@ public class MetaTabsDefaultValues {
 	
 	private static void setup() throws XavaException {
 		tabsForModels = new HashMap<String, Collection<MetaTab>>();
-		tabsExceptForModels = new HashMap<String, Collection<MetaTab>>();
+		tabsExceptForModels = new HashMap<MetaTab, Collection<String>>(); 
 		defaultTabs = new ArrayList<MetaTab>();
 		TabsDefaultValuesParser.setupTabs();		
 	}
@@ -49,14 +48,12 @@ public class MetaTabsDefaultValues {
 			setup();
 		}
 		Collection<MetaTab> tabs = new ArrayList<MetaTab>(defaultTabs);
-		for (Map.Entry<String, Collection<MetaTab>> e: tabsExceptForModels.entrySet()) {
-			if (!e.getKey().equals(model)) tabs.addAll(e.getValue());
-		}
-		
+		for (Map.Entry<MetaTab, Collection<String>> e: tabsExceptForModels.entrySet()) {
+			if (!e.getValue().contains(model)) tabs.add(e.getKey());
+		}		
 		if (tabsForModels.containsKey(model)) {
 			tabs.addAll(tabsForModels.get(model));
-		}
-		
+		}		
 		return tabs;
 	}
 		
