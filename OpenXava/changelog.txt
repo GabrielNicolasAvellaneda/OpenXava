@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: ArrayIndexOutOfBoundsException trace in tab with calculated properties.
 - Fix: Misleading message "Trying to load controller twice". 
 - Fix: Apostrophe used in labels files is not shown in tooltips. 
 - Fix: Several except-for-tab in tabs-default-values fails.

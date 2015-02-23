@@ -8,6 +8,7 @@ import javax.ejb.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
+import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
@@ -24,9 +25,10 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	private static Log log = LogFactory.getLog(EntityTabDataProvider.class);
 	
 	private String componentName;
-	private IConnectionProvider connectionProvider;	
+	private IConnectionProvider connectionProvider;
+	private boolean xmlComponent;
 		
-	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes /*, Collection tabConverters*/) throws RemoteException {
+	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes /*, Collection tabConverters*/) throws RemoteException {		
 		DataChunk tv = null;
 		try {
 			tv = tabProvider.nextChunk();
@@ -88,29 +90,31 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		while (itCalculators.hasNext()) {
 			TabCalculator tabCalculator = (TabCalculator) itCalculators.next();
 			try {
-				PropertiesManager mpCalculator =
-					tabCalculator.getPropertiesManager();
-				MetaSetsContainer metaCalculator =
-					tabCalculator.getMetaCalculator();	
-				if (metaCalculator.containsMetaSets()) {
-					Iterator itMetaSets =
-						metaCalculator.getMetaSetsWithoutValue().iterator();							
-					int idx = tabCalculator.getPropertyName().indexOf('.');
-					String ref = "";
-					if (idx >= 0) {
-						ref = tabCalculator.getPropertyName().substring(0, idx + 1);
-					}
-					while (itMetaSets.hasNext()) {
-						MetaSet metaSet = (MetaSet) itMetaSets.next();
-						Object value =
-							getValue(ref + metaSet.getPropertyNameFrom(), row, propertiesNames);
-						try {	
-							mpCalculator.executeSet(
-								metaSet.getPropertyName(),
-								value);
+				if (xmlComponent) { 	
+					PropertiesManager mpCalculator =
+						tabCalculator.getPropertiesManager();
+					MetaSetsContainer metaCalculator =
+						tabCalculator.getMetaCalculator();	
+					if (metaCalculator.containsMetaSets()) {
+						Iterator itMetaSets =
+							metaCalculator.getMetaSetsWithoutValue().iterator();							
+						int idx = tabCalculator.getPropertyName().indexOf('.');
+						String ref = "";
+						if (idx >= 0) {
+							ref = tabCalculator.getPropertyName().substring(0, idx + 1);
 						}
-						catch (PropertiesManagerException ex) {
-							throw new XavaException("calculator_property_not_found", metaSet.getPropertyName(), value.getClass().getName());
+						while (itMetaSets.hasNext()) {
+							MetaSet metaSet = (MetaSet) itMetaSets.next();
+							Object value =
+								getValue(ref + metaSet.getPropertyNameFrom(), row, propertiesNames);
+							try {	
+								mpCalculator.executeSet(
+									metaSet.getPropertyName(),
+									value);
+							}
+							catch (PropertiesManagerException ex) {
+								throw new XavaException("calculator_property_not_found", metaSet.getPropertyName(), value.getClass().getName());
+							}
 						}
 					}
 				}
@@ -224,6 +228,8 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		return componentName;
 	}
 	public void setComponentName(String componentName) {
+		if (Is.equal(this.componentName, componentName)) return;
+		this.xmlComponent = !MetaComponent.get(componentName).getMetaEntity().isAnnotatedEJB3();  
 		this.componentName = componentName;
 	}
 
