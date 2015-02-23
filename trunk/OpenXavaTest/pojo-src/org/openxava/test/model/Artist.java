@@ -25,7 +25,7 @@ public class Artist extends Identifiable {
 	
 	@Max(90l)	
 	private Integer age;
-
+		
 	public Studio getArtistStudio() {
 		return artistStudio;
 	}
