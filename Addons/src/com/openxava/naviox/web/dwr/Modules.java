@@ -16,7 +16,7 @@ public class Modules {
 	
 	public String displayModulesList(HttpServletRequest request, HttpServletResponse response) { 
 		try {
-			Users.setCurrent(request);
+			RequestReseter.reset(request); 
 			return Servlets.getURIAsString(request, response, "/naviox/modulesList.jsp"); 
 		}
 		catch (Exception ex) {
@@ -27,7 +27,7 @@ public class Modules {
 	
 	public String displayAllModulesList(HttpServletRequest request, HttpServletResponse response, String searchWord) {   
 		try {
-			Users.setCurrent(request);
+			RequestReseter.reset(request); 
 			return Servlets.getURIAsString(request, response, "/naviox/modulesList.jsp?modulesLimit=999&searchWord=" + searchWord); 
 		}
 		catch (Exception ex) {
@@ -39,7 +39,7 @@ public class Modules {
 	
 	public String filter(HttpServletRequest request, HttpServletResponse response, String searchWord) { 
 		try {
-			Users.setCurrent(request);
+			RequestReseter.reset(request); 
 			return Servlets.getURIAsString(request, response, "/naviox/selectModules.jsp?searchWord=" + searchWord); 
 		}
 		catch (Exception ex) {
@@ -50,7 +50,7 @@ public class Modules {
 
 	public void bookmarkCurrentModule(HttpServletRequest request) { 
 		try {
-			Users.setCurrent(request);
+			RequestReseter.reset(request); 
 			com.openxava.naviox.Modules modules = (com.openxava.naviox.Modules) request.getSession().getAttribute("modules");
 			modules.bookmarkCurrentModule();
 		}
@@ -61,7 +61,7 @@ public class Modules {
 	
 	public void unbookmarkCurrentModule(HttpServletRequest request) { 
 		try {
-			Users.setCurrent(request); 
+			RequestReseter.reset(request);  
 			com.openxava.naviox.Modules modules = (com.openxava.naviox.Modules) request.getSession().getAttribute("modules");
 			modules.unbookmarkCurrentModule();
 		}
