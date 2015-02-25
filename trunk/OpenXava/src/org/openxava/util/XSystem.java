@@ -52,6 +52,7 @@ public class XSystem {
 				rootHandler[i].setLevel(Level.ALL);
 		}		
 		Logger.getLogger("org.openxava").setLevel(XavaPreferences.getInstance().getJavaLoggingLevel());
+		Logger.getLogger("com.openxava").setLevel(XavaPreferences.getInstance().getJavaLoggingLevel()); 
 		try {
 			for (Iterator it = MetaComponent.getAllPackageNames().iterator(); it.hasNext(); ) {
 				String packageName = (String) it.next();
