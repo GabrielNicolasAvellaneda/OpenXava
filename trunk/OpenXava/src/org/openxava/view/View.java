@@ -531,12 +531,12 @@ public class View implements java.io.Serializable {
 	private void setValues(Map map, boolean closeCollections) throws XavaException { 
 		if (values == null) values = new HashMap();
 		else values.clear();
-		if (closeCollections) resetCollections();
+		if (closeCollections) resetCollections(true); 
 		resetCollectionTotals();
 		addValues(map);		
 	}
 
-	private void resetCollections() throws XavaException {
+	private void resetCollections(boolean root) throws XavaException { 
 		if (hasSubviews()) { 
 			Iterator it = getSubviews().values().iterator();
 
@@ -544,7 +544,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);
-				subview.resetCollections();										
+				subview.resetCollections(false);
 			}
 		}
 				
@@ -554,7 +554,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);				
-				subview.resetCollections();
+				subview.resetCollections(false); 
 			}
 		}
 				
@@ -564,13 +564,13 @@ public class View implements java.io.Serializable {
 				View subview = getSectionView(i); 
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);
-				subview.resetCollections();
+				subview.resetCollections(false); 
 			}	
 		}	
 		listSelected = null;
 		if (collectionTab != null) {
 			collectionTab.deselectAll();
-			collectionTab.clearCondition(); 
+			if (!root) collectionTab.clearCondition();
 		}
 	}
 	
