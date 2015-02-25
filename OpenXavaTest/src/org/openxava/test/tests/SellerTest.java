@@ -19,7 +19,7 @@ public class SellerTest extends CustomizeListTestBase {
 		super(testName, "Seller");		
 	}
 	
-	
+
 	public void testCollectionWithListPropertiesStoresPreferences() throws Exception {  
 		execute("CRUD.new");
 		assertCollectionColumnCount("customers", 6);
@@ -90,7 +90,7 @@ public class SellerTest extends CustomizeListTestBase {
 	}
 
 	
-	public void testListFeaturesInCollection() throws Exception {
+	public void testListFeaturesInCollection() throws Exception { 
 		// The correct elements
 		execute("List.viewDetail", "row=1");
 		assertValue("number", "2");
@@ -220,12 +220,25 @@ public class SellerTest extends CustomizeListTestBase {
 		assertMessage("Seller deleted successfully");
 	}
 	
-	public void testCollectionOfEntityReferencesElementsNotEditables() throws Exception {
+	public void testCollectionOfEntityReferencesElementsNotEditables_keepsOrderAfterClosingDialog() throws Exception {
 		execute("Mode.detailAndFirst");
-		execute("Collection.view", "row=0,viewObject=xava_view_customers");
+		assertValue("number", "1");
+		assertValueInCollection("customers", 0, "number", "1");
+		assertValueInCollection("customers", 1, "number", "2");
+		execute("List.orderBy", "property=number,collection=customers");
+		execute("List.orderBy", "property=number,collection=customers");
+		assertValueInCollection("customers", 0, "number", "2");
+		assertValueInCollection("customers", 1, "number", "1");
+
+		execute("Collection.view", "row=1,viewObject=xava_view_customers");
 		assertNoEditable("number");
 		assertNoEditable("name");
 		assertNoAction("Collection.new"); // of deliveryPlaces
+		
+		assertDialog();
+		closeDialog();
+		assertValueInCollection("customers", 0, "number", "2");
+		assertValueInCollection("customers", 1, "number", "1");
 	}
 	
 	public void testCustomizeListSupportsRecursiveReferences() throws Exception {

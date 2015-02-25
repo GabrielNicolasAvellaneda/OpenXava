@@ -20,7 +20,7 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	
 	@SuppressWarnings("unchecked")
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		getCollectionElementView().clear(); 
 		getCollectionElementView().setCollectionDetailVisible(true);
 		Collection elements;
@@ -35,10 +35,11 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 		} else {
 			keys = (Map) getCollectionElementView().getCollectionTab().getTableModel().getObjectAt(row);
 		}
+				
 		if (keys != null) {
-			values = MapFacade.getValues(getCollectionElementView().getModelName(), keys, getCollectionElementView().getMembersNames());
+			values = MapFacade.getValues(getCollectionElementView().getModelName(), keys, getCollectionElementView().getMembersNames());			
 			getCollectionElementView().setValues(values);						
-			getCollectionElementView().setCollectionEditingRow(getRow());
+			getCollectionElementView().setCollectionEditingRow(getRow());			
 		} else {
 			throw new XavaException("only_list_collection_for_aggregates");
 		}

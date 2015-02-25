@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Sort and filter lost in collections after editing/viewing an element with a dialog.
 - Fix: ArrayIndexOutOfBoundsException trace in tab with calculated properties.
 - Fix: Misleading message "Trying to load controller twice". 
 - Fix: Apostrophe used in labels files is not shown in tooltips. 
