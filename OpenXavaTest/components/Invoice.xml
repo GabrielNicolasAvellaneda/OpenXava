@@ -195,7 +195,7 @@
 	
 	<view name="NoSections">
 	
-		<reference-view reference="customer" view="Simple"/>
+		<reference-view reference="customer" view="SimpleWithCity"/>
 		
 		<collection-view collection="details">
 			<list-properties>product.description, product.unitPrice+, quantity, amount</list-properties>

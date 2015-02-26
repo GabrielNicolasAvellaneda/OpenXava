@@ -278,6 +278,8 @@
 		</members>
 	</view>
 	
+	<view name="SimpleWithCity" extends="Simple" members="; city"/>
+	
 	<view name="SimpleWithDeliveryPlaces" members="number; type; name; address; deliveryPlaces"/>
 	
 	<view name="SimpleStateAsForm" members="number; type; name; address">

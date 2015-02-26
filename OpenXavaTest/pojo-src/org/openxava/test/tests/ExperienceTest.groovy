@@ -41,7 +41,7 @@ class ExperienceTest extends ModuleTestBase {
 		
 	}
 	
-	void testNavigatingForObjectsWithPolymorphicReference() {
+	void testNavigatingForObjectsWithPolymorphicReference() { 
 		assertListRowCount 1 
 		execute "CRUD.new"
 		setValue "name", "OPENXAVA"

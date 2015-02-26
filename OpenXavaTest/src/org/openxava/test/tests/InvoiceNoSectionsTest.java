@@ -13,6 +13,20 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		super(testName, "InvoiceNoSections");		
 	}
 	
+	public void testAddingAnElementCollectionNotResetReferenceWithCalculatedProperty() throws Exception { 
+		execute("Mode.detailAndFirst");
+		assertValue("year", "2002");
+		assertValue("number", "1");
+		assertValue("customer.number", "1");
+		assertValue("customer.name", "Javi");
+		assertValue("customer.city", "46540 EL PUIG"); // This is a calculated property that produced an error 
+		execute("Collection.edit", "row=0,viewObject=xava_view_details");
+		execute("Collection.save");
+		assertValue("customer.number", "1");
+		assertValue("customer.name", "Javi"); // This was blank by a bug
+		assertValue("customer.city", "46540 EL PUIG");  
+	}
+	
 	public void testSumInCollection() throws Exception { 
 		execute("CRUD.new");
 		execute("CRUD.search");

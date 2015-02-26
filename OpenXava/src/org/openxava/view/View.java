@@ -477,22 +477,26 @@ public class View implements java.io.Serializable {
 	private boolean hasGroups() {		
 		return groupsViews != null && !groupsViews.isEmpty();
 	}
+	
+	public void addValues(Map values) throws XavaException { 
+		addValues(values, false);
+	}
 
-	public void addValues(Map map) throws XavaException {		
-		map = map==null?Collections.EMPTY_MAP:map; 		
-		Iterator it = map.entrySet().iterator();
+	private void addValues(Map values, boolean setValuesForSubviews) throws XavaException {		
+		values = values==null?Collections.EMPTY_MAP:values; 		
+		Iterator it = values.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next(); 
 			String key = (String) en.getKey();
 			Object value = en.getValue();			
 			int idx = key.indexOf('.');
 			if (idx < 0) {				
-				trySetValue(key, value);
+				trySetValue(key, value, setValuesForSubviews); 
 			}
 			else {
 				String subviewName = key.substring(0, idx);
 				String member = key.substring(idx+1);								 				
-				getSubview(subviewName).trySetValue(member, value);
+				getSubview(subviewName).trySetValue(member, value, setValuesForSubviews); 
 			}
 		}											
 	}
@@ -533,7 +537,7 @@ public class View implements java.io.Serializable {
 		else values.clear();
 		if (closeCollections) resetCollections(true); 
 		resetCollectionTotals();
-		addValues(map);		
+		addValues(map, true); 
 	}
 
 	private void resetCollections(boolean root) throws XavaException { 
@@ -1115,7 +1119,7 @@ public class View implements java.io.Serializable {
 		}
 		moveViewValuesToCollectionValues();
 	}	
-				
+	
 	/**
 	 * Try to set the value to the indicated member. <p>
 	 * 
@@ -1124,7 +1128,11 @@ public class View implements java.io.Serializable {
 	 * @param name Can be qualified
 	 * @return <code>true</code> if member exists and it's updated, <code>false</code> otherwise.	 
 	 */
-	public boolean trySetValue(String name, Object value) throws XavaException {		
+	public boolean trySetValue(String name, Object value) throws XavaException { 
+		return trySetValue(name, value, true);
+	}
+					
+	private boolean trySetValue(String name, Object value, boolean setValuesForSubviews) throws XavaException {
 		name = Ids.undecorate(name); 
 		int idx = name.indexOf('.');		
 		if (idx < 0) {
@@ -1142,7 +1150,8 @@ public class View implements java.io.Serializable {
 			if (hasSubview(name)) {	
 				View subview = getSubview(name);
 				if (!subview.isRepresentsCollection()) {
-					subview.setValues((Map)value);										
+					if (setValuesForSubviews) subview.setValues((Map)value);
+					else subview.addValues((Map)value);
 				}
 				else {
 					subview.collectionValues = (List) value; 
@@ -4448,8 +4457,9 @@ public class View implements java.io.Serializable {
 	public void recalculateProperties() {
 		try {												
 			Map names = getCalculatedPropertiesNames();
-			if (!names.isEmpty()) {				
-				addValues(MapFacade.getValues(getModelName(), getKeyValues(), names));
+			if (!names.isEmpty()) {
+				Map values = MapFacade.getValues(getModelName(), getKeyValues(), names);
+				addValues(values);
 				recalculateRecalculatedProperties();
 			}			
 		}
