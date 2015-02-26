@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.2.1 (2015-3-2)
+-------------------------
+- Methods showDialog(), closeDialog(), showNewView() and returnToPreviousView() available from OnChangePropertyBaseAction.
+- New removeBlanks() method in Strings utility class.
+- Entity from View has nulls for non-existing references, before they were empty objects.
 - Fix: Reference with calculated property in an entity is cleared after modifying a collection in the same entity.
 - Fix: View.addValues() does not keep original values in subviews. 
 - Fix: Sort and filter lost in collections after editing/viewing an element with a dialog.
@@ -12,9 +17,7 @@ Change Log for OpenXava project
 - Fix: helpPrefix from xava.properties does not work for external URLs.
 - Fix: It is possible to add programmatically the same action several times. 
 - Fix: View.getEntity() fails when there is an empty reference in the UI. 
-- Entity from View has nulls for non-existing references, before they were empty objects.
 - Fix: Dialog is not shown from an @OnChange action. 
-- Methods showDialog(), closeDialog(), showNewView() and returnToPreviousView() available from OnChangePropertyBaseAction.
 - Fix: Dangerous JavaScript content possible in list mode by a XSS attack.
 - Fix: An IForwardAction from an IChainAction with on-init=true does not do the forward. 
 - Fix: Collection customization is not stored permanently if @ListProperties is used. 
@@ -25,7 +28,6 @@ Change Log for OpenXava project
 - Fix: Error "i.contentWindow is null" on closing a dialog with HTML_TEXT stereotype.
 - Fix: Frames for groups with blanks in their name do not open and close. 
 - Fix: Section and group names with blanks produces some misbehavior.
-- New removeBlanks() method in Strings utility class.
 - Fix: A reference to parent cannot be changed in a composite structure.
 
 OpenXava 5.2 (2015-1-26)
