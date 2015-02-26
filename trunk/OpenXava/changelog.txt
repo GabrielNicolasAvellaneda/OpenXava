@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Reference with calculated property in an entity is cleared after modifying a collection in the same entity.
+- Fix: View.addValues() does not keep original values in subviews. 
 - Fix: Sort and filter lost in collections after editing/viewing an element with a dialog.
 - Fix: ArrayIndexOutOfBoundsException trace in tab with calculated properties.
 - Fix: Misleading message "Trying to load controller twice". 

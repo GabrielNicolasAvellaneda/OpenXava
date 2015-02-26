@@ -211,7 +211,8 @@ public class Invoice {
 	@ReferenceView("Simple")
 	@ReferenceViews({
 		@ReferenceView(forViews="CustomerAsAggregateWithDeliveryPlaces", value="SimpleWithDeliveryPlaces"),
-		@ReferenceView(forViews="DetailsWithTotals", value="Simplest")
+		@ReferenceView(forViews="DetailsWithTotals", value="Simplest"),
+		@ReferenceView(forViews="NoSections", value="SimpleWithCity") 
 	})
 	@AsEmbedded(forViews="CustomerAsAggregateWithDeliveryPlaces")	
 	private Customer customer;

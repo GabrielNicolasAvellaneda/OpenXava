@@ -89,7 +89,7 @@ public class ApplicantTest extends ModuleTestBase {
 		assertEquals(expectedDescription, moduleDescription.asText());
 	}
 
-	public void testPolymorphicReferenceFromBaseClass() throws Exception {
+	public void testPolymorphicReferenceFromBaseClass() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
 		assertValue("name", "JUANILLO");
