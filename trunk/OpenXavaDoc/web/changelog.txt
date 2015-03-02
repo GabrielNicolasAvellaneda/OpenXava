@@ -1,6 +1,35 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.2.1 (2015-3-2)
+-------------------------
+- Methods showDialog(), closeDialog(), showNewView() and returnToPreviousView() available from OnChangePropertyBaseAction.
+- New removeBlanks() method in Strings utility class.
+- Entity from View has nulls for non-existing references, before they were empty objects.
+- Fix: Reference with calculated property in an entity is cleared after modifying a collection in the same entity.
+- Fix: View.addValues() does not keep original values in subviews. 
+- Fix: Sort and filter lost in collections after editing/viewing an element with a dialog.
+- Fix: ArrayIndexOutOfBoundsException trace in tab with calculated properties.
+- Fix: Misleading message "Trying to load controller twice" in the log. 
+- Fix: Apostrophe used in labels files is not shown in tooltips. 
+- Fix: Several except-for-tab in tabs-default-values fails.
+- Fix: Calling getView().getEntity() when there is an element collection in the view fails. 
+- Fix: helpPrefix from xava.properties does not work for external URLs.
+- Fix: It is possible to add programmatically the same action several times. 
+- Fix: View.getEntity() fails when there is an empty reference in the UI. 
+- Fix: Dialog is not shown from an @OnChange action. 
+- Fix: Dangerous JavaScript content possible in list mode by a XSS attack.
+- Fix: An IForwardAction from an IChainAction with on-init=true does not do the forward. 
+- Fix: Collection customization is not stored permanently if @ListProperties is used. 
+- Fix: DWR signature warning in log.
+- Fix: View.getEntity() when creating does not load the references so combo descriptions are not available.
+- Fix: FILES stereotype fails from embedded reference.
+- Fix: XSS protection does not include iframe and window.location.
+- Fix: Error "i.contentWindow is null" on closing a dialog with HTML_TEXT stereotype.
+- Fix: Frames for groups with blanks in their name do not open and close. 
+- Fix: Section and group names with blanks produces some misbehavior.
+- Fix: A reference to parent cannot be changed in a composite structure.
+
 OpenXava 5.2 (2015-1-26)
 ------------------------
 - Moving columns in list with drag and drop.
@@ -24,6 +53,7 @@ OpenXava 5.2 (2015-1-26)
 - Frame spacing when several frames in a row adjusted. 
 - Performance improvement for label resolution.
 - Fix: After removing a column from a list the filter data is gone.
+- Fix: Test code does not work after calling ModuleTestBase.logout().
  
 OpenXava 5.1.1 (2014-11-24)
 ---------------------------
@@ -83,6 +113,7 @@ OpenXava 5.1 (2014-10-21)
 - Fix: ModuleTestBase.logout() fails with the built-in security.
 - Fix: ModuleTestBase.login() fails with a language other than English.
 - Fix: @DefaultValueCalculator with dependent properties is executed twice sometimes.
+- Fix: Portlets from iPad does not work in Liferay.
 
 OpenXava 5.0.1 (2014-7-14)
 --------------------------
@@ -173,6 +204,8 @@ OpenXava 5.0 (2014-6-9)
 - Fix: Scale defined in default-size.xml is ignored when formatting.
 - Fix: Scale definition from @Column and @Digits is ignored when formatting.
 - Fix: The @LabelStyle annotation is not supported with the new renderer.
+- Fix: Boolean inside a group in the parent view using view inheritance fails when clicking on new from detail mode.
+- Fix: When resizing dialog inside elements can go outside dialog (fixed in the new style).
  
 OpenXava 4.9.1 (2014-2-3)
 -------------------------
