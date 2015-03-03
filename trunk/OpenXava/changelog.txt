@@ -10,7 +10,7 @@ OpenXava 5.2.1 (2015-3-2)
 - Fix: View.addValues() does not keep original values in subviews. 
 - Fix: Sort and filter lost in collections after editing/viewing an element with a dialog.
 - Fix: ArrayIndexOutOfBoundsException trace in tab with calculated properties.
-- Fix: Misleading message "Trying to load controller twice". 
+- Fix: Misleading message "Trying to load controller twice" in the log. 
 - Fix: Apostrophe used in labels files is not shown in tooltips. 
 - Fix: Several except-for-tab in tabs-default-values fails.
 - Fix: Calling getView().getEntity() when there is an element collection in the view fails. 
