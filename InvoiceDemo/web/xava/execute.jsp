@@ -76,7 +76,7 @@ if (manager.isListMode() || manager.isSplitMode() && manager.getDialogLevel() ==
 	}
 }
 boolean hasProcessRequest = manager.hasProcessRequest(request);
-manager.preInitModule();
+manager.preInitModule(request); 
 if (manager.isXavaView(request)) { 
 	if (hasProcessRequest) {	
 		view.assignValuesToWebView();
