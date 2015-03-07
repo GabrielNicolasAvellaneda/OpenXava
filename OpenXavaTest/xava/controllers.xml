@@ -1151,5 +1151,10 @@
 		<action name="delete" class="org.openxava.test.actions.RemoveFileAction" 
 			image="delete.gif" confirm="true" />
   	</controller>
-  		
+  	
+  	<controller name="ResetViewOnInit">
+        <action name="init" class="org.openxava.test.actions.ResetViewAction"
+            hidden="true" on-init="true" /> 
+    </controller>
+    	
 </controllers>

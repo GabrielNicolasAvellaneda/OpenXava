@@ -27,6 +27,6 @@ if (validValuesProperty.hasValidValues()) {
 		}
 	}
 	int labelIndex = p != validValuesProperty && validValuesProperty.getMetaModel().isAnnotatedEJB3()?value - 1:value; 
-	description = labelIndex == -1?"":validValuesProperty.getValidValueLabel(request, labelIndex);
+	description = labelIndex == -1?"":validValuesProperty.getValidValueLabel(labelIndex);
 }
 %>
