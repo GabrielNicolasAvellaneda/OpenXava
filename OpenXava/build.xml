@@ -1053,7 +1053,7 @@
 	Updates schema for applications developed with POJOs + JPA (not XML),
 	that is, for applications developed using OX3 or better.
 	-->
-	<target name="updateSchemaJPA" depends="defineHibernateTool">
+	<target name="updateSchemaJPA" depends="processAnnotations, defineHibernateTool">
 
 		<hibernatetool destdir="data">
 			<jpaconfiguration persistenceunit="${persistence.unit}"/>
@@ -1085,5 +1085,16 @@
 
 	</target>
 
-
+    <target name="processAnnotations">
+        <java classname="org.openxava.annotations.processor.Processor" fork="true">
+            <arg value="../${project}/web/WEB-INF/classes"/>
+        	<classpath>
+    		   <pathelement location="../OpenXava/bin"/>
+    		   <fileset dir="../OpenXava/web/WEB-INF/lib">
+    		       <include name="**/*.jar"/>
+    		   </fileset>
+        	</classpath>
+        </java>	
+    </target>
+	
 </project>

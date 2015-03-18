@@ -1,7 +1,9 @@
 package org.openxava.test.tests;
 
+import java.lang.reflect.*;
 import java.util.*;
 
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -133,6 +135,16 @@ public class MovieTest extends ModuleTestBase {
 		assertTrue("Incorrect sections names", sn.removeAll(getSectionsNames()) && sn.isEmpty());
 	}
 	
+	public void testBytecodeGenerated_Concurrent() throws Exception {
+		Class<Movie> clazz = Movie.class;
+		Object object = clazz.newInstance();
+		
+		//Only test. A property @Version should not be handled.
+		assertTrue(getter(clazz, object, "getLock") == null);
+		setter(clazz, object, "setLock", new Class[]{ Long.class }, new Object[]{ new Long(100) });
+		assertTrue(getter(clazz, object, "getLock").equals(new Long(100)));
+	}
+	
 	private void addFile() throws Exception {
 		execute("CRUD.new");
 		assertAction("AttachedFile.choose");
@@ -175,5 +187,19 @@ public class MovieTest extends ModuleTestBase {
 			}
 		}
 		return sn;
+	}
+	
+	private static Object getter(Class<?> clazz, Object object, String methodName) 
+			throws Exception 
+	{
+		Method method = clazz.getMethod(methodName, new Class[]{});
+		return method.invoke(object, new Object[]{});
+	}
+	
+	private static void setter(Class<?> clazz, Object object, String methodName, 
+			Class<?>[] parameters, Object[] values) throws Exception  
+	{
+		Method method = clazz.getMethod(methodName, parameters);
+		method.invoke(object, values);
 	}
 }
