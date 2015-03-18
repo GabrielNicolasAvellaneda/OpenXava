@@ -3,6 +3,7 @@ package org.openxava.test.model;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.annotations.Property.Type;
 import org.openxava.jpa.*;
 import org.openxava.model.*;
 
@@ -14,6 +15,9 @@ import org.openxava.model.*;
  * @author Jeromy Altuna
  */
 @Entity
+@Concurrent(
+	@Property(name="lock", type=Type.LONG)
+)
 @View(members=
 	"data sheet ["   +
 	"   title;"      +	
