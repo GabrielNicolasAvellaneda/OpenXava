@@ -1476,10 +1476,9 @@ public class ModuleTestBase extends TestCase {
 						ACTION_PREFIX + ".List.filter")).isEmpty();
 	}
 	
-	private boolean collectionHasFilterHeader(String collection) throws Exception { 
+	protected boolean _collectionHasFilterHeader(String collection) throws Exception {  
 		return collectionHasFilterHeader(getTable(collection, "collection_not_displayed"));
-	}
-	
+	}	
 	
 	/**
 	 * Rows count displayed with data. <p>
@@ -1727,7 +1726,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void checkRowCollection(String collection, int row) throws Exception {		
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			checkRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {		
@@ -1736,7 +1735,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void checkAllCollection(String collection) throws Exception {		
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			checkAll(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
 		else {		
@@ -1745,7 +1744,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void uncheckAllCollection(String collection) throws Exception {		
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			uncheckAll(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
 		else {		
@@ -1754,7 +1753,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void uncheckRowCollection(String collection, int row) throws Exception {		
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			uncheckRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {		
@@ -1815,7 +1814,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertRowCollectionChecked(String collection, int row) throws Exception { 
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			assertRowChecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {			
@@ -1824,7 +1823,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 
 	protected void assertAllCollectionChecked(String collection) throws Exception { 
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			assertAllChecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
 		else {			 
@@ -1861,7 +1860,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	protected void assertRowCollectionUnchecked(String collection, int row) throws Exception { 
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			assertRowUnchecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {			
@@ -1870,7 +1869,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	protected void assertAllCollectionUnchecked(String collection) throws Exception { 
-		if (collectionHasFilterHeader(collection)) {
+		if (_collectionHasFilterHeader(collection)) {
 			assertAllUnchecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected_all");
 		}
 		else {			
