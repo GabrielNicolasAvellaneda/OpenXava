@@ -23,6 +23,8 @@
 			tofile="../${proyecto}/.project" />			
 		<move file="../${proyecto}/xava/aplicacion.xml.plantilla" 
 			tofile="../${proyecto}/xava/aplicacion.xml" />
+		<move file="../${proyecto}/xava/controladores.xml.plantilla" 
+			tofile="../${proyecto}/xava/controladores.xml" />
 		<move file="../${proyecto}/i18n/Etiquetas_es.properties.plantilla" 
 			tofile="../${proyecto}/i18n/Etiquetas${proyecto}_es.properties" />				
 		<move file="../${proyecto}/i18n/Mensajes_es.properties.plantilla" 
