@@ -6,8 +6,6 @@ import java.util.regex.*;
 
 import javax.servlet.*;
 
-
-
 import org.apache.commons.logging.*;
 import org.openxava.model.meta.*;
 
@@ -77,6 +75,7 @@ public class Messages implements java.io.Serializable {
 		}
 		
 		public String toString(Locale locale) {
+			if (isAlreadyTranslated(id)) return removeQuotationMarks(id); 
 			String m = null;
 			try {
 				m = getMessage(id, locale);
@@ -111,6 +110,17 @@ public class Messages implements java.io.Serializable {
 				}				
 				return id;
 			}
+		}
+		
+		private String removeQuotationMarks(String string) { 
+			if (string.startsWith("'") && string.endsWith("'") && string.length() > 1) {
+				return string.substring(1, string.length() - 1);
+			}
+			return string;
+		}
+
+		private boolean isAlreadyTranslated(String id) { 
+			return id.contains(" ") || id.contains("'"); 
 		}
 		
 		private Object[] translate(Object[] argv, Locale locale) {

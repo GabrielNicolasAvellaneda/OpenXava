@@ -12,7 +12,7 @@ class ConferenceTest extends ModuleTestBase {
 		super(testName, "Conference")		
 	}
 	
-	void testEmbeddedCollectionsOfSameType() {
+	void testEmbeddedCollectionsOfSameType() { 
 		execute "CRUD.new"
 		setValue "name", "THE OPENXAVA CONFERENCE" 
 		

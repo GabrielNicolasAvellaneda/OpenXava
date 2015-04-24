@@ -28,7 +28,7 @@ public class FellowCarriersCalculator implements IModelCalculator {
 			javax.persistence.Query query = manager.createQuery("from Carrier as o where " +
 					"o.warehouse.zoneNumber = :warehouseZone AND " +
 					"o.warehouse.number = :warehouseNumber AND " +
-					"NOT (o.number = :number)");
+					"NOT (o.number = :number) order by o.number"); // tmp order by o.number
 			query.setParameter("warehouseZone", new Integer(warehouseZoneNumber));
 			query.setParameter("warehouseNumber", new Integer(warehouseNumber));
 			query.setParameter("number", new Integer(carrier.getNumber()));
@@ -39,7 +39,7 @@ public class FellowCarriersCalculator implements IModelCalculator {
 			org.hibernate.Query query = session.createQuery("from Carrier as o where " +
 					"o.warehouse.zoneNumber = :warehouseZone AND " +
 					"o.warehouse.number = :warehouseNumber AND " +
-					"NOT (o.number = :number)");
+					"NOT (o.number = :number)  order by o.number"); // tmp order by o.number
 			query.setInteger("warehouseZone", warehouseZoneNumber);
 			query.setInteger("warehouseNumber", warehouseNumber);
 			query.setInteger("number", carrier.getNumber());

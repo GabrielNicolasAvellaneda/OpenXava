@@ -30,7 +30,8 @@ public class HibernateTypeConverter extends HibernateTypeBaseConverter implement
 				result = ((Type) hibernateType).nullSafeGet(new ArrayOneRowResultSetAdapter(new Object[] { o }), "f1", null, null);
 			}
 			else if (hibernateType instanceof UserType) {
-				result = ((UserType) hibernateType).nullSafeGet(new ArrayOneRowResultSetAdapter(new Object[] { o }), fields, null);
+				result = ((UserType) hibernateType).nullSafeGet(new ArrayOneRowResultSetAdapter(new Object[] { o }), fields, null, null); 
+				
 			}
 			else {
 				throw new ConversionException("only_type_and_usertype", hibernateType.getClass());
@@ -59,7 +60,7 @@ public class HibernateTypeConverter extends HibernateTypeBaseConverter implement
 			}
 			else if (hibernateType instanceof UserType) {
 				ps = new ObjectPreparedStatementAdapter();
-				((UserType) hibernateType).nullSafeSet(ps, o, 1);
+				((UserType) hibernateType).nullSafeSet(ps, o, 1, null); 
 				result = ps.getObject();
 			}
 			else {

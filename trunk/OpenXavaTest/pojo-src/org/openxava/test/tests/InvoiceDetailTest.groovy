@@ -15,7 +15,7 @@ class InvoiceDetailTest extends ModuleTestBase {
 		super(testName, "InvoiceDetail") 		
 	}
 	
-	void testImagesGalleryInsideAReference() {
+	void testImagesGalleryInsideAReference() {  
 		execute "CRUD.new"
 		execute "Gallery.edit", "galleryProperty=photos,viewObject=xava_view_product"
 		assertNoErrors()

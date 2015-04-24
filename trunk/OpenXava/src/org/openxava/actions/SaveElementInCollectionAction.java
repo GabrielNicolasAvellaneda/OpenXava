@@ -25,13 +25,13 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	private boolean containerSaved = false;
 	
-	public void execute() throws Exception {		
+	public void execute() throws Exception {	
 		Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			getView().setKeyEditable(false); // To mark as saved
 		}
 		saveCollectionElement(containerKey);
-		commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example) 		
+		commit(); // If we change this, we should run all test suite using READ COMMITED (with hsqldb 2 for example)
 		getView().setKeyEditable(false); // To mark as saved
 		getCollectionElementView().setCollectionEditingRow(-1);
 		getCollectionElementView().clear();		
@@ -63,11 +63,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 				addMessage(isEntity?"entity_modified":"aggregate_modified", getCollectionElementView().getModelName());
 			}
 			catch (ObjectNotFoundException ex) {
-				Map parentKey = new HashMap();
-				MetaCollection metaCollection = getMetaCollection();
-				parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
-				values.putAll(parentKey); 
-				create(values, isEntity);				
+				create(values, isEntity, containerKey);
 			}		
 		}
 		else {
@@ -78,12 +74,20 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}
 	}
 	
-	private void create(Map values, boolean isEntity) throws CreateException {
+	private void create(Map values, boolean isEntity, Map containerKey) throws CreateException { 
 		validateMaximum(1);
-		MapFacade.create(getCollectionElementView().getModelName(), values);
-		addMessage(isEntity?"entity_created_and_associated":"aggregate_created", 
-			getCollectionElementView().getModelName(), 
-			getCollectionElementView().getParent().getModelName());
+		if (isEntity) {
+			Map parentKey = new HashMap();
+			MetaCollection metaCollection = getMetaCollection();
+			parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
+			values.putAll(parentKey);
+			MapFacade.create(getCollectionElementView().getModelName(), values);
+			addMessage("entity_created_and_associated", getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
+		}
+		else {
+			MapFacade.createAggregate(getCollectionElementView().getModelName(), containerKey, getMetaCollection().getName(), values);
+			addMessage("aggregate_created",	getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
+		}
 	}
 
 	protected void associateEntity(Map keyValues) throws ValidationException, XavaException, ObjectNotFoundException, FinderException, RemoteException {		
@@ -115,8 +119,9 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 				Map parentKey = saveIfNotExists(view.getParent());
 				Map key = MapFacade.createAggregateReturningKey( 
 					view.getModelName(),
-					parentKey, 0,					
-					view.getValues() );
+					parentKey, view.getMemberName(),
+					view.getValues()
+				);
 				addMessage("aggregate_created", view.getModelName());
 				view.addValues(key);
 				return key;										

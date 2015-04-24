@@ -65,7 +65,7 @@ public class InvoiceDetailsWithTotalsTest extends CustomizeListTestBase {
 		assertEquals("", header.asText());
 	}
 		
-	public void testFrameTotalsUpdated() throws Exception { 
+	public void testFrameTotalsUpdated() throws Exception {  
 		execute("CRUD.new");
 		execute("CRUD.search");
 		setValue("year", "2004");
@@ -76,7 +76,8 @@ public class InvoiceDetailsWithTotalsTest extends CustomizeListTestBase {
 		HtmlElement header = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_InvoiceDetailsWithTotals__frame_detailsheader"); 
 		assertTrue(header.asText().endsWith("1,403.02"));
 		showCollection("details");
-		execute("Collection.edit", "row=0,viewObject=xava_view_details");
+		execute("List.orderBy", "property=quantity,collection=details"); 
+		execute("Collection.edit", "row=2,viewObject=xava_view_details"); 
 		setValue("quantity", "65");
 		execute("Collection.save");		
 		assertTotalInCollection("details", 2, "amount", "1,390.04");
@@ -84,7 +85,7 @@ public class InvoiceDetailsWithTotalsTest extends CustomizeListTestBase {
 		header = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_InvoiceDetailsWithTotals__frame_detailsheader"); 
 		assertTrue("Unexpected end: " + header.asText(),  header.asText().endsWith("1,390.04"));
 		showCollection("details");
-		execute("Collection.edit", "row=0,viewObject=xava_view_details");
+		execute("Collection.edit", "row=2,viewObject=xava_view_details"); 
 		setValue("quantity", "66");
 		execute("Collection.save");
 		assertTotalInCollection("details", 2, "amount", "1,403.02");

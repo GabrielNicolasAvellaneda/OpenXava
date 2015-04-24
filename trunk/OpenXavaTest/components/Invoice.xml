@@ -87,7 +87,7 @@
 								
 		<collection name="details">
 			<reference model="InvoiceDetail"/>
-			<order>${serviceType} desc</order>
+			<order>${serviceType} desc, ${oid} asc</order>
 			<postremove-calculator class="org.openxava.test.calculators.DetailPostremoveCalculator"/>
 		</collection>
 						

@@ -3,7 +3,7 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * Encapsulate the name and type of a conventional property Java. <p>
+ * Encapsulate the name and type of a conventional Java property. <p>
  * 
  * It is generally used in annotations that will generate bytecode. <p>
  *

@@ -5,6 +5,7 @@ import java.io.*;
 import org.hibernate.dialect.*;
 import org.hibernate.type.*;
 import org.hibernate.type.descriptor.java.*;
+import org.hibernate.type.descriptor.java.BooleanTypeDescriptor;
 import org.hibernate.type.descriptor.sql.*;
 
 /**

@@ -18,7 +18,7 @@ public class TrainingTest extends ModuleTestBase {
 		super(testName, "Training");		
 	}
 	
-	public void testElementCollection() throws Exception {
+	public void testElementCollection() throws Exception { 
 		assertListRowCount(0);
 		execute("CRUD.new");
 		assertDateEditor();
@@ -110,11 +110,11 @@ public class TrainingTest extends ModuleTestBase {
 		setValueInCollection("sessions", 2, "description", "THE LAST SESSION"); 
 		setValueInCollection("sessions", 2, "kms", "1");
 		execute("CRUD.save");
-		assertError("1 is not a valid value for Kms of Training session: must be greater than or equal to 2");
+		assertError("1 is not a valid value for Kms of Training session: tiene que ser mayor o igual que 2"); 
 
 		setValueInCollection("sessions", 2, "kms", "51");
 		execute("CRUD.save");
-		assertError("51 is not a valid value for Kms of Training session: debe ser menor o igual a 50");
+		assertError("51 is not a valid value for Kms of Training session: tiene que ser menor o igual que 50"); 		
 		
 		setValueInCollection("sessions", 2, "kms", "3");
 		setValueInCollection("sessions", 3, "description", "THE LAST SESSION"); 
@@ -127,7 +127,7 @@ public class TrainingTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testRemoveRowInElementCollection() throws Exception {
+	public void testRemoveRowInElementCollection() throws Exception { 
 		getWebClient().getOptions().setCssEnabled(true); 
 		assertListRowCount(0);
 		execute("CRUD.new");		

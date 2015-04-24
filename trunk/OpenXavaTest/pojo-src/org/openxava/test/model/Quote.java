@@ -32,7 +32,7 @@ public class Quote extends Identifiable {
 	@ReferenceView("Simplest")
 	private Customer customer;
 	
-	@org.hibernate.validator.Size(min=1, max=3) 
+	@javax.validation.constraints.Size(min=1, max=3)  
 	@ElementCollection
 	@ListProperties("product.number, product.description, unitPrice, quantity, amount[quote.amountsSum, quote.taxes, quote.total]")
 	private Collection<QuoteDetail> details;	

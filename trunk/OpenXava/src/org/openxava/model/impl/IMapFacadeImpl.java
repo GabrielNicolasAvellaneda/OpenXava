@@ -6,8 +6,6 @@ import java.util.*;
 
 import javax.ejb.*;
 
-
-
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -45,6 +43,13 @@ public interface IMapFacadeImpl {
 				throws CreateException, XavaException, ValidationException, RemoteException;
 				
 	Messages validate(UserInfo userInfo, String modelName, Map values) throws XavaException, RemoteException;
+
+	Object createAggregate(UserInfo userInfo, String modelName, Map keyContainer, String collectionName, Map values)
+		throws CreateException,ValidationException, XavaException, RemoteException; 
+	
+	Map createAggregateReturningKey(UserInfo userInfo, String modelName, Map containerKeyValues, String collectionName, Map values)  
+		throws CreateException,ValidationException, XavaException, RemoteException; 
+
 	
 	Object createAggregate(UserInfo userInfo, String modelName, Map keyContainer, int counter, Map values)
 		throws CreateException,ValidationException, XavaException, RemoteException; 

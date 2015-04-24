@@ -298,6 +298,7 @@ public class AnnotatedClassParser {
 			metaAggregate.setName(modelName);
 			metaAggregate.setBeanClass(pd.getPropertyType().getName());
 			metaAggregate.setPOJOClassName(pd.getPropertyType().getName());
+			metaAggregate.setAnnotatedEJB3(true); 
 			model.getMetaComponent().addMetaAggregate(metaAggregate);
 			parseViews(model.getMetaComponent(), pd.getPropertyType(), modelName);
 			String embedded = Is.emptyString(parentEmbedded) ? pd.getName() : parentEmbedded + "_" + pd.getName();  
@@ -317,6 +318,7 @@ public class AnnotatedClassParser {
 			metaAggregate.setContainerReference(containerReference); 
 			metaAggregate.setName(modelName);
 			metaAggregate.setPOJOClassName(type.getName());
+			metaAggregate.setAnnotatedEJB3(true); 
 			Class pojoClass = metaAggregate.getPOJOClass();
 			IdClass idClass = (IdClass) getAnnotationInHierarchy(pojoClass, IdClass.class);
 			if (idClass != null) {				
@@ -857,18 +859,6 @@ public class AnnotatedClassParser {
 			javax.validation.constraints.Size size = element.getAnnotation(javax.validation.constraints.Size.class);			
 			property.setSize(size.max());
 		}
-		else if (element.isAnnotationPresent(org.hibernate.validator.Max.class)) {
-			org.hibernate.validator.Max max = element.getAnnotation(org.hibernate.validator.Max.class);			
-			property.setSize((int) (Math.log10(max.value()) + 1));
-		}
-		else if (element.isAnnotationPresent(org.hibernate.validator.Length.class)) {
-			org.hibernate.validator.Length length = element.getAnnotation(org.hibernate.validator.Length.class);			
-			property.setSize(length.max());
-		}
-		else if (element.isAnnotationPresent(org.hibernate.validator.Size.class)) {
-			org.hibernate.validator.Size size = element.getAnnotation(org.hibernate.validator.Size.class);			
-			property.setSize(size.max());
-		}
 		else if (element.isAnnotationPresent(Column.class)) {
 			Column column = element.getAnnotation(Column.class);
 			if (column.length() == 255) {
@@ -897,11 +887,6 @@ public class AnnotatedClassParser {
 			property.setSize(digits.integer() + 1 + digits.fraction());
 			property.setScale(digits.fraction());
 		}		
-		else if (element.isAnnotationPresent(org.hibernate.validator.Digits.class)) {
-			org.hibernate.validator.Digits digits = element.getAnnotation(org.hibernate.validator.Digits.class);
-			property.setSize(digits.integerDigits() + 1 + digits.fractionalDigits());
-			property.setScale(digits.fractionalDigits());
-		}
 				
 		// required
 		if (element.isAnnotationPresent(Required.class)) {						
@@ -915,27 +900,6 @@ public class AnnotatedClassParser {
 				property.setRequiredMessage(filterMessage(element.getAnnotation(javax.validation.constraints.Min.class).message()));
 			}
 		}		
-		else if (element.isAnnotationPresent(org.hibernate.validator.Min.class)) {
-			org.hibernate.validator.Min min = element.getAnnotation(org.hibernate.validator.Min.class);
-			if (min.value() > 0) {
-				property.setRequired(true);
-				property.setRequiredMessage(filterMessage(element.getAnnotation(org.hibernate.validator.Min.class).message()));
-			}
-		}
-		else if (element.isAnnotationPresent(org.hibernate.validator.Range.class)) {
-			org.hibernate.validator.Range range = element.getAnnotation(org.hibernate.validator.Range.class);
-			if (range.min() > 0) {
-				property.setRequired(true);
-				property.setRequiredMessage(filterMessage(element.getAnnotation(org.hibernate.validator.Range.class).message()));
-			}
-		}
-		else if (element.isAnnotationPresent(org.hibernate.validator.Length.class)) {
-			org.hibernate.validator.Length length = element.getAnnotation(org.hibernate.validator.Length.class);
-			if (length.min() > 0) {
-				property.setRequired(true);
-				property.setRequiredMessage(filterMessage(element.getAnnotation(org.hibernate.validator.Length.class).message()));
-			}
-		}							
 		
 		// hidden
 		if (element.isAnnotationPresent(Hidden.class)) {  						
@@ -1263,7 +1227,7 @@ public class AnnotatedClassParser {
 				}
 				else {
 					collection.getMetaModel().setContainerModelName(collection.getMetaModel().getName()); 
-					collection.getMetaModel().setContainerReference(oneToMany.mappedBy()); 
+					collection.getMetaModel().setContainerReference(oneToMany.mappedBy());
 					cascadeAndSelfReference = true;					
 				}				
 			}
@@ -1284,11 +1248,6 @@ public class AnnotatedClassParser {
 		
 		if (element.isAnnotationPresent(javax.validation.constraints.Size.class)) {
 			javax.validation.constraints.Size size = element.getAnnotation(javax.validation.constraints.Size.class);
-			collection.setMinimum(size.min());
-			collection.setMaximum(size.max());
-		}
-		else if (element.isAnnotationPresent(org.hibernate.validator.Size.class)) {
-			org.hibernate.validator.Size size = element.getAnnotation(org.hibernate.validator.Size.class);
 			collection.setMinimum(size.min());
 			collection.setMaximum(size.max());
 		}
@@ -2510,8 +2469,8 @@ public class AnnotatedClassParser {
 	/**
 	 * Only for using from MetaApplication class. <p>
 	 */
-	public static Collection friendMetaApplicationGetManagedClassNames() {
-		return obtainManagedClassNamesFromFileClassPath();		
+	public static Collection<String> friendMetaApplicationGetManagedClassNames() { 
+		return obtainManagedClassNamesFromFileClassPath();
 	}
 	
 	public static Collection<String> getManagedClassNames() {
@@ -2540,8 +2499,8 @@ public class AnnotatedClassParser {
 		return managedClassNames;
 	}
 	
-	private static Collection obtainManagedClassNamesFromFileClassPath() {  
-		Collection classNames = new ArrayList();
+	private static Collection<String> obtainManagedClassNamesFromFileClassPath() { 
+		Collection<String> classNames = new ArrayList<String>(); 
 		URL url = getAnchorURL();		
 		if (url != null) {			
 			File baseClassPath=new File(Strings.change(Strings.noLastToken(url.getPath(), "/"), "%20", " "));

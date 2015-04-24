@@ -221,7 +221,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	
-	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception {    
+	public void testCreateEntityWithCollectionFromReference_secondLevelDialog() throws Exception {     
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");		
 		assertDialog();
@@ -363,52 +363,13 @@ public class DeliveryTest extends ModuleTestBase {
 		assertMessage("type.description=JUNIT DELIVERY TYPE 0 CREATED"); // Obtained with getEntity()
 		deleteDeliveryType(0);
 	}
-	
 		
-	public void testNonExistentReferenceUsedAsKey() throws Exception {
-		if (usesAnnotatedPOJO()) { // This case is not supported since 4m6, because Hibernate 3.6 does not support it 
-			log.warn("testNonExistentReferenceUsedAsKey() case not supported in JPA version");
-			return;
-		}
-		createDeliveryType(0, "JUNIT DELIVERY TYPE 0"); 
-		execute("CRUD.new");
-		assertMessage("type=null");
-		setValue("invoice.year", "2002");
-		setValue("invoice.number", "1");
-		assertValue("invoice.date", "1/1/02");						
-		setValue("type.number", "0");
-		setValue("number", "66");
-		setValue("description", "JUNIT");		
-		execute("CRUD.save");
-		assertNoErrors();
-		
-		setValue("invoice.year", "2002");
-		setValue("invoice.number", "1");							
-		setValue("type.number", "0");
-		setValue("number", "66");
-		execute("CRUD.refresh");
-		assertNoErrors();
-		assertValue("description", "JUNIT"); 
-		
-		execute("CRUD.refresh");
-		assertNoErrors();
-		assertValue("description", "JUNIT");
-
-		deleteDeliveryType(0);
-		execute("CRUD.refresh");
-		assertNoErrors(); 
-		assertValue("description", "JUNIT");
-
-		execute("CRUD.delete");
-		assertMessage("Delivery deleted successfully");
-	}
-	
-
 	private void createDeliveryType(int number, String description) {
 		DeliveryType type = new DeliveryType();
 		type.setNumber(number);
 		type.setDescription(description);		
 		XPersistence.getManager().persist(type);
+		XPersistence.getManager().flush(); // Needed for XML versions, in order that Hibernate events work with JPA manager
 		XPersistence.commit();
 	}
 	

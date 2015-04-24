@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.*;
+import org.hibernate.engine.spi.*;
 import org.hibernate.usertype.UserType;
 import org.hibernate.usertype.ParameterizedType;
 import org.openxava.util.*;
@@ -56,7 +57,7 @@ public class EnumStringType implements UserType, ParameterizedType {
         return obj.hashCode();
     }
 
-    public Object nullSafeGet(ResultSet resultSet, String[] names, Object owner) throws HibernateException, SQLException {
+	public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor sessionImplementor, Object owner) throws HibernateException, SQLException { 
         Object o = resultSet.getObject(names[0]);
         if (o == null) return null;
         if (!(o instanceof String)) { 
@@ -86,7 +87,7 @@ public class EnumStringType implements UserType, ParameterizedType {
         }       
     }
 
-    public void nullSafeSet(PreparedStatement ps, Object value, int index) throws HibernateException, SQLException {        
+	public void nullSafeSet(PreparedStatement ps, Object value, int index, SessionImplementor sessionImplementor) throws HibernateException, SQLException {         
         if (value == null) {
             if (log.isTraceEnabled()) {
                 log.trace( "binding '' to parameter: " + index );

@@ -6,8 +6,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import org.hibernate.validator.Digits;
+import javax.validation.constraints.*;
 
 @Entity
 public class ConversionFactor implements Serializable {
@@ -28,7 +27,7 @@ public class ConversionFactor implements Serializable {
 	@Column(scale = 6)
 	private BigDecimal factor;
 	
-	@Digits(integerDigits = 10, fractionalDigits = 6)
+	@Digits(integer=10, fraction=6) 
 	private BigDecimal reverseFactor;
 	
 	public Long getId() {

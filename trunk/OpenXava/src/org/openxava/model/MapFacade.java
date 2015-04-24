@@ -151,7 +151,8 @@ public class MapFacade {
 	
 	/**
 	 * Creates a new aggregate from a map with its initial values. <p>	 
-	 * 
+	 *
+	 * @deprecated Use createAggregate(String modelName, Map containerKey, String collectionName, Map values) instead
 	 * @param modelName  OpenXava model name. Not null
 	 * @param containerKey  Key of entity or aggregate that contains this aggregate. <i>By value</i> semantics.
 	 * @param counter Counter used to generate the aggregate key, indicates the
@@ -186,7 +187,44 @@ public class MapFacade {
 	
 	/**
 	 * Creates a new aggregate from a map with its initial values. <p>	 
+	 *
+	 * @since 5.3
+	 * @param modelName  OpenXava model name. Not null
+	 * @param containerKey  Key of entity or aggregate that contains this aggregate. <i>By value</i> semantics.
+	 * @param collectionName  The name of the collection.  
+	 * @param values  Initial values for create the aggregate. Not null. <i>By value</i> semantics.
+	 * @return Aggregate created, not a map but the create object
+	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction. 
+	 * @exception SystemException  System problem. Rollback transaction. 
+	 */
+	public static Object createAggregate(String modelName, Map containerKey, String collectionName, Map values)  
+		throws
+			CreateException,ValidationException,
+			XavaException, SystemException
+	{
+		Assert.arg(modelName, containerKey, values);					
+		try {		
+			return getImpl(modelName).createAggregate(Users.getCurrentUserInfo(), modelName, containerKey, collectionName, values);
+		}
+		catch (RemoteException ex) {
+			annulImpl(modelName);
+			try {
+				return getImpl(modelName).createAggregate(Users.getCurrentUserInfo(), modelName, containerKey, collectionName, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(ex);
+			}
+		}							
+	}
+
+	
+	/** 
+	 * Creates a new aggregate from a map with its initial values. <p>	 
 	 * 
+	 * @deprecated Use createAggregate(String modelName, Map containerKey, String collectionName, Map values) instead.
 	 * @param modelName  OpenXava model name. Not null
 	 * @param container  Container object (or container key in object format) that contains
 	 * 		the aggregate.
@@ -325,11 +363,12 @@ public class MapFacade {
 	/**	
 	 * Creates a new aggregate from a map with its initial values
 	 * and return a map with the key. <p>  	 
-	 * 
+	 *
+	 * @deprecated Use createAggregateReturningKey(String modelName, Map containerKey, String collectionName, Map values) instead. 
 	 * @param modelName  OpenXava model name. Not null
 	 * @param containerKey  Key of entity or aggregate that contains this aggregate. <i>By value</i> semantics.	
  	 * @param counter Counter used to generate the aggregate key, indicates the
-	 * 		order number. The aggregate implementation can ignorate it.  
+	 * 		order number. The aggregate implementation can ignore it.  
 	 * @param values  Initial values for create the aggregate. Not null. <i>By value</i> semantics.
 	 * @return Key values of created aggregate.
 	 * @exception CreateException  Logic problem on creation.
@@ -356,6 +395,42 @@ public class MapFacade {
 			}
 		}							
 	}
+	
+	/**
+	 * Creates a new aggregate from a map with its initial values
+	 * and return a map with the key. <p>  	 
+	 *
+	 * @since 5.3
+	 * @param modelName  OpenXava model name. Not null
+	 * @param containerKey  Key of entity or aggregate that contains this aggregate. <i>By value</i> semantics.	
+ 	 * @param collectionName  Name of the collection.  
+	 * @param values  Initial values for create the aggregate. Not null. <i>By value</i> semantics.
+	 * @return Key values of created aggregate.
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
+	 */
+	public static Map createAggregateReturningKey(String modelName, Map containerKey, String collectionName, Map values) 
+		throws
+			CreateException,ValidationException, 
+			XavaException, SystemException 
+	{
+		Assert.arg(modelName, containerKey, values);					
+		try {		
+			return getImpl(modelName).createAggregateReturningKey(Users.getCurrentUserInfo(), modelName, containerKey, collectionName, values);
+		}
+		catch (RemoteException ex) {
+			annulImpl(modelName);
+			try {
+				return getImpl(modelName).createAggregateReturningKey(Users.getCurrentUserInfo(), modelName, containerKey, collectionName, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}
+		}							
+	}
+	
 	
 	
 	/**

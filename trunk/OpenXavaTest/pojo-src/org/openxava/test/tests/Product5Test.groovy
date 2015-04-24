@@ -108,7 +108,7 @@ class Product5Test extends CustomizeListTestBase {
 		assertCollectionColumnCount "productDetailsSupplierContactDetails", 2
 	}
 
-	void testRememberActionsInList() {
+	void testRememberActionsInList() { 
 		String[] listActions = 
 		[
 			'CRUD.new', 'CRUD.deleteRow', 'CRUD.deleteSelected',

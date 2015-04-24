@@ -87,7 +87,7 @@ public class ShipmentTest extends ModuleTestBase {
 		
 		assertValue("number", "");
 		assertValue("type", usesAnnotatedPOJO()?"0":"1"); 
-		assertValue("mode", usesAnnotatedPOJO()?"0":"1"); 
+		assertValue("mode", usesAnnotatedPOJO()?"0":"1");
 		assertValue("description", "");
 		assertValue("time", "");
 		
@@ -106,8 +106,8 @@ public class ShipmentTest extends ModuleTestBase {
 		setValue("description", "JUNIT SHIPMENT MODIFIED");
 		execute("CRUD.save");
 		assertNoErrors();
-		assertValue("type", usesAnnotatedPOJO()?"0":"1"); 
-		assertValue("mode", usesAnnotatedPOJO()?"0":"1"); 
+		assertValue("type", usesAnnotatedPOJO()?"0":"1");
+		assertValue("mode", usesAnnotatedPOJO()?"0":"1");
 		assertValue("number", "");		
 		assertValue("description", "");
 		

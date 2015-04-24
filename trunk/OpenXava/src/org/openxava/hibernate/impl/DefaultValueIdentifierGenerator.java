@@ -6,7 +6,7 @@ import java.util.*;
 import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.hibernate.dialect.*;
-import org.hibernate.engine.*;
+import org.hibernate.engine.spi.*;
 import org.hibernate.id.*;
 import org.hibernate.type.*;
 import org.openxava.calculators.*;

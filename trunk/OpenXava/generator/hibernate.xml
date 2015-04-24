@@ -59,7 +59,7 @@ else {
 ModelMapping mapping = metaModel.getMapping();
 </java>
 
-&lt;!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"&gt;
+&lt;!DOCTYPE hibernate-mapping SYSTEM "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"&gt;
 
 &lt;hibernate-mapping package="<expr>packageName</expr>"&gt;
 

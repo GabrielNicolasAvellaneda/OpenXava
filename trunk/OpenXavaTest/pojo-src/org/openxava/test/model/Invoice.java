@@ -6,11 +6,11 @@ import java.util.*;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.apache.commons.lang.*;
 import org.apache.commons.logging.*;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.test.actions.*;
@@ -197,7 +197,7 @@ public class Invoice {
 	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
 	
-	@Digits(integerDigits=2, fractionalDigits=1) 
+	@Digits(integer=2, fraction=1) 
 	@Required
 	private BigDecimal vatPercentage;
 	
@@ -218,7 +218,7 @@ public class Invoice {
 	private Customer customer;
 	
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
-	@OrderBy("serviceType desc") 
+	@OrderBy("serviceType desc, oid asc") 
 	@ListsProperties({
 		@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free"),
 		@ListProperties(forViews="NoSections", value="product.description, product.unitPrice+, quantity, amount"),  

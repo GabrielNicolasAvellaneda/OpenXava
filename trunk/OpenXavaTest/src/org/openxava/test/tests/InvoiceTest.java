@@ -1215,7 +1215,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertValue("customer.name", customerName);				
 	}
 	
-	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {      		
+	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {       		
 		// Create
 		execute("CRUD.new");					
 		assertExists("customer.number");
@@ -1497,7 +1497,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertMessage("Invoice deleted successfully");
 	}
 	
-	public void testAggregateValidatorUsingReferencesToContainer() throws Exception { 		
+	public void testAggregateValidatorUsingReferencesToContainer() throws Exception {  		
 		// Create
 		execute("CRUD.new");				
 						
@@ -1530,7 +1530,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 	}
 	
 	
-	public void testValidationOnSaveAggregateAndModelValidatorReceivesReferenceAndCalculatedProperty() throws Exception {  		
+	public void testValidationOnSaveAggregateAndModelValidatorReceivesReferenceAndCalculatedProperty() throws Exception {   		
 		// Create
 		execute("CRUD.new");						
 		assertExists("customer.number");
@@ -1622,7 +1622,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertValue("customerDiscount", "77.00");				
 	}
 		
-	public void testEditableCollectionActions_i18nforMemberOfCollections() throws Exception {
+	public void testEditableCollectionActions_i18nforMemberOfCollections() throws Exception { 
 		execute("CRUD.new");
 		String [] initialActions = {
 			"Navigation.previous",
@@ -1726,7 +1726,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertLabelInCollection("details", 1, "Product");
 	}
 	
-	public void testDetailActionInCollection_overwriteEditAction_goAndReturnToAnotherXavaView() throws Exception {
+	public void testDetailActionInCollection_overwriteEditAction_goAndReturnToAnotherXavaView() throws Exception { 
 		assertNoListTitle();
 		execute("CRUD.new");							
 		setValue("year", String.valueOf(getInvoice().getYear()));
@@ -1761,7 +1761,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertValue("number", String.valueOf(getInvoice().getNumber()));									
 	}
 	
-	public void testShowNewViewAndReturn() throws Exception { 		
+	public void testShowNewViewAndReturn() throws Exception {  		
 		execute("CRUD.new");							
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
@@ -1790,7 +1790,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 	
 	
 	
-	public void testViewCollectionElementWithKeyWithReference() throws Exception {
+	public void testViewCollectionElementWithKeyWithReference() throws Exception { 
 		deleteInvoiceDeliveries();
 		createDelivery();  
 		

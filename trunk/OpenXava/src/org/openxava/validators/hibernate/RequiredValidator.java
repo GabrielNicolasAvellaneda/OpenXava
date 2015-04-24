@@ -1,6 +1,6 @@
 package org.openxava.validators.hibernate;
 
-import org.hibernate.validator.*;
+import javax.validation.*;
 import org.openxava.annotations.*;
 import org.openxava.validators.*;
 import org.openxava.validators.meta.*;
@@ -11,14 +11,13 @@ import org.openxava.validators.meta.*;
  * @author Javier Paniza
  */
 
-public class RequiredValidator implements Validator<Required> {
-	
+public class RequiredValidator implements ConstraintValidator<Required, Object> {	
 
 	
 	public void initialize(Required required) {
 	}
 
-	public boolean isValid(Object value) {
+	public boolean isValid(Object value, ConstraintValidatorContext context) { 
 		if (HibernateValidatorInhibitor.isInhibited()) return true; // Usually when saving from MapFacade, MapFacade already has done the validation
 		if (value == null) return false;		
 		try {

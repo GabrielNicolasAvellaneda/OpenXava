@@ -2,10 +2,16 @@ package org.openxava.hibernate;
 
 import java.util.*;
 
+import javax.persistence.*;
+
 import org.apache.commons.logging.*;
 import org.hibernate.*;
+import org.hibernate.boot.registry.*;
 import org.hibernate.cfg.*;
 import org.hibernate.event.*;
+import org.hibernate.event.service.spi.*;
+import org.hibernate.event.spi.*;
+import org.hibernate.internal.*;
 import org.openxava.hibernate.impl.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -194,71 +200,57 @@ public class XHibernate {
 					log.error(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName()), ex); 
 				}
 			}
-						
-			Collection preInsertListeners = new ArrayList();
-			Collection preUpdateListeners = new ArrayList();
-			Collection preDeleteListeners = new ArrayList();
-			Collection postLoadListeners = new ArrayList();
 			
-			if (ReferenceMappingDetail.someMappingUsesConverters()) {				
-				// toJava conversion is not enabled because in references it's useless thus we avoid an unnecessary overload
-				ReferenceConverterToDBListener referenceConverterToDBListener = new ReferenceConverterToDBListener();
-				preInsertListeners.add(referenceConverterToDBListener); 
-				preUpdateListeners.add(referenceConverterToDBListener); 
-			}
+			SessionFactory sessionFactory = configuration.buildSessionFactory(
+					new StandardServiceRegistryBuilder().applySettings(
+							configuration.getProperties()).build());
 			
-			if (MetaModel.someModelHasDefaultCalculatorOnCreate()) {
-				preInsertListeners.add(new DefaultValueCalculatorsListener());
-			}
-			
-			if (MetaModel.someModelHasPostCreateCalculator()) {
-				preInsertListeners.add(CalculatorsListener.getInstance());
-			}
-			
-			if (MetaModel.someModelHasPostModifyCalculator()) {				
-				preUpdateListeners.add(CalculatorsListener.getInstance());
-			} 
-			
-			if (MetaModel.someModelHasPreRemoveCalculator()) {				
-				preDeleteListeners.add(CalculatorsListener.getInstance());
-			}
-			
-			if (MetaModel.someModelHasPostLoadCalculator()) {				
-				postLoadListeners.add(CalculatorsListener.getInstance());
-			}
-			
-			
-			if (!preInsertListeners.isEmpty()) {
-				PreInsertEventListener [] preInsertListenersArray = new PreInsertEventListener[preInsertListeners.size()];
-				preInsertListeners.toArray(preInsertListenersArray);
-				configuration.getEventListeners().setPreInsertEventListeners(preInsertListenersArray);
-			}
-
-			if (!preUpdateListeners.isEmpty()) {
-				PreUpdateEventListener [] preUpdateListenersArray = new PreUpdateEventListener[preUpdateListeners.size()];
-				preUpdateListeners.toArray(preUpdateListenersArray);			
-				configuration.getEventListeners().setPreUpdateEventListeners(preUpdateListenersArray);
-			}
-			
-			if (!preDeleteListeners.isEmpty()) {
-				PreDeleteEventListener [] preDeleteListenersArray = new PreDeleteEventListener[preDeleteListeners.size()];
-				preDeleteListeners.toArray(preDeleteListenersArray);			
-				configuration.getEventListeners().setPreDeleteEventListeners(preDeleteListenersArray);
-			}
-			
-			if (!postLoadListeners.isEmpty()) {
-				PostLoadEventListener [] postLoadListenersArray = new PostLoadEventListener[postLoadListeners.size()];
-				postLoadListeners.toArray(postLoadListenersArray);			
-				configuration.getEventListeners().setPostLoadEventListeners(postLoadListenersArray);
-			}		
-									
-			return configuration.buildSessionFactory();
+			_registerEvents(sessionFactory);
+	        
+	        return sessionFactory;        
 		} 
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new HibernateException(XavaResources.getString("hibernate_session_factory_creation_error"));
 		}
 	}
+	
+	/**
+	 * For implementation purpose. Don't use.
+	 */
+	public static void _registerEvents(SessionFactory sessionFactory) {
+        EventListenerRegistry registry = 
+        	((SessionFactoryImpl) sessionFactory)
+        		.getServiceRegistry().getService(EventListenerRegistry.class);
+
+		if (ReferenceMappingDetail.someMappingUsesConverters()) {				
+			// toJava conversion is not enabled because in references it's useless thus we avoid an unnecessary overload
+			ReferenceConverterToDBListener referenceConverterToDBListener = new ReferenceConverterToDBListener();
+			registry.getEventListenerGroup(EventType.PRE_INSERT).appendListener(referenceConverterToDBListener);
+			registry.getEventListenerGroup(EventType.PRE_UPDATE).appendListener(referenceConverterToDBListener);				
+		}
+		
+		if (MetaModel.someModelHasDefaultCalculatorOnCreate()) {
+			registry.getEventListenerGroup(EventType.PRE_INSERT).appendListener(new DefaultValueCalculatorsListener());
+		}
+		
+		if (MetaModel.someModelHasPostCreateCalculator()) {
+			registry.getEventListenerGroup(EventType.PRE_INSERT).appendListener(CalculatorsListener.getInstance());
+		}
+		
+		if (MetaModel.someModelHasPostModifyCalculator()) {				
+			registry.getEventListenerGroup(EventType.PRE_UPDATE).appendListener(CalculatorsListener.getInstance());
+		} 
+		
+		if (MetaModel.someModelHasPreRemoveCalculator()) {				
+			registry.getEventListenerGroup(EventType.PRE_DELETE).appendListener(CalculatorsListener.getInstance());
+		}
+		
+		if (MetaModel.someModelHasPostLoadCalculator()) {				
+			registry.getEventListenerGroup(EventType.POST_LOAD).appendListener(CalculatorsListener.getInstance());
+		}	        
+	}
+
 
 	private static SessionFactory getSessionFactory() throws HibernateException {
 		Properties properties = getSessionFactoryProperties();

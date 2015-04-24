@@ -26,7 +26,7 @@ public class Invoice2Test extends ModuleTestBase {
 		assertValidValuesCount("productList", 7);
 	}
 	
-	public void testTouchContainerFromCallback() throws Exception {
+	public void testTouchContainerFromCallback() throws Exception { 
 		if (!usesAnnotatedPOJO()) return; // This case is only implemented in JPA
 		execute("CRUD.new");
 		setValue("number", "66");
@@ -85,7 +85,7 @@ public class Invoice2Test extends ModuleTestBase {
 		assertNoErrors();		
 	}
 	
-	public void testInjectPropertiesOfContainerInOnCreateCalculatorOfAggregate() throws Exception {  
+	public void testInjectPropertiesOfContainerInOnCreateCalculatorOfAggregate() throws Exception {   
 		execute("CRUD.new");
 		setValue("number", "66");
 		setValue("vatPercentage", "16");

@@ -36,8 +36,8 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Print.generateExcel" // are alwasy present						
 		};		
 		assertActions(initActions); 
-		
-		Invoice invoice = getInvoice();	
+
+		Invoice invoice = getInvoice();
 		setValue("year", String.valueOf(invoice.getYear()));
 		setValue("number", String.valueOf(invoice.getNumber()));
 		execute("CRUD.refresh");
@@ -73,7 +73,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		
 		assertNoEditable("serviceType");		
 		assertNoEditable("product.number");
-		assertNoEditable("product.description");						
+		assertNoEditable("product.description");
 	}
 	
 	public void testLevel4ReferenceInList() throws Exception {

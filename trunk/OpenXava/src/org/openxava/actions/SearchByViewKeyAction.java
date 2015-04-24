@@ -37,7 +37,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		Map keys = null;  
 		Map valuesForSearchByAnyProperty = null;
 		try {									
-			keys = getKeyValuesFromView();			
+			keys = getKeyValuesFromView();		
 			Map values = null;			
 			if (Maps.isEmpty(keys)) {
 				try {					

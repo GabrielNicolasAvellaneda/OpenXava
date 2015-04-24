@@ -1,8 +1,7 @@
 package org.openxava.annotations;
 
 import java.lang.annotation.*;
-
-import org.hibernate.validator.*;
+import javax.validation.*;
 import org.openxava.validators.hibernate.*;
 
 /**
@@ -39,7 +38,7 @@ import org.openxava.validators.hibernate.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
-@ValidatorClass(EntityValidatorValidator.class) 
+@Constraint(validatedBy = EntityValidatorValidator.class) 
 public @interface EntityValidator {
 	
 	/**
@@ -76,4 +75,8 @@ public @interface EntityValidator {
 	 * </pre>
 	 */
 	String message() default "";
+	
+	Class<?>[] groups() default {}; 
+	Class<? extends Payload>[] payload() default {}; 
+
 }

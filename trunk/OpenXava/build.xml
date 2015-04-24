@@ -546,7 +546,7 @@
 		<jar jarfile="${dist.dir}/lib/openxava.jar" basedir="../OpenXava/bin"/>
 		<!-- server-properties.jar -->
 		<mkdir dir="${server.properties.dir}"/>
-		<copy 	toDir="${server.properties.tmp.dir}" overwrite="yes">
+		<copy toDir="${server.properties.tmp.dir}" overwrite="yes">
 			<fileset dir="${server.properties.dir}" />
 			<filterset>
 				<filter token="subcontext" value="${subcontext}"/>
@@ -681,8 +681,9 @@
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="web"/>
 	</target>
 		
-	<target name="createWebSphere8War" depends="prepareWar">
-		<jar jarfile="${dist.dir}/${name.war}.war" basedir="web" excludes="WEB-INF/lib/validation-api.jar"/>
+	<target name="createWebSphere8War">
+		<!-- Since v5.3 the standard way work just fine -->
+		<antcall target="createWar"/>
 	</target>
 
 	<target name="deployWar" depends ="createWar">
@@ -828,7 +829,7 @@
 	<target name="createWebSpherePortal8War">
 		<antcall target="preparePortletsWar"/>
 		<replaceregexp file="${dist.portlets.dir}/WEB-INF/web.xml" match="Addons filters begin.*Addons filters end" replace="No filters for WebSphere Portal" flags="s"/>
-		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}" excludes="WEB-INF/lib/validation-api.jar"/>
+		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
 	</target>
 	
 	<target name="generateWebSpherePortal8Portlets">
@@ -894,54 +895,6 @@
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true" />
 	</target>
 
-	<!-- 
-	 For Hibernate applications with .hbml.xml files, that is,
-	 when code generation from XML components is used, as usual in OpenXava 2.x
-	 -->
-	<target name="exportSchema">
-		<taskdef name="schemaexport" classname="org.hibernate.tool.hbm2ddl.SchemaExportTask" classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;${j2ee.lib};${schema.path}" />
-
-		<schemaexport
-	    	config="${schema.config.file}"
-	        quiet="no"
-	        text="no"
-	        drop="no"
-	        delimiter=";"
-	    	output="../${project}/data/schema-export.sql"
-	    	>
-
-			<fileset dir="../${project}/filtered-files">
-				<include name="**/*.hbm.xml"/>
-				<exclude name="GalleryImage.hbm.xml"/>
-				<exclude name="TabUserPreferences.hbm.xml"/>
-			</fileset>
-
-		</schemaexport>
-	</target>
-
-	<!-- 
-	 For Hibernate applications with .hbml.xml files, that is,
-	 when code generation from XML components is used, as usual in OpenXava 2.x
-	 -->
-	<target name="updateSchema">
-		<taskdef name="schemaupdate"
-	        classname="org.hibernate.tool.hbm2ddl.SchemaUpdateTask"
-	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/web/WEB-INF/lib/groovy-all.jar;../OpenXava/bin;${j2ee.lib};${schema.path}"/>
-
-		<schemaupdate
-	    	config="${schema.config.file}"
-	    	text="no"
-	        quiet="no">
-
-			<fileset dir="../${project}/filtered-files">
-				<include name="**/*.hbm.xml"/>
-				<exclude name="GalleryImage.hbm.xml"/>
-				<exclude name="TabUserPreferences.hbm.xml"/>
-			</fileset>
-
-		</schemaupdate>
-	</target>
-
 	<!--
 	Update this project with the latest OpenXava version present in the workspace.
 	It must be called just after update the OpenXava version.
@@ -957,14 +910,18 @@
 		<!-- Delete the old Hibernate jars (used until v4m5) -->
 		<delete file="../${project}/web/WEB-INF/lib/ejb3-persistence.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/hibernate-annotations.jar"/>
-		<delete file="../${project}/web/WEB-INF/lib/hibernate-commons-annotations.jar"/>
-		<delete file="../${project}/web/WEB-INF/lib/hibernate-entitymanager.jar"/>
+		<!-- Delete the old Hibernate jars (used until v5.2.1) --> 
+		<delete file="../${project}/web/WEB-INF/lib/hibernate3.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/jpa2.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/hibernate-classic-validator.jar"/>		
 		<!-- Delete other unused libraries -->
 		<delete file="../${project}/web/WEB-INF/lib/jboss-archive-browsing.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/jaxb-api.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/jaxb-impl.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/jakarta-oro.jar"/>
 		<delete file="../${project}/web/WEB-INF/lib/activation.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/autobizlogic.jar"/>
+		<delete file="../${project}/web/WEB-INF/lib/commons-jexl.jar"/>		
 		
 		<!-- Delete unused CSS -->
 		<delete file="../${project}/web/xava/style/openxava.css"/>
@@ -1025,12 +982,10 @@
 		</copy>		
 		<jar jarfile="../${project}/web/WEB-INF/lib/addons.jar" basedir="../Addons/bin"/>		
 	</target>
-
-	<target name="defineHibernateTool">
-		<path id="jpatoolslib">
-			<path location="../OpenXava/lib/hibernate-tools.jar" />
-			<path location="../OpenXava/lib/freemarker.jar" />
-			<path location="../OpenXava/lib/commons-logging.jar" />
+	
+	<target name="defineSchemaToolPath">
+		
+		<path id="schema.tool.path"> 
 			<!-- Library from OpenXava in order to work the first time
 				before WEB-INF/lib of new project is populated -->
 			<fileset dir="../OpenXava/web/WEB-INF/lib">
@@ -1041,47 +996,36 @@
 				<include name="**/*.jar"/>
 			</fileset>
 			<path location="../OpenXava/bin" />
-			<path location="${schema.path}" />
+			<path path="${j2ee.lib}"/>
+			<path location="web/WEB-INF/classes"/>
+			<path location="${schema.path}" />			
 		</path>
 
-		<taskdef name="hibernatetool" 
-			classname="org.hibernate.tool.ant.HibernateToolTask" 
-			classpathref="jpatoolslib" />
-	</target>
-
-	<!--
-	Updates schema for applications developed with POJOs + JPA (not XML),
-	that is, for applications developed using OX3 or better.
-	-->
-	<target name="updateSchemaJPA" depends="processAnnotations, defineHibernateTool">
-
-		<hibernatetool destdir="data">
-			<jpaconfiguration persistenceunit="${persistence.unit}"/>
-			<classpath>
-				<path location="web/WEB-INF/classes" />
-			</classpath>
-
-			<hbm2ddl update="true" />
-		</hibernatetool>
-
-	</target>
+	</target>	
 
 	<!-- 
-	Generates schema for applications developed with POJOs + JPA (not XML),
-	that is, for applications developed using OX3 or better.
-	Generates the scheme and show it in the log, 
+	Connects to database and actually modifies its tables from JPA entities definition.
+	-->
+	<target name="updateSchemaJPA" depends="processAnnotations, defineSchemaToolPath"> 
+		
+		<java classname="org.openxava.tools.SchemaTool" classpathref="schema.tool.path">
+			<arg value="update"/>
+			<arg value="${persistence.unit}"/>
+		</java>		
+
+	</target>
+	
+	
+	<!-- 
+	Generates the scheme and show it in the console, 
 	but does not execute it against database.
 	-->
-	<target name="generateSchemaJPA" depends="defineHibernateTool">
-
-		<hibernatetool destdir="data">
-			<jpaconfiguration persistenceunit="${persistence.unit}"/>
-			<classpath>
-				<path location="web/WEB-INF/classes" />
-			</classpath>
-
-			<hbm2ddl export="false" create="true" />
-		</hibernatetool>
+	<target name="generateSchemaJPA" depends="defineSchemaToolPath">
+		
+		<java classname="org.openxava.tools.SchemaTool" classpathref="schema.tool.path">
+			<arg value="generate"/>
+			<arg value="${persistence.unit}"/>
+		</java>		
 
 	</target>
 
@@ -1096,5 +1040,5 @@
         	</classpath>
         </java>	
     </target>
-	
+
 </project>

@@ -2,7 +2,8 @@ package org.openxava.annotations;
 
 import java.lang.annotation.*;
 
-import org.hibernate.validator.*;
+import javax.validation.*;
+
 import org.openxava.validators.hibernate.*;
 
 /**
@@ -28,7 +29,7 @@ import org.openxava.validators.hibernate.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD })
-@ValidatorClass(PropertyValidatorValidator.class) 
+@Constraint(validatedBy = PropertyValidatorValidator.class) 
 public @interface PropertyValidator {
 	
 	/**
@@ -66,5 +67,9 @@ public @interface PropertyValidator {
 	 * </pre>
 	 */
 	String message() default ""; 
+	
+	Class<?>[] groups() default {}; 
+	Class<? extends Payload>[] payload() default {}; 
+
 	
 }
