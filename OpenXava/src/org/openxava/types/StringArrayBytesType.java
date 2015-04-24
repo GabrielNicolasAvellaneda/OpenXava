@@ -5,6 +5,7 @@ import java.sql.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.*;
+import org.hibernate.engine.spi.*;
 import org.hibernate.usertype.*;
 import org.openxava.util.*;
 
@@ -35,7 +36,7 @@ public class StringArrayBytesType implements UserType {
 		return obj.hashCode();
 	}
 
-	public Object nullSafeGet(ResultSet resultSet, String[] names, Object owner) throws HibernateException, SQLException {
+	public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor sessionImplementor, Object owner) throws HibernateException, SQLException {
 		Object o = resultSet.getObject(names[0]);
     	if (o == null) return "";        	    
     	try {
@@ -58,7 +59,7 @@ public class StringArrayBytesType implements UserType {
 		}
 	}
 
-	public void nullSafeSet(PreparedStatement ps, Object value, int index) throws HibernateException, SQLException {
+	public void nullSafeSet(PreparedStatement ps, Object value, int index, SessionImplementor sessionImplementor) throws HibernateException, SQLException { 
 		byte [] bytes = value==null?null:value.toString().getBytes();
 		if (log.isTraceEnabled()) {
 			log.trace( "binding '" + bytes + "' to parameter: " + index );

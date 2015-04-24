@@ -1,7 +1,9 @@
 package org.openxava.validators.hibernate;
 
 import java.util.*;
-import org.hibernate.validator.*;
+
+import javax.validation.*;
+
 import org.openxava.annotations.*;
 import org.openxava.annotations.parse.*;
 import org.openxava.util.*;
@@ -15,7 +17,7 @@ import org.openxava.validators.meta.*;
  * @author Javier Paniza
  */
 
-public class EntityValidatorValidator implements Validator<EntityValidator> {
+public class EntityValidatorValidator implements ConstraintValidator<EntityValidator, Object> {
 	
 	private MetaValidator metaValidator;
 
@@ -23,7 +25,7 @@ public class EntityValidatorValidator implements Validator<EntityValidator> {
 		metaValidator = AnnotatedClassParser.createEntityValidator(entityValidator);
 	}
 
-	public boolean isValid(Object entity) {	
+	public boolean isValid(Object entity, ConstraintValidatorContext context) { 	
 		if (HibernateValidatorInhibitor.isInhibited()) return true;  // Usually when saving from MapFacade, MapFacade already has done the validation
 		if (metaValidator.isOnlyOnCreate()) return true;
 		try {			

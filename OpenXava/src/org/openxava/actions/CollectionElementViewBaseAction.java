@@ -4,6 +4,7 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.ValidationException;
 import org.openxava.view.*;
+import org.openxava.view.meta.*;
 
 /**
  * 
@@ -83,7 +84,9 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction {
 	}
 	
 	protected boolean isEntityReferencesCollection() throws XavaException {
-		return getCollectionElementView().getMetaModel() instanceof MetaEntity;		
+		MetaCollectionView metaCollectionView = getCollectionElementView().getMetaView().getMetaCollectionView(getMetaCollection().getName());
+		if (metaCollectionView != null) return !metaCollectionView.isAsAggregate();
+		return getCollectionElementView().getMetaModel() instanceof MetaEntity; 		
 	}
 	
 	public String getViewObject() {

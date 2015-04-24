@@ -13,7 +13,7 @@ public class FilesFolderTest extends ModuleTestBase {
 		super(testName, "FilesFolder");		
 	}
 	
-	public void testAddingChildrenWithCollectionElementsInACompositeWhoseParentReferenceNotNamedAsEntity() throws Exception {
+	public void testAddingChildrenWithCollectionElementsInACompositeWhoseParentReferenceNotNamedAsEntity() throws Exception { 
 		execute("CRUD.new");
 		setValue("name", "JUNIT FOLDER");
 		execute("Collection.new", "viewObject=xava_view_subfolders");

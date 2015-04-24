@@ -18,7 +18,7 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 		super(testName, "OnlyEditDetailsInvoice");		
 	}
 	
-	public void testAggregatesCollectionEditOnly() throws Exception {
+	public void testAggregatesCollectionEditOnly() throws Exception { 
 		execute("CRUD.new");
 		String [] initActions = {
 			"Navigation.previous",

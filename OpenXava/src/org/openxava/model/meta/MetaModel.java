@@ -1516,7 +1516,7 @@ abstract public class MetaModel extends MetaElement {
 			for (Iterator it = getMetaReferences().iterator(); it.hasNext();) {
 				MetaReference reference = (MetaReference) it.next();
 				if (!onlyKey || reference.isKey()) {
-					values.put(reference.getName(), reference.getMetaModelReferenced().toMap(pm.executeGet(reference.getName())));
+					values.put(reference.getName(), reference.getMetaModelReferenced().toMap(pm.executeGet(reference.getName()), onlyKey));
 				}
 			}	
 			return values;

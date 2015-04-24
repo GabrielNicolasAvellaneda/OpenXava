@@ -6,17 +6,10 @@ package org.openxava.jpa.impl;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Map;
+import java.util.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.*;
+import javax.persistence.criteria.*;
 import javax.persistence.metamodel.Metamodel;
 
 import org.apache.commons.logging.Log;
@@ -246,6 +239,50 @@ public class EntityManagerDecorator implements EntityManager {
 
 	public <T> T unwrap(Class<T> arg0) {
 		return decoratedManager.unwrap(arg0);
+	}
+
+	public <T> EntityGraph<T> createEntityGraph(Class<T> arg0) { 
+		return decoratedManager.createEntityGraph(arg0);
+	}
+
+	public EntityGraph<?> createEntityGraph(String arg0) { 
+		return decoratedManager.createEntityGraph(arg0);
+	}
+
+	public StoredProcedureQuery createNamedStoredProcedureQuery(String arg0) { 
+		return decoratedManager.createNamedStoredProcedureQuery(arg0);
+	}
+
+	public Query createQuery(CriteriaUpdate arg0) { 
+		return decoratedManager.createQuery(arg0);
+	}
+
+	public Query createQuery(CriteriaDelete arg0) { 
+		return decoratedManager.createQuery(arg0);
+	}
+
+	public StoredProcedureQuery createStoredProcedureQuery(String arg0) { 
+		return decoratedManager.createStoredProcedureQuery(arg0);
+	}
+
+	public StoredProcedureQuery createStoredProcedureQuery(String arg0, Class... arg1) { 
+		return decoratedManager.createStoredProcedureQuery(arg0, arg1);
+	}
+
+	public StoredProcedureQuery createStoredProcedureQuery(String arg0, String... arg1) { 
+		return decoratedManager.createStoredProcedureQuery(arg0, arg1);
+	}
+
+	public EntityGraph<?> getEntityGraph(String arg0) { 
+		return decoratedManager.getEntityGraph(arg0);
+	}
+
+	public <T> List<EntityGraph<? super T>> getEntityGraphs(Class<T> arg0) { 
+		return decoratedManager.getEntityGraphs(arg0);
+	}
+
+	public boolean isJoinedToTransaction() { 
+		return decoratedManager.isJoinedToTransaction();
 	}
 
 }

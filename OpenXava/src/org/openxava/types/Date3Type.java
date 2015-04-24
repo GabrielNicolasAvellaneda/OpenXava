@@ -5,6 +5,7 @@ import java.sql.*;
 
 import org.hibernate.*;
 import org.hibernate.engine.*;
+import org.hibernate.engine.spi.*;
 import org.hibernate.type.*;
 import org.hibernate.usertype.*;
 import org.openxava.util.*;
@@ -23,7 +24,8 @@ public class Date3Type implements CompositeUserType {
 	}
 
 	public Type[] getPropertyTypes() {
-		return new Type[] { Hibernate.INTEGER, Hibernate.INTEGER, Hibernate.INTEGER };
+		return new Type[] { IntegerType.INSTANCE, IntegerType.INSTANCE, IntegerType.INSTANCE }; 
+		
 	}
 
 	public Object getPropertyValue(Object component, int property) throws HibernateException {
@@ -71,9 +73,9 @@ public class Date3Type implements CompositeUserType {
 	}
 
 	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner) throws HibernateException, SQLException {
-		Number year = (Number) Hibernate.INTEGER.nullSafeGet( rs, names[0] );
-		Number month = (Number) Hibernate.INTEGER.nullSafeGet( rs, names[1] );
-		Number day = (Number) Hibernate.INTEGER.nullSafeGet( rs, names[2] );
+		Number year = (Number) IntegerType.INSTANCE.nullSafeGet( rs, names[0], session, owner);
+		Number month = (Number) IntegerType.INSTANCE.nullSafeGet( rs, names[1], session, owner );
+		Number day = (Number) IntegerType.INSTANCE.nullSafeGet( rs, names[2], session, owner );		
 		
 		int iyear = year == null?0:year.intValue();
 		int imonth = month == null?0:month.intValue();
@@ -84,9 +86,9 @@ public class Date3Type implements CompositeUserType {
 
 	public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session) throws HibernateException, SQLException {
 		java.util.Date d = (java.util.Date) value;
-		Hibernate.INTEGER.nullSafeSet(st, Dates.getYear(d), index);
-		Hibernate.INTEGER.nullSafeSet(st, Dates.getMonth(d), index + 1);
-		Hibernate.INTEGER.nullSafeSet(st, Dates.getDay(d), index + 2);
+		IntegerType.INSTANCE.nullSafeSet(st, Dates.getYear(d), index, session);
+		IntegerType.INSTANCE.nullSafeSet(st, Dates.getMonth(d), index + 1, session);
+		IntegerType.INSTANCE.nullSafeSet(st, Dates.getDay(d), index + 2, session);		
 	}
 
 	public Object deepCopy(Object value) throws HibernateException {

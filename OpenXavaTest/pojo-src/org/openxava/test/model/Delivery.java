@@ -3,6 +3,7 @@ package org.openxava.test.model;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Columns;
@@ -184,7 +185,7 @@ public class Delivery {
 	private String incidents;	
 	
 	@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
-	@org.hibernate.validator.Size(max=3)
+	@Size(max=3) 
 	@NewAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.new")
 	@SaveAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.save")
 	@DetailAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.saveFailing") 

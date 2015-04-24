@@ -2,7 +2,7 @@ package org.openxava.annotations;
 
 import java.lang.annotation.*;
 
-import org.hibernate.validator.*;
+import javax.validation.*;
 import org.openxava.validators.hibernate.*;
 
 /**
@@ -35,7 +35,7 @@ import org.openxava.validators.hibernate.*;
  * @author Javier Paniza
  */
 
-@ValidatorClass(RequiredValidator.class) 
+@Constraint(validatedBy = RequiredValidator.class) 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD })
 public @interface Required {
@@ -52,6 +52,8 @@ public @interface Required {
 	 * message="You have to specify the car color"
 	 * </pre>
 	 */
-	String message() default "{required}"; 
+	String message() default "{required}";	
+	Class<?>[] groups() default {}; 
+	Class<? extends Payload>[] payload() default {}; 
 	
 }

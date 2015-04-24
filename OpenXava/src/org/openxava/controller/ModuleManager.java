@@ -663,10 +663,7 @@ public class ModuleManager implements java.io.Serializable {
 			manageConstraintViolationException(metaAction, errors, messages,
 					(javax.validation.ConstraintViolationException) ex);
 		} else if (ex instanceof RollbackException) {
-			if (ex.getCause() instanceof InvalidStateException) {
-				manageInvalidStateException(metaAction, errors, messages,
-						(InvalidStateException) ex.getCause());
-			} else if (ex.getCause() instanceof javax.validation.ConstraintViolationException) {
+			if (ex.getCause() instanceof javax.validation.ConstraintViolationException) {
 				manageConstraintViolationException(metaAction, errors,
 						messages,
 						(javax.validation.ConstraintViolationException) ex
@@ -680,10 +677,6 @@ public class ModuleManager implements java.io.Serializable {
 				manageRegularException(metaAction, errors, messages, ex);
 			}
 			doRollback();
-		} else if (ex instanceof InvalidStateException) {
-			manageInvalidStateException(metaAction, errors, messages,
-					(InvalidStateException) ex);
-			doRollback();	
 		} else if (ex instanceof javax.persistence.PersistenceException) {
 			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException
 					&& ((org.hibernate.exception.ConstraintViolationException) ex
@@ -698,7 +691,7 @@ public class ModuleManager implements java.io.Serializable {
 				manageRegularException(metaAction, errors, messages, ex);
 			}
 			doRollback();
-		} else if (ex instanceof javax.validation.ValidationException) {	
+		} else if (ex instanceof javax.validation.ValidationException) {
 			errors.add(ex.getMessage());
 			messages.removeAll();
 			doRollback();			
@@ -716,22 +709,6 @@ public class ModuleManager implements java.io.Serializable {
 		messages.removeAll();
 	}
 
-	private void manageInvalidStateException(MetaAction metaAction,
-			Messages errors, Messages messages, InvalidStateException ex) {
-		InvalidValue[] invalidValues = ex.getInvalidValues();
-		for (int i = 0; i < invalidValues.length; i++) {
-			errors.add(
-					"invalid_state",
-					invalidValues[i].getPropertyName(),
-					invalidValues[i].getBeanClass().getSimpleName(),
-					"'"
-							+ XavaResources.getString(invalidValues[i]
-									.getMessage()) + "'",
-					invalidValues[i].getValue());
-		}
-		messages.removeAll();
-	}
-
 	private void manageConstraintViolationException(MetaAction metaAction,
 			Messages errors, Messages messages,
 			javax.validation.ConstraintViolationException ex) {
@@ -740,8 +717,7 @@ public class ModuleManager implements java.io.Serializable {
 			String attrName = violation.getPropertyPath() == null ? null
 					: violation.getPropertyPath().toString();
 			String domainClass = violation.getRootBeanClass().getSimpleName();
-
-			String message = violation.getMessage();
+			String message = violation.getMessage();			
 			if (message.startsWith("{") && message.endsWith("}")) {
 				message = message.substring(1, message.length() - 1);
 			}

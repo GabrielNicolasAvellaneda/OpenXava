@@ -7,7 +7,6 @@ import javax.ejb.*;
 import javax.persistence.*;
 
 import org.apache.commons.logging.*;
-import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.impl.*;
@@ -70,16 +69,6 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 			throw new org.openxava.validators.ValidationException(XavaResources.getString("remove_error",
 					metaModel.getName(), XavaResources.getString(ex.getMessage())));
 		}		
-		catch (org.hibernate.validator.InvalidStateException ex) {
-			rollback();
-			InvalidValue [] invalidValues = ex.getInvalidValues();
-			StringBuffer message = new StringBuffer();
-			for (int i=0; i<invalidValues.length; i++) {
-				message.append(XavaResources.getString(Locales.getCurrent(), invalidValues[i].getMessage()));			
-			}
-			throw new org.openxava.validators.ValidationException(XavaResources.getString("remove_error",
-					metaModel.getName(), message));			
-		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new RemoveException(XavaResources.getString("remove_error",

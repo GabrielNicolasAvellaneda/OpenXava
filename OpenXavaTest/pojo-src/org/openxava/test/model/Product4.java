@@ -1,14 +1,22 @@
 package org.openxava.test.model;
 
+import java.lang.annotation.*;
 import java.math.*;
+import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.*;
+import javax.validation.constraints.*;
+import javax.validation.metadata.*;
 
 import org.hibernate.validator.*;
+import org.hibernate.validator.internal.engine.path.*;
+import org.hibernate.validator.internal.metadata.descriptor.*;
 import org.openxava.annotations.*;
 import org.openxava.calculators.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.validators.*;
+import org.openxava.util.*;
 
 /**
  * As Product2 but uses property-based access. <p>
@@ -56,26 +64,17 @@ public class Product4 {
 			throw new javax.validation.ValidationException("eclipse_not_saleable"); 
 		}
 		if (getNumber() == 666) {
-			throw new InvalidStateException(
-				new InvalidValue [] {
-					new InvalidValue(
-						"number_of_man", getClass(), "number",
-						getNumber(), this)
-				}
-			);
+			throw new javax.validation.ValidationException(
+				XavaResources.getString("invalid_state", 
+					Labels.get("number"), Labels.get(getClass().getSimpleName()), 
+					XavaResources.getString("number_of_man"), getNumber()));
 		}
 	}
 	
 	@PreRemove
 	public void validateOnRemove() { 		
 		if (number == 1) {
-			throw new InvalidStateException(
-				new InvalidValue [] {
-					new InvalidValue(
-						"one_not_deletable", getClass(), "number", 
-						getNumber(), this)
-				}
-			);
+			throw new javax.validation.ValidationException("one_not_deletable");			
 		}		
 		if (number == 2) {
 			throw new javax.validation.ValidationException("two_not_deletable");
@@ -207,7 +206,7 @@ public class Product4 {
 	}
 	
 	@Transient @Depends("unitPrice")  
-	@Digits(integerDigits=18, fractionalDigits=0) 
+	@Digits(integer=18, fraction=0) 
 	public BigDecimal getUnitPriceInPesetas() {
 		if (unitPrice == null) return null;
 		return unitPrice.multiply(new BigDecimal("166.386")).setScale(0, BigDecimal.ROUND_HALF_UP);

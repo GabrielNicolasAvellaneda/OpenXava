@@ -11,6 +11,7 @@ import javax.xml.parsers.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.*;
+import org.hibernate.internal.*;
 import org.openxava.component.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
@@ -153,7 +154,10 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	
 	public Connection getConnection() throws SQLException {
 		if (isUseHibernateConnection()) {		
-			return XHibernate.getSession().connection();
+			SessionImpl session = ((SessionImpl) XHibernate.createSession());
+			Connection con = ((SessionImpl) XHibernate.createSession()).connection(); 
+			session.close();
+			return con;
 		}			
 		try {
 			if (Is.emptyString(getUser())) {

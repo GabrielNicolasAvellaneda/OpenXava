@@ -5,6 +5,7 @@ import java.sql.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.*;
+import org.hibernate.engine.spi.*;
 import org.hibernate.usertype.*;
 
 /**
@@ -34,12 +35,12 @@ public class NotNullStringType implements UserType {
 		return obj.hashCode();
 	}
 
-	public Object nullSafeGet(ResultSet resultSet, String[] names, Object owner) throws HibernateException, SQLException {
+	public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor sessionImplementor, Object owner) throws HibernateException, SQLException { 
 		Object o = resultSet.getObject(names[0]);
     	return o == null?"":o;        	    
 	}
 
-	public void nullSafeSet(PreparedStatement ps, Object value, int index) throws HibernateException, SQLException {
+	public void nullSafeSet(PreparedStatement ps, Object value, int index, SessionImplementor sessionImplementor) throws HibernateException, SQLException { 
 		ps.setString(index, value==null?"":value.toString());
 		
 	}

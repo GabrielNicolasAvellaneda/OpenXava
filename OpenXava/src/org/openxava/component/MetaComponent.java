@@ -28,7 +28,7 @@ import org.openxava.view.meta.*;
 public class MetaComponent implements Serializable {
 	
 	private static Log log = LogFactory.getLog(MetaComponent.class);
-	private static Map components = new HashMap();
+	private static Map<String, MetaComponent> components = new HashMap<String, MetaComponent>(); 
 	private static Properties packages;
 	private static boolean allComponentsLoaded = false;
 	private static Set allPackageNames;	
@@ -75,7 +75,7 @@ public class MetaComponent implements Serializable {
 		}		
 	}
 	
-	public static Collection getAllLoaded() {
+	public static Collection<MetaComponent> getAllLoaded() {
 		return components.values();
 	}
 		
@@ -409,8 +409,7 @@ public class MetaComponent implements Serializable {
 		return packageNameWithSlashWithoutModel;
 	}
 
-
-	public static Collection getAll() throws XavaException {
+	public static Collection<MetaComponent> getAll() throws XavaException { 
 		if (!allComponentsLoaded) {
 			try {
 				for (Iterator it = getPackages().keySet().iterator(); it.hasNext();) {
@@ -428,7 +427,6 @@ public class MetaComponent implements Serializable {
 		}
 		return getAllLoaded();
 	}
-
 
 	public boolean isTransient() {
 		return _transient;

@@ -119,7 +119,7 @@
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 	
-	<!-- Update schema against current database -->
+	<!-- Updates schema against current database -->
 	<target name="updateSchema">
 		
 		<ant antfile="../OpenXava/build.xml" target="updateSchemaJPA">			
@@ -149,11 +149,12 @@
 		</sql>
 	</target>
 	
-	<!-- Generate the schema from scratch. Show it in log, but does not execute it -->
+	<!-- Generates the schema from scratch. Shows it in console, but does not execute it -->
 	<target name="generateSchema">
 		
 		<ant antfile="../OpenXava/build.xml" target="generateSchemaJPA">
 			<property name="persistence.unit" value="junit"/>
+			<property name="schema.path" value="../OpenXavaTest/lib/hsqldb.jar"/> 
 		</ant>
 				
 	</target>	

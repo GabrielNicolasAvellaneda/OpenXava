@@ -6,7 +6,6 @@ import javax.ejb.*;
 import javax.inject.*;
 
 import org.apache.commons.logging.*;
-import org.hibernate.validator.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -84,16 +83,6 @@ public class AddElementsToCollectionAction extends SaveElementInCollectionAction
 	private void addValidationMessage(Exception ex) { 
 		if (ex instanceof ValidationException) {		
 			addErrors(((ValidationException)ex).getErrors());
-		}
-		else if (ex instanceof InvalidStateException) {
-			InvalidValue [] invalidValues = ((InvalidStateException) ex).getInvalidValues();
-			for (int i=0; i<invalidValues.length; i++) {
-				addError("invalid_state", 
-						invalidValues[i].getPropertyName(), 
-						invalidValues[i].getBeanClass().getSimpleName(), 
-						invalidValues[i].getMessage(), 
-						invalidValues[i].getValue());			
-			}
 		}
 		else if(ex instanceof javax.validation.ConstraintViolationException){
 			Set<javax.validation.ConstraintViolation<?>> violations = 
