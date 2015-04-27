@@ -8,7 +8,7 @@
              
     <!-- Tomcat + Hypersonic -->
     <persistence-unit name="default">
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     	<non-jta-data-source>java:comp/env/jdbc/MySchoolDS</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
@@ -18,7 +18,7 @@
         
     <!-- JBoss + Hypersonic 
     <persistence-unit name="default">
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     	<non-jta-data-source>java:/MiEscuelaDS</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
@@ -29,7 +29,7 @@
     
     <!-- WebSphere + AS/400 
     <persistence-unit name="default">
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     	<non-jta-data-source>jdbc/MiEscuelaDS</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
@@ -41,7 +41,7 @@
     
     <!-- JUnit Hypersonic -->
     <persistence-unit name="junit">
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
 			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
