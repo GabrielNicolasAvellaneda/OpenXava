@@ -1,5 +1,6 @@
 package org.openxava.tools;
 
+import java.sql.*;
 import java.util.*;
 
 import javax.persistence.*;
@@ -10,7 +11,6 @@ import org.hibernate.cfg.*;
 import org.hibernate.dialect.*;
 import org.hibernate.internal.*;
 import org.hibernate.tool.hbm2ddl.*;
-import org.openxava.annotations.parse.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
 
@@ -22,8 +22,10 @@ import org.openxava.util.*;
 
 public class SchemaTool {
 	
-	private static Log log = LogFactory.getLog(SchemaTool.class);
-
+	private static Log log = LogFactory.getLog(SchemaTool.class);	
+	private boolean commitOnFinish = true;
+	private Collection<Class> annotatedClasses = null;
+	
 	public static void main(String[] args) throws Exception { 
 		if (args.length == 0 || Is.emptyString(args[0])) {
 			log.error(XavaResources.getString("schematool_action_required")); 
@@ -33,19 +35,51 @@ public class SchemaTool {
 			log.error(XavaResources.getString("schematool_persistence_unit_required")); 
 			return;
 		}	
+		XPersistence.setPersistenceUnit(args[1]);
+		SchemaTool tool = new SchemaTool();
+		String action = args[0];
+    	if (action.equals("update")) {
+    		tool.updateSchema();
+    	}
+    	else if (action.equals("generate")) {
+    		tool.printSchema();
+    	}
+    	else {
+   			log.error(XavaResources.getString("schematool_action_required"));     		
+    	}		
+	}
+	
+	public void updateSchema() {
+		execute(true, false);
+	}
+	
+	public void generateSchema() {
+		execute(false, false);
+	}
+	
+	public void printSchema() {
+		execute(false, true);
+	}
+	
+	private void execute(boolean update, boolean console) {
 		try {
-			XPersistence.setPersistenceUnit(args[1]); 
 			Configuration cfg = new Configuration();
-			for (ManagedType type: XPersistence.getManager().getMetamodel().getManagedTypes()) {
-				cfg.addAnnotatedClass(type.getJavaType());
-			}		
+			if (annotatedClasses != null) {
+				for (Class annotatedClass: annotatedClasses) {
+					cfg.addAnnotatedClass(annotatedClass);
+				}						
+			}
+			else {
+				for (ManagedType type: XPersistence.getManager().getMetamodel().getManagedTypes()) {
+					cfg.addAnnotatedClass(type.getJavaType());
+				}		
+			}
 			Properties props = new Properties();
 			Map<String, Object> factoryProperties = XPersistence.getManager().getEntityManagerFactory().getProperties();
 			String dialect = (String) factoryProperties.get("hibernate.dialect");
 	    	props.put("hibernate.dialect", dialect);
 	    	String schema = (String) factoryProperties.get("hibernate.default_schema"); 
-	    	String action = args[0];
-	    	if (action.equals("update")) {
+	    	if (update) {
 		    	java.sql.Connection connection = ((SessionImpl) XPersistence.getManager().getDelegate()).connection(); 
 		    	DatabaseMetadata metadata = new DatabaseMetadata(connection, Dialect.getDialect(props), cfg); 
 		    	List<SchemaUpdateScript> scripts = cfg.generateSchemaUpdateScriptList(Dialect.getDialect(props), metadata);
@@ -64,20 +98,29 @@ public class SchemaTool {
 		    		}
 		    	}
 	    	}
-	    	else if (action.equals("generate")) {
+	    	else {
 		    	String [] scripts = cfg.generateSchemaCreationScript(Dialect.getDialect(props));
-				for (String script: scripts) {
-					System.out.print(addSchema(schema, script)); 
-					System.out.println(';');
+				for (String rawScript: scripts) {
+					String script = addSchema(schema, rawScript);
+					if (console) {
+						System.out.print(script); 
+						System.out.println(';');
+					}
+					else {
+						log.info(XavaResources.getString("executing") + ": " + script);
+						Query query = XPersistence.getManager().createNativeQuery(script);
+						query.executeUpdate();
+					}
 				}		
 	    	}
-	    	else {
-	   			log.error(XavaResources.getString("schematool_action_required"));     		
-	    	}
+		}
+		catch (SQLException ex) {
+			log.error(ex);
+			throw new RuntimeException(ex);
 		}
 		finally {
-			XPersistence.commit();
-		}
+			if (commitOnFinish) XPersistence.commit();
+		}		
 	}
 	
 	private static String addSchema(String schema, String script) {
@@ -87,6 +130,19 @@ public class SchemaTool {
 		script = script.replaceAll("\\) references ", ") references " + schema + ".");
 		script = script.replaceAll("create sequence ", "create sequence " + schema + ".");
 		return script;
+	}
+
+	public boolean isCommitOnFinish() {
+		return commitOnFinish;
+	}
+
+	public void setCommitOnFinish(boolean commitOnFinish) {
+		this.commitOnFinish = commitOnFinish;
+	}
+
+	public void addAnnotatedClass(Class annotatedClass) {
+		if (annotatedClasses == null) annotatedClasses = new ArrayList<Class>(); 
+		annotatedClasses.add(annotatedClass);		
 	}
 	
 }
