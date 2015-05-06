@@ -67,6 +67,7 @@ public class SaveMyChartColumnAction extends CollectionElementViewBaseAction {
 		if (myChart.getMetaModel() != null) {
 			MetaProperty property = myChart.getMetaModel().getMetaProperty(columnName);
 			if (property != null) {
+				column.setCalculated(property.isCalculated());
 				column.setNumber(property.isNumber());
 				if (!property.isNumber() && column.isDisplayed()) {
 					column.setDisplayed(false);
