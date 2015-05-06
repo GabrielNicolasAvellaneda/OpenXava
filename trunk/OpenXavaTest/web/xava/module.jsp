@@ -122,7 +122,7 @@
 <%
 	}
 %> 	
-	
+	<link href="<%=contextPath%>/xava/style/c3.css?ox=<%=version%>" rel="stylesheet" type="text/css">
 	<script type='text/javascript' src='<%=contextPath%>/xava/js/dwr-engine.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=contextPath%>/dwr/util.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=contextPath%>/dwr/interface/Module.js?ox=<%=version%>'></script>
@@ -160,6 +160,8 @@
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.js?ox=<%=version%>"></script>	 
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.sorttable.js?ox=<%=version%>"></script>	
+	<script type='text/javascript' src='<%=contextPath%>/xava/js/d3.js?ox=<%=version%>'></script> 
+	<script type='text/javascript' src='<%=contextPath%>/xava/js/c3.js?ox=<%=version%>'></script> 
 	<%
 		File jsEditorsFolder = new File(realPath + "/xava/editors/js");		
 		String[] jsEditors = jsEditorsFolder.list();

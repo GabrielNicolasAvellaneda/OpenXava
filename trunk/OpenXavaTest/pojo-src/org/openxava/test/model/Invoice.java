@@ -125,7 +125,15 @@ import org.openxava.util.*;
 		"year, number, date, vatPercentage;" +
 		"customer;" +
 		"details;"
+	),
+	@View(name="AmountsInSectionAndGroup", members=
+		"year, number;" +
+		"amounts {#" + 		
+			"discounts [customerDiscount, customerTypeDiscount, yearDiscount];" +
+			"values [amountsSum, vatPercentage, vat];" +
+		"}"			
 	)
+
 })
 
 @Tabs({

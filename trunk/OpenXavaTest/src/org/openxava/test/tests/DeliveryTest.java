@@ -32,7 +32,8 @@ public class DeliveryTest extends ModuleTestBase {
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
-		"ExtendedPrint.myReports",		
+		"ExtendedPrint.myReports",
+		"ExtendedPrint.myCharts",
 		"CRUD.new",
 		"CRUD.deleteSelected", 
 		"CRUD.deleteRow",
