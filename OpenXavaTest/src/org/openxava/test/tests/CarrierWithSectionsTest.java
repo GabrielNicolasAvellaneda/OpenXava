@@ -672,6 +672,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"Print.generatePdf",
 			"Print.generateExcel",
 			"ExtendedPrint.myReports",
+			"ExtendedPrint.myCharts",
 			"CRUD.new",
 			"CRUD.deleteSelected",
 			"CRUD.deleteRow", 

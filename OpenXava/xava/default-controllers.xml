@@ -17,6 +17,7 @@ here that you want to override.
 	<object name="xava_mainTab" class="org.openxava.tab.Tab"/>		
 	<object name="xava_customizingTab" class="org.openxava.tab.Tab"/>
 	<object name="xava_myReport" class="org.openxava.session.MyReport"/>
+	<object name="xava_myChart" class="org.openxava.session.MyChart"/>	
 	<object name="xava_row" class="java.lang.Integer" value="-1"/>		<object name="xava_newImageProperty" class="java.lang.String"/>
 	<object name="xava_currentCollectionLabel" class="java.lang.String"/>
 	<object name="xava_collectionViewObject" class="java.lang.String"/>		<object name="xava_previousControllers" class="java.util.Stack"/>
@@ -74,7 +75,12 @@ here that you want to override.
 		<action name="myReports" mode="list"
 			class="org.openxava.actions.MyReportsAction"
 			image="reports.png">	
-		</action>		
+		</action>
+		
+		<action name="myCharts" mode="list"
+			class="org.openxava.actions.MyChartsAction"
+			image="charts.gif"/>		
+			
 	</controller>
 	
 	<controller name="MyReport">
@@ -120,8 +126,46 @@ here that you want to override.
 			image="delete.gif"/>
 		<action name="share" hidden="true" image="shared-reports.png"
 			class="org.openxava.actions.ShareMyReportAction"/>																																										
-	</controller>	
-			
+	</controller>
+	
+	<controller name="MyChart">
+		<action name="save"
+			class="org.openxava.actions.SaveMyChartAction" 
+			image="save.gif"/>
+		<action name="reset" confirm="true"
+			class="org.openxava.actions.ResetMyChartAction"/>
+		<action name="refresh" 
+			class="org.openxava.actions.RefreshMyChartAction"
+			image="refresh.gif"/>
+		<action name="share" hidden="true"
+			class="org.openxava.actions.ShareMyChartAction"
+			image="private.png">
+			<set property="shared" value="true" />	
+		</action>
+		<action name="makePrivate" hidden="true"
+			class="org.openxava.actions.ShareMyChartAction"
+			image="shared.png">
+			<set property="shared" value="false" />	
+		</action>
+		<action name="createNew" hidden="true"
+			class="org.openxava.actions.CreateNewMyChartAction"
+			image="create_new.gif" />
+		<action name="remove" hidden="true" confirm="true"
+			class="org.openxava.actions.RemoveMyChartAction"
+			image="delete.gif"/>
+		<action name="removeColumn" hidden="true" in-each-row="true"
+			class="org.openxava.actions.RemoveMyChartColumnAction"
+			image="delete.gif"/>
+		<action name="saveColumn" hidden="true" 
+			class="org.openxava.actions.SaveMyChartColumnAction"/>
+		<action name="newColumn" hidden="true"
+			class="org.openxava.actions.CreateNewMyChartColumnAction"
+			image="chart_column_add.gif" />						
+		<action name="editColumn" hidden="true" 
+			class="org.openxava.actions.EditMyChartColumnAction"
+			image="edit.gif"/>					
+	</controller>
+	
 	<controller name="TypicalNotResetOnSave">
 		<extends controller="Typical"/>
 		<action name="save" mode="detail"
@@ -265,8 +309,7 @@ here that you want to override.
 			hidden="true"
 			mode="list"
 			image="remove.gif"/>			
-						
-				
+		
 	</controller>
 	
 	<controller name="NoCustomizeList">

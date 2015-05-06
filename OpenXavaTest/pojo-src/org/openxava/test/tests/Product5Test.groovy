@@ -117,6 +117,7 @@ class Product5Test extends CustomizeListTestBase {
 			'List.viewDetail', 
 			'Mode.detailAndFirst', 'Mode.split',
 			'ExtendedPrint.myReports',
+			'ExtendedPrint.myCharts',
 			'Product5.goB'
 		]
 		String[] detailActions =

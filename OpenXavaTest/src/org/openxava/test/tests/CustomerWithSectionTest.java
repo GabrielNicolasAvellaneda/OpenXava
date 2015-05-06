@@ -16,6 +16,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		"Print.generatePdf",
 		"Print.generateExcel",
 		"ExtendedPrint.myReports",
+		"ExtendedPrint.myCharts",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow", 

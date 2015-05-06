@@ -2232,6 +2232,28 @@ public class ModuleTestBase extends TestCase {
 	protected void assertCollectionNotEmpty(String collection) throws Exception { 
 		assertTrue(XavaResources.getString("minimum_1_elements_in_collection", collection), getCollectionRowCount(collection) > 0);
 	}
+	
+	/**
+	 * @since 5.3
+	 */
+	protected void assertValidValueExists(String name, String key, String description) {
+		Collection options = getSelectByName(decorateId(name)).getOptions();
+		assertTrue(XavaResources.getString("unexpected_valid_values", name), options.size() > 0);
+		int i=0;
+		boolean found = false;
+		for (Iterator it = options.iterator(); it.hasNext(); i++) {
+			HtmlOption option = (HtmlOption) it.next();
+			if (option.getValueAttribute().equals(key)) {
+				found = true;
+				assertEquals(XavaResources.getString("unexpected_description", name), description, option.asText());
+				break;
+			}
+		}
+		if (!found) {
+			fail(XavaResources.getString("option_not_found", name, key));
+		}
+		
+	}
 		
 	protected static String getPort() { 
 		if (port == null) {
@@ -2551,5 +2573,5 @@ public class ModuleTestBase extends TestCase {
 	protected HtmlPage getHtmlPage() {
 		return page;
 	}
-	
+
 }
