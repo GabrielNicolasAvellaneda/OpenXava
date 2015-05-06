@@ -503,9 +503,10 @@ public enum MyCharts {
 			MetaProperty property = tab.getMetaTab().getMetaModel().getMetaProperty(myChart.getMyChartLabelColumn());
 			if (property != null) {
 				column.setChart(myChart);
-				column.setName(property.getQualifiedName());
+				column.setName(myChart.getMyChartLabelColumn());
 				column.setLabel(property.getQualifiedLabel(Locales.getCurrent()));
 				column.setCalculated(property.isCalculated());
+				column.setNumber(property.isNumber());
 				addColumn(chartTab, comparators, values, order, column);
 			}
 		}
