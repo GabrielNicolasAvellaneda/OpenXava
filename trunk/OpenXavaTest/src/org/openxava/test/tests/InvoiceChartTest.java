@@ -16,7 +16,7 @@ import com.gargoylesoftware.htmlunit.html.DomElement;
 public class InvoiceChartTest extends ModuleTestBase {
 
 	public InvoiceChartTest(String testName) {
-		super(testName, "Invoice");		
+		super(testName, "Invoice");	 	
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class InvoiceChartTest extends ModuleTestBase {
 		Users.getSharedPreferences().flush();
 	}
 	
-	public void testChartElements() throws Exception {
+	public void testChartElements() throws Exception { 
 		execute("CRUD.new");
 		execute("Mode.list");
 		assertListNotEmpty();

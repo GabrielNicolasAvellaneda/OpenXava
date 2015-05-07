@@ -483,13 +483,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 		else {
 			String refToParent = metaCollection.getMetaReference().getRole();
-			if (childMetaModel.containsMetaReference(refToParent)) {
-				// If the child contains the reference to its parent we simply update this reference
-				Map nullParentKey = new HashMap();
-				nullParentKey.put(refToParent, null); 
-				setValues(childMetaModel, collectionElementKeyValues, nullParentKey);
-			}
-			else {
+			if (!childMetaModel.containsMetaReference(refToParent) || metaCollection.isSortable()) { 
 				// If not (as in ManyToMany relationship), we update the collection in parent
 				Object parent = findEntity(parentMetaModel, keyValues);
 				Object child = findEntity(childMetaModel, collectionElementKeyValues);
@@ -499,10 +493,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					parent = theChild;
 					collectionName = metaCollection.getInverseCollection(); 
 				}				
-				PropertiesManager pm = new PropertiesManager(parent);
+				PropertiesManager pm = new PropertiesManager(parent);				
 				Collection collection = (Collection) pm.executeGet(collectionName);
 				collection.remove(child);
 			}					
+			if (childMetaModel.containsMetaReference(refToParent)) {
+				// If the child contains the reference to its parent we simply update this reference
+				Map nullParentKey = new HashMap();
+				nullParentKey.put(refToParent, null); 
+				setValues(childMetaModel, collectionElementKeyValues, nullParentKey);
+			}
 		}												
 		if (metaCollection.hasPostRemoveCalculators()) {
 			executePostremoveCollectionElement(parentMetaModel, keyValues, metaCollection);			
@@ -543,14 +543,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaCollection metaCollection = parentMetaModel.getMetaCollection(collectionName);		
 		String refToParent = metaCollection.getMetaReference().getRole();
 		MetaModel childMetaModel = metaCollection.getMetaReference().getMetaModelReferenced();
-		
-		if (childMetaModel.containsMetaReference(refToParent)) {
-			// If the child contains the reference to its parent we simply update this reference
-			Map parentKey = new HashMap();
-			parentKey.put(refToParent, keyValues);		
-			setValues(childMetaModel, collectionElementKeyValues, parentKey);								
-		}
-		else {
+		if (!childMetaModel.containsMetaReference(refToParent) || metaCollection.isSortable()) {
 			// If not (as in ManyToMany relationship), we update the collection in parent
 			Object parent = findEntity(parentMetaModel, keyValues);			
 			Object child = findEntity(childMetaModel, collectionElementKeyValues);
@@ -559,15 +552,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				child = parent;
 				parent = theChild;
 				collectionName = metaCollection.getInverseCollection(); 
-			}
-			PropertiesManager pm = new PropertiesManager(parent);
-			Collection collection = (Collection) pm.executeGet(collectionName);
-			if (collection == null) {
-				collection = new HashSet();
-				pm.executeSet(collectionName, collection);
-			}
-			collection.add(child);			 		
-		}		
+			}			
+			addToCollection(parent, collectionName, child);
+		}
+		if (childMetaModel.containsMetaReference(refToParent)) {
+			// If the child contains the reference to its parent we simply update this reference
+			Map parentKey = new HashMap();
+			parentKey.put(refToParent, keyValues);		
+			setValues(childMetaModel, collectionElementKeyValues, parentKey);	
+		}
 	}
 		
 	private Messages validate(String modelName, Map values, boolean creating) throws ObjectNotFoundException, XavaException, RemoteException { 							
@@ -784,7 +777,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				}
 				if (number < 0) { 
 					newObject = getPersistenceProvider().create(metaModel, convertedValues);
-					addAggregateToCollection(metaModel, container, collectionName, newObject); 
+					addToCollection(container, collectionName, newObject); 
 				}
 				else {
 					newObject = getPersistenceProvider().createAggregate(					
@@ -822,7 +815,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	private void addAggregateToCollection(MetaModel metaModel, Object containerModel, String collectionName, Object newAggregate) throws XavaException{ 
+	private void addToCollection(/* MetaModel metaModel, */Object containerModel, String collectionName, Object newAggregate) throws XavaException{ 
 		try {
 			PropertiesManager containerPM = new PropertiesManager(containerModel);
 			Collection collection = (Collection) containerPM.executeGet(collectionName);

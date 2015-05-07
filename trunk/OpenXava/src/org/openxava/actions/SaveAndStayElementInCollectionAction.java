@@ -13,7 +13,7 @@ package org.openxava.actions;
 public class SaveAndStayElementInCollectionAction extends CollectionElementViewBaseAction implements IChainAction, IChainActionWithArgv {
 	
 	public void execute() throws Exception {
-		if (!getCollectionElementView().isCollectionCalculated()) { 
+		if (!getCollectionElementView().isCollectionFromModel()) { 
 			getCollectionElementView().getCollectionTab().getTableModel().refresh();	// to refresh the size,...
 		}
 	}

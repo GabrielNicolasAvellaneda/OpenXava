@@ -1245,6 +1245,9 @@ public class AnnotatedClassParser {
 		else if (element.isAnnotationPresent(Condition.class)) {			
 			collection.setMetaCalculator(null); 
 		}		
+		if (element.isAnnotationPresent(OrderColumn.class)) {
+			collection.setSortable(true);
+		}
 		
 		if (element.isAnnotationPresent(javax.validation.constraints.Size.class)) {
 			javax.validation.constraints.Size size = element.getAnnotation(javax.validation.constraints.Size.class);

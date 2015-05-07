@@ -1457,7 +1457,7 @@ public class Tab implements java.io.Serializable {
 		resetAfterChangeProperties();
 		saveUserPreferences();		
 	}
-		
+	
 	public void clearProperties() throws XavaException {	
 		cloneMetaTab();
 		getMetaTab().clearProperties();		

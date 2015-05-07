@@ -321,6 +321,14 @@ public class Style {
 	 */
 	public String getMoveColumnImage() {   
 		return "move.png";
+	}
+	
+	/**
+	 * 
+	 * @since 5.3
+	 */
+	public String getMoveRowImage() {    
+		return "vertical-move.png";
 	}		
 	
 	/** 

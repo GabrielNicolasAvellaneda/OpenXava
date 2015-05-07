@@ -26,7 +26,8 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private String order;
 	private String inverseCollection;  
 	private boolean orphanRemoval; 
-	private boolean elementCollection; 
+	private boolean elementCollection;
+	private boolean sortable;   
 	
 	private MetaReference metaReference;
 	private Collection metaCalculatorsPostRemove;
@@ -344,6 +345,14 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 
 	public void setElementCollection(boolean elementCollection) {
 		this.elementCollection = elementCollection;
+	}
+
+	public boolean isSortable() {
+		return sortable;
+	}
+
+	public void setSortable(boolean ordenable) {
+		this.sortable = ordenable;
 	}
 
 }

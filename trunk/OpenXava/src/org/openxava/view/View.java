@@ -977,7 +977,7 @@ public class View implements java.io.Serializable {
 		
 	private Collection getDefaultListActionsForCollections() {
 		try {
-			if (isCollectionCalculated() || !isDefaultListActionsForCollectionsIncluded()) return Collections.EMPTY_LIST; 
+			if (isCollectionFromModel() || !isDefaultListActionsForCollectionsIncluded()) return Collections.EMPTY_LIST; 
 			if (defaultListActionsForCollections == null) {			
 					MetaController controller = MetaControllers.getMetaController("DefaultListActionsForCollections"); // Si no existe: �Advertencia?
 					Collection result = new ArrayList();
@@ -999,7 +999,7 @@ public class View implements java.io.Serializable {
 	
 	private Collection getDefaultRowActionsForCollections() { 
 		try {
-			if (isCollectionCalculated() || !isDefaultRowActionsForCollectionsIncluded()) return Collections.EMPTY_LIST; 
+			if (isCollectionFromModel() || !isDefaultRowActionsForCollectionsIncluded()) return Collections.EMPTY_LIST; 
 			if (defaultRowActionsForCollections == null) {			
 					MetaController controller = MetaControllers.getMetaController("DefaultRowActionsForCollections"); // Si no existe: Advertencia?
 					Collection result = new ArrayList();
@@ -1039,7 +1039,7 @@ public class View implements java.io.Serializable {
 			String name = (String) it.next();			
 			if (name.endsWith("+")) {
 				name = name.substring(0, name.length() - 1); 
-				if (view.isRepresentsCollection() && view.isCollectionCalculated()) {
+				if (view.isRepresentsCollection() && view.isCollectionFromModel()) {
 					log.warn(XavaResources.getString("sum_not_in_calculated_collections", view.getMemberName(), name));
 				}
 			}
@@ -1525,7 +1525,7 @@ public class View implements java.io.Serializable {
 		if (collectionValues == null) { 			
 			assertRepresentsCollection("getCollectionValues()");
 			if (getMetaCollection().isElementCollection()) collectionValues = Collections.EMPTY_LIST; 
-			else if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) {				
+			else if (isCollectionFromModel() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) {				
 				// If calculated we obtain the data directly from the model object
 				Map mapMembersNames = new HashMap();
 				mapMembersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));
@@ -1573,7 +1573,7 @@ public class View implements java.io.Serializable {
 	 */	
 	public int getCollectionSize() throws XavaException {
 		assertRepresentsCollection("getCollectionSize()");
-		if (isCollectionCalculated() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) { 
+		if (isCollectionFromModel() ||	!isDefaultListActionsForCollectionsIncluded() || !isDefaultRowActionsForCollectionsIncluded()) { 
 			return getCollectionValues().size();			
 		}
 		else {
@@ -1725,7 +1725,7 @@ public class View implements java.io.Serializable {
 	 */
 	public List getCollectionSelectedValues() throws XavaException {
 		assertRepresentsCollection("getCollectionSelectedValues()");
-		if (isCollectionCalculated()) {
+		if (isCollectionFromModel()) {
 			// If calculated we obtain the data directly from the model object
 			if (listSelected == null) return Collections.EMPTY_LIST;
 			List result = new ArrayList();
@@ -1772,7 +1772,7 @@ public class View implements java.io.Serializable {
 	public List getCollectionObjects() throws XavaException {   		
 		assertRepresentsCollection("getCollectionObjects()");		
 		Map [] keys = null;
-		if (isCollectionCalculated()) { 
+		if (isCollectionFromModel()) { 
 			try {
 				Object model = getParent().getModel();
 				if (model == null) {
@@ -1806,7 +1806,7 @@ public class View implements java.io.Serializable {
 	public List getCollectionSelectedObjects() throws XavaException {  
 		assertRepresentsCollection("getCollectionSelectedObjects()");		
 		Map [] selectedKeys = null;
-		if (isCollectionCalculated()) {
+		if (isCollectionFromModel()) {
 			if (listSelected == null) return Collections.EMPTY_LIST;
 			List selectedObjects = new ArrayList();
 			List objects = getCollectionObjects();
@@ -1854,14 +1854,32 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
+	 * If the collection data is obtained from the model collection directly. <p>
+	 * 
+	 * If not is obtained from model usually a Tab is used to get the data.<br>
+	 * 
+	 * In order to call this method <b>this view must represents a collection</b>.<p>
+	 * 
+	 * @since 5.3
+	 */
+	public boolean isCollectionFromModel() throws XavaException {  
+		assertRepresentsCollection("isCollectionFromModel()");
+		return getMetaCollection().hasCalculator() || getMetaCollection().isSortable(); 
+	}
+	
+	/**
 	 * If the collection represents by this view is calculated. <p>
 	 * 
 	 * In order to call this method <b>this view must represents a collection</b>.<p>
+	 * 
+	 * @deprecated  Since 5.3, use isCollectionFromModel() instead. 
 	 */
-	public boolean isCollectionCalculated() throws XavaException { 
+	public boolean isCollectionCalculated() throws XavaException {
 		assertRepresentsCollection("isCollectionCalculated()");
-		return getMetaCollection().hasCalculator();
+		return isCollectionFromModel(); // Not the most exact but the most practical, 
+										// because this method was used to choose between using tab or not
 	}
+
 	
 	private Map getCollectionMemberNames() throws XavaException {
 		if (collectionMemberNames == null) {   		
@@ -2598,7 +2616,7 @@ public class View implements java.io.Serializable {
 	
 	private void fillCollectionInfo(String qualifier) throws XavaException { 
 		String id = null;
-		if (!isCollectionCalculated()) { 
+		if (!isCollectionFromModel()) { 
 			id = Tab.COLLECTION_PREFIX + getQualifiedCollectionName() + "selected";
 			getCollectionTab().setSelected(getRequest().getParameterValues(id));
 		}
@@ -4059,6 +4077,11 @@ public class View implements java.io.Serializable {
 
 	public void setCollectionMembersEditables(boolean b) {		
 		collectionMembersEditables = b;
+	}
+	
+	public boolean isCollectionSortable() {  
+		assertRepresentsCollection("isCollectionSortable()");
+		return getMetaCollection().isSortable();
 	}
 
 	public boolean isCollectionEditable() {		
@@ -5582,7 +5605,7 @@ public class View implements java.io.Serializable {
 	 * Deselects all items in collection
 	 */
 	public void collectionDeselectAll() {
-		if (isCollectionCalculated()) {
+		if (isCollectionFromModel()) {
 			listSelected = null;
 		} else {
 			getCollectionTab().deselectAll();
@@ -5603,4 +5626,11 @@ public class View implements java.io.Serializable {
 		collectionTab.friendExecuteJspDeselect(deselect);
 	}
 
+	public void moveCollectionElement(int from, int to) throws Exception { 
+		assertRepresentsCollection("moveCollectionElement()");		
+		PropertiesManager pm = new PropertiesManager(getParent().getEntity()); 
+		List elements = (List) pm.executeGet(getMemberName());
+		XCollections.move(elements, from, to);
+	}
+	
 }

@@ -18,11 +18,13 @@ boolean resizeColumns = style.allowsResizeColumns() && XavaPreferences.getInstan
 String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
 String styleOverflow = org.openxava.web.Lists.getOverflow(browser, subview.getMetaPropertiesList());
+boolean sortable = subview.isCollectionSortable();
 %>
 <% if (resizeColumns && scrollSupported) { %> 
 <div class="<xava:id name='collection_scroll'/>" style="<%=styleOverflow%>">
 <% } %>
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<% if (sortable) { %><tbody class="xava_sortable_row"><% } %> 
 <tr class="<%=style.getListHeader()%>">
 	<%
 		if (lineAction != null) {
@@ -85,6 +87,10 @@ for (int f=0; itAggregates.hasNext(); f++) {
 %>
 <td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
 <nobr>
+	<%if (sortable) { %>
+	<img class="xava_handle" align='absmiddle'
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getMoveRowImage()%>' border='0' />
+	<%}%>	
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 <% 
 	if (style.isSeveralActionsPerRow())
@@ -158,6 +164,7 @@ for (int f=0; itAggregates.hasNext(); f++) {
 %>
 </tr>
 <jsp:include page="collectionTotals.jsp" />
+<% if (sortable) { %></tbody><% } %>
 </table>
 <% if (resizeColumns && scrollSupported) { %>
 </div>

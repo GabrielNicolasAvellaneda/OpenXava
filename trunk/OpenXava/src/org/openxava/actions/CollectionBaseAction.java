@@ -59,7 +59,7 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 			if (row >= 0) {
 				Map key;
 				try {
-					if (getCollectionElementView().isCollectionCalculated()) {
+					if (getCollectionElementView().isCollectionFromModel()) {
 						key = (Map) getCollectionElementView().getCollectionValues().get(row);
 					}
 					else {
@@ -110,7 +110,7 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 		if (selectedObjects == null) {
 			if (row >= 0) {
 				try {
-					if (getCollectionElementView().isCollectionCalculated()) {
+					if (getCollectionElementView().isCollectionFromModel()) {
 						Object collectionElement = getCollectionElementView().getCollectionObjects().get(getRow());
 						selectedObjects = Collections.singletonList(collectionElement);						  
 					}

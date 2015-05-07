@@ -54,7 +54,7 @@ public class ApplicantTest extends ModuleTestBase {
 		resetModule();
 		
 		assertModulesCount(15);
-		assertFirstModuleInMenu("Abstract toto", "Abstract toto"); 
+		assertFirstModuleInMenu("Abstract wall", "Abstract wall"); // Not in i18n, to test a case  
 
 		HtmlElement searchBox = getHtmlPage().getHtmlElementById("search_modules_text");
 		searchBox.type("CA");
