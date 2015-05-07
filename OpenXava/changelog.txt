@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Charts generated automatically from list data.
+- New method assertValidValueExists() in ModuleTestBase.
+- A List annotated with @OrderColumn can be sorted by the user with drag & drop.
 - Combo has no blank option in enum properties with @Required. 
 - JPA 2.1 (JSR-338) support.
 - Bean Validation 1.1 (JSR-349) support.

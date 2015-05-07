@@ -24,7 +24,7 @@ public class ProjectTask extends Identifiable {
 	private Priority priority;
 	
 	private Date dueDate;
-
+	
 	public Project getProject() {
 		return project;
 	}

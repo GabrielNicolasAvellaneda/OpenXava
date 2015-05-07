@@ -944,7 +944,9 @@
 		<delete file="../${project}/web/xava/editors/customReportColumnNameEditor.jsp"/>
 		<delete file="../${project}/web/xava/editors/customReportColumnComparatorEditor.jsp"/>
 		<delete file="../${project}/web/xava/editors/customReportColumnValidValuesValueEditor.jsp"/>
-		<delete file="../${project}/web/xava/editors/customReportColumnDescriptionsListValueEditor.jsp"/>		
+		<delete file="../${project}/web/xava/editors/customReportColumnDescriptionsListValueEditor.jsp"/>
+		<delete file="../${project}/web/xava/calculatedCollectionList.jsp"/> 
+		
 		<!-- Delete unused images -->
 		<delete file="../${project}/web/xava/images/customize.gif"/>
 		<delete file="../${project}/web/xava/images/hide-filter.gif"/>

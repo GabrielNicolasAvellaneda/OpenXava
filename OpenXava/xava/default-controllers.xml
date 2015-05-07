@@ -77,7 +77,7 @@ here that you want to override.
 			image="reports.png">	
 		</action>
 		
-		<action name="myCharts" mode="list"
+		<action name="myCharts" mode="list"  
 			class="org.openxava.actions.MyChartsAction"
 			image="charts.gif"/>		
 			

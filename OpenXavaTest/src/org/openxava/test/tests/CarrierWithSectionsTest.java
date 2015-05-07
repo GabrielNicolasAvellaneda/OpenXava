@@ -660,7 +660,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		assertTrue(Is.empty(getValue("fellowCarriersSelected")));
 	}
 	
-	public void testSetControllers() throws Exception {
+	public void testSetControllers() throws Exception { 
 		String [] defaultActions = {
 			"List.hideRows",
 			"List.filter",
@@ -709,6 +709,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 			"Print.generatePdf",
 			"Print.generateExcel",
 			"ExtendedPrint.myReports",
+			"ExtendedPrint.myCharts", 
 			"CRUD.new",
 			"CRUD.deleteSelected",
 			"CRUD.deleteRow", 
@@ -721,7 +722,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		// Returning with returnToPreviousController
 		assertActions(defaultActions); 
 		execute("CarrierWithSections.setTypicalController");
-		assertActions(typicalActions);
+		assertActions(typicalActions); 
 		execute("CarrierWithSections.setPrintController");
 		assertActions(printActions);
 		execute("CarrierWithSections.returnToPreviousControllers");

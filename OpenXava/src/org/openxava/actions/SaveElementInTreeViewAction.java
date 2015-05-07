@@ -36,7 +36,7 @@ public class SaveElementInTreeViewAction extends SaveElementInCollectionAction {
 				if (metaTreeView.isOrderDefined() &&
 						!returnValue.containsKey(metaTreeView.getOrderProperty())) {
 					Integer newOrder = 0;
-					if (getCollectionElementView().isCollectionCalculated()) {
+					if (getCollectionElementView().isCollectionFromModel()) {
 						newOrder = getCollectionElementView().getCollectionValues().size();
 					} else {
 						newOrder = getCollectionElementView().getCollectionTab().getTotalSize();

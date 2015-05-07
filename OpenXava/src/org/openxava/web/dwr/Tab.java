@@ -13,55 +13,6 @@ import org.openxava.util.*;
 
 public class Tab extends DWRBase {
 	
-	private static class TableId { // Table means HTML TABLE
-		
-		private String application;
-		private String module;
-		private String tabObject;
-		private String collection;
-		private boolean valid;
-		
-		public TableId(String tableId, int additionalTokens) {
-			String [] id = tableId.split("_+");
-			if (!"ox".equals(id[0])) {
-				// Bad format. This method relies in the id format by Ids class
-				valid = false; 
-				return;
-			}
-			application = id[1];
-			module = id[2];
-			StringBuffer collectionSB = new StringBuffer();
-			for (int i=3; i<id.length-additionalTokens; i++) { // To work with collections inside @AsEmbedded references 
-				if (i>3) collectionSB.append("_");
-				collectionSB.append(id[i]);				 
-			}
-			this.collection = collectionSB.toString();
-			tabObject = "list".equals(collection)?"xava_tab":"xava_collectionTab_" + collection;									
-			valid = true;
-		}
-
-		public String getApplication() {
-			return application;
-		}
-
-		public String getModule() {
-			return module;
-		}
-
-		public String getTabObject() {
-			return tabObject;
-		}
-		
-		public String getCollection() {
-			return collection;
-		}
-		
-		public boolean isValid() {
-			return valid;
-		}
-		
-	}
-	
 	private static Log log = LogFactory.getLog(Tab.class);
 
 	public static void setFilterVisible(HttpServletRequest request, String application, String module, boolean filterVisible, String tabObject) {
@@ -111,7 +62,7 @@ public class Tab extends DWRBase {
 				// If it has not tab maybe it's a calculated collection
 				org.openxava.view.View view = (org.openxava.view.View) getContext(request).get(id.getApplication(), id.getModule(), "xava_view");
 				org.openxava.view.View collectionView = view.getSubview(id.getCollection());
-				if (collectionView.isCollectionCalculated() || collectionView.isRepresentsElementCollection()) {
+				if (collectionView.isCollectionFromModel() || collectionView.isRepresentsElementCollection()) {
 					String column=columnId.substring(columnId.lastIndexOf("_col") + 4);
 					int columnIndex = Integer.parseInt(column);
 					collectionView.setCollectionColumnWidth(columnIndex, width);

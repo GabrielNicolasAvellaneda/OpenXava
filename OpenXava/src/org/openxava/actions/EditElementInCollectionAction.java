@@ -26,7 +26,7 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 		Collection elements;
 		Map keys = null;
 		Map	values = null;
-		if (getCollectionElementView().isCollectionCalculated()) {		
+		if (getCollectionElementView().isCollectionFromModel()) {		
 			elements = getCollectionElementView().getCollectionValues();
 			if (elements == null) return;
 			if (elements instanceof List) {

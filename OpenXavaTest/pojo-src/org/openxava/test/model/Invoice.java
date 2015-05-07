@@ -126,7 +126,7 @@ import org.openxava.util.*;
 		"customer;" +
 		"details;"
 	),
-	@View(name="AmountsInSectionAndGroup", members=
+	@View(name="AmountsInSectionAndGroup", members= 
 		"year, number;" +
 		"amounts {#" + 		
 			"discounts [customerDiscount, customerTypeDiscount, yearDiscount];" +

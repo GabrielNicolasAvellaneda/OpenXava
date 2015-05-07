@@ -111,7 +111,7 @@ if (tab.isTitleVisible()) {
 <% if (resizeColumns && scrollSupported) { %>
 <div class="<xava:id name='<%=scrollId%>'/>" style="<%=styleOverflow%>">
 <% } %> 
-<table id="<xava:id name='<%=id%>'/>" class="xava_draggable <%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<table id="<xava:id name='<%=id%>'/>" class="xava_sortable_column <%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center">
 <nobr>

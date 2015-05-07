@@ -54,7 +54,7 @@ String propertyPrefix = propertyPrefixAccumulated == null?collectionName + ".":p
 	<%
 		} else if (collectionView.isCollectionFromModel()) {
 	%>
-		<%@include file="../collectionFromModel.jsp" %>
+		<%@include file="../collectionFromModel.jsp" %> <%-- tmp era calculatedCollectionList.jsp --%>
 	<%
 		} else {
 	%>
@@ -174,7 +174,7 @@ else {
 	<%
 		} else if (collectionView.isCollectionFromModel()) {
 	%>
-		<%@include file="../collectionFromModel.jsp" %>
+		<%@include file="../collectionFromModel.jsp" %> <%-- tmp era calculatedCollectionList.jsp --%>
 	<% } else { %>
 		<%@include file="../collectionList.jsp" %>
 	<% } %>
