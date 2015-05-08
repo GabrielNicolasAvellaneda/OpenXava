@@ -6,12 +6,10 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.*;
 
-import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;
 
-import antlr.collections.*;
 import junit.framework.*;
 
 /**

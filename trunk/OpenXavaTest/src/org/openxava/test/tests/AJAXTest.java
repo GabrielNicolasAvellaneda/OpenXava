@@ -365,6 +365,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertLoadedParts("errors, editor_seller.name, " +
 				"editor_number, " +
+				"editor_type," +
 				"editor_alternateSeller.number, " +
 				"editor_address.asString, " + 
 				"editor_address.city, " +
@@ -382,6 +383,7 @@ public class AJAXTest extends ModuleTestBase {
 		setValue("number", "4"); 
 		execute("CRUD.refresh");
 		assertLoadedParts("errors, editor_number, " +
+				"editor_type, " +
 				"editor_address.asString, " + 
 				"editor_address.city, " +
 				"editor_address.zipCode, " +
