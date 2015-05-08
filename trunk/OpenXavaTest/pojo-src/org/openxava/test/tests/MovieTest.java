@@ -1,8 +1,10 @@
 package org.openxava.test.tests;
 
-import java.lang.reflect.*;
 import java.util.*;
 
+import javax.persistence.*;
+
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -134,7 +136,44 @@ public class MovieTest extends ModuleTestBase {
 		assertTrue("At most two sections", getSectionsNames().size() == 2);
 		assertTrue("Incorrect sections names", sn.removeAll(getSectionsNames()) && sn.isEmpty());
 	}
+	
+	public void testBytecodeGenerated_Concurrent() {
+		assertTrue(Classes.hasMethod(Movie.class, "getLock"));		
+	}
+	
+	public void testOptimisticConcurrency() throws Exception {
+		mySetUp();
+		modifyMovieFromFirstUser(1);
+		modifyMovieFromFirstUser(2);
+		myTearDown();
+	}
+	
+	private void modifyMovieFromFirstUser(int id) throws Exception {
+		//First user
+		execute("List.viewDetail", "row=1");
+		assertNotExists("lock"); //@Version
+		setValue("title", "JUNIT U1" + id);
 		
+		//Second user
+		MovieTest otherSession = new MovieTest("Movie2");
+		otherSession.modifyMovieFromSecondUser(id);
+		
+		//First user continues
+		execute("CRUD.save");
+		assertError("Impossible to execute Save action: Another user has modified this record");
+		execute("Mode.list");
+		assertValueInList(1, "title", "JUNIT U2" + id);
+	}
+	
+	private void modifyMovieFromSecondUser(int id) throws Exception {
+		setUp();
+		execute("List.viewDetail", "row=1");
+		setValue("title", "JUNIT U2" + id);
+		execute("CRUD.save");
+		assertNoErrors();
+		tearDown();
+	}
+
 	private void addFile() throws Exception {
 		execute("CRUD.new");
 		assertAction("AttachedFile.choose");
@@ -178,5 +217,18 @@ public class MovieTest extends ModuleTestBase {
 		}
 		return sn;
 	}
+		
+	private void mySetUp() throws Exception {
+		Movie movie = new Movie();
+		movie.setTitle("JUNIT");
+		XPersistence.getManager().persist(movie);	
+		XPersistence.commit();
+		resetModule();
+	}
 	
+	private void myTearDown() throws Exception {
+		Query query = XPersistence.getManager()
+				      .createQuery("delete from Movie m where m.title like 'JUNIT%'");
+		query.executeUpdate();
+	}
 }

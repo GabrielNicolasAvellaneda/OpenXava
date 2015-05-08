@@ -194,5 +194,9 @@
 			</batchtest>			
 		</junit>
 	</target>	
-						
+	
+	<target name="processAnnotations">
+			<ant antfile="../OpenXava/build.xml" target="processAnnotations"/>
+	</target>	
+	
 </project>
