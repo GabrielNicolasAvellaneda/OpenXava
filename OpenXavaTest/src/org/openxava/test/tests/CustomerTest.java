@@ -308,16 +308,16 @@ public class CustomerTest extends CustomizeListTestBase {
 			{ base0?"2":"3", "Special" }	
 		};
 		
-		assertValue("type", base0?"0":"1");		
+		assertValue("type", base0?"2":"3");		
 		assertValidValues("type", validValues);
 	}
 	
 	public void testOnChangeAction() throws Exception {
 		execute("Mode.split"); // To test a case
 		execute("CRUD.new");		
-		assertValue("type", usesAnnotatedPOJO()?"0":"1");		
+		assertValue("type", usesAnnotatedPOJO()?"2":"3");		
 		setValue("name", "PEPE");
-		assertValue("type", usesAnnotatedPOJO()?"0":"1");
+		assertValue("type", usesAnnotatedPOJO()?"2":"3");
 		setValue("name", "JAVI");
 		assertValue("type", usesAnnotatedPOJO()?"1":"2"); 		
 	}	
@@ -358,7 +358,7 @@ public class CustomerTest extends CustomizeListTestBase {
 
 		execute("CRUD.new"); 
 		assertValue("number", "");
-		assertValue("type", usesAnnotatedPOJO()?"0":"1");
+		assertValue("type", usesAnnotatedPOJO()?"2":"3");
 		assertValue("name", "");
 		assertValue("address.street", "");
 		assertValue("address.zipCode", "");
@@ -392,7 +392,7 @@ public class CustomerTest extends CustomizeListTestBase {
 		assertNoErrors();
 		execute("CRUD.new");
 		assertValue("number", "");
-		assertValue("type", usesAnnotatedPOJO()?"0":"1");
+		assertValue("type", usesAnnotatedPOJO()?"2":"3");
 		assertValue("name", "");
 		
 		// Verifying modified
@@ -737,12 +737,10 @@ public class CustomerTest extends CustomizeListTestBase {
 	
 	public void testDescriptionValidValuesEditor() throws Exception { 
 		execute("CRUD.new");
-		assertValue("type", usesAnnotatedPOJO()?"0":"1");
+		assertValue("type", usesAnnotatedPOJO()?"2":"3");
 		setValue("type", usesAnnotatedPOJO()?"1":"2");
 		assertValue("type", usesAnnotatedPOJO()?"1":"2");
 		setValue("type", usesAnnotatedPOJO()?"2":"3");
 		assertValue("type", usesAnnotatedPOJO()?"2":"3");		
 	}
-			
-
 }

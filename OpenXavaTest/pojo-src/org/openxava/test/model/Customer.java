@@ -194,7 +194,7 @@ public class Customer implements IWithName {
 	@Required 
 	@DefaultValueCalculator(
 		value=org.openxava.calculators.IntegerCalculator.class,
-		properties={ @PropertyValue(name="value", value="0") }		
+		properties={ @PropertyValue(name="value", value="2") }		
 	)
 	@Editor(forViews="TypeWithRadioButton", value="ValidValuesRadioButton")	
 	private Type type;

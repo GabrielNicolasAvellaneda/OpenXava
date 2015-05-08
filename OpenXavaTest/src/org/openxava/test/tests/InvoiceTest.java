@@ -1094,13 +1094,13 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");	
-		assertValue("Customer", "type", usesAnnotatedPOJO()?"0":"1");
+		assertValue("Customer", "type", usesAnnotatedPOJO()?"2":"3");
 		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");
 		assertNoErrors();
 		execute("ReferenceSearch.cancel");
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");	
-		assertValue("Customer", "type", usesAnnotatedPOJO()?"0":"1");		
+		assertValue("Customer", "type", usesAnnotatedPOJO()?"2":"3");		
 		execute("NewCreation.cancel");
 		assertExists("year");
 		assertExists("number");
