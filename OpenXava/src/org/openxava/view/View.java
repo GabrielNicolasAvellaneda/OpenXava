@@ -80,7 +80,8 @@ public class View implements java.io.Serializable {
 	private static Log log = LogFactory.getLog(View.class);
 	private static final long serialVersionUID = -7582669617830655121L;
 	private static Collection defaultListActionsForCollections;
-	private static Collection defaultRowActionsForCollections; 
+	private static Collection defaultRowActionsForCollections;
+	private static Object refiner;
 	
 	private String viewObject;  
 	private String propertyPrefix; 
@@ -201,7 +202,11 @@ public class View implements java.io.Serializable {
 	private String rootModelName;
 	private Map defaultValues;
 	private Map oldCollectionTotals;    
-	private Map membersNameForElementCollection; 
+	private Map membersNameForElementCollection;
+	
+	public static void setRefiner(Object newRefiner) {
+		refiner = newRefiner;
+	}
 		
 	public View() {
 		oid = nextOid++;
@@ -3755,16 +3760,29 @@ public class View implements java.io.Serializable {
 		return descriptionsList.isOrderByKey();
 	}
 
-	public boolean isCreateNewForReference(MetaReference ref) throws XavaException {		
-		MetaReferenceView viewRef = getMetaView().getMetaReferenceView(ref);		
-		if (viewRef == null) return true;
-		return viewRef.isCreate();
+	public boolean isCreateNewForReference(MetaReference ref) throws XavaException {
+		return isActionForReference(ref, true); 
 	}
 	
 	public boolean isModifyForReference(MetaReference ref) throws XavaException {
+		return isActionForReference(ref, false); 
+	}
+		
+	private boolean isActionForReference(MetaReference ref, boolean create) throws XavaException { 
 		MetaReferenceView viewRef = getMetaView().getMetaReferenceView(ref);		
 		if (viewRef == null) return true;
-		return viewRef.isModify();
+		if (create && !viewRef.isCreate()) return false; 
+		if (!create && !viewRef.isModify()) return false; 
+		if (refiner == null) return true;
+		try {
+			return (Boolean) XObjects.execute(refiner, "accept", 
+				String.class, ref.getReferencedModelName(), 
+				String.class, create?"new":"save");
+		}
+		catch (Exception ex) {
+			log.error(XavaResources.getString("action_for_reference_error", ref.getName(), ref.getMetaModel().getName()), ex); 
+			return false; 
+		}				
 	}
 	
 	public boolean isSearchForReference(MetaReference ref) throws XavaException {
