@@ -121,11 +121,22 @@ public class QuoteTest extends ModuleTestBase {
 		assertTotalInCollection("details", 0, "amount", "200.00");
 		assertTotalInCollection("details", 1, "amount",  "42.00");
 		assertTotalInCollection("details", 2, "amount", "242.00");
-		
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
 		assertValue("year", "2015");
 		assertValue("number", "66");		
+		
+		// Annotated remove action on elementCollection
+		changeModule("QuoteWithRemoveElementCollection");
+		execute("CRUD.new");
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertValue("year", "2015");
+		assertValue("number", "66");		
+		assertAction("Collection.removeSelected", "row=1,viewObject=xava_view_details");
+		execute("Collection.removeSelected", "row=1,viewObject=xava_view_details");
+		// Just to prove that message was called
+		assertError("Impossible to execute Remove selected action: Impossible to get object from row 1");
 		
 		execute("CRUD.delete");
 		assertNoErrors();

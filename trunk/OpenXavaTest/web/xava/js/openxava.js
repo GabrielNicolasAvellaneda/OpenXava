@@ -910,7 +910,7 @@ openxava.subcontroller = function(id,containerId,buttonId,imageId,aId,spanId){
 	$('#'+buttonId).addClass('ox-subcontroller-select');
 }
 
-openxava.renderChart = function(chartType, grouped, application, module, xavaChartPrefix) { // tmp ¿Aquí? Orden aplicacion module
+openxava.renderChart = function(application, module, chartType, grouped, xavaChartPrefix) { 
 	var idPrefix = "#" + xavaChartPrefix;
 	var rowCount = $(idPrefix + "rowCount").val();
 	var columnCount = $(idPrefix + "columnCount").val();
@@ -957,21 +957,3 @@ openxava.renderChart = function(chartType, grouped, application, module, xavaCha
 	}
 	return specification;
 }
-
-openxava.addEditorInitFunction(function() { // tmp Así no
-	if ($('#xava_application').length &&
-			$('#xava_module').length) {
-		var applicationName = $('#xava_application').val();
-		var moduleName = $('#xava_module').val();
-		var xavaChartPrefix = openxava.decorateId(applicationName, moduleName, "xava_chart__");
-		var idPrefix = "#" + xavaChartPrefix;
-		if ($(idPrefix + 'type').length) {
-			var chartType = $(idPrefix + 'type').val();
-			var grouped = $(idPrefix + 'grouped').val();
-			var specification = openxava.renderChart(chartType, grouped, applicationName, moduleName, xavaChartPrefix);
-			if (specification != 'empty') {
-				c3.generate(specification);
-			}
-		}
-	}
-});

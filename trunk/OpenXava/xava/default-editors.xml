@@ -59,7 +59,7 @@
 	<editor name="BooleanYesNoCombo" url="booleanYesNoEditor.jsp">
 		<formatter class="org.openxava.formatters.BooleanFormatter" />
 		<for-model-property model="MyReportColumn" property="booleanValue" />
-		<for-model-property model="MyChartColumn" property="booleanValue" />
+		<for-model-property model="ChartColumn" property="booleanValue" />
 	</editor>	
 	<editor name="DateCalendar" url="dateCalendarEditor.jsp">
 		<formatter class="org.openxava.formatters.DateFormatter" />		<for-type type="java.util.Date" />
@@ -215,29 +215,29 @@
 	<editor url="textEditor.jsp">
 		<for-model-property model="MyReportColumn" property="label" /> 
 		<for-model-property model="MyReportColumn" property="value" />				
-		<for-model-property model="MyChartColumn" property="label" /> 
-		<for-model-property model="MyChartColumn" property="value" />				
+		<for-model-property model="ChartColumn" property="label" /> 
+		<for-model-property model="ChartColumn" property="value" />				
 	</editor>
 		
 	<editor url="myReportColumnNameEditor.jsp" always-reload="true">
 		<for-model-property model="MyReportColumn" property="name" />
-		<for-model-property model="MyChartColumn" property="name" />
+		<for-model-property model="ChartColumn" property="name" />
 	</editor>
 		
 	<editor url="myReportColumnComparatorEditor.jsp">
 		<list-formatter class="org.openxava.formatters.MyReportComparatorListFormatter"/>
 		<for-model-property model="MyReportColumn" property="comparator" />
-		<for-model-property model="MyChartColumn" property="comparator" />
+		<for-model-property model="ChartColumn" property="comparator" />
 	</editor>
 			
 	<editor url="myReportColumnValidValuesValueEditor.jsp">
 		<for-model-property model="MyReportColumn" property="validValuesValue" />	
-		<for-model-property model="MyChartColumn" property="validValuesValue" />	
+		<for-model-property model="ChartColumn" property="validValuesValue" />	
 	</editor>
 	
 	<editor url="myReportColumnDescriptionsListValueEditor.jsp">
 		<for-model-property model="MyReportColumn" property="descriptionsListValue" />	
-		<for-model-property model="MyChartColumn" property="descriptionsListValue" />	
+		<for-model-property model="ChartColumn" property="descriptionsListValue" />	
 	</editor>	
 												
 	<editor name="AttachedFile" url="attachedFileEditor.jsp">		
@@ -251,16 +251,23 @@
 		<for-stereotype stereotype="ARCHIVOS" />
 	</editor>
 	
-	<editor url="myChartDataEditor.jsp">
-		<for-model-property model="MyChart" property="myChartData"/>
+	<editor url="chartDataEditor.jsp">
+		<for-model-property model="Chart" property="chartData" />
 	</editor>
 	
-	<editor url="myChartNameEditor.jsp">
-		<for-model-property model="MyChart" property="name"/>
+	<editor url="chartNameEditor.jsp">
+		<for-model-property model="Chart" property="name" />
 	</editor>		
 
-	<editor url="myChartLabelColumnSelectorEditor.jsp" always-reload="true">
-		<for-model-property model="MyChart" property="myChartLabelColumn"/>
-	</editor>		
+	<editor url="chartColumnNameEditor.jsp" always-reload="true">
+		<for-model-property model="Chart" property="yColumn" />
+	</editor>
+	
+	<editor url="chartColumnNameEditor.jsp" always-reload="true">
+		<for-model-property model="ChartColumn" property="name" />
+		<property name="showOnlyNumericColumns" value="true" />
+	</editor>	
 
+	<editor name="ChartColumnsEditor" url="elementCollectionEditor.jsp">
+	</editor>
 </editors>

@@ -53,13 +53,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__ExtendedPrint___myCharts</td>
+	<td>id=ox_OpenXavaTest_Invoice__Charts___show</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>id=ui-id-1</td>
-	<td>My Charts</td>
+	<td>Charts</td>
 </tr>
 <!--Delete all previously saved charts-->
 <tr>
@@ -134,8 +134,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___save</td>
+	<td>css=img[alt=&quot; - Save the current entity&quot;]</td>
 	<td></td>
 </tr>
 <tr>
@@ -165,7 +170,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartType</td>
+	<td>id=ox_OpenXavaTest_Invoice__chartType</td>
 	<td>label=Pie</td>
 </tr>
 <tr>
@@ -180,7 +185,12 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___save</td>
+	<td>id=ox_OpenXavaTest_Invoice__columns___2___displayed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=img[alt=&quot; - Save the current entity&quot;]</td>
 	<td></td>
 </tr>
 <tr>
@@ -195,14 +205,9 @@
 </tr>
 <!--Add columns-->
 <tr>
-	<td>click</td>
-	<td>link=Add</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>id=ui-id-2</td>
-	<td>Add - Chart column</td>
+	<td>select</td>
+	<td>id=ox_OpenXavaTest_Invoice__columns___5___name</td>
+	<td>label=Total</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -210,44 +215,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__name</td>
-	<td>label=Customer discount</td>
+	<td>click</td>
+	<td>id=ox_OpenXavaTest_Invoice__columns___5___displayed</td>
+	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___saveColumn</td>
+	<td>pause</td>
+	<td>600</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___saveColumn</td>
+	<td>css=img[alt=&quot; - Save the current entity&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>css=div.ox-message-box</td>
-	<td>Column customerDiscount added to chart</td>
+	<td>Chart '*' saved in preferences</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>css=div.ox-message-box</td>
-	<td>Column customerDiscount added to chart</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___save</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Chart 'Pie chart' saved in preferences</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Chart 'Pie chart' saved in preferences</td>
+	<td>Chart '*' saved in preferences</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -261,13 +251,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__ExtendedPrint___myCharts</td>
+	<td>id=ox_OpenXavaTest_Invoice__Charts___show</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>id=ui-id-1</td>
-	<td>My Charts</td>
+	<td>Charts</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -278,6 +268,22 @@
 	<td>assertSelectOptions</td>
 	<td>id=ox_OpenXavaTest_Invoice__name</td>
 	<td>INVOICE REPORT,Pie Chart</td>
+</tr>
+<!--Test Removing-->
+<tr>
+	<td>assertValue</td>
+	<td>id=ox_OpenXavaTest_Invoice__columns___3___name</td>
+	<td>vat</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#ox_OpenXavaTest_Invoice__columns___3 &gt; td.ox-list-odd &gt; nobr &gt; a[title=&quot;Remove row&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>id=ox_OpenXavaTest_Invoice__columns___3___name</td>
+	<td>detailsCount</td>
 </tr>
 <!--Test Sharing-->
 <tr>
@@ -333,7 +339,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartType</td>
+	<td>id=ox_OpenXavaTest_Invoice__chartType</td>
 	<td>label=${chartName}</td>
 </tr>
 <tr>
@@ -343,7 +349,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartType</td>
+	<td>id=ox_OpenXavaTest_Invoice__chartType</td>
 	<td>label=Line</td>
 </tr>
 <tr>
@@ -356,46 +362,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--Test Reset Button-->
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___reset</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___reset</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForConfirmation</td>
-	<td>Reset: Are you sure?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Chart was reset to default values</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Chart was reset to default values</td>
-</tr>
-<tr>
-	<td>assertEval</td>
-	<td>confirm(&quot;Do you see a Bar chart with a single dataset?&quot;)</td>
-	<td>true</td>
-</tr>
 <!--Test fields on labels-->
 <tr>
 	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartLabelColumn</td>
+	<td>id=ox_OpenXavaTest_Invoice__yColumn</td>
 	<td>label=Delivery date</td>
 </tr>
 <tr>
@@ -410,7 +380,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartLabelColumn</td>
+	<td>id=ox_OpenXavaTest_Invoice__yColumn</td>
 	<td>label=Year</td>
 </tr>
 <tr>
@@ -425,205 +395,9 @@
 </tr>
 <!--Test fields on dataset-->
 <tr>
-	<td>click</td>
-	<td>link=Add</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>id=ui-id-2</td>
-	<td>Add - Chart column</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_Invoice__name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>300</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__name</td>
-	<td>label=City of Customer</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=#ox_OpenXavaTest_Invoice__name &gt; option[value=&quot;customer.city&quot;]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>300</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___saveColumn</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>2000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Column customer.city is not numeric, it wont be displayed</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Column customer.city is not numeric, it wont be displayed</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=td.ox-messages &gt; div.ox-message-box</td>
-	<td>Column customer.city added to chart</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>css=td.ox-messages &gt; div.ox-message-box</td>
-	<td>Column customer.city added to chart</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Add</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>id=ui-id-2</td>
-	<td>Add - Chart column</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_Invoice__name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>600</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__name</td>
-	<td>label=Year discount</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___saveColumn</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>2000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Column yearDiscount added to chart</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Column yearDiscount added to chart</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartLabelColumn</td>
-	<td>label=Lokal</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartLabelColumn</td>
-	<td>label=Customer discount</td>
-</tr>
-<!--Test filters-->
-<tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__myChartLabelColumn</td>
-	<td>label=Year</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>600</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Add</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>id=ui-id-2</td>
-	<td>Add - Chart column</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_Invoice__name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>600</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__name</td>
-	<td>label=Year</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>300</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=ox_OpenXavaTest_Invoice__comparator</td>
-	<td>label=&gt;</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=ox_OpenXavaTest_Invoice__value</td>
-	<td>2004</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__displayed</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___saveColumn</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__MyChart___saveColumn</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=div.ox-message-box</td>
-	<td>Column year added to chart</td>
-</tr>
-<tr>
-	<td>assertEval</td>
-	<td>confirm(&quot;Are all years greater than 2004?&quot;)</td>
-	<td>true</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=ox_OpenXavaTest_Invoice__Dialog___cancel</td>
-	<td></td>
+	<td>id=ox_OpenXavaTest_Invoice__columns___5___name</td>
+	<td>Year Number VAT % Number Amounts sum Customer discount Customer type discount Details count Product unit price sum Seller discount Total V.A.T. Year discount [SHOW MORE...]</td>
 </tr>
 </tbody></table>
 </body>

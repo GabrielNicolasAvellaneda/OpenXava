@@ -1,13 +1,25 @@
 package org.openxava.test.model;
 
-import java.math.*;
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
-import org.openxava.annotations.*;
-import org.openxava.calculators.*;
-import org.openxava.model.*;
+import org.openxava.annotations.DefaultValueCalculator;
+import org.openxava.annotations.ListProperties;
+import org.openxava.annotations.ReferenceView;
+import org.openxava.annotations.RemoveSelectedAction;
+import org.openxava.annotations.Required;
+import org.openxava.annotations.Tab;
+import org.openxava.annotations.View;
+import org.openxava.annotations.Views;
+import org.openxava.calculators.CurrentDateCalculator;
+import org.openxava.model.Identifiable;
 
 /**
  * 
@@ -15,7 +27,10 @@ import org.openxava.model.*;
  */
 
 @Entity
-@View(members="year, number, date; customer; details")
+@Views({
+	@View(members="year, number, date; customer; details"),
+	@View(name="QuoteWithRemoveElementCollection", members="year, number, date; customer; details")
+})
 @Tab(defaultOrder="${year} desc") 
 public class Quote extends Identifiable {
 		
@@ -32,6 +47,7 @@ public class Quote extends Identifiable {
 	@ReferenceView("Simplest")
 	private Customer customer;
 	
+	@RemoveSelectedAction(forViews="QuoteWithRemoveElementCollection", value="Collection.removeSelected")
 	@javax.validation.constraints.Size(min=1, max=3)  
 	@ElementCollection
 	@ListProperties("product.number, product.description, unitPrice, quantity, amount[quote.amountsSum, quote.taxes, quote.total]")
