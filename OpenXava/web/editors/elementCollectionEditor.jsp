@@ -35,7 +35,9 @@ boolean resizeColumns = style.allowsResizeColumns() && XavaPreferences.getInstan
 String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
 String styleOverflow = org.openxava.web.Lists.getOverflow(browser, subview.getMetaPropertiesList());
-String collectionClass = subview.isEditable()?"class='" + style.getElementCollection() + "'":""; 
+String collectionClass = subview.isEditable()?"class='" + style.getElementCollection() + "'":"";
+String removeSelectedAction = subview.getRemoveSelectedCollectionElementsAction();
+boolean suppressRemoveAction = removeSelectedAction != null && "".equals(removeSelectedAction);
 %>
 <div <%=collectionClass%>>
 <% if (resizeColumns && scrollSupported) { %> 
@@ -124,10 +126,25 @@ for (int f=0; f < rowCount; f++) {
 <% if (subview.isCollectionEditable()) { %>
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
 	<nobr>
-	 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)" <%=removeStyle%>>
-		<img 		 
-			src='<%=request.getContextPath()%>/xava/images/delete.gif'
-			border='0' align='middle' onclick="elementCollectionEditor.removeRow('<%=app%>', '<%=module%>', this, <%=f%>, <%=hasTotals%>)"/>
+		<%if (!Is.emptyString(removeSelectedAction)) {%>
+		 <a title='<xava:message key="remove_row"/>' href="javascript:openxava.executeAction('<%=app%>', '<%=module%>', '', false, '<%=removeSelectedAction%>', 'row=<%=f%>,viewObject=<%=viewName%>')" <%=removeStyle%>>
+			<img 		 
+				src='<%=request.getContextPath()%>/xava/images/delete.gif'
+				border='0' align='middle' "/>
+		</a>
+		<%} else if (suppressRemoveAction){%>
+		 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)" <%=removeStyle%>>
+			<img 		 
+				src='<%=request.getContextPath()%>/xava/images/spacer.gif'
+				border='0' align='middle'/>
+		 </a>
+		<%} else { %>
+		 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)" <%=removeStyle%>>
+			<img 		 
+				src='<%=request.getContextPath()%>/xava/images/delete.gif'
+				border='0' align='middle' onclick="elementCollectionEditor.removeRow('<%=app%>', '<%=module%>', this, <%=f%>, <%=hasTotals%>)"/>
+		 </a>
+		<%} %>
 	</a>
 	</nobr>
 	</td>

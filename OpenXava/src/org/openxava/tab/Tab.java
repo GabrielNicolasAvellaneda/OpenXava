@@ -122,8 +122,20 @@ public class Tab implements java.io.Serializable {
 	private boolean conditionJustCleared;
 	private Map<String, String> labels;  
 	private boolean columnsToAddUntilSecondLevel = true; 
+	private boolean cancelSavingPreferences = false;
 	
 	private Messages errors; 
+	
+	public Tab() {
+	}
+	
+	/**
+	 * Creates a tab that will not save the preferences values.
+	 * @param cancelSavingPreferences If the parameter is true, no preferences are stored.
+	 */
+	public Tab(boolean cancelSavingPreferences) {
+		this.cancelSavingPreferences = cancelSavingPreferences;
+	}
 	
 	public List<MetaProperty> getMetaProperties() { 
 		if (metaProperties == null) {
@@ -1577,31 +1589,33 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 
-	protected void saveUserPreferences() { 		
-		try { 
-			Preferences preferences = getPreferences();			
-
-			if (propertiesChanged) { 
-				preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
-				propertiesChanged = false;
-			}
-			preferences.put(SUM_PROPERTIES_NAMES, Strings.toString(getSumPropertiesNames()));
-			preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
-			preferences.putBoolean(FILTER_VISIBLE, filterVisible);
-			preferences.putInt(PAGE_ROW_COUNT, pageRowCount); 
-			if (columnWidths != null) {
-				for (Map.Entry<String, Integer> columnWidth: columnWidths.entrySet()) {
-					preferences.putInt(
-						COLUMN_WIDTH + columnWidth.getKey(),
-						columnWidth.getValue()
-					);
+	protected void saveUserPreferences() {
+		if (!cancelSavingPreferences) {
+			try { 
+				Preferences preferences = getPreferences();			
+	
+				if (propertiesChanged) { 
+					preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
+					propertiesChanged = false;
 				}
+				preferences.put(SUM_PROPERTIES_NAMES, Strings.toString(getSumPropertiesNames()));
+				preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
+				preferences.putBoolean(FILTER_VISIBLE, filterVisible);
+				preferences.putInt(PAGE_ROW_COUNT, pageRowCount); 
+				if (columnWidths != null) {
+					for (Map.Entry<String, Integer> columnWidth: columnWidths.entrySet()) {
+						preferences.putInt(
+							COLUMN_WIDTH + columnWidth.getKey(),
+							columnWidth.getValue()
+						);
+					}
+				}
+				preferences.flush();
 			}
-			preferences.flush();
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
+			}
 		}
-		catch (Exception ex) {
-			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
-		}	
 	}
 	
 	private void removeUserPreferences() { 		

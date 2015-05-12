@@ -1,19 +1,40 @@
 package org.openxava.test.tests;
 
-import java.math.*;
-import java.rmi.*;
-import java.text.*;
-import java.util.*;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
-import javax.rmi.*;
+import javax.rmi.PortableRemoteObject;
 
-import org.openxava.jpa.*;
-import org.openxava.test.calculators.*;
-import org.openxava.test.model.*;
-import org.openxava.util.*;
-import org.openxava.web.*;
+import org.openxava.actions.OnChangeChartLabelColumnAction;
+import org.openxava.jpa.XPersistence;
+import org.openxava.session.Chart;
+import org.openxava.test.calculators.YearInvoiceDiscountCalculator;
+import org.openxava.test.model.Delivery;
+import org.openxava.test.model.DeliveryType;
+import org.openxava.test.model.Invoice;
+import org.openxava.test.model.Product;
+import org.openxava.util.Dates;
+import org.openxava.util.Is;
+import org.openxava.util.Strings;
+import org.openxava.util.Users;
+import org.openxava.util.XavaPreferences;
+import org.openxava.util.XavaResources;
+import org.openxava.web.Ids;
 
-import com.gargoylesoftware.htmlunit.html.*;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.DomNode;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
+import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 
 
 /**
@@ -34,6 +55,21 @@ public class InvoiceTest extends CustomizeListTestBase {
 	
 	public InvoiceTest(String testName) {
 		super(testName, "Invoice");		
+	}
+
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		String nodeName = "chart.tab.OpenXavaTest.Invoice.Invoice";
+		// Clear the preferences
+		if (Users.getCurrentPreferences().nodeExists(nodeName)) {
+			Users.getCurrentPreferences().remove(nodeName);
+		}
+		if (Users.getSharedPreferences().nodeExists(nodeName)) {
+			Users.getSharedPreferences().remove(nodeName);
+		}
+		Users.getCurrentPreferences().flush();
+		Users.getSharedPreferences().flush();
 	}
 	
 	public void testSubcontrollerWithoutActionsInMode() throws Exception {
@@ -1840,6 +1876,52 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertValue("vat", svat);
 	}		
 	
+	public void testChartElements() throws Exception { 
+		execute("CRUD.new");
+		execute("Mode.list");
+		assertListNotEmpty();
+		execute("Charts.show");
+		assertEditable("name");
+		assertValue("name", "INVOICE REPORT");
+		assertValidValues("chartType", new String[][]{
+				{"", ""},
+				{Integer.toString(Chart.ChartType.BAR.ordinal()), "Bar"},
+				{Integer.toString(Chart.ChartType.LINE.ordinal()), "Line"},
+				{Integer.toString(Chart.ChartType.PIE.ordinal()), "Pie"},
+				{Integer.toString(Chart.ChartType.DONUT.ordinal()), "Donut"},
+				{Integer.toString(Chart.ChartType.STACKED_BAR.ordinal()), "Stacked bar"},
+				{Integer.toString(Chart.ChartType.AREA.ordinal()), "Area"},
+				{Integer.toString(Chart.ChartType.STACKED_AREA.ordinal()), "Stacked area"},
+				{Integer.toString(Chart.ChartType.XY.ordinal()), "XY"},
+				{Integer.toString(Chart.ChartType.SPLINE.ordinal()), "Spline"},
+				{Integer.toString(Chart.ChartType.STEP.ordinal()), "Step"},
+				{Integer.toString(Chart.ChartType.STACKED_STEP.ordinal()), "Stacked step"}
+		});
+		assertValue("yColumn", "year");
+		assertValidValueExists("yColumn", OnChangeChartLabelColumnAction.SHOW_MORE, "[SHOW MORE...]");
+		assertChartDisplayed();
+	}
+	
+	public void testChartSave() throws Exception { 
+		execute("CRUD.new");
+		execute("Mode.list");
+		assertListNotEmpty();
+		execute("Charts.show");
+		assertCollectionNotEmpty("columns");
+		assertValueInCollection("columns", 0, "displayed", "false");
+		setValueInCollection("columns", 0, "displayed", "true");
+		execute("Chart.save", "xava.keyProperty=name");
+		assertNoErrors();
+	}
+
+	private void assertChartDisplayed() throws Exception {
+		DomElement container = getHtmlPage().getElementById(decorateId("xava_chart__container"));
+		if (!container.hasChildNodes() &&
+				container.getChildNodes().size() < 10) {
+			fail(XavaResources.getString("my_chart_not_displayed"));
+		}
+	}
+
 	private BigDecimal stringToBigDecimal(String s) throws ParseException {
 		NumberFormat nf = NumberFormat.getInstance();
 		Number n = nf.parse(s);

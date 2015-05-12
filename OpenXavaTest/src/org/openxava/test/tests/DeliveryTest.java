@@ -33,7 +33,7 @@ public class DeliveryTest extends ModuleTestBase {
 		"Print.generatePdf",
 		"Print.generateExcel",
 		"ExtendedPrint.myReports",
-		"ExtendedPrint.myCharts",
+		"Charts.show",
 		"CRUD.new",
 		"CRUD.deleteSelected", 
 		"CRUD.deleteRow",

@@ -4671,7 +4671,7 @@ public class View implements java.io.Serializable {
 	public String getRemoveCollectionElementAction() {
 		return removeCollectionElementAction == null?"Collection.remove":removeCollectionElementAction; 
 	}
-
+	
 	public void setRemoveCollectionElementAction(
 			String removeCollectionElementAction) {		
 		this.removeCollectionElementAction = removeCollectionElementAction;
@@ -5651,4 +5651,15 @@ public class View implements java.io.Serializable {
 		XCollections.move(elements, from, to);
 	}
 	
+	/**
+	 * Gets the model defined remove element from collection. Used for 
+	 * ElementCollection.
+	 * @since 5.3
+	 * @return The remove collection action. Might return a null value.
+	 */
+	public String getRemoveElementCollectionAction() {
+		return removeCollectionElementAction;
+	}
+
+
 }
