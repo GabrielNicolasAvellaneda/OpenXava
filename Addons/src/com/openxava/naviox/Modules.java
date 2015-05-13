@@ -36,7 +36,7 @@ public class Modules implements Serializable {
 	public static void init(String applicationName) {
 		MetaModuleFactory.setApplication(applicationName);
 		DB.init();
-		createFirstStepsModule(applicationName);  
+		createFirstStepsModule(applicationName);
 	}	
 	
 	private static void createFirstStepsModule(String applicationName) {
@@ -54,6 +54,14 @@ public class Modules implements Serializable {
 		topModules = null;
 		bookmarkModules = null; 
 		current = null; 		
+		if (!NaviOXPreferences.getInstance().isStartInLastVisitedModule()) {
+			try {
+				getPreferences().remove("current");
+			}
+			catch (BackingStoreException ex) {
+				log.warn(XavaResources.getString("current_module_problem"), ex);
+			}
+		}
 	}
 	
 	public boolean hasModules() { 
@@ -136,7 +144,8 @@ public class Modules implements Serializable {
 	}
 	
 	private void loadTopModules() {
-		topModules = loadModulesFromPreferences("", MODULES_ON_TOP);
+		topModules = NaviOXPreferences.getInstance().isRememberVisitedModules()?
+			loadModulesFromPreferences("", MODULES_ON_TOP):new ArrayList<MetaModule>();
 	}
 	
 	private void loadBookmarkModules() {  
