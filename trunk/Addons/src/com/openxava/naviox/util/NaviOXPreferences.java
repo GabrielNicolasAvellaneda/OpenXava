@@ -77,4 +77,18 @@ public class NaviOXPreferences {
 		return getProperties().getProperty("createSchema." + database, getCreateSchema()).trim();
 	}
 	
+	/**
+	 * @since 5.3
+	 */
+	public boolean isStartInLastVisitedModule() { 
+		return "true".equalsIgnoreCase(getProperties().getProperty("startInLastVisitedModule", "true").trim());
+	}
+	
+	/**
+	 * @since 5.3
+	 */
+	public boolean isRememberVisitedModules() { 
+		return "true".equalsIgnoreCase(getProperties().getProperty("rememberVisitedModules", "true").trim());
+	}
+		
 }
