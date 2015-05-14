@@ -1008,7 +1008,7 @@
 	<!-- 
 	Connects to database and actually modifies its tables from JPA entities definition.
 	-->
-	<target name="updateSchemaJPA" depends="processAnnotations, defineSchemaToolPath"> 
+	<target name="updateSchemaJPA" depends="defineSchemaToolPath"> 
 		
 		<java classname="org.openxava.tools.SchemaTool" classpathref="schema.tool.path">
 			<arg value="update"/>
@@ -1029,18 +1029,6 @@
 			<arg value="${persistence.unit}"/>
 		</java>		
 
-	</target>
-
-    <target name="processAnnotations">
-        <java classname="org.openxava.annotations.processor.Processor" fork="true">
-            <arg value="../${project}/web/WEB-INF/classes"/>
-        	<classpath>
-    		   <pathelement location="../OpenXava/bin"/>
-    		   <fileset dir="../OpenXava/web/WEB-INF/lib">
-    		       <include name="**/*.jar"/>
-    		   </fileset>
-        	</classpath>
-        </java>	
-    </target>
+	</target>    
 
 </project>
