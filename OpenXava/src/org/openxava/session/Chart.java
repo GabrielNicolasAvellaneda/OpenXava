@@ -10,7 +10,6 @@ import org.openxava.actions.OnChangeChartLabelColumnAction;
 import org.openxava.actions.OnChangeChartNameAction;
 import org.openxava.actions.OnChangeChartTypeAction;
 import org.openxava.annotations.DisplaySize;
-import org.openxava.annotations.Editor;
 import org.openxava.annotations.Hidden;
 import org.openxava.annotations.LabelFormat;
 import org.openxava.annotations.LabelFormatType;
@@ -75,7 +74,6 @@ public class Chart implements Serializable {
 	private String yColumn;
 	
 	@RemoveSelectedAction("Chart.removeColumn")
-	@Editor("ChartColumnsEditor")
 	@ListProperties("displayed, name")
 	@ElementCollection
 	private List<ChartColumn> columns;

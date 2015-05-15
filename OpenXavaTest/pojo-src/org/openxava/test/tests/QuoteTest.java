@@ -127,7 +127,7 @@ public class QuoteTest extends ModuleTestBase {
 		assertValue("number", "66");		
 		
 		// Annotated remove action on elementCollection
-		changeModule("QuoteWithRemoveElementCollection");
+		changeModule("QuoteWithRemoveElementCollection"); 
 		execute("CRUD.new");
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");

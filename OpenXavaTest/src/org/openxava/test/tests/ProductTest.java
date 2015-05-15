@@ -34,7 +34,7 @@ public class ProductTest extends ModuleTestBase {
 		"Print.generatePdf",
 		"Print.generateExcel",
 		"ExtendedPrint.myReports",
-		"Charts.show",
+		"Charts.charts",
 		"CRUD.new",
 		"CRUD.deleteSelected",
 		"CRUD.deleteRow",

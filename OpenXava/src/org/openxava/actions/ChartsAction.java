@@ -27,7 +27,7 @@ public class ChartsAction extends TabBaseAction {
 		getView().setModelName("Chart");
 		getView().setTitleId("charts");
 		loadLastNode();
-		setControllers("Chart", "Dialog");
+		setControllers("Chart"); 
 	}
 	
 	protected void loadLastNode() throws Exception {

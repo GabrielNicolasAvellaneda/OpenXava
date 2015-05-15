@@ -57,20 +57,6 @@ public class InvoiceTest extends CustomizeListTestBase {
 		super(testName, "Invoice");		
 	}
 
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-		String nodeName = "chart.tab.OpenXavaTest.Invoice.Invoice";
-		// Clear the preferences
-		if (Users.getCurrentPreferences().nodeExists(nodeName)) {
-			Users.getCurrentPreferences().remove(nodeName);
-		}
-		if (Users.getSharedPreferences().nodeExists(nodeName)) {
-			Users.getSharedPreferences().remove(nodeName);
-		}
-		Users.getCurrentPreferences().flush();
-		Users.getSharedPreferences().flush();
-	}
 	
 	public void testSubcontrollerWithoutActionsInMode() throws Exception {
 		// subcontroller: InvoicePrint -> all actions are in mode list
@@ -1876,11 +1862,26 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertValue("vat", svat);
 	}		
 	
+	private void chartsSetUp() throws Exception {  
+		String nodeName = "chart.tab.OpenXavaTest.Invoice.Invoice";
+		// Clear the preferences
+		if (Users.getCurrentPreferences().nodeExists(nodeName)) {
+			Users.getCurrentPreferences().remove(nodeName);
+		}
+		if (Users.getSharedPreferences().nodeExists(nodeName)) {
+			Users.getSharedPreferences().remove(nodeName);
+		}
+		Users.getCurrentPreferences().flush();
+		Users.getSharedPreferences().flush();
+	}
+
+	
 	public void testChartElements() throws Exception { 
+		chartsSetUp(); 
 		execute("CRUD.new");
 		execute("Mode.list");
 		assertListNotEmpty();
-		execute("Charts.show");
+		execute("Charts.charts");
 		assertEditable("name");
 		assertValue("name", "INVOICE REPORT");
 		assertValidValues("chartType", new String[][]{
@@ -1902,11 +1903,12 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertChartDisplayed();
 	}
 	
-	public void testChartSave() throws Exception { 
+	public void testChartSave() throws Exception {
+		chartsSetUp();
 		execute("CRUD.new");
 		execute("Mode.list");
 		assertListNotEmpty();
-		execute("Charts.show");
+		execute("Charts.charts");
 		assertCollectionNotEmpty("columns");
 		assertValueInCollection("columns", 0, "displayed", "false");
 		setValueInCollection("columns", 0, "displayed", "true");

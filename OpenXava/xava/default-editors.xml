@@ -59,7 +59,6 @@
 	<editor name="BooleanYesNoCombo" url="booleanYesNoEditor.jsp">
 		<formatter class="org.openxava.formatters.BooleanFormatter" />
 		<for-model-property model="MyReportColumn" property="booleanValue" />
-		<for-model-property model="ChartColumn" property="booleanValue" />
 	</editor>	
 	<editor name="DateCalendar" url="dateCalendarEditor.jsp">
 		<formatter class="org.openxava.formatters.DateFormatter" />		<for-type type="java.util.Date" />
@@ -214,30 +213,24 @@
 	
 	<editor url="textEditor.jsp">
 		<for-model-property model="MyReportColumn" property="label" /> 
-		<for-model-property model="MyReportColumn" property="value" />				
-		<for-model-property model="ChartColumn" property="label" /> 
-		<for-model-property model="ChartColumn" property="value" />				
+		<for-model-property model="MyReportColumn" property="value" />
 	</editor>
 		
 	<editor url="myReportColumnNameEditor.jsp" always-reload="true">
 		<for-model-property model="MyReportColumn" property="name" />
-		<for-model-property model="ChartColumn" property="name" />
 	</editor>
 		
 	<editor url="myReportColumnComparatorEditor.jsp">
 		<list-formatter class="org.openxava.formatters.MyReportComparatorListFormatter"/>
 		<for-model-property model="MyReportColumn" property="comparator" />
-		<for-model-property model="ChartColumn" property="comparator" />
 	</editor>
 			
 	<editor url="myReportColumnValidValuesValueEditor.jsp">
-		<for-model-property model="MyReportColumn" property="validValuesValue" />	
-		<for-model-property model="ChartColumn" property="validValuesValue" />	
+		<for-model-property model="MyReportColumn" property="validValuesValue" />
 	</editor>
 	
 	<editor url="myReportColumnDescriptionsListValueEditor.jsp">
-		<for-model-property model="MyReportColumn" property="descriptionsListValue" />	
-		<for-model-property model="ChartColumn" property="descriptionsListValue" />	
+		<for-model-property model="MyReportColumn" property="descriptionsListValue" />
 	</editor>	
 												
 	<editor name="AttachedFile" url="attachedFileEditor.jsp">		
@@ -267,7 +260,5 @@
 		<for-model-property model="ChartColumn" property="name" />
 		<property name="showOnlyNumericColumns" value="true" />
 	</editor>	
-
-	<editor name="ChartColumnsEditor" url="elementCollectionEditor.jsp">
-	</editor>
+	
 </editors>
