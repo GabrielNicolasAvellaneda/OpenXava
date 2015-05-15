@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- @RemoveSelectedAction available for @ElementCollection.
+- New properties startInLastVisitedModule and rememberVisitedModules in naviox.properties.
 - Charts generated automatically from list data.
 - New method assertValidValueExists() in ModuleTestBase.
 - A List annotated with @OrderColumn can be sorted by the user with drag & drop.

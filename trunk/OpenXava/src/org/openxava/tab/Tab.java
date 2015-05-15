@@ -1589,7 +1589,7 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 
-	protected void saveUserPreferences() {
+	private void saveUserPreferences() {
 		if (!cancelSavingPreferences) {
 			try { 
 				Preferences preferences = getPreferences();			

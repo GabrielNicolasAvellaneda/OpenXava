@@ -55,25 +55,27 @@ public class ProjectTest extends ModuleTestBase {
 	
 	public void testMoveElementInCollectionWithOrderColumn() throws Exception { 
 		String [] membersElements = {"JOHN", "JUAN", "PETER"};
-		moveElementInCollectionWithOrderColumn("members", membersElements);		
+		moveElementInCollectionWithOrderColumn("members", membersElements, false);		
 	}
 	
 	public void testMoveElementInAggregateCollectionWithOrderColumn() throws Exception { 
 		String [] tasksElements = {"ANALYSIS", "DESIGN", "PROGRAMMING"};
-		moveElementInCollectionWithOrderColumn("tasks", tasksElements);
+		moveElementInCollectionWithOrderColumn("tasks", tasksElements, false);
 	}
 	
-	private void moveElementInCollectionWithOrderColumn(String collection, String [] elements) throws Exception { 
+	public void testMoveElementInElementCollectionWithOrderColumn() throws Exception {  
+		String [] tasksElements = {"WE BEGIN", "WE WORK", "WE FINISH"};
+		moveElementInCollectionWithOrderColumn("notes", tasksElements, true);		
+	}
+	
+	private void moveElementInCollectionWithOrderColumn(String collection, String [] elements, boolean save) throws Exception {  
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount(collection, 3);
 		assertValueInCollection(collection, 0, 0, elements[0]);
 		assertValueInCollection(collection, 1, 0, elements[1]);
 		assertValueInCollection(collection, 2, 0, elements[2]);
 		moveRow(collection, 2, 0);
-		assertCollectionRowCount(collection, 3);
-		assertValueInCollection(collection, 0, 0, elements[2]);
-		assertValueInCollection(collection, 1, 0, elements[0]);
-		assertValueInCollection(collection, 2, 0, elements[1]);
+		if (save) execute("CRUD.save"); 
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount(collection, 3);
@@ -81,21 +83,15 @@ public class ProjectTest extends ModuleTestBase {
 		assertValueInCollection(collection, 1, 0, elements[0]);
 		assertValueInCollection(collection, 2, 0, elements[1]);		
 		moveRow(collection, 1, 0);
-		assertCollectionRowCount(collection, 3);
-		assertValueInCollection(collection, 0, 0, elements[0]);
-		assertValueInCollection(collection, 1, 0, elements[2]);
-		assertValueInCollection(collection, 2, 0, elements[1]);		
+		if (save) execute("CRUD.save"); 
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
 		assertCollectionRowCount(collection, 3);
 		assertValueInCollection(collection, 0, 0, elements[0]);
 		assertValueInCollection(collection, 1, 0, elements[2]);
 		assertValueInCollection(collection, 2, 0, elements[1]);				
-		moveRow(collection, 2, 1);		
-		assertCollectionRowCount(collection, 3);
-		assertValueInCollection(collection, 0, 0, elements[0]);
-		assertValueInCollection(collection, 1, 0, elements[1]);
-		assertValueInCollection(collection, 2, 0, elements[2]);		
+		moveRow(collection, 2, 1);
+		if (save) execute("CRUD.save"); 
 	}
 	
 	private void moveRow(String collection, int from, int to) throws Exception {   

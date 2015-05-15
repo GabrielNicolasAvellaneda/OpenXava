@@ -126,20 +126,15 @@ here that you want to override.
 	</controller>
 	
 	<controller name="Charts">
-		<action name="show" mode="list"  
+		<action name="charts" mode="list"  
 			class="org.openxava.actions.ChartsAction"
-			image="charts.gif"/>		
+			image="charts.png"/>		
 	</controller>
 	
 	<controller name="Chart">
 		<action name="save" hidden="true"
 			class="org.openxava.actions.SaveChartAction" 
 			image="save.gif"/>
-		<action name="reset" confirm="true" hidden="true"
-			class="org.openxava.actions.ResetChartAction"/>
-		<action name="refresh" hidden="true"
-			class="org.openxava.actions.RefreshChartAction"
-			image="refresh.gif"/>
 		<action name="share" hidden="true"
 			class="org.openxava.actions.ShareChartAction"
 			image="private.png">
@@ -159,6 +154,8 @@ here that you want to override.
 		<action name="removeColumn" hidden="true" in-each-row="true"
 			class="org.openxava.actions.RemoveChartColumnAction"
 			image="delete.gif"/>
+		<action name="close" 
+			class="org.openxava.actions.CancelDialogAction"/>						
 	</controller>
 	
 	<controller name="TypicalNotResetOnSave">

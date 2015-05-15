@@ -1,5 +1,16 @@
 if (elementCollectionEditor == null) var elementCollectionEditor = {};
 
+openxava.addEditorInitFunction(function() {
+	$('.xava_sortable_elements').sortable({ 
+		items: '>.xava_sortable_element_row',
+	    stop: function( event, ui ) {
+	    	var table = $(event.target).closest("table");	    	
+	    	var row = table.find('tr').eq(1);
+	    	elementCollectionEditor.renumber(row, 0);
+	    }	
+	});
+});
+
 elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	var currentRow = $(element).parent().parent(); 
 	var nextRow = currentRow.next();
@@ -17,7 +28,7 @@ elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	elementCollectionEditor.setDefaultValues(table, rowIndex); 
 	nextRow.show();
 	$(nextRow).after(newRow);
-	currentRow.children().first().find("a").css('visibility', 'visible');
+	currentRow.children().first().find("nobr").css('visibility', 'visible'); 
 }
 
 elementCollectionEditor.setDefaultValues = function(table, rowIndex) {
@@ -40,11 +51,11 @@ elementCollectionEditor.removeRow = function(application, module, element, rowIn
 }
 
 elementCollectionEditor.renumber = function(row, rowIndex) { 
-	if (!$(row).is(":visible")) return; 		
-	var token1 = new RegExp("__" + (rowIndex + 1), "g");
+	if (!$(row).is(":visible")) return; 			
+	var token1 = new RegExp("__\\d+", "g");
 	var token2 = "__" + rowIndex;
 	row.attr("id", row.attr("id").replace(token1, token2));
 	var rowHtml = row.html().replace(token1, token2);
-	row.html(rowHtml);
+	row.html(rowHtml);	
 	elementCollectionEditor.renumber(row.next(), rowIndex + 1);
 }

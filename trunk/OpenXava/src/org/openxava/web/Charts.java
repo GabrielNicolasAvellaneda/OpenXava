@@ -18,7 +18,6 @@ import org.openxava.model.meta.MetaProperty;
 import org.openxava.session.Chart;
 import org.openxava.session.Chart.ChartType;
 import org.openxava.session.ChartColumn;
-import org.openxava.session.ChartColumn.Order;
 import org.openxava.tab.Tab;
 import org.openxava.util.Is;
 import org.openxava.util.Locales;
@@ -433,39 +432,12 @@ public enum Charts {
 				continue;
 			}
 			ChartColumn column = new ChartColumn();
-			column.setChart(chart);
+			column.setChart(chart);			
 			column.setName(property.getQualifiedName());
 			column.setLabel(property.getQualifiedLabel(Locales.getCurrent()));
-			column.setCalculated(property.isCalculated());
 			column.setNumber(property.isNumber());
+			
 			column.setDisplayed(false);
-			if (!column.isCalculated()) {
-				try {
-					if (!Is.emptyString(values[i]) && !Is.emptyString(comparators[i])) { 
-						column.setComparator(comparators[i]);
-						if ("boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName())) {
-							column.setBooleanValue(Tab.EQ_COMPARATOR.equals(comparators[i]));							
-						}
-						else if (property.hasValidValues()) {							
-							int validValue = Integer.parseInt(values[i]);
-							if (property.getMetaModel().isAnnotatedEJB3()) validValue++;		
-							column.setValidValuesValue(validValue); 
-						}
-						else if (values[i].contains(Tab.DESCRIPTIONS_LIST_SEPARATOR)) {
-							column.setDescriptionsListValue(values[i]);
-						}
-						else {
-							column.setValue(values[i]);
-						} 
-					}
-				}
-				catch (Exception ex) {
-					log.warn(XavaResources.getString("initial_value_for_my_report_column_not_set", column.getName()), ex);					
-				}				
-				i++;		
-			}
-			if (tab.isOrderAscending(column.getName())) column.setOrder(Order.ASCENDING);
-			else if (tab.isOrderDescending(column.getName())) column.setOrder(Order.DESCENDING);
 			try {
 				if (addNumeric 
 						&& property.isNumber() 
@@ -474,10 +446,7 @@ public enum Charts {
 					column.setDisplayed(true);
 					numericChosen = true;
 				}
-				//if ((!Is.emptyString(column.getComparator()) && !Is.emptyString(column.getValue()))
-				//		|| (column.isDisplayed() && column.isNumber())) {
-					columns.add(column);
-				//}
+				columns.add(column);
 			} catch (Exception e) {
 				log.debug(e.getMessage());
 			}
@@ -514,10 +483,8 @@ public enum Charts {
 			MetaProperty property = tab.getMetaTab().getMetaModel().getMetaProperty(chart.getyColumn());
 			if (property != null) {
 				column.setChart(chart);
-				column.setName(chart.getyColumn());
+				column.setName(chart.getyColumn());				
 				column.setLabel(property.getQualifiedLabel(Locales.getCurrent()));
-				column.setCalculated(property.isCalculated());
-				column.setNumber(property.isNumber());
 				addColumn(chartTab, comparators, values, order, column);
 			}
 		}
@@ -527,7 +494,7 @@ public enum Charts {
 		}		
 		chartTab.setConditionComparators(comparators);
 		chartTab.setConditionValues(values);
-		request.getSession().setAttribute("xava_chartTab", chartTab);
+		request.getSession().setAttribute("xava_chartTab", chartTab); 
 	}
 
 	/**
@@ -543,31 +510,8 @@ public enum Charts {
 			ChartColumn column) 
 	{
 		if (!("," + tab.getPropertiesNamesAsString() + ",").contains("," + column.getName() + ",")) {
-			tab.addProperty(column.getName());
-			tab.setLabel(column.getName(), column.getLabel()); 
-			if (column.isCalculated())
-				return;
-			if (column.getComparator() != null) {
-				comparators.add(column.getComparator());
-				values.add(column.getValueForCondition());				
-			}
-			else {
-				comparators.add(null);
-				values.add(null);				
-			}
-			if (column.getOrder() != null) {
-				order.append(order.length() == 0?"":", ");
-				order.append("${");
-				order.append(column.getName());
-				order.append("} ");
-				order.append(column.getOrder() == ChartColumn.Order.ASCENDING?"ASC":"DESC");				
-			}
-			if (column.isSum()) {
-				tab.addSumProperty(column.getName());
-			}
-			else {
-				tab.removeSumProperty(column.getName());
-			}
+			tab.addProperty(column.getName());			
+			tab.setLabel(column.getName(), column.getLabel());
 		}
 	}
 	

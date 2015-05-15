@@ -47,7 +47,7 @@ public class Quote extends Identifiable {
 	@ReferenceView("Simplest")
 	private Customer customer;
 	
-	@RemoveSelectedAction(forViews="QuoteWithRemoveElementCollection", value="Collection.removeSelected")
+	@RemoveSelectedAction(forViews="QuoteWithRemoveElementCollection", value="Collection.removeSelected") 
 	@javax.validation.constraints.Size(min=1, max=3)  
 	@ElementCollection
 	@ListProperties("product.number, product.description, unitPrice, quantity, amount[quote.amountsSum, quote.taxes, quote.total]")

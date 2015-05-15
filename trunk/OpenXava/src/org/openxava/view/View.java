@@ -2567,7 +2567,7 @@ public class View implements java.io.Serializable {
 			if (Maps.isEmpty(element)) continue;
 			if (containsReferences) element = Maps.plainToTree(element);
 			collectionValues.add(element);
-		}						
+		}			
 		setCollectionEditionRowFromChangedProperty();
 		oldCollectionTotals = collectionTotals; 
 		moveCollectionValuesToViewValues();
@@ -4671,14 +4671,14 @@ public class View implements java.io.Serializable {
 	public String getRemoveCollectionElementAction() {
 		return removeCollectionElementAction == null?"Collection.remove":removeCollectionElementAction; 
 	}
-	
+
 	public void setRemoveCollectionElementAction(
 			String removeCollectionElementAction) {		
 		this.removeCollectionElementAction = removeCollectionElementAction;
 	}
 	
-	public String getRemoveSelectedCollectionElementsAction() {		
-		return removeSelectedCollectionElementsAction == null?"Collection.removeSelected":removeSelectedCollectionElementsAction; 
+	public String getRemoveSelectedCollectionElementsAction() {				
+		return removeSelectedCollectionElementsAction == null && !isRepresentsElementCollection()?"Collection.removeSelected":removeSelectedCollectionElementsAction;  
 	}
 
 	public void setRemoveSelectedCollectionElementsAction(
@@ -5644,22 +5644,11 @@ public class View implements java.io.Serializable {
 		collectionTab.friendExecuteJspDeselect(deselect);
 	}
 
-	public void moveCollectionElement(int from, int to) throws Exception { 
+	public void moveCollectionElement(int from, int to) throws Exception {
 		assertRepresentsCollection("moveCollectionElement()");		
 		PropertiesManager pm = new PropertiesManager(getParent().getEntity()); 
 		List elements = (List) pm.executeGet(getMemberName());
 		XCollections.move(elements, from, to);
 	}
-	
-	/**
-	 * Gets the model defined remove element from collection. Used for 
-	 * ElementCollection.
-	 * @since 5.3
-	 * @return The remove collection action. Might return a null value.
-	 */
-	public String getRemoveElementCollectionAction() {
-		return removeCollectionElementAction;
-	}
-
-
+		
 }
