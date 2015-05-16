@@ -30,7 +30,7 @@ public class ApplicantTest extends ModuleTestBase {
 		assertNoErrors();
 		execute("Mode.list");
 		assertListRowCount(2);
-		assertValueInList(1, 0, "JUNIT APPLICANT");
+		assertValueInList(1, 0, "JUNIT APPLICANT"); 
 		execute("CRUD.deleteRow", "row=1");
 		assertListRowCount(1);
 	}
@@ -92,7 +92,7 @@ public class ApplicantTest extends ModuleTestBase {
 	public void testPolymorphicReferenceFromBaseClass() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
-		assertValue("name", "JUANILLO");
+		assertValue("name", "JUANILLO"); 
 		assertValue("skill.description", "PROGRAMMING");
 		assertValue("skill.language", "JAVA");
 		assertValue("platform", "MULTIPLATFORM");		 

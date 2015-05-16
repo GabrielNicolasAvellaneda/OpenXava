@@ -1883,7 +1883,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertListNotEmpty();
 		execute("Charts.charts");
 		assertEditable("name");
-		assertValue("name", "INVOICE REPORT");
+		assertValue("name", "INVOICE REPORT"); 
 		assertValidValues("chartType", new String[][]{
 				{"", ""},
 				{Integer.toString(Chart.ChartType.BAR.ordinal()), "Bar"},

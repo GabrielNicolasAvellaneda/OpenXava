@@ -200,9 +200,9 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValue("website", "");
 		execute("WebURL.go", "property=website,viewObject=xava_view_section0");
 		assertError("Empty URL, so you cannot go to it");
-		setValue("website", "http://www.example.com/");
+		setValue("website", "http://www.example.org/"); 
 		execute("WebURL.go", "property=website,viewObject=xava_view_section0");		
-		assertTrue(getHtml().indexOf("This domain is established to be used for illustrative examples") >= 0); 
+		assertTrue(getHtml().indexOf("This domain is established to be used for illustrative examples") >= 0);  
 		
 	}
 	
