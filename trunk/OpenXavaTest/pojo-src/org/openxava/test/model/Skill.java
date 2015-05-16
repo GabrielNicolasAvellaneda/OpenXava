@@ -10,6 +10,7 @@ import org.openxava.model.*;
  * @author Javier Paniza
  */
 @Entity
+@Tab(defaultOrder="${description} asc") 
 public class Skill extends Identifiable {
 
 	@Column(length=60) @Required
