@@ -305,7 +305,7 @@ openxava.initLists = function(application, module) {
 	});				
 	openxava.setListsSize(application, module, "list", openxava.listAdjustment); 
 	openxava.setListsSize(application, module, "collection", openxava.collectionAdjustment);
-	$('.xava_draggable').sorttable({
+	$('.xava_sortable_column').sorttable({ 
 		placeholder: 'xava_placeholder',
 	    helperCells: null,
 	    items: '>:gt(1)',
@@ -319,6 +319,16 @@ openxava.initLists = function(application, module) {
 	    	var tableId = $(event.target).closest("table").attr("id"); 
 	    	Tab.moveProperty(tableId, ui.item.startPos - 2, ui.item.index() - 2);
 	    }
+	});
+	$('.xava_sortable_row').sortable({ 
+		items: '>:gt(0)', 
+	    start: function( event, ui ) {	    	
+	    	ui.item.startPos = ui.item.index(); 
+	    },		
+	    stop: function( event, ui ) {
+	    	var tableId = $(event.target).closest("table").attr("id");
+	    	View.moveCollectionElement(tableId, ui.item.startPos - 1, ui.item.index() - 1);
+	    }	
 	});
 }
 

@@ -137,19 +137,19 @@ for (int f=0; f < rowCount; f++) {
 	 <a title='<xava:message key="remove_row"/>' href="javascript:openxava.executeAction('<%=app%>', '<%=module%>', '', false, '<%=removeSelectedAction%>', 'row=<%=f%>,viewObject=<%=viewName%>')">
 		<img 		 
 			src='<%=request.getContextPath()%>/xava/images/delete.gif'
-			border='0' align='middle' "/>
+			border='0' align='absmiddle' "/>
 	</a>
 	<%} else if (suppressRemoveAction){%>
 	 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)">
 		<img 		 
 			src='<%=request.getContextPath()%>/xava/images/spacer.gif'
-			border='0' align='middle'/>
+			border='0' align='absmiddle'/>
 	 </a>
 	<%} else { %>
 	 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)">
 		<img 		 
 			src='<%=request.getContextPath()%>/xava/images/delete.gif'
-			border='0' align='middle' onclick="elementCollectionEditor.removeRow('<%=app%>', '<%=module%>', this, <%=f%>, <%=hasTotals%>)"/>
+			border='0' align='absmiddle' onclick="elementCollectionEditor.removeRow('<%=app%>', '<%=module%>', this, <%=f%>, <%=hasTotals%>)"/>
 	 </a>
 	<%} %>	
 	</nobr>
