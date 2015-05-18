@@ -36,9 +36,9 @@ public class Invoice extends Identifiable {
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
 	private Customer customer;
 	
-	@ElementCollection
+	@ElementCollection @OrderColumn
 	@ListProperties("product.number, product.description, unitPrice, quantity, amount[invoice.sum, invoice.vat, invoice.total]")
-	private Collection<InvoiceDetail> details;
+	private List<InvoiceDetail> details;
 	
 	@Stereotype("TEXT_AREA")
 	private String remarks;
@@ -100,11 +100,11 @@ public class Invoice extends Identifiable {
 		this.customer = customer;
 	}
 
-	public Collection<InvoiceDetail> getDetails() {
+	public List<InvoiceDetail> getDetails() {
 		return details;
 	}
 
-	public void setDetails(Collection<InvoiceDetail> details) {
+	public void setDetails(List<InvoiceDetail> details) {
 		this.details = details;
 	}
 

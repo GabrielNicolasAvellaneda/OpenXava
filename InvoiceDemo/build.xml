@@ -60,6 +60,5 @@
 			<property name="schema.path" value="../OpenXavaTest/lib/hsqldb.jar"/>
 		</ant>
 	</target>	
-	
-						
+
 </project>

@@ -35,13 +35,17 @@ boolean resizeColumns = style.allowsResizeColumns() && XavaPreferences.getInstan
 String browser = request.getHeader("user-agent");
 boolean scrollSupported = !(browser != null && (browser.indexOf("MSIE 6") >= 0 || browser.indexOf("MSIE 7") >= 0));
 String styleOverflow = org.openxava.web.Lists.getOverflow(browser, subview.getMetaPropertiesList());
-String collectionClass = subview.isEditable()?"class='" + style.getElementCollection() + "'":""; 
+String collectionClass = subview.isEditable()?"class='" + style.getElementCollection() + "'":"";
+boolean sortable = subview.isCollectionSortable();
+String removeSelectedAction = subview.getRemoveSelectedCollectionElementsAction();
+boolean suppressRemoveAction = removeSelectedAction != null && "".equals(removeSelectedAction);
 %>
 <div <%=collectionClass%>>
 <% if (resizeColumns && scrollSupported) { %> 
 <div class="<xava:id name='collection_scroll'/>" style="<%=styleOverflow%>">
 <% } %>
 <table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<% if (sortable) { %><tbody class="xava_sortable_elements"><% } %> 
 <tr class="<%=style.getListHeader()%>">
 	<% if (subview.isCollectionEditable()) { %>
 	<th class=<%=style.getListHeaderCell()%> width="5"/>
@@ -115,20 +119,39 @@ for (int f=0; f < rowCount; f++) {
 	String events=f%2==0?style.getListPairEvents():style.getListOddEvents();
 	String newRowStyle = subview.isCollectionEditable() && f == rowCount - 1?"display: none;":"";
 	String lastRowEvent = subview.isCollectionEditable() && f >= rowCount - 2?"onchange='elementCollectionEditor.onChangeRow(this, "+  f + ")'":"";
-	String removeStyle = subview.isCollectionEditable() && f >= rowCount - 2?"style='visibility:hidden;'":"";
+	String actionsStyle = subview.isCollectionEditable() && f >= rowCount - 2?"style='visibility:hidden;'":"";
 	String app = request.getParameter("application");
 	String module = request.getParameter("module");
 	boolean hasTotals = subview.getCollectionTotalsCount() > 0;
+	String sortableClass = subview.isCollectionEditable() && f >= rowCount - 2?"":"xava_sortable_element_row";
 %>
-<tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid; <%=newRowStyle%>">
+<tr id="<%=idRow%>" class="<%=cssClass%> <%=sortableClass%>" <%=events%> style="border-bottom: 1px solid; <%=newRowStyle%>">
 <% if (subview.isCollectionEditable()) { %>
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
-	<nobr>
-	 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)" <%=removeStyle%>>
+	<nobr <%=actionsStyle%>>
+	<%if (sortable) { %>
+	<img class="xava_handle" align='absmiddle'  
+		src='<%=request.getContextPath()%>/<%=style.getImagesFolder()%>/<%=style.getMoveRowImage()%>' border='0' />
+	<%}%>
+	<%if (!Is.emptyString(removeSelectedAction)) {%>
+	 <a title='<xava:message key="remove_row"/>' href="javascript:openxava.executeAction('<%=app%>', '<%=module%>', '', false, '<%=removeSelectedAction%>', 'row=<%=f%>,viewObject=<%=viewName%>')">
 		<img 		 
 			src='<%=request.getContextPath()%>/xava/images/delete.gif'
-			border='0' align='middle' onclick="elementCollectionEditor.removeRow('<%=app%>', '<%=module%>', this, <%=f%>, <%=hasTotals%>)"/>
+			border='0' align='absmiddle' "/>
 	</a>
+	<%} else if (suppressRemoveAction){%>
+	 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)">
+		<img 		 
+			src='<%=request.getContextPath()%>/xava/images/spacer.gif'
+			border='0' align='absmiddle'/>
+	 </a>
+	<%} else { %>
+	 <a title='<xava:message key="remove_row"/>' href="javascript:void(0)">
+		<img 		 
+			src='<%=request.getContextPath()%>/xava/images/delete.gif'
+			border='0' align='absmiddle' onclick="elementCollectionEditor.removeRow('<%=app%>', '<%=module%>', this, <%=f%>, <%=hasTotals%>)"/>
+	 </a>
+	<%} %>	
 	</nobr>
 	</td>
 <% } %>
@@ -186,6 +209,7 @@ for (int f=0; f < rowCount; f++) {
 %>
 </tr>
 <jsp:include page="collectionTotals.jsp" />
+<% if (sortable) { %></tbody><% } %>
 </table>
 <% if (resizeColumns && scrollSupported) { %>
 </div>

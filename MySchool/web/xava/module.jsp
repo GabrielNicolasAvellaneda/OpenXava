@@ -121,8 +121,8 @@
 	<link rel="stylesheet" type="text/css" media="all" href="<%=contextPath%><%=cssFile%>?ox=<%=version%>"/>
 <%
 	}
-%> 	
-	
+%>
+	<link href="<%=contextPath%>/xava/editors/style/c3.css?ox=<%=version%>" rel="stylesheet" type="text/css"> 	
 	<script type='text/javascript' src='<%=contextPath%>/xava/js/dwr-engine.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=contextPath%>/dwr/util.js?ox=<%=version%>'></script>
 	<script type='text/javascript' src='<%=contextPath%>/dwr/interface/Module.js?ox=<%=version%>'></script>

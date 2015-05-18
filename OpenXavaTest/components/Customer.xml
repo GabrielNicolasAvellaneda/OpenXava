@@ -17,7 +17,7 @@
 				<valid-value value="special"/>     
 			</valid-values>  			
 			<default-value-calculator class="org.openxava.calculators.IntegerCalculator">
-				<set property="value" value="1"/>
+				<set property="value" value="3"/>
 			</default-value-calculator>     
 		</property>
 		

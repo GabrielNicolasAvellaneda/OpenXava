@@ -1,20 +1,23 @@
 Change Log for OpenXava project
 ===============================
 
-- @RemoveSelectedAction available for @ElementCollection.
-- New properties startInLastVisitedModule and rememberVisitedModules in naviox.properties.
+OpenXava 5.3 (2015-5-18)
+------------------------
 - Charts generated automatically from list data.
-- New method assertValidValueExists() in ModuleTestBase.
 - A List annotated with @OrderColumn can be sorted by the user with drag & drop.
-- Combo has no blank option in enum properties with @Required. 
 - JPA 2.1 (JSR-338) support.
 - Bean Validation 1.1 (JSR-349) support.
+- Combo has no blank option in enum properties with @Required. 
+- New properties startInLastVisitedModule and rememberVisitedModules in naviox.properties.
+- Default controllers.xml in new projects.
+- @RemoveSelectedAction available for @ElementCollection.
+- New method assertValidValueExists() in ModuleTestBase.
 - Hibernate upgraded to 4.3.9.
 - Hibernate Validator upgraded to 5.1.3.
+- HSQLDB used in sample projects upgraded to 2.3.2.
 - Classic Hibernate Validator (3.1) dropped.
 - Ant target updateSchema no longer supported for XML components.
 - Automated Business Logic (ABL) library dropped.
-- HSQLDB used in sample projects upgraded to 2.3.2.
 - Fix: Creating a new element in a collection with @OrderColumn fails.
 - Fix: Obsolete hibernate namespace. 
 - Fix: Disabled dialogs using Liferay 5.1 style.
