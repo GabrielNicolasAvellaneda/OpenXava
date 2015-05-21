@@ -33,6 +33,7 @@ org.openxava.tab.impl
 org.openxava.tab.meta
 org.openxava.tab.meta.xmlparse
 org.openxava.tests
+org.openxava.tools
 org.openxava.types
 org.openxava.util
 org.openxava.util.impl
