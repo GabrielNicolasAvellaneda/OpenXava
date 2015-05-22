@@ -1395,7 +1395,15 @@ public class AnnotatedClassParser {
 			collection.setMetaCalculator(null); 
 		}		
 		if (element.isAnnotationPresent(OrderColumn.class)) {
-			collection.setSortable(true);
+			if (element instanceof Field) {
+				Field field = (Field) element; 
+				if (List.class.isAssignableFrom(field.getType())) {
+					collection.setSortable(true);
+				}
+				else {
+					log.warn(XavaResources.getString("order_column_requires_list", collection.getName()));
+				}
+			}
 		}
 		
 		if (element.isAnnotationPresent(javax.validation.constraints.Size.class)) {
