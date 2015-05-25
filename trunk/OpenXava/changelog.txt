@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Some custom reports frozen in some databases, such as MS SQL Server. 
 - Fix: @OrderColumn with java.util.Collection allows the user reorder when the order is not persisted.
 
 OpenXava 5.3 (2015-5-18)
