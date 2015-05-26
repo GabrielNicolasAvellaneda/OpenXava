@@ -522,7 +522,7 @@ public class Tab implements java.io.Serializable {
 					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
 					if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i]) ||
 						RANGE_COMPARATOR.equals(this.conditionComparators[i]) ||
-						Timestamp.class.equals(p.getType()) && EQ_COMPARATOR.equals(this.conditionComparators[i])) {
+						p.isTypeOrStereotypeCompatibleWith(Timestamp.class) && EQ_COMPARATOR.equals(this.conditionComparators[i])) { 
 						metaPropertiesKey.add(null);
 						metaPropertiesKey.add(null);
 					}
@@ -554,16 +554,16 @@ public class Tab implements java.io.Serializable {
 							sb.append(')');
 						}
 						else {
-							v = p.parse(value, getLocale()); 
+							v = p.parse(value, getLocale());
 						} 
-						if (v instanceof Timestamp && EQ_COMPARATOR.equals(this.conditionComparators[i])) {							
-							if (Dates.hasTime((Timestamp) v)) {
+						if ((v instanceof Timestamp || p.isTypeOrStereotypeCompatibleWith(Timestamp.class)) && EQ_COMPARATOR.equals(this.conditionComparators[i])) {  						 
+							if (Dates.hasTime((java.util.Date) v)) { 
 								valuesToWhere.add(v);
 								valuesToWhere.add(v);
 							}
 							else {
-								valuesToWhere.add(Dates.cloneWithoutTime((Timestamp) v));
-								valuesToWhere.add(Dates.cloneWith2359((Timestamp) v));								
+								valuesToWhere.add(Dates.cloneWithoutTime((java.util.Date) v));
+								valuesToWhere.add(Dates.cloneWith2359((java.util.Date) v));								
 							}
 							comparatorsToWhere.add(this.conditionComparators[i]);
 							comparatorsToWhere.add(this.conditionComparators[i]);
@@ -680,7 +680,7 @@ public class Tab implements java.io.Serializable {
 		if (NOT_IN_COMPARATOR.equals(comparator)) return "not in"; 
 		if (RANGE_COMPARATOR.equals(comparator)) return "between ? and ";
 		if (EQ_COMPARATOR.equals(comparator)) {
-			if (p.getType().equals(Timestamp.class)) {
+			if (p.isTypeOrStereotypeCompatibleWith(Timestamp.class)) {  			
 				return "between ? and ";
 			}
 			else {
@@ -1066,10 +1066,10 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 	
-	private void setConditionValuesImpl(String [] values) throws XavaException { 
+	private void setConditionValuesImpl(String [] values) throws XavaException {
 		if (Arrays.equals(this.conditionValues, values)) return;
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
-		this.conditionValues = values;
+		this.conditionValues = values;		
 		condition = null;
 	}
 	

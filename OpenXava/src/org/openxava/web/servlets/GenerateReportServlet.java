@@ -96,7 +96,6 @@ public class GenerateReportServlet extends HttpServlet {
 
 		private Object getValueWithoutWebEditorsFormat(int row, int column){
 			Object r = original.getValueAt(row, column);
-
 			if (r instanceof Boolean) {
 				if (((Boolean) r).booleanValue()) return XavaResources.getString(locale, "yes");
 				return XavaResources.getString(locale, "no");
@@ -108,17 +107,10 @@ public class GenerateReportServlet extends HttpServlet {
 				}
 			}
 			
-			if (r instanceof java.util.Date) {				
+			if (r instanceof java.util.Date) {
 				MetaProperty p = getMetaProperty(column); // In order to use the type declared by the developer 
-					// and not the one returned by JDBC or the JPA engine				
-				if (java.sql.Time.class.isAssignableFrom(p.getType())) {
-					return DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(r);
-				}
-				if (java.sql.Timestamp.class.isAssignableFrom(p.getType())) {
-					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-					return dateFormat.format( r );
-				}
-				return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(r);
+					// and not the one returned by JDBC or the JPA engine
+				return p.format(r, locale); 
 			}
 
 			if (r instanceof BigDecimal) {
