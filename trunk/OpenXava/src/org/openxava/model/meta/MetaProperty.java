@@ -868,7 +868,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return new BigDecimal(n.toString());
 			}
 			
-			if (java.sql.Timestamp.class.isAssignableFrom(type)) {
+			if (isTimestamp()) {  
 				if (emptyString) return null;
 				java.util.Date date = null;
 				try {
@@ -877,7 +877,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				catch (ParseException ex) {
 					date = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
 				}
-				return new Timestamp(date.getTime());
+				return java.sql.Timestamp.class.isAssignableFrom(type)?new Timestamp(date.getTime()):date; 
 			}		
 			
 			if (java.sql.Time.class.isAssignableFrom(type)) { 
@@ -943,6 +943,32 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		throw new ParseException(XavaResources.getString("from_string_on_property_not_supported", type), -1);
 	}
 	
+	private boolean isTimestamp() { 
+		return isTypeOrStereotypeCompatibleWith(java.sql.Timestamp.class);
+	}
+	
+	/**
+	 * 
+	 * @since 5.3.1
+	 */
+	public boolean isTypeOrStereotypeCompatibleWith(Class type) { 
+		if (type.isAssignableFrom(getType())) return true;
+		if (Is.emptyString(getStereotype())) return false;
+		try {
+			String typeName = TypeStereotypeDefault.forStereotype(getStereotype());
+			Class stereotypeType = Class.forName(typeName);
+			return type.isAssignableFrom(stereotypeType);
+		}
+		catch (ClassNotFoundException ex) {
+			log.warn(XavaResources.getString("type_compatible_error", getName(), type.getName()), ex);			
+			return false; 
+		}
+		catch (ElementNotFoundException ex) {
+			return false;
+		}
+	}
+	
+
 	private Object parseEnum(String value) throws Exception { 
 		// We parse as an int
 		if (Is.emptyString(value) || "null".equals(value)) return null;
@@ -1019,7 +1045,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			if (java.sql.Time.class.isAssignableFrom(type)) { 
 				return timeFormat.format(value);
-			}			
+			}
+			if (isTimestamp()) { 
+				return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale).format(value); 
+			}		
 			if (java.util.Date.class.isAssignableFrom(type)) {
 				return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(value);
 			}
