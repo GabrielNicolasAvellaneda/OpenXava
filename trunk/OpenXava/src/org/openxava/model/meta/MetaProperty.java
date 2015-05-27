@@ -1041,7 +1041,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				numberFormat.setMaximumFractionDigits(getScale());
 				numberFormat.setMinimumFractionDigits(getScale());
-				return numberFormat.format(value);				
+				return numberFormat.format(value);
 			}
 			if (java.sql.Time.class.isAssignableFrom(type)) { 
 				return timeFormat.format(value);

@@ -17,8 +17,7 @@ public class MoneyFormatter implements IFormatter {
 
 	public String format(HttpServletRequest request, Object object)	throws Exception {
 		if (object == null) return "";
-		String result = getFormat().format(object);
-		return result;		
+		return getFormat().format(object);
 	}
 
 	public Object parse(HttpServletRequest request, String string) throws Exception {
