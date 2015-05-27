@@ -183,7 +183,9 @@ public class ModelParser extends XmlElementsNames {
 		p.setStereotype(el.getAttribute(xstereotype[lang]));
 		p.setTypeName(el.getAttribute(xtype[lang]));
 		p.setSize(ParserUtil.getAttributeInt(el, xsize[lang]));
-		p.setScale(ParserUtil.getAttributeInt(el, xscale[lang]));
+		if (!Is.emptyString(el.getAttribute(xscale[lang]))) { 
+			p.setScale(ParserUtil.getAttributeInt(el, xscale[lang]));
+		} 
 		p.setHidden(ParserUtil.getAttributeBoolean(el, xhidden[lang]));
 		p.setVersion(ParserUtil.getAttributeBoolean(el, xversion[lang]));
 		p.setSearchKey(ParserUtil.getAttributeBoolean(el, xsearch_key[lang]));

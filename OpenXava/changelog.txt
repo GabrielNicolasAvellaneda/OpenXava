@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Default scale is ignored with XML components. 
 - Fix: The time part is not exported to Excel for stereotype DATETIME with a java.util.Date property.
 - Fix: Filtering in list does not work for stereotype DATETIME with a java.util.Date property.
 - Fix: Spanish format for dates in Excel generation, even if the locale is not Spanish.
