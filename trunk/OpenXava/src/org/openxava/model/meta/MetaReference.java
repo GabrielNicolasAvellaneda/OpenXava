@@ -236,13 +236,13 @@ public class MetaReference extends MetaMember implements Cloneable {
 	}
 	
 	public String getKeyProperty(String propertyKey){
-		Collection keys = getMetaModelReferenced().getKeyPropertiesNames();
+		Collection keys = getMetaModelReferenced().getAllKeyPropertiesNames(); 
 		if (keys.size() == 1) return keys.iterator().next().toString();
 		return "";
 	}
 	
 	public String getKeyProperties(){
-		Collection keys = getMetaModelReferenced().getKeyPropertiesNames();
+		Collection keys = getMetaModelReferenced().getAllKeyPropertiesNames(); 
 		if (keys.size() == 1) return "";
 		
 		Iterator<String> it = keys.iterator();

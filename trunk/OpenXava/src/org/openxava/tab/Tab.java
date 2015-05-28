@@ -483,9 +483,9 @@ public class Tab implements java.io.Serializable {
 					if (keyValues.contains(DESCRIPTIONS_LIST_SEPARATOR)) { 
 						keyValues = keyValues.substring(0, keyValues.indexOf(DESCRIPTIONS_LIST_SEPARATOR));
 					}
-					StringTokenizer st = new StringTokenizer(keyValues, ".");					
-					for (CmpField field : fields) {
-						String property = field.getCmpPropertyName().substring(field.getCmpPropertyName().lastIndexOf('_') + 1);
+					StringTokenizer st = new StringTokenizer(keyValues, ".");
+					for (CmpField field : fields) {					
+						String property = field.getCmpPropertyName().substring(field.getCmpPropertyName().indexOf('_', 1) + 1).replace("_", "."); 
 						String value = st.nextToken();
 						MetaProperty metaProperty = getMetaTab().getMetaModel().getMetaReference(reference).getMetaModelReferenced().getMetaProperty(property);
 						valuesToWhere.add(metaProperty.parse(value.toString(), getLocale()));
@@ -503,7 +503,8 @@ public class Tab implements java.io.Serializable {
 						
 						if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
 						metaPropertiesKey.add(metaProperty);						
-					}					
+					}
+					
 				}
 				else if (!Is.emptyString(this.conditionValues[i])) {
 					if (p.isNumber() && !Strings.isNumeric(this.conditionValues[i])) {
