@@ -18,6 +18,7 @@ public class ServiceExpensesTest extends ModuleTestBase {
 		assertLabelInCollection("expenses", 4, "Receptionist");
 		setValue("description", "JUNIT EXPENSES");
 		setValueInCollection("expenses", 0, "invoice.year", "2007");
+		assertValueInCollection("expenses", 0, "invoice.year", "2007"); 
 		assertValueInCollection("expenses", 0, "invoice.amount", "");
 		setValueInCollection("expenses", 0, "invoice.number", "2");
 		assertValueInCollection("expenses", 0, "invoice.amount", "1,730.00");
@@ -84,6 +85,13 @@ public class ServiceExpensesTest extends ModuleTestBase {
 		
 		execute("CRUD.delete");
 		assertNoErrors();
+		
+		execute("CRUD.new");
+		assertNoErrors();
+		setValueInCollection("expenses", 0, "invoice.year", "2015");
+		assertNoErrors();
+		setValueInCollection("expenses", 0, "invoice.number", "15"); // It does not exist
+		assertErrorsCount(1);
 	}
 			
 }
