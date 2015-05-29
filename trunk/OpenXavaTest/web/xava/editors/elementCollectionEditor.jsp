@@ -79,9 +79,9 @@ for (int columnIndex=0; it.hasNext(); columnIndex++) {
 				p = key.cloneMetaProperty();
 				p.setName(ref.getName() + "." + key.getName());
 			}		
-			if (org.openxava.web.WebEditors.mustToFormat(p, subview.getViewName())) {
-				Object value = subview.getDefaultValueInElementCollection(p.getName()); 
-				defaultValue = org.openxava.web.WebEditors.formatToStringOrArray(request, p, value, errors, subview.getViewName(), false);
+			if (org.openxava.web.WebEditors.mustToFormat(p, subview.getViewName())) {				
+				Object value = subview.getDefaultValueInElementCollection(p.getName());
+				defaultValue = value==null?null:org.openxava.web.WebEditors.formatToStringOrArray(request, p, value, errors, subview.getViewName(), false); 
 				propertyId = p.getName();
 			}		
 		}
