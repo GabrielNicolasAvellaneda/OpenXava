@@ -128,7 +128,7 @@
 		<action name="notWanted" class="org.openxava.test.actions.VoidAction"/>
 	
 	</controller>		
-		
+	
 	<controller name="HidingActions">
 	
 		<action  name="hideGeneratePdf" mode="list" 
@@ -1156,5 +1156,11 @@
         <action name="init" class="org.openxava.test.actions.ResetViewAction"
             hidden="true" on-init="true" /> 
     </controller>
+    
+	<controller name="Team">
+		<extends controller="Typical" />
+		<action name="searchPerson" image="search.gif" hidden="true"
+			class="org.openxava.test.actions.SearchPersonFromTeamMemberAction"/>
+	</controller>    
     	
 </controllers>
