@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @SearchAction is ignored the second time when inheritance is used in the reference.
 - Fix: Search key with default value calculator cleared in element collections.
 - Fix: Filtering list with a reference as descriptions list with composite key that includes other reference fails.
 - Fix: Default scale is ignored with XML components. 

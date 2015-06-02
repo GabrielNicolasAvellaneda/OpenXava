@@ -116,6 +116,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	
 	public void setReferencedModelName(String referencedModelName) {
 		this.referencedModelName = referencedModelName;
+		this.metaModelReferenced = null; 
 	}
 	
 	public boolean isRequired() {

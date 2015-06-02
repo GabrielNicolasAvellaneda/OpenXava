@@ -535,16 +535,24 @@ public class MetaView extends MetaElement implements Cloneable {
 		return result;
 	}
 	
-	public MetaView getMetaView(MetaReference r) throws XavaException {
+	public MetaView getMetaView(MetaReference r) throws XavaException { 
+		return getMetaView(r, r.getMetaModelReferenced());
+	}
+	
+	/**
+	 * 
+	 * @since 5.3.1
+	 */
+	public MetaView getMetaView(MetaReference r, MetaModel metaModelReferenced) throws XavaException { 
 		MetaView result = null;		
 		if (hasMetaReferenceViewFor(r)) {			
 			MetaReferenceView metaReferenceView = getMetaReferenceView(r);
 			String viewName = metaReferenceView.getViewName();
 			if (Is.emptyString(viewName)) {
-				result = r.getMetaModelReferenced().getMetaViewByDefault();				
+				result = metaModelReferenced.getMetaViewByDefault();				
 			}
 			else {
-				result = r.getMetaModelReferenced().getMetaView(viewName);				 
+				result = metaModelReferenced.getMetaView(viewName);				 
 			}
 			try {
 				result = (MetaView) result.clone();
@@ -557,14 +565,14 @@ public class MetaView extends MetaElement implements Cloneable {
 			MetaDescriptionsList metaDescriptionsList = getMetaDescriptionList(r);			
 			if (metaDescriptionsList != null) {
 				result.removeMembers();
-				Iterator itKeys = r.getMetaModelReferenced().getKeyPropertiesNames().iterator();
+				Iterator itKeys = metaModelReferenced.getKeyPropertiesNames().iterator();
 				while (itKeys.hasNext()) {
 					result.addMemberName((String)itKeys.next());
 				}
 			}
 		}
 		else {
-			result = r.getMetaModelReferenced().getMetaViewByDefault();			
+			result = metaModelReferenced.getMetaViewByDefault();			
 		}
 		result.setLabel(r.getLabel());
 		return result;

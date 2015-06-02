@@ -358,8 +358,12 @@ public class View implements java.io.Serializable {
 	 * @since 4.8.1
 	 */
 	public MetaView getMetaView() throws XavaException { 
-		if (metaView == null) {			
-			if (Is.emptyString(getViewName())) {
+		if (metaView == null) {
+			if (isRepresentsEntityReference() && !isRepresentsCollection()) {
+				MetaReference ref = getParent().getMetaReference(getMemberName());
+				metaView = getParent().getMetaView().getMetaView(ref, getMetaModel());
+			}
+			else if (Is.emptyString(getViewName())) {
 				metaView = getMetaModel().getMetaViewByDefault();				
 			}
 			else {
@@ -3547,7 +3551,7 @@ public class View implements java.io.Serializable {
 		representsEntityReference = !representsAggregate;
 	}
 			
-	public String getSearchAction() throws XavaException {			
+	public String getSearchAction() throws XavaException {
 		if (getMetaView().hasMetaSearchAction()) {
 			String action = getMetaView().getMetaSearchAction().getActionName();
 			if (!Is.emptyString(action)) return action; 
