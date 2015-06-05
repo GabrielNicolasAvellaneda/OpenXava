@@ -54,7 +54,6 @@
 	Se conecta a tu base de datos y actualiza el esquema para que conincida con 
 	el actual de tu aplicación.	
 	Recuerda dar valor a la propiedad schema.path.
-	(También puedes usar directamente la tarea ant 'hibernatetool')
 	-->
 	<target name="actualizarEsquema">
 		<ant antfile="../OpenXava/build.xml" target="updateSchemaJPA">			
