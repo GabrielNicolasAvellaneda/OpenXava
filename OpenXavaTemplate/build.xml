@@ -53,7 +53,6 @@
 	
 	<!--
 	Connects to your database and updates your schema in order to match to your current application.
-	(Also you can use directly 'hibernatetool' ant task)
 	-->
 	<target name="updateSchema">
 		<ant antfile="../OpenXava/build.xml" target="updateSchemaJPA">			
