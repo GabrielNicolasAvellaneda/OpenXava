@@ -16,7 +16,7 @@ public class InvoiceDetailsWithTotalsTest extends CustomizeListTestBase {
 	public void testTotalsInCollection() throws Exception { 	
 		execute("Mode.detailAndFirst");		
 		
-		assertTotalsInCollection("details", "");		
+		assertTotalsInCollection("details", ""); 		
 		assertTotalsInCollection("calculatedDetails", "Amounts sum");
 		
 		assertNoAction("List.removeColumnSum");		
@@ -71,7 +71,7 @@ public class InvoiceDetailsWithTotalsTest extends CustomizeListTestBase {
 		setValue("year", "2004");
 		setValue("number", "10");
 		execute("Search.search");
-		assertTotalInCollection("details", 2, "amount", "1,403.02");
+		assertTotalInCollection("details", 2, "amount", "1,403.02"); 
 		hideCollection("details");
 		HtmlElement header = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_InvoiceDetailsWithTotals__frame_detailsheader"); 
 		assertTrue(header.asText().endsWith("1,403.02"));

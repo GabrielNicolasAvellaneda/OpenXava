@@ -960,7 +960,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return type.isAssignableFrom(stereotypeType);
 		}
 		catch (ClassNotFoundException ex) {
-			log.warn(XavaResources.getString("type_compatible_error", getName(), type.getName()), ex);			
 			return false; 
 		}
 		catch (ElementNotFoundException ex) {
