@@ -1241,7 +1241,7 @@ public class DeliveryTest extends ModuleTestBase {
 	
 	public void testGeneratePdf() throws Exception { 
 		execute("Print.generatePdf");		
-		assertContentTypeForPopup("application/pdf");
+		assertContentTypeForPopup("application/pdf"); 
 	}
 		
 	private String getCurrentDate() {

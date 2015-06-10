@@ -30,7 +30,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		"Customer.showSellerInList"
 	};
 
-	public CustomerWithSectionTest(String testName) {
+	public CustomerWithSectionTest(String testName) { 
 		super(testName, "CustomerWithSection", true);		
 	}
 	
