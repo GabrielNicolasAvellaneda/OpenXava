@@ -2722,8 +2722,10 @@ public class AnnotatedClassParser {
 		Collection<String> managedClassNames = new ArrayList<String>();
 		EntityManager manager = XPersistence.createManager();
 		for (ManagedType t: manager.getMetamodel().getManagedTypes()) {
-			if (t.getJavaType().isAnnotationPresent(MappedSuperclass.class)) continue; 
-			String className = t.getJavaType().getName();
+			Class<?> clazz = t.getJavaType();
+			if (clazz == null || clazz.isInterface()) continue;
+			if (clazz.isAnnotationPresent(MappedSuperclass.class)) continue; 
+			String className = clazz.getName();
 			managedClassNames.add(className);
 		}
 		manager.close();
