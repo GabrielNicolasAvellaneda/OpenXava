@@ -71,7 +71,9 @@ public class SchemaTool {
 			}
 			else {
 				for (ManagedType type: XPersistence.getManager().getMetamodel().getManagedTypes()) {
-					cfg.addAnnotatedClass(type.getJavaType());
+					Class<?> clazz = type.getJavaType();
+					if (clazz == null || clazz.isInterface()) continue;
+					cfg.addAnnotatedClass(clazz);
 				}		
 			}
 			Properties props = new Properties();
