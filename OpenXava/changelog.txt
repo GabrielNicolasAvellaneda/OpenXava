@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: OpenXava does not work in Android tablets.
 - Fix: Schema update does not work with Hibernate Envers.
 - Fix: @ReadOnly with @ElementCollection makes the data lost when saving.
 - Fix: @SearchAction is ignored the second time when inheritance is used in the reference.
