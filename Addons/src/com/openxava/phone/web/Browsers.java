@@ -12,7 +12,7 @@ public class Browsers {
 	
 	public static boolean isMobile(HttpServletRequest request) {
 		String browser = request.getHeader("user-agent");
-		return browser != null && (browser.contains("Android") || browser.contains("iPhone"));
+		return browser != null && ((browser.contains("Android") && browser.contains("Mobile")) || browser.contains("iPhone")); 
 	}
 	
 	/**
