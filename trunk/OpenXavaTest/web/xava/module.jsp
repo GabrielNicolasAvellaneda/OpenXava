@@ -292,13 +292,7 @@ if (manager.isResetFormPostNeeded()) {
 		openxava.<%=initiated%> = true;
 	}	
 }
-<%-- tmp ini
-window.onload = <%=onLoadFunction%>;
-setTimeout('<%=onLoadFunction%>()', 1000);
---%>
-<%-- tmp ini --%>
 <%=onLoadFunction%>();
-<%-- tmp fin --%>
 document.additionalParameters="<%=getAdditionalParameters(request)%>";
 </script>
 <% }

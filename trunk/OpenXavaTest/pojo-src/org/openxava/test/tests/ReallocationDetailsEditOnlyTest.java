@@ -16,7 +16,7 @@ public class ReallocationDetailsEditOnlyTest extends ModuleTestBase {
 		super(testName, "ReallocationDetailsEditOnly");		
 	}	
 	
-	public void testDefaultValueCalculatorForReferencesInElementCollections() throws Exception {
+	public void testEditOnlyElementCollections() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertValue("description", "THE BIG REALLOCATION");
 		assertNoErrors();
