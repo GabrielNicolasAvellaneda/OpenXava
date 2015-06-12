@@ -2532,6 +2532,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void assignValuesToElementCollection(String qualifier) {
+		if (!isCollectionMembersEditables()) return; 
 		int oldCount = collectionValues == null?0:collectionValues.size(); 
 		collectionValues = new ArrayList();		
 		mustRefreshCollection = false;

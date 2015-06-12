@@ -36,7 +36,6 @@ public class SeveralModulesTest extends ModuleTestBase {
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
-		imageUrl = "C:/Users/javi/workspace/OpenXavaTest/test-images/foto_javi.jpg";
 		setFileValue("newImage", imageUrl);
 		execute("LoadImage.loadImage");		
 		assertNoErrors();
