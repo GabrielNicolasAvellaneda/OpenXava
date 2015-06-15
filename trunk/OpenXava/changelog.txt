@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Ordering rows in @OrderColumn collections does not work in touch screens.
+- Fix: Moving and resizing columns in list in collection does not work with touch screens.
 - Fix: Removing a second row removes all rows until the end with element collections.
 - Fix: Removing a row after adding several rows remove all rows after it in element collections.
 - Fix: OpenXava does not work in Android tablets.
