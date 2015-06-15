@@ -161,9 +161,7 @@ public class TrainingTest extends ModuleTestBase {
 		assertValueInCollection("sessions", 2, "description", "THREE"); 
 		assertValueInCollection("sessions", 2, "kms", "13");		
 		
-		row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___1"); 
-		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
-		removeIcon.click();
+		removeSessionsRow(1); 
 		assertCollectionRowCount("sessions", 2);
 		assertValueInCollection("sessions", 0, "description", "ONE"); 
 		assertValueInCollection("sessions", 0, "kms", "11");
@@ -194,9 +192,7 @@ public class TrainingTest extends ModuleTestBase {
 		assertValueInCollection("sessions", 3, "description", "FIVE"); 
 		assertValueInCollection("sessions", 3, "kms", "15");
 		
-		row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___2"); 
-		removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
-		removeIcon.click();
+		removeSessionsRow(2); 
 		
 		assertCollectionRowCount("sessions", 3);
 		assertValueInCollection("sessions", 0, "description", "ONE"); 
@@ -216,9 +212,37 @@ public class TrainingTest extends ModuleTestBase {
 		assertValueInCollection("sessions", 1, "kms", "13");							
 		assertValueInCollection("sessions", 2, "description", "FIVE"); 
 		assertValueInCollection("sessions", 2, "kms", "15");
+		
+		removeSessionsRow(0);
+		
+		assertCollectionRowCount("sessions", 2);
+		assertValueInCollection("sessions", 0, "description", "THREE"); 
+		assertValueInCollection("sessions", 0, "kms", "13");							
+		assertValueInCollection("sessions", 1, "description", "FIVE"); 
+		assertValueInCollection("sessions", 1, "kms", "15");
+
+		removeSessionsRow(0);
+		
+		assertCollectionRowCount("sessions", 1);
+		assertValueInCollection("sessions", 0, "description", "FIVE"); 
+		assertValueInCollection("sessions", 0, "kms", "15");
+		
+		execute("CRUD.save");
+		assertNoErrors(); 
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertCollectionRowCount("sessions", 1);
+		assertValueInCollection("sessions", 0, "description", "FIVE"); 
+		assertValueInCollection("sessions", 0, "kms", "15");		
 						
 		execute("CRUD.delete");
 		assertNoErrors();		
+	}
+	
+	private void removeSessionsRow(int rowIndex) throws Exception { 
+		HtmlElement row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___" + rowIndex); 
+		HtmlElement removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
+		removeIcon.click();		
 	}
 
 	private void assertDateEditor() throws Exception {

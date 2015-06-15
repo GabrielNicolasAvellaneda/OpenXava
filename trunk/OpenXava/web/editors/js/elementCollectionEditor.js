@@ -53,12 +53,12 @@ elementCollectionEditor.removeRow = function(application, module, element, rowIn
 elementCollectionEditor.renumber = function(row, rowIndex) { 
 	if (!$(row).is(":visible")) return; 			
 	var token1 = new RegExp("__\\d+", "g");
-	var token2 = "__" + rowIndex;	
+	var token2 = "__" + rowIndex;
 	row.attr("id", row.attr("id").replace(token1, token2));
 	row.find('input').each(function(){	    
 	    $(this).attr('value',$(this).val());	    
 	});
-	var rowHtml = row.html().replace(token1, token2);
+	var rowHtml = row.html().replace(token1, token2).replace(new RegExp("this, \\d+,", "g"), "this, " + rowIndex + ","); 
 	row.html(rowHtml);	
 	elementCollectionEditor.renumber(row.next(), rowIndex + 1);
 }
