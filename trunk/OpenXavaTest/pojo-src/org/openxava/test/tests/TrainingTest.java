@@ -177,8 +177,46 @@ public class TrainingTest extends ModuleTestBase {
 		assertValueInCollection("sessions", 0, "description", "ONE"); 
 		assertValueInCollection("sessions", 0, "kms", "11");
 		assertValueInCollection("sessions", 1, "description", "THREE"); 
-		assertValueInCollection("sessions", 1, "kms", "13");	
+		assertValueInCollection("sessions", 1, "kms", "13");
 
+		setValueInCollection("sessions", 2, "description", "FOUR");
+		setValueInCollection("sessions", 2, "kms", "14");
+		setValueInCollection("sessions", 3, "description", "FIVE");
+		setValueInCollection("sessions", 3, "kms", "15");
+
+		assertCollectionRowCount("sessions", 4);
+		assertValueInCollection("sessions", 0, "description", "ONE"); 
+		assertValueInCollection("sessions", 0, "kms", "11");
+		assertValueInCollection("sessions", 1, "description", "THREE"); 
+		assertValueInCollection("sessions", 1, "kms", "13");			
+		assertValueInCollection("sessions", 2, "description", "FOUR"); 
+		assertValueInCollection("sessions", 2, "kms", "14");
+		assertValueInCollection("sessions", 3, "description", "FIVE"); 
+		assertValueInCollection("sessions", 3, "kms", "15");
+		
+		row = getHtmlPage().getHtmlElementById("ox_OpenXavaTest_Training__sessions___2"); 
+		removeIcon = row.getElementsByTagName("a").get(0).getElementsByTagName("img").get(0);
+		removeIcon.click();
+		
+		assertCollectionRowCount("sessions", 3);
+		assertValueInCollection("sessions", 0, "description", "ONE"); 
+		assertValueInCollection("sessions", 0, "kms", "11");
+		assertValueInCollection("sessions", 1, "description", "THREE"); 
+		assertValueInCollection("sessions", 1, "kms", "13");							
+		assertValueInCollection("sessions", 2, "description", "FIVE"); 
+		assertValueInCollection("sessions", 2, "kms", "15");
+		
+		execute("CRUD.save");
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertCollectionRowCount("sessions", 3);
+		assertValueInCollection("sessions", 0, "description", "ONE"); 
+		assertValueInCollection("sessions", 0, "kms", "11");
+		assertValueInCollection("sessions", 1, "description", "THREE"); 
+		assertValueInCollection("sessions", 1, "kms", "13");							
+		assertValueInCollection("sessions", 2, "description", "FIVE"); 
+		assertValueInCollection("sessions", 2, "kms", "15");
+						
 		execute("CRUD.delete");
 		assertNoErrors();		
 	}
