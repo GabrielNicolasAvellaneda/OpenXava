@@ -28,7 +28,8 @@ elementCollectionEditor.onChangeRow = function(element, rowIndex) {
 	elementCollectionEditor.setDefaultValues(table, rowIndex); 
 	nextRow.show();
 	$(nextRow).after(newRow);
-	currentRow.children().first().find("nobr").css('visibility', 'visible'); 
+	currentRow.children().first().find("nobr").css('visibility', 'visible');
+	currentRow.addClass("xava_sortable_element_row"); 
 }
 
 elementCollectionEditor.setDefaultValues = function(table, rowIndex) {
