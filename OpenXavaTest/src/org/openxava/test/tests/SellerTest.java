@@ -37,7 +37,7 @@ public class SellerTest extends CustomizeListTestBase {
 	public void testCollectionNotCorruptListInSplitMode() throws Exception { 
 		execute("Mode.split");
 		assertListColumnCount(3);
-		assertValueInList(0, 0, "1");
+		assertValueInList(0, 0, "1"); 
 		assertValueInList(0, 1, "MANUEL CHAVARRI");
 		execute("List.viewDetail", "row=2");
 		execute("Collection.add", "viewObject=xava_view_customers");
@@ -182,7 +182,7 @@ public class SellerTest extends CustomizeListTestBase {
 	public void testCustomEditorWithMultipleValuesFormatter_arraysInList() throws Exception {
 
 		// Arrays in list
-		assertValueInList(0, 0, "1");
+		assertValueInList(0, 0, "1"); 
 		assertValueInList(0, 1, "MANUEL CHAVARRI");
 		assertValueInList(0, 2, "1/3"); // This is a String []
 		

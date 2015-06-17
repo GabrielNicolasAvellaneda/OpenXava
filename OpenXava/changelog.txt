@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Drag and drop in @ElementCollection with @OrderColumn after adding several rows fails.
 - Fix: Checkboxes in element collections are too bigs.
 - Fix: Ordering rows in @OrderColumn collections does not work in touch screens.
 - Fix: Moving and resizing columns in list in collection does not work with touch screens.

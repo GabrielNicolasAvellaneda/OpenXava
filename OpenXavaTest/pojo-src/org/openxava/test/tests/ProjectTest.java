@@ -53,6 +53,36 @@ public class ProjectTest extends ModuleTestBase {
 		assertNoErrors();		
 	}
 	
+	public void testMoveElementAfterAddingSeveralElementsInElementCollction() throws Exception { 
+		execute("Mode.detailAndFirst");
+		assertCollectionRowCount("notes", 3);
+		assertValueInCollection("notes", 0, 0, "WE BEGIN");
+		assertValueInCollection("notes", 1, 0, "WE WORK");
+		assertValueInCollection("notes", 2, 0, "WE FINISH");
+		
+		setValueInCollection("notes", 3, "note", "A");
+		setValueInCollection("notes", 4, "note", "B");
+		setValueInCollection("notes", 5, "note", "C");
+	
+		assertCollectionRowCount("notes", 6);
+		assertValueInCollection("notes", 0, 0, "WE BEGIN");
+		assertValueInCollection("notes", 1, 0, "WE WORK");
+		assertValueInCollection("notes", 2, 0, "WE FINISH");
+		assertValueInCollection("notes", 3, 0, "A");
+		assertValueInCollection("notes", 4, 0, "B");
+		assertValueInCollection("notes", 5, 0, "C");
+		
+		moveRow("notes", 1, 4, true);
+		
+		assertCollectionRowCount("notes", 6);		
+		assertValueInCollection("notes", 0, 0, "WE BEGIN");		
+		assertValueInCollection("notes", 2, 0, "WE FINISH");
+		assertValueInCollection("notes", 3, 0, "A");
+		assertValueInCollection("notes", 4, 0, "B");
+		assertValueInCollection("notes", 1, 0, "WE WORK");
+		assertValueInCollection("notes", 5, 0, "C");
+	}
+	
 	public void testMoveElementInCollectionWithOrderColumn() throws Exception { 
 		String [] membersElements = {"JOHN", "JUAN", "PETER"};
 		moveElementInCollectionWithOrderColumn("members", membersElements, false);		
@@ -94,15 +124,21 @@ public class ProjectTest extends ModuleTestBase {
 		if (save) execute("CRUD.save"); 
 	}
 	
-	private void moveRow(String collection, int from, int to) throws Exception {   
+	private void moveRow(String collection, int from, int to) throws Exception {
+		moveRow(collection, from, to, false);
+	}
+	
+	private void moveRow(String collection, int from, int to, boolean classRequired) throws Exception {   
 		// This method does not work for all "from, to" combinations, at least with HtmlUnit 2.15
 		HtmlTable table = getHtmlPage().getHtmlElementById(decorateId(collection));
 		HtmlElement fromRow = table.getRow(from + 1);
 		fromRow.mouseDown(); 
 		HtmlElement toRow = table.getRow(to + 1);
+		if (classRequired) assertTrue(toRow.getAttribute("class").contains("xava_sortable_element_row"));
 		toRow.mouseMove();
 		toRow.mouseUp();
 		Thread.sleep(500); 		
 	}
+
 		
 }
