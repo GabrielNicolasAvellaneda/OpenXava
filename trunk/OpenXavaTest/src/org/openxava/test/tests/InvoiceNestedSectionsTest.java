@@ -23,6 +23,25 @@ public class InvoiceNestedSectionsTest extends ModuleTestBase {
 		assertContentTypeForPopup("application/pdf");		
 	}
 	
+	public void testReadOnlyCheckBoxInSpanish() throws Exception { 
+		setLocale("es");
+		execute("Mode.detailAndFirst");
+		assertValue("year", "2002");
+		assertValue("number", "1");
+		assertValue("paid", "false");
+		assertNoEditable("paid");
+		execute("InvoiceNestedSections.showPaid");
+		assertMessage("paid=false");
+		
+		execute("Navigation.next");
+		assertValue("year", "2004");
+		assertValue("number", "2");
+		assertValue("paid", "true");
+		assertNoEditable("paid");
+		execute("InvoiceNestedSections.showPaid");
+		assertMessage("paid=true");		
+	}
+	
 	public void testCalculatedPropertiesDependingFromPropertiesInOtherSections() throws Exception {  
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");		

@@ -49,7 +49,7 @@ import org.openxava.util.*;
 	@View(name="ActiveYear", extendsView="NoSections"),
 	@View(name="Simple", members="year, number, date, yearDiscount;"),
 	@View(name="NestedSections", members=
-		"year, number, date;" +
+		"year, number, date, paid;" + 
 		"customer { customer }" +
 		"data {" +				 
 		"	details { details }" +
@@ -213,6 +213,7 @@ public class Invoice {
 	private String comment;
 	
 	@Type(type="org.openxava.types.SiNoType")
+	@ReadOnly(forViews="NestedSections") 
 	private boolean paid;
 		
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
