@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- generatePortlets ant target works for WebSphere Portal 8, generateWebSpherePortal8Portlets is no longer needed.
+- Fix: Portlet application cannot be deployed on Liferay 6.0 and 6.1.
 - Fix: Boolean property with read only checkbox in Spanish has always false as value, even if it's checked.
 - Fix: Drag and drop in @ElementCollection with @OrderColumn after adding several rows fails.
 - Fix: Checkboxes in element collections are too bigs.
