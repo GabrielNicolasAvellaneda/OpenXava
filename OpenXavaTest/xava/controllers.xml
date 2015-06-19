@@ -515,6 +515,14 @@
 											
 	</controller>
 	
+	<controller name="InvoiceNestedSections">
+		<extends controller="Typical"/>
+		<subcontroller controller="InvoicePrint" image="report.gif"/>
+		<action name="showPaid" mode="detail" 
+			class="org.openxava.test.actions.ShowPropertyValueAction">
+			<set property="property" value="paid"/>
+		</action>															
+	</controller>
 
 	<controller name="InvoicePrint">
 		<action name="printPdf" mode="detail"
