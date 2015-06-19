@@ -822,22 +822,19 @@
 	</target>
 	
 	<target name="createPortletsWar">
-		<antcall target="preparePortletsWar"/> 		
+		<antcall target="preparePortletsWar"/> 	
+		<replaceregexp file="${dist.portlets.dir}/WEB-INF/web.xml" match="Addons filters begin.*Addons filters end" replace="No filters for portal" flags="s"/>
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
 	</target>
 	
 	<target name="createWebSpherePortal8War">
-		<antcall target="preparePortletsWar"/>
-		<replaceregexp file="${dist.portlets.dir}/WEB-INF/web.xml" match="Addons filters begin.*Addons filters end" replace="No filters for WebSphere Portal" flags="s"/>
-		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
+		<!-- Since v5.3.1 the standard way work just fine -->
+		<antcall target="createPortletsWar"/>
 	</target>
 	
 	<target name="generateWebSpherePortal8Portlets">
-		<antcall target="touchApplicationXML"/>
-		<delete dir="${dist.portlets.dir}"/>
-		<antcall target="createWebSpherePortal8War">
-			<param name="generate.jetspeed2.files" value="false"/>
-		</antcall>
+		<!-- Since v5.3.1 the standard way work just fine -->
+		<antcall target="generatePortlets"/>
 	</target>	
 
 	<target name="generatePortlets">
