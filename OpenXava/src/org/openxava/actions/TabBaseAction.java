@@ -62,8 +62,8 @@ abstract public class TabBaseAction extends ViewBaseAction {
 	}
 
 	protected Tab getTab() throws XavaException {
-		if (tab == null ) {			
-			String tabObject = Is.emptyString(getCollection())?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(getCollection(), ".", "_"); 
+		if (tab == null ) {
+			String tabObject = Is.emptyString(getCollection())?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(getCollection(), ".", "_");
 			tab = (Tab) getContext().get(getRequest(), tabObject);
 			tab.setRequest(getRequest()); 
 			if (tab.getCollectionView() != null) {				
@@ -75,10 +75,8 @@ abstract public class TabBaseAction extends ViewBaseAction {
 
 	public String getCollection() {
 		if (collection == null && viewObject != null) {
-			this.collection = viewObject.substring("xava_view_".length());									
-			while (this.collection.startsWith("section")) {
-				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);				
-			}
+			this.collection = viewObject.substring("xava_view_".length());
+			this.collection = this.collection.replaceAll("section\\d+_", ""); 
 			String objectName = Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
 			while (!Is.emptyString(this.collection) && !getContext().exists(getRequest(), objectName)) {
 				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);
