@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Update schema tool does not create images table for IMAGES_GALLERY estereotype. 
+- Fix: Infinite loop when generating PDF or any other list action from a collection inside a section of a reference.
 - generatePortlets ant target works for WebSphere Portal 8, generateWebSpherePortal8Portlets is no longer needed.
 - Fix: Portlet application cannot be deployed on Liferay 6.0 and 6.1.
 - Fix: Boolean property with read only checkbox in Spanish has always false as value, even if it's checked.
