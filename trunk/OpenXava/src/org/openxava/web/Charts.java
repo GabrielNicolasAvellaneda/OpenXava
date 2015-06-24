@@ -217,13 +217,11 @@ public enum Charts {
 	 * @return First column of the model.
 	 */
 	private String getAxisColumns(Tab tab) {
-		String returnValue = "";
 		for (Object metaPropertyObject : tab.getMetaProperties()) {
 			MetaProperty metaProperty = (MetaProperty)metaPropertyObject;
-			returnValue = metaProperty.getName();
-			break;
+			return metaProperty.getQualifiedName(); 			
 		}
-		return returnValue;
+		return "";	
 	}
 	
 	/**
