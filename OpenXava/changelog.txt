@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Memory leak after calling charts.
 - Fix: Charts fail when the first list column is a numeric property of a reference.
 - Fix: @ReadOnly does not work for views with inheritance inside groups or sections.
 - Fix: Update schema tool does not create images table for IMAGES_GALLERY estereotype. 
