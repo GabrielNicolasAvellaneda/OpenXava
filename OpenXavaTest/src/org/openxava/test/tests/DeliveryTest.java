@@ -50,7 +50,7 @@ public class DeliveryTest extends ModuleTestBase {
 	public DeliveryTest(String testName) {
 		super(testName, "Delivery");		
 	}
-	
+		
 	public void testFilterDescriptionsListAndEnumLetterType_myReportConditionWithDescriptionsListAndValidValues() throws Exception {
 		assertLabelInList(3, "Description of Type");
 		assertLabelInList(7, "Distance");
@@ -534,7 +534,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertEquals(date, dateAsLabel);
 	}
 	
-	public void testSecondLevelCalculatedPropertyAndDependenOf3LevelPropertyInList() throws Exception {
+	public void testSecondLevelCalculatedPropertyAndDependenOf3LevelPropertyInList_chartsWithNumericPropertyFromReferenceAsFirstColumn() throws Exception { 
 		int c = getListRowCount();
 		boolean withoutDiscount = false;
 		boolean withDiscount = true;
@@ -545,6 +545,11 @@ public class DeliveryTest extends ModuleTestBase {
 			else fail("Only 0.00 or 20.00 are valid values for invoice.sellerDiscount"); 
 		}
 		assertTrue("It's required deliveries with invoices with and without seller discount", withDiscount && withoutDiscount);
+		
+		assertLabelInList(0, "Year of Invoice"); // We need Year to test this case, because is a numeric property of a reference in the first column
+		execute("Charts.charts");
+		assertNoErrors();
+		assertExists("name");		
 	}
 		
 	public void testUseListWithOtherModelAndReturnToModuleList() throws Exception {
