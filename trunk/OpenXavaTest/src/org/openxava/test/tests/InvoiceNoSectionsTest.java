@@ -17,7 +17,7 @@ public class InvoiceNoSectionsTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertValue("year", "2002");
 		assertValue("number", "1");
-		assertValue("customer.number", "1");
+		assertValue("customer.number", "1"); 
 		assertValue("customer.name", "Javi");
 		assertValue("customer.city", "46540 EL PUIG"); // This is a calculated property that produced an error 
 		execute("Collection.edit", "row=0,viewObject=xava_view_details");

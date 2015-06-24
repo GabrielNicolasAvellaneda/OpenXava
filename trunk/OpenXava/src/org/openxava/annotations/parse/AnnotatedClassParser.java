@@ -1204,7 +1204,6 @@ public class AnnotatedClassParser {
 			}
 						
 			if (mustAddMetaView) metaView.addMetaViewProperty(propertyView);
-
 		}
 		
 		// Not applicable

@@ -39,10 +39,10 @@ public class MetaView extends MetaElement implements Cloneable {
 	private MetaView parent; // in section case
 	private String parentName = null; // at momment for use in section
 	private Collection allMetaMembers;
-	private Map metaGroups;
+	private Map<String, MetaGroup> metaGroups; 
 	private Map metaProperties;
 	private Collection propertiesNamesThrowOnChange;	
-	private List sections = null;
+	private List<MetaView> sections = null; 
 	private Collection metaMembers; // Of MetaMember
 	private Collection _membersNames = new ArrayList(); // Of String
 	private Map metaViewsReferences;
@@ -226,7 +226,7 @@ public class MetaView extends MetaElement implements Cloneable {
 			MetaProperty property = (MetaProperty) member;
 			MetaProperty newProperty = property.cloneMetaProperty();
 			member = newProperty;
-			MetaPropertyView propertyView = getMetaPropertyViewFor(property.getName());						
+			MetaPropertyView propertyView = getMetaPropertyViewFor(property.getName());
 			if (propertyView != null) {				
 				String label = propertyView.getLabel();				
 				if (!Is.emptyString(label)) {					
@@ -326,8 +326,20 @@ public class MetaView extends MetaElement implements Cloneable {
 		if (extendedFromExtendsView || Is.emptyString(getExtendsView())) return;
 		MetaView extendsView = getMetaExtendsView();
 		
-		sections = sum(extendsView.sections, sections);
-		metaGroups = sum(extendsView.metaGroups, metaGroups);
+		if (extendsView.sections != null) {
+			sections = sum(extendsView.sections, sections);
+			for (MetaView section: extendsView.sections) {
+				promote(section);
+			}
+		}
+
+		if (extendsView.metaGroups != null) {
+			metaGroups = sum(extendsView.metaGroups, metaGroups);
+			for (MetaGroup group: extendsView.metaGroups.values()) {
+				promote(group.getMetaView());
+			}
+		}
+
 		_membersNames = sum(extendsView._membersNames, _membersNames);		
 		
 		extendedFromExtendsView = true;
