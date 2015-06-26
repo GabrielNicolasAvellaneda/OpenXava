@@ -1,13 +1,18 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 5.3.1 (2015-6-29)
+--------------------------
+- Eclipse workspace included in distribution upgraded to Eclipse Mars, though it still works fine with older Eclipse versions.
+- Template project generates a project configured for HSQLDB for easy startup. 
+- start-hsqldb.bat/.sh no longer need the JAVA_HOME environment variable.
 - HSQLDB jar moved from OpenXavaTest to OpenXava.
+- generatePortlets ant target works for WebSphere Portal 8, generateWebSpherePortal8Portlets is no longer needed.
 - Fix: Memory leak after calling charts.
 - Fix: Charts fail when the first list column is a numeric property of a reference.
 - Fix: @ReadOnly does not work for views with inheritance inside groups or sections.
 - Fix: Update schema tool does not create images table for IMAGES_GALLERY estereotype. 
 - Fix: Infinite loop when generating PDF or any other list action from a collection inside a section of a reference.
-- generatePortlets ant target works for WebSphere Portal 8, generateWebSpherePortal8Portlets is no longer needed.
 - Fix: Portlet application cannot be deployed on Liferay 6.0 and 6.1.
 - Fix: Boolean property with read only checkbox in Spanish has always false as value, even if it's checked.
 - Fix: Drag and drop in @ElementCollection with @OrderColumn after adding several rows fails.
