@@ -160,6 +160,7 @@
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.js?ox=<%=version%>"></script>	 
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery-ui.js?ox=<%=version%>"></script>
 	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.sorttable.js?ox=<%=version%>"></script>	
+	<script type="text/javascript" src="<%=contextPath%>/xava/js/jquery.ui.touch-punch.js?ox=<%=version%>"></script>	
 	<%
 		File jsEditorsFolder = new File(realPath + "/xava/editors/js");		
 		String[] jsEditors = jsEditorsFolder.list();
@@ -292,8 +293,7 @@ if (manager.isResetFormPostNeeded()) {
 		openxava.<%=initiated%> = true;
 	}	
 }
-window.onload = <%=onLoadFunction%>;
-setTimeout('<%=onLoadFunction%>()', 1000);
+<%=onLoadFunction%>();
 document.additionalParameters="<%=getAdditionalParameters(request)%>";
 </script>
 <% }

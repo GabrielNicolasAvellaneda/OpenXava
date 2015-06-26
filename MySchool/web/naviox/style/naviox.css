@@ -616,7 +616,7 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	background: inherit;
 }
 
-.ox-element-collection .editor {
+.ox-element-collection .editor { 
 	width: 100%; 
 	box-sizing: border-box; 
 	-moz-box-sizing: border-box; 
@@ -624,6 +624,11 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 	height: 30px;
 }
 
+.ox-element-collection input[type="checkbox"] {
+	height: inherit;
+	margin-left: auto;
+    margin-right: auto;
+}
 
 .ox-element-collection .ox-list-pair, .ox-element-collection .ox-list-odd {
 	border-bottom-style: hidden; 
