@@ -213,10 +213,11 @@
 	</view>		
 			
 	<view name="NestedSections">
+		<property-view property="paid" read-only="true"/>
 		<reference-view reference="customer" view="Simple"/>
 		
 		<members>
-			year, number, date;
+			year, number, date, paid;
 			<section name="customer">customer</section>
 			<section name="data">				 
 				<section name="details">details</section>

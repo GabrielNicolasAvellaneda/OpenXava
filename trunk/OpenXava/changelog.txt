@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- HSQLDB jar moved from OpenXavaTest to OpenXava.
 - Fix: Memory leak after calling charts.
 - Fix: Charts fail when the first list column is a numeric property of a reference.
 - Fix: @ReadOnly does not work for views with inheritance inside groups or sections.

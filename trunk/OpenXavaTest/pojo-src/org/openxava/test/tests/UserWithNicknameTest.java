@@ -70,7 +70,7 @@ public class UserWithNicknameTest extends ModuleTestBase {
 		removeFiles();		
 	}	
 
-	public void testStoreFrameStatusWithTooLongName() throws Exception {
+	public void testStoreFrameStatusWithTooLongName() throws Exception { 
 		assertListRowCount(0);
 		execute("CRUD.new");		
 		//Open frame		

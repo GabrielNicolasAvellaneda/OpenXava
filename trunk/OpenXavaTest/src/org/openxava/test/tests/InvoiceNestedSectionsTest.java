@@ -28,7 +28,7 @@ public class InvoiceNestedSectionsTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertValue("year", "2002");
 		assertValue("number", "1");
-		assertValue("paid", "false");
+		assertValue("paid", "false"); 
 		assertNoEditable("paid");
 		execute("InvoiceNestedSections.showPaid");
 		assertMessage("paid=false");
