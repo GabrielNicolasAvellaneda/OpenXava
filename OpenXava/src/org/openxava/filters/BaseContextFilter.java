@@ -5,7 +5,6 @@ import javax.servlet.http.*;
 
 
 import org.openxava.controller.*;
-import org.openxava.ejbx.SessionBase;
 import org.openxava.util.*;
 
 
