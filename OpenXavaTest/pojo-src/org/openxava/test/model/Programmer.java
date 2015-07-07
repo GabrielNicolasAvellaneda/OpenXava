@@ -20,6 +20,16 @@ import org.openxava.annotations.*;
 			"name, sex;" +
 			"mainLanguage;" +
 			"experiences { experiences }"
+	),
+	@View(name="WithGroupInSection",
+		members = 
+			"name;" +
+			"data {" +
+				"experiences;" +	
+				"personal [ " +
+				"	sex; mainLanguage;" +
+				"]" +				
+			"}"
 	)
 })
 public class Programmer extends Human {

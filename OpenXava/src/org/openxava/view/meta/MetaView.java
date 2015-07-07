@@ -183,7 +183,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	public Collection getMetaMembers() throws XavaException {
 		if (metaMembers == null) {
 			metaMembers = new ArrayList();
-			Iterator it = getMembersNames().iterator();			
+			Iterator it = getMembersNames().iterator();		
 			while (it.hasNext()) {
 				String name = (String) it.next();
 				if (name.startsWith("__GROUP__")) {
@@ -325,23 +325,20 @@ public class MetaView extends MetaElement implements Cloneable {
 	private void copyMembersFromExtendedView() {
 		if (extendedFromExtendsView || Is.emptyString(getExtendsView())) return;
 		MetaView extendsView = getMetaExtendsView();
-		
+		sections = sum(extendsView.sections, sections);
+		metaGroups = sum(extendsView.metaGroups, metaGroups);
+		_membersNames = sum(extendsView._membersNames, _membersNames);		
 		if (extendsView.sections != null) {
-			sections = sum(extendsView.sections, sections);
 			for (MetaView section: extendsView.sections) {
 				promote(section);
 			}
 		}
 
 		if (extendsView.metaGroups != null) {
-			metaGroups = sum(extendsView.metaGroups, metaGroups);
 			for (MetaGroup group: extendsView.metaGroups.values()) {
 				promote(group.getMetaView());
 			}
-		}
-
-		_membersNames = sum(extendsView._membersNames, _membersNames);		
-		
+		}	
 		extendedFromExtendsView = true;
 	}
 	
