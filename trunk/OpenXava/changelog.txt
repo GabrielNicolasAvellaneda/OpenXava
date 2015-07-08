@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: @ReadOnly in list with @OrderColumn can be reordered by the user.
 - Fix: View inheritance fails with groups inside sections.
 
 OpenXava 5.3.1 (2015-6-29)
