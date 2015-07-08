@@ -4104,7 +4104,7 @@ public class View implements java.io.Serializable {
 	
 	public boolean isCollectionSortable() {  
 		assertRepresentsCollection("isCollectionSortable()");
-		return getMetaCollection().isSortable();
+		return getMetaCollection().isSortable() && isCollectionEditable(); 
 	}
 
 	public boolean isCollectionEditable() {		
