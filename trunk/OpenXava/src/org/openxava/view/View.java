@@ -39,6 +39,7 @@ import org.openxava.controller.meta.MetaController;
 import org.openxava.controller.meta.MetaControllers;
 import org.openxava.filters.CollectionInViewFilter;
 import org.openxava.filters.CollectionWithConditionInViewFilter;
+import org.openxava.jpa.*;
 import org.openxava.mapping.ModelMapping;
 import org.openxava.model.MapFacade;
 import org.openxava.model.PersistenceFacade;
@@ -2880,7 +2881,7 @@ public class View implements java.io.Serializable {
 						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);
 						calculationDone = true;
 					}
-					if (pr.hasDefaultValueCalculator()) {					
+					if (pr.hasDefaultValueCalculator()) {	
 						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.createDefaultValueCalculator(), errors, messages);
 						calculationDone = true;
 					}					
@@ -2968,7 +2969,7 @@ public class View implements java.io.Serializable {
 			action.setView(viewOfAction);
 			action.setChangedProperty(changedPropertyQualifiedName); 
 			action.setNewValue(getValue(changedPropertyQualifiedName));
-			getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());				
+			getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());
 			registerExecutedAction(changedPropertyQualifiedName, action);
 		}
 	}	
@@ -3102,7 +3103,7 @@ public class View implements java.io.Serializable {
 			}
 			
 			Object newValue = calculator.calculate();
-			PersistenceFacade.refreshIfManaged(pojo); 
+			PersistenceFacade.refreshIfManaged(pojo);
 			
 			if (calculator instanceof IOptionalCalculator) {
 				if (!((IOptionalCalculator) calculator).isCalculate()) {

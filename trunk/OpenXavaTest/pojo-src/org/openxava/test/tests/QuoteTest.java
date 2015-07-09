@@ -36,6 +36,7 @@ public class QuoteTest extends ModuleTestBase {
 		assertNoEditableInCollection("details", 0, "amount");
 
 		setValueInCollection("details", 0, "product.number", "1");
+		assertNoErrors(); 
 		assertValueInCollection("details", 0, "product.description", "MULTAS DE TRAFICO");
 		assertValueInCollection("details", 0, "unitPrice", "11.00");		
 		setValueInCollection("details", 0, "unitPrice", "100");

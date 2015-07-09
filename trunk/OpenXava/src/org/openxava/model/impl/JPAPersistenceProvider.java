@@ -7,6 +7,7 @@ import javax.ejb.*;
 import javax.persistence.*;
 
 import org.apache.commons.logging.*;
+import org.hibernate.cfg.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.impl.*;
@@ -118,12 +119,8 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 	}
 	
 	private boolean isManaged(Object object) {
-		try {
-			return XPersistence.getManager().contains(object);
-		}
-		catch (IllegalArgumentException ex) {
-			return false; // Surely it's not annotated with @Entity
-		}		
+		if (!object.getClass().isAnnotationPresent(Entity.class)) return false; 
+		return XPersistence.getManager().contains(object);
 	}
 
 	public ITabProvider createTabProvider() {
