@@ -64,7 +64,6 @@ public class SchemaTool {
 	private void execute(boolean update, boolean console) {
 		try {
 			Configuration cfg = new Configuration();
-			cfg.addResource("GalleryImage.hbm.xml");
 			
 			if (annotatedClasses != null) {
 				for (Class annotatedClass: annotatedClasses) {
@@ -72,6 +71,7 @@ public class SchemaTool {
 				}						
 			}
 			else {
+				cfg.addResource("GalleryImage.hbm.xml");
 				for (ManagedType type: XPersistence.getManager().getMetamodel().getManagedTypes()) {
 					Class<?> clazz = type.getJavaType();
 					if (clazz == null || clazz.isInterface()) continue;
