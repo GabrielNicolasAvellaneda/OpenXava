@@ -127,20 +127,50 @@ public class QuoteTest extends ModuleTestBase {
 		assertValue("year", "2015");
 		assertValue("number", "66");		
 		
+		assertRemoveActionInElementCollection(); 
+		
+		execute("CRUD.delete");
+		assertNoErrors();
+	}
+
+	private void assertRemoveActionInElementCollection() throws Exception {
 		// Annotated remove action on elementCollection
 		changeModule("QuoteWithRemoveElementCollection"); 
 		execute("CRUD.new");
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
 		assertValue("year", "2015");
-		assertValue("number", "66");		
-		assertAction("Collection.removeSelected", "row=1,viewObject=xava_view_details");
-		execute("Collection.removeSelected", "row=1,viewObject=xava_view_details");
-		// Just to prove that message was called
-		assertError("Impossible to execute Remove selected action: Impossible to get object from row 1");
+		assertValue("number", "66");
+
+		assertCollectionRowCount("details", 2);
+		assertValueInCollection("details", 0, "product.number", "1");
+		assertValueInCollection("details", 0, "product.description", "MULTAS DE TRAFICO");
+		assertValueInCollection("details", 0, "unitPrice", "100.00");
+		assertValueInCollection("details", 0, "quantity", "2");
+		assertValueInCollection("details", 0, "amount", "200.00");		
+		assertValueInCollection("details", 1, "product.number", "2");
+		assertValueInCollection("details", 1, "product.description", "IBM ESERVER ISERIES 270");
+		assertValueInCollection("details", 1, "unitPrice", "7,000.00");
+		assertValueInCollection("details", 1, "quantity", "1");
+		assertValueInCollection("details", 1, "amount", "7,000.00");		
+		assertTotalInCollection("details", 0, "amount", "7,200.00");
+		assertTotalInCollection("details", 1, "amount", "1,512.00");
+		assertTotalInCollection("details", 2, "amount", "8,712.00");
 		
-		execute("CRUD.delete");
+		assertAction("Quote.removeDetail", "row=0,viewObject=xava_view_section0_details"); // Important, inside a section
+		execute("Quote.removeDetail", "row=0,viewObject=xava_view_section0_details");
 		assertNoErrors();
+		assertNoMessages();
+		
+		assertCollectionRowCount("details", 1);
+		assertValueInCollection("details", 0, "product.number", "2");
+		assertValueInCollection("details", 0, "product.description", "IBM ESERVER ISERIES 270");
+		assertValueInCollection("details", 0, "unitPrice", "7,000.00");
+		assertValueInCollection("details", 0, "quantity", "1");
+		assertValueInCollection("details", 0, "amount", "7,000.00");		
+		assertTotalInCollection("details", 0, "amount", "7,000.00");
+		assertTotalInCollection("details", 1, "amount", "1,470.00");
+		assertTotalInCollection("details", 2, "amount", "8,470.00");
 	}
 	
 	public void testDependentDefaultValueCalculatorInElementCollection() throws Exception { 

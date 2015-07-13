@@ -37,7 +37,10 @@
 			class="org.openxava.test.actions.ResetUnitPriceCalculatorAction"
 			hidden="true" on-each-request="true"/>
 		<action name="showProducts" mode="detail"
-			class="org.openxava.test.actions.ShowQuoteProducsAction"/>	
+			class="org.openxava.test.actions.ShowQuoteProducsAction"/>
+		<action name="removeDetail" 
+			class="org.openxava.actions.RemoveSelectedInElementCollectionAction"
+			hidden="true"/>
 	</controller>
 
 	<controller name="Author">	
