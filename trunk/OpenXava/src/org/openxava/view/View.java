@@ -4988,6 +4988,9 @@ public class View implements java.io.Serializable {
 	public void refreshCollections() {  
 		if (isRepresentsCollection()) {
 			refreshCollection();
+			if (isRepresentsElementCollection()) {
+				collectionTotals = null;
+			}
 			return;
 		}
 		if (hasSubviews()) {

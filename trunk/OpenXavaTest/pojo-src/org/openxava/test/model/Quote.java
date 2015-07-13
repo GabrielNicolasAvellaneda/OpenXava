@@ -29,7 +29,7 @@ import org.openxava.model.Identifiable;
 @Entity
 @Views({
 	@View(members="year, number, date; customer; details"),
-	@View(name="QuoteWithRemoveElementCollection", members="year, number, date; customer; details")
+	@View(name="QuoteWithRemoveElementCollection", members="year, number, date; data { customer; details }") 
 })
 @Tab(defaultOrder="${year} desc") 
 public class Quote extends Identifiable {
@@ -47,7 +47,7 @@ public class Quote extends Identifiable {
 	@ReferenceView("Simplest")
 	private Customer customer;
 	
-	@RemoveSelectedAction(forViews="QuoteWithRemoveElementCollection", value="Collection.removeSelected") 
+	@RemoveSelectedAction(forViews="QuoteWithRemoveElementCollection", value="Quote.removeDetail") 
 	@javax.validation.constraints.Size(min=1, max=3)  
 	@ElementCollection
 	@ListProperties("product.number, product.description, unitPrice, quantity, amount[quote.amountsSum, quote.taxes, quote.total]")
