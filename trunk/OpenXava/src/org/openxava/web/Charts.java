@@ -197,7 +197,7 @@ public enum Charts {
 				chart.setChartType(Chart.ChartType.valueOf(chartPreferences.get(KEY_CHART_TYPE, "BAR")));
 				int index = 0;
 				ChartColumn column = new ChartColumn();
-				chart.getColumns().clear();
+				chart.setColumns(new ArrayList<ChartColumn>());
 				while(column.load(chartPreferences, index++)) {
 					column.setChart(chart);
 					chart.getColumns().add(column);
@@ -205,8 +205,8 @@ public enum Charts {
 				}
 				returnValue = true;
 			}
-		} catch (Exception e) {
-			log.error(e.getMessage() + ": keeping same chart");
+		} catch (Exception e) { 
+			log.warn(XavaResources.getString("chart_not_loaded"), e);
 		}
 		return returnValue;
 	}

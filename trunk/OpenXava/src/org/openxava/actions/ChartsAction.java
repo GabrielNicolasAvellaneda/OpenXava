@@ -8,7 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.openxava.session.Chart;
-import org.openxava.util.Is;
+import org.openxava.util.*;
 import org.openxava.web.Charts;
 
 /**
