@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Apostrophes incorrectly shown in search dialog title in Spanish.
 - Fix: Saved chart configurations are not restored.
 - New RemoveSelectedInElementCollectionAction to refine @RemoveSelectedAction for @ElementCollection.
 - Fix: Transaction marked as rollbackOnly in element collection with default calculator that use JPA.
