@@ -1861,25 +1861,8 @@ public class InvoiceTest extends CustomizeListTestBase {
 		String svat = nf.format(vat);
 		assertValue("vat", svat);
 	}		
-	
-	private void chartsSetUp() throws Exception {  
-		String nodeName = "chart.tab.OpenXavaTest.Invoice.Invoice";
-		// Clear the preferences
-		if (Users.getCurrentPreferences().nodeExists(nodeName)) {
-			Users.getCurrentPreferences().remove(nodeName);
-		}
-		if (Users.getSharedPreferences().nodeExists(nodeName)) {
-			Users.getSharedPreferences().remove(nodeName);
-		}
-		Users.getCurrentPreferences().flush();
-		Users.getSharedPreferences().flush();
-	}
-
-	
+		
 	public void testChartElements() throws Exception { 
-		chartsSetUp(); 
-		execute("CRUD.new");
-		execute("Mode.list");
 		assertListNotEmpty();
 		execute("Charts.charts");
 		assertEditable("name");
@@ -1904,16 +1887,26 @@ public class InvoiceTest extends CustomizeListTestBase {
 	}
 	
 	public void testChartSave() throws Exception {
-		chartsSetUp();
-		execute("CRUD.new");
-		execute("Mode.list");
 		assertListNotEmpty();
 		execute("Charts.charts");
 		assertCollectionNotEmpty("columns");
+		reload(); // Because with HtmlUnit d3 library block the action call, we reload to unblock
 		assertValueInCollection("columns", 0, "displayed", "false");
-		setValueInCollection("columns", 0, "displayed", "true");
+		setValueInCollection("columns", 0, "displayed", "true"); 
+		reload(); // Because with HtmlUnit d3 library block the action call, we reload to unblock 
+		setValue("name", "The Ultra Chart"); 
 		execute("Chart.save", "xava.keyProperty=name");
 		assertNoErrors();
+		
+		resetModule();
+		execute("Charts.charts");
+		assertValue("name", "THE ULTRA CHART"); 
+		String [][] storedCharts = {
+			{ "THE ULTRA CHART", "The Ultra Chart" }
+		};		
+		assertValidValues("name", storedCharts);
+
+		assertValueInCollection("columns", 0, "displayed", "true");
 	}
 
 	private void assertChartDisplayed() throws Exception {

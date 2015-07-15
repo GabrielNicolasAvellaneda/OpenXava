@@ -705,7 +705,7 @@ public class ModuleTestBase extends TestCase {
 	private void execute(String action, String arguments, boolean clicking) throws Exception {
 		throwChangeOfLastNotNotifiedProperty();
 		HtmlElement element = null;
-		element = getAnchorForAction(action, arguments);  
+		element = getAnchorForAction(action, arguments);
 		if (arguments == null && element == null) { // We try if it is a button
 			String moduleMarkForButton = "executeAction(\"" + application + "\", \"" + module + "\"";
 			HtmlElement inputElement = page.getHtmlElementById(decorateId(action)); 
