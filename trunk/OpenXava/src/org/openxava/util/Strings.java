@@ -789,9 +789,13 @@ public class Strings {
             replace("\u00E9", "e").replace("\u00C9", "E").
             replace("\u00ED", "i").replace("\u00CD", "I").
             replace("\u00F3", "o").replace("\u00D3", "O").
-            replace("\u00FA", "u").replace("\u00DA", "U");      
-	}
-	
+            replace("\u00FA", "u").replace("\u00DA", "U").
+            replace("\u00E0", "a").replace("\u00C0", "A").
+            replace("\u00E8", "e").replace("\u00C8", "E").
+            replace("\u00EC", "i").replace("\u00CC", "I").
+            replace("\u00F2", "o").replace("\u00D2", "O").
+            replace("\u00F9", "u").replace("\u00D9", "U");            
+	}	
 	/**
 	 * Determines if the string is a valid model name.
 	 * 

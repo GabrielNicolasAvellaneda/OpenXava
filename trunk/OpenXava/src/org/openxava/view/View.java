@@ -3101,6 +3101,9 @@ public class View implements java.io.Serializable {
 				if (pojo == null) pojo = getPOJO();
 				((IEntityCalculator) calculator).setEntity(pojo); 
 			}
+			if (calculator instanceof IJDBCCalculator) {
+				((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
+			}					
 			
 			Object newValue = calculator.calculate();
 			PersistenceFacade.refreshIfManaged(pojo);
