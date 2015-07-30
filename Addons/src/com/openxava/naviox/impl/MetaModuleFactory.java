@@ -24,8 +24,14 @@ public class MetaModuleFactory {
 	public static List<MetaModule> createAll() {
 		MetaApplication app = MetaApplications.getMetaApplication(application);
 		createDefaultMetaModules(app);
-		createAdditionalMetaModules(app); 
+		createAdditionalMetaModules(app);
 		return new ArrayList<MetaModule>(app.getMetaModules());
+	}
+
+	private static void printModules(MetaApplication app) {
+		for (Object m: app.getMetaModules()) {
+			String nombre = ((MetaModule) m).getName();
+		}
 	}
 
 	private static void createDefaultMetaModules(MetaApplication app) {
