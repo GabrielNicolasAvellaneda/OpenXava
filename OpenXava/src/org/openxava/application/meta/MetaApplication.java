@@ -77,7 +77,9 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	private void generateDefaultModulesFromXMLComponents() throws XavaException {
 		boolean generateDefaultModules = XavaPreferences.getInstance().isGenerateDefaultModules();
 		for (Iterator it=MetaComponent.getAll().iterator(); it.hasNext(); ) {
-			String modelName = ((MetaComponent) it.next()).getName();
+			MetaComponent component = (MetaComponent) it.next();
+			if (component.getMetaEntity().isAnnotatedEJB3()) break; // If there is just one JPA this is not a XML application, so we don't continue
+			String modelName = component.getName();
 			if (!metaModules.containsKey(modelName) && generateDefaultModules) {
 				createDefaultModule(modelName);
 			}			

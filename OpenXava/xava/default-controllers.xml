@@ -155,7 +155,7 @@ here that you want to override.
 			class="org.openxava.actions.RemoveChartColumnAction"
 			image="delete.gif"/>
 		<action name="close" 
-			class="org.openxava.actions.CancelDialogAction"/>						
+			class="org.openxava.actions.CloseChartDialogAction"/>						
 	</controller>
 	
 	<controller name="TypicalNotResetOnSave">

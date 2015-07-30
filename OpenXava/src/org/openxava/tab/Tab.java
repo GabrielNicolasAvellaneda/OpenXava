@@ -475,7 +475,8 @@ public class Tab implements java.io.Serializable {
 					}
 					
 					String reference = p.getQualifiedName().replace("." + p.getName(), "");
-					List<CmpField> fields = (List<CmpField>) getMetaTab().getMetaModel().getMapping().getReferenceMapping(reference).getCmpFields();
+					MetaReference metaReference = getMetaTab().getMetaModel().getMetaReference(reference); 
+					List<CmpField> fields = (List<CmpField>) metaReference.getMetaModel().getMapping().getReferenceMapping(metaReference.getName()).getCmpFields();
 					Collections.sort(fields, CMPFieldComparator.getInstance());
 					
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();

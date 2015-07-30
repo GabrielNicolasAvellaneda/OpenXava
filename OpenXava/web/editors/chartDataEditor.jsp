@@ -30,7 +30,6 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) session.getAttribute("xava_chartTab");
-session.removeAttribute("xava_chartTab");
 
 String chartObject = request.getParameter("chartObject");
 chartObject = (chartObject == null || chartObject.equals(""))?"xava_chart":chartObject;
@@ -62,13 +61,14 @@ try {
 	}
 	java.util.List<Integer> selected = new java.util.ArrayList<Integer>(); 
 	int end = model.getRowCount();
+	
 	for (int i = 0; i < end; i++){
 		Map key = (Map)model.getObjectAt(i);
 		for (Map selectedKey : selectedKeys) {
-	if (selectedKey.equals(key)) {
-		selected.add(i);
-		break;
-	}
+			if (selectedKey.equals(key)) { 
+				selected.add(i);
+				break;
+			}
 		}
 	}
 	int[] selectedRows = ArrayUtils.toPrimitive(selected.toArray(new Integer[selected.size()]));

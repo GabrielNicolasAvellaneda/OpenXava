@@ -7,6 +7,7 @@ import java.util.logging.*;
 
 import junit.framework.*;
 
+import org.apache.commons.beanutils.*;
 import org.apache.commons.logging.*;
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.util.*;
@@ -61,7 +62,9 @@ public class ModuleTestBase extends TestCase {
 	private static String port;
 	private static int loginFormIndex = -1;
 	private static Collection excludedActions;  
-	private static Collection ignoredActions; 
+	private static Collection ignoredActions;
+	private static BrowserVersion browserVersion; 
+	
 	private String locale;
 	private MetaModule metaModule;
 	private MetaModel metaModel;
@@ -74,7 +77,6 @@ public class ModuleTestBase extends TestCase {
 	private HtmlForm form;  
 	private String lastNotNotifiedPropertyName; 
 	private String lastNotNotifiedPropertyValue;
-	private BrowserVersion browserVersion;
 	private String previousModule;
 	private String popupPDFAsText; 
 	private String [] popupPDFLines;
@@ -483,7 +485,7 @@ public class ModuleTestBase extends TestCase {
 	 * Like close navigator, open again, and reexecute the module.
 	 */
 	protected void resetModule() throws Exception {		
-		client = new WebClient(BrowserVersion.FIREFOX_24); 
+		client = new WebClient(getBrowserVersion()); 
 		client.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		client.getOptions().setThrowExceptionOnScriptError(false);
 		client.getOptions().setCssEnabled(false); 
@@ -506,6 +508,15 @@ public class ModuleTestBase extends TestCase {
 		if (isCoreViaAJAX()) {
 			restorePage();
 		}
+	}
+	
+	private static BrowserVersion getBrowserVersion() throws Exception {
+		if (browserVersion == null) {
+			browserVersion = new BrowserVersion("", "", "", 0); 
+			BeanUtils.copyProperties(browserVersion, (BrowserVersion.FIREFOX_24));		
+			browserVersion.setUserAgent(browserVersion.getUserAgent() + " HtmlUnit");
+		}
+		return browserVersion;
 	}
 	
 	private boolean isCoreViaAJAX() { 

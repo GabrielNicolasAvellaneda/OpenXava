@@ -258,17 +258,16 @@ public class WebEditors {
 	
 	public static String getEditorURLDescriptionsList(String tabName, String tabModelName, String propertyKey, int index, String prefix, String qualifiedName, String name){
 		if (qualifiedName.indexOf('.') < 0) return "";
-		
+
 		String url = "";
-		String url_default = "";
+		String defaultURL = "";
 		MetaModel metaModel = MetaModel.get(tabModelName);
-		String reference = qualifiedName.replace("." + name, "");
+		String reference = Strings.noLastTokenWithoutLastDelim(qualifiedName, ".");
 		MetaReference metaReference = metaModel.getMetaReference(reference);
-		
+		metaModel = metaReference.getMetaModel();
 		Collection<MetaView> metaViews = metaModel.getMetaViews();
 		for (MetaView metaView : metaViews){
-			MetaDescriptionsList metaDescriptionsList = metaView.getMetaDescriptionList(metaReference);
-			
+			MetaDescriptionsList metaDescriptionsList = metaView.getMetaDescriptionList(metaReference);			
 			if (metaDescriptionsList == null) continue;
 			if (!Is.empty(metaDescriptionsList.getDepends())) continue;
 			Collection<String> forTabs = Is.empty(metaDescriptionsList.getForTabs()) ?
@@ -298,10 +297,10 @@ public class WebEditors {
 					+ "&orderByKey=" + metaDescriptionsList.isOrderByKey()
 					+ "&order=" + metaDescriptionsList.getOrder();
 				if (forTabs.contains(tabName)) return url;
-				if (forTabs.isEmpty()) url_default = url;
+				if (forTabs.isEmpty()) defaultURL = url;
 			}
 		}
-		return url_default;
+		return defaultURL;
 	}
 
 }
