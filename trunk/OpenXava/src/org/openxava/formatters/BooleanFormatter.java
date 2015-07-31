@@ -37,8 +37,8 @@ public class BooleanFormatter implements IFormatter {
 		if (Is.emptyString(string)) return nullAsFalse?Boolean.FALSE:null;		
 		if (
 			"yes".equalsIgnoreCase(string) ||
-			"SÍ".equalsIgnoreCase(string) ||
-			"Sí".equalsIgnoreCase(string) ||
+			"S\u00ED".equalsIgnoreCase(string) || 
+			"S\u00CD".equalsIgnoreCase(string) ||
 			"Si".equalsIgnoreCase(string) ||
 			"true".equalsIgnoreCase(string) ||
 			"verdadero".equalsIgnoreCase(string)) return Boolean.TRUE;
