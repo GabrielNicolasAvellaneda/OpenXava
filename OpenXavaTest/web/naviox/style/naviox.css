@@ -600,12 +600,17 @@ input[type="button"]:active, A#show_modules.show-modules-selected {
 }
 
 .ox-list-pair, .ox-list-odd {
-	height: 35px;
 	border-bottom-color: #EBEBEB !important;
 }
 
 .ox-list-pair a, .ox-list-odd a {
 	color: black;  
+}
+
+.ox-list-pair a nobr, .ox-list-odd a nobr {
+	vertical-align: middle; 
+	display: table-cell; 
+	height: 35px;  
 }
 
 .ox-list-pair:hover, .ox-list-odd:hover {
