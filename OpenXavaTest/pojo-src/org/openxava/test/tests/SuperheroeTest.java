@@ -20,10 +20,8 @@ public class SuperheroeTest extends ModuleTestBase {
 		setValue("name", "<b>Super</b>man");
 		execute("CRUD.save");
 		execute("Mode.list");
-		//assertValueInList(2, 0, "<b>Super</b>man"); // tmp Falla
-		assertValueInList(0, 0, "<b>Super</b>man"); // tmp 
-		// tmp execute("CRUD.deleteRow", "row=2");		
-		execute("CRUD.deleteRow", "row=0"); // tmp
+		assertValueInList(0, 0, "<b>Super</b>man"); 
+		execute("CRUD.deleteRow", "row=0");
 	}
 	
 }

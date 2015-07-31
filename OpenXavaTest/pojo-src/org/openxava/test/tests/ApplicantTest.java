@@ -1,6 +1,9 @@
 package org.openxava.test.tests;
 
+import javax.persistence.*;
+
 import org.apache.commons.lang.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 import com.gargoylesoftware.htmlunit.*;
@@ -54,19 +57,20 @@ public class ApplicantTest extends ModuleTestBase {
 		resetModule();
 		
 		assertModulesCount(15);
-		assertFirstModuleInMenu("Abstract wall", "Abstract wall"); // Not in i18n, to test a case  
+		assertTrue(AbstractWall.class.isAnnotationPresent(MappedSuperclass.class)); // This should be the first one, but as it's MappedSupperclass in not shown
+		assertFirstModuleInMenu("Academic year", "Academic year"); // Not in i18n, to test a case
 
 		HtmlElement searchBox = getHtmlPage().getHtmlElementById("search_modules_text");
-		searchBox.type("CA");
-		assertEquals("CA", searchBox.getAttribute("value"));
+		searchBox.type("INVOICE");
+		assertEquals("INVOICE", searchBox.getAttribute("value"));		
 		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
 		assertModulesCount(15);
-		assertFirstModuleInMenu("Academic years", "Academic years management");  
+		assertFirstModuleInMenu("Current year invoices", "Current year invoices management"); 
 		
 		HtmlAnchor loadMoreModules = (HtmlAnchor) getHtmlPage().getHtmlElementById("more_modules").getParentNode();
 		loadMoreModules.click();
 		getWebClient().waitForBackgroundJavaScriptStartingBefore(10000);
-		assertModulesCount(20); // We have to adjust this when we add new modules that content "ca"
+		assertModulesCount(39); // We have to adjust this when we add new modules that content "invoice"
 		
 		searchBox.type(" \b");
 		assertEquals("", searchBox.getAttribute("value"));

@@ -4,8 +4,6 @@ import java.io.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-
-import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
 /**

@@ -514,8 +514,8 @@
 			class="org.openxava.test.actions.HideShowAction">
 			<set property="name" value="amounts"/>
 			<set property="hide" value="false"/>	
-		</action>																
-											
+		</action>				
+		
 	</controller>
 	
 	<controller name="InvoiceNestedSections">
