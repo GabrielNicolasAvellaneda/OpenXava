@@ -33,7 +33,7 @@ public class Invoice3 {
 	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
 	
-	@Digits(integer=2, fraction=1)  
+	@Digits(integer=2, fraction=1)
 	@Required
 	private BigDecimal vatPercentage;
 	
