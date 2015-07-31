@@ -1862,10 +1862,10 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertValue("vat", svat);
 	}		
 		
-	public void testChartElements() throws Exception { 
+	public void testChartElements() throws Exception {
 		assertListNotEmpty();
 		execute("Charts.charts");
-		assertEditable("name");
+		assertEditable("name"); 
 		assertValue("name", "INVOICE REPORT"); 
 		assertValidValues("chartType", new String[][]{
 				{"", ""},
@@ -1884,16 +1884,17 @@ public class InvoiceTest extends CustomizeListTestBase {
 		assertValue("yColumn", "year");
 		assertValidValueExists("yColumn", OnChangeChartLabelColumnAction.SHOW_MORE, "[SHOW MORE...]");
 		assertChartDisplayed();
+
+		reload(); 
+		assertChartDisplayed();		 
 	}
 	
 	public void testChartSave() throws Exception {
 		assertListNotEmpty();
 		execute("Charts.charts");
 		assertCollectionNotEmpty("columns");
-		reload(); // Because with HtmlUnit d3 library block the action call, we reload to unblock
 		assertValueInCollection("columns", 0, "displayed", "false");
 		setValueInCollection("columns", 0, "displayed", "true"); 
-		reload(); // Because with HtmlUnit d3 library block the action call, we reload to unblock 
 		setValue("name", "The Ultra Chart"); 
 		execute("Chart.save", "xava.keyProperty=name");
 		assertNoErrors();
@@ -1911,8 +1912,7 @@ public class InvoiceTest extends CustomizeListTestBase {
 
 	private void assertChartDisplayed() throws Exception {
 		DomElement container = getHtmlPage().getElementById(decorateId("xava_chart__container"));
-		if (!container.hasChildNodes() &&
-				container.getChildNodes().size() < 10) {
+		if (container == null || (!container.hasChildNodes() && container.getChildNodes().size() < 10)) {	
 			fail(XavaResources.getString("my_chart_not_displayed"));
 		}
 	}

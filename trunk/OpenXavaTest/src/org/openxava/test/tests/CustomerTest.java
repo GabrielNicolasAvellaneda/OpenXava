@@ -52,6 +52,14 @@ public class CustomerTest extends CustomizeListTestBase {
 		this.section = section?"_section0":"";		
 	}
 	
+	public void testDescriptionsListInListForSecondLevelReferences() throws Exception { 
+		assertListRowCount(5);
+		assertLabelInList(4, "Seller level");
+		setConditionValues("", "", "", "", "A");
+		execute("List.filter");
+		assertListRowCount(3);
+	}
+	
 	public void testReloadModuleInsideHtml() throws Exception { // NaviOX with a special group combination, address with a group for city 		
 		execute("CRUD.new");
 		assertAction("EditableOnOff.setOn"); 

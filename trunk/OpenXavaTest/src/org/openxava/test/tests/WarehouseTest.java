@@ -110,7 +110,7 @@ public class WarehouseTest extends WarehouseSplitTestBase {
 		assertChangeRowCount(10, 5);
 		execute("List.goPage", "page=11");
 		
-		assertChangeRowCount(5, 10, 3);
+		assertChangeRowCount(5, 10, 3); 
 		assertValueInList(0, 2, value60);
 		assertValueInList(2, 2, value62);		
 	}
