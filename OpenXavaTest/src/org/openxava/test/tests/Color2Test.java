@@ -45,13 +45,13 @@ public class Color2Test extends ModuleTestBase {
 
 		String [][] validValues = {
 			{ "", "" },
-			{ "1:_:CAR", "CAR" }, 
-			{ "3:_:DOOR", "DOOR" },
+			{ "2:_:LAMPPOST", "LAMPPOST" },
 			{ "0:_:HOUSE", "HOUSE" },
-			{ "2:_:LAMPPOST", "LAMPPOST" }
+			{ "3:_:DOOR", "DOOR" },
+			{ "1:_:CAR", "CAR" } 
 		};
 		
-		assertValidValues("descriptionsListValue", validValues);
+		assertValidValues("descriptionsListValue", validValues); 
 		assertValue("descriptionsListValue", "");
 		setValue("descriptionsListValue", "1:_:CAR"); 
 		execute("MyReport.saveColumn");
@@ -77,6 +77,14 @@ public class Color2Test extends ModuleTestBase {
 	
 	public void testFilterDescriptionsList_keyReferenceWithSameNameThatPropertyFather() throws Exception{ 
 		assertLabelInList(4, "Name of Used to");
+		String [][] validValues = {
+			{ "", "" },
+			{ "2:_:LAMPPOST", "LAMPPOST" },
+			{ "0:_:HOUSE", "HOUSE" },
+			{ "3:_:DOOR", "DOOR" },
+			{ "1:_:CAR", "CAR" }
+		};
+		assertValidValues("conditionValue___3", validValues);		
 		assertValueInList(0, 4, "CAR");
 		setConditionValues(new String[] { "", "", "", "1"} );
 		// execute("List.filter"); // Not needed because filterOnChange=true

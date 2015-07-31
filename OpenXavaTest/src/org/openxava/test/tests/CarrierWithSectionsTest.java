@@ -577,7 +577,7 @@ public class CarrierWithSectionsTest extends ModuleTestBase {
 		setValue("name", "Carrier report 1");
 		execute("MyReport.generatePdf");		
 		
-		execute("ExtendedPrint.myReports");
+		execute("ExtendedPrint.myReports"); 
 		String [][] customReports1 = {
 			{ "Carrier report 1", "Carrier report 1" },	
 		};

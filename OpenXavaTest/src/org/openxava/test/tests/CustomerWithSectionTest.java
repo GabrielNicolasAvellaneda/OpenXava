@@ -518,7 +518,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	}
 	
 	public void testCustomizeList() throws Exception {
-		doTestCustomizeList_moveAndRemove();
+		doTestCustomizeList_moveAndRemove(); 
 		tearDown();	setUp();
 		doTestCustomizeList_generatePDF();
 		tearDown();	setUp();
@@ -713,7 +713,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 				found_red = true;
 			}
 			else { 
-				assertNoRowStyleInList(i);				
+				assertNoRowStyleInList(i);		
 			}						
 		}
 		if (!found) {
